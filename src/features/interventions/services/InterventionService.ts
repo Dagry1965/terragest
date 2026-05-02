@@ -1,100 +1,52 @@
 import {
-  addDoc,
-  collection,
-  deleteDoc,
-  doc,
-  getDoc,
-  getDocs,
-  query,
-  updateDoc,
-  where,
-} from "firebase/firestore";
+  FirestoreInterventionRepository
+}
+from "../repositories/firestore/FirestoreInterventionRepository";
 
-import { db } from "@/lib/firebase/firebase";
-
-import { COLLECTIONS } from "@/constants/collections";
+import { Intervention }
+from "../types/Intervention";
 
 export const InterventionService = {
 
-  async create(data: any) {
+  async create(
+    data: Intervention
+  ) {
 
-    return addDoc(
-      collection(
-        db,
-        COLLECTIONS.INTERVENTIONS
-      ),
-      data
-    );
+    return FirestoreInterventionRepository
+      .create(data);
   },
 
-  async getById(id: string) {
+  async getAll() {
 
-    const snapshot = await getDoc(
-      doc(
-        db,
-        COLLECTIONS.INTERVENTIONS,
-        id
-      )
-    );
+    return FirestoreInterventionRepository
+      .getAll();
+  },
 
-    if (!snapshot.exists()) {
-      return null;
-    }
+  async getById(
+    id: string
+  ) {
 
-    return {
-      id: snapshot.id,
-      ...snapshot.data(),
-    };
+    return FirestoreInterventionRepository
+      .getById(id);
   },
 
   async update(
+
     id: string,
-    data: any
+
+    data: Partial<Intervention>
+
   ) {
 
-    return updateDoc(
-      doc(
-        db,
-        COLLECTIONS.INTERVENTIONS,
-        id
-      ),
-      data
-    );
+    return FirestoreInterventionRepository
+      .update(id, data);
   },
 
-  async delete(id: string) {
-
-    return deleteDoc(
-      doc(
-        db,
-        COLLECTIONS.INTERVENTIONS,
-        id
-      )
-    );
-  },
-
-  async getAllByOrganisation(
-    organisationId: string
+  async delete(
+    id: string
   ) {
 
-    const q = query(
-      collection(
-        db,
-        COLLECTIONS.INTERVENTIONS
-      ),
-      where(
-        "organisationId",
-        "==",
-        organisationId
-      )
-    );
-
-    const snapshot =
-      await getDocs(q);
-
-    return snapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
+    return FirestoreInterventionRepository
+      .delete(id);
   },
 };
