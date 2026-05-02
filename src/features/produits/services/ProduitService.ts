@@ -1,55 +1,54 @@
-import type { Produit }
+import {
+  FirestoreProduitRepository
+}
+from "../repositories/firestore/FirestoreProduitRepository";
+
+import { Produit }
 from "../types/Produit";
 
-import { ProduitRepository }
-from "../repositories/ProduitRepository";
+export const ProduitService = {
 
-export class ProduitService {
-
-  static async create(
+  async create(
     data: Produit
   ) {
 
-    return ProduitRepository.create(
-      data
-    );
-  }
+    return FirestoreProduitRepository
+      .create(data);
+  },
 
-  static async getAllByOrganisation(
+  async getAllByOrganisation(
     organisationId: string
   ) {
 
-    return ProduitRepository
-      .getAllByOrganisation(
-        organisationId
-      );
-  }
+    return FirestoreProduitRepository
+      .getAll();
+  },
 
-  static async getById(
+  async getById(
     id: string
   ) {
 
-    return ProduitRepository
+    return FirestoreProduitRepository
       .getById(id);
-  }
+  },
 
-  static async update(
+  async update(
+
     id: string,
+
     data: Partial<Produit>
+
   ) {
 
-    return ProduitRepository.update(
-      id,
-      data
-    );
-  }
+    return FirestoreProduitRepository
+      .update(id, data);
+  },
 
-  static async delete(
+  async delete(
     id: string
   ) {
 
-    return ProduitRepository.delete(
-      id
-    );
-  }
-}
+    return FirestoreProduitRepository
+      .delete(id);
+  },
+};

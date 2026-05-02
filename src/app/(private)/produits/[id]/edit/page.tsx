@@ -1,10 +1,22 @@
 "use client";
 
-import { useEffect, useState }
-from "react";
+import toast from "react-hot-toast";
 
-import { useParams }
-from "next/navigation";
+import {
+  useEffect,
+  useState
+} from "react";
+
+import {
+  useParams,
+  useRouter
+} from "next/navigation";
+
+import { FormField }
+from "@/components/form/FormField";
+
+import { Button }
+from "@/components/ui/Button";
 
 import { ProduitService }
 from "@/features/produits/services/ProduitService";
@@ -12,159 +24,220 @@ from "@/features/produits/services/ProduitService";
 import { UNITE }
 from "@/features/produits/types/UNITE";
 
-import { Button }
-from "@/components/ui/Button";
-
 export default function EditProduitPage() {
 
   const params = useParams();
 
+  const router = useRouter();
+
   const [nom, setNom] =
     useState("");
 
-  const [categorie, setCategorie] =
+  const [categorie,
+    setCategorie] =
     useState("");
 
-  const [unite, setUnite] =
-    useState<UNITE>(UNITE.KG);
+  const [unite,
+    setUnite] =
+    useState<UNITE>(
+      UNITE.KG
+    );
 
-  const [prixUnitaire, setPrixUnitaire] =
+  const [prixUnitaire,
+    setPrixUnitaire] =
     useState("");
 
-  const [saving, setSaving] =
+  const [loading,
+    setLoading] =
     useState(false);
 
   useEffect(() => {
 
-    async function loadProduit() {
-
-      const produit =
-        await ProduitService.getById(
-          params.id as string
-        );
-
-      setNom(produit.nom);
-
-      setCategorie(
-        produit.categorie
-      );
-
-      setUnite(
-        produit.unite
-      );
-
-      setPrixUnitaire(
-        String(
-          produit.prixUnitaire
-        )
-      );
-    }
-
     loadProduit();
 
-  }, [params.id]);
+  }, []);
 
-  async function handleSave() {
+  const loadProduit =
+    async () => {
 
-    try {
+      try {
 
-      setSaving(true);
+        const produit =
+          await ProduitService
+            .getById(
+              params.id as string
+            );
 
-      await ProduitService.update(
+        if (!produit) {
 
-        params.id as string,
+          toast.error(
+            "Produit introuvable"
+          );
 
-        {
-          nom,
-
-          categorie,
-
-          unite,
-
-          prixUnitaire:
-            Number(prixUnitaire),
+          return;
         }
-      );
 
-    } finally {
+        setNom(
+          produit.nom
+        );
 
-      setSaving(false);
-    }
-  }
+        setCategorie(
+          produit.categorie
+        );
+
+        setUnite(
+          produit.unite
+        );
+
+        setPrixUnitaire(
+          String(
+            produit.prixUnitaire
+          )
+        );
+
+      } catch (error) {
+
+        console.error(error);
+
+        toast.error(
+          "Erreur chargement"
+        );
+      }
+    };
+
+  const handleSave =
+    async () => {
+
+      try {
+
+        setLoading(true);
+
+        await ProduitService
+          .update(
+
+            params.id as string,
+
+            {
+
+              nom,
+
+              categorie,
+
+              unite,
+
+              prixUnitaire:
+                Number(
+                  prixUnitaire
+                ),
+            }
+          );
+
+        toast.success(
+          "Produit modifié"
+        );
+
+        router.push(
+          "/produits"
+        );
+
+      } catch (error) {
+
+        console.error(error);
+
+        toast.error(
+          "Erreur modification"
+        );
+
+      } finally {
+
+        setLoading(false);
+      }
+    };
 
   return (
 
-    <div className="
-      p-10
-      space-y-6
-    ">
+    <div className="p-10">
 
-      <h1 className="
-        text-3xl
-        font-bold
-      ">
-
-        Modifier Produit
-
-      </h1>
-
-      <input
-        value={nom}
-        onChange={(e) =>
-          setNom(e.target.value)
-        }
-        placeholder="Nom"
+      <div
         className="
-          border
-          p-3
-          rounded-lg
-          w-full
+          max-w-xl
+          bg-white
+          rounded-2xl
+          shadow-md
+          p-6
+          space-y-6
         "
-      />
-
-      <input
-        value={categorie}
-        onChange={(e) =>
-          setCategorie(e.target.value)
-        }
-        placeholder="Catégorie"
-        className="
-          border
-          p-3
-          rounded-lg
-          w-full
-        "
-      />
-
-      <input
-        value={prixUnitaire}
-        onChange={(e) =>
-          setPrixUnitaire(
-            e.target.value
-          )
-        }
-        placeholder="Prix unitaire"
-        className="
-          border
-          p-3
-          rounded-lg
-          w-full
-        "
-      />
-
-      <Button
-        onClick={handleSave}
-        disabled={saving}
-        className="w-full"
       >
 
-        {
-          saving
-            ? "Sauvegarde..."
-            : "Sauvegarder"
-        }
+        <h1
+          className="
+            text-3xl
+            font-bold
+          "
+        >
+          Modifier Produit
+        </h1>
 
-      </Button>
+        <FormField
+          label="Nom"
+          inputProps={{
+            value: nom,
+            onChange: (e) =>
+              setNom(
+                e.target.value
+              ),
+          }}
+        />
+
+        <FormField
+          label="Catégorie"
+          inputProps={{
+            value: categorie,
+            onChange: (e) =>
+              setCategorie(
+                e.target.value
+              ),
+          }}
+        />
+
+        <FormField
+          label="Unité"
+          inputProps={{
+            value: unite,
+            onChange: (e) =>
+              setUnite(
+                e.target.value as UNITE
+              ),
+          }}
+        />
+
+        <FormField
+          label="Prix unitaire"
+          inputProps={{
+            type: "number",
+            value: prixUnitaire,
+            onChange: (e) =>
+              setPrixUnitaire(
+                e.target.value
+              ),
+          }}
+        />
+
+        <Button
+          onClick={handleSave}
+          disabled={loading}
+          className="w-full"
+        >
+
+          {
+            loading
+              ? "Enregistrement..."
+              : "Enregistrer"
+          }
+
+        </Button>
+
+      </div>
 
     </div>
   );
