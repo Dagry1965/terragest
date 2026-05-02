@@ -1,5 +1,11 @@
 "use client";
 
+import {
+
+  AuthProvider
+
+} from "@/providers/AuthProvider";
+
 export default function PrivateShell({
 
   children,
@@ -12,10 +18,14 @@ export default function PrivateShell({
 
   return (
 
-    <div>
+    <AuthProvider>
 
-      {children}
+      <div>
 
-    </div>
+        {children}
+
+      </div>
+
+    </AuthProvider>
   );
 }
