@@ -1,0 +1,72 @@
+rules_version = '2';
+
+service cloud.firestore {
+
+  match /databases/{database}/documents {
+
+    function isAuthenticated() {
+
+      return request.auth != null;
+    }
+
+    function sameTenant(
+      tenantId
+    ) {
+
+      return request.auth.token.tenantId
+        == tenantId;
+    }
+
+    function isAdmin() {
+
+      return request.auth.token.role
+        == "ADMIN";
+    }
+
+    function isManager() {
+
+      return request.auth.token.role
+        == "MANAGER";
+    }
+
+    function canWrite() {
+
+      return isAdmin()
+        || isManager();
+    }
+
+    match /exploitations/{document} {
+
+      allow read:
+
+        if isAuthenticated()
+        && sameTenant(
+          resource.data.tenantId
+        );
+
+      allow create:
+
+        if isAuthenticated()
+        && canWrite()
+        && sameTenant(
+          request.resource.data.tenantId
+        );
+
+      allow update:
+
+        if isAuthenticated()
+        && canWrite()
+        && sameTenant(
+          resource.data.tenantId
+        );
+
+      allow delete:
+
+        if isAuthenticated()
+        && isAdmin()
+        && sameTenant(
+          resource.data.tenantId
+        );
+    }
+  }
+}

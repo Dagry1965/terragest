@@ -1,0 +1,5 @@
+export const PRODUCT_CREATED =
+"PRODUCT_CREATED";
+
+export const STOCK_ALERT =
+"STOCK_ALERT";

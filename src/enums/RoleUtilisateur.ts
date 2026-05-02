@@ -1,0 +1,6 @@
+export enum ROLE_UTILISATEUR {
+
+  ADMIN = "ADMIN",
+
+  GESTIONNAIRE = "GESTIONNAIRE",
+}

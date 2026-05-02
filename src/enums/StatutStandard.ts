@@ -1,0 +1,8 @@
+export enum STATUT_STANDARD {
+
+  ACTIF = "ACTIF",
+
+  INACTIF = "INACTIF",
+
+  SUSPENDU = "SUSPENDU",
+}

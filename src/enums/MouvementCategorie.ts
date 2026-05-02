@@ -1,0 +1,6 @@
+export enum MOUVEMENT_CATEGORIE {
+
+  RESSOURCE = "RESSOURCE",
+
+  PRODUIT = "PRODUIT",
+}

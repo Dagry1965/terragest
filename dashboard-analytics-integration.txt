@@ -1,0 +1,26 @@
+AJOUTER CES IMPORTS :
+
+import { DashboardAnalytics } from "@/components/dashboard/DashboardAnalytics";
+
+---------------------------------------------------
+
+AJOUTER CE STATE :
+
+const [produitsData,
+  setProduitsData] =
+  useState<any[]>([]);
+
+---------------------------------------------------
+
+AJOUTER DANS loadDashboard()
+
+setProduitsData(produits);
+
+---------------------------------------------------
+
+AJOUTER AVANT LA FIN DU RETURN :
+
+<DashboardAnalytics
+  produits={produitsData}
+  terrainsAnalytics={topExploitations}
+/>

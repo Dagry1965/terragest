@@ -1,0 +1,18 @@
+{
+  "title": "Terragest Operations",
+
+  "panels": [
+
+    {
+      "title": "ERP Requests"
+    },
+
+    {
+      "title": "IoT Events"
+    },
+
+    {
+      "title": "AI Predictions"
+    }
+  ]
+}
