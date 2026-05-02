@@ -1,3 +1,110 @@
+# =====================================================
+# TERRAGEST
+# REAL KPI DASHBOARD
+# =====================================================
+
+Set-Location `
+"C:\Users\Admin\terragest"
+
+# =====================================================
+# ANALYTICS SERVICE
+# =====================================================
+
+New-Item `
+-ItemType Directory `
+-Force `
+-Path `
+"src\features\analytics\services"
+
+$service = @'
+import {
+
+  getDocs,
+
+  collection
+
+} from "firebase/firestore";
+
+import {
+
+  db
+
+} from "@/lib/firebase/firebase";
+
+export const
+DashboardAnalyticsService = {
+
+  async getStats() {
+
+    const [
+
+      produits,
+
+      exploitations,
+
+      stocks,
+
+      materiels
+
+    ] = await Promise.all([
+
+      getDocs(
+        collection(
+          db,
+          "produits"
+        )
+      ),
+
+      getDocs(
+        collection(
+          db,
+          "exploitations"
+        )
+      ),
+
+      getDocs(
+        collection(
+          db,
+          "mouvements_stock"
+        )
+      ),
+
+      getDocs(
+        collection(
+          db,
+          "materiels"
+        )
+      ),
+    ]);
+
+    return {
+
+      produits:
+        produits.size,
+
+      exploitations:
+        exploitations.size,
+
+      stocks:
+        stocks.size,
+
+      materiels:
+        materiels.size,
+    };
+  },
+};
+'@
+
+Set-Content `
+-Path `
+"src\features\analytics\services\DashboardAnalyticsService.ts" `
+-Value $service
+
+# =====================================================
+# DASHBOARD PAGE
+# =====================================================
+
+$dashboard = @'
 "use client";
 
 import {
@@ -178,3 +285,25 @@ export default function DashboardPage() {
     </div>
   );
 }
+'@
+
+Set-Content `
+-Path `
+"src\app\(private)\dashboard\page.tsx" `
+-Value $dashboard
+
+# =====================================================
+# BUILD
+# =====================================================
+
+Write-Host ""
+Write-Host "Running build..." `
+-ForegroundColor Cyan
+
+pnpm build
+
+Write-Host ""
+Write-Host "Deploy after success:" `
+-ForegroundColor Green
+
+Write-Host "firebase deploy"

@@ -1,10 +1,16 @@
 import {
-  collection,
-  getDocs
+
+  getDocs,
+
+  collection
+
 } from "firebase/firestore";
 
-import { db }
-from "@/lib/firebase/firebase";
+import {
+
+  db
+
+} from "@/lib/firebase/firebase";
 
 export const
 DashboardAnalyticsService = {
@@ -17,11 +23,9 @@ DashboardAnalyticsService = {
 
       exploitations,
 
-      interventions,
+      stocks,
 
-      materiels,
-
-      mouvements
+      materiels
 
     ] = await Promise.all([
 
@@ -42,7 +46,7 @@ DashboardAnalyticsService = {
       getDocs(
         collection(
           db,
-          "interventions"
+          "mouvements_stock"
         )
       ),
 
@@ -50,13 +54,6 @@ DashboardAnalyticsService = {
         collection(
           db,
           "materiels"
-        )
-      ),
-
-      getDocs(
-        collection(
-          db,
-          "mouvements_stock"
         )
       ),
     ]);
@@ -69,14 +66,11 @@ DashboardAnalyticsService = {
       exploitations:
         exploitations.size,
 
-      interventions:
-        interventions.size,
+      stocks:
+        stocks.size,
 
       materiels:
         materiels.size,
-
-      mouvements:
-        mouvements.size,
     };
   },
 };
