@@ -1,30 +1,150 @@
 "use client";
 
 import {
-  AppLayout,
-} from "@/components/layout/AppLayout";
+  useDashboardStats
+}
+from "@/features/analytics/hooks/useDashboardStats";
 
 export default function DashboardPage() {
 
+  const stats =
+    useDashboardStats();
+
   return (
 
-    <AppLayout>
+    <div className="p-10 space-y-8">
 
-      <div className="
-        p-10
-      ">
-
-        <h1 className="
+      <h1
+        className="
           text-4xl
           font-bold
-        ">
+        "
+      >
+        Dashboard
+      </h1>
 
-          Dashboard
+      <div
+        className="
+          grid
+          grid-cols-1
+          md:grid-cols-2
+          lg:grid-cols-5
+          gap-6
+        "
+      >
 
-        </h1>
+        <div
+          className="
+            bg-white
+            rounded-2xl
+            shadow-md
+            p-6
+          "
+        >
+          <p className="text-sm">
+            Produits
+          </p>
+
+          <h2
+            className="
+              text-3xl
+              font-bold
+            "
+          >
+            {stats.produits}
+          </h2>
+        </div>
+
+        <div
+          className="
+            bg-white
+            rounded-2xl
+            shadow-md
+            p-6
+          "
+        >
+          <p className="text-sm">
+            Exploitations
+          </p>
+
+          <h2
+            className="
+              text-3xl
+              font-bold
+            "
+          >
+            {stats.exploitations}
+          </h2>
+        </div>
+
+        <div
+          className="
+            bg-white
+            rounded-2xl
+            shadow-md
+            p-6
+          "
+        >
+          <p className="text-sm">
+            Interventions
+          </p>
+
+          <h2
+            className="
+              text-3xl
+              font-bold
+            "
+          >
+            {stats.interventions}
+          </h2>
+        </div>
+
+        <div
+          className="
+            bg-white
+            rounded-2xl
+            shadow-md
+            p-6
+          "
+        >
+          <p className="text-sm">
+            Matériels
+          </p>
+
+          <h2
+            className="
+              text-3xl
+              font-bold
+            "
+          >
+            {stats.materiels}
+          </h2>
+        </div>
+
+        <div
+          className="
+            bg-white
+            rounded-2xl
+            shadow-md
+            p-6
+          "
+        >
+          <p className="text-sm">
+            Mouvements
+          </p>
+
+          <h2
+            className="
+              text-3xl
+              font-bold
+            "
+          >
+            {stats.mouvements}
+          </h2>
+        </div>
 
       </div>
 
-    </AppLayout>
+    </div>
   );
 }
