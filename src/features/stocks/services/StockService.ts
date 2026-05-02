@@ -1,48 +1,23 @@
-import type { Produit }
-from "@/features/produits/types/Produit";
+import {
 
-import { MOUVEMENT_STOCK }
-from "../types/MOUVEMENT_STOCK";
+  FirestoreStockRepository
 
-export class StockService {
+} from "@/features/stocks/repositories/firestore/FirestoreStockRepository";
 
-  static calculerNouveauStock(
+export const
+StockService = {
 
-    stockActuel: number,
+  async create(
+    data: any
+  ) {
 
-    quantite: number,
+    return FirestoreStockRepository
+      .create(data);
+  },
 
-    type: MOUVEMENT_STOCK
+  async getAll() {
 
-  ): number {
-
-    switch (type) {
-
-      case MOUVEMENT_STOCK.ENTREE:
-
-        return stockActuel + quantite;
-
-      case MOUVEMENT_STOCK.SORTIE:
-
-        return stockActuel - quantite;
-
-      case MOUVEMENT_STOCK.AJUSTEMENT:
-
-        return quantite;
-
-      default:
-
-        return stockActuel;
-    }
-  }
-
-  static verifierRupture(
-    produit: Produit
-  ): boolean {
-
-    return (
-      produit.stockActuel <=
-      produit.seuilAlerte
-    );
-  }
-}
+    return FirestoreStockRepository
+      .getAll();
+  },
+};

@@ -1,42 +1,54 @@
 import {
+
   collection,
+
   addDoc,
+
   getDocs,
-  doc,
+
   getDoc,
+
   updateDoc,
-  deleteDoc
+
+  deleteDoc,
+
+  doc
+
 } from "firebase/firestore";
 
-import { db }
-from "@/lib/firebase/firebase";
+import {
 
-import { MOUVEMENT_STOCK }
-from "../../types/MOUVEMENT_STOCK";
+  db
+
+} from "@/lib/firebase/firebase";
 
 const COLLECTION =
   "mouvements_stock";
 
-export class
-FirestoreStockRepository {
+export const
+FirestoreStockRepository = {
 
-  static async create(
-    data: MOUVEMENT_STOCK
+  async create(
+    data: any
   ) {
 
     return addDoc(
+
       collection(
         db,
         COLLECTION
       ),
-      data as any
-    );
-  }
 
-  static async getAll() {
+      data
+    );
+  },
+
+  async getAll() {
 
     const snapshot =
+
       await getDocs(
+
         collection(
           db,
           COLLECTION
@@ -44,30 +56,24 @@ FirestoreStockRepository {
       );
 
     return snapshot.docs.map(
-      (item) => {
 
-        const data =
-          item.data() as Record<
-            string,
-            any
-          >;
+      (item) => ({
 
-        return {
+        id: item.id,
 
-          ...data,
-
-          id: item.id,
-        };
-      }
+        ...item.data(),
+      })
     );
-  }
+  },
 
-  static async getById(
+  async getById(
     id: string
-  ): Promise<any> {
+  ) {
 
     const snapshot =
+
       await getDoc(
+
         doc(
           db,
           COLLECTION,
@@ -75,34 +81,30 @@ FirestoreStockRepository {
         )
       );
 
-    if (!snapshot.exists()) {
+    if (
+      !snapshot.exists()
+    ) {
 
       return null;
     }
 
-    const data =
-      snapshot.data() as Record<
-        string,
-        any
-      >;
-
     return {
 
-      ...data,
-
       id: snapshot.id,
-    };
-  }
 
-  static async update(
+      ...snapshot.data(),
+    };
+  },
+
+  async update(
 
     id: string,
 
-    data: Partial<MOUVEMENT_STOCK>
+    data: any
 
   ) {
 
-    await updateDoc(
+    return updateDoc(
 
       doc(
         db,
@@ -110,15 +112,15 @@ FirestoreStockRepository {
         id
       ),
 
-      data as any
+      data
     );
-  }
+  },
 
-  static async delete(
+  async delete(
     id: string
   ) {
 
-    await deleteDoc(
+    return deleteDoc(
 
       doc(
         db,
@@ -126,5 +128,5 @@ FirestoreStockRepository {
         id
       )
     );
-  }
-}
+  },
+};

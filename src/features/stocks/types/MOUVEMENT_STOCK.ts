@@ -1,10 +1,14 @@
-export enum MOUVEMENT_STOCK {
+export interface MOUVEMENT_STOCK {
 
-  ENTREE = "ENTREE",
+  id: string;
 
-  SORTIE = "SORTIE",
+  produitId: string;
 
-  AJUSTEMENT = "AJUSTEMENT",
+  produitNom: string;
 
-  TRANSFERT = "TRANSFERT",
+  type: "ENTREE" | "SORTIE";
+
+  quantite: number;
+
+  createdAt: Date;
 }
