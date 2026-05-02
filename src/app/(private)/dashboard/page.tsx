@@ -5,6 +5,11 @@ import {
 }
 from "@/features/analytics/hooks/useDashboardStats";
 
+import {
+  DashboardBarChart
+}
+from "@/features/analytics/components/DashboardBarChart";
+
 export default function DashboardPage() {
 
   const stats =
@@ -144,6 +149,37 @@ export default function DashboardPage() {
         </div>
 
       </div>
+
+      <DashboardBarChart
+
+        data={[
+
+          {
+            name: "Produits",
+            value: stats.produits,
+          },
+
+          {
+            name: "Exploitations",
+            value: stats.exploitations,
+          },
+
+          {
+            name: "Interventions",
+            value: stats.interventions,
+          },
+
+          {
+            name: "Matériels",
+            value: stats.materiels,
+          },
+
+          {
+            name: "Mouvements",
+            value: stats.mouvements,
+          },
+        ]}
+      />
 
     </div>
   );
