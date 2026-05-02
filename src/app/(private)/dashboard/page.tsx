@@ -10,6 +10,11 @@ import {
 }
 from "@/features/analytics/components/DashboardBarChart";
 
+import {
+  StockAlerts
+}
+from "@/features/analytics/components/StockAlerts";
+
 export default function DashboardPage() {
 
   const stats =
@@ -177,6 +182,33 @@ export default function DashboardPage() {
           {
             name: "Mouvements",
             value: stats.mouvements,
+          },
+        ]}
+      />
+
+      <StockAlerts
+
+        produits={[
+
+          {
+            id: "1",
+            nom: "Engrais NPK",
+            stockActuel: 2,
+            seuilAlerte: 5,
+          },
+
+          {
+            id: "2",
+            nom: "Semences Maïs",
+            stockActuel: 12,
+            seuilAlerte: 10,
+          },
+
+          {
+            id: "3",
+            nom: "Herbicide",
+            stockActuel: 1,
+            seuilAlerte: 3,
           },
         ]}
       />
