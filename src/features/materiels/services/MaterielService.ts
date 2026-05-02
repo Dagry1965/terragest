@@ -1,100 +1,52 @@
 import {
-  addDoc,
-  collection,
-  deleteDoc,
-  doc,
-  getDoc,
-  getDocs,
-  query,
-  updateDoc,
-  where,
-} from "firebase/firestore";
+  FirestoreMaterielRepository
+}
+from "../repositories/firestore/FirestoreMaterielRepository";
 
-import { db } from "@/lib/firebase/firebase";
-
-import { COLLECTIONS } from "@/constants/collections";
+import { Materiel }
+from "../types/Materiel";
 
 export const MaterielService = {
 
-  async create(data: any) {
+  async create(
+    data: Materiel
+  ) {
 
-    return addDoc(
-      collection(
-        db,
-        COLLECTIONS.MATERIELS
-      ),
-      data
-    );
+    return FirestoreMaterielRepository
+      .create(data);
   },
 
-  async getById(id: string) {
+  async getAll() {
 
-    const snapshot = await getDoc(
-      doc(
-        db,
-        COLLECTIONS.MATERIELS,
-        id
-      )
-    );
+    return FirestoreMaterielRepository
+      .getAll();
+  },
 
-    if (!snapshot.exists()) {
-      return null;
-    }
+  async getById(
+    id: string
+  ) {
 
-    return {
-      id: snapshot.id,
-      ...snapshot.data(),
-    };
+    return FirestoreMaterielRepository
+      .getById(id);
   },
 
   async update(
+
     id: string,
-    data: any
+
+    data: Partial<Materiel>
+
   ) {
 
-    return updateDoc(
-      doc(
-        db,
-        COLLECTIONS.MATERIELS,
-        id
-      ),
-      data
-    );
+    return FirestoreMaterielRepository
+      .update(id, data);
   },
 
-  async delete(id: string) {
-
-    return deleteDoc(
-      doc(
-        db,
-        COLLECTIONS.MATERIELS,
-        id
-      )
-    );
-  },
-
-  async getAllByOrganisation(
-    organisationId: string
+  async delete(
+    id: string
   ) {
 
-    const q = query(
-      collection(
-        db,
-        COLLECTIONS.MATERIELS
-      ),
-      where(
-        "organisationId",
-        "==",
-        organisationId
-      )
-    );
-
-    const snapshot =
-      await getDocs(q);
-
-    return snapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
+    return FirestoreMaterielRepository
+      .delete(id);
   },
 };
