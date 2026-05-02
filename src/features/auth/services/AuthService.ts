@@ -14,7 +14,14 @@ export const AuthService = {
     password: string
   ) {
 
-    return signInWithEmailAndPassword(
+    if (!auth) {
+
+  throw new Error(
+    "Firebase auth unavailable"
+  );
+}
+
+return signInWithEmailAndPassword(
       auth,
       email,
       password
@@ -23,16 +30,31 @@ export const AuthService = {
 
   async logout() {
 
-    return signOut(auth);
+    if (!auth) {
+
+  throw new Error(
+    "Firebase auth unavailable"
+  );
+}
+
+return signOut(auth);
   },
 
   subscribe(
     callback: any
   ) {
 
-    return onAuthStateChanged(
+    if (!auth) {
+
+  throw new Error(
+    "Firebase auth unavailable"
+  );
+}
+
+return onAuthStateChanged(
       auth,
       callback
     );
   },
 };
+

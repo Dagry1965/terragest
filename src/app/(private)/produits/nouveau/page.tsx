@@ -1,37 +1,28 @@
 "use client";
 
-import { useState }
-from "react";
+export const dynamic = "force-dynamic";
 
-import { useRouter }
-from "next/navigation";
+import { useState } from "react";
 
-import toast
-from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
-import { FormField }
-from "@/components/form/FormField";
+import toast from "react-hot-toast";
 
-import { Button }
-from "@/components/ui/Button";
+import { FormField } from "@/components/form/FormField";
 
-import { required }
-from "@/utils/validation/validators";
+import { Button } from "@/components/ui/Button";
 
-import { useAuth }
-from "@/providers/AuthProvider";
+import { required } from "@/utils/validation/validators";
 
-import { UtilisateurService }
-from "@/services/UtilisateurService";
+import { useAuth } from "@/providers/AuthProvider";
 
-import { ProduitService }
-from "@/features/produits/services/ProduitService";
+import { UtilisateurService } from "@/services/UtilisateurService";
 
-import { AuditService }
-from "@/features/audit/services/AuditService";
+import { ProduitService } from "@/features/produits/services/ProduitService";
 
-import { UNITE }
-from "@/features/produits/types/UNITE";
+import { AuditService } from "@/features/audit/services/AuditService";
+
+import { UNITE } from "@/features/produits/types/UNITE";
 
 export default function NouveauProduitPage() {
 
@@ -39,7 +30,7 @@ export default function NouveauProduitPage() {
 
   const auth = useAuth();
 
-const user = auth?.user;
+  const user = auth?.user;
 
   const [nom, setNom] =
     useState("");
@@ -155,7 +146,8 @@ const user = auth?.user;
 
         module: "PRODUITS",
 
-        cibleId: crypto.randomUUID(),
+        cibleId:
+          crypto.randomUUID(),
 
         cibleNom: nom,
 
@@ -196,22 +188,24 @@ const user = auth?.user;
 
     <div className="p-10">
 
-      <div className="
-        max-w-xl
-        bg-white
-        rounded-2xl
-        shadow-md
-        p-6
-        space-y-6
-      ">
+      <div
+        className="
+          max-w-xl
+          bg-white
+          rounded-2xl
+          shadow-md
+          p-6
+          space-y-6
+        "
+      >
 
-        <h1 className="
-          text-3xl
-          font-bold
-        ">
-
+        <h1
+          className="
+            text-3xl
+            font-bold
+          "
+        >
           Nouveau Produit
-
         </h1>
 
         <FormField
@@ -234,6 +228,17 @@ const user = auth?.user;
             onChange: (e) =>
               setCategorie(
                 e.target.value
+              ),
+          }}
+        />
+
+        <FormField
+          label="Unité"
+          inputProps={{
+            value: unite,
+            onChange: (e) =>
+              setUnite(
+                e.target.value as UNITE
               ),
           }}
         />

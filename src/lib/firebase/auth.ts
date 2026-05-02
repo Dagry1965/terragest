@@ -9,9 +9,24 @@ export const login = async (
   email: string,
   password: string
 ) => {
-  return signInWithEmailAndPassword(auth, email, password);
+  if (!auth) {
+
+  throw new Error(
+    "Firebase auth unavailable"
+  );
+}
+
+return signInWithEmailAndPassword(auth, email, password);
 };
 
 export const logout = async () => {
-  return signOut(auth);
+  if (!auth) {
+
+  throw new Error(
+    "Firebase auth unavailable"
+  );
+}
+
+return signOut(auth);
 };
+
