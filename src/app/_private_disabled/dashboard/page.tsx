@@ -1,4 +1,4 @@
-export default function HomePage() {
+export default function DashboardPage() {
 
   return (
 
@@ -7,7 +7,7 @@ export default function HomePage() {
         padding: 40
       }}
     >
-      Terragest stable
+      Dashboard stable
     </div>
   );
 }
