@@ -1,0 +1,8 @@
+export enum STATUT_STOCK {
+
+  DISPONIBLE = "DISPONIBLE",
+
+  FAIBLE = "FAIBLE",
+
+  RUPTURE = "RUPTURE",
+}

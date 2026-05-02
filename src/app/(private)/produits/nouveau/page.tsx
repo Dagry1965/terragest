@@ -1,38 +1,54 @@
 "use client";
 
-import { useState } from "react";
+import { useState }
+from "react";
 
-import { useRouter } from "next/navigation";
+import { useRouter }
+from "next/navigation";
 
-import toast from "react-hot-toast";
+import toast
+from "react-hot-toast";
 
-import { FormField } from "@/components/form/FormField";
+import { FormField }
+from "@/components/form/FormField";
 
-import { Button } from "@/components/ui/Button";
+import { Button }
+from "@/components/ui/Button";
 
-import { required } from "@/utils/validation/validators";
+import { required }
+from "@/utils/validation/validators";
 
-import { useAuth } from "@/providers/AuthProvider";
+import { useAuth }
+from "@/providers/AuthProvider";
 
-import { UtilisateurService } from "@/services/UtilisateurService";
+import { UtilisateurService }
+from "@/services/UtilisateurService";
 
-import { ProduitService } from "@/features/produits/services/ProduitService";
+import { ProduitService }
+from "@/features/produits/services/ProduitService";
 
-import { AuditService } from "@/features/audit/services/AuditService";
+import { AuditService }
+from "@/features/audit/services/AuditService";
+
+import { UNITE }
+from "@/features/produits/types/UNITE";
 
 export default function NouveauProduitPage() {
 
   const router = useRouter();
 
-  const { user } = useAuth();
+  const auth = useAuth();
 
-  const [nom, setNom] = useState("");
+const user = auth?.user;
+
+  const [nom, setNom] =
+    useState("");
 
   const [categorie, setCategorie] =
     useState("");
 
   const [unite, setUnite] =
-    useState("");
+    useState<UNITE>(UNITE.KG);
 
   const [prixUnitaire,
     setPrixUnitaire] =
@@ -49,18 +65,15 @@ export default function NouveauProduitPage() {
     const newErrors: any = {};
 
     if (!required(nom)) {
+
       newErrors.nom =
         "Nom obligatoire";
     }
 
     if (!required(categorie)) {
+
       newErrors.categorie =
         "Catégorie obligatoire";
-    }
-
-    if (!required(unite)) {
-      newErrors.unite =
-        "Unité obligatoire";
     }
 
     setErrors(newErrors);
@@ -99,30 +112,33 @@ export default function NouveauProduitPage() {
         return;
       }
 
-      const result =
-        await ProduitService.create({
+      await ProduitService.create({
 
-          organisationId:
-            utilisateur.organisationId,
+        id: crypto.randomUUID(),
 
-          nom,
+        organisationId:
+          utilisateur.organisationId,
 
-          categorie,
+        nom,
 
-          unite,
+        categorie,
 
-          prixUnitaire:
-            Number(prixUnitaire),
+        unite,
 
-          stockActuel: 0,
+        prix: Number(prixUnitaire),
 
-          seuilAlerte: 0,
+        prixUnitaire:
+          Number(prixUnitaire),
 
-          statut: "ACTIF",
+        stockActuel: 0,
 
-          createdAt:
-            new Date().toISOString(),
-        });
+        seuilAlerte: 0,
+
+        statut: "ACTIF",
+
+        createdAt:
+          new Date(),
+      });
 
       await AuditService.log({
 
@@ -139,24 +155,28 @@ export default function NouveauProduitPage() {
 
         module: "PRODUITS",
 
-        cibleId: result.id,
+        cibleId: crypto.randomUUID(),
 
         cibleNom: nom,
 
         metadata: {
+
           categorie,
+
           unite,
         },
 
         createdAt:
-          new Date().toISOString(),
+          new Date(),
       });
 
       toast.success(
         "Produit créé"
       );
 
-      router.push("/produits");
+      router.push(
+        "/produits"
+      );
 
     } catch (err) {
 
@@ -169,7 +189,6 @@ export default function NouveauProduitPage() {
     } finally {
 
       setLoading(false);
-
     }
   };
 
@@ -186,13 +205,14 @@ export default function NouveauProduitPage() {
         space-y-6
       ">
 
-        <div>
+        <h1 className="
+          text-3xl
+          font-bold
+        ">
 
-          <h1 className="text-3xl font-bold">
-            Nouveau Produit
-          </h1>
+          Nouveau Produit
 
-        </div>
+        </h1>
 
         <FormField
           label="Nom"
@@ -200,7 +220,9 @@ export default function NouveauProduitPage() {
           inputProps={{
             value: nom,
             onChange: (e) =>
-              setNom(e.target.value),
+              setNom(
+                e.target.value
+              ),
           }}
         />
 
@@ -211,18 +233,6 @@ export default function NouveauProduitPage() {
             value: categorie,
             onChange: (e) =>
               setCategorie(
-                e.target.value
-              ),
-          }}
-        />
-
-        <FormField
-          label="Unité"
-          error={errors.unite}
-          inputProps={{
-            value: unite,
-            onChange: (e) =>
-              setUnite(
                 e.target.value
               ),
           }}
@@ -245,9 +255,13 @@ export default function NouveauProduitPage() {
           disabled={loading}
           className="w-full"
         >
-          {loading
-            ? "Création..."
-            : "Créer"}
+
+          {
+            loading
+              ? "Création..."
+              : "Créer"
+          }
+
         </Button>
 
       </div>

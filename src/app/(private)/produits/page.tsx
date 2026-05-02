@@ -31,7 +31,9 @@ export default function ProduitsPage() {
 
   const router = useRouter();
 
-  const { user } = useAuth();
+  const auth = useAuth();
+
+const user = auth?.user;
 
   const [utilisateur,
     setUtilisateur] =
@@ -302,3 +304,4 @@ export default function ProduitsPage() {
     </div>
   );
 }
+

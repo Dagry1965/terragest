@@ -1,12 +1,9 @@
-import { UNITE } from "@/enums/Unite";
-
-import { STATUT_STANDARD } from "@/enums/StatutStandard";
+import { UNITE }
+from "./UNITE";
 
 export interface Produit {
 
   id: string;
-
-  organisationId: string;
 
   nom: string;
 
@@ -14,13 +11,17 @@ export interface Produit {
 
   unite: UNITE;
 
+  prix: number;
+
   prixUnitaire: number;
+
+  organisationId: string;
 
   stockActuel: number;
 
   seuilAlerte: number;
 
-  statut: STATUT_STANDARD;
+  statut: string;
 
-  createdAt: string;
+  createdAt: Date;
 }

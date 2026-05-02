@@ -1,31 +1,47 @@
+"use client";
+
+import React from "react";
+
 interface ButtonProps {
 
-  label: string;
+  children?: React.ReactNode;
 
-  onClick?: () => void;
+  onClick?: () => void | Promise<void>;
+
+  disabled?: boolean;
+
+  className?: string;
+
+  type?: "button" | "submit" | "reset";
 }
 
-export const Button = ({
-  label,
+export function Button({
+  children,
   onClick,
-}: ButtonProps) => {
+  disabled = false,
+  className = "",
+  type = "button",
+}: ButtonProps) {
 
   return (
 
     <button
+      type={type}
       onClick={onClick}
-      className="
-        px-5
-        py-3
-        rounded-xl
+      disabled={disabled}
+      className={`
+        px-4
+        py-2
+        rounded-lg
         bg-black
         text-white
-        font-medium
-        hover:opacity-90
-      "
+        disabled:opacity-50
+        disabled:cursor-not-allowed
+        ${className}
+      `}
     >
 
-      {label}
+      {children}
 
     </button>
   );

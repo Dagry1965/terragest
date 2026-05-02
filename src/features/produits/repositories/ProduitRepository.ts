@@ -1,84 +1,80 @@
-import {
-  collection,
-  addDoc,
-  getDocs,
-  query,
-  where,
-  doc,
-  updateDoc,
-  getDoc,
-} from "firebase/firestore";
+import type { Produit }
+from "../types/Produit";
 
-import { db } from "@/lib/firebase/firebase";
+import { UNITE }
+from "../types/UNITE";
 
-import { Produit } from "../types/Produit";
+export class ProduitRepository {
 
-const COLLECTION_NAME = "produits";
-
-export const ProduitRepository = {
-
-  async create(data: Produit) {
-
-    return addDoc(
-      collection(db, COLLECTION_NAME),
-      data
-    );
-  },
-
-  async getAllByOrganisation(
-    organisationId: string
-  ) {
-
-    const q = query(
-      collection(db, COLLECTION_NAME),
-      where(
-        "organisationId",
-        "==",
-        organisationId
-      )
-    );
-
-    const snapshot = await getDocs(q);
-
-    return snapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-  },
-
-  async updateStock(
-    id: string,
-    stockActuel: number
-  ) {
-
-    const ref = doc(
-      db,
-      COLLECTION_NAME,
-      id
-    );
-
-    await updateDoc(ref, {
-      stockActuel,
-    });
-  },
-
-  async getById(id: string) {
-
-    const ref = doc(
-      db,
-      COLLECTION_NAME,
-      id
-    );
-
-    const snapshot = await getDoc(ref);
-
-    if (!snapshot.exists()) {
-      return null;
-    }
+  static async getById(
+    id: string
+  ): Promise<Produit> {
 
     return {
-      id: snapshot.id,
-      ...snapshot.data(),
-    } as Produit;
-  },
-};
+
+      id,
+
+      nom: "Produit demo",
+
+      categorie: "Agricole",
+
+      unite: UNITE.KG,
+
+      prix: 0,
+
+      prixUnitaire: 0,
+
+      organisationId: "demo-org",
+
+      stockActuel: 100,
+
+      seuilAlerte: 10,
+
+      statut: "ACTIF",
+
+      createdAt: new Date(),
+    };
+  }
+
+  static async create(
+    data: Produit
+  ) {
+
+    return true;
+  }
+
+  static async update(
+    id: string,
+    data: Partial<Produit>
+  ) {
+
+    return true;
+  }
+
+  
+  static async updateStock(
+
+    id: string,
+
+    stockActuel: number
+
+  ) {
+
+    return true;
+  }
+
+  static async getAllByOrganisation(
+    organisationId: string
+  ): Promise<Produit[]> {
+
+    return [];
+  }
+
+  static async delete(
+    id: string
+  ) {
+
+    return true;
+  }
+}
+

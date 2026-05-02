@@ -143,7 +143,7 @@ export default function ProduitDetailPage() {
 
       </div>
 
-      <Card>
+      <Card title="Section">
 
         <div className="space-y-4">
 
@@ -202,3 +202,4 @@ export default function ProduitDetailPage() {
     </div>
   );
 }
+
