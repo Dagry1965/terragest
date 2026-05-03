@@ -1,7 +1,7 @@
 "use client";
 
-import { BillingPlan }
-from "@/features/billing/types/Subscription";
+import { CheckoutButton }
+from "@/features/payments/components/CheckoutButton";
 
 const plans = [
   {
@@ -104,17 +104,9 @@ export const BillingPlans =
               ))}
             </ul>
 
-            <button
-              className="
-                w-full
-                bg-black
-                text-white
-                py-3
-                rounded-xl
-              "
-            >
-              Choisir
-            </button>
+            <CheckoutButton
+              plan={plan.id as any}
+            />
           </div>
         </div>
       ))}
