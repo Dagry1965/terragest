@@ -1,0 +1,30 @@
+const STORAGE_KEY =
+  "{{ModuleSlug}}_offline_data";
+
+export function saveOfflineData(
+  data: any
+) {
+  localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify(data)
+  );
+}
+
+export function loadOfflineData() {
+  const raw =
+    localStorage.getItem(
+      STORAGE_KEY
+    );
+
+  if (!raw) {
+    return null;
+  }
+
+  return JSON.parse(raw);
+}
+
+export function clearOfflineData() {
+  localStorage.removeItem(
+    STORAGE_KEY
+  );
+}

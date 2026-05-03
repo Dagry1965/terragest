@@ -285,6 +285,19 @@ Write-GeneratedFile `
     -Path "$($paths.Services)/subscribeTo$($modulePascal).ts" `
     -Content $realtimeListenerContent `
     -Force
+# ============================================
+# OFFLINE QUEUE
+# ============================================
+
+$offlineQueueContent = Render-Template `
+    -TemplatePath "$PSScriptRoot/../templates/offline-queue.template.txt" `
+    -Variables $templateVariables
+
+Write-GeneratedFile `
+    -Path "$($paths.Services)/offlineQueue.ts" `
+    -Content $offlineQueueContent `
+    -Force
+
 
 # ============================================
 # CRUD PAGES
