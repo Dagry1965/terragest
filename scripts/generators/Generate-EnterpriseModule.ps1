@@ -193,6 +193,33 @@ Write-GeneratedFile `
     -Force
 
 # ============================================
+# SORTING
+# ============================================
+
+$sortingContent = Render-Template `
+    -TemplatePath "$PSScriptRoot/../templates/sorting.template.txt" `
+    -Variables $templateVariables
+
+Write-GeneratedFile `
+    -Path "$($paths.Components)/$($modulePascal)Sorting.tsx" `
+    -Content $sortingContent `
+    -Force
+
+
+# ============================================
+# BULK ACTIONS
+# ============================================
+
+$bulkActionsContent = Render-Template `
+    -TemplatePath "$PSScriptRoot/../templates/bulk-actions.template.txt" `
+    -Variables $templateVariables
+
+Write-GeneratedFile `
+    -Path "$($paths.Components)/$($modulePascal)BulkActions.tsx" `
+    -Content $bulkActionsContent `
+    -Force
+
+# ============================================
 # CRUD PAGES
 # ============================================
 
