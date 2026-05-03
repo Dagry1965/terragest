@@ -6,11 +6,19 @@ from "@/features/tenancy/hooks/useTenant";
 export const OrganizationSwitcher =
 () => {
 
+  const tenant =
+    useTenant() as any;
+
+  if (!tenant) {
+
+    return null;
+  }
+
   const {
     organizations,
     organization,
     setActiveOrganization,
-  } = useTenant() as any;
+  } = tenant;
 
   return (
     <div

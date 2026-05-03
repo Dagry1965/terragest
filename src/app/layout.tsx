@@ -1,40 +1,32 @@
+import type { Metadata }
+from "next";
+
 import "./globals.css";
 
-import { ReactNode }
-from "react";
+export const metadata:
+Metadata = {
 
-import { AuthProvider }
-from "@/contexts/AuthContext";
+  title: "Terragest",
 
-import { TenantProvider }
-from "@/features/tenancy/context/TenantProvider";
+  description:
+    "ERP Agricole SaaS",
 
-type Props = {
-
-  children: ReactNode;
+  manifest:
+    "/manifest.json",
 };
 
-export default function RootLayout({
+export default function
+RootLayout({
   children,
-}: Props) {
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
 
   return (
     <html lang="fr">
-
       <body>
-
-        <AuthProvider>
-
-          <TenantProvider>
-
-            {children}
-
-          </TenantProvider>
-
-        </AuthProvider>
-
+        {children}
       </body>
-
     </html>
   );
 }

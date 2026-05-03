@@ -11,6 +11,19 @@ export async function POST(
 
   try {
 
+    if (!stripe) {
+
+      return NextResponse.json(
+        {
+          error:
+            "Stripe non configuré",
+        },
+        {
+          status: 500,
+        }
+      );
+    }
+
     const body =
       await request.json();
 
