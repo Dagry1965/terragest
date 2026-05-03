@@ -8,7 +8,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 
-import { db } from "@/lib/firebase/firebase";
+import { db } from "@/lib/firebase/config";
 
 export class BaseRepository<T> {
 

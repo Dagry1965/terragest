@@ -10,7 +10,7 @@ import {
 
   db
 
-} from "@/lib/firebase/firebase";
+} from "@/lib/firebase/config";
 
 export const
 DashboardAnalyticsService = {

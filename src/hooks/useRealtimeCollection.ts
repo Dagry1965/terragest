@@ -12,7 +12,7 @@ import {
   useState,
 } from "react";
 
-import { db } from "@/lib/firebase/firebase";
+import { db } from "@/lib/firebase/config";
 
 interface RealtimeOptions {
 

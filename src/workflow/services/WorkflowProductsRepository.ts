@@ -5,7 +5,7 @@ import {
 
 import {
   db,
-} from "@/lib/firebase/firebase";
+} from "@/lib/firebase/config";
 
 import {
   WorkflowAutomation,

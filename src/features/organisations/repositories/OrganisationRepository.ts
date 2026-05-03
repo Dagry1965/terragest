@@ -4,7 +4,7 @@ import {
   getDocs,
 } from "firebase/firestore";
 
-import { db } from "@/lib/firebase/firebase";
+import { db } from "@/lib/firebase/config";
 
 import { Organisation } from "@/types/organisation";
 

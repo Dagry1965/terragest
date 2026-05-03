@@ -14,7 +14,7 @@ export const PredictiveEngine = {
           "HIGH",
 
         recommendation:
-          "Réapprovisionnement immédiat",
+          "RÃ©approvisionnement immÃ©diat",
       };
     }
 
@@ -28,7 +28,7 @@ export const PredictiveEngine = {
           "MEDIUM",
 
         recommendation:
-          "Surveillance recommandée",
+          "Surveillance recommandÃ©e",
       };
     }
 
@@ -42,3 +42,5 @@ export const PredictiveEngine = {
     };
   },
 };
+
+

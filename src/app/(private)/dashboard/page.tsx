@@ -159,7 +159,7 @@ export default function DashboardPage() {
         >
 
           <p>
-            Matériels
+            MatÃ©riels
           </p>
 
           <h2
@@ -178,3 +178,5 @@ export default function DashboardPage() {
     </div>
   );
 }
+
+

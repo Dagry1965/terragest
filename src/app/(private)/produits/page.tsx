@@ -28,7 +28,7 @@ export default function ProduitsPage() {
         </h1>
 
         <Link
-          href="/produits/nouveau"
+          href="/produits"
           className="
             bg-green-600
             text-white
@@ -37,7 +37,7 @@ export default function ProduitsPage() {
             rounded-xl
           "
         >
-          Nouveau
+          Rafraîchir
         </Link>
 
       </div>

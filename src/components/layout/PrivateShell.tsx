@@ -6,6 +6,9 @@ import {
 
 } from "@/providers/AuthProvider";
 
+import PrivateGuard
+from "@/components/auth/PrivateGuard";
+
 export default function PrivateShell({
 
   children,
@@ -20,11 +23,15 @@ export default function PrivateShell({
 
     <AuthProvider>
 
-      <div>
+      <PrivateGuard>
 
-        {children}
+        <div>
 
-      </div>
+          {children}
+
+        </div>
+
+      </PrivateGuard>
 
     </AuthProvider>
   );

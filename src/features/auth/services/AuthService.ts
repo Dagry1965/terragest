@@ -1,60 +1,54 @@
+"use client";
+
 import {
+
   signInWithEmailAndPassword,
+
   signOut,
-  onAuthStateChanged,
+
+  onAuthStateChanged
+
 } from "firebase/auth";
 
-import { auth }
-from "@/lib/firebase/firebase";
+import {
 
-export const AuthService = {
+  auth
+
+} from "@/lib/firebase/config";
+
+export const
+AuthService = {
 
   async login(
+
     email: string,
+
     password: string
+
   ) {
 
-    if (!auth) {
+    return signInWithEmailAndPassword(
 
-  throw new Error(
-    "Firebase auth unavailable"
-  );
-}
-
-return signInWithEmailAndPassword(
       auth,
+
       email,
+
       password
     );
   },
 
   async logout() {
 
-    if (!auth) {
-
-  throw new Error(
-    "Firebase auth unavailable"
-  );
-}
-
-return signOut(auth);
+    return signOut(auth);
   },
 
   subscribe(
     callback: any
   ) {
 
-    if (!auth) {
-
-  throw new Error(
-    "Firebase auth unavailable"
-  );
-}
-
-return onAuthStateChanged(
+    return onAuthStateChanged(
       auth,
       callback
     );
   },
 };
-

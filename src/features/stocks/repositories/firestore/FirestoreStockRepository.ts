@@ -20,7 +20,7 @@ import {
 
   db
 
-} from "@/lib/firebase/firebase";
+} from "@/lib/firebase/config";
 
 const COLLECTION =
   "mouvements_stock";

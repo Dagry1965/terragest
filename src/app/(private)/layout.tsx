@@ -1,36 +1,34 @@
-"use client";
+import { Sidebar }
+from "@/components/layout/Sidebar";
 
-import dynamic
-from "next/dynamic";
+import { Topbar }
+from "@/components/layout/Topbar";
 
-const PrivateShell =
-  dynamic(
-
-    () => import(
-      "@/components/layout/PrivateShell"
-    ),
-
-    {
-      ssr: false,
-    }
-  );
-
-export default function Layout({
-
+export default function PrivateLayout({
   children,
-
 }: {
-
   children: React.ReactNode;
-
 }) {
 
   return (
+    <div
+      className="
+        flex
+        min-h-screen
+        bg-gray-100
+      "
+    >
+      <Sidebar />
 
-    <PrivateShell>
+      <div className="flex-1">
 
-      {children}
+        <Topbar />
 
-    </PrivateShell>
+        <main className="p-6">
+          {children}
+        </main>
+
+      </div>
+    </div>
   );
 }

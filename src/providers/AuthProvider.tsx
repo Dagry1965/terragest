@@ -24,7 +24,7 @@ import {
 
   auth
 
-} from "@/lib/firebase/firebase";
+} from "@/lib/firebase/config";
 
 interface AuthContextType {
 

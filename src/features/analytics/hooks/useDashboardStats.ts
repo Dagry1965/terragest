@@ -11,7 +11,7 @@ import {
 } from "firebase/firestore";
 
 import { db }
-from "@/lib/firebase/firebase";
+from "@/lib/firebase/config";
 
 export function
 useDashboardStats() {

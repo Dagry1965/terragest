@@ -3,7 +3,7 @@ import {
   getDoc,
 } from "firebase/firestore";
 
-import { db } from "@/lib/firebase/firebase";
+import { db } from "@/lib/firebase/config";
 
 import { Utilisateur } from "@/types/utilisateur";
 

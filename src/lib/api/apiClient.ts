@@ -1,57 +1,33 @@
-const API_URL =
-process.env.NEXT_PUBLIC_API_URL;
-
-const API_KEY =
-process.env.NEXT_PUBLIC_API_KEY;
-
 export const apiClient = {
+  async get(url: string) {
+    console.log("GET", url);
 
-  async get(
-    endpoint: string
-  ) {
-
-    const response =
-      await fetch(
-        `${API_URL}${endpoint}`,
-        {
-          headers: {
-
-            "x-api-key":
-              API_KEY || "",
-          },
-        }
-      );
-
-    return response.json();
+    return {
+      data: [],
+    };
   },
 
-  async post(
-    endpoint: string,
-    payload: any
-  ) {
+  async post(url: string, data: any) {
+    console.log("POST", url, data);
 
-    const response =
-      await fetch(
-        `${API_URL}${endpoint}`,
-        {
-          method: "POST",
+    return {
+      data,
+    };
+  },
 
-          headers: {
+  async put(url: string, data: any) {
+    console.log("PUT", url, data);
 
-            "Content-Type":
-              "application/json",
+    return {
+      data,
+    };
+  },
 
-            "x-api-key":
-              API_KEY || "",
-          },
+  async delete(url: string) {
+    console.log("DELETE", url);
 
-          body:
-            JSON.stringify(
-              payload
-            ),
-        }
-      );
-
-    return response.json();
+    return {
+      success: true,
+    };
   },
 };
