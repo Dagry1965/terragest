@@ -219,6 +219,21 @@ Write-GeneratedFile `
     -Content $bulkActionsContent `
     -Force
 
+
+# ============================================
+# EXPORT ACTIONS
+# ============================================
+
+$exportActionsContent = Render-Template `
+    -TemplatePath "$PSScriptRoot/../templates/export-actions.template.txt" `
+    -Variables $templateVariables
+
+Write-GeneratedFile `
+    -Path "$($paths.Components)/$($modulePascal)ExportActions.tsx" `
+    -Content $exportActionsContent `
+    -Force
+
+
 # ============================================
 # CRUD PAGES
 # ============================================
