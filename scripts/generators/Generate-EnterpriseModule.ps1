@@ -261,6 +261,32 @@ Write-GeneratedFile `
     -Force
 
 # ============================================
+# REALTIME WIDGET
+# ============================================
+
+$realtimeWidgetContent = Render-Template `
+    -TemplatePath "$PSScriptRoot/../templates/realtime-widget.template.txt" `
+    -Variables $templateVariables
+
+Write-GeneratedFile `
+    -Path "$($paths.Components)/$($modulePascal)RealtimeWidget.tsx" `
+    -Content $realtimeWidgetContent `
+    -Force
+
+# ============================================
+# REALTIME LISTENER
+# ============================================
+
+$realtimeListenerContent = Render-Template `
+    -TemplatePath "$PSScriptRoot/../templates/realtime-listener.template.txt" `
+    -Variables $templateVariables
+
+Write-GeneratedFile `
+    -Path "$($paths.Services)/subscribeTo$($modulePascal).ts" `
+    -Content $realtimeListenerContent `
+    -Force
+
+# ============================================
 # CRUD PAGES
 # ============================================
 
