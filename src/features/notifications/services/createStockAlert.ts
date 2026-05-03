@@ -1,36 +1,28 @@
-import { NotificationService } from "@/features/notifications/services/NotificationService";
+import { NotificationService }
+from "@/features/notifications/services/NotificationService";
 
-export const createStockAlert =
-  async (
-    organisationId: string,
-    produit: any
-  ) => {
+export async function
+createStockAlert(
+  organizationId: string,
+  productName: string
+) {
 
-    if (
-      produit.stockActuel >
-      produit.seuilAlerte
-    ) {
-      return;
-    }
+  await NotificationService.create({
 
-    await NotificationService.create({
+    title:
+      "Stock faible",
 
-      organisationId,
+    message:
+      `Le stock du produit ${productName} est faible.`,
 
-      titre: "Stock faible",
+    severity:
+      "warning",
 
-      message:
-        `${produit.nom} est sous le seuil d'alerte`,
+    read: false,
 
-      type: "STOCK_FAIBLE",
+    createdAt:
+      new Date().toISOString(),
+  });
 
-      lu: false,
-
-      metadata: {
-        produitId: produit.id,
-      },
-
-      createdAt:
-        new Date().toISOString(),
-    });
-  };
+  return true;
+}

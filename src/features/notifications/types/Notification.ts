@@ -1,18 +1,21 @@
-export interface Notification {
+export type NotificationSeverity =
+  | "info"
+  | "success"
+  | "warning"
+  | "error";
 
-  id: string;
+export type Notification = {
 
-  organisationId: string;
+  id?: string;
 
-  titre: string;
+  title: string;
 
   message: string;
 
-  type: string;
+  severity:
+    NotificationSeverity;
 
-  lu: boolean;
-
-  metadata?: any;
+  read: boolean;
 
   createdAt: string;
-}
+};

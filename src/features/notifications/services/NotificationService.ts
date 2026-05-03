@@ -1,74 +1,68 @@
 import {
-  addDoc,
-  collection,
-  doc,
-  getDocs,
-  limit,
-  orderBy,
-  query,
-  updateDoc,
-  where,
-} from "firebase/firestore";
+  Notification,
+} from "@/features/notifications/types/Notification";
 
-import { db } from "@/lib/firebase/config";
+const mockNotifications:
+Notification[] = [
+  {
+    id: "1",
+
+    title:
+      "Stock faible",
+
+    message:
+      "Le stock engrais est faible.",
+
+    severity:
+      "warning",
+
+    read: false,
+
+    createdAt:
+      new Date().toISOString(),
+  },
+
+  {
+    id: "2",
+
+    title:
+      "Synchronisation réussie",
+
+    message:
+      "Les données offline sont synchronisées.",
+
+    severity:
+      "success",
+
+    read: false,
+
+    createdAt:
+      new Date().toISOString(),
+  },
+];
 
 export const NotificationService = {
 
-  async create(data: any) {
+  async getNotifications():
+  Promise<Notification[]> {
 
-    return addDoc(
-      collection(
-        db,
-        "notifications"
-      ),
-      data
-    );
+    return mockNotifications;
   },
 
-  async getLatestByOrganisation(
-    organisationId: string
+  async create(
+    notification: Notification
   ) {
 
-    const q = query(
-      collection(
-        db,
-        "notifications"
-      ),
+    mockNotifications.unshift({
+      ...notification,
 
-      where(
-        "organisationId",
-        "==",
-        organisationId
-      ),
+      id:
+        crypto.randomUUID(),
 
-      orderBy(
-        "createdAt",
-        "desc"
-      ),
+      createdAt:
+        new Date().toISOString(),
+    });
 
-      limit(20)
-    );
-
-    const snapshot =
-      await getDocs(q);
-
-    return snapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-  },
-
-  async markAsRead(id: string) {
-
-    return updateDoc(
-      doc(
-        db,
-        "notifications",
-        id
-      ),
-      {
-        lu: true,
-      }
-    );
+    return true;
   },
 };

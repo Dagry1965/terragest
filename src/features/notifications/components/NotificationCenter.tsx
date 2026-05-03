@@ -1,105 +1,130 @@
 "use client";
 
-import { NotificationBadge } from "@/features/notifications/components/NotificationBadge";
+import {
+  Notification,
+} from "@/features/notifications/types/Notification";
 
-interface NotificationCenterProps {
+import { useNotifications }
+from "@/features/notifications/hooks/useNotifications";
 
-  notifications: any[];
-}
+type Props = {
+
+  notifications?: Notification[];
+};
 
 export const NotificationCenter = ({
-  notifications,
-}: NotificationCenterProps) => {
+  notifications: externalNotifications,
+}: Props) => {
 
-  const unread =
-    notifications.filter(
-      (item) => !item.lu
-    );
+  const {
+    notifications:
+      internalNotifications,
+  } = useNotifications();
+
+  const notifications =
+    externalNotifications
+    || internalNotifications;
 
   return (
-
-    <div className="
-      bg-white
-      rounded-2xl
-      shadow-md
-      p-6
-    ">
-
-      <div className="
-        flex
-        items-center
-        justify-between
-      ">
-
-        <h2 className="text-2xl font-bold">
+    <div
+      className="
+        bg-white
+        border
+        rounded-2xl
+        overflow-hidden
+      "
+    >
+      <div
+        className="
+          p-6
+          border-b
+        "
+      >
+        <h2
+          className="
+            text-xl
+            font-semibold
+          "
+        >
           Notifications
         </h2>
-
-        <NotificationBadge
-          total={unread.length}
-        />
-
       </div>
 
-      <div className="mt-6 space-y-4">
-
-        {notifications.length === 0 && (
-
-          <p className="text-gray-500">
-            Aucune notification
-          </p>
-
-        )}
-
-        {notifications.map((item) => (
+      <div
+        className="
+          divide-y
+        "
+      >
+        {notifications.map(
+          (notification) => (
 
           <div
-            key={item.id}
-            className={`
-              border
-              rounded-xl
+            key={notification.id}
+            className="
               p-4
-
-              ${!item.lu
-                ? "border-red-300 bg-red-50"
-                : "border-gray-200"}
-            `}
+            "
           >
+            <div
+              className="
+                flex
+                items-start
+                justify-between
+                gap-4
+              "
+            >
+              <div>
 
-            <div className="
-              flex
-              items-center
-              justify-between
-            ">
+                <h3
+                  className="
+                    font-medium
+                  "
+                >
+                  {
+                    notification.title
+                  }
+                </h3>
 
-              <h3 className="font-bold">
-                {item.titre}
-              </h3>
+                <p
+                  className="
+                    text-sm
+                    text-gray-600
+                    mt-1
+                  "
+                >
+                  {
+                    notification.message
+                  }
+                </p>
+              </div>
 
-              {!item.lu && (
-
-                <span className="
+              <span
+                className={`
                   text-xs
-                  font-bold
-                  text-red-600
-                ">
-                  Nouveau
-                </span>
-
-              )}
-
+                  px-2
+                  py-1
+                  rounded-full
+                  ${
+                    notification.severity ===
+                    "success"
+                      ? "bg-green-100 text-green-700"
+                    : notification.severity ===
+                      "warning"
+                      ? "bg-yellow-100 text-yellow-700"
+                    : notification.severity ===
+                      "error"
+                      ? "bg-red-100 text-red-700"
+                      : "bg-blue-100 text-blue-700"
+                  }
+                `}
+              >
+                {
+                  notification.severity
+                }
+              </span>
             </div>
-
-            <p className="text-gray-600 mt-2">
-              {item.message}
-            </p>
-
           </div>
-
         ))}
-
       </div>
-
     </div>
   );
-}
+};
