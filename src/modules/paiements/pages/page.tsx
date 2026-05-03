@@ -1,0 +1,9 @@
+﻿export default function PaiementsPage() {
+  return (
+    <div className="p-6">
+      <h1 className="text-2xl font-bold">
+        Paiements
+      </h1>
+    </div>
+  );
+}

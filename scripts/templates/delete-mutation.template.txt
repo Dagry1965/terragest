@@ -1,0 +1,22 @@
+"use client";
+
+import { useMutation } from "@tanstack/react-query";
+
+import { queryClient } from "@/shared/lib/query/query-client";
+
+import { {{ModuleName}}Service } from "../services/{{ModuleName}}Service";
+
+const service = new {{ModuleName}}Service();
+
+export function useDelete{{ModuleName}}() {
+  return useMutation({
+    mutationFn: (id: string) =>
+      service.delete(id),
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["{{ModuleSlug}}"],
+      });
+    },
+  });
+}

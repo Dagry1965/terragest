@@ -1,8 +1,8 @@
-import { {{ModuleName}}Repository } from "../repositories/{{ModuleName}}Repository";
+﻿import { FacturesRepository } from "../repositories/FacturesRepository";
 
-export class {{ModuleName}}Service {
+export class FacturesService {
   private repository =
-    new {{ModuleName}}Repository();
+    new FacturesRepository();
 
   async findAll() {
     return this.repository.findAll();

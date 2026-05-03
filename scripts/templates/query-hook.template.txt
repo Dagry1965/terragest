@@ -1,0 +1,14 @@
+"use client";
+
+import { useQuery } from "@tanstack/react-query";
+
+import { {{ModuleName}}Service } from "../services/{{ModuleName}}Service";
+
+const service = new {{ModuleName}}Service();
+
+export function use{{ModuleName}}() {
+  return useQuery({
+    queryKey: ["{{ModuleSlug}}"],
+    queryFn: () => service.findAll(),
+  });
+}

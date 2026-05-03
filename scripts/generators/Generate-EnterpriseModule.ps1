@@ -51,6 +51,18 @@ Write-GeneratedFile `
     -Force
 
 # ============================================
+# SCHEMA
+# ============================================
+
+$schemaContent = Render-Template `
+    -TemplatePath "$PSScriptRoot/../templates/schema.template.txt" `
+    -Variables $templateVariables
+
+Write-GeneratedFile `
+    -Path "$($paths.Root)/schemas/$($modulePascal).schema.ts" `
+    -Content $schemaContent `
+    -Force
+# ============================================
 # REPOSITORY
 # ============================================
 
@@ -74,6 +86,58 @@ $serviceContent = Render-Template `
 Write-GeneratedFile `
     -Path "$($paths.Services)/$($modulePascal)Service.ts" `
     -Content $serviceContent `
+    -Force
+# ============================================
+# QUERY HOOK
+# ============================================
+
+$queryHookContent = Render-Template `
+    -TemplatePath "$PSScriptRoot/../templates/query-hook.template.txt" `
+    -Variables $templateVariables
+
+Write-GeneratedFile `
+    -Path "$($paths.Hooks)/use$($modulePascal).ts" `
+    -Content $queryHookContent `
+    -Force
+
+
+# ============================================
+# CREATE MUTATION
+# ============================================
+
+$createMutationContent = Render-Template `
+    -TemplatePath "$PSScriptRoot/../templates/create-mutation.template.txt" `
+    -Variables $templateVariables
+
+Write-GeneratedFile `
+    -Path "$($paths.Hooks)/useCreate$($modulePascal).ts" `
+    -Content $createMutationContent `
+    -Force
+
+# ============================================
+# UPDATE MUTATION
+# ============================================
+
+$updateMutationContent = Render-Template `
+    -TemplatePath "$PSScriptRoot/../templates/update-mutation.template.txt" `
+    -Variables $templateVariables
+
+Write-GeneratedFile `
+    -Path "$($paths.Hooks)/useUpdate$($modulePascal).ts" `
+    -Content $updateMutationContent `
+    -Force
+
+# ============================================
+# DELETE MUTATION
+# ============================================
+
+$deleteMutationContent = Render-Template `
+    -TemplatePath "$PSScriptRoot/../templates/delete-mutation.template.txt" `
+    -Variables $templateVariables
+
+Write-GeneratedFile `
+    -Path "$($paths.Hooks)/useDelete$($modulePascal).ts" `
+    -Content $deleteMutationContent `
     -Force
 
 # ============================================
@@ -151,6 +215,19 @@ Write-GeneratedFile `
     -Force
 
 
+
+# ============================================
+# FORM
+# ============================================
+
+$formContent = Render-Template `
+    -TemplatePath "$PSScriptRoot/../templates/form.template.txt" `
+    -Variables $templateVariables
+
+Write-GeneratedFile `
+    -Path "$($paths.Components)/$($modulePascal)Form.tsx" `
+    -Content $formContent `
+    -Force
 
 # ============================================
 # DONE
