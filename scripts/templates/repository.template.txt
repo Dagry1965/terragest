@@ -1,0 +1,8 @@
+import { FirestoreRepository } from "@/infrastructure/firebase/FirestoreRepository";
+import { {{ModuleName}}DTO } from "../dto/{{ModuleName}}DTO";
+
+export class {{ModuleName}}Repository extends FirestoreRepository<{{ModuleName}}DTO> {
+  constructor() {
+    super("{{ModuleSlug}}");
+  }
+}

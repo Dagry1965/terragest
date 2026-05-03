@@ -1,0 +1,5 @@
+import { {{ModuleName}}Repository } from "../repositories/{{ModuleName}}Repository";
+
+export class {{ModuleName}}Service {
+  private repository = new {{ModuleName}}Repository();
+}
