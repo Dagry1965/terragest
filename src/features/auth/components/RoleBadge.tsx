@@ -1,8 +1,9 @@
-import { UserRole } from "@/features/auth/types/UserRole";
+import { UserRole }
+from "@/features/auth/types/UserRole";
 
 interface RoleBadgeProps {
 
-  role: string;
+  role: UserRole;
 }
 
 export const RoleBadge = ({
@@ -13,19 +14,16 @@ export const RoleBadge = ({
 
     switch (role) {
 
-      case UserRole.ADMIN:
+      case "admin":
         return "bg-red-100 text-red-700";
 
-      case UserRole.SUPERVISEUR:
+      case "manager":
         return "bg-blue-100 text-blue-700";
 
-      case UserRole.GESTIONNAIRE:
+      case "agent":
         return "bg-green-100 text-green-700";
 
-      case UserRole.OPERATEUR:
-        return "bg-yellow-100 text-yellow-700";
-
-      case UserRole.LECTURE:
+      case "viewer":
         return "bg-gray-200 text-gray-700";
 
       default:
@@ -50,4 +48,4 @@ export const RoleBadge = ({
       {role}
     </span>
   );
-}
+};

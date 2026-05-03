@@ -1,41 +1,39 @@
-import { UserRole } from "@/features/auth/types/UserRole";
+import { UserRole }
+from "@/features/auth/types/UserRole";
 
 export const Permissions = {
 
   CAN_CREATE: [
-    UserRole.ADMIN,
-    UserRole.SUPERVISEUR,
-    UserRole.GESTIONNAIRE,
-    UserRole.OPERATEUR,
-  ],
+    "admin",
+    "manager",
+    "agent",
+  ] satisfies UserRole[],
 
   CAN_UPDATE: [
-    UserRole.ADMIN,
-    UserRole.SUPERVISEUR,
-    UserRole.GESTIONNAIRE,
-    UserRole.OPERATEUR,
-  ],
+    "admin",
+    "manager",
+    "agent",
+  ] satisfies UserRole[],
 
   CAN_DELETE: [
-    UserRole.ADMIN,
-    UserRole.SUPERVISEUR,
-  ],
+    "admin",
+    "manager",
+  ] satisfies UserRole[],
 
   CAN_VALIDATE: [
-    UserRole.ADMIN,
-    UserRole.SUPERVISEUR,
-  ],
+    "admin",
+    "manager",
+  ] satisfies UserRole[],
 
   CAN_REJECT: [
-    UserRole.ADMIN,
-    UserRole.SUPERVISEUR,
-  ],
+    "admin",
+    "manager",
+  ] satisfies UserRole[],
 
   CAN_VIEW: [
-    UserRole.ADMIN,
-    UserRole.SUPERVISEUR,
-    UserRole.GESTIONNAIRE,
-    UserRole.OPERATEUR,
-    UserRole.LECTURE,
-  ],
+    "admin",
+    "manager",
+    "agent",
+    "viewer",
+  ] satisfies UserRole[],
 };

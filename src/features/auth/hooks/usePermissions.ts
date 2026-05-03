@@ -1,24 +1,31 @@
 "use client";
 
-import {
-  RBACEngine,
-} from "@/features/auth/services/RBACEngine";
+import { UserRole }
+from "@/features/auth/types/UserRole";
 
-export const usePermissions =
-(
-  permissions: string[]
-) => {
+import { PermissionService }
+from "@/features/auth/services/PermissionService";
+
+export function usePermissions(
+  role: UserRole = "admin"
+) {
 
   return {
 
-    canAccess:
-      (
-        permission: string
-      ) =>
+    canViewDashboard:
+      PermissionService
+        .canViewDashboard(role),
 
-        RBACEngine.canAccess(
-          permissions,
-          permission
-        ),
+    canManageProducts:
+      PermissionService
+        .canManageProducts(role),
+
+    canDeleteProducts:
+      PermissionService
+        .canDeleteProducts(role),
+
+    canViewAnalytics:
+      PermissionService
+        .canViewAnalytics(role),
   };
 }

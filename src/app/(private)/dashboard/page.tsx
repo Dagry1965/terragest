@@ -1,11 +1,20 @@
-import { KPICard }
-from "@/components/dashboard/KPICard";
+import { AnalyticsCards }
+from "@/features/analytics/components/AnalyticsCards";
+
+import { StockValueChart }
+from "@/features/analytics/components/StockValueChart";
+
+import { ProductsCategoryChart }
+from "@/features/analytics/components/ProductsCategoryChart";
+
+import { AlertsPanel }
+from "@/features/alerts/components/AlertsPanel";
 
 import { RecentActivities }
 from "@/components/dashboard/RecentActivities";
 
-import { AlertsPanel }
-from "@/components/dashboard/AlertsPanel";
+import { RoleGuard }
+from "@/features/auth/guards/RoleGuard";
 
 export default function DashboardPage() {
 
@@ -29,43 +38,28 @@ export default function DashboardPage() {
             mt-2
           "
         >
-          Vue globale de votre ERP agricole
+          ERP Agricole Enterprise
         </p>
       </div>
 
-      <div
-        className="
-          grid
-          grid-cols-1
-          md:grid-cols-2
-          xl:grid-cols-4
-          gap-6
-        "
-      >
-        <KPICard
-          title="Exploitations"
-          value="24"
-          subtitle="+12% ce mois"
-        />
+      <RoleGuard permission="canViewAnalytics">
 
-        <KPICard
-          title="Produits"
-          value="128"
-          subtitle="+8 nouveaux"
-        />
+        <AnalyticsCards />
 
-        <KPICard
-          title="Stocks"
-          value="87%"
-          subtitle="DisponibilitÃ©"
-        />
+        <div
+          className="
+            grid
+            grid-cols-1
+            xl:grid-cols-2
+            gap-6
+          "
+        >
+          <StockValueChart />
 
-        <KPICard
-          title="MatÃ©riels"
-          value="16"
-          subtitle="2 maintenances"
-        />
-      </div>
+          <ProductsCategoryChart />
+        </div>
+
+      </RoleGuard>
 
       <div
         className="
@@ -81,6 +75,7 @@ export default function DashboardPage() {
 
         <AlertsPanel />
       </div>
+
     </div>
   );
 }
