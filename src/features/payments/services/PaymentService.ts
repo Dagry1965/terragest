@@ -9,11 +9,35 @@ export const PaymentService = {
     plan: CheckoutPlan
   ): Promise<CheckoutSession> {
 
-    // MOCK STRIPE SESSION
+    const response =
+      await fetch(
+        "/api/stripe/checkout",
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type":
+              "application/json",
+          },
+
+          body: JSON.stringify({
+            plan,
+          }),
+        }
+      );
+
+    const data =
+      await response.json();
+
+    if (!response.ok) {
+
+      throw new Error(
+        data.error
+      );
+    }
 
     return {
-      url:
-        "/billing/success",
+      url: data.url,
       plan,
     };
   },
