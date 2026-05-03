@@ -167,6 +167,32 @@ Write-GeneratedFile `
     -Force
 
 # ============================================
+# FILTERS
+# ============================================
+
+$filtersContent = Render-Template `
+    -TemplatePath "$PSScriptRoot/../templates/filters.template.txt" `
+    -Variables $templateVariables
+
+Write-GeneratedFile `
+    -Path "$($paths.Components)/$($modulePascal)Filters.tsx" `
+    -Content $filtersContent `
+    -Force
+
+# ============================================
+# PAGINATION
+# ============================================
+
+$paginationContent = Render-Template `
+    -TemplatePath "$PSScriptRoot/../templates/pagination.template.txt" `
+    -Variables $templateVariables
+
+Write-GeneratedFile `
+    -Path "$($paths.Components)/$($modulePascal)Pagination.tsx" `
+    -Content $paginationContent `
+    -Force
+
+# ============================================
 # CRUD PAGES
 # ============================================
 
@@ -228,6 +254,19 @@ Write-GeneratedFile `
     -Path "$($paths.Components)/$($modulePascal)Form.tsx" `
     -Content $formContent `
     -Force
+# ============================================
+# TABLE
+# ============================================
+
+$tableContent = Render-Template `
+    -TemplatePath "$PSScriptRoot/../templates/table.template.txt" `
+    -Variables $templateVariables
+
+Write-GeneratedFile `
+    -Path "$($paths.Components)/$($modulePascal)Table.tsx" `
+    -Content $tableContent `
+    -Force
+
 
 # ============================================
 # DONE
