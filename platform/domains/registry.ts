@@ -61,4 +61,19 @@ export const domainRegistry:
       enabled: true,
     },
 
+
+    {
+      key: "observability",
+
+      label: "Observability",
+
+      enabled: true,
+
+      realtime: true,
+      offline: true,
+      analytics: true,
+      monitoring: true,
+    },
+
 ];
+

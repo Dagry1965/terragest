@@ -10,6 +10,14 @@ param(
 
     [switch]$Monitoring
 )
+
+# ============================================
+# NORMALIZATION
+# ============================================
+
+$Domain =
+    $Domain.ToLower()
+
 Write-Host ""
 Write-Host "==================================="
 Write-Host " DOMAIN GENERATOR"
@@ -47,6 +55,98 @@ foreach ($folder in $folders) {
 }
 
 # ============================================
+# RUNTIME PROVISIONING
+# ============================================
+
+if ($Realtime) {
+
+    $realtimeFolders = @(
+
+        "$domainRoot/infrastructure/realtime",
+
+        "$domainRoot/infrastructure/realtime/listeners",
+
+        "$domainRoot/infrastructure/realtime/subscriptions",
+
+        "$domainRoot/infrastructure/realtime/synchronization"
+    )
+
+    foreach ($folder in $realtimeFolders) {
+
+        New-Item `
+            -ItemType Directory `
+            -Force `
+            -Path $folder | Out-Null
+    }
+}
+
+if ($Offline) {
+
+    $offlineFolders = @(
+
+        "$domainRoot/infrastructure/offline",
+
+        "$domainRoot/infrastructure/offline/queue",
+
+        "$domainRoot/infrastructure/offline/persistence",
+
+        "$domainRoot/infrastructure/offline/retry"
+    )
+
+    foreach ($folder in $offlineFolders) {
+
+        New-Item `
+            -ItemType Directory `
+            -Force `
+            -Path $folder | Out-Null
+    }
+}
+
+if ($Analytics) {
+
+    $analyticsFolders = @(
+
+        "$domainRoot/infrastructure/analytics",
+
+        "$domainRoot/infrastructure/analytics/dashboards",
+
+        "$domainRoot/infrastructure/analytics/metrics",
+
+        "$domainRoot/infrastructure/analytics/reporting"
+    )
+
+    foreach ($folder in $analyticsFolders) {
+
+        New-Item `
+            -ItemType Directory `
+            -Force `
+            -Path $folder | Out-Null
+    }
+}
+
+if ($Monitoring) {
+
+    $monitoringFolders = @(
+
+        "$domainRoot/infrastructure/monitoring",
+
+        "$domainRoot/infrastructure/monitoring/alerts",
+
+        "$domainRoot/infrastructure/monitoring/health",
+
+        "$domainRoot/infrastructure/monitoring/observability"
+    )
+
+    foreach ($folder in $monitoringFolders) {
+
+        New-Item `
+            -ItemType Directory `
+            -Force `
+            -Path $folder | Out-Null
+    }
+}
+
+# ============================================
 # DOMAIN REGISTRY AUTO-REGISTRATION
 # ============================================
 
@@ -68,6 +168,20 @@ $registryContent =
     Get-Content `
         $registryPath `
         -Raw
+
+# ============================================
+# REGISTRY VALIDATION
+# ============================================
+
+if (!($registryContent.Contains("];"))) {
+
+    Write-Host ""
+    Write-Host "ERROR:"
+    Write-Host "Invalid registry format"
+    Write-Host ""
+
+    exit
+}
 
 # ============================================
 # DUPLICATE CHECK
@@ -94,12 +208,13 @@ $domainLabel =
     $Domain.Substring(1)
 
 # ============================================
-# DOMAIN ENTRY
+# CAPABILITIES
 # ============================================
 
 $capabilities = @()
 
 if ($Realtime) {
+
     $capabilities += @'
 
       realtime: true,
@@ -107,6 +222,7 @@ if ($Realtime) {
 }
 
 if ($Offline) {
+
     $capabilities += @'
 
       offline: true,
@@ -114,6 +230,7 @@ if ($Offline) {
 }
 
 if ($Analytics) {
+
     $capabilities += @'
 
       analytics: true,
@@ -121,6 +238,7 @@ if ($Analytics) {
 }
 
 if ($Monitoring) {
+
     $capabilities += @'
 
       monitoring: true,
@@ -129,6 +247,10 @@ if ($Monitoring) {
 
 $capabilitiesText =
     $capabilities -join ""
+
+# ============================================
+# DOMAIN ENTRY
+# ============================================
 
 $domainEntry = @"
 
@@ -172,6 +294,26 @@ Write-Host ""
 
 Write-Host "Created:"
 Write-Host " - $domainRoot"
+Write-Host ""
+
+Write-Host "Capabilities:"
+
+if ($Realtime) {
+    Write-Host " - realtime"
+}
+
+if ($Offline) {
+    Write-Host " - offline"
+}
+
+if ($Analytics) {
+    Write-Host " - analytics"
+}
+
+if ($Monitoring) {
+    Write-Host " - monitoring"
+}
+
 Write-Host ""
 
 Write-Host "Registered:"
