@@ -16,30 +16,43 @@ from "@/components/dashboard/RecentActivities";
 import { RoleGuard }
 from "@/features/auth/guards/RoleGuard";
 
+import { OrganizationSwitcher }
+from "@/features/tenancy/components/OrganizationSwitcher";
+
 export default function DashboardPage() {
 
   return (
     <div className="space-y-6">
 
-      <div>
+      <div
+        className="
+          flex
+          items-center
+          justify-between
+        "
+      >
+        <div>
 
-        <h1
-          className="
-            text-3xl
-            font-bold
-          "
-        >
-          Dashboard
-        </h1>
+          <h1
+            className="
+              text-3xl
+              font-bold
+            "
+          >
+            Dashboard
+          </h1>
 
-        <p
-          className="
-            text-gray-500
-            mt-2
-          "
-        >
-          ERP Agricole Enterprise
-        </p>
+          <p
+            className="
+              text-gray-500
+              mt-2
+            "
+          >
+            ERP Agricole SaaS
+          </p>
+        </div>
+
+        <OrganizationSwitcher />
       </div>
 
       <RoleGuard permission="canViewAnalytics">
@@ -75,7 +88,6 @@ export default function DashboardPage() {
 
         <AlertsPanel />
       </div>
-
     </div>
   );
 }
