@@ -1,6 +1,27 @@
 "use client";
 
+import {
+  signOut,
+} from "firebase/auth";
+
+import { auth }
+from "@/lib/firebase/config";
+
+import { useRouter }
+from "next/navigation";
+
 export const Topbar = () => {
+
+  const router =
+    useRouter();
+
+  async function handleLogout() {
+
+    await signOut(auth);
+
+    router.push("/login");
+  }
+
   return (
     <header
       className="
@@ -13,14 +34,26 @@ export const Topbar = () => {
         px-6
       "
     >
-      <h2
-        className="
-          text-xl
-          font-semibold
-        "
-      >
-        ERP Agricole
-      </h2>
+      <div>
+
+        <h2
+          className="
+            text-xl
+            font-semibold
+          "
+        >
+          Terragest ERP
+        </h2>
+
+        <p
+          className="
+            text-sm
+            text-gray-500
+          "
+        >
+          Gestion Agricole
+        </p>
+      </div>
 
       <div
         className="
@@ -29,18 +62,40 @@ export const Topbar = () => {
           gap-4
         "
       >
-        <span>
-          Admin
-        </span>
-
         <div
           className="
-            w-10
-            h-10
-            rounded-full
-            bg-black
+            hidden
+            md:block
+            text-right
           "
-        />
+        >
+          <p className="font-medium">
+            Admin
+          </p>
+
+          <p
+            className="
+              text-xs
+              text-gray-500
+            "
+          >
+            Super utilisateur
+          </p>
+        </div>
+
+        <button
+          onClick={handleLogout}
+          className="
+            bg-black
+            text-white
+            px-4
+            py-2
+            rounded-lg
+            text-sm
+          "
+        >
+          Logout
+        </button>
       </div>
     </header>
   );

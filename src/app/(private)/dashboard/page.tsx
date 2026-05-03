@@ -1,182 +1,86 @@
-"use client";
+import { KPICard }
+from "@/components/dashboard/KPICard";
 
-import {
+import { RecentActivities }
+from "@/components/dashboard/RecentActivities";
 
-  useEffect,
-
-  useState
-
-} from "react";
-
-import {
-
-  DashboardAnalyticsService
-
-} from "@/features/analytics/services/DashboardAnalyticsService";
+import { AlertsPanel }
+from "@/components/dashboard/AlertsPanel";
 
 export default function DashboardPage() {
 
-  const [
-
-    stats,
-
-    setStats
-
-  ] = useState<any>(null);
-
-  useEffect(() => {
-
-    load();
-
-  }, []);
-
-  const load =
-    async () => {
-
-      const data =
-
-        await DashboardAnalyticsService
-          .getStats();
-
-      setStats(data);
-    };
-
-  if (!stats) {
-
-    return (
-
-      <div className="p-10">
-
-        Chargement...
-
-      </div>
-    );
-  }
-
   return (
+    <div className="space-y-6">
 
-    <div className="p-10">
+      <div>
 
-      <h1
-        className="
-          text-4xl
-          font-bold
-          mb-8
-        "
-      >
-        Dashboard KPI
-      </h1>
+        <h1
+          className="
+            text-3xl
+            font-bold
+          "
+        >
+          Dashboard
+        </h1>
+
+        <p
+          className="
+            text-gray-500
+            mt-2
+          "
+        >
+          Vue globale de votre ERP agricole
+        </p>
+      </div>
 
       <div
         className="
           grid
           grid-cols-1
           md:grid-cols-2
-          lg:grid-cols-4
+          xl:grid-cols-4
           gap-6
         "
       >
+        <KPICard
+          title="Exploitations"
+          value="24"
+          subtitle="+12% ce mois"
+        />
 
-        <div
-          className="
-            bg-white
-            rounded-2xl
-            shadow-md
-            p-6
-          "
-        >
+        <KPICard
+          title="Produits"
+          value="128"
+          subtitle="+8 nouveaux"
+        />
 
-          <p>
-            Produits
-          </p>
+        <KPICard
+          title="Stocks"
+          value="87%"
+          subtitle="DisponibilitÃ©"
+        />
 
-          <h2
-            className="
-              text-4xl
-              font-bold
-            "
-          >
-            {stats.produits}
-          </h2>
-
-        </div>
-
-        <div
-          className="
-            bg-white
-            rounded-2xl
-            shadow-md
-            p-6
-          "
-        >
-
-          <p>
-            Exploitations
-          </p>
-
-          <h2
-            className="
-              text-4xl
-              font-bold
-            "
-          >
-            {stats.exploitations}
-          </h2>
-
-        </div>
-
-        <div
-          className="
-            bg-white
-            rounded-2xl
-            shadow-md
-            p-6
-          "
-        >
-
-          <p>
-            Stocks
-          </p>
-
-          <h2
-            className="
-              text-4xl
-              font-bold
-            "
-          >
-            {stats.stocks}
-          </h2>
-
-        </div>
-
-        <div
-          className="
-            bg-white
-            rounded-2xl
-            shadow-md
-            p-6
-          "
-        >
-
-          <p>
-            MatÃ©riels
-          </p>
-
-          <h2
-            className="
-              text-4xl
-              font-bold
-            "
-          >
-            {stats.materiels}
-          </h2>
-
-        </div>
-
+        <KPICard
+          title="MatÃ©riels"
+          value="16"
+          subtitle="2 maintenances"
+        />
       </div>
 
+      <div
+        className="
+          grid
+          grid-cols-1
+          xl:grid-cols-3
+          gap-6
+        "
+      >
+        <div className="xl:col-span-2">
+          <RecentActivities />
+        </div>
+
+        <AlertsPanel />
+      </div>
     </div>
   );
 }
-
-
