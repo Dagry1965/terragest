@@ -1,10 +1,29 @@
+$ErrorActionPreference = "Stop"
+
+$ProjectRoot = "C:\Users\Admin\terragest"
+
+Set-Location $ProjectRoot
+
+Write-Host ""
+Write-Host "======================================="
+Write-Host " FIRESTORE SAAS RULES SETUP"
+Write-Host "======================================="
+Write-Host ""
+
+# -------------------------------------------------
+# FIRESTORE RULES
+# -------------------------------------------------
+
+$rules = @'
 rules_version = '2';
 
 service cloud.firestore {
 
   match /databases/{database}/documents {
 
-    // HELPERS
+    # -------------------------------------------------
+    # HELPERS
+    # -------------------------------------------------
 
     function isAuthenticated() {
 
@@ -35,7 +54,9 @@ service cloud.firestore {
         == "admin";
     }
 
-    // ORGANIZATIONS
+    # -------------------------------------------------
+    # ORGANIZATIONS
+    # -------------------------------------------------
 
     match /organizations/{docId} {
 
@@ -51,7 +72,9 @@ service cloud.firestore {
         isSameOrganization();
     }
 
-    // MEMBERSHIPS
+    # -------------------------------------------------
+    # MEMBERSHIPS
+    # -------------------------------------------------
 
     match /memberships/{docId} {
 
@@ -67,7 +90,9 @@ service cloud.firestore {
         isSameOrganization();
     }
 
-    // PRODUITS
+    # -------------------------------------------------
+    # PRODUITS
+    # -------------------------------------------------
 
     match /produits/{docId} {
 
@@ -86,7 +111,9 @@ service cloud.firestore {
         isSameOrganization();
     }
 
-    // STOCKS
+    # -------------------------------------------------
+    # STOCKS
+    # -------------------------------------------------
 
     match /stocks/{docId} {
 
@@ -105,7 +132,9 @@ service cloud.firestore {
         isSameOrganization();
     }
 
-    // MATERIELS
+    # -------------------------------------------------
+    # MATERIELS
+    # -------------------------------------------------
 
     match /materiels/{docId} {
 
@@ -125,3 +154,22 @@ service cloud.firestore {
     }
   }
 }
+'@
+
+[System.IO.File]::WriteAllText(
+  "$ProjectRoot\firestore.rules",
+  $rules
+)
+
+Write-Host "Updated: firestore.rules"
+
+Write-Host ""
+Write-Host "======================================="
+Write-Host " FIRESTORE SAAS RULES COMPLETE"
+Write-Host "======================================="
+Write-Host ""
+Write-Host "NEXT:"
+Write-Host "1. firebase deploy --only firestore:rules"
+Write-Host "2. pnpm build"
+Write-Host "3. git commit"
+Write-Host ""
