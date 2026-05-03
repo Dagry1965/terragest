@@ -235,6 +235,21 @@ Write-GeneratedFile `
 
 
 # ============================================
+# DASHBOARD CARD
+# ============================================
+
+$dashboardCardContent = Render-Template `
+    -TemplatePath "$PSScriptRoot/../templates/dashboard-card.template.txt" `
+    -Variables $templateVariables
+
+Write-GeneratedFile `
+    -Path "$($paths.Components)/$($modulePascal)DashboardCard.tsx" `
+    -Content $dashboardCardContent `
+    -Force
+
+
+
+# ============================================
 # CRUD PAGES
 # ============================================
 
