@@ -7,7 +7,7 @@ from "next/server";
 import {
   isPublicRoute,
 }
-from "@/lib/auth/session";
+from "./lib/auth/session";
 
 export function middleware(
   request: NextRequest

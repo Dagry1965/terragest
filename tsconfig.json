@@ -1,4 +1,4 @@
-﻿{
+{
   "compilerOptions": {
     "target": "ES2017",
     "lib": [
@@ -17,15 +17,17 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "incremental": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    },
     "plugins": [
       {
         "name": "next"
       }
-    ],
-   "baseUrl": ".",
-"paths": {
-  "@/*": ["./src/*"]
-}
+    ]
   },
   "include": [
     "next-env.d.ts",
@@ -34,11 +36,9 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
   ],
-  "exclude": [
-    "node_modules",
-    "mobile",
-    "_quarantine"
-  ]
+ "exclude": [
+  "node_modules",
+  "experimental",
+  "mobile"
+]
 }
-
-
