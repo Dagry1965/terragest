@@ -247,7 +247,18 @@ Write-GeneratedFile `
     -Content $dashboardCardContent `
     -Force
 
+# ============================================
+# CHART WIDGET
+# ============================================
 
+$chartWidgetContent = Render-Template `
+    -TemplatePath "$PSScriptRoot/../templates/chart-widget.template.txt" `
+    -Variables $templateVariables
+
+Write-GeneratedFile `
+    -Path "$($paths.Components)/$($modulePascal)ChartWidget.tsx" `
+    -Content $chartWidgetContent `
+    -Force
 
 # ============================================
 # CRUD PAGES
