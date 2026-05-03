@@ -1,64 +1,68 @@
-import {
-  addDoc,
-  collection,
-  doc,
-  getDoc,
-  updateDoc,
-} from "firebase/firestore";
+import { BillingPlan }
+from "@/features/billing/types/Subscription";
 
-import { db } from "@/lib/firebase/config";
+import { BillingRepository }
+from "@/features/billing/repositories/BillingRepository";
 
 export const BillingService = {
 
-  async createSubscription(
-    data: any
+  getPlanLimits(
+    plan: BillingPlan
   ) {
 
-    return addDoc(
-      collection(
-        db,
-        "subscriptions"
-      ),
-      data
-    );
-  },
+    switch (plan) {
 
-  async getSubscription(
-    organisationId: string
-  ) {
+      case "free":
 
-    const ref =
-      doc(
-        db,
-        "subscriptions",
-        organisationId
-      );
+        return {
+          maxUsers: 3,
+          analytics: false,
+          realtime: false,
+        };
 
-    const snapshot =
-      await getDoc(ref);
+      case "pro":
 
-    if (!snapshot.exists()) {
-      return null;
+        return {
+          maxUsers: 25,
+          analytics: true,
+          realtime: true,
+        };
+
+      case "enterprise":
+
+        return {
+          maxUsers: 999,
+          analytics: true,
+          realtime: true,
+        };
+
+      default:
+
+        return {
+          maxUsers: 1,
+          analytics: false,
+          realtime: false,
+        };
     }
-
-    return {
-      id: snapshot.id,
-      ...snapshot.data(),
-    };
   },
 
-  async updateSubscription(
-    organisationId: string,
-    data: any
+  async getSubscriptions() {
+
+    return await
+      BillingRepository.getAll();
+  },
+
+  async updatePlan(
+    id: string,
+    plan: BillingPlan
   ) {
 
-    return updateDoc(
-      doc(
-        db,
-        "subscriptions",
-        organisationId
-      ),
-      data
-    );
+    return await
+      BillingRepository.update(
+        id,
+        {
+          plan,
+        }
+      );
   },
 };
