@@ -15,4 +15,6 @@ export interface ModuleContext {
   payload?: unknown;
 
   user?: string;
+
+  tenant?: string;
 }

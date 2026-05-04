@@ -1,3 +1,18 @@
+# =========================================================
+# TERRAGEST - CONNECT GOVERNANCE RUNTIME
+# =========================================================
+
+Write-Host ""
+Write-Host "========================================="
+Write-Host " CONNECT GOVERNANCE RUNTIME"
+Write-Host "========================================="
+Write-Host ""
+
+# =========================================================
+# MODULE RUNTIME
+# =========================================================
+
+$moduleRuntime = @'
 // src/platform/modules/runtime/ModuleRuntime.ts
 
 import {
@@ -295,3 +310,60 @@ export class ModuleRuntime {
     );
   }
 }
+'@
+
+Set-Content `
+  ".\src\platform\modules\runtime\ModuleRuntime.ts" `
+  $moduleRuntime
+
+Write-Host ""
+Write-Host "[UPDATED] ModuleRuntime.ts"
+
+# =========================================================
+# MODULE CONTEXT
+# =========================================================
+
+$moduleContext = @'
+// src/platform/modules/types/ModuleContext.ts
+
+import { ExecutionMode }
+from "@/platform/modules/types/ExecutionMode";
+
+export interface ModuleContext {
+
+  domain: string;
+
+  action: string;
+
+  mode:
+    ExecutionMode;
+
+  payload?: unknown;
+
+  user?: string;
+
+  tenant?: string;
+}
+'@
+
+Set-Content `
+  ".\src\platform\modules\types\ModuleContext.ts" `
+  $moduleContext
+
+Write-Host "[UPDATED] ModuleContext.ts"
+
+# =========================================================
+# SUCCESS
+# =========================================================
+
+Write-Host ""
+Write-Host "========================================="
+Write-Host " GOVERNANCE CONNECTED"
+Write-Host "========================================="
+Write-Host ""
+
+Write-Host "Next:"
+Write-Host ""
+Write-Host ".\scripts\connect-governance-runtime.ps1"
+Write-Host "pnpm build"
+Write-Host ""
