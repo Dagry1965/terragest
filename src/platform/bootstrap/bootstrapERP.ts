@@ -17,11 +17,15 @@ from "@/platform/sagas/registerSagas";
 import { WorkflowScheduler }
 from "@/platform/execution/WorkflowScheduler";
 
+import { WorkerPool }
+from "@/platform/workers/WorkerPool";
+
 export function bootstrapERP() {
 registerBusinessRules();
 registerERPAutomations();
 registerERPSagas();
 registerTimelineListeners();
 WorkflowScheduler.start();
+WorkerPool.startWorkers(3);
   erpOrchestrator.initialize();
 }
