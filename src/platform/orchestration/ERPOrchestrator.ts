@@ -9,6 +9,9 @@ from "@/platform/workflows/ERPNotifications";
 import { initializeERPAudit }
 from "@/platform/workflows/ERPAudit";
 
+import { DependencyValidator }
+from "@/platform/dependencies/DependencyValidator";
+
 class ERPOrchestrator {
 
   initialize() {
@@ -22,6 +25,8 @@ class ERPOrchestrator {
     initializeERPNotifications();
 
     initializeERPAudit();
+
+    DependencyValidator.validate();
 
     console.log(
       "[ERP] Orchestration ready"
