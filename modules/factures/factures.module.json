@@ -1,0 +1,17 @@
+{
+  "module": "factures",
+  "architecture": "ddd",
+  "features": [
+    "Crud",
+    "Realtime",
+    "Dashboard",
+    "Tests"
+  ],
+  "options": {
+    "pdf": true,
+    "export": true,
+    "payments": true,
+    "taxes": true,
+    "notifications": true
+  }
+}

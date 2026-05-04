@@ -1,0 +1,21 @@
+﻿"use client";
+
+interface Props {
+  title: string;
+}
+
+export function UtilisateursChartWidget({
+  title,
+}: Props) {
+  return (
+    <div className="border rounded p-4 shadow-sm">
+      <div className="font-semibold mb-4">
+        {title}
+      </div>
+
+      <div className="h-64 flex items-center justify-center text-gray-400">
+        Chart placeholder
+      </div>
+    </div>
+  );
+}

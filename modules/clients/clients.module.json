@@ -1,0 +1,17 @@
+{
+  "module": "clients",
+  "architecture": "ddd",
+  "features": [
+    "Crud",
+    "Realtime",
+    "Dashboard",
+    "Tests"
+  ],
+  "options": {
+    "crm": true,
+    "contacts": true,
+    "history": true,
+    "notifications": true,
+    "analytics": true
+  }
+}

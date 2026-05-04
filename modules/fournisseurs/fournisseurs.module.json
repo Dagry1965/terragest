@@ -1,0 +1,17 @@
+{
+  "module": "fournisseurs",
+  "architecture": "ddd",
+  "features": [
+    "Crud",
+    "Realtime",
+    "Dashboard",
+    "Tests"
+  ],
+  "options": {
+    "purchases": true,
+    "contracts": true,
+    "deliveries": true,
+    "analytics": true,
+    "history": true
+  }
+}

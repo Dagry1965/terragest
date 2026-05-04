@@ -1,0 +1,18 @@
+{
+  "module": "mouvements-stock",
+  "architecture": "ddd",
+  "features": [
+    "Crud",
+    "Realtime",
+    "Offline",
+    "Dashboard",
+    "Tests"
+  ],
+  "options": {
+    "inventory": true,
+    "audit": true,
+    "tracking": true,
+    "barcode": true,
+    "alerts": true
+  }
+}

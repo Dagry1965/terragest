@@ -1,0 +1,18 @@
+{
+  "module": "productions",
+  "architecture": "ddd",
+  "features": [
+    "Crud",
+    "Realtime",
+    "Offline",
+    "Dashboard",
+    "Tests"
+  ],
+  "options": {
+    "yieldTracking": true,
+    "seasonality": true,
+    "analytics": true,
+    "timeline": true,
+    "mobile": true
+  }
+}

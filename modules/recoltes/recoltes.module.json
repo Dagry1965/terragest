@@ -1,0 +1,18 @@
+{
+  "module": "recoltes",
+  "architecture": "ddd",
+  "features": [
+    "Crud",
+    "Realtime",
+    "Offline",
+    "Dashboard",
+    "Tests"
+  ],
+  "options": {
+    "harvestTracking": true,
+    "weights": true,
+    "storage": true,
+    "quality": true,
+    "mobile": true
+  }
+}

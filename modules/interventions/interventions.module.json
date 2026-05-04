@@ -1,0 +1,18 @@
+{
+  "module": "interventions",
+  "architecture": "ddd",
+  "features": [
+    "Crud",
+    "Realtime",
+    "Offline",
+    "Dashboard",
+    "Tests"
+  ],
+  "options": {
+    "mobile": true,
+    "offline": true,
+    "realtime": true,
+    "timeline": true,
+    "notifications": true
+  }
+}

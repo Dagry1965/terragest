@@ -1,3 +1,3 @@
-export * from "./dto/DTO";
-export * from "./repositories/Repository";
-export * from "./services/Service";
+﻿export * from "./dto/FournisseursDTO";
+export * from "./repositories/FournisseursRepository";
+export * from "./services/FournisseursService";

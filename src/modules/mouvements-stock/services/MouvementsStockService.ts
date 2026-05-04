@@ -1,8 +1,8 @@
-﻿import { ContratsRepository } from "../repositories/ContratsRepository";
+﻿import { MouvementsStockRepository } from "../repositories/MouvementsStockRepository";
 
-export class ContratsService {
+export class MouvementsStockService {
   private repository =
-    new ContratsRepository();
+    new MouvementsStockRepository();
 
   async findAll() {
     return this.repository.findAll();

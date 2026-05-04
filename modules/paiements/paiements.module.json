@@ -1,0 +1,17 @@
+{
+  "module": "paiements",
+  "architecture": "ddd",
+  "features": [
+    "Crud",
+    "Realtime",
+    "Dashboard",
+    "Tests"
+  ],
+  "options": {
+    "transactions": true,
+    "audit": true,
+    "security": true,
+    "invoices": true,
+    "notifications": true
+  }
+}

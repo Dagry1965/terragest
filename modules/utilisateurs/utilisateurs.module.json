@@ -1,0 +1,17 @@
+{
+  "module": "utilisateurs",
+  "architecture": "ddd",
+  "features": [
+    "Crud",
+    "Realtime",
+    "Dashboard",
+    "Tests"
+  ],
+  "options": {
+    "roles": true,
+    "permissions": true,
+    "security": true,
+    "audit": true,
+    "notifications": true
+  }
+}

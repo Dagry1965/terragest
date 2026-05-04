@@ -1,0 +1,17 @@
+{
+  "module": "contrats",
+  "architecture": "ddd",
+  "features": [
+    "Crud",
+    "Realtime",
+    "Dashboard",
+    "Tests"
+  ],
+  "options": {
+    "workflow": true,
+    "documents": true,
+    "validation": true,
+    "signature": true,
+    "timeline": true
+  }
+}
