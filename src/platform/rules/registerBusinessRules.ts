@@ -1,51 +1,45 @@
 // src/platform/rules/registerBusinessRules.ts
 
-import { BusinessRulesEngine }
-from "@/platform/rules/BusinessRulesEngine";
+import { RuleRegistry }
+from "@/platform/rules/registry/RuleRegistry";
 
 export function registerBusinessRules() {
 
-  BusinessRulesEngine.register({
+  RuleRegistry.register({
 
     name: "stock-alert-rule",
 
-    event: "stock.created",
+    domain: "stock",
 
-    execute(payload) {
+    action: "create",
+
+    priority: 10,
+
+    async execute(context) {
 
       console.log(
         "[RULE] stock alert",
-        payload
+        context.payload
       );
     }
   });
 
-  BusinessRulesEngine.register({
+  RuleRegistry.register({
 
-    name: "maintenance-notification-rule",
+    name:
+      "paiement-validation-rule",
 
-    event: "maintenance.created",
+    domain: "paiement",
 
-    execute(payload) {
+    action: "create",
 
-      console.log(
-        "[RULE] maintenance notification",
-        payload
-      );
-    }
-  });
+    priority: 20,
 
-  BusinessRulesEngine.register({
-
-    name: "paiement-facture-rule",
-
-    event: "paiement.created",
-
-    execute(payload) {
+    async execute(context) {
 
       console.log(
-        "[RULE] generate facture",
-        payload
+        "[RULE] paiement validation",
+        context.payload
       );
     }
   });

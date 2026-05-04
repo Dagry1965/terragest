@@ -6,6 +6,12 @@ from "@/platform/observability/EventStore";
 import { MetricsRegistry }
 from "@/platform/observability/MetricsRegistry";
 
+import { WebhookDispatcher }
+from "@/platform/integrations/WebhookDispatcher";
+
+import { BusinessRulesEngine }
+from "@/platform/rules/engine/BusinessRulesEngine";
+
 type EventHandler =
   (payload: unknown) => void;
 
@@ -29,7 +35,7 @@ class DomainEventsManager {
       .push(handler);
   }
 
-  dispatch(
+  async dispatch(
     event: string,
     payload?: unknown
   ) {
@@ -52,12 +58,26 @@ class DomainEventsManager {
       event
     );
 
+    await WebhookDispatcher.dispatch(
+      event,
+      payload
+    );
+
+ await BusinessRulesEngine.execute({
+
+  domain: "global",
+
+  action: event,
+
+  payload
+});
+
     const handlers =
       this.handlers[event] || [];
 
     for (const handler of handlers) {
 
-      handler(payload);
+      await handler(payload);
     }
   }
 }

@@ -1,57 +1,17 @@
 // src/platform/bootstrap/bootstrapERP.ts
 
-import { erpOrchestrator }
-from "@/platform/orchestration/ERPOrchestrator";
+import { loadDomains }
+from "@/platform/bootstrap/loadDomains";
 
-import { registerBusinessRules }
-from "@/platform/rules/registerBusinessRules";
+export async function bootstrapERP() {
 
-import { registerTimelineListeners }
-from "@/platform/timeline/registerTimelineListeners";
+  console.log(
+    "[BOOTSTRAP ERP]"
+  );
 
-import { registerERPAutomations }
-from "@/platform/automation/registerAutomations";
+  await loadDomains();
 
-import { registerERPSagas }
-from "@/platform/sagas/registerSagas";
-
-import { WorkflowScheduler }
-from "@/platform/execution/WorkflowScheduler";
-
-import { WorkerPool }
-from "@/platform/workers/WorkerPool";
-
-import { RuntimeRecoveryScheduler }
-from "@/platform/persistence/RuntimeRecoveryScheduler";
-
-import { RuntimePersistenceService }
-from "@/platform/persistence/RuntimePersistenceService";
-
-import { OperationalIntelligenceScheduler }
-from "@/platform/intelligence/OperationalIntelligenceScheduler";
-
-export function bootstrapERP() {
-
-  RuntimePersistenceService
-    .restoreLatestSnapshot();
-
-  RuntimeRecoveryScheduler
-    .start();
-
-  registerBusinessRules();
-
-  registerERPAutomations();
-
-  registerERPSagas();
-
-  registerTimelineListeners();
-
-  WorkflowScheduler.start();
-
-  WorkerPool.startWorkers(3);
-
-  OperationalIntelligenceScheduler
-    .start();
-
-  erpOrchestrator.initialize();
+  console.log(
+    "[BOOTSTRAP ERP READY]"
+  );
 }
