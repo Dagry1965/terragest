@@ -5,13 +5,26 @@
 import { useEffect, useState }
 from "react";
 
+import { EventTimeline }
+from "./graphs/EventTimeline";
+
+import { MetricsPanel }
+from "./graphs/MetricsPanel";
+
+interface ERPEvent {
+
+  event: string;
+
+  timestamp?: string;
+}
+
 interface ERPStatus {
 
   modules: unknown[];
 
   metrics: Record<string, number>;
 
-  events: unknown[];
+  events: ERPEvent[];
 }
 
 export function ERPStatusDashboard() {
@@ -69,20 +82,13 @@ export function ERPStatusDashboard() {
         </p>
       </div>
 
-      <div>
+      <MetricsPanel
+        metrics={status.metrics}
+      />
 
-        <h3 className="font-semibold">
-          Metrics
-        </h3>
-
-        <pre>
-          {JSON.stringify(
-            status.metrics,
-            null,
-            2
-          )}
-        </pre>
-      </div>
+      <EventTimeline
+        events={status.events}
+      />
     </div>
   );
 }
