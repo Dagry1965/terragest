@@ -27,6 +27,9 @@ from "@/platform/persistence/RuntimeRecoveryScheduler";
 import { RuntimePersistenceService }
 from "@/platform/persistence/RuntimePersistenceService";
 
+import { OperationalIntelligenceScheduler }
+from "@/platform/intelligence/OperationalIntelligenceScheduler";
+
 export function bootstrapERP() {
 
   RuntimePersistenceService
@@ -46,6 +49,9 @@ export function bootstrapERP() {
   WorkflowScheduler.start();
 
   WorkerPool.startWorkers(3);
+
+  OperationalIntelligenceScheduler
+    .start();
 
   erpOrchestrator.initialize();
 }
