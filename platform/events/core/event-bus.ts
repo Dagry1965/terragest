@@ -1,5 +1,7 @@
 import { DomainEvent } from "../types";
 
+import { traceExecution } from "../../execution/runtime/execution-trace";
+
 type EventHandler =
   (event: DomainEvent) => void;
 
@@ -20,6 +22,11 @@ export class EventBus {
 
     this.handlers[eventType].push(handler);
 
+    traceExecution(
+      "EVENT_SUBSCRIPTION",
+      eventType
+    );
+
     console.log(
       "[EVENT SUBSCRIBED]",
       eventType
@@ -27,6 +34,11 @@ export class EventBus {
   }
 
   publish(event: DomainEvent) {
+
+    traceExecution(
+      "EVENT",
+      event.type
+    );
 
     console.log(
       "[EVENT PUBLISHED]",

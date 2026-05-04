@@ -1,19 +1,18 @@
-import { RuleEngine } from "../../rules/engine/rule-engine";
 import { Workflow } from "../types";
+
+import { workflowRegistry } from "../registry";
+
+import { RuleEngine } from "../../rules/engine/rule-engine";
+
+import { traceExecution } from "../../execution/runtime/execution-trace";
+
+const ruleEngine =
+  new RuleEngine();
 
 export class WorkflowEngine {
 
-  private workflows: Workflow[] = [];
-
-  register(workflow: Workflow) {
-
-    this.workflows.push(workflow);
-
-    console.log(
-      "[WORKFLOW REGISTERED]",
-      workflow.name
-    );
-  }
+  private workflows: Workflow[] =
+    workflowRegistry;
 
   execute(trigger: string) {
 
@@ -37,10 +36,29 @@ export class WorkflowEngine {
 
     for (const workflow of matchingWorkflows) {
 
-      console.log(
-        "[WORKFLOW EXECUTION]",
-        workflow.name
-      );
+      try {
+
+        traceExecution(
+          "WORKFLOW",
+          workflow.name
+        );
+
+        console.log(
+          "[WORKFLOW EXECUTION]",
+          workflow.name
+        );
+
+        ruleEngine.evaluate(
+          workflow.name
+        );
+
+      } catch (error) {
+
+        console.error(
+          "[WORKFLOW ERROR]",
+          error
+        );
+      }
     }
   }
 
