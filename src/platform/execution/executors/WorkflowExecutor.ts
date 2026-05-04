@@ -15,6 +15,12 @@ from "@/platform/resilience/DeadLetterQueue";
 import { CircuitBreaker }
 from "@/platform/circuit-breaker/CircuitBreaker";
 
+import { ExecutionPolicy }
+from "@/platform/security/ExecutionPolicy";
+
+import { SecurityAudit }
+from "@/platform/security/SecurityAudit";
+
 const workflowCircuitBreaker =
   new CircuitBreaker(3);
 
@@ -50,10 +56,33 @@ export class WorkflowExecutor {
       job.workflow
     );
 
+    const allowed =
+      ExecutionPolicy.canExecute({
+
+        workflow: job.workflow,
+
+        role: "admin"
+      });
+
+    if (!allowed) {
+
+      SecurityAudit.log(
+        "workflow.denied",
+        job
+      );
+
+      return;
+    }
+
     WorkflowThrottler
       .startExecution();
 
     try {
+
+      SecurityAudit.log(
+        "workflow.started",
+        job
+      );
 
       await workflowCircuitBreaker.execute(
         async () => {
@@ -79,6 +108,11 @@ export class WorkflowExecutor {
       });
 
     } finally {
+
+      SecurityAudit.log(
+        "workflow.finished",
+        job
+      );
 
       WorkflowThrottler
         .finishExecution();
