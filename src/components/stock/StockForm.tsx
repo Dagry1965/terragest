@@ -14,6 +14,9 @@ from "@/platform/modules/runtime/ModuleRuntime";
 import { ExecutionMode }
 from "@/platform/modules/types/ExecutionMode";
 
+import { StockStore }
+from "@/domains/stock/store/StockStore";
+
 export function StockForm() {
 
   const router =
@@ -60,6 +63,22 @@ export function StockForm() {
               quantite
             )
         }
+      });
+
+      StockStore.add({
+
+        id:
+          crypto.randomUUID(),
+
+        produit,
+
+        quantite:
+          Number(
+            quantite
+          ),
+
+        workflow:
+          "DRAFT"
       });
 
       console.log(

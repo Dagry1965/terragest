@@ -8,38 +8,13 @@ from "next/link";
 import { ERPLayout }
 from "@/components/layout/ERPLayout";
 
-const stocks = [
-
-  {
-
-    id: 1,
-
-    produit:
-      "Engrais NPK",
-
-    quantite:
-      120,
-
-    workflow:
-      "APPROVED"
-  },
-
-  {
-
-    id: 2,
-
-    produit:
-      "Semences Maïs",
-
-    quantite:
-      45,
-
-    workflow:
-      "DRAFT"
-  }
-];
+import { StockStore }
+from "@/domains/stock/store/StockStore";
 
 export default function StocksPage() {
+
+  const stocks =
+    StockStore.all();
 
   return (
 
