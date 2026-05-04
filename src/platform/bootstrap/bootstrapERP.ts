@@ -3,11 +3,16 @@
 import { loadDomains }
 from "@/platform/bootstrap/loadDomains";
 
+import { registerPolicies }
+from "@/platform/governance/registerPolicies";
+
 export async function bootstrapERP() {
 
   console.log(
     "[BOOTSTRAP ERP]"
   );
+
+  registerPolicies();
 
   await loadDomains();
 

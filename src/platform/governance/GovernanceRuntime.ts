@@ -11,6 +11,9 @@ from "@/platform/governance/features/FeatureFlags";
 import { DomainPermissions }
 from "@/platform/governance/permissions/DomainPermissions";
 
+import { RuntimePoliciesEngine }
+from "@/platform/governance/policies/engine/RuntimePoliciesEngine";
+
 export class GovernanceRuntime {
 
   static validate(
@@ -41,6 +44,10 @@ export class GovernanceRuntime {
         `Permission denied: ${context.domain}`
       );
     }
+
+    RuntimePoliciesEngine.validate(
+      context
+    );
 
     console.log(
       "[GOVERNANCE OK]",
