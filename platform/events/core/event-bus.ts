@@ -1,6 +1,30 @@
 import { DomainEvent } from "../types";
 
+type EventHandler =
+  (event: DomainEvent) => void;
+
 export class EventBus {
+
+  private handlers:
+    Record<string, EventHandler[]> = {};
+
+  subscribe(
+    eventType: string,
+    handler: EventHandler
+  ) {
+
+    if (!this.handlers[eventType]) {
+
+      this.handlers[eventType] = [];
+    }
+
+    this.handlers[eventType].push(handler);
+
+    console.log(
+      "[EVENT SUBSCRIBED]",
+      eventType
+    );
+  }
 
   publish(event: DomainEvent) {
 
@@ -8,13 +32,13 @@ export class EventBus {
       "[EVENT PUBLISHED]",
       event.type
     );
-  }
 
-  subscribe(eventType: string) {
+    const eventHandlers =
+      this.handlers[event.type] || [];
 
-    console.log(
-      "[EVENT SUBSCRIBED]",
-      eventType
-    );
+    for (const handler of eventHandlers) {
+
+      handler(event);
+    }
   }
 }

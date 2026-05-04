@@ -1,6 +1,23 @@
-export function subscribeToDomainEvents() {
+import { EventBus }
+from "../core/event-bus";
 
-  console.log(
-    "Subscribing to domain events"
-  );
-}
+import { WorkflowEngine }
+from "../../workflows/engine/workflow-engine";
+
+const eventBus =
+  new EventBus();
+
+const workflowEngine =
+  new WorkflowEngine();
+
+eventBus.subscribe(
+
+  "payment.validated",
+
+  (event) => {
+
+    workflowEngine.execute(
+      event.type
+    );
+  }
+);
