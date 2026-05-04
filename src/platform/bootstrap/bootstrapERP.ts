@@ -2,6 +2,7 @@
 
 import { erpOrchestrator }
 from "@/platform/orchestration/ERPOrchestrator";
+
 import { registerBusinessRules }
 from "@/platform/rules/registerBusinessRules";
 
@@ -20,12 +21,31 @@ from "@/platform/execution/WorkflowScheduler";
 import { WorkerPool }
 from "@/platform/workers/WorkerPool";
 
+import { RuntimeRecoveryScheduler }
+from "@/platform/persistence/RuntimeRecoveryScheduler";
+
+import { RuntimePersistenceService }
+from "@/platform/persistence/RuntimePersistenceService";
+
 export function bootstrapERP() {
-registerBusinessRules();
-registerERPAutomations();
-registerERPSagas();
-registerTimelineListeners();
-WorkflowScheduler.start();
-WorkerPool.startWorkers(3);
+
+  RuntimePersistenceService
+    .restoreLatestSnapshot();
+
+  RuntimeRecoveryScheduler
+    .start();
+
+  registerBusinessRules();
+
+  registerERPAutomations();
+
+  registerERPSagas();
+
+  registerTimelineListeners();
+
+  WorkflowScheduler.start();
+
+  WorkerPool.startWorkers(3);
+
   erpOrchestrator.initialize();
 }
