@@ -1,14 +1,16 @@
-// src/platform/events/EventTypes.ts
+﻿// src/platform/events/EventTypes.ts
 
 export const ERPEventTypes = {
 
-  STOCK_CREATED: "stock.created",
+  STOCK_CREATED:
+    "stock.created",
 
-  INTERVENTION_CREATED: "intervention.created",
+  PAIEMENT_CREATED:
+    "paiement.created",
 
-  PAIEMENT_CREATED: "paiement.created",
+  MAINTENANCE_CREATED:
+    "maintenance.created",
 
-  CONTRAT_CREATED: "contrat.created",
-
-  MAINTENANCE_CREATED: "maintenance.created"
+  INTERVENTION_CREATED:
+    "intervention.created"
 };

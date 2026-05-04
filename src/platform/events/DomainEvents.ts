@@ -1,32 +1,47 @@
-// src/platform/events/DomainEvents.ts
+﻿// src/platform/events/DomainEvents.ts
 
-type EventHandler = (payload: unknown) => void;
+type EventHandler =
+(payload: unknown) => void;
 
 class DomainEventsManager {
 
-  private handlers: Record<string, EventHandler[]> = {};
+  private handlers:
+  Record<string, EventHandler[]>
+  = {};
 
-  subscribe(event: string, handler: EventHandler) {
+  subscribe(
+    event: string,
+    handler: EventHandler
+  ) {
 
     if (!this.handlers[event]) {
 
       this.handlers[event] = [];
     }
 
-    this.handlers[event].push(handler);
+    this.handlers[event]
+      .push(handler);
   }
 
-  dispatch(event: string, payload?: unknown) {
+  dispatch(
+    event: string,
+    payload?: unknown
+  ) {
 
-    console.log(`[EVENT] ${event}`, payload);
+    console.log(
+      `[EVENT] ${event}`,
+      payload
+    );
 
-    const eventHandlers = this.handlers[event] || [];
+    const handlers =
+      this.handlers[event] || [];
 
-    for (const handler of eventHandlers) {
+    for (const handler of handlers) {
 
       handler(payload);
     }
   }
 }
 
-export const DomainEvents = new DomainEventsManager();
+export const DomainEvents =
+  new DomainEventsManager();

@@ -1,4 +1,4 @@
-// src/platform/registry/ModuleRegistry.ts
+﻿// src/platform/registry/ModuleRegistry.ts
 
 export interface ERPModule {
 
@@ -7,15 +7,16 @@ export interface ERPModule {
   enabled: boolean;
 
   version: string;
-
-  features?: string[];
 }
 
 class ModuleRegistryManager {
 
-  private modules: ERPModule[] = [];
+  private modules:
+    ERPModule[] = [];
 
-  register(module: ERPModule) {
+  register(
+    module: ERPModule
+  ) {
 
     console.log(
       "[MODULE REGISTERED]",

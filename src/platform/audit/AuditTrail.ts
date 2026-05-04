@@ -1,4 +1,4 @@
-// src/platform/audit/AuditTrail.ts
+﻿// src/platform/audit/AuditTrail.ts
 
 export class AuditTrail {
 
@@ -7,10 +7,13 @@ export class AuditTrail {
     payload?: unknown
   ) {
 
-    console.log("[AUDIT]", {
-      event,
-      payload,
-      timestamp: new Date()
-    });
+    console.log(
+      "[AUDIT]",
+      {
+        event,
+        payload,
+        timestamp: new Date()
+      }
+    );
   }
 }
