@@ -1,13 +1,19 @@
 ﻿// src/platform/events/DomainEvents.ts
 
+import { EventStore }
+from "@/platform/observability/EventStore";
+
+import { MetricsRegistry }
+from "@/platform/observability/MetricsRegistry";
+
 type EventHandler =
-(payload: unknown) => void;
+  (payload: unknown) => void;
 
 class DomainEventsManager {
 
   private handlers:
-  Record<string, EventHandler[]>
-  = {};
+    Record<string, EventHandler[]>
+    = {};
 
   subscribe(
     event: string,
@@ -31,6 +37,19 @@ class DomainEventsManager {
     console.log(
       `[EVENT] ${event}`,
       payload
+    );
+
+    EventStore.append({
+
+      event,
+
+      payload,
+
+      timestamp: new Date()
+    });
+
+    MetricsRegistry.increment(
+      event
     );
 
     const handlers =
