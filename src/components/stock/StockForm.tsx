@@ -5,13 +5,82 @@
 import { useState }
 from "react";
 
+import { useRouter }
+from "next/navigation";
+
+import { ModuleRuntime }
+from "@/platform/modules/runtime/ModuleRuntime";
+
+import { ExecutionMode }
+from "@/platform/modules/types/ExecutionMode";
+
 export function StockForm() {
+
+  const router =
+    useRouter();
 
   const [produit, setProduit] =
     useState("");
 
   const [quantite, setQuantite] =
     useState("");
+
+  const [loading, setLoading] =
+    useState(false);
+
+  async function handleSubmit() {
+
+    setLoading(true);
+
+    try {
+
+      await ModuleRuntime.create({
+
+        domain:
+          "stock",
+
+        action:
+          "create",
+
+        mode:
+          ExecutionMode.INTERACTIVE,
+
+        user:
+          "admin",
+
+        tenant:
+          "default",
+
+        payload: {
+
+          produit,
+
+          quantite:
+            Number(
+              quantite
+            )
+        }
+      });
+
+      console.log(
+        "[STOCK CREATED]"
+      );
+
+      router.push(
+        "/stocks"
+      );
+
+    } catch (error) {
+
+      console.error(
+        error
+      );
+
+    } finally {
+
+      setLoading(false);
+    }
+  }
 
   return (
 
@@ -92,6 +161,15 @@ export function StockForm() {
       </div>
 
       <button
+
+        onClick={
+          handleSubmit
+        }
+
+        disabled={
+          loading
+        }
+
         className="
           bg-black
           text-white
@@ -99,7 +177,12 @@ export function StockForm() {
           py-3
         "
       >
-        Enregistrer
+
+        {loading
+
+          ? "Création..."
+
+          : "Enregistrer"}
       </button>
 
     </div>

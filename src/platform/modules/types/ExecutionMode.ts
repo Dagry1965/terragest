@@ -2,12 +2,15 @@
 
 export enum ExecutionMode {
 
-  LIGHT =
-    "LIGHT",
-
   STANDARD =
     "STANDARD",
 
-  CRITICAL =
-    "CRITICAL"
+  INTERACTIVE =
+    "INTERACTIVE",
+
+  AUTOMATED =
+    "AUTOMATED",
+
+  SCHEDULED =
+    "SCHEDULED"
 }
