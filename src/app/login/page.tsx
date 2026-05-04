@@ -1,17 +1,11 @@
+// src/app/login/page.tsx
+
 "use client";
 
-import { useState } from "react";
-
-import {
-  signInWithEmailAndPassword,
-} from "firebase/auth";
-
-import { auth } from "@/lib/firebase/config";
-
-import { useRouter } from "next/navigation";
+import { useState }
+from "react";
 
 export default function LoginPage() {
-  const router = useRouter();
 
   const [email, setEmail] =
     useState("");
@@ -19,70 +13,104 @@ export default function LoginPage() {
   const [password, setPassword] =
     useState("");
 
-  const [error, setError] =
-    useState("");
-
-  async function handleLogin(
-    e: React.FormEvent
-  ) {
-    e.preventDefault();
-
-    try {
-      await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-
-      router.push("/dashboard");
-    } catch (err: any) {
-      setError(err.message);
-    }
-  }
-
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <form
-        onSubmit={handleLogin}
-        className="bg-white p-8 rounded-2xl shadow-md w-full max-w-md space-y-4"
+
+    <div
+      className="
+        min-h-screen
+        flex
+        items-center
+        justify-center
+        bg-zinc-100
+      "
+    >
+
+      <div
+        className="
+          w-full
+          max-w-md
+          bg-white
+          rounded-2xl
+          shadow-sm
+          p-8
+        "
       >
-        <h1 className="text-2xl font-bold">
-          Connexion Terragest
+
+        <h1
+          className="
+            text-3xl
+            font-bold
+            mb-6
+          "
+        >
+          Connexion ERP
         </h1>
 
-        <input
-          type="email"
-          placeholder="Email"
-          className="w-full border p-3 rounded-lg"
-          value={email}
-          onChange={(e) =>
-            setEmail(e.target.value)
-          }
-        />
-
-        <input
-          type="password"
-          placeholder="Mot de passe"
-          className="w-full border p-3 rounded-lg"
-          value={password}
-          onChange={(e) =>
-            setPassword(e.target.value)
-          }
-        />
-
-        {error && (
-          <p className="text-red-500 text-sm">
-            {error}
-          </p>
-        )}
-
-        <button
-          type="submit"
-          className="w-full bg-black text-white p-3 rounded-lg"
+        <div
+          className="
+            flex
+            flex-col
+            gap-4
+          "
         >
-          Se connecter
-        </button>
-      </form>
+
+          <input
+
+            type="email"
+
+            placeholder="Email"
+
+            value={email}
+
+            onChange={event =>
+              setEmail(
+                event.target.value
+              )
+            }
+
+            className="
+              border
+              rounded-xl
+              px-4
+              py-3
+            "
+          />
+
+          <input
+
+            type="password"
+
+            placeholder="Mot de passe"
+
+            value={password}
+
+            onChange={event =>
+              setPassword(
+                event.target.value
+              )
+            }
+
+            className="
+              border
+              rounded-xl
+              px-4
+              py-3
+            "
+          />
+
+          <button
+            className="
+              bg-black
+              text-white
+              rounded-xl
+              py-3
+              font-medium
+            "
+          >
+            Se connecter
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
