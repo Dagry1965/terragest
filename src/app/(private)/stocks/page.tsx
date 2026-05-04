@@ -1,120 +1,182 @@
+// src/app/(private)/stocks/page.tsx
+
 "use client";
 
-import {
+import Link
+from "next/link";
 
-  useEffect,
+import { ERPLayout }
+from "@/components/layout/ERPLayout";
 
-  useState
+const stocks = [
 
-} from "react";
+  {
 
-import {
+    id: 1,
 
-  StockService
+    produit:
+      "Engrais NPK",
 
-} from "@/features/stocks/services/StockService";
+    quantite:
+      120,
+
+    workflow:
+      "APPROVED"
+  },
+
+  {
+
+    id: 2,
+
+    produit:
+      "Semences Maïs",
+
+    quantite:
+      45,
+
+    workflow:
+      "DRAFT"
+  }
+];
 
 export default function StocksPage() {
 
-  const [
-
-    mouvements,
-
-    setMouvements
-
-  ] = useState<any[]>([]);
-
-  useEffect(() => {
-
-    load();
-
-  }, []);
-
-  const load =
-    async () => {
-
-      const data =
-
-        await StockService
-          .getAll();
-
-      setMouvements(data);
-    };
-
   return (
 
-    <div className="p-10">
+    <ERPLayout>
 
-      <h1
+      <div
         className="
-          text-4xl
-          font-bold
-          mb-8
+          flex
+          items-center
+          justify-between
+          mb-6
         "
       >
-        Stocks
-      </h1>
+
+        <div>
+
+          <h1
+            className="
+              text-3xl
+              font-bold
+            "
+          >
+            Stocks
+          </h1>
+
+          <p
+            className="
+              text-zinc-500
+            "
+          >
+            Gestion des stocks ERP
+          </p>
+        </div>
+
+        <Link
+
+          href="/stocks/new"
+
+          className="
+            bg-black
+            text-white
+            px-4
+            py-3
+            rounded-xl
+          "
+        >
+          Nouveau stock
+        </Link>
+      </div>
 
       <div
         className="
           bg-white
           rounded-2xl
-          shadow-md
-          p-6
+          shadow-sm
+          overflow-hidden
         "
       >
 
-        <div
-          className="
-            space-y-4
-          "
+        <table
+          className="w-full"
         >
 
-          {
-            mouvements.map(
+          <thead
+            className="
+              bg-zinc-100
+            "
+          >
 
-              (mouvement) => (
+            <tr>
 
-                <div
+              <th
+                className="
+                  p-4
+                  text-left
+                "
+              >
+                Produit
+              </th>
 
-                  key={
-                    mouvement.id
-                  }
+              <th
+                className="
+                  p-4
+                  text-left
+                "
+              >
+                Quantité
+              </th>
 
-                  className="
-                    border
-                    rounded-xl
-                    p-4
-                  "
+              <th
+                className="
+                  p-4
+                  text-left
+                "
+              >
+                Workflow
+              </th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            {stocks.map(stock => (
+
+              <tr
+
+                key={stock.id}
+
+                className="
+                  border-t
+                "
+              >
+
+                <td
+                  className="p-4"
                 >
+                  {stock.produit}
+                </td>
 
-                  <p>
-                    {
-                      mouvement.produitNom
-                    }
-                  </p>
+                <td
+                  className="p-4"
+                >
+                  {stock.quantite}
+                </td>
 
-                  <p>
-                    {
-                      mouvement.type
-                    }
-                  </p>
+                <td
+                  className="p-4"
+                >
+                  {stock.workflow}
+                </td>
 
-                  <p>
-                    {
-                      mouvement.quantite
-                    }
-                  </p>
-
-                </div>
-              )
-            )
-          }
-
-        </div>
-
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
 
-    </div>
+    </ERPLayout>
   );
 }
