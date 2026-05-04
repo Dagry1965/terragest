@@ -112,6 +112,15 @@ export default function StocksPage() {
               >
                 Workflow
               </th>
+
+              <th
+                className="
+                  p-4
+                  text-left
+                "
+              >
+                Actions
+              </th>
             </tr>
           </thead>
 
@@ -144,6 +153,23 @@ export default function StocksPage() {
                   className="p-4"
                 >
                   {stock.workflow}
+                </td>
+
+                <td
+                  className="p-4"
+                >
+
+                  <Link
+
+                    href={`/stocks/${stock.id}`}
+
+                    className="
+                      text-blue-600
+                    "
+                  >
+                    Ouvrir
+                  </Link>
+
                 </td>
 
               </tr>
