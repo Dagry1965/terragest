@@ -5,13 +5,38 @@
 import { useState }
 from "react";
 
+import { useRouter }
+from "next/navigation";
+
+import { AuthService }
+from "@/platform/auth/AuthService";
+
 export default function LoginPage() {
+
+  const router =
+    useRouter();
 
   const [email, setEmail] =
     useState("");
 
   const [password, setPassword] =
     useState("");
+
+  function handleLogin() {
+
+    const success =
+      AuthService.login(
+
+        email,
+
+        password
+      );
+
+    if (success) {
+
+      router.push("/");
+    }
+  }
 
   return (
 
@@ -99,6 +124,11 @@ export default function LoginPage() {
           />
 
           <button
+
+            onClick={
+              handleLogin
+            }
+
             className="
               bg-black
               text-white
