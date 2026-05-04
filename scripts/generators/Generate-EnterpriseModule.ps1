@@ -1,6 +1,13 @@
 param(
-    [Parameter(Mandatory = $true)]
-    [string]$ModuleName
+
+    [string]$ModuleName,
+
+    [string[]]$Features = @(
+        "Crud",
+        "Tests"
+    ),
+
+    [string]$Manifest
 )
 
 # ============================================
@@ -12,6 +19,48 @@ $sharedPath = Resolve-Path "$PSScriptRoot\..\shared"
 . "$sharedPath\naming.ps1"
 . "$sharedPath\filesystem.ps1"
 . "$sharedPath\template-engine.ps1"
+
+# ============================================
+# LOAD FEATURE REGISTRY
+# ============================================
+
+. "$PSScriptRoot\registry\features.ps1"
+
+# ============================================
+# LOAD MANIFEST
+# ============================================
+
+if ($Manifest) {
+
+    if (-not (Test-Path $Manifest)) {
+
+        throw "Manifest not found: $Manifest"
+    }
+
+    $manifestContent = Get-Content $Manifest -Raw `
+        | ConvertFrom-Json
+
+    $ModuleName = $manifestContent.module
+
+    $Features = $manifestContent.features
+}
+
+# ============================================
+# VALIDATIONS
+# ============================================
+
+if ([string]::IsNullOrWhiteSpace($ModuleName)) {
+
+    throw "ModuleName is required"
+}
+
+foreach ($feature in $Features) {
+
+    if (-not $FeatureRegistry.ContainsKey($feature)) {
+
+        throw "Unknown feature: $feature"
+    }
+}
 
 # ============================================
 # NAMING
@@ -38,8 +87,41 @@ $templateVariables = @{
 }
 
 # ============================================
-# DTO
+# FEATURES HELPERS
 # ============================================
+
+function Has-Feature {
+
+    param(
+        [string]$Feature
+    )
+
+    return $Features -contains $Feature
+}
+
+function Generate-IfFeature {
+
+    param(
+        [string]$Feature,
+        [scriptblock]$Action
+    )
+
+    if (Has-Feature $Feature) {
+
+        Write-Host "[FEATURE] $Feature" -ForegroundColor Cyan
+
+        & $Action
+    }
+}
+
+# ============================================
+# CORE
+# ============================================
+
+Write-Host ""
+Write-Host "[CORE] Generating core module..." -ForegroundColor Yellow
+
+# DTO
 
 $dtoContent = Render-Template `
     -TemplatePath "$PSScriptRoot/../templates/dto.template.txt" `
@@ -50,9 +132,7 @@ Write-GeneratedFile `
     -Content $dtoContent `
     -Force
 
-# ============================================
 # SCHEMA
-# ============================================
 
 $schemaContent = Render-Template `
     -TemplatePath "$PSScriptRoot/../templates/schema.template.txt" `
@@ -62,9 +142,8 @@ Write-GeneratedFile `
     -Path "$($paths.Root)/schemas/$($modulePascal).schema.ts" `
     -Content $schemaContent `
     -Force
-# ============================================
+
 # REPOSITORY
-# ============================================
 
 $repositoryContent = Render-Template `
     -TemplatePath "$PSScriptRoot/../templates/repository.template.txt" `
@@ -75,9 +154,7 @@ Write-GeneratedFile `
     -Content $repositoryContent `
     -Force
 
-# ============================================
 # SERVICE
-# ============================================
 
 $serviceContent = Render-Template `
     -TemplatePath "$PSScriptRoot/../templates/service.template.txt" `
@@ -87,75 +164,8 @@ Write-GeneratedFile `
     -Path "$($paths.Services)/$($modulePascal)Service.ts" `
     -Content $serviceContent `
     -Force
-# ============================================
-# QUERY HOOK
-# ============================================
 
-$queryHookContent = Render-Template `
-    -TemplatePath "$PSScriptRoot/../templates/query-hook.template.txt" `
-    -Variables $templateVariables
-
-Write-GeneratedFile `
-    -Path "$($paths.Hooks)/use$($modulePascal).ts" `
-    -Content $queryHookContent `
-    -Force
-
-
-# ============================================
-# CREATE MUTATION
-# ============================================
-
-$createMutationContent = Render-Template `
-    -TemplatePath "$PSScriptRoot/../templates/create-mutation.template.txt" `
-    -Variables $templateVariables
-
-Write-GeneratedFile `
-    -Path "$($paths.Hooks)/useCreate$($modulePascal).ts" `
-    -Content $createMutationContent `
-    -Force
-
-# ============================================
-# UPDATE MUTATION
-# ============================================
-
-$updateMutationContent = Render-Template `
-    -TemplatePath "$PSScriptRoot/../templates/update-mutation.template.txt" `
-    -Variables $templateVariables
-
-Write-GeneratedFile `
-    -Path "$($paths.Hooks)/useUpdate$($modulePascal).ts" `
-    -Content $updateMutationContent `
-    -Force
-
-# ============================================
-# DELETE MUTATION
-# ============================================
-
-$deleteMutationContent = Render-Template `
-    -TemplatePath "$PSScriptRoot/../templates/delete-mutation.template.txt" `
-    -Variables $templateVariables
-
-Write-GeneratedFile `
-    -Path "$($paths.Hooks)/useDelete$($modulePascal).ts" `
-    -Content $deleteMutationContent `
-    -Force
-
-# ============================================
-# TEST
-# ============================================
-
-$testContent = Render-Template `
-    -TemplatePath "$PSScriptRoot/../templates/test.template.txt" `
-    -Variables $templateVariables
-
-Write-GeneratedFile `
-    -Path "$($paths.Tests)/$($modulePascal)Service.test.ts" `
-    -Content $testContent `
-    -Force
-
-# ============================================
 # INDEX
-# ============================================
 
 $indexContent = Render-Template `
     -TemplatePath "$PSScriptRoot/../templates/index.template.txt" `
@@ -167,218 +177,257 @@ Write-GeneratedFile `
     -Force
 
 # ============================================
-# FILTERS
+# CRUD
 # ============================================
 
-$filtersContent = Render-Template `
-    -TemplatePath "$PSScriptRoot/../templates/filters.template.txt" `
-    -Variables $templateVariables
+Generate-IfFeature "Crud" {
 
-Write-GeneratedFile `
-    -Path "$($paths.Components)/$($modulePascal)Filters.tsx" `
-    -Content $filtersContent `
-    -Force
+    # QUERY HOOK
 
-# ============================================
-# PAGINATION
-# ============================================
+    $queryHookContent = Render-Template `
+        -TemplatePath "$PSScriptRoot/../templates/query-hook.template.txt" `
+        -Variables $templateVariables
 
-$paginationContent = Render-Template `
-    -TemplatePath "$PSScriptRoot/../templates/pagination.template.txt" `
-    -Variables $templateVariables
+    Write-GeneratedFile `
+        -Path "$($paths.Hooks)/use$($modulePascal).ts" `
+        -Content $queryHookContent `
+        -Force
 
-Write-GeneratedFile `
-    -Path "$($paths.Components)/$($modulePascal)Pagination.tsx" `
-    -Content $paginationContent `
-    -Force
+    # CREATE MUTATION
 
-# ============================================
-# SORTING
-# ============================================
+    $createMutationContent = Render-Template `
+        -TemplatePath "$PSScriptRoot/../templates/create-mutation.template.txt" `
+        -Variables $templateVariables
 
-$sortingContent = Render-Template `
-    -TemplatePath "$PSScriptRoot/../templates/sorting.template.txt" `
-    -Variables $templateVariables
+    Write-GeneratedFile `
+        -Path "$($paths.Hooks)/useCreate$($modulePascal).ts" `
+        -Content $createMutationContent `
+        -Force
 
-Write-GeneratedFile `
-    -Path "$($paths.Components)/$($modulePascal)Sorting.tsx" `
-    -Content $sortingContent `
-    -Force
+    # UPDATE MUTATION
 
+    $updateMutationContent = Render-Template `
+        -TemplatePath "$PSScriptRoot/../templates/update-mutation.template.txt" `
+        -Variables $templateVariables
 
-# ============================================
-# BULK ACTIONS
-# ============================================
+    Write-GeneratedFile `
+        -Path "$($paths.Hooks)/useUpdate$($modulePascal).ts" `
+        -Content $updateMutationContent `
+        -Force
 
-$bulkActionsContent = Render-Template `
-    -TemplatePath "$PSScriptRoot/../templates/bulk-actions.template.txt" `
-    -Variables $templateVariables
+    # DELETE MUTATION
 
-Write-GeneratedFile `
-    -Path "$($paths.Components)/$($modulePascal)BulkActions.tsx" `
-    -Content $bulkActionsContent `
-    -Force
+    $deleteMutationContent = Render-Template `
+        -TemplatePath "$PSScriptRoot/../templates/delete-mutation.template.txt" `
+        -Variables $templateVariables
 
+    Write-GeneratedFile `
+        -Path "$($paths.Hooks)/useDelete$($modulePascal).ts" `
+        -Content $deleteMutationContent `
+        -Force
 
-# ============================================
-# EXPORT ACTIONS
-# ============================================
+    # FILTERS
 
-$exportActionsContent = Render-Template `
-    -TemplatePath "$PSScriptRoot/../templates/export-actions.template.txt" `
-    -Variables $templateVariables
+    $filtersContent = Render-Template `
+        -TemplatePath "$PSScriptRoot/../templates/filters.template.txt" `
+        -Variables $templateVariables
 
-Write-GeneratedFile `
-    -Path "$($paths.Components)/$($modulePascal)ExportActions.tsx" `
-    -Content $exportActionsContent `
-    -Force
+    Write-GeneratedFile `
+        -Path "$($paths.Components)/$($modulePascal)Filters.tsx" `
+        -Content $filtersContent `
+        -Force
 
+    # PAGINATION
 
-# ============================================
-# DASHBOARD CARD
-# ============================================
+    $paginationContent = Render-Template `
+        -TemplatePath "$PSScriptRoot/../templates/pagination.template.txt" `
+        -Variables $templateVariables
 
-$dashboardCardContent = Render-Template `
-    -TemplatePath "$PSScriptRoot/../templates/dashboard-card.template.txt" `
-    -Variables $templateVariables
+    Write-GeneratedFile `
+        -Path "$($paths.Components)/$($modulePascal)Pagination.tsx" `
+        -Content $paginationContent `
+        -Force
 
-Write-GeneratedFile `
-    -Path "$($paths.Components)/$($modulePascal)DashboardCard.tsx" `
-    -Content $dashboardCardContent `
-    -Force
+    # SORTING
 
-# ============================================
-# CHART WIDGET
-# ============================================
+    $sortingContent = Render-Template `
+        -TemplatePath "$PSScriptRoot/../templates/sorting.template.txt" `
+        -Variables $templateVariables
 
-$chartWidgetContent = Render-Template `
-    -TemplatePath "$PSScriptRoot/../templates/chart-widget.template.txt" `
-    -Variables $templateVariables
+    Write-GeneratedFile `
+        -Path "$($paths.Components)/$($modulePascal)Sorting.tsx" `
+        -Content $sortingContent `
+        -Force
 
-Write-GeneratedFile `
-    -Path "$($paths.Components)/$($modulePascal)ChartWidget.tsx" `
-    -Content $chartWidgetContent `
-    -Force
+    # BULK ACTIONS
 
-# ============================================
-# REALTIME WIDGET
-# ============================================
+    $bulkActionsContent = Render-Template `
+        -TemplatePath "$PSScriptRoot/../templates/bulk-actions.template.txt" `
+        -Variables $templateVariables
 
-$realtimeWidgetContent = Render-Template `
-    -TemplatePath "$PSScriptRoot/../templates/realtime-widget.template.txt" `
-    -Variables $templateVariables
+    Write-GeneratedFile `
+        -Path "$($paths.Components)/$($modulePascal)BulkActions.tsx" `
+        -Content $bulkActionsContent `
+        -Force
 
-Write-GeneratedFile `
-    -Path "$($paths.Components)/$($modulePascal)RealtimeWidget.tsx" `
-    -Content $realtimeWidgetContent `
-    -Force
+    # EXPORT ACTIONS
 
-# ============================================
-# REALTIME LISTENER
-# ============================================
+    $exportActionsContent = Render-Template `
+        -TemplatePath "$PSScriptRoot/../templates/export-actions.template.txt" `
+        -Variables $templateVariables
 
-$realtimeListenerContent = Render-Template `
-    -TemplatePath "$PSScriptRoot/../templates/realtime-listener.template.txt" `
-    -Variables $templateVariables
+    Write-GeneratedFile `
+        -Path "$($paths.Components)/$($modulePascal)ExportActions.tsx" `
+        -Content $exportActionsContent `
+        -Force
 
-Write-GeneratedFile `
-    -Path "$($paths.Services)/subscribeTo$($modulePascal).ts" `
-    -Content $realtimeListenerContent `
-    -Force
-# ============================================
-# OFFLINE QUEUE
-# ============================================
+    # PAGES
 
-$offlineQueueContent = Render-Template `
-    -TemplatePath "$PSScriptRoot/../templates/offline-queue.template.txt" `
-    -Variables $templateVariables
+    $listPageContent = Render-Template `
+        -TemplatePath "$PSScriptRoot/../templates/list-page.template.txt" `
+        -Variables $templateVariables
 
-Write-GeneratedFile `
-    -Path "$($paths.Services)/offlineQueue.ts" `
-    -Content $offlineQueueContent `
-    -Force
+    Write-GeneratedFile `
+        -Path "$($paths.Pages)/page.tsx" `
+        -Content $listPageContent `
+        -Force
 
+    $newPageContent = Render-Template `
+        -TemplatePath "$PSScriptRoot/../templates/new-page.template.txt" `
+        -Variables $templateVariables
 
-# ============================================
-# CRUD PAGES
-# ============================================
+    Write-GeneratedFile `
+        -Path "$($paths.Pages)/nouveau/page.tsx" `
+        -Content $newPageContent `
+        -Force
 
-# LIST PAGE
+    $detailsPageContent = Render-Template `
+        -TemplatePath "$PSScriptRoot/../templates/details-page.template.txt" `
+        -Variables $templateVariables
 
-$listPageContent = Render-Template `
-    -TemplatePath "$PSScriptRoot/../templates/list-page.template.txt" `
-    -Variables $templateVariables
+    Write-GeneratedFile `
+        -Path "$($paths.Pages)/[id]/page.tsx" `
+        -Content $detailsPageContent `
+        -Force
 
-Write-GeneratedFile `
-    -Path "$($paths.Pages)/page.tsx" `
-    -Content $listPageContent `
-    -Force
+    $editPageContent = Render-Template `
+        -TemplatePath "$PSScriptRoot/../templates/edit-page.template.txt" `
+        -Variables $templateVariables
 
-# NEW PAGE
+    Write-GeneratedFile `
+        -Path "$($paths.Pages)/[id]/edit/page.tsx" `
+        -Content $editPageContent `
+        -Force
 
-$newPageContent = Render-Template `
-    -TemplatePath "$PSScriptRoot/../templates/new-page.template.txt" `
-    -Variables $templateVariables
+    # FORM
 
-Write-GeneratedFile `
-    -Path "$($paths.Pages)/nouveau/page.tsx" `
-    -Content $newPageContent `
-    -Force
+    $formContent = Render-Template `
+        -TemplatePath "$PSScriptRoot/../templates/form.template.txt" `
+        -Variables $templateVariables
 
-# DETAILS PAGE
+    Write-GeneratedFile `
+        -Path "$($paths.Components)/$($modulePascal)Form.tsx" `
+        -Content $formContent `
+        -Force
 
-$detailsPageContent = Render-Template `
-    -TemplatePath "$PSScriptRoot/../templates/details-page.template.txt" `
-    -Variables $templateVariables
+    # TABLE
 
-Write-GeneratedFile `
-    -Path "$($paths.Pages)/[id]/page.tsx" `
-    -Content $detailsPageContent `
-    -Force
+    $tableContent = Render-Template `
+        -TemplatePath "$PSScriptRoot/../templates/table.template.txt" `
+        -Variables $templateVariables
 
-# EDIT PAGE
-
-$editPageContent = Render-Template `
-    -TemplatePath "$PSScriptRoot/../templates/edit-page.template.txt" `
-    -Variables $templateVariables
-
-Write-GeneratedFile `
-    -Path "$($paths.Pages)/[id]/edit/page.tsx" `
-    -Content $editPageContent `
-    -Force
-
-
+    Write-GeneratedFile `
+        -Path "$($paths.Components)/$($modulePascal)Table.tsx" `
+        -Content $tableContent `
+        -Force
+}
 
 # ============================================
-# FORM
+# TESTS
 # ============================================
 
-$formContent = Render-Template `
-    -TemplatePath "$PSScriptRoot/../templates/form.template.txt" `
-    -Variables $templateVariables
+Generate-IfFeature "Tests" {
 
-Write-GeneratedFile `
-    -Path "$($paths.Components)/$($modulePascal)Form.tsx" `
-    -Content $formContent `
-    -Force
+    $testContent = Render-Template `
+        -TemplatePath "$PSScriptRoot/../templates/test.template.txt" `
+        -Variables $templateVariables
+
+    Write-GeneratedFile `
+        -Path "$($paths.Tests)/$($modulePascal)Service.test.ts" `
+        -Content $testContent `
+        -Force
+}
+
 # ============================================
-# TABLE
+# REALTIME
 # ============================================
 
-$tableContent = Render-Template `
-    -TemplatePath "$PSScriptRoot/../templates/table.template.txt" `
-    -Variables $templateVariables
+Generate-IfFeature "Realtime" {
 
-Write-GeneratedFile `
-    -Path "$($paths.Components)/$($modulePascal)Table.tsx" `
-    -Content $tableContent `
-    -Force
+    $realtimeWidgetContent = Render-Template `
+        -TemplatePath "$PSScriptRoot/../templates/realtime-widget.template.txt" `
+        -Variables $templateVariables
 
+    Write-GeneratedFile `
+        -Path "$($paths.Components)/$($modulePascal)RealtimeWidget.tsx" `
+        -Content $realtimeWidgetContent `
+        -Force
+
+    $realtimeListenerContent = Render-Template `
+        -TemplatePath "$PSScriptRoot/../templates/realtime-listener.template.txt" `
+        -Variables $templateVariables
+
+    Write-GeneratedFile `
+        -Path "$($paths.Services)/subscribeTo$($modulePascal).ts" `
+        -Content $realtimeListenerContent `
+        -Force
+}
+
+# ============================================
+# OFFLINE
+# ============================================
+
+Generate-IfFeature "Offline" {
+
+    $offlineQueueContent = Render-Template `
+        -TemplatePath "$PSScriptRoot/../templates/offline-queue.template.txt" `
+        -Variables $templateVariables
+
+    Write-GeneratedFile `
+        -Path "$($paths.Services)/offlineQueue.ts" `
+        -Content $offlineQueueContent `
+        -Force
+}
+
+# ============================================
+# DASHBOARD
+# ============================================
+
+Generate-IfFeature "Dashboard" {
+
+    $dashboardCardContent = Render-Template `
+        -TemplatePath "$PSScriptRoot/../templates/dashboard-card.template.txt" `
+        -Variables $templateVariables
+
+    Write-GeneratedFile `
+        -Path "$($paths.Components)/$($modulePascal)DashboardCard.tsx" `
+        -Content $dashboardCardContent `
+        -Force
+
+    $chartWidgetContent = Render-Template `
+        -TemplatePath "$PSScriptRoot/../templates/chart-widget.template.txt" `
+        -Variables $templateVariables
+
+    Write-GeneratedFile `
+        -Path "$($paths.Components)/$($modulePascal)ChartWidget.tsx" `
+        -Content $chartWidgetContent `
+        -Force
+}
 
 # ============================================
 # DONE
 # ============================================
 
 Write-Host ""
-Write-Host "[OK] Enterprise module generated: $modulePascal"
+Write-Host "[OK] Enterprise module generated: $modulePascal" -ForegroundColor Green
 Write-Host ""
