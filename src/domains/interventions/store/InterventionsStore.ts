@@ -1,6 +1,6 @@
-// src/domains/maintenance/store/MaintenanceStore.ts
+// src/domains/interventions/store/InterventionsStore.ts
 
-export interface MaintenanceTimelineEntry {
+export interface InterventionsTimelineEntry {
 
   id: string;
 
@@ -9,7 +9,7 @@ export interface MaintenanceTimelineEntry {
   date: string;
 }
 
-export interface MaintenanceItem {
+export interface InterventionsItem {
 
   id: string;
 
@@ -18,16 +18,16 @@ export interface MaintenanceItem {
   workflow: string;
 
   timeline:
-    MaintenanceTimelineEntry[];
+    InterventionsTimelineEntry[];
 }
 
-class MaintenanceStoreManager {
+class InterventionsStoreManager {
 
   private items:
-    MaintenanceItem[] = [];
+    InterventionsItem[] = [];
 
   add(
-    item: MaintenanceItem
+    item: InterventionsItem
   ) {
 
     this.items.unshift(
@@ -83,5 +83,5 @@ class MaintenanceStoreManager {
   }
 }
 
-export const MaintenanceStore =
-  new MaintenanceStoreManager();
+export const InterventionsStore =
+  new InterventionsStoreManager();

@@ -1,4 +1,4 @@
-// src/components/maintenance/MaintenanceForm.tsx
+// src/components/materiels/MaterielsForm.tsx
 
 "use client";
 
@@ -18,11 +18,11 @@ import { ExecutionMode }
 from "@/platform/modules/types/ExecutionMode";
 
 import {
-  MaintenanceStore
+  MaterielsStore
 }
-from "@/domains/maintenance/store/MaintenanceStore";
+from "@/domains/materiels/store/MaterielsStore";
 
-export function MaintenanceForm() {
+export function MaterielsForm() {
 
   const router =
     useRouter();
@@ -35,7 +35,7 @@ export function MaintenanceForm() {
     await ModuleRuntime.create({
 
       domain:
-        "maintenance",
+        "materiels",
 
       action:
         "create",
@@ -58,7 +58,7 @@ export function MaintenanceForm() {
     const id =
       crypto.randomUUID();
 
-    MaintenanceStore.add({
+    MaterielsStore.add({
 
       id,
 
@@ -75,7 +75,7 @@ export function MaintenanceForm() {
             crypto.randomUUID(),
 
           label:
-            "Maintenance créé",
+            "Materiels créé",
 
           date:
             new Date()
@@ -85,7 +85,7 @@ export function MaintenanceForm() {
     });
 
     router.push(
-      `/maintenance/`
+      `/materiels/`
     );
   }
 
