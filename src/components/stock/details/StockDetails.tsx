@@ -18,6 +18,12 @@ from "@/components/workflow/WorkflowStatus";
 import { Timeline }
 from "@/components/timeline/Timeline";
 
+import { WorkflowActions }
+from "@/components/erp/workflow/WorkflowActions";
+
+import { EntityDetailsLayout }
+from "@/components/erp/details/EntityDetailsLayout";
+
 interface StockDetailsProps {
 
   stock:
@@ -58,11 +64,14 @@ export function StockDetails({
 
   return (
 
-    <div
-      className="
-        flex
-        flex-col
-        gap-6
+    <EntityDetailsLayout
+
+      title={
+        stock.produit
+      }
+
+      subtitle="
+        Détail du stock ERP
       "
     >
 
@@ -86,32 +95,23 @@ export function StockDetails({
           "
         >
 
-          <div>
-
-            <h2
-              className="
-                text-2xl
-                font-bold
-                mb-2
-              "
-            >
-              {stock.produit}
-            </h2>
-
-            <p
-              className="
-                text-zinc-500
-              "
-            >
-              Détail du stock ERP
-            </p>
-          </div>
-
           <WorkflowStatus
             status={
               stock.workflow
             }
           />
+
+          <WorkflowActions
+
+            onValidate={
+              validateWorkflow
+            }
+
+            onApprove={
+              approveWorkflow
+            }
+          />
+
         </div>
 
         <div
@@ -166,49 +166,6 @@ export function StockDetails({
 
         </div>
 
-        <div
-          className="
-            flex
-            gap-4
-          "
-        >
-
-          <button
-
-            onClick={
-              validateWorkflow
-            }
-
-            className="
-              bg-zinc-800
-              text-white
-              px-4
-              py-3
-              rounded-xl
-            "
-          >
-            Valider
-          </button>
-
-          <button
-
-            onClick={
-              approveWorkflow
-            }
-
-            className="
-              bg-black
-              text-white
-              px-4
-              py-3
-              rounded-xl
-            "
-          >
-            Approuver
-          </button>
-
-        </div>
-
       </div>
 
       <Timeline
@@ -217,6 +174,6 @@ export function StockDetails({
         }
       />
 
-    </div>
+    </EntityDetailsLayout>
   );
 }

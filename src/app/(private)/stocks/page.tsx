@@ -8,6 +8,12 @@ from "next/link";
 import { ERPLayout }
 from "@/components/layout/ERPLayout";
 
+import { ERPDataTable }
+from "@/components/erp/datatable/ERPDataTable";
+
+import { ERPFilterBar }
+from "@/components/erp/filters/ERPFilterBar";
+
 import { StockStore }
 from "@/domains/stock/store/StockStore";
 
@@ -15,6 +21,19 @@ export default function StocksPage() {
 
   const stocks =
     StockStore.all();
+
+  const data =
+    stocks.map(stock => ({
+
+      produit:
+        stock.produit,
+
+      quantite:
+        stock.quantite,
+
+      workflow:
+        stock.workflow
+    }));
 
   return (
 
@@ -67,115 +86,49 @@ export default function StocksPage() {
 
       <div
         className="
-          bg-white
-          rounded-2xl
-          shadow-sm
-          overflow-hidden
+          flex
+          flex-col
+          gap-6
         "
       >
 
-        <table
-          className="w-full"
-        >
+        <ERPFilterBar />
 
-          <thead
-            className="
-              bg-zinc-100
-            "
-          >
+        <ERPDataTable
 
-            <tr>
+          columns={[
 
-              <th
-                className="
-                  p-4
-                  text-left
-                "
-              >
-                Produit
-              </th>
+            {
 
-              <th
-                className="
-                  p-4
-                  text-left
-                "
-              >
-                Quantité
-              </th>
+              key:
+                "produit",
 
-              <th
-                className="
-                  p-4
-                  text-left
-                "
-              >
-                Workflow
-              </th>
+              label:
+                "Produit"
+            },
 
-              <th
-                className="
-                  p-4
-                  text-left
-                "
-              >
-                Actions
-              </th>
-            </tr>
-          </thead>
+            {
 
-          <tbody>
+              key:
+                "quantite",
 
-            {stocks.map(stock => (
+              label:
+                "Quantité"
+            },
 
-              <tr
+            {
 
-                key={stock.id}
+              key:
+                "workflow",
 
-                className="
-                  border-t
-                "
-              >
+              label:
+                "Workflow"
+            }
+          ]}
 
-                <td
-                  className="p-4"
-                >
-                  {stock.produit}
-                </td>
+          data={data}
+        />
 
-                <td
-                  className="p-4"
-                >
-                  {stock.quantite}
-                </td>
-
-                <td
-                  className="p-4"
-                >
-                  {stock.workflow}
-                </td>
-
-                <td
-                  className="p-4"
-                >
-
-                  <Link
-
-                    href={`/stocks/${stock.id}`}
-
-                    className="
-                      text-blue-600
-                    "
-                  >
-                    Ouvrir
-                  </Link>
-
-                </td>
-
-              </tr>
-            ))}
-          </tbody>
-        </table>
       </div>
 
     </ERPLayout>

@@ -8,6 +8,9 @@ from "react";
 import { useRouter }
 from "next/navigation";
 
+import { ERPFormSection }
+from "@/components/erp/forms/ERPFormSection";
+
 import { ModuleRuntime }
 from "@/platform/modules/runtime/ModuleRuntime";
 
@@ -117,16 +120,8 @@ export function StockForm() {
 
   return (
 
-    <div
-      className="
-        bg-white
-        rounded-2xl
-        shadow-sm
-        p-6
-        flex
-        flex-col
-        gap-4
-      "
+    <ERPFormSection
+      title="Informations stock"
     >
 
       <div>
@@ -218,6 +213,6 @@ export function StockForm() {
           : "Enregistrer"}
       </button>
 
-    </div>
+    </ERPFormSection>
   );
 }
