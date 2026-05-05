@@ -1,23 +1,10 @@
 ﻿import { InterventionService }
 from "../services/InterventionService";
 
-export class
-BreakdownInterventionWorkflow {
-
-  private service =
-    new InterventionService();
-
-  async execute(
-    payload?: unknown
-  ) {
-
-    console.log(
-      "[Workflow] breakdown intervention"
+export class BreakdownInterventionWorkflow {
+  async execute(payload?: unknown) {
+    return InterventionService.create(
+      payload as never
     );
-
-    return this.service
-      .createIntervention(
-        payload
-      );
   }
 }

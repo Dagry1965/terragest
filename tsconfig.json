@@ -54,8 +54,23 @@
   ],
 
   "exclude": [
-    "node_modules",
-    "experimental",
-    "mobile"
-  ]
+  "node_modules",
+  ".next",
+  "out",
+  "dist",
+  "backups",
+  "coverage",
+  "reports",
+  "scripts",
+  "tests",
+  "platform/tests",
+  "src/_quarantine",
+  "experimental",
+  "experimental/**",
+  "mobile",
+  "mobile/**",
+  "src/**/*.test.ts",
+  "src/**/*.test.tsx",
+  "jest.config.ts"
+]
 }
