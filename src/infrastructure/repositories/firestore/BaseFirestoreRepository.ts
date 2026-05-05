@@ -12,6 +12,8 @@ import {
 
   getDocs,
 
+  onSnapshot,
+
   updateDoc
 }
 from "firebase/firestore";
@@ -108,6 +110,36 @@ export class BaseFirestoreRepository<T> {
       ),
 
       data as object
+    );
+  }
+
+  subscribe(
+    callback:
+      (data: unknown[]) => void
+  ) {
+
+    return onSnapshot(
+
+      collection(
+        db,
+        this.collectionName
+      ),
+
+      snapshot => {
+
+        const data =
+          snapshot.docs.map(
+            doc => ({
+
+              id:
+                doc.id,
+
+              ...doc.data()
+            })
+          );
+
+        callback(data);
+      }
     );
   }
 }

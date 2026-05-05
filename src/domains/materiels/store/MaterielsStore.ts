@@ -37,6 +37,23 @@ class MaterielsStoreManager {
     );
   }
 
+  subscribe() {
+
+    materielsRepository.subscribe(
+
+      data => {
+
+        this.items =
+          data as MaterielItem[];
+
+        console.log(
+          "[MATERIELS REALTIME]",
+          this.items.length
+        );
+      }
+    );
+  }
+
   async add(
     item: MaterielItem
   ) {

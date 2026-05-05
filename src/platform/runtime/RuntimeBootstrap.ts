@@ -13,8 +13,10 @@ export class RuntimeBootstrap {
 
     await MaterielsStore.load();
 
+    MaterielsStore.subscribe();
+
     console.log(
-      "[BOOTSTRAP] Runtime ready"
+      "[BOOTSTRAP] Runtime realtime ready"
     );
   }
 }
