@@ -1,32 +1,35 @@
-import type { Metadata }
-from "next";
+// src/app/layout.tsx
 
 import "./globals.css";
 
-export const metadata:
-Metadata = {
+import {
+  RuntimeBootstrapProvider
+}
+from "@/components/bootstrap/RuntimeBootstrapProvider";
 
-  title: "Terragest",
+export default function RootLayout({
 
-  description:
-    "ERP Agricole SaaS",
+  children
+}: {
 
-  manifest:
-    "/manifest.json",
-};
-
-export default function
-RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+  children:
+    React.ReactNode;
+}) {
 
   return (
+
     <html lang="fr">
+
       <body>
-        {children}
+
+        <RuntimeBootstrapProvider>
+
+          {children}
+
+        </RuntimeBootstrapProvider>
+
       </body>
+
     </html>
   );
 }
