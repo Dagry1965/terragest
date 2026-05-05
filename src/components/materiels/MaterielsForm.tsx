@@ -29,7 +29,7 @@ export function MaterielsForm() {
 
   const [nom, setNom] =
     useState("");
-    
+
   async function handleSubmit() {
 
     await ModuleRuntime.create({
@@ -64,41 +64,33 @@ export function MaterielsForm() {
 
       nom,
 
-      workflow:
-        "DRAFT",
+      statut:
+        "OPERATIONNEL",
 
-      timeline: [
+      historique: [
 
-        {
-
-          id:
-            crypto.randomUUID(),
-
-          label:
-            "Materiels crÃ©Ã©",
-
-          date:
-            new Date()
-              .toLocaleString()
-        }
+        `${new Date().toLocaleString()} - Création matériel`
       ]
     });
 
     router.push(
-      `/materiels/`
+      `/materiels/${id}`
     );
   }
 
   return (
 
     <ERPFormSection
-      title="Informations"
+      title="Matériel"
     >
 
       <div>
 
         <label
-          className="block mb-2"
+          className="
+            block
+            mb-2
+          "
         >
           Nom
         </label>

@@ -1,85 +1,38 @@
 // src/domains/interventions/store/InterventionsStore.ts
 
-export interface InterventionsTimelineEntry {
+export interface InterventionItem {
 
   id: string;
 
-  label: string;
+  materielId: string;
 
-  date: string;
-}
-
-export interface InterventionsItem {
-
-  id: string;
-
-  nom: string;
+  description: string;
 
   workflow: string;
-
-  timeline:
-    InterventionsTimelineEntry[];
 }
 
 class InterventionsStoreManager {
 
   private items:
-    InterventionsItem[] = [];
+    InterventionItem[] = [];
 
   add(
-    item: InterventionsItem
+    item: InterventionItem
   ) {
 
     this.items.unshift(
       item
+    );
+
+    console.log(
+      "[INTERVENTION CREATED]",
+      item.id
     );
   }
 
   all() {
 
     return this.items;
-  }
-
-  find(
-    id: string
-  ) {
-
-    return this.items.find(
-      item =>
-        item.id === id
-    );
-  }
-
-  transition(
-
-    id: string,
-
-    workflow: string
-  ) {
-
-    const item =
-      this.find(id);
-
-    if (!item) {
-
-      return;
-    }
-
-    item.workflow =
-      workflow;
-
-    item.timeline.unshift({
-
-      id:
-        crypto.randomUUID(),
-
-      label:
-        `Workflow `,
-
-      date:
-        new Date()
-          .toLocaleString()
-    });
   }
 }
 

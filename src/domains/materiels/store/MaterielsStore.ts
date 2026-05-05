@@ -1,43 +1,29 @@
 // src/domains/materiels/store/MaterielsStore.ts
 
-export interface MaterielsTimelineEntry {
-
-  id: string;
-
-  label: string;
-
-  date: string;
-}
-
-export interface MaterielsItem {
+export interface MaterielItem {
 
   id: string;
 
   nom: string;
 
-  workflow: string;
+  statut: string;
 
-  timeline:
-    MaterielsTimelineEntry[];
+  historique:
+    string[];
 }
 
 class MaterielsStoreManager {
 
   private items:
-    MaterielsItem[] = [];
+    MaterielItem[] = [];
 
   add(
-    item: MaterielsItem
+    item: MaterielItem
   ) {
 
     this.items.unshift(
       item
     );
-  }
-
-  all() {
-
-    return this.items;
   }
 
   find(
@@ -50,11 +36,11 @@ class MaterielsStoreManager {
     );
   }
 
-  transition(
+  setStatus(
 
     id: string,
 
-    workflow: string
+    statut: string
   ) {
 
     const item =
@@ -65,21 +51,18 @@ class MaterielsStoreManager {
       return;
     }
 
-    item.workflow =
-      workflow;
+    item.statut =
+      statut;
 
-    item.timeline.unshift({
+    item.historique.unshift(
 
-      id:
-        crypto.randomUUID(),
+      `${new Date().toLocaleString()} - ${statut}`
+    );
+  }
 
-      label:
-        `Workflow `,
+  all() {
 
-      date:
-        new Date()
-          .toLocaleString()
-    });
+    return this.items;
   }
 }
 

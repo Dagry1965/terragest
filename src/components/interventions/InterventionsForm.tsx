@@ -29,7 +29,7 @@ export function InterventionsForm() {
 
   const [nom, setNom] =
     useState("");
-    
+
   async function handleSubmit() {
 
     await ModuleRuntime.create({
@@ -62,45 +62,36 @@ export function InterventionsForm() {
 
       id,
 
-      nom,
+      materielId:
+        crypto.randomUUID(),
+
+      description:
+        nom,
 
       workflow:
-        "DRAFT",
-
-      timeline: [
-
-        {
-
-          id:
-            crypto.randomUUID(),
-
-          label:
-            "Interventions créé",
-
-          date:
-            new Date()
-              .toLocaleString()
-        }
-      ]
+        "OPEN"
     });
 
     router.push(
-      `/interventions/`
+      `/interventions/${id}`
     );
   }
 
   return (
 
     <ERPFormSection
-      title="Informations"
+      title="Intervention"
     >
 
       <div>
 
         <label
-          className="block mb-2"
+          className="
+            block
+            mb-2
+          "
         >
-          Nom
+          Description
         </label>
 
         <input
