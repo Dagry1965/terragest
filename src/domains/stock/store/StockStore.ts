@@ -1,5 +1,14 @@
 // src/domains/stock/store/StockStore.ts
 
+export interface StockTimelineEntry {
+
+  id: string;
+
+  label: string;
+
+  date: string;
+}
+
 export interface StockItem {
 
   id: string;
@@ -9,6 +18,9 @@ export interface StockItem {
   quantite: number;
 
   workflow: string;
+
+  timeline:
+    StockTimelineEntry[];
 }
 
 class StockStoreManager {
@@ -33,6 +45,53 @@ class StockStoreManager {
   all() {
 
     return this.items;
+  }
+
+  find(
+    id: string
+  ) {
+
+    return this.items.find(
+      item =>
+        item.id === id
+    );
+  }
+
+  transition(
+
+    id: string,
+
+    workflow: string
+  ) {
+
+    const item =
+      this.find(id);
+
+    if (!item) {
+
+      return;
+    }
+
+    item.workflow =
+      workflow;
+
+    item.timeline.unshift({
+
+      id:
+        crypto.randomUUID(),
+
+      label:
+        `Workflow ${workflow}`,
+
+      date:
+        new Date()
+          .toLocaleString()
+    });
+
+    console.log(
+      "[STOCK WORKFLOW]",
+      workflow
+    );
   }
 }
 

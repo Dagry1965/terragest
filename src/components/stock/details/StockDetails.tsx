@@ -2,10 +2,21 @@
 
 "use client";
 
+import { useRouter }
+from "next/navigation";
+
 import {
-  StockItem
+  StockItem,
+
+  StockStore
 }
 from "@/domains/stock/store/StockStore";
+
+import { WorkflowStatus }
+from "@/components/workflow/WorkflowStatus";
+
+import { Timeline }
+from "@/components/timeline/Timeline";
 
 interface StockDetailsProps {
 
@@ -18,116 +29,193 @@ export function StockDetails({
   stock
 }: StockDetailsProps) {
 
+  const router =
+    useRouter();
+
+  function validateWorkflow() {
+
+    StockStore.transition(
+
+      stock.id,
+
+      "VALIDATED"
+    );
+
+    router.refresh();
+  }
+
+  function approveWorkflow() {
+
+    StockStore.transition(
+
+      stock.id,
+
+      "APPROVED"
+    );
+
+    router.refresh();
+  }
+
   return (
 
     <div
       className="
-        bg-white
-        rounded-2xl
-        shadow-sm
-        p-6
         flex
         flex-col
         gap-6
       "
     >
 
-      <div>
-
-        <h2
-          className="
-            text-2xl
-            font-bold
-            mb-2
-          "
-        >
-          {stock.produit}
-        </h2>
-
-        <p
-          className="
-            text-zinc-500
-          "
-        >
-          Détail du stock ERP
-        </p>
-      </div>
-
       <div
         className="
-          grid
-          grid-cols-2
+          bg-white
+          rounded-2xl
+          shadow-sm
+          p-6
+          flex
+          flex-col
           gap-6
         "
       >
 
-        <div>
+        <div
+          className="
+            flex
+            items-center
+            justify-between
+          "
+        >
 
-          <div
-            className="
-              text-sm
-              text-zinc-500
-              mb-1
-            "
-          >
-            Produit
+          <div>
+
+            <h2
+              className="
+                text-2xl
+                font-bold
+                mb-2
+              "
+            >
+              {stock.produit}
+            </h2>
+
+            <p
+              className="
+                text-zinc-500
+              "
+            >
+              Détail du stock ERP
+            </p>
           </div>
 
-          <div
-            className="
-              font-medium
-            "
-          >
-            {stock.produit}
-          </div>
+          <WorkflowStatus
+            status={
+              stock.workflow
+            }
+          />
         </div>
 
-        <div>
+        <div
+          className="
+            grid
+            grid-cols-2
+            gap-6
+          "
+        >
 
-          <div
-            className="
-              text-sm
-              text-zinc-500
-              mb-1
-            "
-          >
-            Quantité
+          <div>
+
+            <div
+              className="
+                text-sm
+                text-zinc-500
+                mb-1
+              "
+            >
+              Produit
+            </div>
+
+            <div
+              className="
+                font-medium
+              "
+            >
+              {stock.produit}
+            </div>
           </div>
 
-          <div
-            className="
-              font-medium
-            "
-          >
-            {stock.quantite}
+          <div>
+
+            <div
+              className="
+                text-sm
+                text-zinc-500
+                mb-1
+              "
+            >
+              Quantité
+            </div>
+
+            <div
+              className="
+                font-medium
+              "
+            >
+              {stock.quantite}
+            </div>
           </div>
+
         </div>
 
-        <div>
+        <div
+          className="
+            flex
+            gap-4
+          "
+        >
 
-          <div
+          <button
+
+            onClick={
+              validateWorkflow
+            }
+
             className="
-              text-sm
-              text-zinc-500
-              mb-1
+              bg-zinc-800
+              text-white
+              px-4
+              py-3
+              rounded-xl
             "
           >
-            Workflow
-          </div>
+            Valider
+          </button>
 
-          <div
+          <button
+
+            onClick={
+              approveWorkflow
+            }
+
             className="
-              inline-flex
-              px-3
-              py-1
-              rounded-full
-              bg-zinc-100
+              bg-black
+              text-white
+              px-4
+              py-3
+              rounded-xl
             "
           >
-            {stock.workflow}
-          </div>
+            Approuver
+          </button>
+
         </div>
+
       </div>
+
+      <Timeline
+        entries={
+          stock.timeline
+        }
+      />
 
     </div>
   );

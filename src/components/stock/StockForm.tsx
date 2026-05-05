@@ -65,10 +65,12 @@ export function StockForm() {
         }
       });
 
+      const id =
+        crypto.randomUUID();
+
       StockStore.add({
 
-        id:
-          crypto.randomUUID(),
+        id,
 
         produit,
 
@@ -78,15 +80,27 @@ export function StockForm() {
           ),
 
         workflow:
-          "DRAFT"
+          "DRAFT",
+
+        timeline: [
+
+          {
+
+            id:
+              crypto.randomUUID(),
+
+            label:
+              "Stock créé",
+
+            date:
+              new Date()
+                .toLocaleString()
+          }
+        ]
       });
 
-      console.log(
-        "[STOCK CREATED]"
-      );
-
       router.push(
-        "/stocks"
+        `/stocks/${id}`
       );
 
     } catch (error) {
