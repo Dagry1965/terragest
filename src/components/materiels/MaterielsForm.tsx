@@ -30,58 +30,76 @@ export function MaterielsForm() {
   const [nom, setNom] =
     useState("");
 
+  const [loading, setLoading] =
+    useState(false);
+
   async function handleSubmit() {
 
-    await ModuleRuntime.create({
+    setLoading(true);
 
-      domain:
-        "materiels",
+    try {
 
-      action:
-        "create",
+      await ModuleRuntime.create({
 
-      mode:
-        ExecutionMode.INTERACTIVE,
+        domain:
+          "materiels",
 
-      user:
-        "admin",
+        action:
+          "create",
 
-      tenant:
-        "default",
+        mode:
+          ExecutionMode.INTERACTIVE,
 
-      payload: {
+        user:
+          "admin",
 
-        nom
-      }
-    });
+        tenant:
+          "default",
 
-    const id =
-      crypto.randomUUID();
+        payload: {
 
-    MaterielsStore.add({
+          nom
+        }
+      });
 
-      id,
+      const id =
+        crypto.randomUUID();
 
-      nom,
+      await MaterielsStore.add({
 
-      statut:
-        "OPERATIONNEL",
+        id,
 
-      historique: [
+        nom,
 
-        `${new Date().toLocaleString()} - CrÈation matÈriel`
-      ]
-    });
+        statut:
+          "OPERATIONNEL",
 
-    router.push(
-      `/materiels/${id}`
-    );
+        historique: [
+
+          `${new Date().toLocaleString()} - Cr√©ation mat√©riel`
+        ]
+      });
+
+      router.push(
+        `/materiels/${id}`
+      );
+
+    } catch (error) {
+
+      console.error(
+        error
+      );
+
+    } finally {
+
+      setLoading(false);
+    }
   }
 
   return (
 
     <ERPFormSection
-      title="MatÈriel"
+      title="Mat√©riel"
     >
 
       <div>
@@ -121,6 +139,10 @@ export function MaterielsForm() {
           handleSubmit
         }
 
+        disabled={
+          loading
+        }
+
         className="
           bg-black
           text-white
@@ -128,7 +150,12 @@ export function MaterielsForm() {
           py-3
         "
       >
-        Enregistrer
+
+        {loading
+
+          ? "Cr√©ation..."
+
+          : "Enregistrer"}
       </button>
 
     </ERPFormSection>

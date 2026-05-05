@@ -1,5 +1,10 @@
 // src/domains/materiels/store/MaterielsStore.ts
 
+import {
+  materielsRepository
+}
+from "@/domains/materiels/repositories/MaterielsRepository";
+
 export interface MaterielItem {
 
   id: string;
@@ -17,12 +22,35 @@ class MaterielsStoreManager {
   private items:
     MaterielItem[] = [];
 
-  add(
+  async load() {
+
+    const data =
+      await materielsRepository
+        .findAll();
+
+    this.items =
+      data as MaterielItem[];
+
+    console.log(
+      "[MATERIELS LOADED]",
+      this.items.length
+    );
+  }
+
+  async add(
     item: MaterielItem
   ) {
 
     this.items.unshift(
       item
+    );
+
+    await materielsRepository
+      .create(item);
+
+    console.log(
+      "[MATERIEL CREATED]",
+      item.nom
     );
   }
 
@@ -36,7 +64,7 @@ class MaterielsStoreManager {
     );
   }
 
-  setStatus(
+  async setStatus(
 
     id: string,
 
@@ -58,6 +86,15 @@ class MaterielsStoreManager {
 
       `${new Date().toLocaleString()} - ${statut}`
     );
+
+    await materielsRepository
+      .update(id, {
+
+        statut,
+
+        historique:
+          item.historique
+      });
   }
 
   all() {
