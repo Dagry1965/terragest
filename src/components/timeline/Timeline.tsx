@@ -1,3 +1,4 @@
+﻿import { formatDisplayValue } from "@/core/utils/formatFirestoreDate";
 // src/components/timeline/Timeline.tsx
 
 interface TimelineEntry {
@@ -76,7 +77,7 @@ export function Timeline({
                 text-zinc-500
               "
             >
-              {entry.date}
+              {formatDisplayValue(entry.date)}
             </div>
 
           </div>
@@ -85,3 +86,5 @@ export function Timeline({
     </div>
   );
 }
+
+

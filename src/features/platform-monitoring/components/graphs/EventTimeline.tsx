@@ -1,6 +1,7 @@
-// src/features/platform-monitoring/components/graphs/EventTimeline.tsx
+﻿"use client";
 
-"use client";
+import { formatDisplayValue } from "@/core/utils/formatFirestoreDate";
+// src/features/platform-monitoring/components/graphs/EventTimeline.tsx
 
 interface EventItem {
 
@@ -45,7 +46,7 @@ export function EventTimeline({
               </p>
 
               <p className="text-sm opacity-70">
-                {event.timestamp}
+                {formatDisplayValue(event.timestamp)}
               </p>
             </div>
           )
@@ -54,3 +55,4 @@ export function EventTimeline({
     </div>
   );
 }
+

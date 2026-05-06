@@ -1,22 +1,45 @@
-﻿import type { BusinessRule }
-from "./BusinessRule";
+﻿import type {
+  Rule
+}
+from "./types/Rule";
 
 export const
 MaterielCriticalRule:
-BusinessRule = {
+  Rule = {
 
-  id: "RULE_MAT_CRITICAL",
+  id:
+    "MATERIEL_CRITICAL_RULE",
 
   name:
-    "Critical Material Breakdown",
+    "Critical Materiel Rule",
 
-  condition:
-    "severity === HIGH",
+  description:
+    "Détection matériel critique",
 
-  action:
-    "URGENT_MAINTENANCE",
+  async condition(
+    context
+  ) {
 
-  priority: 1,
+    const payload =
+      context.payload as {
+        categorie?: string;
+      };
 
-  enabled: true,
+    return (
+      payload?.categorie?.toLowerCase()
+      === "critique"
+    );
+  },
+
+  async action(
+    context
+  ) {
+
+    console.log(
+
+      "[RULE] Critical materiel detected",
+
+      context.payload
+    );
+  },
 };

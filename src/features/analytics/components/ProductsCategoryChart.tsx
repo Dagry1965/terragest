@@ -75,11 +75,7 @@ export const ProductsCategoryChart =
       >
         CatÃ©gories Produits
       </h3>
-
-      <ResponsiveContainer
-        width="100%"
-        height="100%"
-      >
+<ResponsiveContainer width="100%" height={280}>
         <PieChart>
 
           <Pie

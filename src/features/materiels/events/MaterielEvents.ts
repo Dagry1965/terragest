@@ -1,11 +1,16 @@
-﻿export const MATERIEL_CREATED =
-  "MATERIEL_CREATED";
+﻿import {
+  RuntimeEventRegistry
+}
+from "@/runtime/events/RuntimeEventRegistry";
 
-export const MATERIEL_UPDATED =
-  "MATERIEL_UPDATED";
+export {
+  RuntimeEventRegistry
+}
+from "@/runtime/events/RuntimeEventRegistry";
 
-export const MATERIEL_DELETED =
-  "MATERIEL_DELETED";
-
-export const MATERIEL_BREAKDOWN_DECLARED =
-  "MATERIEL_BREAKDOWN_DECLARED";
+export const {
+  MATERIEL_CREATED,
+  MATERIEL_UPDATED,
+  MATERIEL_DELETED,
+  MATERIEL_BREAKDOWN_DECLARED,
+} = RuntimeEventRegistry;

@@ -34,7 +34,12 @@ export default function LoginPage() {
 
     if (success) {
 
-      router.push("/");
+      document.cookie =
+        "token=authenticated; path=/; max-age=86400; SameSite=Lax";
+
+      router.push(
+        "/dashboard"
+      );
     }
   }
 
@@ -139,6 +144,7 @@ export default function LoginPage() {
           >
             Se connecter
           </button>
+
         </div>
       </div>
     </div>

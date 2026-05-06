@@ -1,38 +1,63 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname }
+
+import {
+  useEffect,
+  useState,
+}
+from "react";
+
+import {
+  usePathname
+}
 from "next/navigation";
 
-const menuItems = [
-  {
-    label: "Dashboard",
-    href: "/dashboard",
-  },
-  {
-    label: "Exploitations",
-    href: "/exploitations",
-  },
-  {
-    label: "Produits",
-    href: "/produits",
-  },
-  {
-    label: "Stocks",
-    href: "/stocks",
-  },
-  {
-    label: "MatÃ©riels",
-    href: "/materiels",
-  },
-];
+import {
+  loadFeatures
+}
+from "@/platform/bootstrap/loadFeatures";
+
+import {
+  buildNavigation,
+  type NavigationItem,
+}
+from "@/platform/navigation/buildNavigation";
 
 export const Sidebar = () => {
 
   const pathname =
     usePathname();
 
+  const [
+    items,
+    setItems
+  ] = useState<
+    NavigationItem[]
+  >([]);
+
+  useEffect(() => {
+
+    async function bootstrap() {
+
+      await loadFeatures();
+
+      const navigation =
+  buildNavigation(
+    "ADMIN"
+  );
+
+      setItems(
+        navigation
+      );
+    }
+
+    bootstrap();
+
+  }, []);
+
   return (
+
     <aside
       className="
         hidden
@@ -45,6 +70,7 @@ export const Sidebar = () => {
         p-6
       "
     >
+
       <div className="mb-10">
 
         <h1
@@ -65,38 +91,45 @@ export const Sidebar = () => {
         >
           ERP Agricole SaaS
         </p>
+
       </div>
 
       <nav className="space-y-2">
 
-        {menuItems.map((item) => {
+        {items.map(
+          item => {
 
-          const active =
-            pathname.startsWith(
-              item.href
+            const active =
+              pathname.startsWith(
+                item.route
+              );
+
+            return (
+
+              <Link
+                key={item.route}
+                href={item.route}
+                className={`
+                  block
+                  rounded-xl
+                  px-4
+                  py-3
+                  transition
+                  ${
+                    active
+                      ? "bg-white text-black"
+                      : "hover:bg-white/10"
+                  }
+                `}
+              >
+
+                {item.label}
+
+              </Link>
             );
+          }
+        )}
 
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`
-                block
-                rounded-xl
-                px-4
-                py-3
-                transition
-                ${
-                  active
-                    ? "bg-white text-black"
-                    : "hover:bg-white/10"
-                }
-              `}
-            >
-              {item.label}
-            </Link>
-          );
-        })}
       </nav>
 
       <div className="mt-auto pt-10">
@@ -108,6 +141,7 @@ export const Sidebar = () => {
             p-4
           "
         >
+
           <p className="text-sm">
             Terragest Platform
           </p>
@@ -119,10 +153,13 @@ export const Sidebar = () => {
               mt-1
             "
           >
-            Production Ready
+            Runtime Driven ERP
           </p>
+
         </div>
+
       </div>
+
     </aside>
   );
 };

@@ -57,10 +57,8 @@ export const StockValueChart =
         Valeur du Stock
       </h3>
 
-      <ResponsiveContainer
-        width="100%"
-        height="100%"
-      >
+     <ResponsiveContainer width="100%" height={280}>
+      
         <BarChart data={chartData}>
 
           <XAxis dataKey="nom" />

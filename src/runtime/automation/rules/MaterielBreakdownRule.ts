@@ -1,23 +1,52 @@
-﻿import type { AutomationRule }
-from "./AutomationRule";
+﻿import type {
+  Automation
+}
+from "../types/Automation";
+
+import {
+  RuntimeEventRegistry
+}
+from "@/runtime/events/RuntimeEventRegistry";
 
 export const
 MaterielBreakdownRule:
-AutomationRule = {
+  Automation = {
 
-  id: "RULE_MAT_BREAKDOWN",
+  id:
+    "AUTOMATION_MATERIEL_BREAKDOWN",
 
   name:
     "Materiel Breakdown Automation",
 
-  trigger:
-    "MATERIEL_BREAKDOWN_DECLARED",
+  description:
+    "Automation matériel critique",
 
-  condition:
-    "severity === HIGH",
+  eventType:
+    RuntimeEventRegistry.MATERIEL_CREATED,
 
-  action:
-    "CREATE_INTERVENTION",
+  async action(
+    context
+  ) {
 
-  enabled: true,
+    const payload =
+      context.payload as {
+        categorie?: string;
+        nom?: string;
+      };
+
+    if (
+      payload?.categorie?.toLowerCase()
+      !== "critique"
+    ) {
+
+      return;
+    }
+
+    console.log(
+
+      "[AUTOMATION] Maintenance workflow triggered",
+
+      payload
+    );
+  },
 };

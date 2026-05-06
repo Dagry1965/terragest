@@ -1,0 +1,36 @@
+﻿
+FullName                                                                        LastWriteTime      
+--------                                                                        -------------      
+C:\Users\Admin\terragest\reports\architecture\audit-terragest-v2.md             05.05.2026 15:57:06
+C:\Users\Admin\terragest\reports\architecture\foundation-setup.md               05.05.2026 16:04:52
+C:\Users\Admin\terragest\reports\architecture\workflow-engine-migration.md      05.05.2026 16:10:01
+C:\Users\Admin\terragest\reports\architecture\enterprise-ui-consolidation.md    05.05.2026 16:11:35
+C:\Users\Admin\terragest\reports\architecture\materiels-clean-architecture.md   05.05.2026 16:13:41
+C:\Users\Admin\terragest\reports\runtime\runtime-orchestration.md               05.05.2026 16:15:07
+C:\Users\Admin\terragest\reports\runtime\materiels-runtime-connection.md        05.05.2026 16:16:39
+C:\Users\Admin\terragest\reports\runtime\runtime-resilience.md                  05.05.2026 16:18:11
+C:\Users\Admin\terragest\reports\observability\runtime-observability.md         05.05.2026 16:19:43
+C:\Users\Admin\terragest\reports\automation\automation-engine.md                05.05.2026 16:21:35
+C:\Users\Admin\terragest\reports\rules\business-rule-engine.md                  05.05.2026 16:25:34
+C:\Users\Admin\terragest\reports\processes\process-engine.md                    05.05.2026 16:27:04
+C:\Users\Admin\terragest\reports\os\enterprise-os.md                            05.05.2026 16:29:24
+C:\Users\Admin\terragest\reports\integrations\enterprise-integrations.md        05.05.2026 16:30:51
+C:\Users\Admin\terragest\reports\data\data-platform.md                          05.05.2026 16:32:26
+C:\Users\Admin\terragest\reports\enterprise\enterprise-runtime-bootstrap.md     05.05.2026 16:34:39
+C:\Users\Admin\terragest\reports\enterprise\materiel-breakdown-flow.md          05.05.2026 16:36:47
+C:\Users\Admin\terragest\reports\testing\enterprise-testing.md                  05.05.2026 16:39:28
+C:\Users\Admin\terragest\reports\data\persistent-eventstore.md                  05.05.2026 16:43:14
+C:\Users\Admin\terragest\reports\observability\live-observability.md            05.05.2026 16:45:18
+C:\Users\Admin\terragest\reports\platform\enterprise-shell.md                   05.05.2026 16:47:57
+C:\Users\Admin\terragest\reports\platform\runtime-shell-integration.md          05.05.2026 16:53:09
+C:\Users\Admin\terragest\reports\persistence\firestore-persistence.md           05.05.2026 16:55:52
+C:\Users\Admin\terragest\reports\persistence\runtime-persistence-integration.md 05.05.2026 16:58:29
+C:\Users\Admin\terragest\reports\realtime\runtime-realtime-platform.md          05.05.2026 17:01:33
+C:\Users\Admin\terragest\reports\quality\enterprise-quality-platform.md         05.05.2026 17:04:48
+C:\Users\Admin\terragest\reports\governance\architecture-governance.md          05.05.2026 17:08:24
+C:\Users\Admin\terragest\reports\materiels\enterprise-materiels-module.md       05.05.2026 17:11:26
+C:\Users\Admin\terragest\reports\stabilization\stability-plan.md                05.05.2026 17:26:43
+C:\Users\Admin\terragest\reports\stabilization\legacy-quarantine.md             05.05.2026 17:30:04
+C:\Users\Admin\terragest\reports\features-governance-report.md                  06.05.2026 01:46:55
+
+

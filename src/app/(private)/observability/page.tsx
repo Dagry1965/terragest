@@ -1,16 +1,24 @@
+﻿import { formatDisplayValue } from "@/core/utils/formatFirestoreDate";
 import { AuditTable }
 from "@/features/observability/components/AuditTable";
 
-export default function
-ObservabilityPage() {
+import LiveRuntimeDashboard
+from "@/features/observability/dashboards/LiveRuntimeDashboard";
+
+import WorkflowExecutionMonitor
+from "@/features/observability/widgets/workflows/WorkflowExecutionMonitor";
+
+export default function ObservabilityPage() {
 
   return (
+
     <div
       className="
         p-6
         space-y-6
       "
     >
+
       <div>
 
         <h1
@@ -28,11 +36,17 @@ ObservabilityPage() {
             mt-2
           "
         >
-          Audit et monitoring
+          Audit, monitoring et Ã©vÃ©nements runtime
         </p>
+
       </div>
 
+      <LiveRuntimeDashboard />
+
+<WorkflowExecutionMonitor />
       <AuditTable />
+
     </div>
   );
 }
+

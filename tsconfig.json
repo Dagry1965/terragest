@@ -53,7 +53,7 @@
     ".next/dev/types/**/*.ts"
   ],
 
-  "exclude": [
+ "exclude": [
   "node_modules",
   ".next",
   "out",
@@ -69,6 +69,8 @@
   "experimental/**",
   "mobile",
   "mobile/**",
+  "templates",
+  "templates/**",
   "src/**/*.test.ts",
   "src/**/*.test.tsx",
   "jest.config.ts"
