@@ -11,8 +11,7 @@ from "next/link";
 import {
   collection,
   getDocs,
-}
-from "firebase/firestore";
+} from "firebase/firestore";
 
 import { db }
 from "@/infrastructure/firebase/firebase";
@@ -27,24 +26,24 @@ import {
 }
 from "@/components/erp/forms/ERPDynamicForm";
 
-export default function ExploitationsPage() {
+export default function TerrainsPage() {
 
   const [
-    exploitations,
-    setExploitations,
+    terrains,
+    setTerrains,
   ] = useState<any[]>([]);
 
-  async function loadExploitations() {
+  async function loadTerrains() {
 
     const snapshot =
       await getDocs(
         collection(
           db,
-          "exploitations"
+          "terrains"
         )
       );
 
-    setExploitations(
+    setTerrains(
 
       snapshot.docs.map(
         (doc) => ({
@@ -58,7 +57,7 @@ export default function ExploitationsPage() {
   }
 
   useEffect(() => {
-    loadExploitations();
+    loadTerrains();
   }, []);
 
   return (
@@ -86,7 +85,7 @@ export default function ExploitationsPage() {
               font-bold
             "
           >
-            Exploitations
+            Terrains
           </h1>
 
           <p
@@ -95,23 +94,23 @@ export default function ExploitationsPage() {
               text-gray-500
             "
           >
-            Gestion des exploitations ERP
+            Gestion des terrains ERP
           </p>
 
         </div>
 
         <Link
-          href="/exploitations/nouveau"
+          href="/terrains/nouveau"
 
           className="
             rounded-xl
-            bg-green-600
+            bg-emerald-600
             px-4
             py-2
             text-white
           "
         >
-          Nouvelle exploitation
+          Nouveau terrain
         </Link>
 
       </div>
@@ -136,14 +135,14 @@ export default function ExploitationsPage() {
         </h2>
 
         <ERPDynamicForm
-          module="exploitations"
+          module="terrains"
 
           context={{
             role:
               "gestionnaire",
 
             exploitationType:
-              "piscicole",
+              "agricole",
           }}
         />
 
@@ -165,13 +164,13 @@ export default function ExploitationsPage() {
             font-semibold
           "
         >
-          Liste exploitations
+          Liste terrains
         </h2>
 
-        {exploitations.length === 0 ? (
+        {terrains.length === 0 ? (
 
           <p className="text-gray-500">
-            Aucune exploitation trouvée.
+            Aucun terrain trouvé.
           </p>
 
         ) : (
@@ -197,7 +196,7 @@ export default function ExploitationsPage() {
                 </th>
 
                 <th className="p-3">
-                  Statut
+                  Surface
                 </th>
 
                 <th className="p-3">
@@ -210,7 +209,7 @@ export default function ExploitationsPage() {
 
             <tbody>
 
-              {exploitations.map(
+              {terrains.map(
                 (item) => (
 
                 <tr
@@ -232,7 +231,7 @@ export default function ExploitationsPage() {
 
                   <td className="p-3">
                     {formatDisplayValue(
-                      item.statut
+                      item.surface
                     )}
                   </td>
 

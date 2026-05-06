@@ -1,50 +1,79 @@
-// src/app/(private)/stocks/page.tsx
+﻿"use client";
 
-"use client";
+import {
+  useEffect,
+  useState,
+} from "react";
 
 import Link
 from "next/link";
 
-import { ERPLayout }
-from "@/components/layout/ERPLayout";
+import {
+  collection,
+  getDocs,
+} from "firebase/firestore";
 
-import { ERPDataTable }
-from "@/components/erp/datatable/ERPDataTable";
+import { db }
+from "@/infrastructure/firebase/firebase";
 
-import { ERPFilterBar }
-from "@/components/erp/filters/ERPFilterBar";
+import {
+  formatDisplayValue,
+}
+from "@/core/utils/formatFirestoreDate";
 
-import { StockStore }
-from "@/domains/stock/store/StockStore";
+import {
+  ERPDynamicForm,
+}
+from "@/components/erp/forms/ERPDynamicForm";
 
 export default function StocksPage() {
 
-  const stocks =
-    StockStore.all();
+  const [
+    stocks,
+    setStocks,
+  ] = useState<any[]>([]);
 
-  const data =
-    stocks.map(stock => ({
+  async function loadStocks() {
 
-      produit:
-        stock.produit,
+    const snapshot =
+      await getDocs(
+        collection(
+          db,
+          "stocks"
+        )
+      );
 
-      quantite:
-        stock.quantite,
+    setStocks(
 
-      workflow:
-        stock.workflow
-    }));
+      snapshot.docs.map(
+        (doc) => ({
+
+          id: doc.id,
+
+          ...doc.data(),
+        })
+      )
+    );
+  }
+
+  useEffect(() => {
+    loadStocks();
+  }, []);
 
   return (
 
-    <ERPLayout>
+    <div
+      className="
+        p-10
+        space-y-8
+      "
+    >
 
       <div
         className="
           flex
           items-center
           justify-between
-          mb-6
         "
       >
 
@@ -52,7 +81,7 @@ export default function StocksPage() {
 
           <h1
             className="
-              text-3xl
+              text-4xl
               font-bold
             "
           >
@@ -61,76 +90,166 @@ export default function StocksPage() {
 
           <p
             className="
-              text-zinc-500
+              mt-2
+              text-gray-500
             "
           >
             Gestion des stocks ERP
           </p>
+
         </div>
 
         <Link
-
           href="/stocks/new"
 
           className="
-            bg-black
-            text-white
-            px-4
-            py-3
             rounded-xl
+            bg-amber-600
+            px-4
+            py-2
+            text-white
           "
         >
           Nouveau stock
         </Link>
+
       </div>
 
       <div
         className="
-          flex
-          flex-col
-          gap-6
+          rounded-2xl
+          bg-white
+          p-6
+          shadow-md
         "
       >
 
-        <ERPFilterBar />
+        <h2
+          className="
+            mb-4
+            text-xl
+            font-semibold
+          "
+        >
+          Formulaire dynamique ERP
+        </h2>
 
-        <ERPDataTable
+        <ERPDynamicForm
+          module="stocks"
 
-          columns={[
-
-            {
-
-              key:
-                "produit",
-
-              label:
-                "Produit"
-            },
-
-            {
-
-              key:
-                "quantite",
-
-              label:
-                "Quantité"
-            },
-
-            {
-
-              key:
-                "workflow",
-
-              label:
-                "Workflow"
-            }
-          ]}
-
-          data={data}
+          context={{
+            role:
+              "gestionnaire",
+          }}
         />
 
       </div>
 
-    </ERPLayout>
+      <div
+        className="
+          rounded-2xl
+          bg-white
+          p-6
+          shadow-md
+        "
+      >
+
+        <h2
+          className="
+            mb-4
+            text-xl
+            font-semibold
+          "
+        >
+          Liste stocks
+        </h2>
+
+        {stocks.length === 0 ? (
+
+          <p className="text-gray-500">
+            Aucun stock trouvé.
+          </p>
+
+        ) : (
+
+          <table
+            className="
+              w-full
+              border-collapse
+              text-left
+            "
+          >
+
+            <thead>
+
+              <tr className="border-b">
+
+                <th className="p-3">
+                  Produit
+                </th>
+
+                <th className="p-3">
+                  Quantité
+                </th>
+
+                <th className="p-3">
+                  Seuil
+                </th>
+
+                <th className="p-3">
+                  Date
+                </th>
+
+              </tr>
+
+            </thead>
+
+            <tbody>
+
+              {stocks.map(
+                (item) => (
+
+                <tr
+                  key={item.id}
+                  className="border-b"
+                >
+
+                  <td className="p-3">
+                    {formatDisplayValue(
+                      item.produit
+                    )}
+                  </td>
+
+                  <td className="p-3">
+                    {formatDisplayValue(
+                      item.quantite
+                    )}
+                  </td>
+
+                  <td className="p-3">
+                    {formatDisplayValue(
+                      item.seuilAlerte
+                    )}
+                  </td>
+
+                  <td className="p-3">
+                    {formatDisplayValue(
+                      item.createdAt
+                    )}
+                  </td>
+
+                </tr>
+
+              ))}
+
+            </tbody>
+
+          </table>
+
+        )}
+
+      </div>
+
+    </div>
   );
 }
