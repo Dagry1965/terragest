@@ -1,0 +1,205 @@
+﻿TERRAGEST ERP - DUPLICATION SUMMARY
+Generated: 05/07/2026 10:37:19
+
+
+----- Sidebar -----
+Count: 8
+src\components\erp\shell\ErpSidebar.tsx
+src\components\layout\Sidebar.tsx
+src\components\navigation\Sidebar.tsx
+src\components\sidebar\AppSidebar.tsx
+src\components\sidebar\ERPSidebar.tsx
+src\core\layout\Sidebar.tsx
+src\features\platform\components\navigation\EnterpriseSidebar.tsx
+src\ui\sidebar\ERPSidebar.tsx
+
+----- Topbar -----
+Count: 8
+src\components\erp\shell\ErpTopbar.tsx
+src\components\layout\Topbar.tsx
+src\components\navigation\Topbar.tsx
+src\components\topbar\AppTopbar.tsx
+src\components\topbar\ERPTopbar.tsx
+src\core\layout\Topbar.tsx
+src\features\platform\components\layout\EnterpriseTopbar.tsx
+src\ui\topbar\ERPTopbar.tsx
+
+----- AppShell -----
+Count: 2
+src\components\shell\EnterpriseAppShell.tsx
+src\core\layout\AppShell.tsx
+
+----- DataTable -----
+Count: 5
+src\components\crud\DataTable.tsx
+src\components\data-table\DataTable.tsx
+src\components\erp\datatable\ERPDataTable.tsx
+src\components\ui\DataTable.tsx
+src\shared\tables\EnterpriseDataTable.tsx
+
+----- KPICard -----
+Count: 6
+src\analytics\dashboards\KPICard.tsx
+src\components\dashboard\KPICard.tsx
+src\components\dashboard\RealtimeKpiCard.tsx
+src\components\ui\KPICard.tsx
+src\features\dashboard\components\DashboardKPICards.tsx
+src\features\superadmin\components\PlatformKpiCard.tsx
+
+----- Card -----
+Count: 36
+src\analytics\dashboards\KPICard.tsx
+src\components\dashboard\KPICard.tsx
+src\components\dashboard\RealtimeKpiCard.tsx
+src\components\erp\theme\ERPCard.tsx
+src\components\ui\Card.tsx
+src\components\ui\KPICard.tsx
+src\components\ui\SkeletonCard.tsx
+src\features\analytics\components\AnalyticsCards.tsx
+src\features\dashboard\components\DashboardKPICards.tsx
+src\features\observability\components\RuntimeStatusCard.tsx
+src\features\offline\components\OfflineSyncCard.tsx
+src\features\organization-analytics\components\OrganizationAnalyticsCards.tsx
+src\features\organization-analytics\components\PlanUsageCard.tsx
+src\features\pwa\components\OfflineStatusCard.tsx
+src\features\superadmin\components\PlatformKpiCard.tsx
+src\features\workflow-engine\components\WorkflowCard.tsx
+src\_quarantine\modules\alertes\components\AlertesDashboardCard.tsx
+src\_quarantine\modules\analytics\components\AnalyticsDashboardCard.tsx
+src\_quarantine\modules\clients\components\ClientsDashboardCard.tsx
+src\_quarantine\modules\contrats\components\ContratsDashboardCard.tsx
+src\_quarantine\modules\exploitations\components\ExploitationsDashboardCard.tsx
+src\_quarantine\modules\factures\components\FacturesDashboardCard.tsx
+src\_quarantine\modules\fournisseurs\components\FournisseursDashboardCard.tsx
+src\_quarantine\modules\interventions\components\InterventionsDashboardCard.tsx
+src\_quarantine\modules\maintenance\components\MaintenanceDashboardCard.tsx
+src\_quarantine\modules\materiels\components\MaterielsDashboardCard.tsx
+src\_quarantine\modules\mobile\components\MobileDashboardCard.tsx
+src\_quarantine\modules\monitoring\components\MonitoringDashboardCard.tsx
+src\_quarantine\modules\mouvements-stock\components\MouvementsStockDashboardCard.tsx
+src\_quarantine\modules\paiements\components\PaiementsDashboardCard.tsx
+src\_quarantine\modules\productions\components\ProductionsDashboardCard.tsx
+src\_quarantine\modules\recoltes\components\RecoltesDashboardCard.tsx
+src\_quarantine\modules\stocks\components\StocksDashboardCard.tsx
+src\_quarantine\modules\sync\components\SyncDashboardCard.tsx
+src\_quarantine\modules\terrains\components\TerrainsDashboardCard.tsx
+src\_quarantine\modules\utilisateurs\components\UtilisateursDashboardCard.tsx
+
+----- Table -----
+Count: 33
+src\components\crud\DataTable.tsx
+src\components\data-table\DataTable.tsx
+src\components\erp\datatable\ERPDataTable.tsx
+src\components\erp\theme\ERPTable.tsx
+src\components\ui\DataTable.tsx
+src\components\ui\Table.tsx
+src\features\exploitations\components\ExploitationsEnterpriseTable.tsx
+src\features\exploitations\components\ExploitationsTable.tsx
+src\features\observability\components\AuditTable.tsx
+src\features\produits\components\ProductsTable.tsx
+src\features\superadmin\components\OrganisationsTable.tsx
+src\features\teams\components\TeamMembersTable.tsx
+src\shared\tables\EnterpriseDataTable.tsx
+src\_quarantine\modules\alertes\components\AlertesTable.tsx
+src\_quarantine\modules\analytics\components\AnalyticsTable.tsx
+src\_quarantine\modules\clients\components\ClientsTable.tsx
+src\_quarantine\modules\contrats\components\ContratsTable.tsx
+src\_quarantine\modules\exploitations\components\ExploitationsTable.tsx
+src\_quarantine\modules\factures\components\FacturesTable.tsx
+src\_quarantine\modules\fournisseurs\components\FournisseursTable.tsx
+src\_quarantine\modules\interventions\components\InterventionsTable.tsx
+src\_quarantine\modules\maintenance\components\MaintenanceTable.tsx
+src\_quarantine\modules\materiels\components\MaterielsTable.tsx
+src\_quarantine\modules\mobile\components\MobileTable.tsx
+src\_quarantine\modules\monitoring\components\MonitoringTable.tsx
+src\_quarantine\modules\mouvements-stock\components\MouvementsStockTable.tsx
+src\_quarantine\modules\paiements\components\PaiementsTable.tsx
+src\_quarantine\modules\productions\components\ProductionsTable.tsx
+src\_quarantine\modules\recoltes\components\RecoltesTable.tsx
+src\_quarantine\modules\stocks\components\StocksTable.tsx
+src\_quarantine\modules\sync\components\SyncTable.tsx
+src\_quarantine\modules\terrains\components\TerrainsTable.tsx
+src\_quarantine\modules\utilisateurs\components\UtilisateursTable.tsx
+
+----- Workflow -----
+Count: 68
+src\components\erp\workflow\WorkflowActions.tsx
+src\components\erp\workflow-designer\ERPWorkflowDesigner.tsx
+src\components\erp\workflow-editor\ERPVisualWorkflowEditor.tsx
+src\components\workflow\WorkflowStatus.tsx
+src\core\workers\workflow-worker.ts
+src\core\workflows\workflow-engine.ts
+src\domains\maintenance\services\MaintenanceWorkflowService.ts
+src\domains\paiement\workflows\PaiementWorkflow.ts
+src\features\interventions\workflows\BreakdownInterventionWorkflow.ts
+src\features\materiels\workflows\definitions\CreateMaterielWorkflow.ts
+src\features\materiels\workflows\MaterielMaintenanceWorkflow.ts
+src\features\observability\services\workflows\WorkflowExecutionRealtimeService.ts
+src\features\observability\stores\workflows\workflowExecutionStore.ts
+src\features\observability\widgets\live\WorkflowExecutionPanel.tsx
+src\features\observability\widgets\workflows\WorkflowExecutionMonitor.tsx
+src\features\platform\components\runtime\WorkflowStatusPanel.tsx
+src\features\workflow\components\WorkflowActions.tsx
+src\features\workflow\components\WorkflowStatusBadge.tsx
+src\features\workflow\types\WorkflowHistory.ts
+src\features\workflow\types\WorkflowStatus.ts
+src\features\workflow-engine\components\WorkflowCard.tsx
+src\features\workflow-engine\components\WorkflowDashboard.tsx
+src\features\workflow-engine\services\WorkflowAnalytics.ts
+src\features\workflow-engine\services\WorkflowEngine.ts
+src\features\workflow-engine\types\WorkflowDefinition.ts
+src\features\workflow-engine\types\WorkflowExecution.ts
+src\platform\execution\executors\WorkflowExecutor.ts
+src\platform\execution\queue\WorkflowQueue.ts
+src\platform\execution\WorkflowScheduler.ts
+src\platform\intelligence\WorkflowScoringEngine.ts
+src\platform\scheduling\WorkflowPriority.ts
+src\platform\scheduling\WorkflowSchedulerPolicy.ts
+src\platform\throttling\WorkflowThrottler.ts
+src\platform\workflows\history\WorkflowHistoryEntry.ts
+src\platform\workflows\registry\WorkflowRegistry.ts
+src\platform\workflows\runtime\WorkflowRuntime.ts
+src\platform\workflows\states\WorkflowState.ts
+src\platform\workflows\store\WorkflowStateStore.ts
+src\platform\workflows\supervision\WorkflowSupervision.ts
+src\platform\workflows\timeline\WorkflowTimeline.ts
+src\platform\workflows\timeline\WorkflowTimelineEntry.ts
+src\platform\workflows\ERPWorkflow.ts
+src\runtime\bootstrap\registerMaterielWorkflows.ts
+src\runtime\execution\PersistentWorkflowExecutor.ts
+src\runtime\monitoring\WorkflowAnalytics.ts
+src\runtime\orchestration\WorkflowDispatcher.ts
+src\runtime\persistence\workflows\WorkflowRepository.ts
+src\runtime\quality\checks\WorkflowConsistencyCheck.ts
+src\runtime\realtime\streams\LiveWorkflowUpdates.ts
+src\runtime\registry\WorkflowRegistry.ts
+src\runtime\supervision\WorkflowSupervisor.ts
+src\runtime\workflow-persistence\WorkflowHistoryEntry.ts
+src\runtime\workflow-persistence\WorkflowPersistenceEngine.ts
+src\runtime\workflow-persistence\WorkflowRuntimeService.ts
+src\runtime\workflow-ui\ERPWorkflowActions.tsx
+src\runtime\workflow-ui\maintenance.workflow.ts
+src\runtime\workflow-ui\Workflow.types.ts
+src\runtime\workflow-ui\WorkflowRuntimeEngine.ts
+src\runtime\workflows\engine\WorkflowExecutor.ts
+src\runtime\workflows\persistence\WorkflowExecutionPersistence.ts
+src\runtime\workflows\state\WorkflowStateStore.ts
+src\runtime\workflows\types\WorkflowDefinition.ts
+src\runtime\workflows\types\WorkflowExecution.ts
+src\runtime\workflows\types\WorkflowStep.ts
+src\runtime\workflows\WorkflowEngine.ts
+src\_quarantine\workflow\automations\WorkflowAutomation.ts
+src\_quarantine\workflow\notifications\WorkflowNotificationCenter.tsx
+src\_quarantine\workflow\services\WorkflowProductsRepository.ts
+
+----- Timeline -----
+Count: 9
+src\components\erp\runtime-timeline\ERPRuntimeTimeline.tsx
+src\components\operations\OperationsTimeline.tsx
+src\components\timeline\Timeline.tsx
+src\core\runtime\runtime-timeline.ts
+src\features\platform-monitoring\components\graphs\EventTimeline.tsx
+src\platform\timeline\ERPTimeline.ts
+src\platform\timeline\registerTimelineListeners.ts
+src\platform\workflows\timeline\WorkflowTimeline.ts
+src\platform\workflows\timeline\WorkflowTimelineEntry.ts

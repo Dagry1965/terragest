@@ -1,14 +1,4 @@
-"use client";
-
-import {
-  useParams
-}
-from "next/navigation";
-
-export default function ExploitationDetailPage() {
-
-  const params =
-    useParams();
+﻿export default function NouveauPage() {
 
   return (
 
@@ -16,10 +6,10 @@ export default function ExploitationDetailPage() {
 
       <div
         className="
-          bg-white
           rounded-2xl
+          bg-white
+          p-8
           shadow-md
-          p-6
         "
       >
 
@@ -27,15 +17,18 @@ export default function ExploitationDetailPage() {
           className="
             text-3xl
             font-bold
-            mb-6
           "
         >
-          Exploitation
+          Nouveau stocks
         </h1>
 
-        <p>
-          ID :
-          {params.id}
+        <p
+          className="
+            mt-4
+            text-gray-500
+          "
+        >
+          Formulaire en préparation.
         </p>
 
       </div>

@@ -1,12 +1,17 @@
-import { ProductForm }
-from "@/features/produits/components/ProductForm";
-
-export default function NouveauProduitPage() {
+﻿export default function NouveauPage() {
 
   return (
-    <div className="space-y-6">
 
-      <div>
+    <div className="p-10">
+
+      <div
+        className="
+          rounded-2xl
+          bg-white
+          p-8
+          shadow-md
+        "
+      >
 
         <h1
           className="
@@ -14,20 +19,20 @@ export default function NouveauProduitPage() {
             font-bold
           "
         >
-          Nouveau Produit
+          Nouveau produits
         </h1>
 
         <p
           className="
+            mt-4
             text-gray-500
-            mt-2
           "
         >
-          Ajouter un produit
+          Formulaire en préparation.
         </p>
+
       </div>
 
-      <ProductForm />
     </div>
   );
 }

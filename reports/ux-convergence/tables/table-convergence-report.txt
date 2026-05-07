@@ -1,0 +1,35 @@
+﻿# ERP TABLE CONVERGENCE
+
+TO_REVIEW	src\components\crud\DataTable.tsx
+TO_REVIEW	src\components\data-table\DataTable.tsx
+CANONICAL	src\components\erp\datatable\ERPDataTable.tsx
+TO_REVIEW	src\components\erp\theme\ERPTable.tsx
+LEGACY_UI	src\components\ui\DataTable.tsx
+LEGACY_UI	src\components\ui\Table.tsx
+FEATURE_SPECIFIC	src\features\exploitations\components\ExploitationsEnterpriseTable.tsx
+FEATURE_SPECIFIC	src\features\exploitations\components\ExploitationsTable.tsx
+FEATURE_SPECIFIC	src\features\observability\components\AuditTable.tsx
+FEATURE_SPECIFIC	src\features\produits\components\ProductsTable.tsx
+FEATURE_SPECIFIC	src\features\superadmin\components\OrganisationsTable.tsx
+FEATURE_SPECIFIC	src\features\teams\components\TeamMembersTable.tsx
+SHARED_LAYER	src\shared\tables\EnterpriseDataTable.tsx
+QUARANTINE	src\_quarantine\modules\alertes\components\AlertesTable.tsx
+QUARANTINE	src\_quarantine\modules\analytics\components\AnalyticsTable.tsx
+QUARANTINE	src\_quarantine\modules\clients\components\ClientsTable.tsx
+QUARANTINE	src\_quarantine\modules\contrats\components\ContratsTable.tsx
+QUARANTINE	src\_quarantine\modules\exploitations\components\ExploitationsTable.tsx
+QUARANTINE	src\_quarantine\modules\factures\components\FacturesTable.tsx
+QUARANTINE	src\_quarantine\modules\fournisseurs\components\FournisseursTable.tsx
+QUARANTINE	src\_quarantine\modules\interventions\components\InterventionsTable.tsx
+QUARANTINE	src\_quarantine\modules\maintenance\components\MaintenanceTable.tsx
+QUARANTINE	src\_quarantine\modules\materiels\components\MaterielsTable.tsx
+QUARANTINE	src\_quarantine\modules\mobile\components\MobileTable.tsx
+QUARANTINE	src\_quarantine\modules\monitoring\components\MonitoringTable.tsx
+QUARANTINE	src\_quarantine\modules\mouvements-stock\components\MouvementsStockTable.tsx
+QUARANTINE	src\_quarantine\modules\paiements\components\PaiementsTable.tsx
+QUARANTINE	src\_quarantine\modules\productions\components\ProductionsTable.tsx
+QUARANTINE	src\_quarantine\modules\recoltes\components\RecoltesTable.tsx
+QUARANTINE	src\_quarantine\modules\stocks\components\StocksTable.tsx
+QUARANTINE	src\_quarantine\modules\sync\components\SyncTable.tsx
+QUARANTINE	src\_quarantine\modules\terrains\components\TerrainsTable.tsx
+QUARANTINE	src\_quarantine\modules\utilisateurs\components\UtilisateursTable.tsx

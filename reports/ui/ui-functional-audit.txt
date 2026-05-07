@@ -1,0 +1,80 @@
+﻿
+=====================================
+ROUTE: /dashboard
+FICHIER: .\src\app\(private)\dashboard\page.tsx
+STATUS: OK
+Boutons détectés:
+
+=====================================
+ROUTE: /exploitations
+FICHIER: .\src\app\(private)\exploitations\page.tsx
+STATUS: OK
+Boutons détectés:
+  Ligne 103: <Link
+  Ligne 104: href="/exploitations/nouveau"
+
+=====================================
+ROUTE: /terrains
+FICHIER: .\src\app\(private)\terrains\page.tsx
+STATUS: OK
+Boutons détectés:
+  Ligne 102: <Link
+  Ligne 103: href="/terrains/nouveau"
+
+=====================================
+ROUTE: /materiels
+FICHIER: .\src\app\(private)\materiels\page.tsx
+STATUS: OK
+Boutons détectés:
+  Ligne 84: <Link
+  Ligne 85: href="/materiels/nouveau"
+
+=====================================
+ROUTE: /maintenance
+FICHIER: .\src\app\(private)\maintenance\page.tsx
+STATUS: OK
+Boutons détectés:
+  Ligne 80: <button
+  Ligne 81: onClick={createIncident}
+
+=====================================
+ROUTE: /interventions
+FICHIER: .\src\app\(private)\interventions\page.tsx
+STATUS: OK
+Boutons détectés:
+  Ligne 36: <Link
+  Ligne 37: href="/interventions/nouveau"
+
+=====================================
+ROUTE: /stocks
+FICHIER: .\src\app\(private)\stocks\page.tsx
+STATUS: OK
+Boutons détectés:
+  Ligne 102: <Link
+  Ligne 103: href="/stocks/new"
+
+=====================================
+ROUTE: /produits
+FICHIER: .\src\app\(private)\produits\page.tsx
+STATUS: OK
+Boutons détectés:
+  Ligne 102: <Link
+  Ligne 103: href="/produits/nouveau"
+
+=====================================
+ROUTE: /notifications
+FICHIER: .\src\app\(private)\notifications\page.tsx
+STATUS: OK
+Boutons détectés:
+
+=====================================
+ROUTE: /runtime-supervision
+FICHIER: .\src\app\(private)\runtime-supervision\page.tsx
+STATUS: OK
+Boutons détectés:
+
+=====================================
+ROUTE: /observability
+FICHIER: .\src\app\(private)\observability\page.tsx
+STATUS: OK
+Boutons détectés:

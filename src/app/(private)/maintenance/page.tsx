@@ -12,6 +12,8 @@ import {
 
 import { formatDisplayValue } from "@/core/utils/formatFirestoreDate";
 import { ERPDynamicForm } from "@/components/erp/forms/ERPDynamicForm";
+import { ERPWorkflowActions } from "@/runtime/workflow-ui/ERPWorkflowActions";
+import { WorkflowRuntimeService } from "@/runtime/workflow-persistence/WorkflowRuntimeService";
 
 import "@/runtime/listeners/MaintenanceNotificationListener";
 import "@/runtime/listeners/MaintenanceAuditListener";
@@ -84,6 +86,61 @@ export default function MaintenancePage() {
         </button>
       </div>
 
+      
+      <div
+        className="
+          rounded-2xl
+          bg-white
+          p-6
+          shadow-md
+        "
+      >
+
+        <h2
+          className="
+            mb-4
+            text-xl
+            font-semibold
+          "
+        >
+          Actions Workflow
+        </h2>
+
+        <ERPWorkflowActions
+          module="maintenance"
+          state="ouverte"
+          role="superviseur"
+
+          onAction={async (action, targetState) => {
+
+            await WorkflowRuntimeService.executeTransition({
+
+              module:
+                "maintenance",
+
+              entityId:
+                "maintenance-demo",
+
+              fromState:
+                "ouverte",
+
+              toState:
+                targetState,
+
+              action,
+
+              user:
+                "superviseur-demo",
+            });
+
+            console.log(
+              "Workflow persisted"
+            );
+          }}
+        />
+
+      </div>
+
       <div className="rounded-2xl bg-white p-6 shadow-md">
         <h2 className="mb-4 text-xl font-semibold">
           Formulaire dynamique ERP
@@ -97,6 +154,61 @@ export default function MaintenancePage() {
             materielType: "tracteur",
           }}
         />
+      </div>
+
+      
+      <div
+        className="
+          rounded-2xl
+          bg-white
+          p-6
+          shadow-md
+        "
+      >
+
+        <h2
+          className="
+            mb-4
+            text-xl
+            font-semibold
+          "
+        >
+          Actions Workflow
+        </h2>
+
+        <ERPWorkflowActions
+          module="maintenance"
+          state="ouverte"
+          role="superviseur"
+
+          onAction={async (action, targetState) => {
+
+            await WorkflowRuntimeService.executeTransition({
+
+              module:
+                "maintenance",
+
+              entityId:
+                "maintenance-demo",
+
+              fromState:
+                "ouverte",
+
+              toState:
+                targetState,
+
+              action,
+
+              user:
+                "superviseur-demo",
+            });
+
+            console.log(
+              "Workflow persisted"
+            );
+          }}
+        />
+
       </div>
 
       <div className="rounded-2xl bg-white p-6 shadow-md">
@@ -135,3 +247,5 @@ export default function MaintenancePage() {
     </div>
   );
 }
+
+

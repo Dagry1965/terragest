@@ -100,7 +100,7 @@ export default function StocksPage() {
         </div>
 
         <Link
-          href="/stocks/new"
+          href="/stocks/nouveau"
 
           className="
             rounded-xl
@@ -253,3 +253,4 @@ export default function StocksPage() {
     </div>
   );
 }
+

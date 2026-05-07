@@ -1,45 +1,18 @@
-"use client";
+﻿import { GenericDetailPage } from "@/components/erp/generic/GenericDetailPage";
 
-import {
-  useParams
-}
-from "next/navigation";
+type Props = {
+  params: {
+    id: string;
+  };
+};
 
-export default function MaterielDetailPage() {
-
-  const params =
-    useParams();
-
+export default function MaterielDetailPage({
+  params,
+}: Props) {
   return (
-
-    <div className="p-10">
-
-      <div
-        className="
-          bg-white
-          rounded-2xl
-          shadow-md
-          p-6
-        "
-      >
-
-        <h1
-          className="
-            text-3xl
-            font-bold
-            mb-6
-          "
-        >
-          Matériel
-        </h1>
-
-        <p>
-          ID :
-          {params.id}
-        </p>
-
-      </div>
-
-    </div>
+    <GenericDetailPage
+      moduleKey="materiels"
+      id={params.id}
+    />
   );
 }

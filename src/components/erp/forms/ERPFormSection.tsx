@@ -1,56 +1,60 @@
-// src/components/erp/forms/ERPFormSection.tsx
-
-import {
-  ReactNode
-}
-from "react";
-
-interface ERPFormSectionProps {
-
-  title: string;
-
-  children:
-    ReactNode;
-}
+﻿"use client";
 
 export function ERPFormSection({
-
   title,
-
-  children
-}: ERPFormSectionProps) {
+  description,
+  children,
+}: {
+  title: string;
+  description?: string;
+  children: React.ReactNode;
+}) {
 
   return (
 
-    <div
+    <section
       className="
-        bg-white
         rounded-2xl
-        shadow-sm
+        border
+        border-slate-200
+        bg-white
         p-6
+        shadow-sm
       "
     >
 
-      <h3
-        className="
-          text-xl
-          font-semibold
-          mb-6
-        "
-      >
-        {title}
-      </h3>
+      <div className="mb-6">
 
-      <div
-        className="
-          flex
-          flex-col
-          gap-4
-        "
-      >
+        <h2
+          className="
+            text-lg
+            font-semibold
+            text-slate-900
+          "
+        >
+          {title}
+        </h2>
+
+        {description && (
+
+          <p
+            className="
+              mt-2
+              text-sm
+              text-slate-500
+            "
+          >
+            {description}
+          </p>
+
+        )}
+
+      </div>
+
+      <div className="space-y-6">
         {children}
       </div>
 
-    </div>
+    </section>
   );
 }

@@ -1,239 +1,124 @@
 ﻿"use client";
 
-import { useEffect, useState } from "react";
-import Link from "next/link";
+import { ERPPage }
+from "@/components/erp/page/ERPPage";
 
-import { db } from "@/infrastructure/firebase/firebase";
+import { ERPMetricCard }
+from "@/components/erp/page/ERPMetricCard";
 
-import {
-  collection,
-  getDocs,
-} from "firebase/firestore";
+import { ERPStatusBadge }
+from "@/components/erp/page/ERPStatusBadge";
 
-import { formatDisplayValue }
-from "@/core/utils/formatFirestoreDate";
-
-import {
-  ERPDynamicForm,
-}
-from "@/components/erp/forms/ERPDynamicForm";
+import { ERPWidgetCard }
+from "@/components/erp/page/ERPWidgetCard";
 
 export default function MaterielsPage() {
 
-  const [
-    materiels,
-    setMateriels,
-  ] = useState<any[]>([]);
-
-  async function loadMateriels() {
-
-    const snapshot =
-      await getDocs(
-        collection(
-          db,
-          "materiels"
-        )
-      );
-
-    setMateriels(
-      snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }))
-    );
-  }
-
-  useEffect(() => {
-    loadMateriels();
-  }, []);
-
   return (
 
-    <div className="p-10 space-y-8">
+    <ERPPage
+      title="Matériels"
+      subtitle="Supervision des équipements et actifs opérationnels."
+    >
 
-      <div
-        className="
-          flex
-          items-center
-          justify-between
-        "
-      >
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
 
-        <div>
+        <ERPMetricCard
+          title="Matériels actifs"
+          value="182"
+          subtitle="équipements opérationnels"
+          status={
+            <ERPStatusBadge
+              label="STABLE"
+              variant="success"
+            />
+          }
+        />
 
-          <h1
-            className="
-              text-4xl
-              font-bold
-            "
-          >
-            Matériels
-          </h1>
+        <ERPMetricCard
+          title="En maintenance"
+          value="12"
+          subtitle="maintenance en cours"
+          variant="warning"
+          status={
+            <ERPStatusBadge
+              label="PENDING"
+              variant="warning"
+            />
+          }
+        />
 
-          <p
-            className="
-              mt-2
-              text-gray-500
-            "
-          >
-            Gestion des matériels ERP
-          </p>
+        <ERPMetricCard
+          title="Critiques"
+          value="4"
+          subtitle="intervention urgente"
+          variant="danger"
+          status={
+            <ERPStatusBadge
+              label="CRITIQUE"
+              variant="danger"
+            />
+          }
+        />
 
-        </div>
-
-        <Link
-          href="/materiels/nouveau"
-
-          className="
-            rounded-xl
-            bg-blue-600
-            px-4
-            py-2
-            text-white
-          "
-        >
-          Nouveau matériel
-        </Link>
-
-      </div>
-
-      <div
-        className="
-          rounded-2xl
-          bg-white
-          p-6
-          shadow-md
-        "
-      >
-
-        <h2
-          className="
-            mb-4
-            text-xl
-            font-semibold
-          "
-        >
-          Formulaire dynamique ERP
-        </h2>
-
-        <ERPDynamicForm
-          module="materiels"
-
-          context={{
-            role:
-              "gestionnaire",
-
-            materielType:
-              "tracteur",
-          }}
+        <ERPMetricCard
+          title="Disponibilité"
+          value="94%"
+          subtitle="santé opérationnelle"
+          status={
+            <ERPStatusBadge
+              label="HEALTHY"
+              variant="success"
+            />
+          }
         />
 
       </div>
 
-      <div
-        className="
-          rounded-2xl
-          bg-white
-          p-6
-          shadow-md
-        "
-      >
+      <ERPWidgetCard title="Activité matériels">
 
-        <h2
-          className="
-            mb-4
-            text-xl
-            font-semibold
-          "
-        >
-          Liste matériels
-        </h2>
+        <div className="space-y-4">
 
-        {materiels.length === 0 ? (
+          <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
 
-          <p className="text-gray-500">
-            Aucun matériel trouvé.
-          </p>
+            <p className="font-medium text-slate-900">
+              Maintenance déclenchée sur TR-204
+            </p>
 
-        ) : (
+            <p className="mt-1 text-sm text-slate-500">
+              Workflow maintenance runtime exécuté
+            </p>
 
-          <table
-            className="
-              w-full
-              border-collapse
-              text-left
-            "
-          >
+          </div>
 
-            <thead>
+          <div className="rounded-xl border border-amber-200 bg-amber-50 p-4">
 
-              <tr className="border-b">
+            <p className="font-medium text-amber-900">
+              Révision préventive en attente
+            </p>
 
-                <th className="p-3">
-                  Nom
-                </th>
+            <p className="mt-1 text-sm text-amber-700">
+              2 équipements nécessitent validation
+            </p>
 
-                <th className="p-3">
-                  Type
-                </th>
+          </div>
 
-                <th className="p-3">
-                  Statut
-                </th>
+          <div className="rounded-xl border border-rose-200 bg-rose-50 p-4">
 
-                <th className="p-3">
-                  Date
-                </th>
+            <p className="font-medium text-rose-900">
+              Panne critique détectée
+            </p>
 
-              </tr>
+            <p className="mt-1 text-sm text-rose-700">
+              Intervention urgente recommandée
+            </p>
 
-            </thead>
+          </div>
 
-            <tbody>
+        </div>
 
-              {materiels.map((item) => (
+      </ERPWidgetCard>
 
-                <tr
-                  key={item.id}
-                  className="border-b"
-                >
-
-                  <td className="p-3">
-                    {formatDisplayValue(
-                      item.nom
-                    )}
-                  </td>
-
-                  <td className="p-3">
-                    {formatDisplayValue(
-                      item.type
-                    )}
-                  </td>
-
-                  <td className="p-3">
-                    {formatDisplayValue(
-                      item.statut
-                    )}
-                  </td>
-
-                  <td className="p-3">
-                    {formatDisplayValue(
-                      item.createdAt
-                    )}
-                  </td>
-
-                </tr>
-
-              ))}
-
-            </tbody>
-
-          </table>
-
-        )}
-
-      </div>
-
-    </div>
+    </ERPPage>
   );
 }

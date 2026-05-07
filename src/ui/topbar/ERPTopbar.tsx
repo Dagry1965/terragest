@@ -1,4 +1,6 @@
-﻿export default function ERPTopbar() {
+"use client";
 
-  return null;
+export {
+  Topbar as default
 }
+from "@/core/layout/Topbar";

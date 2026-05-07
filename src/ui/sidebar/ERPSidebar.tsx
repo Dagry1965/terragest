@@ -1,4 +1,6 @@
-﻿export default function ERPSidebar() {
+"use client";
 
-  return null;
+export {
+  Sidebar as default
 }
+from "@/core/layout/Sidebar";

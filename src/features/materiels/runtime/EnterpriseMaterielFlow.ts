@@ -53,6 +53,18 @@ import {
 }
 from "@/runtime/automation/scheduler/AutomationScheduler";
 
+
+import {
+  RuntimeSecurityManager
+}
+from "@/runtime/security/RuntimeSecurityManager";
+
+import type {
+  ERPUserRole
+}
+from "@/platform/security/roles/RoleDefinition";
+
+
 import {
   MaterielBreakdownRule
 }
@@ -70,6 +82,10 @@ export class EnterpriseMaterielFlow {
 
   private workflowExecutor =
     new WorkflowExecutor();
+
+private security =
+  new RuntimeSecurityManager();
+
 
   private realtime =
     new MaterielRealtimeGateway();
