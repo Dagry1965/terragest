@@ -1,12 +1,15 @@
-﻿export { ERPButton } from "./ERPButton";
+﻿export { ERPBadge } from "./ERPBadge";
+export { ERPButton } from "./ERPButton";
 export { ERPCard } from "./ERPCard";
-export { ERPInput } from "./ERPInput";
-export { ERPSelect } from "./ERPSelect";
-export { ERPBadge } from "./ERPBadge";
-export { ERPSkeleton } from "./ERPSkeleton";
-export { ERPEmptyState } from "./ERPEmptyState";
-export { ERPToast } from "./ERPToast";
-export { ERPTabs } from "./ERPTabs";
-export { ERPModal } from "./ERPModal";
-export { ERPDrawer } from "./ERPDrawer";
 export { ERPChartCard } from "./ERPChartCard";
+export { ERPDrawer } from "./ERPDrawer";
+export { ERPEmptyState } from "./ERPEmptyState";
+export { ERPInput } from "./ERPInput";
+export { ERPModal } from "./ERPModal";
+export { ERPSelect } from "./ERPSelect";
+export { ERPSkeleton } from "./ERPSkeleton";
+export { ERPTabs } from "./ERPTabs";
+export { ERPToast } from "./ERPToast";
+
+export { ERPTable } from "./table";
+export type { ERPTableColumn } from "./table";

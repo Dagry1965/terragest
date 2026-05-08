@@ -1,4 +1,4 @@
-﻿import { useEffect, useState }
+import { useEffect, useState }
 from "react";
 
 import type { RuntimeHealth }

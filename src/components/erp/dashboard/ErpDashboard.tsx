@@ -1,6 +1,6 @@
-﻿import { getEnabledModules } from "@/core/modules/module-registry";
+import { getEnabledModules } from "@/core/modules/module-registry";
 
-export function ErpDashboard() {
+export function ErpTableau de bord() {
   const modules = getEnabledModules();
 
   return (

@@ -1,0 +1,11 @@
+export { ERPModuleActivityPanel } from "./ERPModuleActivityPanel";
+export { ERPModuleWorkflowPanel } from "./ERPModuleWorkflowPanel";
+export { ERPModuleKpiGrid } from "./ERPModuleKpiGrid";
+export { ERPModuleTabs } from "./ERPModuleTabs";
+export { ERPModuleToolbar } from "./ERPModuleToolbar";
+export { ERPModuleHeader } from "./ERPModuleHeader";
+export { ERPModuleListTemplate } from "./ERPModuleListTemplate";
+export { ERPModuleDashboardTemplate } from "./ERPModuleDashboardTemplate";
+export { ERPModuleActionPageTemplate } from "./ERPModuleActionPageTemplate";
+export { ERPPageTemplateRegistry } from "./ERPPageTemplateRegistry";
+export type { ERPPageTemplateType } from "./ERPPageTemplateRegistry";

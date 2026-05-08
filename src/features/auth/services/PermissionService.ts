@@ -3,7 +3,7 @@ from "@/features/auth/types/UserRole";
 
 export const PermissionService = {
 
-  canViewDashboard(
+  canViewTableau de bord(
     role: UserRole
   ) {
 

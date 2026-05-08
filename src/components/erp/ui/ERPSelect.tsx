@@ -1,30 +1,49 @@
-﻿"use client";
+﻿import type { SelectHTMLAttributes } from "react";
+
+interface ERPSelectOption {
+  label: string;
+  value: string;
+}
+
+interface ERPSelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
+  label?: string;
+  options?: ERPSelectOption[];
+  error?: string;
+}
 
 export function ERPSelect({
   label,
-  options,
-}: {
-  label: string;
-  options: string[];
-}) {
+  options = [],
+  error,
+  className = "",
+  children,
+  ...props
+}: ERPSelectProps) {
   return (
-    <div className="space-y-2">
-      <label className="text-sm font-medium text-slate-700">
-        {label}
-      </label>
+    <label className="block space-y-2">
+      {label && (
+        <span className="text-sm font-medium text-slate-300">
+          {label}
+        </span>
+      )}
 
       <select
-        className="
-          w-full rounded-2xl border border-slate-300 bg-white
-          px-4 py-3 text-sm text-slate-900 outline-none
-          transition-all duration-200
-          focus:border-slate-500 focus:ring-4 focus:ring-slate-200/70
-        "
+        className={`w-full rounded-xl border border-slate-800 bg-slate-950 px-3 py-2 text-sm text-slate-100 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 ${className}`}
+        {...props}
       >
-        {options.map((option) => (
-          <option key={option}>{option}</option>
-        ))}
+        {children ??
+          options.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
       </select>
-    </div>
+
+      {error && (
+        <span className="text-xs text-red-400">
+          {error}
+        </span>
+      )}
+    </label>
   );
 }

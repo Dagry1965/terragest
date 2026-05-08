@@ -1,29 +1,7 @@
 ﻿import { ERPModuleRegistry } from "../ERPModuleRegistry";
+import { coreERPModules } from "../definitions/coreModules";
 
-const modules = [
-  "dashboard",
-  "exploitations",
-  "terrains",
-  "materiels",
-  "maintenance",
-  "interventions",
-  "stocks",
-  "produits",
-  "notifications",
-  "runtime-supervision",
-];
-
-for (const code of modules) {
-  ERPModuleRegistry.register({
-    code,
-    name: code
-      .replace("-", " ")
-      .replace(/\b\w/g, (c) => c.toUpperCase()),
-    routes: [`/${code}`],
-    permissions: [`${code}.read`, `${code}.write`],
-    workflows: [],
-    rules: [],
-    analytics: [],
-    notifications: [],
-  });
+export function registerCoreModules() {
+  ERPModuleRegistry.registerMany(coreERPModules);
+  return ERPModuleRegistry.all();
 }

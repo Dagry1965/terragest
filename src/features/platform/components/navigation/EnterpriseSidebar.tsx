@@ -1,12 +1,12 @@
-﻿export default function
+export default function
 EnterpriseSidebar() {
 
   const items = [
 
-    "Dashboard",
+    "Tableau de bord",
     "Exploitations",
     "Terrains",
-    "MatÃ©riels",
+    "Matériels",
     "Interventions",
     "Stocks",
     "Workflows",

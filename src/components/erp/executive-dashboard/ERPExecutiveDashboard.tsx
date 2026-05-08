@@ -20,7 +20,7 @@ import {
   getAutomationsRegistry,
 } from "@/core/automation/registry/automation-registry";
 
-export function ERPExecutiveDashboard() {
+export function ERPExecutiveTableau de bord() {
   const metrics =
     getMetrics();
 

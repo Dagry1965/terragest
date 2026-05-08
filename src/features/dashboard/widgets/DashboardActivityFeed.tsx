@@ -13,7 +13,7 @@ const ACTIVITIES = [
   "Nouvelle inspection mobile",
 ];
 
-export const DashboardActivityFeed =
+export const Tableau de bordActivityFeed =
 () => {
 
   return (

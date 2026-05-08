@@ -1,11 +1,11 @@
-﻿import LiveRuntimeDashboard
-from "../../observability/dashboards/LiveRuntimeDashboard";
+import LiveRuntimeTableau de bord
+from "../../observability/dashboards/LiveRuntimeTableau de bord";
 
 import NotificationCenter
 from "../components/notifications/NotificationCenter";
 
 export default function
-EnterpriseSupervisionDashboard() {
+EnterpriseSupervisionTableau de bord() {
 
   return (
 
@@ -18,7 +18,7 @@ EnterpriseSupervisionDashboard() {
 
       <NotificationCenter />
 
-      <LiveRuntimeDashboard />
+      <LiveRuntimeTableau de bord />
 
     </div>
   );

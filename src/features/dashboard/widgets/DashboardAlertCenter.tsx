@@ -21,7 +21,7 @@ const ALERTS = [
   },
 ];
 
-export const DashboardAlertCenter =
+export const Tableau de bordAlertCenter =
 () => {
 
   return (

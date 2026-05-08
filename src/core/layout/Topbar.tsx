@@ -1,20 +1,18 @@
-﻿"use client";
-
 export function Topbar() {
   return (
-    <header className="h-16 border-b bg-white px-8 flex items-center justify-between">
+    <header className="flex h-20 items-center justify-between border-b border-slate-200 bg-white px-6">
       <div>
+        <h1 className="text-xl font-black text-slate-950">
+          Terragest ERP
+        </h1>
         <p className="text-sm text-slate-500">
-          ERP Terragest
+          Gestion centralisee des modules, operations et indicateurs.
         </p>
-        <h2 className="font-semibold">
-          Cockpit opérationnel
-        </h2>
       </div>
 
-      <span className="rounded-full bg-green-100 px-3 py-1 text-sm text-green-700">
-        Runtime actif
-      </span>
+      <div className="rounded-full border border-blue-200 bg-blue-50 px-4 py-2 text-sm font-bold text-blue-700">
+        Donnees synchronisees
+      </div>
     </header>
   );
 }

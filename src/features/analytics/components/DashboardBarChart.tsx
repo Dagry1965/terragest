@@ -21,7 +21,7 @@ interface Props {
 }
 
 export function
-DashboardBarChart({
+Tableau de bordBarChart({
 
   data
 

@@ -2,7 +2,7 @@
 
 const items = [
 
-  "Dashboard",
+  "Tableau de bord",
 
   "Exploitations",
 

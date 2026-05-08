@@ -94,7 +94,7 @@ export function ERPCommandCenter() {
         </h1>
 
         <p className="mt-4 max-w-3xl text-slate-300">
-          Observabilité, supervision, runtime timeline,
+          Observability, supervision, runtime timeline,
           workflows, événements, règles métier et monitoring ERP.
         </p>
       </section>

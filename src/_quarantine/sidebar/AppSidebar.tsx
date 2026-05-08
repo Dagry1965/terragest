@@ -7,7 +7,7 @@ from "next/link";
 const items = [
 
   {
-    label: "Dashboard",
+    label: "Tableau de bord",
     href: "/dashboard",
   },
 

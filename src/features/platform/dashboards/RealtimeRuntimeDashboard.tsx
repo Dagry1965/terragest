@@ -1,4 +1,4 @@
-﻿import RuntimeMetricsPanel
+import RuntimeMetricsPanel
 from "../components/runtime/RuntimeMetricsPanel";
 
 import WorkflowStatusPanel
@@ -11,7 +11,7 @@ import NotificationCenter
 from "../components/notifications/NotificationCenter";
 
 export default function
-RealtimeRuntimeDashboard() {
+RealtimeRuntimeTableau de bord() {
 
   return (
 

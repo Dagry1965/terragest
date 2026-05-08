@@ -1,4 +1,4 @@
-﻿import { formatDisplayValue } from "@/core/utils/formatFirestoreDate";
+import { formatDisplayValue } from "@/core/utils/formatFirestoreDate";
 import LiveEventStream
 from "../widgets/live/LiveEventStream";
 
@@ -15,7 +15,7 @@ import EventReplayConsole
 from "../widgets/live/EventReplayConsole";
 
 export default function
-LiveRuntimeDashboard() {
+LiveRuntimeTableau de bord() {
 
   return (
 

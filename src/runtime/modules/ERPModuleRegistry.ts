@@ -1,37 +1,43 @@
-﻿import { ERPModule } from "./ERPModule";
+﻿import type { ERPModule } from "./ERPModule";
 
-class Registry {
-  private modules: ERPModule[] = [];
+class ERPModuleRegistryClass {
+  private modules = new Map<string, ERPModule>();
 
   register(module: ERPModule) {
-    if (this.modules.some((m) => m.code === module.code)) return;
-    this.modules.push({ enabled: true, ...module });
+    this.modules.set(module.metadata.key, module);
+    return module;
   }
 
-  getAll() {
-    return this.modules.filter((m) => m.enabled !== false);
+  registerMany(modules: ERPModule[]) {
+    modules.forEach((module) => this.register(module));
+    return modules;
   }
 
-  getNavigation() {
-    return this.getAll().map((module) => ({
-      label: module.name,
-      href: module.routes?.[0] || `/${module.code}`,
-      code: module.code,
-    }));
+  get(key: string) {
+    return this.modules.get(key);
   }
 
-  validate() {
-    return this.getAll().map((module) => ({
-      code: module.code,
-      name: module.name,
-      hasRoutes: !!module.routes?.length,
-      hasPermissions: !!module.permissions?.length,
-      hasWorkflows: !!module.workflows?.length,
-      hasRules: !!module.rules?.length,
-      hasAnalytics: !!module.analytics?.length,
-      hasNotifications: !!module.notifications?.length,
-    }));
+  has(key: string) {
+    return this.modules.has(key);
+  }
+
+  all() {
+    return Array.from(this.modules.values()).sort(
+      (a, b) => (a.metadata.order ?? 999) - (b.metadata.order ?? 999)
+    );
+  }
+
+  visible() {
+    return this.all().filter((module) => module.metadata.visible !== false);
+  }
+
+  enabled() {
+    return this.all().filter((module) => module.metadata.enabled !== false);
+  }
+
+  clear() {
+    this.modules.clear();
   }
 }
 
-export const ERPModuleRegistry = new Registry();
+export const ERPModuleRegistry = new ERPModuleRegistryClass();

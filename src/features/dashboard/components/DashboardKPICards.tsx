@@ -36,7 +36,7 @@ const KPIS: KPI[] = [
   },
 ];
 
-export const DashboardKPICards =
+export const Tableau de bordKPICards =
 () => {
 
   return (

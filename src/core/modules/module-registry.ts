@@ -1,4 +1,4 @@
-﻿export type ERPModuleGroup =
+export type ERPModuleGroup =
   | "Pilotage"
   | "MÃ©tier"
   | "OpÃ©rations"
@@ -108,7 +108,7 @@ export const moduleRegistry: ERPModule[] = [
   {
     key: "materiels",
     label: "MatÃ©riel",
-    pluralLabel: "MatÃ©riels",
+    pluralLabel: "Matériels",
     group: "OpÃ©rations",
     enabled: true,
     description: "Gestion des matÃ©riels, Ã©tats, affectations et pannes.",

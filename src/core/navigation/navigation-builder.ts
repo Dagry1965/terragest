@@ -1,4 +1,4 @@
-﻿import { getEnabledModules } from "@/core/modules/module-registry";
+import { getEnabledModules } from "@/core/modules/module-registry";
 
 export type ERPNavigationItem = {
   label: string;
@@ -9,7 +9,7 @@ export type ERPNavigationItem = {
 export function buildERPNavigation(): ERPNavigationItem[] {
   const staticItems: ERPNavigationItem[] = [
     {
-      label: "Dashboard",
+      label: "Tableau de bord",
       href: "/",
       group: "Pilotage",
     },

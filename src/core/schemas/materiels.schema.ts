@@ -1,9 +1,9 @@
-﻿import { ERPModuleSchema } from "./types";
+import { ERPModuleSchema } from "./types";
 
 export const materielsSchema: ERPModuleSchema = {
   module: "materiels",
 
-  title: "MatÃ©riels",
+  title: "Matériels",
 
   description:
     "Gestion des matÃ©riels, Ã©tats et maintenance.",

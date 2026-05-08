@@ -7,7 +7,7 @@ export const ReportingService = {
   async generateBusinessReport() {
 
     const metrics =
-      await AggregationService.buildDashboardMetrics();
+      await AggregationService.buildTableau de bordMetrics();
 
     return {
 

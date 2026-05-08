@@ -1,18 +1,18 @@
-﻿import { GenericEditPage } from "@/components/erp/generic/GenericEditPage";
+import { GenericEditPage } from "@/components/erp/generic/GenericEditPage";
 
-type Props = {
-  params: {
+type PageProps = {
+  params: Promise<{
     id: string;
-  };
+  }>;
 };
 
-export default function MaterielEditPage({
-  params,
-}: Props) {
+export default async function Page({ params }: PageProps) {
+  const { id } = await params;
+
   return (
     <GenericEditPage
       moduleKey="materiels"
-      id={params.id}
+      id={id}
     />
   );
 }

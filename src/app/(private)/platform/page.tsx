@@ -1,7 +1,7 @@
 // src/app/(private)/platform/page.tsx
 
-import { ERPStatusDashboard }
-from "@/features/platform-monitoring/components/ERPStatusDashboard";
+import { ERPStatusTableau de bord }
+from "@/features/platform-monitoring/components/ERPStatusTableau de bord";
 
 export default function PlatformPage() {
 
@@ -9,7 +9,7 @@ export default function PlatformPage() {
 
     <div className="p-6">
 
-      <ERPStatusDashboard />
+      <ERPStatusTableau de bord />
     </div>
   );
 }

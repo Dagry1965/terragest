@@ -50,7 +50,7 @@ const workflows = [
   },
 ];
 
-export const WorkflowDashboard = () => {
+export const WorkflowTableau de bord = () => {
 
   return (
 

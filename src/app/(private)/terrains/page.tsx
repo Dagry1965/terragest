@@ -1,7 +1,5 @@
-﻿import { GenericListPage } from "@/components/erp/generic/GenericListPage";
+import { GenericListPage } from "@/components/erp/generic/GenericListPage";
 
-export default function TerrainsPage() {
-  return (
-    <GenericListPage moduleKey="terrains" />
-  );
+export default function Page() {
+  return <GenericListPage moduleKey="terrains" />;
 }

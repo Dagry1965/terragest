@@ -1,4 +1,4 @@
-﻿import type { RuntimeHealth }
+import type { RuntimeHealth }
 from "../types/RuntimeHealth";
 
 export class RuntimeObservabilityService {

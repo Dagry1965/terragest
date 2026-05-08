@@ -1,9 +1,9 @@
-﻿import { formatDisplayValue } from "@/core/utils/formatFirestoreDate";
+import { formatDisplayValue } from "@/core/utils/formatFirestoreDate";
 import { AuditTable }
 from "@/features/observability/components/AuditTable";
 
-import LiveRuntimeDashboard
-from "@/features/observability/dashboards/LiveRuntimeDashboard";
+import LiveRuntimeTableau de bord
+from "@/features/observability/dashboards/LiveRuntimeTableau de bord";
 
 import WorkflowExecutionMonitor
 from "@/features/observability/widgets/workflows/WorkflowExecutionMonitor";
@@ -41,7 +41,7 @@ export default function ObservabilityPage() {
 
       </div>
 
-      <LiveRuntimeDashboard />
+      <LiveRuntimeTableau de bord />
 
 <WorkflowExecutionMonitor />
       <AuditTable />

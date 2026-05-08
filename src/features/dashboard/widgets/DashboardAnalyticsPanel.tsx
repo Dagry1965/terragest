@@ -1,6 +1,6 @@
 "use client";
 
-export const DashboardAnalyticsPanel =
+export const Tableau de bordAnalyticsPanel =
 () => {
 
   return (

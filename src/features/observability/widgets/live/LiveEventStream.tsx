@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { formatDisplayValue } from "@/core/utils/formatFirestoreDate";
 import {

@@ -13,7 +13,7 @@ import {
 } from "@/lib/firebase/config";
 
 export const
-DashboardAnalyticsService = {
+Tableau de bordAnalyticsService = {
 
   async getStats() {
 

@@ -8,7 +8,7 @@ import {
 
 export const AggregationService = {
 
-  async buildDashboardMetrics() {
+  async buildTableau de bordMetrics() {
 
     const products =
       await AnalyticsRepository.getProducts();

@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 interface Props {
   title: string;
@@ -6,7 +6,7 @@ interface Props {
   value: string | number;
 }
 
-export function InterventionsDashboardCard({
+export function InterventionsTableau de bordCard({
   title,
   value,
 }: Props) {

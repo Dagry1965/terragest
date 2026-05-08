@@ -12,9 +12,9 @@ export function usePermissions(
 
   return {
 
-    canViewDashboard:
+    canViewTableau de bord:
       PermissionService
-        .canViewDashboard(role),
+        .canViewTableau de bord(role),
 
     canManageProducts:
       PermissionService

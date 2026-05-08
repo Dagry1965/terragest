@@ -1,0 +1,3 @@
+export {
+  ERPRealtimeSyncBadge,
+} from "./ERPRealtimeSyncBadge";

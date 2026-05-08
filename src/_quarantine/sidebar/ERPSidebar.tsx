@@ -7,7 +7,7 @@ from "next/link";
 
 const items = [
 
-  "Dashboard",
+  "Tableau de bord",
 
   "Exploitations",
 

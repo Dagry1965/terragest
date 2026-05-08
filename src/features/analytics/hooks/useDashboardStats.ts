@@ -14,7 +14,7 @@ import { db }
 from "@/lib/firebase/config";
 
 export function
-useDashboardStats() {
+useTableau de bordStats() {
 
   const [stats, setStats] =
     useState({

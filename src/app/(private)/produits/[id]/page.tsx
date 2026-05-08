@@ -1,45 +1,18 @@
-"use client";
+import { GenericDetailPage } from "@/components/erp/generic/GenericDetailPage";
 
-import {
-  useParams
-}
-from "next/navigation";
+type PageProps = {
+  params: Promise<{
+    id: string;
+  }>;
+};
 
-export default function ProduitDetailPage() {
-
-  const params =
-    useParams();
+export default async function Page({ params }: PageProps) {
+  const { id } = await params;
 
   return (
-
-    <div className="p-10">
-
-      <div
-        className="
-          bg-white
-          rounded-2xl
-          shadow-md
-          p-6
-        "
-      >
-
-        <h1
-          className="
-            text-3xl
-            font-bold
-            mb-6
-          "
-        >
-          Produit
-        </h1>
-
-        <p>
-          ID :
-          {params.id}
-        </p>
-
-      </div>
-
-    </div>
+    <GenericDetailPage
+      moduleKey="produits"
+      id={id}
+    />
   );
 }

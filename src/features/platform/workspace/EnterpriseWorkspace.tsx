@@ -1,11 +1,11 @@
-﻿import EnterpriseTopbar
+import EnterpriseTopbar
 from "../components/layout/EnterpriseTopbar";
 
 import EnterpriseSidebar
 from "../components/navigation/EnterpriseSidebar";
 
-import EnterpriseSupervisionDashboard
-from "../dashboards/EnterpriseSupervisionDashboard";
+import EnterpriseSupervisionTableau de bord
+from "../dashboards/EnterpriseSupervisionTableau de bord";
 
 export default function
 EnterpriseWorkspace() {
@@ -37,7 +37,7 @@ EnterpriseWorkspace() {
           "
         >
 
-          <EnterpriseSupervisionDashboard />
+          <EnterpriseSupervisionTableau de bord />
 
         </main>
 

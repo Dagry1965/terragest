@@ -1,4 +1,4 @@
-// src/features/platform-monitoring/components/ERPStatusDashboard.tsx
+// src/features/platform-monitoring/components/ERPStatusTableau de bord.tsx
 
 "use client";
 
@@ -27,7 +27,7 @@ interface ERPStatus {
   events: ERPEvent[];
 }
 
-export function ERPStatusDashboard() {
+export function ERPStatusTableau de bord() {
 
   const [status, setStatus] =
     useState<ERPStatus | null>(null);

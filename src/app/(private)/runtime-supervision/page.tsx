@@ -1,4 +1,4 @@
-﻿import {
+import {
   RuntimeSupervisionDashboard,
 }
 from "@/features/runtime-supervision/RuntimeSupervisionDashboard";

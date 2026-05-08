@@ -13,17 +13,17 @@ import {
   buildMonthlyAnalytics,
 } from "@/features/analytics/components/analyticsHelpers";
 
-interface DashboardAnalyticsProps {
+interface Tableau de bordAnalyticsProps {
 
   produits: any[];
 
   terrainsAnalytics: any[];
 }
 
-export const DashboardAnalytics = ({
+export const Tableau de bordAnalytics = ({
   produits,
   terrainsAnalytics,
-}: DashboardAnalyticsProps) => {
+}: Tableau de bordAnalyticsProps) => {
 
   const produitsByCategorie =
     useMemo(

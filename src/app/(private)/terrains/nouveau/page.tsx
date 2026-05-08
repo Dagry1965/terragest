@@ -1,7 +1,5 @@
-﻿import { GenericCreatePage } from "@/components/erp/generic/GenericCreatePage";
+import { GenericCreatePage } from "@/components/erp/generic/GenericCreatePage";
 
-export default function NewTerrainPage() {
-  return (
-    <GenericCreatePage moduleKey="terrains" />
-  );
+export default function Page() {
+  return <GenericCreatePage moduleKey="terrains" />;
 }
