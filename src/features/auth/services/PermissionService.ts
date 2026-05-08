@@ -1,44 +1,15 @@
-import { UserRole }
-from "@/features/auth/types/UserRole";
-
-export const PermissionService = {
-
-  canViewTableau de bord(
-    role: UserRole
-  ) {
-
-    return [
-      "admin",
-      "manager",
-      "agent",
-      "viewer",
-    ].includes(role);
+﻿export const PermissionService = {
+  canViewDashboard(role: string) {
+    return ["admin", "manager", "user"].includes(role);
   },
 
-  canManageProducts(
-    role: UserRole
-  ) {
-
-    return [
-      "admin",
-      "manager",
-    ].includes(role);
+  canViewModules(role: string) {
+    return ["admin", "manager"].includes(role);
   },
 
-  canDeleteProducts(
-    role: UserRole
-  ) {
-
+  canManageUsers(role: string) {
     return role === "admin";
   },
-
-  canViewAnalytics(
-    role: UserRole
-  ) {
-
-    return [
-      "admin",
-      "manager",
-    ].includes(role);
-  },
 };
+
+export default PermissionService;

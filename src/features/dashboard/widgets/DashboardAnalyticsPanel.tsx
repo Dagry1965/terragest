@@ -1,6 +1,6 @@
-"use client";
+﻿"use client";
 
-export const Tableau de bordAnalyticsPanel =
+export const DashboardAnalyticsPanel =
 () => {
 
   return (
@@ -31,7 +31,7 @@ export const Tableau de bordAnalyticsPanel =
         mt-4
       ">
 
-        Tendances & analyses métier
+        Tendances & analyses mÃ©tier
 
       </div>
 

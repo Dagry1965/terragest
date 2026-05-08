@@ -1,12 +1,12 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 
 const items = [
-  ["Tableau de bord", "/dashboard"],
+  ["Dashboard", "/dashboard"],
   ["Exploitations", "/exploitations"],
   ["Terrains", "/terrains"],
-  ["Matériels", "/materiels"],
+  ["MatÃ©riels", "/materiels"],
   ["Maintenance", "/maintenance"],
   ["Interventions", "/interventions/workflow"],
   ["Stocks", "/stocks"],

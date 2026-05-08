@@ -1,4 +1,4 @@
-import RuntimeActivityFeed
+﻿import RuntimeActivityFeed
 from "../components/runtime/RuntimeActivityFeed";
 
 import WorkflowStatusPanel
@@ -11,7 +11,7 @@ import NotificationCenter
 from "../components/notifications/NotificationCenter";
 
 export default function
-ConnectedRuntimeTableau de bord() {
+ConnectedRuntimeDashboard() {
 
   return (
 

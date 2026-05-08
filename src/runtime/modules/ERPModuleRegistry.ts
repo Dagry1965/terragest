@@ -1,38 +1,51 @@
-﻿import type { ERPModule } from "./ERPModule";
+﻿import type { ERPModuleDefinition } from "./ERPModuleDefinition";
+
+export type ERPAnyModule = ERPModuleDefinition | any;
 
 class ERPModuleRegistryClass {
-  private modules = new Map<string, ERPModule>();
+  private modules = new Map<string, ERPAnyModule>();
 
-  register(module: ERPModule) {
-    this.modules.set(module.metadata.key, module);
-    return module;
-  }
-
-  registerMany(modules: ERPModule[]) {
-    modules.forEach((module) => this.register(module));
-    return modules;
-  }
-
-  get(key: string) {
-    return this.modules.get(key);
-  }
-
-  has(key: string) {
-    return this.modules.has(key);
-  }
-
-  all() {
-    return Array.from(this.modules.values()).sort(
-      (a, b) => (a.metadata.order ?? 999) - (b.metadata.order ?? 999)
+  private getModuleKey(module: ERPAnyModule): string {
+    return (
+      module.key ??
+      module.id ??
+      module.name ??
+      module.metadata?.key ??
+      module.metadata?.id ??
+      module.metadata?.name
     );
   }
 
-  visible() {
-    return this.all().filter((module) => module.metadata.visible !== false);
+  register(module: ERPAnyModule) {
+    const key = this.getModuleKey(module);
+
+    if (!key) {
+      throw new Error("ERPModuleRegistry: module key is missing");
+    }
+
+    this.modules.set(key, module);
+    return module;
   }
 
-  enabled() {
-    return this.all().filter((module) => module.metadata.enabled !== false);
+  registerMany(modules: ERPAnyModule[]) {
+    modules.forEach((module) => this.register(module));
+    return this.all();
+  }
+
+  get(moduleKey: string) {
+    return this.modules.get(moduleKey);
+  }
+
+  all() {
+    return Array.from(this.modules.values());
+  }
+
+  getAll() {
+    return this.all();
+  }
+
+  has(moduleKey: string) {
+    return this.modules.has(moduleKey);
   }
 
   clear() {

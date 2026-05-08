@@ -1,154 +1,33 @@
-"use client";
+﻿"use client";
 
-import {
-  useEffect,
-  useState
-} from "react";
+import { useEffect, useState } from "react";
 
-import {
-  collection,
-  onSnapshot
-} from "firebase/firestore";
+export type DashboardStats = {
+  produits: number;
+  stocks: number;
+  materiels: number;
+  exploitations: number;
+};
 
-import { db }
-from "@/lib/firebase/config";
-
-export function
-useTableau de bordStats() {
-
+export function useDashboardStats() {
   const [stats, setStats] =
-    useState({
-
+    useState<DashboardStats>({
       produits: 0,
-
-      exploitations: 0,
-
-      interventions: 0,
-
+      stocks: 0,
       materiels: 0,
-
-      mouvements: 0,
+      exploitations: 0,
     });
 
   useEffect(() => {
-
-    const unsubscribers = [
-
-      onSnapshot(
-
-        collection(
-          db,
-          "produits"
-        ),
-
-        (snapshot) => {
-
-          setStats(
-            (prev) => ({
-
-              ...prev,
-
-              produits:
-                snapshot.size,
-            })
-          );
-        }
-      ),
-
-      onSnapshot(
-
-        collection(
-          db,
-          "exploitations"
-        ),
-
-        (snapshot) => {
-
-          setStats(
-            (prev) => ({
-
-              ...prev,
-
-              exploitations:
-                snapshot.size,
-            })
-          );
-        }
-      ),
-
-      onSnapshot(
-
-        collection(
-          db,
-          "interventions"
-        ),
-
-        (snapshot) => {
-
-          setStats(
-            (prev) => ({
-
-              ...prev,
-
-              interventions:
-                snapshot.size,
-            })
-          );
-        }
-      ),
-
-      onSnapshot(
-
-        collection(
-          db,
-          "materiels"
-        ),
-
-        (snapshot) => {
-
-          setStats(
-            (prev) => ({
-
-              ...prev,
-
-              materiels:
-                snapshot.size,
-            })
-          );
-        }
-      ),
-
-      onSnapshot(
-
-        collection(
-          db,
-          "mouvements_stock"
-        ),
-
-        (snapshot) => {
-
-          setStats(
-            (prev) => ({
-
-              ...prev,
-
-              mouvements:
-                snapshot.size,
-            })
-          );
-        }
-      ),
-    ];
-
-    return () => {
-
-      unsubscribers.forEach(
-        (unsubscribe) =>
-          unsubscribe()
-      );
-    };
-
+    setStats({
+      produits: 0,
+      stocks: 0,
+      materiels: 0,
+      exploitations: 0,
+    });
   }, []);
 
   return stats;
 }
+
+export default useDashboardStats;

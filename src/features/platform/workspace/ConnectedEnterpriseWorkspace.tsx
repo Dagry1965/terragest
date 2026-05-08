@@ -1,11 +1,11 @@
-import EnterpriseTopbar
+﻿import EnterpriseTopbar
 from "../components/layout/EnterpriseTopbar";
 
 import EnterpriseSidebar
 from "../components/navigation/EnterpriseSidebar";
 
-import ConnectedRuntimeTableau de bord
-from "../dashboards/ConnectedRuntimeTableau de bord";
+import ConnectedRuntimeDashboard
+from "../dashboards/ConnectedRuntimeDashboard";
 
 export default function
 ConnectedEnterpriseWorkspace() {
@@ -37,7 +37,7 @@ ConnectedEnterpriseWorkspace() {
           "
         >
 
-          <ConnectedRuntimeTableau de bord />
+          <ConnectedRuntimeDashboard />
 
         </main>
 

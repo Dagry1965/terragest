@@ -1,82 +1,41 @@
-"use client";
+﻿"use client";
 
-import { useMemo } from "react";
-
-import { KpiBarChart } from "@/features/analytics/components/KpiBarChart";
-
-import { KpiPieChart } from "@/features/analytics/components/KpiPieChart";
-
-import { KpiLineChart } from "@/features/analytics/components/KpiLineChart";
-
-import {
-  buildCategoryAnalytics,
-  buildMonthlyAnalytics,
-} from "@/features/analytics/components/analyticsHelpers";
-
-interface Tableau de bordAnalyticsProps {
-
+export interface DashboardAnalyticsProps {
   produits: any[];
-
-  terrainsAnalytics: any[];
+  stocks: any[];
+  materiels: any[];
+  exploitations: any[];
 }
 
-export const Tableau de bordAnalytics = ({
+export function DashboardAnalytics({
   produits,
-  terrainsAnalytics,
-}: Tableau de bordAnalyticsProps) => {
-
-  const produitsByCategorie =
-    useMemo(
-      () =>
-        buildCategoryAnalytics(
-          produits
-        ),
-      [produits]
-    );
-
-  const produitsMensuels =
-    useMemo(
-      () =>
-        buildMonthlyAnalytics(
-          produits
-        ),
-      [produits]
-    );
-
+  stocks,
+  materiels,
+  exploitations,
+}: DashboardAnalyticsProps) {
   return (
-
-    <div className="
-      grid
-      grid-cols-1
-      xl:grid-cols-2
-      gap-6
-    ">
-
-      <KpiPieChart
-        title="Produits par catégorie"
-        data={produitsByCategorie}
-        dataKey="value"
-        nameKey="name"
-      />
-
-      <KpiLineChart
-        title="Évolution produits"
-        data={produitsMensuels}
-        dataKey="value"
-        nameKey="name"
-      />
-
-      <div className="xl:col-span-2">
-
-        <KpiBarChart
-          title="Terrains par exploitation"
-          data={terrainsAnalytics}
-          dataKey="total"
-          nameKey="nom"
-        />
-
+    <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="rounded-2xl border bg-white p-6 shadow-sm">
+        <div className="text-sm text-gray-500">Produits</div>
+        <div className="text-3xl font-bold">{produits?.length ?? 0}</div>
       </div>
 
+      <div className="rounded-2xl border bg-white p-6 shadow-sm">
+        <div className="text-sm text-gray-500">Stocks</div>
+        <div className="text-3xl font-bold">{stocks?.length ?? 0}</div>
+      </div>
+
+      <div className="rounded-2xl border bg-white p-6 shadow-sm">
+        <div className="text-sm text-gray-500">Matériels</div>
+        <div className="text-3xl font-bold">{materiels?.length ?? 0}</div>
+      </div>
+
+      <div className="rounded-2xl border bg-white p-6 shadow-sm">
+        <div className="text-sm text-gray-500">Exploitations</div>
+        <div className="text-3xl font-bold">{exploitations?.length ?? 0}</div>
+      </div>
     </div>
   );
 }
+
+export default DashboardAnalytics;

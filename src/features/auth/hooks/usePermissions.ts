@@ -1,31 +1,16 @@
-"use client";
+﻿import { PermissionService } from "@/features/auth/services/PermissionService";
 
-import { UserRole }
-from "@/features/auth/types/UserRole";
-
-import { PermissionService }
-from "@/features/auth/services/PermissionService";
-
-export function usePermissions(
-  role: UserRole = "admin"
-) {
-
+export function usePermissions(role: string) {
   return {
+    canViewDashboard:
+      PermissionService.canViewDashboard(role),
 
-    canViewTableau de bord:
-      PermissionService
-        .canViewTableau de bord(role),
+    canViewModules:
+      PermissionService.canViewModules(role),
 
-    canManageProducts:
-      PermissionService
-        .canManageProducts(role),
-
-    canDeleteProducts:
-      PermissionService
-        .canDeleteProducts(role),
-
-    canViewAnalytics:
-      PermissionService
-        .canViewAnalytics(role),
+    canManageUsers:
+      PermissionService.canManageUsers(role),
   };
 }
+
+export default usePermissions;

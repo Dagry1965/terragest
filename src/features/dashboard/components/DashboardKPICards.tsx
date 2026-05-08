@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 interface KPI {
 
@@ -36,7 +36,7 @@ const KPIS: KPI[] = [
   },
 ];
 
-export const Tableau de bordKPICards =
+export const DashboardKPICards =
 () => {
 
   return (

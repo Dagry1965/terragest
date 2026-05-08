@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 interface Props {
   title: string;
@@ -6,7 +6,7 @@ interface Props {
   value: string | number;
 }
 
-export function MouvementsStockTableau de bordCard({
+export function MouvementsStockDashboardCard({
   title,
   value,
 }: Props) {

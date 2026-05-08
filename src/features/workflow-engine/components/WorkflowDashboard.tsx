@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { WorkflowCard } from "@/features/workflow-engine/components/WorkflowCard";
 
@@ -50,7 +50,7 @@ const workflows = [
   },
 ];
 
-export const WorkflowTableau de bord = () => {
+export const WorkflowDashboard = () => {
 
   return (
 

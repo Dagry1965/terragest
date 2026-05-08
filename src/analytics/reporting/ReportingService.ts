@@ -1,22 +1,12 @@
-import {
-  AggregationService,
-} from "@/analytics/services/AggregationService";
+﻿import { AggregationService } from "../aggregation/AggregationService";
 
-export const ReportingService = {
-
-  async generateBusinessReport() {
-
+export class ReportingService {
+  static async buildReport() {
     const metrics =
-      await AggregationService.buildTableau de bordMetrics();
+      await AggregationService.buildDashboardMetrics();
 
     return {
-
-      generatedAt:
-        new Date(),
-
       metrics,
     };
-  },
-};
-
-
+  }
+}

@@ -1,5 +1,5 @@
-export default function
-MaterielsTableau de bord() {
+﻿export default function
+MaterielsDashboard() {
 
   return (
 
@@ -26,7 +26,7 @@ MaterielsTableau de bord() {
             mb-4
           "
         >
-          Matériels
+          MatÃ©riels
         </h2>
 
         <p>

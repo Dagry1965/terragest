@@ -1,17 +1,17 @@
-"use client";
+﻿"use client";
 
 const ALERTS = [
 
   {
     level: "critical",
     message:
-      "Stock critique détecté",
+      "Stock critique dÃ©tectÃ©",
   },
 
   {
     level: "warning",
     message:
-      "Météo défavorable",
+      "MÃ©tÃ©o dÃ©favorable",
   },
 
   {
@@ -21,7 +21,7 @@ const ALERTS = [
   },
 ];
 
-export const Tableau de bordAlertCenter =
+export const DashboardAlertCenter =
 () => {
 
   return (

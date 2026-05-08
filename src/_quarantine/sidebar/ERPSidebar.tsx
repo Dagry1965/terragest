@@ -1,4 +1,4 @@
-// src/components/sidebar/ERPSidebar.tsx
+﻿// src/components/sidebar/ERPSidebar.tsx
 
 "use client";
 
@@ -7,7 +7,7 @@ from "next/link";
 
 const items = [
 
-  "Tableau de bord",
+  "Dashboard",
 
   "Exploitations",
 
@@ -17,7 +17,7 @@ const items = [
 
   "Produits",
 
-  "Matériels",
+  "MatÃ©riels",
 
   "Interventions",
 

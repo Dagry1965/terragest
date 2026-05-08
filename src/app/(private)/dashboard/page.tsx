@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { ERPBadge, ERPButton } from "@/components/erp/ui";
@@ -42,7 +42,7 @@ export default function DashboardPage() {
               </div>
 
               <h1 className="mt-5 text-4xl font-black tracking-tight">
-                Tableau de bord Terragest
+                Dashboard Terragest
               </h1>
 
               <p className="mt-3 max-w-3xl text-base leading-7 text-slate-300">

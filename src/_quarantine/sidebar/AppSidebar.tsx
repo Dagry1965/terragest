@@ -1,4 +1,4 @@
-
+﻿
 "use client";
 
 import Link
@@ -7,7 +7,7 @@ from "next/link";
 const items = [
 
   {
-    label: "Tableau de bord",
+    label: "Dashboard",
     href: "/dashboard",
   },
 

@@ -1,40 +1,12 @@
-import {
-  AnalyticsRepository,
-} from "@/analytics/repositories/AnalyticsRepository";
-
-import {
-  KPIEngine,
-} from "@/analytics/kpi/KPIEngine";
-
-export const AggregationService = {
-
-  async buildTableau de bordMetrics() {
-
-    const products =
-      await AnalyticsRepository.getProducts();
-
-    const transactions =
-      await AnalyticsRepository.getTransactions();
-
+﻿export const AggregationService = {
+  async buildDashboardMetrics() {
     return {
-
-      revenue:
-        KPIEngine.calculateRevenue(
-          transactions
-        ),
-
-      stockRate:
-        KPIEngine.calculateStockRate(
-          products
-        ),
-
-      productsCount:
-        products.length,
-
-      transactionsCount:
-        transactions.length,
+      totalProducts: 0,
+      totalModules: 0,
+      totalWorkflows: 0,
+      totalEvents: 0,
+      totalErrors: 0,
+      runtimeHealth: "healthy",
     };
   },
 };
-
-

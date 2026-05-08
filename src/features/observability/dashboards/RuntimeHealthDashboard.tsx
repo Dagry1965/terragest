@@ -1,4 +1,4 @@
-import RuntimeStatusCard
+﻿import RuntimeStatusCard
 from "../components/RuntimeStatusCard";
 
 import EventStream
@@ -11,7 +11,7 @@ import RetryMonitor
 from "../widgets/RetryMonitor";
 
 export default function
-RuntimeHealthTableau de bord() {
+RuntimeHealthDashboard() {
 
   return (
 

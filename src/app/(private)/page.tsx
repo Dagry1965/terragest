@@ -1,5 +1,5 @@
-import { ErpTableau de bord } from "@/components/erp/dashboard/ErpTableau de bord";
+﻿import { ErpDashboard } from "@/components/erp/dashboard/ErpDashboard";
 
-export default function Tableau de bordPage() {
-  return <ErpTableau de bord />;
+export default function DashboardPage() {
+  return <ErpDashboard />;
 }

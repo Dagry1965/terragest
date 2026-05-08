@@ -1,8 +1,8 @@
-"use client";
+﻿"use client";
 
 const items = [
 
-  "Tableau de bord",
+  "Dashboard",
 
   "Exploitations",
 

@@ -1,19 +1,19 @@
-"use client";
+﻿"use client";
 
 const ACTIVITIES = [
 
-  "Nouvelle exploitation créée",
+  "Nouvelle exploitation crÃ©Ã©e",
 
-  "Intervention terminée",
+  "Intervention terminÃ©e",
 
-  "Stock faible détecté",
+  "Stock faible dÃ©tectÃ©",
 
-  "Rapport IA généré",
+  "Rapport IA gÃ©nÃ©rÃ©",
 
   "Nouvelle inspection mobile",
 ];
 
-export const Tableau de bordActivityFeed =
+export const DashboardActivityFeed =
 () => {
 
   return (
@@ -33,7 +33,7 @@ export const Tableau de bordActivityFeed =
           font-bold
         ">
 
-          Activité récente
+          ActivitÃ© rÃ©cente
 
         </h2>
 
