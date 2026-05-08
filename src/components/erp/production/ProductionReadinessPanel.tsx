@@ -21,16 +21,16 @@ export function ProductionReadinessPanel() {
             </span>
 
             <ERPBadge
-              tone={
-                check.status === "ready"
-                  ? "success"
-                  : check.status === "warning"
-                    ? "warning"
-                    : "info"
-              }
-            >
-              {check.status}
-            </ERPBadge>
+  tone={
+    check.status === "ok"
+      ? "success"
+      : check.status === "warning"
+        ? "warning"
+        : "danger"
+  }
+>
+  {check.status}
+</ERPBadge>
           </div>
         ))}
       </div>

@@ -1,4 +1,4 @@
-export type ProductionReadinessStatus =
+﻿export type ProductionReadinessStatus =
   | "ok"
   | "warning"
   | "critical";

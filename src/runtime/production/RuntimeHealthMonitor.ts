@@ -5,7 +5,7 @@ export class RuntimeHealthMonitor {
     const logs = ProductionLogger.all();
 
     const errors = logs.filter(
-      (log) => log.level === "error" || log.level === "critical"
+      (log) => log.level === "error"
     );
 
     return {

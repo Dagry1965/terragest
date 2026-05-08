@@ -8,9 +8,7 @@ export function ProductionLogsPanel() {
     <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
       <div className="mb-5 flex items-start justify-between gap-4">
         <div>
-          <h2 className="text-lg font-black text-slate-950">
-            Logs runtime
-          </h2>
+          <h2 className="text-lg font-black text-slate-950">Logs runtime</h2>
           <p className="mt-1 text-sm text-slate-500">
             Journal structure production.
           </p>
@@ -21,9 +19,7 @@ export function ProductionLogsPanel() {
 
       <div className="space-y-3">
         {logs.length === 0 ? (
-          <p className="text-sm text-slate-500">
-            Aucun log pour le moment.
-          </p>
+          <p className="text-sm text-slate-500">Aucun log pour le moment.</p>
         ) : (
           logs.map((log) => (
             <div
@@ -35,18 +31,16 @@ export function ProductionLogsPanel() {
                   <p className="text-sm font-black text-slate-900">
                     {log.scope}
                   </p>
-                  <p className="mt-1 text-sm text-slate-500">
-                    {log.message}
-                  </p>
+                  <p className="mt-1 text-sm text-slate-500">{log.message}</p>
                 </div>
 
                 <ERPBadge
                   tone={
-                    log.level === "error" || log.level === "critical"
+                    log.level === "error"
                       ? "danger"
                       : log.level === "warning"
-                        ? "warning"
-                        : "info"
+                      ? "warning"
+                      : "success"
                   }
                 >
                   {log.level}

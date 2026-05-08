@@ -1,60 +1,111 @@
 export type ProductionLogLevel =
   | "info"
   | "warning"
-  | "error"
-  | "critical";
+  | "error";
 
-export interface ProductionLogEntry {
+export type ProductionLog = {
   id: string;
   level: ProductionLogLevel;
-  scope: string;
   message: string;
-  payload?: Record<string, unknown>;
-  createdAt: string;
+  scope: string;
+  source?: string;
+  timestamp: string;
+};
+
+function createId(prefix: string) {
+  return `${prefix}_${Date.now()}_${Math.random()
+    .toString(16)
+    .slice(2)}`;
 }
 
-const logs: ProductionLogEntry[] = [];
+class ProductionLoggerClass {
+  private logs: ProductionLog[] = [];
 
-export class ProductionLogger {
-  static log(
-    level: ProductionLogLevel,
-    scope: string,
+  info(
     message: string,
-    payload?: Record<string, unknown>
+    scope = "production"
   ) {
-    const entry: ProductionLogEntry = {
-      id: `${scope}-${Date.now()}`,
-      level,
-      scope,
+    return this.add(
+      "info",
       message,
-      payload,
-      createdAt: new Date().toISOString(),
+      scope
+    );
+  }
+
+  warning(
+    message: string,
+    scope = "production"
+  ) {
+    return this.add(
+      "warning",
+      message,
+      scope
+    );
+  }
+
+  error(
+    message: string,
+    scope = "production"
+  ) {
+    return this.add(
+      "error",
+      message,
+      scope
+    );
+  }
+
+  add(
+    level: ProductionLogLevel,
+    message: string,
+    scope = "production"
+  ) {
+    const log: ProductionLog = {
+      id: createId("prod_log"),
+      level,
+      message,
+      scope,
+      source: scope,
+      timestamp: new Date().toISOString(),
     };
 
-    logs.unshift(entry);
+    this.logs.unshift(log);
 
-    if (level === "error" || level === "critical") {
-      console.error("[ERP]", entry);
-    } else {
-      console.log("[ERP]", entry);
+    this.logs =
+      this.logs.slice(0, 300);
+
+    return log;
+  }
+
+  all() {
+    if (this.logs.length === 0) {
+      this.seed();
     }
 
-    return entry;
+    return this.logs;
   }
 
-  static info(scope: string, message: string, payload?: Record<string, unknown>) {
-    return ProductionLogger.log("info", scope, message, payload);
-  }
+  private seed() {
+    this.info(
+      "Production governance initialized",
+      "governance"
+    );
 
-  static warning(scope: string, message: string, payload?: Record<string, unknown>) {
-    return ProductionLogger.log("warning", scope, message, payload);
-  }
+    this.warning(
+      "Cloud persistence driver pending",
+      "persistence"
+    );
 
-  static error(scope: string, message: string, payload?: Record<string, unknown>) {
-    return ProductionLogger.log("error", scope, message, payload);
-  }
+    this.info(
+      "Runtime monitoring active",
+      "monitoring"
+    );
 
-  static all() {
-    return logs;
+    this.info(
+      "Security policies loaded",
+      "security"
+    );
   }
 }
+
+export const ProductionLogger =
+  new ProductionLoggerClass();

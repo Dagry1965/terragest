@@ -1,3 +1,26 @@
+$ErrorActionPreference = "Stop"
+
+$ProjectRoot = "C:\Users\Admin\terragest"
+Set-Location -LiteralPath $ProjectRoot
+
+function Write-Utf8($Path, $Content) {
+  $FullPath = Join-Path $ProjectRoot $Path
+  $Dir = Split-Path $FullPath -Parent
+
+  if (!(Test-Path -LiteralPath $Dir)) {
+    New-Item -ItemType Directory -Path $Dir -Force | Out-Null
+  }
+
+  [System.IO.File]::WriteAllText(
+    $FullPath,
+    $Content,
+    [System.Text.UTF8Encoding]::new($false)
+  )
+
+  Write-Host "WRITTEN: $Path" -ForegroundColor Green
+}
+
+Write-Utf8 "src\components\erp\production\ProductionHardeningPanel.tsx" @'
 import {
   ERPSection,
   ERPStatCard,
@@ -51,3 +74,21 @@ export function ProductionHardeningPanel() {
     </ERPSection>
   );
 }
+'@
+
+$IndexPath = "src\components\erp\production\index.ts"
+$FullIndexPath = Join-Path $ProjectRoot $IndexPath
+
+$IndexContent = Get-Content -LiteralPath $FullIndexPath -Raw
+
+$ExportLine = 'export * from "./ProductionHardeningPanel";'
+
+if ($IndexContent -notmatch [regex]::Escape($ExportLine)) {
+  $IndexContent = $IndexContent.TrimEnd() + "`r`n" + $ExportLine + "`r`n"
+}
+
+Write-Utf8 $IndexPath $IndexContent
+
+Write-Host ""
+Write-Host "ProductionHardeningPanel ajoute et exporte." -ForegroundColor Green
+Write-Host "Relance : pnpm build" -ForegroundColor Yellow

@@ -1,47 +1,32 @@
-export interface ProductionReadinessCheck {
-  key: string;
-  label: string;
-  status: "ready" | "warning" | "todo";
-}
+import {
+  getERPProductionReadinessSnapshot,
+} from "./readiness/ERPProductionReadinessSnapshot";
 
-export class ProductionReadiness {
-  static checks(): ProductionReadinessCheck[] {
+export const ProductionReadiness = {
+  checks() {
+    const snapshot =
+      getERPProductionReadinessSnapshot();
+
     return [
-      {
-        key: "error-boundary",
-        label: "Error boundaries globaux",
-        status: "ready",
-      },
-      {
-        key: "logging",
-        label: "Logging structure",
-        status: "ready",
-      },
-      {
-        key: "cache",
-        label: "Cache runtime",
-        status: "ready",
-      },
-      {
-        key: "rate-limit",
-        label: "Rate limiting runtime",
-        status: "ready",
-      },
-      {
-        key: "tenant",
-        label: "Isolation tenant reelle",
-        status: "warning",
-      },
-      {
-        key: "ci-cd",
-        label: "CI/CD enterprise",
-        status: "todo",
-      },
-      {
-        key: "security-audit",
-        label: "Audit securite production",
-        status: "warning",
-      },
+      ...snapshot.policies.map((policy) => ({
+        key: policy.key,
+        label: policy.label,
+        status: policy.status,
+        description: policy.description,
+      })),
+
+      ...snapshot.cloud.map((check) => ({
+        key: check.key,
+        label: check.label,
+        status: check.status,
+        description: check.description,
+      })),
     ];
-  }
-}
+  },
+
+  score() {
+    return getERPProductionReadinessSnapshot()
+      .metrics
+      .readinessScore;
+  },
+};
