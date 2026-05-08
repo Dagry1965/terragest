@@ -1,5 +1,5 @@
-﻿import { runtimeMetricsRegistry } from "./RuntimeMetricsRegistry";
+﻿import { runtimeAlertRegistry } from "./RuntimeAlertRegistry";
 
-export function getRuntimeMetrics() {
-  return runtimeMetricsRegistry.getMetrics();
+export function getRuntimeAlerts() {
+  return runtimeAlertRegistry.getAlerts();
 }
