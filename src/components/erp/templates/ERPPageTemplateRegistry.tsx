@@ -39,12 +39,8 @@ export const ERPPageTemplateRegistry = {
       return <ERPModuleDashboardTemplate module={module} />;
     }
 
-    if (type === "create") {
-      return <ERPFormRenderer module={module} mode="create" />;
-    }
-
-    if (type === "edit") {
-      return <ERPFormRenderer module={module} mode="edit" />;
+    if (type === "create" || type === "edit") {
+      return <ERPFormRenderer module={module} />;
     }
 
     if (type === "details") {
