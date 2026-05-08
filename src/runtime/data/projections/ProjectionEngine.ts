@@ -1,4 +1,4 @@
-﻿export class ProjectionEngine {
+export class ProjectionEngine {
 
   project(
     event: unknown

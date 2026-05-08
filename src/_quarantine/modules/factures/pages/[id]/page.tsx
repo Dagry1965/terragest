@@ -1,4 +1,4 @@
-﻿export default function FacturesDetailsPage() {
+export default function FacturesDetailsPage() {
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold">

@@ -1,4 +1,4 @@
-﻿import {
+import {
   ProcessRepository
 }
 from "../persistence/processes/ProcessRepository";

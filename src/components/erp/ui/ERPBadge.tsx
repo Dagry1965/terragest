@@ -1,4 +1,4 @@
-﻿import type { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 type ERPBadgeTone = "default" | "success" | "warning" | "danger" | "info";
 

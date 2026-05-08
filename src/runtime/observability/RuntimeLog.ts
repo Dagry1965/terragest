@@ -1,4 +1,4 @@
-﻿export interface RuntimeLog {
+export interface RuntimeLog {
 
   type: string;
 

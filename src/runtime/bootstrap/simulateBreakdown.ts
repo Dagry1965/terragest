@@ -1,4 +1,4 @@
-﻿import { initializeRuntime }
+import { initializeRuntime }
 from "./initializeRuntime";
 
 import {

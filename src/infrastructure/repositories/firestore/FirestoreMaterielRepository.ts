@@ -1,4 +1,4 @@
-﻿import type { Materiel }
+import type { Materiel }
 from "../../../features/materiels/types/Materiel";
 
 import type { MaterielRepository }

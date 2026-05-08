@@ -1,4 +1,4 @@
-﻿export class WorkflowSupervisor {
+export class WorkflowSupervisor {
 
   monitor(
     workflow: string

@@ -1,4 +1,4 @@
-﻿export const
+export const
 INTERVENTION_CREATED =
   "INTERVENTION_CREATED";
 

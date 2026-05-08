@@ -1,4 +1,4 @@
-﻿export interface WorkflowHistoryEntry {
+export interface WorkflowHistoryEntry {
 
   module: string;
 

@@ -1,4 +1,4 @@
-﻿import RuntimeActivityFeed
+import RuntimeActivityFeed
 from "../components/runtime/RuntimeActivityFeed";
 
 import WorkflowStatusPanel

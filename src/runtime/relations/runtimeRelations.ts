@@ -1,4 +1,4 @@
-﻿import {
+import {
   RuntimeRelation,
 }
 from "@/runtime/relations/RuntimeRelation";

@@ -1,4 +1,4 @@
-﻿export class Scheduler {
+export class Scheduler {
 
   schedule(
     job: string

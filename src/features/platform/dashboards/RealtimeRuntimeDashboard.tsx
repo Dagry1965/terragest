@@ -1,4 +1,4 @@
-﻿import RuntimeMetricsPanel
+import RuntimeMetricsPanel
 from "../components/runtime/RuntimeMetricsPanel";
 
 import WorkflowStatusPanel

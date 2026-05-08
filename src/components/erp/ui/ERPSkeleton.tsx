@@ -1,4 +1,4 @@
-﻿interface ERPSkeletonProps {
+interface ERPSkeletonProps {
   className?: string;
 }
 

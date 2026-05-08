@@ -1,4 +1,4 @@
-﻿// src/platform/health/ERPHealthCheck.ts
+// src/platform/health/ERPHealthCheck.ts
 
 import { ModuleRegistry }
 from "@/platform/registry/ModuleRegistry";

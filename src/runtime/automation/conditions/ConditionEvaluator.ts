@@ -1,4 +1,4 @@
-﻿export class ConditionEvaluator {
+export class ConditionEvaluator {
 
   evaluate(
     condition: string,

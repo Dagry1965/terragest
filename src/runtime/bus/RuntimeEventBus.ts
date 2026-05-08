@@ -1,4 +1,4 @@
-﻿type EventHandler = (payload: any) => Promise<void>;
+type EventHandler = (payload: any) => Promise<void>;
 
 class RuntimeEventBus {
   private handlers: Record<string, EventHandler[]> = {};

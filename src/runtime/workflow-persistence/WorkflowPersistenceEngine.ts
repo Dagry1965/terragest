@@ -1,4 +1,4 @@
-﻿import { db }
+import { db }
 from "@/infrastructure/firebase/firebase";
 
 import {

@@ -1,4 +1,4 @@
-﻿export interface SortParams {
+export interface SortParams {
   field: string;
   direction: "asc" | "desc";
 }

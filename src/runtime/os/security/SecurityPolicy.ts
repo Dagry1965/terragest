@@ -1,4 +1,4 @@
-﻿export const SecurityPolicy = {
+export const SecurityPolicy = {
 
   enforce() {
 

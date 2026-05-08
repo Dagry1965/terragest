@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { ERPPage }
 from "@/components/erp/page/ERPPage";

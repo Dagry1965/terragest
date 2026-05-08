@@ -1,4 +1,4 @@
-﻿export const MaterielPolicies = {
+export const MaterielPolicies = {
 
   canCreate: true,
   canUpdate: true,

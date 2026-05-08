@@ -1,4 +1,4 @@
-﻿export class CircuitBreaker {
+export class CircuitBreaker {
 
   private failures = 0;
 

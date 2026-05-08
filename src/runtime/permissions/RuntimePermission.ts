@@ -1,4 +1,4 @@
-﻿export interface RuntimePermission {
+export interface RuntimePermission {
 
   module: string;
 

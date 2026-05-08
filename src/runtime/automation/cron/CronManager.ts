@@ -1,4 +1,4 @@
-﻿export class CronManager {
+export class CronManager {
 
   register(
     expression: string

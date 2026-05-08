@@ -22,7 +22,7 @@ export function archiveJob(
     entityId:
       job.payload?.id,
     message:
-      `Job archivé : ${job.name}`,
+      `Job archivï¿½ : ${job.name}`,
   });
 
   console.log(

@@ -1,4 +1,4 @@
-﻿import {
+import {
   WorkflowRepository
 }
 from "../persistence/workflows/WorkflowRepository";

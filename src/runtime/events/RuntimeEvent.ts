@@ -1,4 +1,4 @@
-﻿export interface RuntimeEvent {
+export interface RuntimeEvent {
 
   type: string;
 

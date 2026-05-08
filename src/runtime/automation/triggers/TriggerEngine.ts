@@ -1,4 +1,4 @@
-﻿export class TriggerEngine {
+export class TriggerEngine {
 
   trigger(
     event: string,

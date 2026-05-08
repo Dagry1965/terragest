@@ -1,4 +1,4 @@
-﻿export default function EnterpriseShell() {
+export default function EnterpriseShell() {
 
   return null;
 }

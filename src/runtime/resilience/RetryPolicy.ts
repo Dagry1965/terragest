@@ -1,4 +1,4 @@
-﻿export class RetryPolicy {
+export class RetryPolicy {
 
   async execute(
     callback: () => Promise<void>,

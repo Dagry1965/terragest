@@ -1,0 +1,12 @@
+import { ERPModuleActionPageTemplate } from "@/components/erp/templates";
+
+export default function Page() {
+  return (
+    <ERPModuleActionPageTemplate
+      moduleLabel="Maintenance"
+      type="edit"
+      actionLabel="Edition"
+      description="Page raccordee au template ERP enterprise centralise pour stabiliser le build et preparer la convergence runtime."
+    />
+  );
+}

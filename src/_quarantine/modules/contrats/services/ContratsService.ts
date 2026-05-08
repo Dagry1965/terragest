@@ -1,4 +1,4 @@
-﻿import { ContratsRepository } from "../repositories/ContratsRepository";
+import { ContratsRepository } from "../repositories/ContratsRepository";
 
 export class ContratsService {
   private repository =

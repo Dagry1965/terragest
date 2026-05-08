@@ -1,4 +1,4 @@
-﻿import type { ERPModule } from "../ERPModule";
+import type { ERPModule } from "../ERPModule";
 import { ERPModuleBuilder } from "../builders/ERPModuleBuilder";
 
 export class RuntimeTableFactory {

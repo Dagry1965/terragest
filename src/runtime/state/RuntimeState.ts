@@ -1,4 +1,4 @@
-﻿export interface RuntimeState {
+export interface RuntimeState {
 
   module: string;
 

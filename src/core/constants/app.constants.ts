@@ -1,4 +1,4 @@
-﻿export const APP_NAME = "Terragest";
+export const APP_NAME = "Terragest";
 
 export const DEFAULT_LANGUAGE = "fr";
 

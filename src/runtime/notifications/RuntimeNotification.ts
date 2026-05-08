@@ -1,4 +1,4 @@
-﻿export interface RuntimeNotification {
+export interface RuntimeNotification {
 
   type: string;
 

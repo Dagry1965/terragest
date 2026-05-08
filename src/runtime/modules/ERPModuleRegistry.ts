@@ -1,4 +1,4 @@
-﻿import type { ERPModuleDefinition } from "./ERPModuleDefinition";
+import type { ERPModuleDefinition } from "./ERPModuleDefinition";
 
 export type ERPAnyModule = ERPModuleDefinition | any;
 

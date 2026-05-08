@@ -1,4 +1,4 @@
-﻿import { PersistentEventStore }
+import { PersistentEventStore }
 from "../PersistentEventStore";
 
 export class ReplayEngine {

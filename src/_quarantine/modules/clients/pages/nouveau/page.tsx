@@ -1,4 +1,4 @@
-﻿export default function NouveauClientsPage() {
+export default function NouveauClientsPage() {
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold">

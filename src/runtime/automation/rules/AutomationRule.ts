@@ -1,4 +1,4 @@
-﻿export type AutomationRule = {
+export type AutomationRule = {
 
   id: string;
 

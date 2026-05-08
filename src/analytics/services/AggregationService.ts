@@ -1,4 +1,4 @@
-﻿export const AggregationService = {
+export const AggregationService = {
   async buildDashboardMetrics() {
     return {
       totalProducts: 0,

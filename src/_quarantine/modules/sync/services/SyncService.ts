@@ -1,4 +1,4 @@
-﻿import { SyncRepository } from "../repositories/SyncRepository";
+import { SyncRepository } from "../repositories/SyncRepository";
 
 export class SyncService {
   private repository =

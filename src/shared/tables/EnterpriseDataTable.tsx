@@ -1,4 +1,4 @@
-﻿export default function EnterpriseDataTable() {
+export default function EnterpriseDataTable() {
 
   return null;
 }

@@ -1,4 +1,4 @@
-﻿import {
+import {
   runtimeBusinessRules,
 }
 from "@/runtime/business-rules/runtimeBusinessRules";

@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { formatDisplayValue } from "@/core/utils/formatFirestoreDate";
 // src/features/platform-monitoring/components/graphs/EventTimeline.tsx

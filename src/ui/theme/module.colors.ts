@@ -1,4 +1,4 @@
-﻿export const moduleColors = {
+export const moduleColors = {
   exploitations:
     "from-green-500 to-green-700",
 

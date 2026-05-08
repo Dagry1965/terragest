@@ -1,4 +1,4 @@
-﻿import type { ERPModule } from "../ERPModule";
+import type { ERPModule } from "../ERPModule";
 import { RuntimePageFactory, type RuntimePageType } from "../factories/RuntimePageFactory";
 
 export class ERPModuleRenderer {

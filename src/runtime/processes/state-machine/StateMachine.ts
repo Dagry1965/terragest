@@ -1,4 +1,4 @@
-﻿export class StateMachine {
+export class StateMachine {
 
   private currentState =
     "INITIAL";

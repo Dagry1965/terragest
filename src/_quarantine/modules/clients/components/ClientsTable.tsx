@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useClients } from "../hooks/useClients";
 

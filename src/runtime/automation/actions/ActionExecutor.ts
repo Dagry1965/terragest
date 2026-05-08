@@ -1,4 +1,4 @@
-﻿export class ActionExecutor {
+export class ActionExecutor {
 
   async execute(
     action: string,

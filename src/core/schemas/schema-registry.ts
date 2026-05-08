@@ -1,4 +1,4 @@
-﻿import { exploitationsSchema } from "./exploitations.schema";
+import { exploitationsSchema } from "./exploitations.schema";
 import { terrainsSchema } from "./terrains.schema";
 import { materielsSchema } from "./materiels.schema";
 

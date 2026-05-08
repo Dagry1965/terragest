@@ -1,4 +1,4 @@
-﻿import { AggregationService } from "../aggregation/AggregationService";
+import { AggregationService } from "../aggregation/AggregationService";
 
 export class ReportingService {
   static async buildReport() {

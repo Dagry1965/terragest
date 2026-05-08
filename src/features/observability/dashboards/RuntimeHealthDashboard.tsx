@@ -1,4 +1,4 @@
-﻿import RuntimeStatusCard
+import RuntimeStatusCard
 from "../components/RuntimeStatusCard";
 
 import EventStream

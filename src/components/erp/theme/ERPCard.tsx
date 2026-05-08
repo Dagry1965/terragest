@@ -1,1 +1,1 @@
-﻿export { ERPCard } from "@/components/erp/ui";
+export { ERPCard } from "@/components/erp/ui";

@@ -1,4 +1,4 @@
-﻿import {
+import {
   collection,
   onSnapshot,
 } from "firebase/firestore";

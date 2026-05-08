@@ -1,4 +1,4 @@
-﻿type EventHandler = (
+type EventHandler = (
   payload?: unknown
 ) => void | Promise<void>;
 

@@ -1,4 +1,4 @@
-﻿export class EventSerializer {
+export class EventSerializer {
 
   serialize(
     payload?: unknown

@@ -1,4 +1,4 @@
-﻿export class DeadLetterQueue {
+export class DeadLetterQueue {
 
   private queue: unknown[] = [];
 

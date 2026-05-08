@@ -1,4 +1,4 @@
-﻿export class AnalyticsEngine {
+export class AnalyticsEngine {
 
   analyze(
     dataset: string

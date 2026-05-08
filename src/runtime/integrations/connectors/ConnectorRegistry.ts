@@ -1,4 +1,4 @@
-﻿export class ConnectorRegistry {
+export class ConnectorRegistry {
 
   private connectors:
     string[] = [];

@@ -1,4 +1,4 @@
-﻿import {
+import {
   MATERIEL_BREAKDOWN_DECLARED
 }
 from "../../features/materiels/events/MaterielEvents";

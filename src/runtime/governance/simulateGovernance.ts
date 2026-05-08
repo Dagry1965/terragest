@@ -1,4 +1,4 @@
-﻿import {
+import {
   EnterpriseGovernanceEngine
 }
 from "./EnterpriseGovernanceEngine";

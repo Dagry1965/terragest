@@ -1,4 +1,4 @@
-﻿interface ERPToastProps {
+interface ERPToastProps {
   title: string;
   message?: string;
   tone?: "success" | "warning" | "danger" | "info";

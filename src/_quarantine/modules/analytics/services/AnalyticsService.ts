@@ -1,4 +1,4 @@
-﻿import { AnalyticsRepository } from "../repositories/AnalyticsRepository";
+import { AnalyticsRepository } from "../repositories/AnalyticsRepository";
 
 export class AnalyticsService {
   private repository =

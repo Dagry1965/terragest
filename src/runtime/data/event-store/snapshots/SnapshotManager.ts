@@ -1,4 +1,4 @@
-﻿export class SnapshotManager {
+export class SnapshotManager {
 
   create(
     stream: string

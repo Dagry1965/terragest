@@ -1,4 +1,4 @@
-﻿export const observabilityStore = {
+export const observabilityStore = {
 
   runtimeStatus: "HEALTHY",
 };

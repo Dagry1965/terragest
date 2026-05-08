@@ -1,4 +1,4 @@
-﻿export class OrganizationContext {
+export class OrganizationContext {
 
   resolve() {
 

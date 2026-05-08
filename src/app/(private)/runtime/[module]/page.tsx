@@ -1,4 +1,4 @@
-﻿import { ERPModuleRegistry } from "@/runtime/modules/ERPModuleRegistry";
+import { ERPModuleRegistry } from "@/runtime/modules/ERPModuleRegistry";
 import { registerCoreERPModules } from "@/runtime/modules/registerCoreERPModules";
 import { ERPModuleListRenderer } from "@/runtime/modules/renderer/ERPModuleListRenderer";
 

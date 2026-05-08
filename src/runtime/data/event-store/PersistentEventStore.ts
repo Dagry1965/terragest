@@ -1,4 +1,4 @@
-﻿type StoredEvent = {
+type StoredEvent = {
 
   id: string;
 

@@ -1,4 +1,4 @@
-﻿export class PipelineEngine {
+export class PipelineEngine {
 
   async execute(
     pipeline: string

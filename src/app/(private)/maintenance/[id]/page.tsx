@@ -1,18 +1,12 @@
-import { GenericDetailPage } from "@/components/erp/generic/GenericDetailPage";
+import { ERPModuleActionPageTemplate } from "@/components/erp/templates";
 
-type PageProps = {
-  params: Promise<{
-    id: string;
-  }>;
-};
-
-export default async function Page({ params }: PageProps) {
-  const { id } = await params;
-
+export default function Page() {
   return (
-    <GenericDetailPage
-      moduleKey="maintenance"
-      id={id}
+    <ERPModuleActionPageTemplate
+      moduleLabel="Maintenance"
+      type="details"
+      actionLabel="Details"
+      description="Page legacy stabilisee par le template ERP enterprise centralise."
     />
   );
 }

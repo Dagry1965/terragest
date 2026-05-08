@@ -1,4 +1,4 @@
-﻿export interface DynamicField {
+export interface DynamicField {
   name: string;
 
   label: string;

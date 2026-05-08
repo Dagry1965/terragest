@@ -1,4 +1,4 @@
-﻿export class FederationEngine {
+export class FederationEngine {
 
   federate(
     domain: string

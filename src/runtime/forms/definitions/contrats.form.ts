@@ -1,4 +1,4 @@
-﻿import {
+import {
   DynamicField,
 }
 from "@/runtime/forms/DynamicField";

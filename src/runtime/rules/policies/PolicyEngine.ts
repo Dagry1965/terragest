@@ -1,4 +1,4 @@
-﻿import type { BusinessRule }
+import type { BusinessRule }
 from "../BusinessRule";
 
 import { RuleEvaluator }

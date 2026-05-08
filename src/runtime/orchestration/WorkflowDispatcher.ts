@@ -1,4 +1,4 @@
-﻿export class WorkflowDispatcher {
+export class WorkflowDispatcher {
 
   async dispatch(
     workflow: string

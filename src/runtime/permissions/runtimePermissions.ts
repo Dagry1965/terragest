@@ -1,4 +1,4 @@
-﻿import {
+import {
   RuntimePermission,
 }
 from "@/runtime/permissions/RuntimePermission";

@@ -1,4 +1,4 @@
-﻿import {
+import {
   QualityGateEngine
 }
 from "./gates/QualityGateEngine";

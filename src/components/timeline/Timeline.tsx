@@ -1,4 +1,4 @@
-﻿import { formatDisplayValue } from "@/core/utils/formatFirestoreDate";
+import { formatDisplayValue } from "@/core/utils/formatFirestoreDate";
 // src/components/timeline/Timeline.tsx
 
 interface TimelineEntry {

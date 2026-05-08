@@ -1,4 +1,4 @@
-﻿export class ReadModelBuilder {
+export class ReadModelBuilder {
 
   build(
     model: string

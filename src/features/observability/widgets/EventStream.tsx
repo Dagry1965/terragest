@@ -1,4 +1,4 @@
-﻿export default function EventStream() {
+export default function EventStream() {
 
   return (
 

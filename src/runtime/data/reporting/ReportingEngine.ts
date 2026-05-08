@@ -1,4 +1,4 @@
-﻿export class ReportingEngine {
+export class ReportingEngine {
 
   generate(
     report: string

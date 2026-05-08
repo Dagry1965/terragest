@@ -1,4 +1,4 @@
-﻿import { db } from "@/infrastructure/firebase/firebase";
+import { db } from "@/infrastructure/firebase/firebase";
 
 import {
   addDoc,

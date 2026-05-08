@@ -1,4 +1,4 @@
-﻿import LiveRuntimeDashboard
+import LiveRuntimeDashboard
 from "../../observability/dashboards/LiveRuntimeDashboard";
 
 import NotificationCenter

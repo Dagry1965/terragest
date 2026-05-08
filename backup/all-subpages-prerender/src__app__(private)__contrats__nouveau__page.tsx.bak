@@ -1,0 +1,12 @@
+import { ERPModuleActionPageTemplate } from "@/components/erp/templates";
+
+export default function Page() {
+  return (
+    <ERPModuleActionPageTemplate
+      moduleLabel="Contrats"
+      type="create"
+      actionLabel="Creation"
+      description="Page de creation raccordee au template ERP enterprise centralise."
+    />
+  );
+}

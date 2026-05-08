@@ -1,4 +1,4 @@
-﻿export interface ERPModuleMetadata {
+export interface ERPModuleMetadata {
   key: string;
   label: string;
   description?: string;

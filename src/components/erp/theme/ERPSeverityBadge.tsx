@@ -1,4 +1,4 @@
-﻿import { severityColors }
+import { severityColors }
 from "@/ui/theme/severity.colors";
 
 interface Props {

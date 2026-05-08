@@ -1,4 +1,4 @@
-﻿export const themeTokens = {
+export const themeTokens = {
   borderRadius: {
     sm: "6px",
     md: "12px",

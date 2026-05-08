@@ -1,4 +1,4 @@
-﻿import { EventBus }
+import { EventBus }
 from "../events/EventBus";
 
 import { WorkflowRegistry }

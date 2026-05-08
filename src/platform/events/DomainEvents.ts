@@ -1,4 +1,4 @@
-﻿// src/platform/events/DomainEvents.ts
+// src/platform/events/DomainEvents.ts
 
 import { EventStore }
 from "@/platform/observability/EventStore";

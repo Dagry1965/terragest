@@ -1,4 +1,4 @@
-﻿// src/platform/notifications/NotificationBus.ts
+// src/platform/notifications/NotificationBus.ts
 
 export class NotificationBus {
 

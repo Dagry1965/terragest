@@ -1,4 +1,4 @@
-﻿export class ApprovalEngine {
+export class ApprovalEngine {
 
   approve(
     processId: string

@@ -1,4 +1,4 @@
-﻿export class EventPipeline {
+export class EventPipeline {
 
   async dispatch(
     event: string,

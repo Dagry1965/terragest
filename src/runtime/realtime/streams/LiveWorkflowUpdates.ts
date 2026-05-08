@@ -1,4 +1,4 @@
-﻿export class
+export class
 LiveWorkflowUpdates {
 
   push(

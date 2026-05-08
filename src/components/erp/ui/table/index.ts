@@ -1,2 +1,2 @@
-﻿export { ERPTable } from "./ERPTable";
+export { ERPTable } from "./ERPTable";
 export type { ERPTableColumn } from "./ERPTable";

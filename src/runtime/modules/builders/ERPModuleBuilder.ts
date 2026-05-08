@@ -1,4 +1,4 @@
-﻿import type { ERPModule } from "../ERPModule";
+import type { ERPModule } from "../ERPModule";
 import type { ERPModuleField } from "../schemas/ERPModuleSchema";
 
 export interface ERPTableDefinition {

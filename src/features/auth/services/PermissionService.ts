@@ -1,4 +1,4 @@
-﻿export const PermissionService = {
+export const PermissionService = {
   canViewDashboard(role: string) {
     return ["admin", "manager", "user"].includes(role);
   },

@@ -1,4 +1,4 @@
-﻿export class RuntimeExecutor {
+export class RuntimeExecutor {
 
   async execute(
     workflow: string

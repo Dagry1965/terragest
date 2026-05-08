@@ -1,4 +1,4 @@
-﻿import { describe, it, expect } from "vitest";
+import { describe, it, expect } from "vitest";
 
 describe("MaterielsService", () => {
   it("should be defined", () => {

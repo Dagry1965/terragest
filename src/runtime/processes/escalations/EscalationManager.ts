@@ -1,4 +1,4 @@
-﻿export class EscalationManager {
+export class EscalationManager {
 
   escalate(
     processId: string

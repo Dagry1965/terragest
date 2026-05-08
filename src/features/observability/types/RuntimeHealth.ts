@@ -1,4 +1,4 @@
-﻿export type RuntimeHealth = {
+export type RuntimeHealth = {
 
   status: string;
 

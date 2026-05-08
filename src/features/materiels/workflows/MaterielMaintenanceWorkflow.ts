@@ -1,4 +1,4 @@
-﻿export class MaterielMaintenanceWorkflow {
+export class MaterielMaintenanceWorkflow {
 
   async execute() {
 

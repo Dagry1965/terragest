@@ -1,4 +1,4 @@
-﻿export class CQRSBus {
+export class CQRSBus {
 
   command(
     name: string

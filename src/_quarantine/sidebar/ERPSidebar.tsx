@@ -1,4 +1,4 @@
-﻿// src/components/sidebar/ERPSidebar.tsx
+// src/components/sidebar/ERPSidebar.tsx
 
 "use client";
 

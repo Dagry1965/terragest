@@ -1,4 +1,4 @@
-﻿export class SyncEngine {
+export class SyncEngine {
 
   async synchronize(
     source: string

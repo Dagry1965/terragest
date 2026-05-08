@@ -1,4 +1,4 @@
-﻿export class SagaCoordinator {
+export class SagaCoordinator {
 
   async start(
     saga: string

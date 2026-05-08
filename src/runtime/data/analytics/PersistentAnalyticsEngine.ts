@@ -1,4 +1,4 @@
-﻿import {
+import {
   AnalyticsRepository
 }
 from "../../persistence/analytics/AnalyticsRepository";

@@ -1,4 +1,4 @@
-﻿export const DashboardAnalyticsService = {
+export const DashboardAnalyticsService = {
   async getStats() {
     return {
       produits: 0,

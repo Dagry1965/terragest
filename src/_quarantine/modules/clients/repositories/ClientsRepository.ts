@@ -1,4 +1,4 @@
-﻿import { FirestoreRepository } from "@/infrastructure/firebase/FirestoreRepository";
+import { FirestoreRepository } from "@/infrastructure/firebase/FirestoreRepository";
 import { ClientsDTO } from "../dto/ClientsDTO";
 
 export class ClientsRepository extends FirestoreRepository<ClientsDTO> {

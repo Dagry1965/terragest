@@ -1,4 +1,4 @@
-﻿export class EventStore {
+export class EventStore {
 
   private events:
     unknown[] = [];

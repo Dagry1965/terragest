@@ -1,4 +1,4 @@
-﻿export function formatFirestoreDate(value: any): string {
+export function formatFirestoreDate(value: any): string {
   if (!value) return "";
 
   if (typeof value === "string") return value;

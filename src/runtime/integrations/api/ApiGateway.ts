@@ -1,4 +1,4 @@
-﻿export class ApiGateway {
+export class ApiGateway {
 
   expose(
     route: string

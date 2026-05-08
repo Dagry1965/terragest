@@ -1,4 +1,4 @@
-﻿import {
+import {
   RuntimeRealtimeGateway
 }
 from "./gateway/RuntimeRealtimeGateway";

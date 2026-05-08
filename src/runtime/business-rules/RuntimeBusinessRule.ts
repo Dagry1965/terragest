@@ -1,4 +1,4 @@
-﻿export interface RuntimeBusinessRule {
+export interface RuntimeBusinessRule {
 
   id: string;
 

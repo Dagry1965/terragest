@@ -1,4 +1,4 @@
-﻿import {
+import {
   bootstrapEnterpriseRuntime
 }
 from "./bootstrapEnterpriseRuntime";

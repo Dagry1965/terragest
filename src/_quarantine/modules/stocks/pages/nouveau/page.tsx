@@ -1,4 +1,4 @@
-﻿export default function NouveauStocksPage() {
+export default function NouveauStocksPage() {
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold">

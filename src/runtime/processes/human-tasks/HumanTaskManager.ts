@@ -1,4 +1,4 @@
-﻿export class HumanTaskManager {
+export class HumanTaskManager {
 
   assign(
     task: string,

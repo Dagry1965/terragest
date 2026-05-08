@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useProductions } from "../hooks/useProductions";
 

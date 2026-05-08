@@ -1,4 +1,4 @@
-﻿import {
+import {
   WorkflowPersistenceEngine,
 }
 from "@/runtime/workflow-persistence/WorkflowPersistenceEngine";

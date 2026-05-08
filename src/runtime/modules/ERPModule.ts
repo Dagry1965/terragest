@@ -1,4 +1,4 @@
-﻿import type { ERPModuleMetadata } from "./metadata/ERPModuleMetadata";
+import type { ERPModuleMetadata } from "./metadata/ERPModuleMetadata";
 import type { ERPModuleSchema } from "./schemas/ERPModuleSchema";
 
 export interface ERPModuleAction {

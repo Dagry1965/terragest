@@ -1,4 +1,4 @@
-﻿export class ProjectionDispatcher {
+export class ProjectionDispatcher {
 
   dispatch(
     event: unknown

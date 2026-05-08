@@ -1,19 +1,12 @@
-import { coreERPModules } from "@/runtime/modules";
 import { ERPModuleActionPageTemplate } from "@/components/erp/templates";
 
 export default function Page() {
-  const runtimeModule = coreERPModules.find(
-    (module) => module.metadata.key === "produits"
-  );
-
-  if (!runtimeModule) {
-    return null;
-  }
-
   return (
     <ERPModuleActionPageTemplate
-      module={runtimeModule}
+      moduleLabel="Produits"
       type="import"
+      actionLabel="Import"
+      description="Page legacy stabilisee par le template ERP enterprise centralise."
     />
   );
 }

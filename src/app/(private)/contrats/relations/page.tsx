@@ -1,19 +1,12 @@
-import { coreERPModules } from "@/runtime/modules";
 import { ERPModuleActionPageTemplate } from "@/components/erp/templates";
 
 export default function Page() {
-  const runtimeModule = coreERPModules.find(
-    (module) => module.metadata.key === "contrats"
-  );
-
-  if (!runtimeModule) {
-    return null;
-  }
-
   return (
     <ERPModuleActionPageTemplate
-      module={runtimeModule}
+      moduleLabel="Contrats"
       type="relations"
+      actionLabel="Relations"
+      description="Page legacy stabilisee par le template ERP enterprise centralise."
     />
   );
 }

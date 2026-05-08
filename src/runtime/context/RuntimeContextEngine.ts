@@ -1,4 +1,4 @@
-﻿export class RuntimeContextEngine {
+export class RuntimeContextEngine {
 
   static buildContext(
     data: any

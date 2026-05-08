@@ -1,4 +1,4 @@
-﻿import EnterpriseWorkspace
+import EnterpriseWorkspace
 from "../workspace/EnterpriseWorkspace";
 
 export default function

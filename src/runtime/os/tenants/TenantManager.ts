@@ -1,4 +1,4 @@
-﻿export class TenantManager {
+export class TenantManager {
 
   private currentTenant:
     string | null = null;

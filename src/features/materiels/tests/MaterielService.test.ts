@@ -1,4 +1,4 @@
-﻿describe(
+describe(
   "MaterielService",
   () => {
 

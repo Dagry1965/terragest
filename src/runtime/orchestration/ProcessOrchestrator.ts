@@ -1,4 +1,4 @@
-﻿export class ProcessOrchestrator {
+export class ProcessOrchestrator {
 
   async execute(processName: string) {
 

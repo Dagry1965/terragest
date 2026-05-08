@@ -1,0 +1,10 @@
+import { ERPModuleEnterprisePage } from "@/components/erp/modules";
+
+export default function Page() {
+  return (
+    <ERPModuleEnterprisePage
+      moduleLabel="Materiels"
+      moduleDescription="Gestion du parc materiel."
+    />
+  );
+}

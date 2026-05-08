@@ -1,4 +1,4 @@
-﻿import type { Materiel }
+import type { Materiel }
 from "../types/Materiel";
 
 export interface MaterielRepository {

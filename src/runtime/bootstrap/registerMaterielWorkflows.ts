@@ -1,4 +1,4 @@
-﻿import { WorkflowRegistry }
+import { WorkflowRegistry }
 from "../registry/WorkflowRegistry";
 
 import { MaterielMaintenanceWorkflow }

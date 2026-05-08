@@ -1,4 +1,4 @@
-﻿export interface RuntimeNavigationLink {
+export interface RuntimeNavigationLink {
 
   label: string;
 

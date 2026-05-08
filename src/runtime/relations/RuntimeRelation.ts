@@ -1,4 +1,4 @@
-﻿export interface RuntimeRelation {
+export interface RuntimeRelation {
 
   source: string;
 

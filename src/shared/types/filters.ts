@@ -1,3 +1,3 @@
-﻿export interface FilterParams {
+export interface FilterParams {
   search?: string;
 }

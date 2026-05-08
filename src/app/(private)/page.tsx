@@ -1,4 +1,4 @@
-﻿import { ErpDashboard } from "@/components/erp/dashboard/ErpDashboard";
+import { ErpDashboard } from "@/components/erp/dashboard/ErpDashboard";
 
 export default function DashboardPage() {
   return <ErpDashboard />;

@@ -1,4 +1,4 @@
-﻿export const queryKeys = {
+export const queryKeys = {
   organisations: ["organisations"],
   utilisateurs: ["utilisateurs"],
   exploitations: ["exploitations"],

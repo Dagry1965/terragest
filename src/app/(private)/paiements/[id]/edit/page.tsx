@@ -1,18 +1,12 @@
-import { GenericEditPage } from "@/components/erp/generic/GenericEditPage";
+import { ERPModuleActionPageTemplate } from "@/components/erp/templates";
 
-type PageProps = {
-  params: Promise<{
-    id: string;
-  }>;
-};
-
-export default async function Page({ params }: PageProps) {
-  const { id } = await params;
-
+export default function Page() {
   return (
-    <GenericEditPage
-      moduleKey="paiements"
-      id={id}
+    <ERPModuleActionPageTemplate
+      moduleLabel="Paiements"
+      type="edit"
+      actionLabel="Edition"
+      description="Page legacy stabilisee par le template ERP enterprise centralise."
     />
   );
 }

@@ -1,4 +1,4 @@
-﻿import type { ProcessDefinition }
+import type { ProcessDefinition }
 from "./ProcessDefinition";
 
 export const

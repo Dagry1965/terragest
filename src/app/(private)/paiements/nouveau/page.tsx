@@ -1,5 +1,12 @@
-import { GenericCreatePage } from "@/components/erp/generic/GenericCreatePage";
+import { ERPModuleActionPageTemplate } from "@/components/erp/templates";
 
 export default function Page() {
-  return <GenericCreatePage moduleKey="paiements" />;
+  return (
+    <ERPModuleActionPageTemplate
+      moduleLabel="Paiements"
+      type="create"
+      actionLabel="Creation"
+      description="Page legacy stabilisee par le template ERP enterprise centralise."
+    />
+  );
 }

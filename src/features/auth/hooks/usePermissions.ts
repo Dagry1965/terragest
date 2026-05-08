@@ -1,4 +1,4 @@
-﻿import { PermissionService } from "@/features/auth/services/PermissionService";
+import { PermissionService } from "@/features/auth/services/PermissionService";
 
 export function usePermissions(role: string) {
   return {

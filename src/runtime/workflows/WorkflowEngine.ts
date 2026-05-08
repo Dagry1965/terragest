@@ -1,4 +1,4 @@
-﻿export class WorkflowEngine {
+export class WorkflowEngine {
 
   async run(workflow: string) {
 

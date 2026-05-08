@@ -1,4 +1,4 @@
-﻿export class AggregationService {
+export class AggregationService {
   static async buildDashboardMetrics() {
     return {
       totalModules: 0,

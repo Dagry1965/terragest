@@ -1,4 +1,4 @@
-﻿import { InterventionService }
+import { InterventionService }
 from "../services/InterventionService";
 
 export class BreakdownInterventionWorkflow {

@@ -1,63 +1,77 @@
 import type { ERPModule } from "@/runtime/modules";
 import type { ERPAction } from "./ERPAction";
 
-export class ERPActionResolver {
-  static resolve(module: ERPModule): ERPAction[] {
-    const routes = module.metadata.routes ?? {};
+function getBasePath(
+  module: ERPModule
+): string {
+  const routes =
+    module.metadata.routes ?? {};
 
-    return [
-      {
-        key: "create",
-        label: "Nouveau",
-        href: routes.create,
-        variant: "primary",
-      },
-      {
-        key: "export",
-        label: "Exporter",
-        variant: "secondary",
-      },
-      {
-        key: "import",
-        label: "Importer",
-        variant: "ghost",
-      },
-      {
-        key: "workflow",
-        label: "Workflow",
-        variant: "ghost",
-        visible: module.metadata.features?.workflows === true,
-      },
-      {
-        key: "audit",
-        label: "Audit",
-        variant: "ghost",
-        visible: module.metadata.features?.audit === true,
-      },
-      {
-        key: "relations",
-        label: "Relations",
-        variant: "ghost",
-      },
-    ].filter((action) => action.visible !== false);
-  }
-
-  static resolveRowActions(module: ERPModule, id?: string): ERPAction[] {
-    const basePath = module.metadata.routes?.list ?? `/${module.metadata.key}`;
-
-    return [
-      {
-        key: "details",
-        label: "Ouvrir",
-        href: id ? `${basePath}/${id}` : basePath,
-        variant: "ghost",
-      },
-      {
-        key: "edit",
-        label: "Modifier",
-        href: id ? `${basePath}/${id}/edit` : basePath,
-        variant: "secondary",
-      },
-    ];
-  }
+  return routes.list ?? "/";
 }
+
+export function resolveERPModuleActions(
+  module: ERPModule
+): ERPAction[] {
+  const basePath =
+    getBasePath(module);
+
+  return [
+    {
+      key: "create",
+      label: "Nouveau",
+      href: `${basePath}/nouveau`,
+      variant: "primary",
+    },
+    {
+      key: "import",
+      label: "Importer",
+      href: `${basePath}/import`,
+      variant: "secondary",
+    },
+    {
+      key: "export",
+      label: "Exporter",
+      href: `${basePath}/export`,
+      variant: "secondary",
+    },
+    {
+      key: "audit",
+      label: "Audit",
+      href: `${basePath}/audit`,
+      variant: "ghost",
+    },
+    {
+      key: "workflows",
+      label: "Workflows",
+      href: `${basePath}/workflows`,
+      variant: "ghost",
+    },
+    {
+      key: "relations",
+      label: "Relations",
+      href: `${basePath}/relations`,
+      variant: "ghost",
+    },
+    {
+      key: "delete",
+      label: "Supprimer",
+      variant: "danger",
+      visible: false,
+    },
+  ];
+}
+
+export const ERPActionResolver = {
+  forModule(
+    module: ERPModule
+  ): ERPAction[] {
+    return resolveERPModuleActions(module);
+  },
+
+  resolve(
+    module: ERPModule
+  ): ERPAction[] {
+    return resolveERPModuleActions(module);
+  },
+};

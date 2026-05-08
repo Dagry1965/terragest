@@ -1,4 +1,4 @@
-﻿import { MouvementsStockRepository } from "../repositories/MouvementsStockRepository";
+import { MouvementsStockRepository } from "../repositories/MouvementsStockRepository";
 
 export class MouvementsStockService {
   private repository =

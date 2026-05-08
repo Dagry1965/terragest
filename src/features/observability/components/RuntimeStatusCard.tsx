@@ -1,4 +1,4 @@
-﻿import { useRuntimeHealth }
+import { useRuntimeHealth }
 from "../hooks/useRuntimeHealth";
 
 export default function

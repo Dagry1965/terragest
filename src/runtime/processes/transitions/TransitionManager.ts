@@ -1,4 +1,4 @@
-﻿export class TransitionManager {
+export class TransitionManager {
 
   validate(
     from: string,

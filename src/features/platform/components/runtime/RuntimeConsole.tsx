@@ -1,4 +1,4 @@
-﻿import EventReplayConsole
+import EventReplayConsole
 from "../../../observability/widgets/live/EventReplayConsole";
 
 export default function

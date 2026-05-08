@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useRecoltes } from "../hooks/useRecoltes";
 

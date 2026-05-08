@@ -1,4 +1,4 @@
-﻿export const env = {
+export const env = {
   appName: "Terragest",
   timezone: "Europe/Zurich",
 };

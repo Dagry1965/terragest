@@ -1,4 +1,4 @@
-﻿import { AlertesRepository } from "../repositories/AlertesRepository";
+import { AlertesRepository } from "../repositories/AlertesRepository";
 
 export class AlertesService {
   private repository =

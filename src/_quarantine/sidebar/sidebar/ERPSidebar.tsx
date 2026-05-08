@@ -1,4 +1,4 @@
-﻿export default function ERPSidebar() {
+export default function ERPSidebar() {
 
   return null;
 }

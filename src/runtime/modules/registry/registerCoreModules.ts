@@ -1,4 +1,4 @@
-﻿import { ERPModuleRegistry } from "../ERPModuleRegistry";
+import { ERPModuleRegistry } from "../ERPModuleRegistry";
 import { coreERPModules } from "../definitions/coreModules";
 
 export function registerCoreModules() {

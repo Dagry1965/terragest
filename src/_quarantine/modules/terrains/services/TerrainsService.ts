@@ -1,4 +1,4 @@
-﻿import { TerrainsRepository } from "../repositories/TerrainsRepository";
+import { TerrainsRepository } from "../repositories/TerrainsRepository";
 
 export class TerrainsService {
   private repository =

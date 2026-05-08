@@ -1,4 +1,4 @@
-﻿import { ERPModuleSchema } from "./types";
+import { ERPModuleSchema } from "./types";
 
 export const terrainsSchema: ERPModuleSchema = {
   module: "terrains",

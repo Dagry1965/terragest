@@ -1,27 +1,25 @@
-﻿import type { ReactNode } from "react";
-
-interface ERPEmptyStateProps {
-  title?: string;
+type ERPEmptyStateProps = {
+  title: string;
   description?: string;
-  action?: ReactNode;
-}
+};
 
 export function ERPEmptyState({
-  title = "Aucune donnÃ©e",
-  description = "Aucun Ã©lÃ©ment disponible pour le moment.",
-  action,
+  title,
+  description,
 }: ERPEmptyStateProps) {
   return (
-    <div className="rounded-2xl border border-dashed border-slate-800 bg-slate-950/60 p-10 text-center">
-      <h3 className="text-base font-semibold text-slate-100">
-        {title}
-      </h3>
+    <div className="flex min-h-[220px] items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-8 text-center">
+      <div className="max-w-xl">
+        <h2 className="text-lg font-semibold text-slate-950">
+          {title}
+        </h2>
 
-      <p className="mx-auto mt-2 max-w-md text-sm text-slate-400">
-        {description}
-      </p>
-
-      {action && <div className="mt-5">{action}</div>}
+        {description && (
+          <p className="mt-2 text-sm text-slate-600">
+            {description}
+          </p>
+        )}
+      </div>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-﻿import {
+import {
   PersistentRuntimePublisher
 }
 from "../../../runtime/monitoring/PersistentRuntimePublisher";

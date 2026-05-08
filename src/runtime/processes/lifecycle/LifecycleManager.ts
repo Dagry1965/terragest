@@ -1,4 +1,4 @@
-﻿export class LifecycleManager {
+export class LifecycleManager {
 
   start(
     process: string

@@ -1,4 +1,4 @@
-﻿export const statusColors = {
+export const statusColors = {
   active:
     "bg-green-100 text-green-700",
 

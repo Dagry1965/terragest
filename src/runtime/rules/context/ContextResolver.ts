@@ -1,4 +1,4 @@
-﻿export class ContextResolver {
+export class ContextResolver {
 
   resolve(
     payload?: unknown

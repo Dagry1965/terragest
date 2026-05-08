@@ -1,4 +1,4 @@
-﻿export interface WorkflowState {
+export interface WorkflowState {
 
   id: string;
 

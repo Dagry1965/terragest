@@ -1,4 +1,4 @@
-﻿export type BusinessRule = {
+export type BusinessRule = {
 
   id: string;
 

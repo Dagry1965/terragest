@@ -1,4 +1,4 @@
-﻿import { InterventionsRepository } from "../repositories/InterventionsRepository";
+import { InterventionsRepository } from "../repositories/InterventionsRepository";
 
 export class InterventionsService {
   private repository =

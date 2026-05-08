@@ -1,4 +1,4 @@
-﻿export const severityColors = {
+export const severityColors = {
   low:
     "bg-blue-100 text-blue-700",
 

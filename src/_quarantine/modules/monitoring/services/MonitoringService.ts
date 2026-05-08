@@ -1,4 +1,4 @@
-﻿import { MonitoringRepository } from "../repositories/MonitoringRepository";
+import { MonitoringRepository } from "../repositories/MonitoringRepository";
 
 export class MonitoringService {
   private repository =

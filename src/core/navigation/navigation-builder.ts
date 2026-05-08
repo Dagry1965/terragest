@@ -1,4 +1,4 @@
-﻿import { getEnabledModules } from "@/core/modules/module-registry";
+import { getEnabledModules } from "@/core/modules/module-registry";
 
 export type ERPNavigationItem = {
   label: string;

@@ -1,4 +1,4 @@
-﻿export class StreamManager {
+export class StreamManager {
 
   create(
     stream: string

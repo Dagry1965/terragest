@@ -1,4 +1,4 @@
-﻿import { MaintenanceRepository } from "../repositories/MaintenanceRepository";
+import { MaintenanceRepository } from "../repositories/MaintenanceRepository";
 
 export class MaintenanceService {
   private repository =

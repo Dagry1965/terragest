@@ -1,4 +1,4 @@
-﻿export class ProviderAdapter {
+export class ProviderAdapter {
 
   connect(
     provider: string

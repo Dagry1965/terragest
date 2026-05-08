@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useContrats } from "../hooks/useContrats";
 

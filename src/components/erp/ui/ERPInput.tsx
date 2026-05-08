@@ -1,4 +1,4 @@
-﻿import type { InputHTMLAttributes } from "react";
+import type { InputHTMLAttributes } from "react";
 
 interface ERPInputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;

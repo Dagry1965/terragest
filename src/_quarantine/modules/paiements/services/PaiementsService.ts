@@ -1,4 +1,4 @@
-﻿import { PaiementsRepository } from "../repositories/PaiementsRepository";
+import { PaiementsRepository } from "../repositories/PaiementsRepository";
 
 export class PaiementsService {
   private repository =

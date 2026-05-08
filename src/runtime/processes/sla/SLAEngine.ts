@@ -1,4 +1,4 @@
-﻿export class SLAEngine {
+export class SLAEngine {
 
   monitor(
     processId: string

@@ -1,4 +1,4 @@
-﻿import {
+import {
   RuntimeAutomation,
 }
 from "@/runtime/automation/RuntimeAutomation";

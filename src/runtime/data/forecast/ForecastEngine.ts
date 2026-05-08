@@ -1,4 +1,4 @@
-﻿export class ForecastEngine {
+export class ForecastEngine {
 
   predict(
     model: string

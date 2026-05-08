@@ -1,4 +1,4 @@
-﻿export type ERPModuleFieldType =
+export type ERPModuleFieldType =
   | "text"
   | "number"
   | "date"

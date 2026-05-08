@@ -1,4 +1,4 @@
-﻿export class DecisionEngine {
+export class DecisionEngine {
 
   decide(
     input?: unknown

@@ -1,4 +1,4 @@
-﻿import { FacturesRepository } from "../repositories/FacturesRepository";
+import { FacturesRepository } from "../repositories/FacturesRepository";
 
 export class FacturesService {
   private repository =

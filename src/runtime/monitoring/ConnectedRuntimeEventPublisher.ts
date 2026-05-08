@@ -1,4 +1,4 @@
-﻿import {
+import {
   runtimeActivityStore
 }
 from "../../features/platform/components/runtime/runtimeActivityStore";

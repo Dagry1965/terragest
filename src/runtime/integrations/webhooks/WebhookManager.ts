@@ -1,4 +1,4 @@
-﻿export class WebhookManager {
+export class WebhookManager {
 
   receive(
     event: string,

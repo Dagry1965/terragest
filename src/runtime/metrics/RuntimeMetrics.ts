@@ -1,4 +1,4 @@
-﻿export class RuntimeMetrics {
+export class RuntimeMetrics {
 
   increment(metric: string) {
 

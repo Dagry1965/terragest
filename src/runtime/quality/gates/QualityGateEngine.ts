@@ -1,4 +1,4 @@
-﻿import {
+import {
   RuntimeValidator
 }
 from "../validation/RuntimeValidator";

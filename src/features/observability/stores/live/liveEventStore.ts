@@ -1,4 +1,4 @@
-﻿export type LiveRuntimeEvent = {
+export type LiveRuntimeEvent = {
   type: string;
   timestamp: number;
   payload?: unknown;

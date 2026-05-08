@@ -1,4 +1,4 @@
-﻿import EnterpriseTopbar
+import EnterpriseTopbar
 from "../components/layout/EnterpriseTopbar";
 
 import EnterpriseSidebar

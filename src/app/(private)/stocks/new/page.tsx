@@ -1,37 +1,12 @@
-// src/app/(private)/stocks/new/page.tsx
+import { ERPModuleActionPageTemplate } from "@/components/erp/templates";
 
-import { ERPLayout }
-from "@/components/layout/ERPLayout";
-
-import { StockForm }
-from "@/components/stock/StockForm";
-
-export default function NewStockPage() {
-
+export default function Page() {
   return (
-
-    <ERPLayout>
-
-      <div
-        className="
-          max-w-2xl
-        "
-      >
-
-        <h1
-          className="
-            text-3xl
-            font-bold
-            mb-6
-          "
-        >
-          Nouveau stock
-        </h1>
-
-        <StockForm />
-
-      </div>
-
-    </ERPLayout>
+    <ERPModuleActionPageTemplate
+      moduleLabel="Stocks"
+      type="create"
+      actionLabel="Creation"
+      description="Page legacy stabilisee par le template ERP enterprise centralise."
+    />
   );
 }

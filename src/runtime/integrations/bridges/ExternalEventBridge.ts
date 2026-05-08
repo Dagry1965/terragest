@@ -1,4 +1,4 @@
-﻿export class ExternalEventBridge {
+export class ExternalEventBridge {
 
   bridge(
     event: string

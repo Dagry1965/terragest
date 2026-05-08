@@ -1,4 +1,4 @@
-﻿export class WorkflowRegistry {
+export class WorkflowRegistry {
 
   private workflows =
     new Map<string, unknown>();

@@ -1,4 +1,4 @@
-﻿import { PermissionEngine }
+import { PermissionEngine }
 from "../permissions/PermissionEngine";
 
 export class AccessController {

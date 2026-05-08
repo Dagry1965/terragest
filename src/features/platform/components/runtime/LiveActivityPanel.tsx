@@ -1,4 +1,4 @@
-﻿import LiveEventStream
+import LiveEventStream
 from "../../../observability/widgets/live/LiveEventStream";
 
 export default function

@@ -1,4 +1,4 @@
-﻿export class DataWarehouseConnector {
+export class DataWarehouseConnector {
 
   connect(
     warehouse: string

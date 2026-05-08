@@ -1,52 +1,51 @@
+import type { ReactNode } from "react";
 import type { ERPModule } from "@/runtime/modules";
-import { ERPEmptyState } from "@/components/erp/ui";
-import { ERPFormRenderer } from "@/components/erp/forms/ERPFormRenderer";
-import { ERPRuntimeDetails } from "@/components/erp/runtime/ERPRuntimeDetails";
-import { ERPModuleListTemplate } from "./ERPModuleListTemplate";
-import { ERPModuleDashboardTemplate } from "./ERPModuleDashboardTemplate";
+
+import { ERPModuleActionPageTemplate } from "./ERPModuleActionPageTemplate";
 
 export type ERPPageTemplateType =
   | "list"
-  | "dashboard"
+  | "detail"
+  | "details"
   | "create"
   | "edit"
-  | "details";
+  | "audit"
+  | "import"
+  | "export"
+  | "relations"
+  | "workflows";
 
-interface RenderOptions {
+export type ERPTemplateProps = {
   module?: ERPModule;
-  type?: ERPPageTemplateType;
-  data?: Record<string, unknown>[];
-  record?: Record<string, unknown>;
+  type?: ERPPageTemplateType | string;
+  data?: unknown;
+  record?: unknown;
+};
+
+function GenericERPTemplate({
+  module,
+  type,
+}: ERPTemplateProps): ReactNode {
+  return (
+    <ERPModuleActionPageTemplate
+      module={module}
+      type={type}
+    />
+  );
 }
 
-export const ERPPageTemplateRegistry = {
-  render({
-    module,
-    type = "list",
-    data = [],
-    record,
-  }: RenderOptions) {
-    if (!module) {
-      return (
-        <ERPEmptyState
-          title="Module introuvable"
-          description="La definition du module est absente."
-        />
-      );
-    }
-
-    if (type === "dashboard") {
-      return <ERPModuleDashboardTemplate module={module} />;
-    }
-
-    if (type === "create" || type === "edit") {
-      return <ERPFormRenderer module={module} />;
-    }
-
-    if (type === "details") {
-      return <ERPRuntimeDetails module={module} data={record} />;
-    }
-
-    return <ERPModuleListTemplate module={module} data={data} />;
-  },
+export const ERPPageTemplateRegistry: Record<
+  string,
+  (props: ERPTemplateProps) => ReactNode
+> = {
+  list: GenericERPTemplate,
+  detail: GenericERPTemplate,
+  details: GenericERPTemplate,
+  create: GenericERPTemplate,
+  edit: GenericERPTemplate,
+  audit: GenericERPTemplate,
+  import: GenericERPTemplate,
+  export: GenericERPTemplate,
+  relations: GenericERPTemplate,
+  workflows: GenericERPTemplate,
 };

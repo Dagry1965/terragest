@@ -1,4 +1,4 @@
-﻿// src/platform/events/EventTypes.ts
+// src/platform/events/EventTypes.ts
 
 export const ERPEventTypes = {
 

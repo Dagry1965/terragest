@@ -1,4 +1,4 @@
-﻿export type RuntimeActivity = {
+export type RuntimeActivity = {
 
   type: string;
 

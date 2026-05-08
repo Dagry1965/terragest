@@ -1,4 +1,4 @@
-﻿export class PermissionEngine {
+export class PermissionEngine {
 
   can(
     action: string

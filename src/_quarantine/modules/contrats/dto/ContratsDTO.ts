@@ -1,4 +1,4 @@
-﻿import { BaseDTO } from "@/core/dto/BaseDTO";
+import { BaseDTO } from "@/core/dto/BaseDTO";
 
 export interface ContratsDTO extends BaseDTO {
   nom: string;

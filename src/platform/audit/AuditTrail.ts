@@ -1,4 +1,4 @@
-﻿// src/platform/audit/AuditTrail.ts
+// src/platform/audit/AuditTrail.ts
 
 export class AuditTrail {
 

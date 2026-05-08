@@ -1,4 +1,4 @@
-﻿export class ExecutionTrace {
+export class ExecutionTrace {
 
   trace(
     operation: string,

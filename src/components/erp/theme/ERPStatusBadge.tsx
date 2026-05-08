@@ -1,4 +1,4 @@
-﻿import { statusColors }
+import { statusColors }
 from "@/ui/theme/status.colors";
 
 interface Props {

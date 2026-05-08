@@ -1,4 +1,4 @@
-﻿export class RuntimeIsolationManager {
+export class RuntimeIsolationManager {
 
   isolate(
     tenantId: string

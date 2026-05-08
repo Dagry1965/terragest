@@ -1,4 +1,4 @@
-﻿export type ProcessDefinition = {
+export type ProcessDefinition = {
 
   id: string;
 

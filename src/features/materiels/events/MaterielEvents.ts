@@ -1,4 +1,4 @@
-﻿import {
+import {
   RuntimeEventRegistry
 }
 from "@/runtime/events/RuntimeEventRegistry";

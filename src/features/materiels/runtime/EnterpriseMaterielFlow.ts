@@ -1,4 +1,4 @@
-﻿import {
+import {
   MATERIEL_CREATED
 }
 from "../events/MaterielEvents";

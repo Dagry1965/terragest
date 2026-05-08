@@ -1,4 +1,4 @@
-﻿export const ERPTheme = {
+export const ERPTheme = {
   colors: {
     primary: "#0F172A",
     secondary: "#1E293B",

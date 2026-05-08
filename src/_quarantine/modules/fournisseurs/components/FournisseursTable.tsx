@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useFournisseurs } from "../hooks/useFournisseurs";
 

@@ -1,4 +1,4 @@
-﻿import { z } from "zod";
+import { z } from "zod";
 
 export const MaintenanceSchema = z.object({
   id: z.string().optional(),

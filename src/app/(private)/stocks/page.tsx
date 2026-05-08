@@ -1,5 +1,12 @@
-import { GenericListPage } from "@/components/erp/generic/GenericListPage";
+import { ERPModuleActionPageTemplate } from "@/components/erp/templates";
 
 export default function Page() {
-  return <GenericListPage moduleKey="stocks" />;
+  return (
+    <ERPModuleActionPageTemplate
+      moduleLabel="Stocks"
+      type="list"
+      actionLabel="Liste"
+      description="Page raccordee au template ERP enterprise centralise pour stabiliser le build et preparer la convergence runtime."
+    />
+  );
 }

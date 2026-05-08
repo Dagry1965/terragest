@@ -1,4 +1,4 @@
-﻿export interface DynamicSelectOption {
+export interface DynamicSelectOption {
 
   label: string;
 

@@ -1,4 +1,4 @@
-﻿export class AuditStream {
+export class AuditStream {
 
   log(
     event: string,

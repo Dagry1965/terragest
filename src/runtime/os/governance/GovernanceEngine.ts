@@ -1,4 +1,4 @@
-﻿export class GovernanceEngine {
+export class GovernanceEngine {
 
   validate(
     operation: string

@@ -1,4 +1,4 @@
-﻿export interface RuntimeAutomation {
+export interface RuntimeAutomation {
 
   id: string;
 

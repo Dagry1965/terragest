@@ -1,3 +1,4 @@
+import type { ERPAction } from "@/runtime/actions/ERPAction";
 import { ERPBadge } from "@/components/erp/ui";
 import { ERPActionRegistry } from "@/runtime/actions";
 import { ERPActionButton } from "@/components/erp/navigation/ERPActionButton";
@@ -132,7 +133,7 @@ export function ERPEnterpriseDataTable({
                     {ERPActionRegistry.forRow(
                       module,
                       String(row.id ?? "")
-                    ).map((action) => (
+                    ).map((action: ERPAction) => (
                       <ERPActionButton key={action.key} action={action} />
                     ))}
                   </div>

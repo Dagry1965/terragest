@@ -1,4 +1,4 @@
-﻿export default function PaiementsDetailsPage() {
+export default function PaiementsDetailsPage() {
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold">

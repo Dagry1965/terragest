@@ -1,4 +1,4 @@
-﻿import {
+import {
   DynamicFormContext,
 }
 from "@/runtime/forms/DynamicField";

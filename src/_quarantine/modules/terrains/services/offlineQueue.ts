@@ -1,4 +1,4 @@
-﻿interface OfflineAction {
+interface OfflineAction {
   type: string;
 
   payload: any;
