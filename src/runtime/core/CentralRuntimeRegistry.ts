@@ -1,5 +1,5 @@
-﻿import { runtimeAlertRegistry } from "./RuntimeAlertRegistry";
+﻿import { runtimeExecutionRegistry } from "./RuntimeExecutionRegistry";
 
-export function getRuntimeAlerts() {
-  return runtimeAlertRegistry.getAlerts();
+export function getRuntimeExecutions() {
+  return runtimeExecutionRegistry.getExecutions();
 }
