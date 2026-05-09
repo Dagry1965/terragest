@@ -1,5 +1,5 @@
-﻿import { runtimeExecutionRegistry } from "./RuntimeExecutionRegistry";
+﻿import { runtimeEventBus } from "./RuntimeEventBus";
 
-export function getRuntimeExecutions() {
-  return runtimeExecutionRegistry.getExecutions();
+export function getRuntimeEventBus() {
+  return runtimeEventBus;
 }
