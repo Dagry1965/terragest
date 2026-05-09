@@ -1,31 +1,63 @@
-import type { ReactNode } from "react";
+"use client";
 
-type ERPBadgeTone = "default" | "success" | "warning" | "danger" | "info";
+import type {
+  PropsWithChildren,
+} from "react";
 
-interface ERPBadgeProps {
-  children: ReactNode;
+import {
+  ERPTheme,
+} from "./ERPTheme";
+
+type ERPBadgeTone =
+  | "default"
+  | "success"
+  | "warning"
+  | "danger"
+  | "info";
+
+interface ERPBadgeProps
+  extends PropsWithChildren {
+
+  label?: string;
+
+  variant?: ERPBadgeTone;
+
   tone?: ERPBadgeTone;
-  className?: string;
 }
 
-const tones: Record<ERPBadgeTone, string> = {
-  default: "bg-slate-800 text-slate-200 border-slate-700",
-  success: "bg-emerald-950 text-emerald-300 border-emerald-800",
-  warning: "bg-amber-950 text-amber-300 border-amber-800",
-  danger: "bg-red-950 text-red-300 border-red-800",
-  info: "bg-sky-950 text-sky-300 border-sky-800",
-};
-
 export function ERPBadge({
+  label,
   children,
-  tone = "default",
-  className = "",
+  variant,
+  tone = "info",
 }: ERPBadgeProps) {
+
+  const resolvedTone =
+    variant ?? tone;
+
+  const background =
+    resolvedTone === "success"
+      ? ERPTheme.colors.success
+      : resolvedTone === "warning"
+      ? ERPTheme.colors.warning
+      : resolvedTone === "danger"
+      ? ERPTheme.colors.danger
+      : ERPTheme.colors.primary;
+
   return (
     <span
-      className={`inline-flex items-center rounded-full border px-2.5 py-1 text-xs font-medium ${tones[tone]} ${className}`}
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        padding: "4px 10px",
+        borderRadius: ERPTheme.radius.xl,
+        background,
+        color: ERPTheme.colors.text,
+        fontSize: "12px",
+        fontWeight: 700,
+      }}
     >
-      {children}
+      {label ?? children}
     </span>
   );
 }
