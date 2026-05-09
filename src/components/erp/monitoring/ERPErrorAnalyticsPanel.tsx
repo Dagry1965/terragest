@@ -1,7 +1,8 @@
 type ERPErrorAlert = {
-  id: string;
+  id?: string;
   title?: string;
   message?: string;
+  description?: string;
   level?: string;
 };
 
@@ -34,9 +35,9 @@ export function ERPErrorAnalyticsPanel({
         </div>
       ) : (
         <div className="space-y-4">
-          {alerts.map((alert: ERPErrorAlert) => (
+          {alerts.map((alert: ERPErrorAlert, index: number) => (
             <div
-              key={alert.id}
+              key={alert.id ?? index}
               className="rounded-2xl border border-amber-200 bg-amber-50 p-5"
             >
               <p className="font-semibold text-slate-900">
@@ -44,7 +45,10 @@ export function ERPErrorAnalyticsPanel({
               </p>
 
               <p className="mt-1 text-sm text-slate-600">
-                {alert.message ?? alert.level ?? "Aucun détail disponible."}
+                {alert.message ??
+                  alert.description ??
+                  alert.level ??
+                  "Aucun détail disponible."}
               </p>
             </div>
           ))}

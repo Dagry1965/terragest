@@ -1,14 +1,9 @@
-export interface ERPAlertItem {
-  id: string;
-  module?: string;
-  title: string;
-  description?: string;
-  message?: string;
-  level?: "info" | "warning" | "critical";
-  status?: "success" | "warning" | "error" | "pending";
-  createdAt?: string;
-  timestamp?: string;
-}
+import type {
+  ERPBaseRuntimeRecord,
+} from "../shared/ERPRuntimeTypes";
+
+export interface ERPAlertItem
+  extends ERPBaseRuntimeRecord {}
 
 export class ERPAlertStore {
   private static items: ERPAlertItem[] = [];
