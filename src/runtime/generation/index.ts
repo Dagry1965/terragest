@@ -7,3 +7,5 @@ export * from "./ERPRoutesGenerationEngine";
 export * from "./ERPWorkflowGenerationEngine";
 export * from "./ERPPermissionsGenerationEngine";
 export * from "./ERPMenuGenerationEngine";
+export * from "./ERPPageGenerationEngine";
+export * from "./ERPModuleRuntimeFactory";
