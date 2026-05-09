@@ -1,21 +1,53 @@
-import type { ReactNode } from "react";
+"use client";
 
-type ERPSectionProps = {
-  children: ReactNode;
-  className?: string;
-};
+import type { PropsWithChildren } from "react";
+import { ERPTheme } from "./ERPTheme";
+
+interface ERPSectionProps extends PropsWithChildren {
+  title?: string;
+  description?: string;
+}
 
 export function ERPSection({
+  title,
+  description,
   children,
-  className = "",
 }: ERPSectionProps) {
   return (
     <section
-      className={[
-        "rounded-2xl border border-slate-200 bg-white p-6 shadow-sm",
-        className,
-      ].join(" ")}
+      style={{
+        marginBottom: ERPTheme.spacing.xl,
+      }}
     >
+      <div
+        style={{
+          marginBottom: ERPTheme.spacing.md,
+        }}
+      >
+        {title && (
+          <h2
+            style={{
+              fontSize: "24px",
+              fontWeight: 700,
+              color: ERPTheme.colors.text,
+            }}
+          >
+            {title}
+          </h2>
+        )}
+
+        {description && (
+          <p
+            style={{
+              marginTop: ERPTheme.spacing.xs,
+              color: ERPTheme.colors.muted,
+            }}
+          >
+            {description}
+          </p>
+        )}
+      </div>
+
       {children}
     </section>
   );
