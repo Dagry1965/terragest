@@ -43,6 +43,10 @@ import {
   runtimeStreamRegistry,
 } from "./RuntimeStreamRegistry";
 
+import {
+  runtimeScheduler,
+} from "./RuntimeScheduler";
+
 export class CentralRuntimeRegistry {
   private modules =
     new Map<
@@ -114,6 +118,10 @@ export class CentralRuntimeRegistry {
 
   getRuntimeStreams() {
     return runtimeStreamRegistry.getStreams();
+  }
+
+  getRuntimeScheduler() {
+    return runtimeScheduler;
   }
 }
 
