@@ -11,32 +11,24 @@ Write-Host ""
 # =========================================================
 
 $ProjectRoot =
-  "C:\Users\Admin\terragest"
+  "C:\\Users\\Admin\\terragest"
 
 $Timestamp =
   Get-Date -Format "yyyyMMdd-HHmm"
 
-$ExternalBackupRoot =
-  "C:\Users\Admin\terragest-backups"
-
 $BackupRoot =
   Join-Path `
-    $ExternalBackupRoot `
-    "runtime-convergence-$Timestamp"
+    $ProjectRoot `
+    "backup/runtime-convergence-$Timestamp"
 
 $ReportsRoot =
   Join-Path `
     $ProjectRoot `
-    "reports\runtime"
+    "reports/runtime"
 
 # =========================================================
 # CREATE DIRECTORIES
 # =========================================================
-
-New-Item `
-  -ItemType Directory `
-  -Force `
-  -Path $ExternalBackupRoot | Out-Null
 
 New-Item `
   -ItemType Directory `
@@ -53,16 +45,15 @@ New-Item `
 # =========================================================
 
 Write-Host ""
-Write-Host "Creating external backups..." `
+Write-Host "Creating backups..." `
   -ForegroundColor Cyan
 
 $FoldersToBackup = @(
-  "src\runtime",
-  "src\app",
-  "src\components",
-  "src\modules",
-  "platform",
-  "modules",
+  "src/runtime",
+  "src/app",
+  "src/components",
+  "src/modules",
+  "src/platform",
   "scripts"
 )
 
@@ -71,29 +62,18 @@ foreach ($folder in $FoldersToBackup) {
     $Source =
       Join-Path $ProjectRoot $folder
 
-    if (Test-Path -LiteralPath $Source) {
-
-        $SafeName =
-          $folder -replace "\\", "__"
+    if (Test-Path $Source) {
 
         $Destination =
           Join-Path `
             $BackupRoot `
-            $SafeName
+            ($folder -replace "/", "_")
 
         Copy-Item `
-          -LiteralPath $Source `
+          -Path $Source `
           -Destination $Destination `
           -Recurse `
           -Force
-
-        Write-Host "Backup OK : $folder" `
-          -ForegroundColor Green
-    }
-    else {
-
-        Write-Host "Backup ignored, missing folder : $folder" `
-          -ForegroundColor DarkYellow
     }
 }
 
@@ -108,7 +88,7 @@ Write-Host "Creating runtime core..." `
 $RuntimeCore =
   Join-Path `
     $ProjectRoot `
-    "src\runtime\core"
+    "src/runtime/core"
 
 New-Item `
   -ItemType Directory `
@@ -135,20 +115,12 @@ foreach ($file in $CoreFiles) {
         $RuntimeCore `
         $file
 
-    if (!(Test-Path -LiteralPath $FullPath)) {
+    if (!(Test-Path $FullPath)) {
 
         Set-Content `
-          -LiteralPath $FullPath `
+          -Path $FullPath `
           -Value "// TERRAGEST ERP RUNTIME CORE" `
           -Encoding UTF8
-
-        Write-Host "Created : src\runtime\core\$file" `
-          -ForegroundColor Green
-    }
-    else {
-
-        Write-Host "Already exists : src\runtime\core\$file" `
-          -ForegroundColor DarkYellow
     }
 }
 
@@ -174,59 +146,9 @@ foreach ($report in $Reports) {
         $report
 
     Set-Content `
-      -LiteralPath $ReportPath `
+      -Path $ReportPath `
       -Value "# TERRAGEST ERP REPORT" `
       -Encoding UTF8
-
-    Write-Host "Report OK : reports\runtime\$report" `
-      -ForegroundColor Green
-}
-
-# =========================================================
-# CLEAN OLD INTERNAL BACKUPS FROM PROJECT BUILD SCOPE
-# =========================================================
-
-$InternalBackupRoot =
-  Join-Path `
-    $ProjectRoot `
-    "backup"
-
-if (Test-Path -LiteralPath $InternalBackupRoot) {
-
-    $InternalRuntimeBackups =
-      Get-ChildItem `
-        -LiteralPath $InternalBackupRoot `
-        -Directory `
-        -Filter "runtime-convergence-*"
-
-    foreach ($oldBackup in $InternalRuntimeBackups) {
-
-        $Target =
-          Join-Path `
-            $ExternalBackupRoot `
-            $oldBackup.Name
-
-        if (!(Test-Path -LiteralPath $Target)) {
-
-            Move-Item `
-              -LiteralPath $oldBackup.FullName `
-              -Destination $ExternalBackupRoot `
-              -Force
-
-            Write-Host "Moved old internal backup : $($oldBackup.Name)" `
-              -ForegroundColor Yellow
-        }
-        else {
-
-            Remove-Item `
-              -LiteralPath $oldBackup.FullName `
-              -Recurse `
-              -Force
-
-            Write-Host "Removed duplicate internal backup : $($oldBackup.Name)" `
-              -ForegroundColor Yellow
-        }
-    }
 }
 
 # =========================================================
@@ -239,7 +161,7 @@ Write-Host " RUNTIME CONVERGENCE INITIALIZED"
 Write-Host "========================================="
 Write-Host ""
 
-Write-Host "External Backup :" `
+Write-Host "Backup :" `
   -ForegroundColor Yellow
 
 Write-Host $BackupRoot

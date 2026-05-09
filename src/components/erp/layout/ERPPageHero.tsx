@@ -1,60 +1,74 @@
-import type { ReactNode } from "react";
-import { ERPBadge, ERPButton } from "@/components/erp/ui";
+"use client";
+
+import type {
+  ReactNode,
+} from "react";
+
+import {
+  ERPTheme,
+} from "../ui";
 
 interface ERPPageHeroProps {
-  eyebrow?: string;
   title: string;
   description?: string;
   category?: string;
-  actions?: ReactNode;
   side?: ReactNode;
 }
 
 export function ERPPageHero({
-  eyebrow = "Module mÃ©tier",
   title,
   description,
   category,
-  actions,
   side,
 }: ERPPageHeroProps) {
   return (
-    <section className="mb-8 overflow-hidden rounded-[2rem] border border-slate-200 bg-white p-8 text-slate-950 shadow-2xl">
-      <div className="grid gap-8 lg:grid-cols-[1.5fr_0.8fr]">
-        <div>
-          <div className="flex flex-wrap gap-2">
-            <ERPBadge tone="info">{eyebrow}</ERPBadge>
-            <ERPBadge tone="success">OpÃ©rationnel</ERPBadge>
-            {category && <ERPBadge>{category}</ERPBadge>}
-          </div>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+        gap: ERPTheme.spacing.lg,
+        marginBottom: ERPTheme.spacing.xl,
+      }}
+    >
+      <div>
+        {category && (
+          <p
+            style={{
+              color: ERPTheme.colors.muted,
+              fontSize: "13px",
+              marginBottom: ERPTheme.spacing.xs,
+              textTransform: "uppercase",
+              letterSpacing: "0.08em",
+            }}
+          >
+            {category}
+          </p>
+        )}
 
-          <h1 className="mt-6 text-5xl font-black tracking-tight">
-            {title}
-          </h1>
+        <h1
+          style={{
+            fontSize: "36px",
+            fontWeight: 800,
+            color: ERPTheme.colors.text,
+          }}
+        >
+          {title}
+        </h1>
 
-          {description && (
-            <p className="mt-5 max-w-3xl text-lg leading-8 text-slate-600">
-              {description}
-            </p>
-          )}
-
-          <div className="mt-8 flex flex-wrap gap-3">
-            {actions ?? (
-              <>
-                <ERPButton type="button">CrÃ©er un enregistrement</ERPButton>
-                <ERPButton variant="secondary" type="button">
-                  Exporter
-                </ERPButton>
-                <ERPButton variant="ghost" type="button">
-                  Inspecter
-                </ERPButton>
-              </>
-            )}
-          </div>
-        </div>
-
-        {side}
+        {description && (
+          <p
+            style={{
+              marginTop: ERPTheme.spacing.sm,
+              color: ERPTheme.colors.muted,
+              maxWidth: "900px",
+            }}
+          >
+            {description}
+          </p>
+        )}
       </div>
-    </section>
+
+      {side && <div>{side}</div>}
+    </div>
   );
 }
