@@ -1,3 +1,7 @@
+import {
+  runtimeEventStore,
+} from "./RuntimeEventStore";
+
 export interface RuntimeEvent {
 
   name: string;
@@ -23,6 +27,10 @@ export class RuntimeEventBus {
   emit(
     event: RuntimeEvent
   ) {
+
+    runtimeEventStore.append(
+      event
+    );
 
     const handlers =
       this.handlers.get(
