@@ -1,5 +1,5 @@
-﻿import { runtimeEventBus } from "./RuntimeEventBus";
+﻿import { runtimeEventStore } from "./RuntimeEventStore";
 
-export function getRuntimeEventBus() {
-  return runtimeEventBus;
+export function getRuntimeEvents() {
+  return runtimeEventStore.getEvents();
 }
