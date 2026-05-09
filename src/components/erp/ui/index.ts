@@ -28,3 +28,7 @@ export * from "./ERPBadge";
 export * from "./ERPInput";
 export * from "./ERPSelect";
 export * from "./ERPTable";
+export * from "./ERPModal";
+export * from "./ERPDrawer";
+export * from "./ERPTabs";
+export * from "./ERPSkeleton";
