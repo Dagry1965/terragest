@@ -1,5 +1,5 @@
-﻿import { runtimeWorkerRegistry } from "./RuntimeWorkerRegistry";
+﻿import { runtimeQueueRegistry } from "./RuntimeQueueRegistry";
 
-export function getRuntimeWorkers() {
-  return runtimeWorkerRegistry.getWorkers();
+export function getRuntimeQueues() {
+  return runtimeQueueRegistry.getJobs();
 }
