@@ -1,7 +1,20 @@
+"use client";
+
+import {
+  ERPTheme,
+} from "./ERPTheme";
+
 interface ERPToastProps {
+
   title: string;
+
   message?: string;
-  tone?: "success" | "warning" | "danger" | "info";
+
+  tone?:
+    | "success"
+    | "warning"
+    | "danger"
+    | "info";
 }
 
 export function ERPToast({
@@ -9,17 +22,61 @@ export function ERPToast({
   message,
   tone = "info",
 }: ERPToastProps) {
-  const toneClass = {
-    success: "border-emerald-800 bg-emerald-950 text-emerald-200",
-    warning: "border-amber-800 bg-amber-950 text-amber-200",
-    danger: "border-red-800 bg-red-950 text-red-200",
-    info: "border-sky-800 bg-sky-950 text-sky-200",
-  }[tone];
+
+  const background =
+    tone === "success"
+      ? ERPTheme.colors.success
+      : tone === "warning"
+      ? ERPTheme.colors.warning
+      : tone === "danger"
+      ? ERPTheme.colors.danger
+      : ERPTheme.colors.primary;
 
   return (
-    <div className={`rounded-xl border p-4 shadow-lg ${toneClass}`}>
-      <strong className="block text-sm">{title}</strong>
-      {message && <p className="mt-1 text-sm opacity-80">{message}</p>}
+
+    <div
+      style={{
+        background,
+
+        color:
+          ERPTheme.colors.text,
+
+        borderRadius:
+          ERPTheme.radius.lg,
+
+        padding:
+          ERPTheme.spacing.md,
+
+        boxShadow:
+          ERPTheme.shadows.md,
+
+        minWidth: "280px",
+      }}
+    >
+
+      <strong
+        style={{
+          display: "block",
+          marginBottom: "4px",
+        }}
+      >
+        {title}
+      </strong>
+
+      {
+        message && (
+
+          <span
+            style={{
+              fontSize: "14px",
+              opacity: 0.9,
+            }}
+          >
+            {message}
+          </span>
+        )
+      }
+
     </div>
   );
 }
