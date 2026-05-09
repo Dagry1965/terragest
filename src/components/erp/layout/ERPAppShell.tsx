@@ -1,64 +1,100 @@
-import type { ReactNode } from "react";
-import { ERPBadge } from "@/components/erp/ui";
-import { coreERPModules } from "@/runtime/modules";
+"use client";
 
-interface ERPAppShellProps {
-  children: ReactNode;
+import type { PropsWithChildren } from "react";
+import Link from "next/link";
+import { ERPTheme } from "../ui";
+
+const navigation = [
+  { label: "Dashboard", href: "/dashboard" },
+  { label: "Terrains", href: "/terrains" },
+  { label: "Exploitations", href: "/exploitations" },
+  { label: "Stocks", href: "/stocks" },
+  { label: "Matériels", href: "/materiels" },
+  { label: "Maintenance", href: "/maintenance" },
+  { label: "Paiements", href: "/paiements" },
+  { label: "Supervision", href: "/supervision" },
+];
+
+interface ERPAppShellProps extends PropsWithChildren {
   activeModule?: string;
 }
 
-export function ERPAppShell({ children, activeModule }: ERPAppShellProps) {
+export function ERPAppShell({
+  children,
+  activeModule,
+}: ERPAppShellProps) {
   return (
-    <div className="min-h-screen bg-slate-100 text-slate-950">
-      <div className="grid min-h-screen grid-cols-1 xl:grid-cols-[300px_1fr]">
-        <aside className="hidden border-r border-slate-200 bg-slate-950 p-6 text-white xl:block">
-          <div className="mb-10">
-            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-600 text-xl font-black">
-              TG
-            </div>
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "260px 1fr",
+        minHeight: "100vh",
+        background: ERPTheme.colors.background,
+      }}
+    >
+      <aside
+        style={{
+          background: ERPTheme.colors.surface,
+          padding: ERPTheme.spacing.lg,
+          borderRight: `1px solid ${ERPTheme.colors.card}`,
+        }}
+      >
+        <div
+          style={{
+            marginBottom: ERPTheme.spacing.xl,
+          }}
+        >
+          <h1
+            style={{
+              color: ERPTheme.colors.text,
+              fontSize: "22px",
+              fontWeight: 800,
+            }}
+          >
+            Terragest ERP
+          </h1>
+        </div>
 
-            <h1 className="mt-5 text-2xl font-black">
-              Terragest ERP
-            </h1>
+        <nav
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: ERPTheme.spacing.sm,
+          }}
+        >
+          {navigation.map((item) => {
+            const isActive =
+              activeModule &&
+              item.href.includes(activeModule);
 
-            <p className="mt-1 text-sm text-slate-400">
-              Enterprise Runtime Platform
-            </p>
-          </div>
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                style={{
+                  color: ERPTheme.colors.text,
+                  textDecoration: "none",
+                  padding: ERPTheme.spacing.sm,
+                  borderRadius: ERPTheme.radius.md,
+                  background: isActive
+                    ? ERPTheme.colors.card
+                    : "transparent",
+                }}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
+        </nav>
+      </aside>
 
-          <div className="mb-6 flex flex-wrap gap-2">
-            <ERPBadge tone="success">ERP Core</ERPBadge>
-            <ERPBadge tone="info">Runtime</ERPBadge>
-          </div>
-
-          <nav className="space-y-2">
-            {coreERPModules.map((item) => {
-              const active = activeModule === item.metadata.key;
-
-              return (
-                <a
-                  key={item.metadata.key}
-                  href={`/${item.metadata.key}`}
-                  className={`block rounded-2xl px-4 py-3 text-sm transition ${
-                    active
-                      ? "bg-blue-600 text-white"
-                      : "text-slate-300 hover:bg-slate-800 hover:text-white"
-                  }`}
-                >
-                  <div className="font-bold">{item.metadata.label}</div>
-                  <div className="mt-1 text-xs opacity-70">
-                    {item.metadata.category ?? "Module ERP"}
-                  </div>
-                </a>
-              );
-            })}
-          </nav>
-        </aside>
-
-        <main className="p-6 md:p-8 xl:p-10">
-          {children}
-        </main>
-      </div>
+      <main
+        style={{
+          padding: ERPTheme.spacing.xl,
+        }}
+      >
+        {children}
+      </main>
     </div>
   );
 }
