@@ -38,3 +38,4 @@ export * from "./ERPDataList";
 export * from "./ERPToolbar";
 export * from "./ERPStack";
 export * from "./ERPPanel";
+export * from "./ERPMetricCard";
