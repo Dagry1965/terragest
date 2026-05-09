@@ -1,29 +1,45 @@
-type ERPStatCardProps = {
+"use client";
+
+import {
+  ERPCard,
+} from "./ERPCard";
+
+interface ERPStatCardProps {
   label: string;
   value: string | number;
+  trend?: string;
   helper?: string;
-};
+}
 
 export function ERPStatCard({
   label,
   value,
+  trend,
   helper,
 }: ERPStatCardProps) {
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-      <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
-        {label}
-      </p>
+    <ERPCard>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "8px",
+        }}
+      >
+        <span style={{ fontSize: "14px", opacity: 0.7 }}>
+          {label}
+        </span>
 
-      <p className="mt-2 text-2xl font-semibold text-slate-950">
-        {value}
-      </p>
+        <strong style={{ fontSize: "32px", fontWeight: 700 }}>
+          {value}
+        </strong>
 
-      {helper && (
-        <p className="mt-1 text-sm text-slate-500">
-          {helper}
-        </p>
-      )}
-    </div>
+        {(trend || helper) && (
+          <span style={{ fontSize: "13px", opacity: 0.8 }}>
+            {trend ?? helper}
+          </span>
+        )}
+      </div>
+    </ERPCard>
   );
 }
