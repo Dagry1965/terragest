@@ -9,3 +9,4 @@ export * from "./alerts/ERPAlert";
 export * from "./alerts/ERPAlertStore";
 
 export * from "./ERPRuntimeSeed";
+export * from "./ERPRuntimeAuditTrail";
