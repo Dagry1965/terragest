@@ -8,7 +8,8 @@ export interface ERPFormField {
     | "text"
     | "number"
     | "date"
-    | "select";
+   | "select"
+| "boolean";
 }
 
 export interface ERPGeneratedForm {
