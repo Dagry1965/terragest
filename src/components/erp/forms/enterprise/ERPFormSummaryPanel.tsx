@@ -1,5 +1,6 @@
 import { ERPBadge } from "@/components/erp/ui";
 import type { ERPModule } from "@/runtime/modules";
+import type { ERPModuleField } from "@/runtime/modules/schemas/ERPModuleSchema";
 
 interface ERPFormSummaryPanelProps {
   module: ERPModule;
@@ -8,7 +9,9 @@ interface ERPFormSummaryPanelProps {
 export function ERPFormSummaryPanel({
   module,
 }: ERPFormSummaryPanelProps) {
-  const requiredFields = module.schema.fields.filter((field) => field.required);
+  const requiredFields = module.schema.fields.filter(
+  (field: ERPModuleField) => field.required
+);
 
   return (
     <aside className="space-y-5">

@@ -1,12 +1,15 @@
 import type { ERPModule } from "@/runtime/modules";
-import { RuntimeRepository } from "@/runtime/repositories/RuntimeRepository";
+import { FirestoreRuntimeMutation } from "@/runtime/firestore/FirestoreRuntimeMutation";
 
 export class RuntimeMutationEngine {
   static async create(
     module: ERPModule,
     data: Record<string, unknown>
   ) {
-    return RuntimeRepository.create(module, data);
+    return FirestoreRuntimeMutation.create(
+      module,
+      data
+    );
   }
 
   static async update(
@@ -14,6 +17,20 @@ export class RuntimeMutationEngine {
     id: string,
     data: Record<string, unknown>
   ) {
-    return RuntimeRepository.update(module, id, data);
+    return FirestoreRuntimeMutation.update(
+      module,
+      id,
+      data
+    );
+  }
+
+  static async delete(
+    module: ERPModule,
+    id: string
+  ) {
+    return FirestoreRuntimeMutation.delete(
+      module,
+      id
+    );
   }
 }

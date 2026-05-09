@@ -2,23 +2,27 @@ import type { ERPAction } from "@/runtime/actions/ERPAction";
 import { ERPBadge } from "@/components/erp/ui";
 import { ERPActionRegistry } from "@/runtime/actions";
 import { ERPActionButton } from "@/components/erp/navigation/ERPActionButton";
-import type { ERPModule } from "@/runtime/modules";
 import { ERPModuleBuilder } from "@/runtime/modules";
+import type { ERPModule } from "@/runtime/modules";
 import { ERPRuntimeFieldValue } from "@/components/erp/runtime/ERPRuntimeFieldValue";
+import type { ERPModuleField } from "@/runtime/modules/schemas/ERPModuleSchema";
 
 interface ERPEnterpriseDataTableProps {
   module: ERPModule;
   data?: Record<string, unknown>[];
 }
 
+/* ---------------------------------------------------------
+ * Génération de données factices si aucune donnée n'est fournie
+ * --------------------------------------------------------- */
 function createRows(module: ERPModule): Record<string, unknown>[] {
   return Array.from({ length: 8 }).map((_, index) => {
     const row: Record<string, unknown> = {
       id: `${module.metadata.key}-${index + 1}`,
     };
 
-    module.schema.fields.forEach((field) => {
-      if (field.type === "number") {
+    module.schema.fields.forEach((field: ERPModuleField) => {
+      if (field.type === "number" || field.type === "currency") {
         row[field.key] = index * 10 + 5;
       } else if (field.type === "status") {
         row[field.key] =
@@ -26,9 +30,11 @@ function createRows(module: ERPModule): Record<string, unknown>[] {
             ? "Actif"
             : index % 3 === 1
               ? "En suivi"
-              : "A controler";
+              : "À contrôler";
       } else if (field.type === "relation") {
-        row[field.key] = "REF-" + String(index + 1).padStart(3, "0");
+        row[field.key] = `REF-${String(index + 1).padStart(3, "0")}`;
+      } else if (field.type === "select" && field.options?.length) {
+        row[field.key] = field.options[0]?.value ?? "";
       } else {
         row[field.key] = `${field.label} ${index + 1}`;
       }
@@ -38,6 +44,9 @@ function createRows(module: ERPModule): Record<string, unknown>[] {
   });
 }
 
+/* ---------------------------------------------------------
+ * Composant principal
+ * --------------------------------------------------------- */
 export function ERPEnterpriseDataTable({
   module,
   data,
@@ -46,7 +55,9 @@ export function ERPEnterpriseDataTable({
   const rows = data && data.length > 0 ? data : createRows(module);
 
   const columns = table.columns.map((column) => {
-    const field = module.schema.fields.find((item) => item.key === column.key);
+    const field = module.schema.fields.find(
+      (item: ERPModuleField) => item.key === column.key
+    );
 
     return {
       key: column.key,
@@ -62,22 +73,24 @@ export function ERPEnterpriseDataTable({
 
   return (
     <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
+      {/* HEADER */}
       <div className="flex flex-col gap-4 border-b border-slate-200 px-6 py-5 md:flex-row md:items-center md:justify-between">
         <div>
           <h3 className="text-xl font-black text-slate-950">
-            Liste operationnelle
+            Liste opérationnelle
           </h3>
           <p className="mt-1 text-sm text-slate-500">
-            Donnees metier du module {module.metadata.label}.
+            Données métier du module {module.metadata.label}.
           </p>
         </div>
 
         <div className="flex gap-2">
           <ERPBadge tone="success">{rows.length} lignes</ERPBadge>
-          <ERPBadge tone="info">Synchronise</ERPBadge>
+          <ERPBadge tone="info">Synchronisé</ERPBadge>
         </div>
       </div>
 
+      {/* FILTER BAR */}
       <div className="grid gap-3 border-b border-slate-200 bg-slate-50 p-4 md:grid-cols-3">
         <input
           className="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:border-blue-500"
@@ -88,16 +101,17 @@ export function ERPEnterpriseDataTable({
           <option>Tous les statuts</option>
           <option>Actif</option>
           <option>En suivi</option>
-          <option>A controler</option>
+          <option>À contrôler</option>
         </select>
 
         <select className="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:border-blue-500">
-          <option>Tri recent</option>
-          <option>Tri alphabetique</option>
-          <option>Priorite</option>
+          <option>Tri récent</option>
+          <option>Tri alphabétique</option>
+          <option>Priorité</option>
         </select>
       </div>
 
+      {/* TABLE */}
       <div className="overflow-x-auto">
         <table className="w-full border-collapse text-left text-sm">
           <thead>
@@ -110,6 +124,7 @@ export function ERPEnterpriseDataTable({
                   {column.label}
                 </th>
               ))}
+
               <th className="px-6 py-4 text-right text-xs font-black uppercase tracking-wide text-slate-500">
                 Actions
               </th>
@@ -118,7 +133,10 @@ export function ERPEnterpriseDataTable({
 
           <tbody className="divide-y divide-slate-100">
             {rows.map((row, index) => (
-              <tr key={index} className="transition hover:bg-blue-50/70">
+              <tr
+                key={String(row.id ?? index)}
+                className="transition hover:bg-blue-50/70"
+              >
                 {columns.map((column) => (
                   <td
                     key={String(column.key)}

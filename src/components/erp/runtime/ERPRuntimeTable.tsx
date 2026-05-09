@@ -2,6 +2,7 @@ import { ERPBadge } from "@/components/erp/ui";
 import type { ERPModule } from "@/runtime/modules";
 import { ERPModuleBuilder } from "@/runtime/modules";
 import { ERPRuntimeFieldValue } from "./ERPRuntimeFieldValue";
+import type { ERPModuleField } from "@/runtime/modules/schemas/ERPModuleSchema";
 
 interface ERPRuntimeTableProps {
   module: ERPModule;
@@ -12,7 +13,7 @@ function createDemoRows(module: ERPModule): Record<string, unknown>[] {
   return Array.from({ length: 8 }).map((_, index) => {
     const row: Record<string, unknown> = {};
 
-    module.schema.fields.forEach((field) => {
+    module.schema.fields.forEach((field: ERPModuleField) => {
       if (field.type === "number") {
         row[field.key] = index * 10 + 5;
       } else if (field.type === "status") {
@@ -41,7 +42,7 @@ export function ERPRuntimeTable({
   const rows = data && data.length > 0 ? data : createDemoRows(module);
 
   const columns = table.columns.map((column) => {
-    const field = module.schema.fields.find((item) => item.key === column.key);
+    const field = module.schema.fields.find((item: ERPModuleField) => item.key === column.key);
 
     return {
       key: column.key,

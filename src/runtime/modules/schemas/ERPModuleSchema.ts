@@ -1,3 +1,15 @@
+export interface ERPModuleFieldOption {
+  label: string;
+  value: string;
+}
+
+export interface ERPConditionalRule {
+  field: string;
+  operator: "equals" | "notEquals" | "in" | "notIn";
+  value?: unknown;
+  values?: unknown[];
+}
+
 export type ERPModuleFieldType =
   | "text"
   | "number"
@@ -12,25 +24,71 @@ export type ERPModuleFieldType =
   | "email"
   | "phone";
 
-export interface ERPModuleFieldOption {
-  label: string;
-  value: string;
+export interface ERPModuleFieldReference {
+  module: string;
+  field: string;
+}
+
+export type ERPRelationType =
+  | "one-to-one"
+  | "one-to-many"
+  | "many-to-one"
+  | "many-to-many";
+
+export interface ERPFieldValidator {
+  type: "min" | "max" | "regex" | "email" | "phone" | "custom";
+  value?: unknown;
+  message?: string;
 }
 
 export interface ERPModuleField {
   key: string;
   label: string;
   type: ERPModuleFieldType | string;
+
   required?: boolean;
   searchable?: boolean;
   sortable?: boolean;
   filterable?: boolean;
+
   visibleInList?: boolean;
   visibleInForm?: boolean;
   visibleInDetails?: boolean;
+
   relation?: string;
   options?: ERPModuleFieldOption[];
   defaultValue?: unknown;
+
+  /*
+   * CONDITIONAL LOGIC
+   */
+  visibleIf?: ERPConditionalRule;
+  requiredIf?: ERPConditionalRule;
+  readonlyIf?: ERPConditionalRule;
+
+  /*
+   * VALIDATION RULES
+   */
+  validators?: ERPFieldValidator[];
+
+  /*
+   * RELATIONAL INTELLIGENCE
+   */
+  primaryKey?: boolean;
+  foreignKey?: boolean;
+  nullable?: boolean;
+  unique?: boolean;
+  indexed?: boolean;
+  cascadeDelete?: boolean;
+
+  relationType?: ERPRelationType;
+  references?: ERPModuleFieldReference;
+
+  /*
+   * DYNAMIC OPTIONS
+   */
+  dependsOn?: string;
+  optionsByValue?: Record<string, ERPModuleFieldOption[]>;
 }
 
 export interface ERPModuleSchema {
@@ -39,4 +97,5 @@ export interface ERPModuleSchema {
   fields: ERPModuleField[];
   timestamps?: boolean;
   softDelete?: boolean;
+  primaryKey?: string;
 }

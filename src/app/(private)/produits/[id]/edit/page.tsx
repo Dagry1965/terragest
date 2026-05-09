@@ -1,12 +1,10 @@
-import { ERPModuleActionPageTemplate } from "@/components/erp/templates";
+import { GenericEditPage } from "@/components/erp/generic/GenericEditPage";
 
-export default function Page() {
-  return (
-    <ERPModuleActionPageTemplate
-      moduleLabel="Produits"
-      type="edit"
-      actionLabel="Edition"
-      description="Page legacy stabilisee par le template ERP enterprise centralise."
-    />
-  );
+export default function EditProduitPage({
+  params,
+}: {
+  params: { id: string };
+}) {
+  return <GenericEditPage moduleKey="produits" id={params.id} />;
 }
+

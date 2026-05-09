@@ -1,12 +1,10 @@
-import { ERPModuleActionPageTemplate } from "@/components/erp/templates";
+import { GenericDetailPage } from "@/components/erp/generic/GenericDetailPage";
 
-export default function Page() {
-  return (
-    <ERPModuleActionPageTemplate
-      moduleLabel="Produits"
-      type="details"
-      actionLabel="Details"
-      description="Page legacy stabilisee par le template ERP enterprise centralise."
-    />
-  );
+export default function ProduitDetailPage({
+  params,
+}: {
+  params: { id: string };
+}) {
+  return <GenericDetailPage moduleKey="produits" id={params.id} />;
 }
+

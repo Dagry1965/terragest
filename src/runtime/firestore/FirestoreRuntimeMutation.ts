@@ -5,7 +5,6 @@ import {
 } from "./FirestoreRuntimeRepository";
 
 export class FirestoreRuntimeMutation {
-
   static async create(
     module: ERPModule,
     data: Record<string, unknown>
@@ -25,6 +24,16 @@ export class FirestoreRuntimeMutation {
       module,
       id,
       data
+    );
+  }
+
+  static async delete(
+    module: ERPModule,
+    id: string
+  ) {
+    return FirestoreRuntimeRepository.delete(
+      module,
+      id
     );
   }
 }

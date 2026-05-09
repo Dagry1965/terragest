@@ -1,0 +1,1 @@
+powershell -ExecutionPolicy Bypass -File .\scripts\business\fix-core-modules-options.ps1

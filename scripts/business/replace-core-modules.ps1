@@ -1,3 +1,6 @@
+$Path = "src\runtime\modules\definitions\coreModules.ts"
+
+$Content = @'
 import type { ERPModule } from "../ERPModule";
 
 export const coreERPModules: ERPModule[] = [
@@ -5,9 +8,9 @@ export const coreERPModules: ERPModule[] = [
     metadata: {
       key: "produits",
       label: "Produits",
-      description: "RÃƒÂ©fÃƒÂ©rentiel central des produits agricoles, animaux, piscicoles et immobiliers.",
+      description: "Référentiel central des produits agricoles, animaux, piscicoles et immobiliers.",
       icon: "package",
-      category: "RÃƒÂ©fÃƒÂ©rentiel",
+      category: "Référentiel",
       enabled: true,
       visible: true,
       order: 10,
@@ -34,10 +37,10 @@ export const coreERPModules: ERPModule[] = [
       softDelete: true,
       fields: [
         { key: "nom", label: "Produit", type: "text", required: true, searchable: true, sortable: true },
-        { key: "categorie", label: "CatÃƒÂ©gorie", type: "select", required: true, filterable: true, options: [{ label: "Agricole", value: "agricole" }, { label: "Animal", value: "animal" }, { label: "Piscicole", value: "piscicole" }, { label: "Immobilier", value: "immobilier" }] },
-        { key: "type", label: "Type", type: "select", required: true, filterable: true, options: [{ label: "Igname", value: "igname" }, { label: "Manioc", value: "manioc" }, { label: "Arachide", value: "arachide" }, { label: "Maïs", value: "mais" }, { label: "Viande", value: "viande" }, { label: "Œufs", value: "oeufs" }, { label: "Lait", value: "lait" }, { label: "Tilapia", value: "tilapia" }, { label: "Silure", value: "silure" }, { label: "Maison", value: "maison" }, { label: "Appartement", value: "appartement" }] },
-        { key: "modeStock", label: "Gestion de stock", type: "select", required: true, filterable: true, options: [{ label: "Stockable", value: "stockable" }, { label: "Non stockable", value: "non_stockable" }] },
-        { key: "unite", label: "UnitÃƒÂ©", type: "text" },
+        { key: "categorie", label: "Catégorie", type: "select", required: true, filterable: true, options: ["agricole", "animal", "piscicole", "immobilier"] },
+        { key: "type", label: "Type", type: "select", required: true, filterable: true, options: ["igname", "manioc", "arachide", "mais", "viande", "oeufs", "lait", "tilapia", "silure", "maison", "appartement"] },
+        { key: "modeStock", label: "Gestion de stock", type: "select", required: true, filterable: true, options: ["stockable", "non_stockable"] },
+        { key: "unite", label: "Unité", type: "text" },
         { key: "seuilMinimum", label: "Seuil minimum", type: "number", sortable: true },
         { key: "prixAchat", label: "Prix achat", type: "number", sortable: true },
         { key: "prixVente", label: "Prix vente", type: "number", sortable: true },
@@ -45,12 +48,12 @@ export const coreERPModules: ERPModule[] = [
       ],
     },
     actions: [
-      { key: "create", label: "CrÃƒÂ©er", type: "primary", href: "/produits/nouveau", event: "PRODUIT_CREATED" },
+      { key: "create", label: "Créer", type: "primary", href: "/produits/nouveau", event: "PRODUIT_CREATED" },
       { key: "edit", label: "Modifier", type: "secondary", event: "PRODUIT_UPDATED" },
       { key: "archive", label: "Archiver", type: "danger", event: "PRODUIT_ARCHIVED" },
     ],
     relations: [
-      { key: "stocks", label: "Stocks liÃƒÂ©s", targetModule: "stocks", type: "one-to-many" },
+      { key: "stocks", label: "Stocks liés", targetModule: "stocks", type: "one-to-many" },
       { key: "mouvements", label: "Mouvements de stock", targetModule: "mouvements", type: "one-to-many" },
       { key: "maintenance", label: "Maintenance", targetModule: "maintenance", type: "one-to-many" },
       { key: "interventions", label: "Interventions", targetModule: "interventions", type: "one-to-many" },
@@ -58,7 +61,7 @@ export const coreERPModules: ERPModule[] = [
     workflows: [
       {
         key: "create-produit",
-        label: "CrÃƒÂ©ation produit",
+        label: "Création produit",
         initialState: "draft",
         states: ["draft", "validated", "active", "archived"],
       },
@@ -98,8 +101,8 @@ export const coreERPModules: ERPModule[] = [
       softDelete: true,
       fields: [
         { key: "produitId", label: "Produit", type: "relation", relation: "produits", required: true, filterable: true },
-        { key: "quantite", label: "QuantitÃƒÂ©", type: "number", required: true, sortable: true },
-        { key: "unite", label: "UnitÃƒÂ©", type: "text" },
+        { key: "quantite", label: "Quantité", type: "number", required: true, sortable: true },
+        { key: "unite", label: "Unité", type: "text" },
         { key: "seuilAlerte", label: "Seuil alerte", type: "number", sortable: true },
         { key: "emplacement", label: "Emplacement", type: "text", searchable: true },
         { key: "statut", label: "Statut", type: "status", filterable: true },
@@ -111,7 +114,7 @@ export const coreERPModules: ERPModule[] = [
     metadata: {
       key: "mouvements",
       label: "Mouvements",
-      description: "EntrÃƒÂ©es, sorties, corrections et transferts de stock.",
+      description: "Entrées, sorties, corrections et transferts de stock.",
       icon: "repeat",
       category: "Logistique",
       enabled: true,
@@ -140,8 +143,8 @@ export const coreERPModules: ERPModule[] = [
       fields: [
         { key: "produitId", label: "Produit", type: "relation", relation: "produits", required: true, filterable: true },
         { key: "stockId", label: "Stock", type: "relation", relation: "stocks", required: true },
-        { key: "type", label: "Type mouvement", type: "select", required: true, filterable: true, options: [{ label: "Entrée", value: "entree" }, { label: "Sortie", value: "sortie" }, { label: "Transfert", value: "transfert" }, { label: "Correction", value: "correction" }] },
-        { key: "quantite", label: "QuantitÃƒÂ©", type: "number", required: true, sortable: true },
+        { key: "type", label: "Type mouvement", type: "select", required: true, filterable: true, options: ["entree", "sortie", "transfert", "correction"] },
+        { key: "quantite", label: "Quantité", type: "number", required: true, sortable: true },
         { key: "motif", label: "Motif", type: "text", searchable: true },
         { key: "statut", label: "Statut", type: "status", filterable: true },
       ],
@@ -152,9 +155,9 @@ export const coreERPModules: ERPModule[] = [
     metadata: {
       key: "maintenance",
       label: "Maintenance",
-      description: "Maintenance prÃƒÂ©ventive, corrective et critique.",
+      description: "Maintenance préventive, corrective et critique.",
       icon: "settings",
-      category: "OpÃƒÂ©rations",
+      category: "Opérations",
       enabled: true,
       visible: true,
       order: 40,
@@ -182,9 +185,9 @@ export const coreERPModules: ERPModule[] = [
       softDelete: true,
       fields: [
         { key: "titre", label: "Maintenance", type: "text", required: true, searchable: true, sortable: true },
-        { key: "materielId", label: "MatÃƒÂ©riel", type: "relation", relation: "materiels" },
-        { key: "produitId", label: "Produit consommÃƒÂ©", type: "relation", relation: "produits" },
-        { key: "priorite", label: "PrioritÃƒÂ©", type: "select", filterable: true, options: [{ label: "Basse", value: "basse" }, { label: "Normale", value: "normale" }, { label: "Haute", value: "haute" }, { label: "Critique", value: "critique" }] },
+        { key: "materielId", label: "Matériel", type: "relation", relation: "materiels" },
+        { key: "produitId", label: "Produit consommé", type: "relation", relation: "produits" },
+        { key: "priorite", label: "Priorité", type: "select", filterable: true, options: ["basse", "normale", "haute", "critique"] },
         { key: "statut", label: "Statut", type: "status", filterable: true },
       ],
     },
@@ -194,9 +197,9 @@ export const coreERPModules: ERPModule[] = [
     metadata: {
       key: "interventions",
       label: "Interventions",
-      description: "Suivi des interventions terrain, affectations et clÃƒÂ´tures.",
+      description: "Suivi des interventions terrain, affectations et clôtures.",
       icon: "wrench",
-      category: "OpÃƒÂ©rations",
+      category: "Opérations",
       enabled: true,
       visible: true,
       order: 50,
@@ -223,11 +226,17 @@ export const coreERPModules: ERPModule[] = [
       softDelete: true,
       fields: [
         { key: "titre", label: "Intervention", type: "text", required: true, searchable: true, sortable: true },
-        { key: "materielId", label: "MatÃƒÂ©riel", type: "relation", relation: "materiels" },
-        { key: "produitId", label: "Produit utilisÃƒÂ©", type: "relation", relation: "produits" },
+        { key: "materielId", label: "Matériel", type: "relation", relation: "materiels" },
+        { key: "produitId", label: "Produit utilisé", type: "relation", relation: "produits" },
         { key: "responsable", label: "Responsable", type: "text", searchable: true },
         { key: "statut", label: "Statut", type: "status", filterable: true },
       ],
     },
   },
 ];
+'@
+
+$Utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+[System.IO.File]::WriteAllText((Resolve-Path $Path), $Content, $Utf8NoBom)
+
+Write-Host "coreModules.ts remplacé avec succès en UTF-8."

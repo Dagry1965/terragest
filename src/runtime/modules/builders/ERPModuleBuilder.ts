@@ -1,6 +1,7 @@
 import type { ERPModule } from "../ERPModule";
 import type { ERPModuleField } from "../schemas/ERPModuleSchema";
 
+
 export interface ERPTableDefinition {
   module: string;
   collection: string;
@@ -38,8 +39,8 @@ export class ERPModuleBuilder {
       module: module.metadata.key,
       collection: module.schema.collection,
       columns: module.schema.fields
-        .filter((field) => field.visibleInList !== false)
-        .map((field) => ({
+      .filter((field: ERPModuleField) => field.visibleInList !== false)
+.map((field: ERPModuleField) => ({
           key: field.key,
           label: field.label,
           sortable: field.sortable,
@@ -54,7 +55,7 @@ export class ERPModuleBuilder {
       module: module.metadata.key,
       collection: module.schema.collection,
       fields: module.schema.fields.filter(
-        (field) => field.visibleInForm !== false
+        (field: ERPModuleField) => field.visibleInForm !== false
       ),
     };
   }
@@ -64,7 +65,7 @@ export class ERPModuleBuilder {
       module: module.metadata.key,
       collection: module.schema.collection,
       fields: module.schema.fields.filter(
-        (field) => field.visibleInDetails !== false
+        (field: ERPModuleField) => field.visibleInDetails !== false
       ),
     };
   }
