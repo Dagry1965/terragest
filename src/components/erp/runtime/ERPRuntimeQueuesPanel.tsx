@@ -1,70 +1,60 @@
 "use client";
 
-import type { ReactNode } from "react";
+import {
+  ERPBadge,
+  ERPPanel,
+  ERPTable,
+} from "../ui";
 
-interface ERPTableColumn<T> {
-  key: keyof T;
-  label: string;
-  render?: (value: T[keyof T], record: T) => ReactNode;
+interface ERPRuntimeQueuesPanelProps {
+  queues: {
+    id: string;
+    queue: string;
+    status: "pending" | "running" | "completed" | "failed";
+  }[];
 }
 
-interface ERPTableProps<T> {
-  columns: ERPTableColumn<T>[];
-  rows: T[];
-}
-
-export function ERPTable<T>({
-  columns,
-  rows,
-}: ERPTableProps<T>) {
+export function ERPRuntimeQueuesPanel({
+  queues,
+}: ERPRuntimeQueuesPanelProps) {
   return (
-    <table
-      style={{
-        width: "100%",
-        borderCollapse: "collapse",
-      }}
+    <ERPPanel
+      title="Runtime Queues"
+      description="État des files runtime."
     >
-      <thead>
-        <tr>
-          {columns.map((col) => (
-            <th
-              key={String(col.key)}
-              style={{
-                textAlign: "left",
-                padding: "8px",
-                borderBottom: "1px solid #ddd",
-                fontWeight: 600,
-              }}
-            >
-              {col.label}
-            </th>
-          ))}
-        </tr>
-      </thead>
-
-      <tbody>
-        {rows.map((record, index) => (
-          <tr key={index}>
-            {columns.map((col) => {
-              const value = record[col.key];
+      <ERPTable
+        columns={[
+          { key: "queue", label: "Queue" },
+          {
+            key: "status",
+            label: "Status",
+            render: value => {
+              const status = String(value);
 
               return (
-                <td
-                  key={String(col.key)}
-                  style={{
-                    padding: "8px",
-                    borderBottom: "1px solid #eee",
-                  }}
+                <ERPBadge
+                  tone={
+                    status === "completed"
+                      ? "success"
+                      : status === "failed"
+                      ? "danger"
+                      : status === "running"
+                      ? "info"
+                      : "warning"
+                  }
                 >
-                  {col.render
-                    ? col.render(value, record)
-                    : String(value)}
-                </td>
+                  {status}
+                </ERPBadge>
               );
-            })}
-          </tr>
-        ))}
-      </tbody>
-    </table>
+            },
+          },
+        ]}
+        rows={queues.map(queue => ({
+          id: queue.id,
+          queue: queue.queue,
+          status: queue.status,
+        }))}
+      />
+    </ERPPanel>
   );
 }

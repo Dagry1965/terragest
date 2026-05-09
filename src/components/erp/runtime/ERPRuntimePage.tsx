@@ -1,24 +1,48 @@
-import { ERPPageTemplateRegistry } from "@/components/erp/templates";
-import type { ERPModule } from "@/runtime/modules";
-import type { ERPPageTemplateType } from "@/components/erp/templates";
+"use client";
+
+import {
+  ERPPage,
+  ERPEmptyState,
+} from "../ui";
 
 interface ERPRuntimePageProps {
-  module?: ERPModule;
-  type?: ERPPageTemplateType;
-  data?: Record<string, unknown>[];
+  title?: string;
+  description?: string;
+  module?: {
+    metadata?: {
+      label?: string;
+      key?: string;
+    };
+  };
+  type?: string;
   record?: Record<string, unknown>;
+  data?: Record<string, unknown>[];
 }
 
 export function ERPRuntimePage({
+  title,
+  description,
   module,
   type = "list",
-  data = [],
-  record,
 }: ERPRuntimePageProps) {
-  return ERPPageTemplateRegistry.render({
-    module,
-    type,
-    data,
-    record,
-  });
+  const moduleLabel =
+    module?.metadata?.label ?? "Module ERP";
+
+  const resolvedTitle =
+    title ?? `${moduleLabel} — ${type}`;
+
+  return (
+    <ERPPage
+      title={resolvedTitle}
+      description={
+        description ??
+        "Page générée automatiquement par le Runtime ERP."
+      }
+    >
+      <ERPEmptyState
+        title={resolvedTitle}
+        description="Cette page est branchée sur le runtime ERP central."
+      />
+    </ERPPage>
+  );
 }
