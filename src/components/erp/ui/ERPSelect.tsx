@@ -1,49 +1,100 @@
-import type { SelectHTMLAttributes } from "react";
+"use client";
+
+import type {
+  SelectHTMLAttributes,
+} from "react";
+
+import {
+  ERPTheme,
+} from "./ERPTheme";
 
 interface ERPSelectOption {
+
   label: string;
+
   value: string;
 }
 
-interface ERPSelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
+interface ERPSelectProps
+  extends SelectHTMLAttributes<
+    HTMLSelectElement
+  > {
+
   label?: string;
-  options?: ERPSelectOption[];
-  error?: string;
+
+  options:
+    ERPSelectOption[];
 }
 
 export function ERPSelect({
   label,
-  options = [],
-  error,
-  className = "",
-  children,
+  options,
   ...props
 }: ERPSelectProps) {
+
   return (
-    <label className="block space-y-2">
-      {label && (
-        <span className="text-sm font-medium text-slate-300">
-          {label}
-        </span>
-      )}
+
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap:
+          ERPTheme.spacing.xs,
+      }}
+    >
+
+      {
+        label && (
+
+          <label
+            style={{
+              color:
+                ERPTheme.colors.text,
+
+              fontSize: "14px",
+            }}
+          >
+            {label}
+          </label>
+        )
+      }
 
       <select
-        className={`w-full rounded-xl border border-slate-800 bg-slate-950 px-3 py-2 text-sm text-slate-100 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 ${className}`}
         {...props}
+        style={{
+          background:
+            ERPTheme.colors.surface,
+
+          border:
+            `1px solid ${ERPTheme.colors.card}`,
+
+          borderRadius:
+            ERPTheme.radius.md,
+
+          padding:
+            ERPTheme.spacing.md,
+
+          color:
+            ERPTheme.colors.text,
+        }}
       >
-        {children ??
-          options.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
+
+        {
+          options.map(
+            option => (
+
+              <option
+                key={option.value}
+                value={option.value}
+              >
+                {option.label}
+              </option>
+            )
+          )
+        }
+
       </select>
 
-      {error && (
-        <span className="text-xs text-red-400">
-          {error}
-        </span>
-      )}
-    </label>
+    </div>
   );
 }
