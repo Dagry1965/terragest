@@ -55,12 +55,13 @@ import {
   runtimePolicyRegistry,
 } from "./RuntimePolicyRegistry";
 
+import {
+  runtimeSecurityRegistry,
+} from "./RuntimeSecurityRegistry";
+
 export class CentralRuntimeRegistry {
   private modules =
-    new Map<
-      RuntimeModuleId,
-      RuntimeModuleContract
-    >();
+    new Map<RuntimeModuleId, RuntimeModuleContract>();
 
   initialize() {
     for (const module of GeneratedRuntimeModules) {
@@ -138,6 +139,10 @@ export class CentralRuntimeRegistry {
 
   getRuntimePolicies() {
     return runtimePolicyRegistry.getPolicies();
+  }
+
+  getRuntimeSecurity() {
+    return runtimeSecurityRegistry.getRules();
   }
 }
 
