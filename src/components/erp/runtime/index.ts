@@ -8,3 +8,4 @@ export * from "./ERPRuntimeStatusPanel";
 export * from "./ERPRuntimeAlertsPanel";
 export * from "./ERPRuntimeWorkersPanel";
 export * from "./ERPRuntimeRetryPanel";
+export * from "./ERPRuntimeDeadLetterPanel";export * from "./ERPRuntimeDeadLetterPanel";
