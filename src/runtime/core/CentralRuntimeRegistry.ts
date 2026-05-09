@@ -47,6 +47,10 @@ import {
   runtimeScheduler,
 } from "./RuntimeScheduler";
 
+import {
+  runtimeAuditRegistry,
+} from "./RuntimeAuditRegistry";
+
 export class CentralRuntimeRegistry {
   private modules =
     new Map<
@@ -122,6 +126,10 @@ export class CentralRuntimeRegistry {
 
   getRuntimeScheduler() {
     return runtimeScheduler;
+  }
+
+  getRuntimeAudit() {
+    return runtimeAuditRegistry.getEntries();
   }
 }
 
