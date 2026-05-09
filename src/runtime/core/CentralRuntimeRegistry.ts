@@ -39,6 +39,10 @@ import {
   runtimeDeadLetterQueue,
 } from "./RuntimeDeadLetterQueue";
 
+import {
+  runtimeStreamRegistry,
+} from "./RuntimeStreamRegistry";
+
 export class CentralRuntimeRegistry {
   private modules =
     new Map<
@@ -106,6 +110,10 @@ export class CentralRuntimeRegistry {
 
   getRuntimeDeadLetters() {
     return runtimeDeadLetterQueue.getEvents();
+  }
+
+  getRuntimeStreams() {
+    return runtimeStreamRegistry.getStreams();
   }
 }
 
