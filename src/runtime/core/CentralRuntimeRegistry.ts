@@ -51,6 +51,10 @@ import {
   runtimeAuditRegistry,
 } from "./RuntimeAuditRegistry";
 
+import {
+  runtimePolicyRegistry,
+} from "./RuntimePolicyRegistry";
+
 export class CentralRuntimeRegistry {
   private modules =
     new Map<
@@ -130,6 +134,10 @@ export class CentralRuntimeRegistry {
 
   getRuntimeAudit() {
     return runtimeAuditRegistry.getEntries();
+  }
+
+  getRuntimePolicies() {
+    return runtimePolicyRegistry.getPolicies();
   }
 }
 
