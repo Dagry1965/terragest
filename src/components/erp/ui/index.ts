@@ -34,3 +34,4 @@ export * from "./ERPTabs";
 export * from "./ERPSkeleton";
 export * from "./ERPToast";
 export * from "./ERPEmptyState";
+export * from "./ERPDataList";
