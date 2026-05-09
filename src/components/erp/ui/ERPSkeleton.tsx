@@ -1,11 +1,43 @@
+"use client";
+
+import {
+  ERPTheme,
+} from "./ERPTheme";
+
 interface ERPSkeletonProps {
-  className?: string;
+
+  height?: string;
+
+  width?: string;
+
+  radius?: string;
 }
 
-export function ERPSkeleton({ className = "" }: ERPSkeletonProps) {
+export function ERPSkeleton({
+  height = "16px",
+  width = "100%",
+  radius,
+}: ERPSkeletonProps) {
+
   return (
+
     <div
-      className={`animate-pulse rounded-xl bg-slate-800/80 ${className}`}
+      style={{
+        height,
+        width,
+
+        borderRadius:
+          radius
+          ?? ERPTheme.radius.md,
+
+        background:
+          ERPTheme.colors.card,
+
+        opacity: 0.5,
+
+        animation:
+          "pulse 1.5s infinite",
+      }}
     />
   );
 }
