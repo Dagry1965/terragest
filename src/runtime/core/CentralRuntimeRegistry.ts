@@ -1,5 +1,5 @@
-﻿import { runtimeQueueRegistry } from "./RuntimeQueueRegistry";
+﻿import { runtimeRetryRegistry } from "./RuntimeRetryRegistry";
 
-export function getRuntimeQueues() {
-  return runtimeQueueRegistry.getJobs();
+export function getRuntimeRetries() {
+  return runtimeRetryRegistry.getRetries();
 }
