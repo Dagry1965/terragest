@@ -8,6 +8,10 @@ import {
   erpBusinessSchemaRegistry,
 } from "../schemas";
 
+import {
+  erpModuleRuntimeDataBridge,
+} from "../data";
+
 interface ERPModuleRuntimeFactoryProps {
 
   module: string;
@@ -17,15 +21,11 @@ interface ERPModuleRuntimeFactoryProps {
     | "create"
     | "details"
     | "edit";
-
-  rows?:
-    Record<string, unknown>[];
 }
 
 export function ERPModuleRuntimeFactory({
   module,
   type,
-  rows = [],
 }: ERPModuleRuntimeFactoryProps) {
 
   const schema =
@@ -36,6 +36,10 @@ export function ERPModuleRuntimeFactory({
 
     return null;
   }
+
+  const rows =
+    erpModuleRuntimeDataBridge
+      .getModuleData(module);
 
   return (
 
