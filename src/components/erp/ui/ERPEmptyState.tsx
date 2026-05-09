@@ -1,25 +1,77 @@
-type ERPEmptyStateProps = {
+"use client";
+
+import {
+  ERPTheme,
+} from "./ERPTheme";
+
+interface ERPEmptyStateProps {
+
   title: string;
+
   description?: string;
-};
+}
 
 export function ERPEmptyState({
   title,
   description,
 }: ERPEmptyStateProps) {
-  return (
-    <div className="flex min-h-[220px] items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-8 text-center">
-      <div className="max-w-xl">
-        <h2 className="text-lg font-semibold text-slate-950">
-          {title}
-        </h2>
 
-        {description && (
-          <p className="mt-2 text-sm text-slate-600">
+  return (
+
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+
+        padding:
+          ERPTheme.spacing.xl,
+
+        borderRadius:
+          ERPTheme.radius.xl,
+
+        background:
+          ERPTheme.colors.surface,
+
+        border:
+          `1px dashed ${ERPTheme.colors.card}`,
+
+        color:
+          ERPTheme.colors.text,
+
+        textAlign: "center",
+      }}
+    >
+
+      <h3
+        style={{
+          fontSize: "20px",
+          fontWeight: 700,
+        }}
+      >
+        {title}
+      </h3>
+
+      {
+        description && (
+
+          <p
+            style={{
+              marginTop:
+                ERPTheme.spacing.sm,
+
+              color:
+                ERPTheme.colors.muted,
+
+              maxWidth: "520px",
+            }}
+          >
             {description}
           </p>
-        )}
-      </div>
+        )
+      }
+
     </div>
   );
 }
