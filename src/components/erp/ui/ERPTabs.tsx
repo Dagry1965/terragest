@@ -1,37 +1,92 @@
-import type { ReactNode } from "react";
+"use client";
 
-interface ERPTabItem {
-  key: string;
+import {
+  ERPTheme,
+} from "./ERPTheme";
+
+interface ERPTab {
+
+  id: string;
+
   label: string;
-  content: ReactNode;
 }
 
 interface ERPTabsProps {
-  items: ERPTabItem[];
-  activeKey?: string;
+
+  tabs: ERPTab[];
+
+  activeTab: string;
+
+  onChange: (
+    tabId: string
+  ) => void;
 }
 
-export function ERPTabs({ items, activeKey }: ERPTabsProps) {
-  const active = items.find((item) => item.key === activeKey) ?? items[0];
+export function ERPTabs({
+  tabs,
+  activeTab,
+  onChange,
+}: ERPTabsProps) {
 
   return (
-    <div>
-      <div className="mb-4 flex gap-2 border-b border-slate-800">
-        {items.map((item) => (
-          <div
-            key={item.key}
-            className={`border-b-2 px-3 py-2 text-sm ${
-              item.key === active.key
-                ? "border-blue-500 text-blue-300"
-                : "border-transparent text-slate-400"
-            }`}
-          >
-            {item.label}
-          </div>
-        ))}
-      </div>
 
-      <div>{active?.content}</div>
+    <div
+      style={{
+        display: "flex",
+        gap:
+          ERPTheme.spacing.sm,
+
+        marginBottom:
+          ERPTheme.spacing.lg,
+      }}
+    >
+
+      {
+        tabs.map(
+          tab => {
+
+            const active =
+              tab.id === activeTab;
+
+            return (
+
+              <button
+                key={tab.id}
+                onClick={() =>
+                  onChange(tab.id)
+                }
+                style={{
+                  border: "none",
+
+                  cursor: "pointer",
+
+                  padding:
+                    `${ERPTheme.spacing.sm} ${ERPTheme.spacing.md}`,
+
+                  borderRadius:
+                    ERPTheme.radius.md,
+
+                  background:
+                    active
+                      ? ERPTheme.colors.primary
+                      : ERPTheme.colors.card,
+
+                  color:
+                    ERPTheme.colors.text,
+
+                  fontWeight:
+                    active
+                      ? 700
+                      : 500,
+                }}
+              >
+                {tab.label}
+              </button>
+            );
+          }
+        )
+      }
+
     </div>
   );
 }
