@@ -8,16 +8,8 @@ import {
 } from "../generated/GeneratedRuntimeModules";
 
 import {
-  runtimeBindingsRegistry,
-} from "./RuntimeBindings";
-
-import {
-  runtimeWorkflowRegistry,
-} from "./RuntimeWorkflowRegistry";
-
-import {
-  runtimeEventTopology,
-} from "./RuntimeEventTopology";
+  runtimeOrchestrator,
+} from "./RuntimeOrchestrator";
 
 import {
   runtimeLifecycle,
@@ -81,16 +73,8 @@ export class CentralRuntimeRegistry {
     return this.modules.size;
   }
 
-  getModuleBindings(moduleId: string) {
-    return runtimeBindingsRegistry.getBinding(moduleId);
-  }
-
-  getModuleWorkflows(moduleId: string) {
-    return runtimeWorkflowRegistry.getModuleWorkflows(moduleId);
-  }
-
-  getModuleTopology(moduleId: string) {
-    return runtimeEventTopology.getModuleTopology(moduleId);
+  getRuntimeOrchestrator() {
+    return runtimeOrchestrator;
   }
 
   getRuntimeLifecycle() {
