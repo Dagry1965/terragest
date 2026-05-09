@@ -1,5 +1,5 @@
-﻿import { runtimeRetryRegistry } from "./RuntimeRetryRegistry";
+﻿import { runtimeDeadLetterQueue } from "./RuntimeDeadLetterQueue";
 
-export function getRuntimeRetries() {
-  return runtimeRetryRegistry.getRetries();
+export function getRuntimeDeadLetters() {
+  return runtimeDeadLetterQueue.getEvents();
 }
