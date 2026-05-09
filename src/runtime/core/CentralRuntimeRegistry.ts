@@ -1,5 +1,5 @@
-﻿import { runtimeEventStore } from "./RuntimeEventStore";
+﻿import { runtimeWorkerRegistry } from "./RuntimeWorkerRegistry";
 
-export function getRuntimeEvents() {
-  return runtimeEventStore.getEvents();
+export function getRuntimeWorkers() {
+  return runtimeWorkerRegistry.getWorkers();
 }
