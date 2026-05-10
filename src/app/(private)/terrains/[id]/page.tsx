@@ -1,12 +1,16 @@
-import { ERPModuleActionPageTemplate } from "@/components/erp/templates";
+import { GenericDetailPage } from "@/components/erp/generic/GenericDetailPage";
 
-export default function Page() {
+export default async function TerrainDetailPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+
   return (
-    <ERPModuleActionPageTemplate
-      moduleLabel="Terrains"
-      type="details"
-      actionLabel="Details"
-      description="Page legacy stabilisee par le template ERP enterprise centralise."
+    <GenericDetailPage
+      moduleKey="terrains"
+      id={id}
     />
   );
 }

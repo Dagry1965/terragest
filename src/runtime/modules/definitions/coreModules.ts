@@ -230,4 +230,131 @@ export const coreERPModules: ERPModule[] = [
       ],
     },
   },
+
+  {
+    metadata: {
+      key: "terrains",
+      label: "Terrains",
+      description: "Gestion agro-foncière des terrains, propriétaires, vocations, surfaces, contrats et exploitations liées.",
+      icon: "map",
+      category: "Foncier",
+      enabled: true,
+      visible: true,
+      order: 60,
+      routes: {
+        list: "/terrains",
+        create: "/terrains/nouveau",
+        details: "/terrains",
+        edit: "/terrains",
+      },
+      features: {
+        dashboard: true,
+        analytics: true,
+        workflows: true,
+        audit: true,
+        realtime: true,
+        automation: true,
+        notifications: true,
+      },
+    },
+    schema: {
+      module: "terrains",
+      collection: "terrains",
+      timestamps: true,
+      softDelete: true,
+      fields: [
+        { key: "nom", label: "Terrain", type: "text", required: true, searchable: true, sortable: true },
+
+        { key: "proprietaireId", label: "Propriétaire", type: "relation", relation: "utilisateurs", required: true, filterable: true },
+
+        { key: "vocationTerrain", label: "Terrain à vocation", type: "select", required: true, filterable: true, options: [
+          { label: "Agricole", value: "agricole" },
+          { label: "Habitation", value: "habitation" },
+          { label: "Piscicole", value: "piscicole" },
+          { label: "Élevage", value: "elevage" },
+          { label: "Mixte", value: "mixte" },
+          { label: "Réserve foncière", value: "reserve_fonciere" },
+        ] },
+
+        { key: "surfaceTotale", label: "Surface totale", type: "number", required: true, sortable: true },
+        { key: "surfaceDisponible", label: "Surface disponible", type: "number", sortable: true },
+        { key: "surfaceAgricole", label: "Surface agricole", type: "number", sortable: true },
+        { key: "surfaceHabitation", label: "Surface habitation", type: "number", sortable: true },
+
+        { key: "prixAcquisition", label: "Prix d'acquisition", type: "number", sortable: true },
+        { key: "dateAcquisition", label: "Date d'acquisition", type: "date", sortable: true },
+
+        { key: "typeContratFoncier", label: "Type de contrat foncier", type: "select", filterable: true, options: [
+          { label: "Achat", value: "achat" },
+          { label: "Location", value: "location" },
+          { label: "Bail rural", value: "bail_rural" },
+          { label: "Concession", value: "concession" },
+          { label: "Donation", value: "donation" },
+          { label: "Héritage", value: "heritage" },
+        ] },
+
+        { key: "referenceContrat", label: "Référence contrat", type: "text", searchable: true },
+
+        { key: "statut", label: "Statut", type: "status", required: true, filterable: true },
+      ],
+    },
+
+    form: {
+      layout: "tabs",
+
+      tabs: [
+        {
+          key: "general",
+          label: "Informations",
+          fields: [
+            "nom",
+            "proprietaireId",
+            "vocationTerrain",
+            "statut",
+          ],
+        },
+
+        {
+          key: "surfaces",
+          label: "Surfaces",
+          fields: [
+            "surfaceTotale",
+            "surfaceDisponible",
+            "surfaceAgricole",
+            "surfaceHabitation",
+          ],
+        },
+
+        {
+          key: "contrat",
+          label: "Contrat foncier",
+          fields: [
+            "typeContratFoncier",
+            "referenceContrat",
+            "prixAcquisition",
+            "dateAcquisition",
+          ],
+        },
+      ],
+    },
+
+    actions: [
+      { key: "create", label: "Créer", type: "primary", href: "/terrains/nouveau", event: "TERRAIN_CREATED" },
+      { key: "edit", label: "Modifier", type: "secondary", event: "TERRAIN_UPDATED" },
+      { key: "archive", label: "Archiver", type: "danger", event: "TERRAIN_ARCHIVED" },
+    ],
+    relations: [
+      { key: "proprietaire", label: "Propriétaire", targetModule: "utilisateurs", type: "many-to-one" },
+      { key: "exploitations", label: "Exploitations liées", targetModule: "exploitations", type: "one-to-many" },
+      { key: "contrats", label: "Contrats fonciers", targetModule: "contrats", type: "one-to-many" },
+    ],
+    workflows: [
+      {
+        key: "create-terrain",
+        label: "Création terrain",
+        initialState: "draft",
+        states: ["draft", "validated", "active", "archived"],
+      },
+    ],
+  }
 ];

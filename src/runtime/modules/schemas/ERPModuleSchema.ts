@@ -24,6 +24,7 @@ export type ERPModuleFieldType =
   | "email"
   | "phone";
 
+
 export interface ERPModuleFieldReference {
   module: string;
   field: string;
@@ -65,6 +66,26 @@ export interface ERPModuleField {
   visibleIf?: ERPConditionalRule;
   requiredIf?: ERPConditionalRule;
   readonlyIf?: ERPConditionalRule;
+/*
+*VALIDATION
+*/
+
+validation?: {
+  required?: boolean;
+
+  min?: number;
+
+  max?: number;
+
+  minLength?: number;
+
+  maxLength?: number;
+
+  email?: boolean;
+
+  beforeToday?: boolean;
+};
+
 
   /*
    * VALIDATION RULES

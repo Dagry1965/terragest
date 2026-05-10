@@ -1,23 +1,35 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { ERPRelationDataLoader } from "@/runtime/modules/lifecycle/ERPRelationDataLoader"; // ✅ Correction ajoutée
+import { ERPRelationDataLoader } from "@/runtime/modules/lifecycle/ERPRelationDataLoader";
 
-import type {
-  ERPConditionalRule,
-  ERPModuleField,
-} from "@/runtime/modules/schemas/ERPModuleSchema";
+type ERPFieldOption = {
+  label: string;
+  value: string;
+};
 
-type RuntimeFormModule = {
-  fields?: ERPModuleField[];
-  schema?: {
-    fields?: ERPModuleField[];
-  };
+type ERPField = {
+  key: string;
+  label: string;
+  type?: string;
+  required?: boolean;
+  relation?: string;
+  options?: ERPFieldOption[];
 };
 
 type RelationOption = {
   id: string;
   label: string;
+};
+
+type RuntimeFormModule = {
+  metadata?: {
+    key?: string;
+  };
+  schema?: {
+    fields?: ERPField[];
+  };
+  fields?: ERPField[];
 };
 
 type Props = {
@@ -26,66 +38,50 @@ type Props = {
   onSubmit?: (data: Record<string, unknown>) => void | Promise<void>;
 };
 
-/* ---------------------------------------------------------
- * CONDITIONAL LOGIC
- * --------------------------------------------------------- */
-function evaluateCondition(
-  condition: ERPConditionalRule | undefined,
-  data: Record<string, unknown>
-) {
-  if (!condition) return true;
-
-  const currentValue = data[condition.field];
-
-  switch (condition.operator) {
-    case "equals":
-      return currentValue === condition.value;
-    case "notEquals":
-      return currentValue !== condition.value;
-    case "in":
-      return condition.values?.includes(currentValue) ?? false;
-    case "notIn":
-      return !(condition.values?.includes(currentValue) ?? false);
-    default:
-      return true;
-  }
-}
-
 export function ERPFormEngine({
   module,
   initialData = {},
   onSubmit,
 }: Props) {
   const fields = useMemo(() => {
-    return module.schema?.fields ?? module.fields ?? [];
+    return module?.schema?.fields ?? module?.fields ?? [];
   }, [module]);
 
   const [values, setValues] = useState<Record<string, unknown>>(initialData);
+
   const [relationOptions, setRelationOptions] = useState<
     Record<string, RelationOption[]>
   >({});
 
-  /* ---------------------------------------------------------
-   * LOAD RELATIONS
-   * --------------------------------------------------------- */
   useEffect(() => {
     async function loadRelations() {
       const relationFields = fields.filter(
-        (field: ERPModuleField) => field.type === "relation"
+        (field) => field.type === "relation"
       );
 
       const loadedOptions: Record<string, RelationOption[]> = {};
 
       for (const field of relationFields) {
-        const targetModule = field.references?.module ?? field.relation;
+        const targetModule = field.relation;
 
         if (!targetModule) {
           loadedOptions[field.key] = [];
           continue;
         }
 
-        loadedOptions[field.key] =
-          await ERPRelationDataLoader.load(targetModule);
+        try {
+          loadedOptions[field.key] =
+            await ERPRelationDataLoader.load(targetModule);
+        } catch (error) {
+          console.error(
+            "Erreur chargement relation",
+            field.key,
+            targetModule,
+            error
+          );
+
+          loadedOptions[field.key] = [];
+        }
       }
 
       setRelationOptions(loadedOptions);
@@ -94,194 +90,103 @@ export function ERPFormEngine({
     loadRelations();
   }, [fields]);
 
-  /* ---------------------------------------------------------
-   * VALIDATION
-   * --------------------------------------------------------- */
-  function validateField(
-    field: ERPModuleField,
-    value: unknown,
-    data: Record<string, unknown>
-  ) {
-    const errors: string[] = [];
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
 
-    for (const validator of field.validators ?? []) {
-      switch (validator.type) {
-        case "min":
-          if (
-            typeof value === "number" &&
-            typeof validator.value === "number" &&
-            value < validator.value
-          ) {
-            errors.push(
-              validator.message ??
-                `${field.label} doit être ≥ ${validator.value}`
-            );
-          }
-          break;
+    await onSubmit?.(values);
 
-        case "max":
-          if (
-            typeof value === "number" &&
-            typeof validator.value === "number" &&
-            value > validator.value
-          ) {
-            errors.push(
-              validator.message ??
-                `${field.label} doit être ≤ ${validator.value}`
-            );
-          }
-          break;
-      }
-    }
-
-    return errors;
+    console.log("ERP FORM SUBMIT", {
+      module: module?.metadata?.key,
+      data: values,
+    });
   }
 
-  /* ---------------------------------------------------------
-   * SUBMIT
-   * --------------------------------------------------------- */
-  async function handleSubmit(formData: FormData) {
-    const payload: Record<string, unknown> = {};
-    const validationErrors: string[] = [];
-
-    for (const field of fields) {
-      const value = formData.get(field.key);
-
-      payload[field.key] = value;
-
-      const fieldErrors = validateField(field, value, payload);
-      validationErrors.push(...fieldErrors);
-    }
-
-    if (validationErrors.length > 0) {
-      console.error(validationErrors);
-      return;
-    }
-
-    await onSubmit?.(payload);
+  if (fields.length === 0) {
+    return (
+      <div className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+        Aucun champ trouvé dans le schéma du module.
+      </div>
+    );
   }
 
-  /* ---------------------------------------------------------
-   * OPTIONS DYNAMIQUES
-   * --------------------------------------------------------- */
-  function getOptions(field: ERPModuleField) {
-    if (field.dependsOn && field.optionsByValue) {
-      const parentValue = String(values[field.dependsOn] ?? "");
-      return field.optionsByValue[parentValue] ?? [];
-    }
-
-    return field.options ?? [];
-  }
-
-  /* ---------------------------------------------------------
-   * RENDER
-   * --------------------------------------------------------- */
   return (
-    <form action={handleSubmit} className="space-y-6">
-      {fields.map((field: ERPModuleField) => {
-        const isVisible = evaluateCondition(field.visibleIf, values);
-        if (!isVisible) return null;
+    <form onSubmit={handleSubmit} className="space-y-6">
+      <div className="rounded-xl bg-gray-100 p-4 text-sm">
+        Champs détectés : {fields.length}
+      </div>
 
-        const isRequired =
-          field.required ||
-          !evaluateCondition(field.requiredIf, values)
-            ? field.required
-            : false;
+      {fields.map((field) => (
+        <div key={field.key} className="space-y-2">
+          <label className="block text-sm font-medium text-gray-700">
+            {field.label}
+            {field.required ? " *" : ""}
+          </label>
 
-        const isReadonly = !evaluateCondition(field.readonlyIf, values);
+          {field.type === "relation" ? (
+            <select
+              name={field.key}
+              required={field.required}
+              value={String(values[field.key] ?? "")}
+              onChange={(event) =>
+                setValues((current) => ({
+                  ...current,
+                  [field.key]: event.target.value,
+                }))
+              }
+              className="w-full rounded-xl border px-4 py-3"
+            >
+              <option value="">Sélectionner</option>
 
-        const options = getOptions(field);
+              {(relationOptions[field.key] ?? []).map((option) => (
+                <option key={option.id} value={option.id}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          ) : field.type === "select" || field.type === "status" ? (
+            <select
+              name={field.key}
+              required={field.required}
+              value={String(values[field.key] ?? "")}
+              onChange={(event) =>
+                setValues((current) => ({
+                  ...current,
+                  [field.key]: event.target.value,
+                }))
+              }
+              className="w-full rounded-xl border px-4 py-3"
+            >
+              <option value="">Sélectionner</option>
 
-        return (
-          <div key={field.key} className="space-y-2">
-            <label className="text-sm font-medium">
-              {field.label}
-              {isRequired ? " *" : ""}
-            </label>
-
-            {field.type === "textarea" ? (
-              <textarea
-                name={field.key}
-                value={String(values[field.key] ?? "")}
-                className="w-full rounded-xl border px-4 py-3"
-                required={isRequired}
-                readOnly={isReadonly}
-                onChange={(event) =>
-                  setValues((current) => ({
-                    ...current,
-                    [field.key]: event.target.value,
-                  }))
-                }
-              />
-            ) : field.type === "relation" ? (
-              <select
-                name={field.key}
-                value={String(values[field.key] ?? "")}
-                className="w-full rounded-xl border px-4 py-3"
-                required={isRequired}
-                disabled={isReadonly}
-                onChange={(event) =>
-                  setValues((current) => ({
-                    ...current,
-                    [field.key]: event.target.value,
-                  }))
-                }
-              >
-                <option value="">Sélectionner</option>
-
-                {(relationOptions[field.key] ?? []).map((option) => (
-                  <option key={option.id} value={option.id}>
-                    {option.label}
-                  </option>
-                ))}
-              </select>
-            ) : field.type === "select" || field.type === "status" ? (
-              <select
-                name={field.key}
-                value={String(values[field.key] ?? "")}
-                className="w-full rounded-xl border px-4 py-3"
-                required={isRequired}
-                disabled={isReadonly}
-                onChange={(event) =>
-                  setValues((current) => ({
-                    ...current,
-                    [field.key]: event.target.value,
-                  }))
-                }
-              >
-                <option value="">Sélectionner</option>
-
-                {options.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </select>
-            ) : (
-              <input
-                name={field.key}
-                type={
-                  field.type === "number"
-                    ? "number"
-                    : field.type === "date"
-                    ? "date"
-                    : "text"
-                }
-                value={String(values[field.key] ?? "")}
-                className="w-full rounded-xl border px-4 py-3"
-                required={isRequired}
-                readOnly={isReadonly}
-                onChange={(event) =>
-                  setValues((current) => ({
-                    ...current,
-                    [field.key]: event.target.value,
-                  }))
-                }
-              />
-            )}
-          </div>
-        );
-      })}
+              {(field.options ?? []).map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          ) : (
+            <input
+              name={field.key}
+              type={
+                field.type === "number"
+                  ? "number"
+                  : field.type === "date"
+                  ? "date"
+                  : "text"
+              }
+              required={field.required}
+              value={String(values[field.key] ?? "")}
+              onChange={(event) =>
+                setValues((current) => ({
+                  ...current,
+                  [field.key]: event.target.value,
+                }))
+              }
+              className="w-full rounded-xl border px-4 py-3"
+            />
+          )}
+        </div>
+      ))}
 
       <button
         type="submit"

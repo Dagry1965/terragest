@@ -1,5 +1,5 @@
 import { ERPRuntimePage } from "@/components/erp/runtime";
-import { coreERPModules } from "@/runtime/modules";
+import { coreERPModules } from "@/runtime/modules/definitions/coreModules";
 import type { ERPModule } from "@/runtime/modules";
 
 interface GenericCreatePageProps {

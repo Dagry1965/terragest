@@ -1,12 +1,6 @@
-import { ERPModuleActionPageTemplate } from "@/components/erp/templates";
+import { GenericListPage } from "@/components/erp/generic/GenericListPage";
+export const dynamic = "force-dynamic";
 
-export default function Page() {
-  return (
-    <ERPModuleActionPageTemplate
-      moduleLabel="Terrains"
-      type="list"
-      actionLabel="Liste"
-      description="Page raccordee au template ERP enterprise centralise pour stabiliser le build et preparer la convergence runtime."
-    />
-  );
+export default function TerrainsPage() {
+  return <GenericListPage moduleKey="terrains" />;
 }

@@ -27,6 +27,16 @@ export interface ERPModuleWorkflow {
 export interface ERPModule {
   metadata: ERPModuleMetadata;
   schema: ERPModuleSchema;
+
+  form?: {
+    layout?: "sections" | "tabs" | "stepper";
+    tabs?: {
+      key: string;
+      label: string;
+      fields: string[];
+    }[];
+  };
+
   actions?: ERPModuleAction[];
   relations?: ERPModuleRelation[];
   workflows?: ERPModuleWorkflow[];

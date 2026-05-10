@@ -8,7 +8,6 @@ import {
 } from "@/runtime/firestore";
 
 export class RuntimeDataBinding {
-
   static async list(
     module: ERPModule
   ) {
@@ -46,6 +45,16 @@ export class RuntimeDataBinding {
       module,
       id,
       data
+    );
+  }
+
+  static async delete(
+    module: ERPModule,
+    id: string
+  ) {
+    return FirestoreRuntimeMutation.delete(
+      module,
+      id
     );
   }
 }

@@ -1,20 +1,23 @@
 "use client";
 
+import Link from "next/link";
+
 import {
   ERPPage,
   ERPEmptyState,
 } from "../ui";
 
+import { ERPEnterpriseForm } from "@/components/erp/forms/enterprise/ERPEnterpriseForm";
+import { ERPRuntimeDetails } from "./ERPRuntimeDetails";
+import { ERPRuntimeTable } from "./ERPRuntimeTable";
+
+import type { ERPModule } from "@/runtime/modules/ERPModule";
+
 interface ERPRuntimePageProps {
   title?: string;
   description?: string;
-  module?: {
-    metadata?: {
-      label?: string;
-      key?: string;
-    };
-  };
-  type?: string;
+  module?: ERPModule;
+  type?: "list" | "create" | "detail" | "edit" | string;
   record?: Record<string, unknown>;
   data?: Record<string, unknown>[];
 }
@@ -24,9 +27,14 @@ export function ERPRuntimePage({
   description,
   module,
   type = "list",
+  record,
+  data = [],
 }: ERPRuntimePageProps) {
   const moduleLabel =
     module?.metadata?.label ?? "Module ERP";
+
+  const moduleDescription =
+    module?.metadata?.description;
 
   const resolvedTitle =
     title ?? `${moduleLabel} — ${type}`;
@@ -36,13 +44,75 @@ export function ERPRuntimePage({
       title={resolvedTitle}
       description={
         description ??
+        moduleDescription ??
         "Page générée automatiquement par le Runtime ERP."
       }
     >
-      <ERPEmptyState
-        title={resolvedTitle}
-        description="Cette page est branchée sur le runtime ERP central."
-      />
+      <div className="space-y-6">
+
+ <div className="rounded-xl bg-yellow-50 p-4 text-sm text-slate-900">
+    type: {type}
+    <br />
+    module: {module?.metadata?.key ?? "aucun"}
+    <br />
+    record id: {String(record?.id ?? "aucun")}
+    <br />
+    record keys: {record ? Object.keys(record).join(", ") : "aucun"}
+  </div>
+        {/* FORMULAIRE DE CRÉATION */}
+        {type === "create" && module && (
+          <ERPEnterpriseForm
+            module={module}
+            mode="create"
+          />
+        )}
+
+        {/* FORMULAIRE D'ÉDITION */}
+        {type === "edit" && module && record && (
+          <ERPEnterpriseForm
+            module={module}
+            mode="edit"
+            initialData={record}
+          />
+        )}
+
+        {/* PAGE DE DÉTAIL */}
+        {type === "detail" && module && record && (
+          <ERPRuntimeDetails
+            module={module}
+            data={record}
+          />
+        )}
+
+        {/* BOUTON NOUVEAU */}
+        {type === "list" &&
+          module?.metadata?.routes?.create && (
+            <div className="flex justify-end">
+              <Link
+                href={module.metadata.routes.create}
+                className="rounded-xl bg-black px-4 py-2 text-sm font-medium text-white"
+              >
+                Nouveau
+              </Link>
+            </div>
+          )}
+
+        {/* TABLEAU LISTE */}
+        {type === "list" && module && (
+          <ERPRuntimeTable
+            module={module}
+            data={data}
+          />
+        )}
+
+        {/* MODULE INTROUVABLE */}
+        {!module && (
+          <ERPEmptyState
+            title="Module introuvable"
+            description="Aucun module runtime n'a été trouvé."
+          />
+        )}
+      </div>
     </ERPPage>
   );
 }
