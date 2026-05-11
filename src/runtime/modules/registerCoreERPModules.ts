@@ -3,8 +3,8 @@ import { ERPModuleRegistry } from "./ERPModuleRegistry";
 export function registerCoreERPModules() {
   ERPModuleRegistry.register({
     key: "materiels",
-    label: "MatÃ©riels",
-    description: "Gestion du parc matÃ©riel.",
+    label: "MatÃƒÂ©riels",
+    description: "Gestion du parc matÃƒÂ©riel.",
     collection: "materiels",
     routes: {
       list: "/materiels",
@@ -21,12 +21,12 @@ export function registerCoreERPModules() {
         type: "status",
         options: ["actif", "maintenance", "panne"],
       },
-      { name: "cout", label: "CoÃ»t", type: "currency" },
+      { name: "cout", label: "CoÃƒÂ»t", type: "currency" },
     ],
     actions: [
       {
         name: "create",
-        label: "CrÃ©er",
+        label: "CrÃƒÂ©er",
         type: "create",
         event: "MATERIEL_CREATED",
       },
@@ -76,7 +76,7 @@ export function registerCoreERPModules() {
     actions: [
       {
         name: "create",
-        label: "CrÃ©er",
+        label: "CrÃƒÂ©er",
         type: "create",
         event: "EXPLOITATION_CREATED",
       },

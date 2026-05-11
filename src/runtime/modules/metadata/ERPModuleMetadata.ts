@@ -1,3 +1,5 @@
+import type { ERPModuleField } from "../schemas/ERPModuleSchema";
+
 export interface ERPModuleMetadata {
   key: string;
   label: string;
@@ -12,6 +14,7 @@ export interface ERPModuleMetadata {
   tags?: string[];
   permissions?: string[];
   dependencies?: string[];
+dashboard?: boolean;
 
   routes?: {
     list?: string;
@@ -31,3 +34,10 @@ export interface ERPModuleMetadata {
     realtime?: boolean;
   };
 }
+export type ERPModuleSchema = {
+  module?: string;
+  collection: string;
+  timestamps?: boolean;
+  softDelete?: boolean;
+  fields: ERPModuleField[];
+};

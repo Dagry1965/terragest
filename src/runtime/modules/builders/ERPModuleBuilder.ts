@@ -3,7 +3,7 @@ import type { ERPModuleField } from "../schemas/ERPModuleSchema";
 
 
 export interface ERPTableDefinition {
-  module: string;
+  module?: string;
   collection: string;
   columns: {
     key: string;
@@ -15,13 +15,13 @@ export interface ERPTableDefinition {
 }
 
 export interface ERPFormDefinition {
-  module: string;
+  module?: string;
   collection: string;
   fields: ERPModuleField[];
 }
 
 export interface ERPDetailsDefinition {
-  module: string;
+  module?: string;
   collection: string;
   fields: ERPModuleField[];
 }

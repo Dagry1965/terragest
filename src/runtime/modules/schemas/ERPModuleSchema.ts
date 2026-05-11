@@ -24,10 +24,9 @@ export type ERPModuleFieldType =
   | "email"
   | "phone";
 
-
 export interface ERPModuleFieldReference {
-  module: string;
-  field: string;
+  module?: string;
+  field?: string;
 }
 
 export type ERPRelationType =
@@ -40,6 +39,28 @@ export interface ERPFieldValidator {
   type: "min" | "max" | "regex" | "email" | "phone" | "custom";
   value?: unknown;
   message?: string;
+}
+
+export interface ERPFieldValidation {
+  required?: boolean;
+  min?: number;
+  max?: number;
+  minLength?: number;
+  maxLength?: number;
+  email?: boolean;
+  phone?: boolean;
+  regex?: string;
+  beforeToday?: boolean;
+  afterToday?: boolean;
+  message?: string;
+}
+
+export interface ERPModuleFieldVisibility {
+  field: string;
+  equals?: string | number | boolean;
+  notEquals?: string | number | boolean;
+  in?: Array<string | number | boolean>;
+  notIn?: Array<string | number | boolean>;
 }
 
 export interface ERPModuleField {
@@ -59,6 +80,8 @@ export interface ERPModuleField {
   relation?: string;
   options?: ERPModuleFieldOption[];
   defaultValue?: unknown;
+  placeholder?: string;
+  helperText?: string;
 
   /*
    * CONDITIONAL LOGIC
@@ -66,26 +89,16 @@ export interface ERPModuleField {
   visibleIf?: ERPConditionalRule;
   requiredIf?: ERPConditionalRule;
   readonlyIf?: ERPConditionalRule;
-/*
-*VALIDATION
-*/
 
-validation?: {
-  required?: boolean;
+  /*
+   * SIMPLE VISIBILITY METADATA
+   */
+  visibility?: ERPModuleFieldVisibility;
 
-  min?: number;
-
-  max?: number;
-
-  minLength?: number;
-
-  maxLength?: number;
-
-  email?: boolean;
-
-  beforeToday?: boolean;
-};
-
+  /*
+   * VALIDATION
+   */
+  validation?: ERPFieldValidation;
 
   /*
    * VALIDATION RULES
@@ -110,10 +123,18 @@ validation?: {
    */
   dependsOn?: string;
   optionsByValue?: Record<string, ERPModuleFieldOption[]>;
+
+  /*
+   * DYNAMIC COMPUTING
+   */
+computed?: {
+  formula: string;
+  dependsOn: string[];
+};
 }
 
 export interface ERPModuleSchema {
-  module: string;
+  module?: string;
   collection: string;
   fields: ERPModuleField[];
   timestamps?: boolean;

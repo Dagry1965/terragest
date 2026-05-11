@@ -7,16 +7,22 @@ import type {
   ERPModuleField,
 } from "@/runtime/modules";
 
+import {
+  RuntimeVisibilityEngine,
+} from "@/runtime/visibility/RuntimeVisibilityEngine";
+
 import { ERPFormField } from "./ERPFormField";
 
 interface ERPFormTabsProps {
   module: ERPModule;
   initialData?: Record<string, unknown>;
+  formValues?: Record<string, unknown>;
 }
 
 export function ERPFormTabs({
   module,
   initialData = {},
+  formValues = {},
 }: ERPFormTabsProps) {
   const [activeTab, setActiveTab] =
     useState(
@@ -40,14 +46,15 @@ export function ERPFormTabs({
       (field: ERPModuleField) =>
         activeTabConfig?.fields.includes(
           field.key
+        ) &&
+        RuntimeVisibilityEngine.isVisible(
+          field,
+          formValues
         )
     );
 
   return (
     <div className="space-y-6">
-
-      {/* TABS HEADER */}
-
       <div className="flex flex-wrap gap-3 border-b border-slate-200 pb-4">
         {tabs.map((tab) => {
           const active =
@@ -80,8 +87,6 @@ export function ERPFormTabs({
         })}
       </div>
 
-      {/* TAB CONTENT */}
-
       <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
         <div className="grid gap-6 md:grid-cols-2">
           {visibleFields.map((field) => (
@@ -94,6 +99,12 @@ export function ERPFormTabs({
             />
           ))}
         </div>
+
+        {visibleFields.length === 0 ? (
+          <p className="text-sm text-slate-500">
+            Aucun champ à afficher pour cet onglet.
+          </p>
+        ) : null}
       </div>
     </div>
   );

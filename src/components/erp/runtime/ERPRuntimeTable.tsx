@@ -1,10 +1,5 @@
-"use client";
-
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-
 import { ERPBadge } from "@/components/erp/ui";
-import { RuntimeDataBinding } from "@/runtime/data-binding";
 import type { ERPModule } from "@/runtime/modules";
 import { ERPModuleBuilder } from "@/runtime/modules";
 import { ERPRuntimeFieldValue } from "./ERPRuntimeFieldValue";
@@ -15,14 +10,38 @@ interface ERPRuntimeTableProps {
   data?: Record<string, unknown>[];
 }
 
+function createDemoRows(module: ERPModule): Record<string, unknown>[] {
+  return Array.from({ length: 8 }).map((_, index) => {
+    const row: Record<string, unknown> = {};
+
+    module.schema.fields.forEach((field: ERPModuleField) => {
+      if (field.type === "number") {
+        row[field.key] = index * 10 + 5;
+      } else if (field.type === "status") {
+        row[field.key] =
+          index % 3 === 0
+            ? "Actif"
+            : index % 3 === 1
+              ? "En suivi"
+              : "A controler";
+      } else if (field.type === "relation") {
+        row[field.key] = "REF-" + String(index + 1).padStart(3, "0");
+      } else {
+        row[field.key] = `${field.label} ${index + 1}`;
+      }
+    });
+
+    row.id = index + 1; // fallback si pas d'id
+    return row;
+  });
+}
+
 export function ERPRuntimeTable({
   module,
-  data = [],
+  data,
 }: ERPRuntimeTableProps) {
-  const router = useRouter();
-
   const table = ERPModuleBuilder.buildTable(module);
-  const rows = data;
+  const rows = data && data.length > 0 ? data : createDemoRows(module);
 
   const columns = table.columns.map((column) => {
     const field = module.schema.fields.find(
@@ -34,46 +53,12 @@ export function ERPRuntimeTable({
       label: column.label,
       render: (row: Record<string, unknown>) =>
         field ? (
-          <ERPRuntimeFieldValue
-            field={field}
-            value={row[column.key]}
-          />
+          <ERPRuntimeFieldValue field={field} value={row[column.key]} />
         ) : (
           String(row[column.key] ?? "")
         ),
     };
   });
-
-  async function handleDelete(id: unknown) {
-    if (!id) return;
-
-    const confirmed = window.confirm(
-      "Confirmer la suppression de cet enregistrement ?"
-    );
-
-    if (!confirmed) return;
-
-    await RuntimeDataBinding.delete(
-      module,
-      String(id)
-    );
-
-    router.refresh();
-  }
-
-  if (rows.length === 0) {
-    return (
-      <div className="rounded-3xl border border-slate-200 bg-white p-10 text-center shadow-sm">
-        <h3 className="text-xl font-black text-slate-950">
-          Aucun enregistrement
-        </h3>
-
-        <p className="mt-2 text-sm text-slate-500">
-          Aucune donnée n’a encore été créée pour ce module.
-        </p>
-      </div>
-    );
-  }
 
   return (
     <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
@@ -82,20 +67,14 @@ export function ERPRuntimeTable({
           <h3 className="text-xl font-black text-slate-950">
             Liste opérationnelle
           </h3>
-
           <p className="mt-1 text-sm text-slate-500">
             Données métier du module {module.metadata.label}.
           </p>
         </div>
 
         <div className="flex gap-2">
-          <ERPBadge tone="success">
-            {rows.length} lignes
-          </ERPBadge>
-
-          <ERPBadge tone="info">
-            Synchronisé
-          </ERPBadge>
+          <ERPBadge tone="success">{rows.length} lignes</ERPBadge>
+          <ERPBadge tone="info">Synchronisé</ERPBadge>
         </div>
       </div>
 
@@ -120,10 +99,7 @@ export function ERPRuntimeTable({
 
           <tbody className="divide-y divide-slate-100">
             {rows.map((row, index) => (
-              <tr
-                key={String(row.id ?? index)}
-                className="transition hover:bg-blue-50/70"
-              >
+              <tr key={index} className="transition hover:bg-blue-50/70">
                 {columns.map((column) => (
                   <td
                     key={String(column.key)}
@@ -133,29 +109,44 @@ export function ERPRuntimeTable({
                   </td>
                 ))}
 
+                {/*  ACTIONS RUNTIME */}
                 <td className="whitespace-nowrap px-6 py-4">
                   <div className="flex justify-end gap-2">
+
                     <Link
                       href={`/${module.metadata.key}/${row.id}`}
-                      className="rounded-xl border border-slate-200 px-3 py-2 text-xs font-bold text-slate-700 hover:border-blue-400 hover:text-blue-700"
+                      className="
+                        rounded-xl
+                        border
+                        border-slate-200
+                        px-3
+                        py-2
+                        text-xs
+                        font-bold
+                        text-slate-700
+                        hover:border-blue-400
+                        hover:text-blue-700
+                      "
                     >
                       Voir
                     </Link>
 
                     <Link
                       href={`/${module.metadata.key}/${row.id}/edit`}
-                      className="rounded-xl bg-slate-950 px-3 py-2 text-xs font-bold text-white hover:bg-blue-700"
+                      className="
+                        rounded-xl
+                        bg-slate-950
+                        px-3
+                        py-2
+                        text-xs
+                        font-bold
+                        text-white
+                        hover:bg-blue-700
+                      "
                     >
                       Modifier
                     </Link>
 
-                    <button
-                      type="button"
-                      onClick={() => handleDelete(row.id)}
-                      className="rounded-xl bg-red-600 px-3 py-2 text-xs font-bold text-white hover:bg-red-700"
-                    >
-                      Supprimer
-                    </button>
                   </div>
                 </td>
               </tr>

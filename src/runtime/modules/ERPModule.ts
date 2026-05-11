@@ -13,7 +13,8 @@ export interface ERPModuleAction {
 export interface ERPModuleRelation {
   key: string;
   label: string;
-  targetModule: string;
+  targetModule?: string;
+  targetmodule?: string;
   type: "one-to-one" | "one-to-many" | "many-to-one" | "many-to-many";
 }
 
@@ -24,20 +25,54 @@ export interface ERPModuleWorkflow {
   states?: string[];
 }
 
+export interface ERPModuleVisibility {
+  field: string;
+  equals?: string | number | boolean;
+  notEquals?: string | number | boolean;
+  in?: Array<string | number | boolean>;
+}
+
+export interface ERPModulePersistence {
+  firestore?: boolean;
+  timestamps?: boolean;
+  softDelete?: boolean;
+}
+
+export interface ERPModulePermissions {
+  create?: boolean;
+  read?: boolean;
+  update?: boolean;
+  delete?: boolean;
+  import?: boolean;
+  export?: boolean;
+}
+
+export interface ERPModuleFormTab {
+  key: string;
+  label: string;
+  fields: string[];
+}
+
+export interface ERPModuleFormConfig {
+  layout?: "sections" | "tabs" | "stepper";
+  tabs?: ERPModuleFormTab[];
+}
+
 export interface ERPModule {
   metadata: ERPModuleMetadata;
   schema: ERPModuleSchema;
 
-  form?: {
-    layout?: "sections" | "tabs" | "stepper";
-    tabs?: {
-      key: string;
-      label: string;
-      fields: string[];
-    }[];
-  };
+  permissions?: ERPModulePermissions;
+
+  persistence?: ERPModulePersistence;
+
+  visibility?: ERPModuleVisibility;
+
+  form?: ERPModuleFormConfig;
 
   actions?: ERPModuleAction[];
+
   relations?: ERPModuleRelation[];
+
   workflows?: ERPModuleWorkflow[];
 }

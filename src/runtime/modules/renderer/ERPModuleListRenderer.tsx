@@ -42,7 +42,7 @@ export function ERPModuleListRenderer({
                   colSpan={visibleFields.length || 1}
                   className="px-4 py-8 text-center text-muted-foreground"
                 >
-                  Aucune donnÃ©e disponible.
+                  Aucune donnÃƒÂ©e disponible.
                 </td>
               </tr>
             )}

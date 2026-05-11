@@ -34,6 +34,6 @@ export class ERPRelationDataLoader {
     if (name) return name;
     if (email) return email;
 
-    return String(record.id ?? "Sans libellé");
+    return String(record.id ?? "Sans libellÃ©");
   }
 }

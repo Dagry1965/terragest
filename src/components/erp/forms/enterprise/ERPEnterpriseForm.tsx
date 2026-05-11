@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import type { ERPModule } from "@/runtime/modules";
@@ -13,9 +13,18 @@ import { ERPFormField } from "./ERPFormField";
 import { ERPFormSection } from "./ERPFormSection";
 import { ERPFormSummaryPanel } from "./ERPFormSummaryPanel";
 import { ERPFormTabs } from "./ERPFormTabs";
+
 import {
   RuntimeValidationEngine,
 } from "@/runtime/validation/RuntimeValidationEngine";
+
+import {
+  RuntimeVisibilityEngine,
+} from "@/runtime/visibility/RuntimeVisibilityEngine";
+
+import {
+  RuntimeComputedEngine,
+} from "@/runtime/computed/RuntimeComputedEngine";
 
 import type {
   RuntimeValidationError,
@@ -33,53 +42,137 @@ export function ERPEnterpriseForm({
   initialData = {},
 }: ERPEnterpriseFormProps) {
   const [saving, setSaving] = useState(false);
-  const [errors, setErrors] = useState<RuntimeValidationError[]>([]);
+
+  const [errors, setErrors] =
+    useState<RuntimeValidationError[]>([]);
+
+  const [formValues, setFormValues] =
+    useState<Record<string, unknown>>(initialData);
 
   const router = useRouter();
 
-  const form = ERPModuleBuilder.buildForm(module);
+  const form =
+    ERPModuleBuilder.buildForm(module);
 
-  const mainFields = form.fields.filter(
-    (field) => field.type !== "relation"
-  );
+  useEffect(() => {
+    const computedValues: Record<string, unknown> = {
+      ...formValues,
+    };
 
-  const relationFields = form.fields.filter(
-    (field) => field.type === "relation"
-  );
+    form.fields.forEach((field) => {
+      if (!field.computed) {
+        return;
+      }
 
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+      computedValues[field.key] =
+        RuntimeComputedEngine.compute(
+          field.computed.formula,
+          computedValues
+        );
+    });
+
+    const hasChanged =
+      JSON.stringify(computedValues) !==
+      JSON.stringify(formValues);
+
+    if (hasChanged) {
+      setFormValues(computedValues);
+    }
+  }, [form.fields, formValues]);
+
+  const visibleFields =
+    form.fields.filter((field) =>
+      RuntimeVisibilityEngine.isVisible(
+        field,
+        formValues
+      )
+    );
+
+  const mainFields =
+    visibleFields.filter(
+      (field) => field.type !== "relation"
+    );
+
+  const relationFields =
+    visibleFields.filter(
+      (field) => field.type === "relation"
+    );
+
+  function handleFormChange(
+    event: React.FormEvent<HTMLFormElement>
+  ) {
+    const formData =
+      new FormData(event.currentTarget);
+
+    const values =
+      Object.fromEntries(formData.entries());
+
+    setFormValues((currentValues) => ({
+      ...currentValues,
+      ...values,
+    }));
+  }
+
+  async function handleSubmit(
+    event: React.FormEvent<HTMLFormElement>
+  ) {
     event.preventDefault();
     setSaving(true);
 
-    //  CORRECTION : on récupère d'abord toutes les données du formulaire
-    const formData = new FormData(event.currentTarget);
-    const payload: Record<string, unknown> = {};
+    const formData =
+      new FormData(event.currentTarget);
 
-    form.fields.forEach((field) => {
-      let value: unknown = formData.get(field.key);
+    const payload: Record<string, unknown> = {
+      ...formValues,
+    };
 
-      // Gestion basique des types (nombre, etc.)
-      if (field.type === "number" && value !== null) {
-        value = value === "" ? null : Number(value);
+    visibleFields.forEach((field) => {
+      let value: unknown =
+        formData.get(field.key) ??
+        formValues[field.key];
+
+      if (
+        field.type === "number" &&
+        value !== null
+      ) {
+        value =
+          value === ""
+            ? null
+            : Number(value);
       }
 
-      payload[field.key] = value ?? "";
+      payload[field.key] =
+        value ?? "";
     });
 
-    //  CORRECTION : on valide APRÈS avoir rempli le payload
-    const validationErrors = RuntimeValidationEngine.validate(module, payload);
+    const validationErrors =
+      RuntimeValidationEngine.validate(
+        module,
+        payload
+      );
+
     setErrors(validationErrors);
 
     if (validationErrors.length > 0) {
-      console.log("ERP VALIDATION ERRORS", validationErrors);
+      console.log(
+        "ERP VALIDATION ERRORS",
+        validationErrors
+      );
+
       setSaving(false);
       return;
     }
 
     try {
       if (mode === "create") {
-        await RuntimeDataBinding.create(module, payload);
-      } else if (mode === "edit" && initialData.id) {
+        await RuntimeDataBinding.create(
+          module,
+          payload
+        );
+      } else if (
+        mode === "edit" &&
+        initialData.id
+      ) {
         await RuntimeDataBinding.update(
           module,
           String(initialData.id),
@@ -88,32 +181,48 @@ export function ERPEnterpriseForm({
       }
 
       router.push(
-        module.metadata.routes?.list ?? `/${module.metadata.key}`
+        module.metadata.routes?.list ??
+          `/${module.metadata.key}`
       );
+
       router.refresh();
 
-      console.log("ERP ENTERPRISE FORM SAVED", {
-        module: module.metadata.key,
-        mode,
-        payload,
-      });
+      console.log(
+        "ERP ENTERPRISE FORM SAVED",
+        {
+          module: module.metadata.key,
+          mode,
+          payload,
+        }
+      );
     } catch (error) {
-      console.error("ERP ENTERPRISE FORM ERROR", error);
+      console.error(
+        "ERP ENTERPRISE FORM ERROR",
+        error
+      );
     } finally {
       setSaving(false);
     }
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-8">
+    <form
+      onSubmit={handleSubmit}
+      onChange={handleFormChange}
+      className="space-y-8"
+    >
       <section className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
         <div className="bg-gradient-to-r from-slate-950 via-slate-900 to-blue-950 px-8 py-8 text-white">
           <p className="text-sm font-bold uppercase tracking-wide text-blue-200">
-            {mode === "create" ? "Création" : "Modification"}
+            {mode === "create"
+              ? "Création"
+              : "Modification"}
           </p>
+
           <h1 className="mt-3 text-4xl font-black tracking-tight">
             {module.metadata.label}
           </h1>
+
           <p className="mt-3 max-w-3xl text-base leading-7 text-slate-300">
             Formulaire métier connecté au binding runtime.
           </p>
@@ -122,15 +231,18 @@ export function ERPEnterpriseForm({
 
       <section className="grid gap-8 xl:grid-cols-[1fr_360px]">
         <div className="space-y-6">
-<div className="rounded-xl bg-yellow-50 p-4 text-sm text-slate-900">
-  layout: {module.form?.layout ?? "aucun"}
-  <br />
-  tabs: {module.form?.tabs?.length ?? 0}
-</div>
-
+          <div className="rounded-xl bg-yellow-50 p-4 text-sm text-slate-900">
+            layout: {module.form?.layout ?? "aucun"}
+            <br />
+            tabs: {module.form?.tabs?.length ?? 0}
+          </div>
 
           {module.form?.layout === "tabs" ? (
-            <ERPFormTabs module={module} initialData={initialData} />
+            <ERPFormTabs
+              module={module}
+              initialData={formValues}
+              formValues={formValues}
+            />
           ) : (
             <>
               <ERPFormSection
@@ -141,7 +253,9 @@ export function ERPEnterpriseForm({
                   <ERPFormField
                     key={field.key}
                     field={field}
-                    initialValue={initialData[field.key]}
+                    initialValue={
+                      formValues[field.key]
+                    }
                   />
                 ))}
               </ERPFormSection>
@@ -155,7 +269,9 @@ export function ERPEnterpriseForm({
                     <ERPFormField
                       key={field.key}
                       field={field}
-                      initialValue={initialData[field.key]}
+                      initialValue={
+                        formValues[field.key]
+                      }
                     />
                   ))}
                 </ERPFormSection>
@@ -164,12 +280,12 @@ export function ERPEnterpriseForm({
           )}
 
           <div className="flex flex-wrap gap-3 rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
-            {/* Affichage des erreurs de validation */}
             {errors.length > 0 && (
               <div className="w-full rounded-3xl border border-red-200 bg-red-50 p-5">
                 <h3 className="text-sm font-black text-red-700">
                   Validation métier
                 </h3>
+
                 <div className="mt-3 space-y-2">
                   {errors.map((error, index) => (
                     <div
@@ -183,19 +299,23 @@ export function ERPEnterpriseForm({
               </div>
             )}
 
-            <ERPButton type="submit" disabled={saving}>
-              {saving ? "Enregistrement..." : "Enregistrer"}
+            <ERPButton
+              type="submit"
+              disabled={saving}
+            >
+              {saving
+                ? "Enregistrement..."
+                : "Enregistrer"}
             </ERPButton>
 
-            {/*  CORRECTION : type="button" pour éviter une double soumission */}
             <ERPButton
               variant="secondary"
               type="button"
               disabled={saving}
               onClick={() => {
-                // Tu peux ajouter ici la logique "Enregistrer et continuer" plus tard
-                console.log("Enregistrer et continuer cliqué");
-                // Exemple : handleSubmit + ne pas rediriger
+                console.log(
+                  "Enregistrer et continuer cliqué"
+                );
               }}
             >
               Enregistrer et continuer
@@ -207,7 +327,8 @@ export function ERPEnterpriseForm({
               disabled={saving}
               onClick={() =>
                 router.push(
-                  module.metadata.routes?.list ?? `/${module.metadata.key}`
+                  module.metadata.routes?.list ??
+                    `/${module.metadata.key}`
                 )
               }
             >
