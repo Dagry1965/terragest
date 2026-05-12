@@ -1,4 +1,9 @@
 import type { ERPModule } from "../ERPModule";
+import {
+  createBusinessModule,
+  clientFields, commandeFields, recetteFields, depenseFields, devisFields, factureFields,
+}
+from "../factory";
 
 export const coreERPModules: ERPModule[] = [
   {
@@ -502,6 +507,399 @@ export const coreERPModules: ERPModule[] = [
         states: ["draft", "validated", "active", "archived"],
       },
     ],
-  }
+  },
+  createBusinessModule({
+    key: "clients",
+    label: "Clients",
+    description: "Gestion centralisÃ©e des clients.",
+    fields: clientFields,
+  }),
+  createBusinessModule({
+    key: "devis",
+    label: "Devis",
+    description: "Gestion des devis.",
+    fields: devisFields,
+  }),
+
+  {
+    metadata: {
+      key: "achats",
+      label: "Achats",
+      description: "Module ERP Achats.",
+      icon: "package",
+      category: "Metier",
+      enabled: true,
+
+      routes: {
+        list: "/achats",
+        create: "/achats/nouveau",
+        details: "/achats",
+        edit: "/achats",
+      },
+
+      features: {
+        dashboard: true,
+        analytics: true,
+        workflows: true,
+        audit: true,
+        realtime: true,
+        automation: true,
+        notifications: true,
+        observability: true,
+      },
+    },
+
+     schema: {
+  collection: "achats",
+      fields: [
+        {
+          key: "nom",
+          label: "Nom",
+          type: "text",
+          required: true,
+        },
+      ],
+    },
+  },
+
+  {
+    metadata: {
+      key: "livraisons",
+      label: "Livraisons",
+      description: "Module ERP Livraisons.",
+      icon: "package",
+      category: "Metier",
+      enabled: true,
+
+      routes: {
+        list: "/livraisons",
+        create: "/livraisons/nouveau",
+        details: "/livraisons",
+        edit: "/livraisons",
+      },
+
+      features: {
+        dashboard: true,
+        analytics: true,
+        workflows: true,
+        audit: true,
+        realtime: true,
+        automation: true,
+        notifications: true,
+        observability: true,
+      },
+    },
+
+     schema: {
+  collection: "livraisons",
+      fields: [
+        {
+          key: "nom",
+          label: "Nom",
+          type: "text",
+          required: true,
+        },
+      ],
+    },
+  },
+
+  {
+    metadata: {
+      key: "employes",
+      label: "Employes",
+      description: "Module ERP Employes.",
+      icon: "package",
+      category: "Metier",
+      enabled: true,
+
+      routes: {
+        list: "/employes",
+        create: "/employes/nouveau",
+        details: "/employes",
+        edit: "/employes",
+      },
+
+      features: {
+        dashboard: true,
+        analytics: true,
+        workflows: true,
+        audit: true,
+        realtime: true,
+        automation: true,
+        notifications: true,
+        observability: true,
+      },
+    },
+
+    schema: {
+  collection: "employes",
+      fields: [
+        {
+          key: "nom",
+          label: "Nom",
+          type: "text",
+          required: true,
+        },
+      ],
+    },
+  },
+
+  {
+    metadata: {
+      key: "taches",
+      label: "Taches",
+      description: "Module ERP Taches.",
+      icon: "package",
+      category: "Metier",
+      enabled: true,
+
+      routes: {
+        list: "/taches",
+        create: "/taches/nouveau",
+        details: "/taches",
+        edit: "/taches",
+      },
+
+      features: {
+        dashboard: true,
+        analytics: true,
+        workflows: true,
+        audit: true,
+        realtime: true,
+        automation: true,
+        notifications: true,
+        observability: true,
+      },
+    },
+
+    schema: {
+  collection: "taches",
+      fields: [
+        {
+          key: "nom",
+          label: "Nom",
+          type: "text",
+          required: true,
+        },
+      ],
+    },
+  },
+
+  {
+    metadata: {
+      key: "incidents",
+      label: "Incidents",
+      description: "Module ERP Incidents.",
+      icon: "package",
+      category: "Metier",
+      enabled: true,
+
+      routes: {
+        list: "/incidents",
+        create: "/incidents/nouveau",
+        details: "/incidents",
+        edit: "/incidents",
+      },
+
+      features: {
+        dashboard: true,
+        analytics: true,
+        workflows: true,
+        audit: true,
+        realtime: true,
+        automation: true,
+        notifications: true,
+        observability: true,
+      },
+    },
+
+     schema: {
+  collection: "incidents",
+      fields: [
+        {
+          key: "nom",
+          label: "Nom",
+          type: "text",
+          required: true,
+        },
+      ],
+    },
+  },
+
+  {
+    metadata: {
+      key: "vehicules",
+      label: "Vehicules",
+      description: "Module ERP Vehicules.",
+      icon: "package",
+      category: "Metier",
+      enabled: true,
+
+      routes: {
+        list: "/vehicules",
+        create: "/vehicules/nouveau",
+        details: "/vehicules",
+        edit: "/vehicules",
+      },
+
+      features: {
+        dashboard: true,
+        analytics: true,
+        workflows: true,
+        audit: true,
+        realtime: true,
+        automation: true,
+        notifications: true,
+        observability: true,
+      },
+    },
+
+     schema: {
+  collection: "vehicules",
+      fields: [
+        {
+          key: "nom",
+          label: "Nom",
+          type: "text",
+          required: true,
+        },
+      ],
+    },
+  },
+
+  {
+    metadata: {
+      key: "parcelles",
+      label: "Parcelles",
+      description: "Module ERP Parcelles.",
+      icon: "package",
+      category: "Metier",
+      enabled: true,
+
+      routes: {
+        list: "/parcelles",
+        create: "/parcelles/nouveau",
+        details: "/parcelles",
+        edit: "/parcelles",
+      },
+
+      features: {
+        dashboard: true,
+        analytics: true,
+        workflows: true,
+        audit: true,
+        realtime: true,
+        automation: true,
+        notifications: true,
+        observability: true,
+      },
+    },
+
+    schema: {
+  collection: "parcelles",
+      fields: [
+        {
+          key: "nom",
+          label: "Nom",
+          type: "text",
+          required: true,
+        },
+      ],
+    },
+  },
+
+  {
+    metadata: {
+      key: "recoltes",
+      label: "Recoltes",
+      description: "Module ERP Recoltes.",
+      icon: "package",
+      category: "Metier",
+      enabled: true,
+
+      routes: {
+        list: "/recoltes",
+        create: "/recoltes/nouveau",
+        details: "/recoltes",
+        edit: "/recoltes",
+      },
+
+      features: {
+        dashboard: true,
+        analytics: true,
+        workflows: true,
+        audit: true,
+        realtime: true,
+        automation: true,
+        notifications: true,
+        observability: true,
+      },
+    },
+
+     schema: {
+  collection: "recoltes",
+      fields: [
+        {
+          key: "nom",
+          label: "Nom",
+          type: "text",
+          required: true,
+        },
+      ],
+    },
+  },
+
+  {
+    metadata: {
+      key: "intrants",
+      label: "Intrants",
+      description: "Module ERP Intrants.",
+      icon: "package",
+      category: "Metier",
+      enabled: true,
+
+      routes: {
+        list: "/intrants",
+        create: "/intrants/nouveau",
+        details: "/intrants",
+        edit: "/intrants",
+      },
+
+      features: {
+        dashboard: true,
+        analytics: true,
+        workflows: true,
+        audit: true,
+        realtime: true,
+        automation: true,
+        notifications: true,
+        observability: true,
+      },
+    },
+
+    schema: {
+  collection: "intrants",
+      fields: [
+        {
+          key: "nom",
+          label: "Nom",
+          type: "text",
+          required: true,
+        },
+      ],
+    },
+  },
+  createBusinessModule({
+    key: "depenses",
+    label: "DÃ©penses",
+    description: "Gestion des dÃ©penses.",
+    fields: depenseFields,
+  }),
+  createBusinessModule({
+    key: "recettes",
+    label: "Recettes",
+    description: "Gestion des recettes.",
+    fields: recetteFields,
+  }),
 
 ];
