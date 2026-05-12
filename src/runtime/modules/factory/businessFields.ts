@@ -155,6 +155,7 @@ export const vehiculeFields = [
   { key: "typeVehicule", label: "Type vÃ©hicule", type: "select", options: ["Voiture", "Camion", "Tracteur", "Moto", "Autre"] },
   { key: "kilometrage", label: "KilomÃ©trage", type: "number" },
   { key: "dateMiseEnService", label: "Date mise en service", type: "date" },
+  { key: "couleur", label: "Couleur", type: "text" },
   {
     key: "statut",
     label: "Statut",

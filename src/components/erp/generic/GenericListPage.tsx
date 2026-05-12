@@ -43,11 +43,7 @@ export function GenericListPage({
             runtimeModule
           );
 
-        console.log(
-          "ERP LIST DATA",
-          runtimeModule.metadata.key,
-          records
-        );
+        
 
         setData(records);
       } catch (error) {

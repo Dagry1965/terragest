@@ -1,5 +1,7 @@
-import { ERPCommandCenter } from "@/components/erp/command-center/ERPCommandCenter";
+import { ERPTechnicalDashboard } from "@/components/erp/dashboard/technical/ERPTechnicalDashboard";
+
+export const dynamic = "force-dynamic";
 
 export default function SupervisionPage() {
-  return <ERPCommandCenter />;
+  return <ERPTechnicalDashboard />;
 }

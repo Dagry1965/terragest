@@ -12,6 +12,8 @@ import { ERPRuntimeDetails } from "./ERPRuntimeDetails";
 import { ERPRuntimeTable } from "./ERPRuntimeTable";
 
 import type { ERPModule } from "@/runtime/modules/ERPModule";
+import { ERPModuleIcon }
+from "@/components/erp/ui/ERPModuleIcon";
 
 interface ERPRuntimePageProps {
   title?: string;
@@ -49,16 +51,9 @@ export function ERPRuntimePage({
       }
     >
       <div className="space-y-6">
-
  <div className="rounded-xl bg-yellow-50 p-4 text-sm text-slate-900">
-    type: {type}
-    <br />
-    module: {module?.metadata?.key ?? "aucun"}
-    <br />
-    record id: {String(record?.id ?? "aucun")}
-    <br />
-    record keys: {record ? Object.keys(record).join(", ") : "aucun"}
   </div>
+
         {/* FORMULAIRE DE CRÉATION */}
         {type === "create" && module && (
           <ERPEnterpriseForm
