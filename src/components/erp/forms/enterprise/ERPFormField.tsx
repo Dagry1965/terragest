@@ -136,10 +136,14 @@ export function ERPFormField({
               label: "À contrôler",
               value: "a-controler",
             },
-          ]).map((option) => (
-            <option
-              key={option.value}
-              value={option.value}
+          ]).map((option, index) => (
+  <option
+    key={
+      option.value ??
+      option.label ??
+      index
+    }
+    value={option.value}
             >
               {option.label}
             </option>
