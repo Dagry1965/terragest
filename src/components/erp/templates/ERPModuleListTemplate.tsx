@@ -1,5 +1,5 @@
 import type { ERPModule } from "@/runtime/modules";
-import { ERPEnterpriseDataTable } from "@/components/erp/datatable/ERPEnterpriseDataTable";
+import { ERPRuntimeTable } from "@/components/erp/runtime/ERPRuntimeTable";
 import { ERPModuleHeader } from "./ERPModuleHeader";
 import { ERPModuleKpiGrid } from "./ERPModuleKpiGrid";
 import { ERPModuleTabs } from "./ERPModuleTabs";
@@ -22,7 +22,7 @@ export function ERPModuleListTemplate({
       <ERPModuleTabs module={module} />
 
       <section className="grid gap-8 xl:grid-cols-[1fr_360px]">
-        <ERPEnterpriseDataTable module={module} data={data} />
+        <ERPRuntimeTable module={module} data={data} />
 
         <aside className="space-y-6">
           <ERPModuleWorkflowPanel module={module} />
