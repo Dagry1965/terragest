@@ -1,89 +1,326 @@
-
 param(
-    [Parameter(Mandatory = $true)]
-    [string]$ModuleName
+  [Parameter(Mandatory = $true)]
+  [string]$Module
 )
 
-$Root = Resolve-Path "."
-$TemplateRoot = Join-Path $Root "templates\erp-module"
-$TargetRoot = Join-Path $Root "src\features\$ModuleName"
+$ErrorActionPreference = "Stop"
 
-function To-PascalCase {
-    param([string]$Value)
+$root =
+  "C:\Users\Admin\terragest"
 
-    return ($Value -split "[-_\s]" | ForEach-Object {
-        $_.Substring(0,1).ToUpper() + $_.Substring(1).ToLower()
-    }) -join ""
+$moduleLower =
+  $Module.ToLower()
+
+$modulePascal =
+  (Get-Culture).TextInfo.ToTitleCase(
+    $moduleLower
+  )
+
+function Ensure-Dir {
+  param([string]$Path)
+
+  New-Item `
+    -ItemType Directory `
+    -Force `
+    -Path $Path | Out-Null
 }
 
-$ModulePascal = To-PascalCase $ModuleName
-$ModuleEventPrefix = $ModuleName.ToUpper()
+function Write-File {
+  param(
+    [string]$Path,
+    [string]$Content
+  )
 
-if (!(Test-Path $TemplateRoot)) {
-    throw "Template folder not found: $TemplateRoot"
+  [System.IO.File]::WriteAllText(
+    $Path,
+    $Content,
+    [System.Text.UTF8Encoding]::new($false)
+  )
+
+  Write-Host "OK -> $Path"
 }
 
-if (Test-Path $TargetRoot) {
-    throw "Module already exists: $TargetRoot"
+# =====================================================
+# STRUCTURE
+# =====================================================
+
+$paths = @(
+  "src/app/(private)/$moduleLower",
+  "src/app/(private)/$moduleLower/nouveau",
+  "src/app/(private)/$moduleLower/[id]",
+  "src/app/(private)/$moduleLower/[id]/edit",
+
+  "src/features/$moduleLower",
+
+  "src/domains/$moduleLower",
+
+  "src/runtime/modules/generated/$moduleLower",
+
+  "src/runtime/workflows/generated/$moduleLower",
+
+  "src/runtime/policies/generated/$moduleLower",
+
+  "src/runtime/firestore/generated/$moduleLower",
+
+  "src/runtime/observability/generated/$moduleLower",
+
+  "src/runtime/tests/generated/$moduleLower"
+)
+
+foreach ($path in $paths) {
+  Ensure-Dir (
+    Join-Path $root $path
+  )
 }
 
-Copy-Item $TemplateRoot $TargetRoot -Recurse -Force
+# =====================================================
+# FEATURE
+# =====================================================
 
-Get-ChildItem $TargetRoot -Recurse -File | ForEach-Object {
-
-    $content = [System.IO.File]::ReadAllText($_.FullName)
-
-    $content = $content `
-        -replace "__MODULE_PASCAL__", $ModulePascal `
-        -replace "__MODULE_EVENT_PREFIX__", $ModuleEventPrefix `
-        -replace "__MODULE__", $ModuleName
-
-    [System.IO.File]::WriteAllText($_.FullName, $content)
-
-    $newName = $_.Name `
-        -replace "__MODULE_PASCAL__", $ModulePascal `
-        -replace "__MODULE_EVENT_PREFIX__", $ModuleEventPrefix `
-        -replace "__MODULE__", $ModuleName
-
-    if ($newName -ne $_.Name) {
-        Rename-Item $_.FullName $newName -Force
-    }
+$feature = @"
+import type {
+  FeatureDefinition
 }
+from "@/platform/registry/FeatureDefinition";
 
-$RegistryPath = Join-Path $Root "src\runtime\events\RuntimeEventRegistry.ts"
+export const ${modulePascal}Feature:
+  FeatureDefinition = {
 
-$CreatedEvent = "$($ModuleEventPrefix)_CREATED"
-$UpdatedEvent = "$($ModuleEventPrefix)_UPDATED"
-$DeletedEvent = "$($ModuleEventPrefix)_DELETED"
+  name:
+    "$moduleLower",
 
-$RegistryContent = [System.IO.File]::ReadAllText($RegistryPath)
+  label:
+    "$modulePascal",
 
-if ($RegistryContent -notmatch $CreatedEvent) {
+  enabled:
+    true,
 
-    $Insert = @"
+  version:
+    "1.0.0",
 
-  // ======================
-  // $ModulePascal
-  // ======================
+  route:
+    "/$moduleLower",
 
-  ${CreatedEvent}:
-    "$CreatedEvent",
+  capabilities: [
+    "crud",
+    "runtime",
+    "workflow",
+    "rules",
+    "automation",
+    "observability",
+    "realtime",
+    "analytics"
+  ],
 
-  ${UpdatedEvent}:
-    "$UpdatedEvent",
-
-  ${DeletedEvent}:
-    "$DeletedEvent",
-
+  dependencies: [],
+};
 "@
 
-    $RegistryContent =
-        $RegistryContent -replace "} as const;", "$Insert} as const;"
+Write-File `
+  (Join-Path $root "src/features/$moduleLower/$moduleLower.feature.ts") `
+  $feature
 
-    [System.IO.File]::WriteAllText($RegistryPath, $RegistryContent)
+# =====================================================
+# PAGE
+# =====================================================
+
+$page = @"
+import {
+  GenericListPage
 }
+from "@/components/erp/generic/GenericListPage";
+
+export default function ${modulePascal}Page() {
+
+  return (
+
+    <GenericListPage
+      module="$moduleLower"
+    />
+  );
+}
+"@
+
+Write-File `
+  (Join-Path $root "src/app/(private)/$moduleLower/page.tsx") `
+  $page
+
+# =====================================================
+# CREATE PAGE
+# =====================================================
+
+$createPage = @"
+import {
+  GenericCreatePage
+}
+from "@/components/erp/generic/GenericCreatePage";
+
+export default function Create${modulePascal}Page() {
+
+  return (
+
+    <GenericCreatePage
+      module="$moduleLower"
+    />
+  );
+}
+"@
+
+Write-File `
+  (Join-Path $root "src/app/(private)/$moduleLower/nouveau/page.tsx") `
+  $createPage
+
+# =====================================================
+# DETAIL PAGE
+# =====================================================
+
+$detailPage = @"
+import {
+  GenericDetailPage
+}
+from "@/components/erp/generic/GenericDetailPage";
+
+type Props = {
+  params: Promise<{
+    id: string;
+  }>;
+};
+
+export default async function ${modulePascal}DetailPage({
+  params,
+}: Props) {
+
+  const { id } =
+    await params;
+
+  return (
+
+    <GenericDetailPage
+      module="$moduleLower"
+      id={id}
+    />
+  );
+}
+"@
+
+Write-File `
+  (Join-Path $root "src/app/(private)/$moduleLower/[id]/page.tsx") `
+  $detailPage
+
+# =====================================================
+# EDIT PAGE
+# =====================================================
+
+$editPage = @"
+import {
+  GenericEditPage
+}
+from "@/components/erp/generic/GenericEditPage";
+
+type Props = {
+  params: Promise<{
+    id: string;
+  }>;
+};
+
+export default async function Edit${modulePascal}Page({
+  params,
+}: Props) {
+
+  const { id } =
+    await params;
+
+  return (
+
+    <GenericEditPage
+      module="$moduleLower"
+      id={id}
+    />
+  );
+}
+"@
+
+Write-File `
+  (Join-Path $root "src/app/(private)/$moduleLower/[id]/edit/page.tsx") `
+  $editPage
+
+# =====================================================
+# WORKFLOW
+# =====================================================
+
+$workflow = @"
+export const ${modulePascal}Workflow = {
+
+  key:
+    "${moduleLower}_workflow",
+
+  label:
+    "$modulePascal Workflow",
+
+  states: [
+    "draft",
+    "active",
+    "validated",
+    "archived"
+  ],
+};
+"@
+
+Write-File `
+  (Join-Path $root "src/runtime/workflows/generated/$moduleLower/$moduleLower.workflow.ts") `
+  $workflow
+
+# =====================================================
+# POLICY
+# =====================================================
+
+$policy = @"
+export const ${modulePascal}Policy = {
+
+  module:
+    "$moduleLower",
+
+  permissions: [
+    "create",
+    "read",
+    "update",
+    "delete",
+    "audit",
+    "workflow"
+  ],
+};
+"@
+
+Write-File `
+  (Join-Path $root "src/runtime/policies/generated/$moduleLower/$moduleLower.policy.ts") `
+  $policy
+
+# =====================================================
+# OBSERVABILITY
+# =====================================================
+
+$observability = @"
+export const ${modulePascal}Observability = {
+
+  module:
+    "$moduleLower",
+
+  metrics: true,
+
+  tracing: true,
+
+  audit: true,
+
+  monitoring: true,
+};
+"@
+
+Write-File `
+  (Join-Path $root "src/runtime/observability/generated/$moduleLower/$moduleLower.observability.ts") `
+  $observability
 
 Write-Host ""
-Write-Host "ERP module generated : $ModulePascal" -ForegroundColor Green
-Write-Host "Path : $TargetRoot" -ForegroundColor Yellow
-Write-Host ""
+Write-Host "======================================"
+Write-Host "ERP MODULE GENERATED:"
+Write-Host $modulePascal
+Write-Host "======================================"

@@ -5,7 +5,7 @@ export const coreERPModules: ERPModule[] = [
     metadata: {
       key: "utilisateurs",
       label: "Utilisateurs",
-      description: "RÃƒÂ©fÃƒÂ©rentiel des utilisateurs et propriÃƒÂ©taires.",
+      description: "RÃ©fÃ©rentiel des utilisateurs et propriÃ©taires.",
       icon: "users",
       category: "Administration",
       dashboard: false,
@@ -26,10 +26,10 @@ export const coreERPModules: ERPModule[] = [
       timestamps: true,
       softDelete: false,
       fields: [
-        { key: "prenom", label: "PrÃƒÂ©nom", type: "text", searchable: true },
+        { key: "prenom", label: "PrÃ©nom", type: "text", searchable: true },
         { key: "nom", label: "Nom", type: "text", searchable: true, sortable: true },
         { key: "email", label: "Email", type: "email", searchable: true },
-        { key: "role", label: "RÃƒÂ´le", type: "text", filterable: true },
+        { key: "role", label: "RÃ´le", type: "text", filterable: true },
         { key: "statut", label: "Statut", type: "status", filterable: true },
       ],
     },
@@ -38,7 +38,7 @@ export const coreERPModules: ERPModule[] = [
       { key: "edit", label: "Modifier", type: "secondary", event: "UTILISATEUR_UPDATED" },
     ],
     relations: [
-      { key: "terrains", label: "Terrains possÃƒÂ©dÃƒÂ©s", targetModule: "terrains", type: "one-to-many" },
+      { key: "terrains", label: "Terrains possÃ©dÃ©s", targetModule: "terrains", type: "one-to-many" },
     ],
   },
 
@@ -46,9 +46,9 @@ export const coreERPModules: ERPModule[] = [
     metadata: {
       key: "produits",
       label: "Produits",
-      description: "RÃƒÂ©fÃƒÂ©rentiel central des produits agricoles, animaux, piscicoles et immobiliers.",
+      description: "RÃ©fÃ©rentiel central des produits agricoles, animaux, piscicoles et immobiliers.",
       icon: "package",
-      category: "RÃƒÂ©fÃƒÂ©rentiel",
+      category: "RÃ©fÃ©rentiel",
       enabled: true,
       visible: true,
       order: 10,
@@ -75,10 +75,10 @@ export const coreERPModules: ERPModule[] = [
       softDelete: true,
       fields: [
         { key: "nom", label: "Produit", type: "text", required: true, searchable: true, sortable: true },
-        { key: "categorie", label: "CatÃƒÂ©gorie", type: "select", required: true, filterable: true, options: [{ label: "Agricole", value: "agricole" }, { label: "Animal", value: "animal" }, { label: "Piscicole", value: "piscicole" }, { label: "Immobilier", value: "immobilier" }] },
-        { key: "type", label: "Type", type: "select", required: true, filterable: true, options: [{ label: "Igname", value: "igname" }, { label: "Manioc", value: "manioc" }, { label: "Arachide", value: "arachide" }, { label: "MaÃƒÂ¯s", value: "mais" }, { label: "Viande", value: "viande" }, { label: "Ã…â€™ufs", value: "oeufs" }, { label: "Lait", value: "lait" }, { label: "Tilapia", value: "tilapia" }, { label: "Silure", value: "silure" }, { label: "Maison", value: "maison" }, { label: "Appartement", value: "appartement" }] },
+        { key: "categorie", label: "CatÃ©gorie", type: "select", required: true, filterable: true, options: [{ label: "Agricole", value: "agricole" }, { label: "Animal", value: "animal" }, { label: "Piscicole", value: "piscicole" }, { label: "Immobilier", value: "immobilier" }] },
+        { key: "type", label: "Type", type: "select", required: true, filterable: true, options: [{ label: "Igname", value: "igname" }, { label: "Manioc", value: "manioc" }, { label: "Arachide", value: "arachide" }, { label: "MaÃ¯s", value: "mais" }, { label: "Viande", value: "viande" }, { label: "Å’ufs", value: "oeufs" }, { label: "Lait", value: "lait" }, { label: "Tilapia", value: "tilapia" }, { label: "Silure", value: "silure" }, { label: "Maison", value: "maison" }, { label: "Appartement", value: "appartement" }] },
         { key: "modeStock", label: "Gestion de stock", type: "select", required: true, filterable: true, options: [{ label: "Stockable", value: "stockable" }, { label: "Non stockable", value: "non_stockable" }] },
-        { key: "unite", label: "UnitÃƒÂ©", type: "text" },
+        { key: "unite", label: "UnitÃ©", type: "text" },
         { key: "seuilMinimum", label: "Seuil minimum", type: "number", sortable: true },
         { key: "prixAchat", label: "Prix achat", type: "number", sortable: true },
         { key: "prixVente", label: "Prix vente", type: "number", sortable: true },
@@ -86,12 +86,12 @@ export const coreERPModules: ERPModule[] = [
       ],
     },
     actions: [
-      { key: "create", label: "CrÃƒÂ©er", type: "primary", href: "/produits/nouveau", event: "PRODUIT_CREATED" },
+      { key: "create", label: "CrÃ©er", type: "primary", href: "/produits/nouveau", event: "PRODUIT_CREATED" },
       { key: "edit", label: "Modifier", type: "secondary", event: "PRODUIT_UPDATED" },
       { key: "archive", label: "Archiver", type: "danger", event: "PRODUIT_ARCHIVED" },
     ],
     relations: [
-      { key: "stocks", label: "Stocks liÃƒÂ©s", targetModule: "stocks", type: "one-to-many" },
+      { key: "stocks", label: "Stocks liÃ©s", targetModule: "stocks", type: "one-to-many" },
       { key: "mouvements", label: "Mouvements de stock", targetModule: "mouvements", type: "one-to-many" },
       { key: "maintenance", label: "Maintenance", targetModule: "maintenance", type: "one-to-many" },
       { key: "interventions", label: "Interventions", targetModule: "interventions", type: "one-to-many" },
@@ -99,7 +99,7 @@ export const coreERPModules: ERPModule[] = [
     workflows: [
       {
         key: "create-produit",
-        label: "CrÃƒÂ©ation produit",
+        label: "CrÃ©ation produit",
         initialState: "draft",
         states: ["draft", "validated", "active", "archived"],
       },
@@ -139,8 +139,8 @@ export const coreERPModules: ERPModule[] = [
       softDelete: true,
       fields: [
         { key: "produitId", label: "Produit", type: "relation", relation: "produits", required: true, filterable: true },
-        { key: "quantite", label: "QuantitÃƒÂ©", type: "number", required: true, sortable: true },
-        { key: "unite", label: "UnitÃƒÂ©", type: "text" },
+        { key: "quantite", label: "QuantitÃ©", type: "number", required: true, sortable: true },
+        { key: "unite", label: "UnitÃ©", type: "text" },
         { key: "seuilAlerte", label: "Seuil alerte", type: "number", sortable: true },
         { key: "emplacement", label: "Emplacement", type: "text", searchable: true },
         { key: "statut", label: "Statut", type: "status", filterable: true },
@@ -152,7 +152,7 @@ export const coreERPModules: ERPModule[] = [
     metadata: {
       key: "mouvements",
       label: "Mouvements",
-      description: "EntrÃƒÂ©es, sorties, corrections et transferts de stock.",
+      description: "EntrÃ©es, sorties, corrections et transferts de stock.",
       icon: "repeat",
       category: "Logistique",
       enabled: true,
@@ -181,8 +181,8 @@ export const coreERPModules: ERPModule[] = [
       fields: [
         { key: "produitId", label: "Produit", type: "relation", relation: "produits", required: true, filterable: true },
         { key: "stockId", label: "Stock", type: "relation", relation: "stocks", required: true },
-        { key: "type", label: "Type mouvement", type: "select", required: true, filterable: true, options: [{ label: "EntrÃƒÂ©e", value: "entree" }, { label: "Sortie", value: "sortie" }, { label: "Transfert", value: "transfert" }, { label: "Correction", value: "correction" }] },
-        { key: "quantite", label: "QuantitÃƒÂ©", type: "number", required: true, sortable: true },
+        { key: "type", label: "Type mouvement", type: "select", required: true, filterable: true, options: [{ label: "EntrÃ©e", value: "entree" }, { label: "Sortie", value: "sortie" }, { label: "Transfert", value: "transfert" }, { label: "Correction", value: "correction" }] },
+        { key: "quantite", label: "QuantitÃ©", type: "number", required: true, sortable: true },
         { key: "motif", label: "Motif", type: "text", searchable: true },
         { key: "statut", label: "Statut", type: "status", filterable: true },
       ],
@@ -193,9 +193,9 @@ export const coreERPModules: ERPModule[] = [
     metadata: {
       key: "maintenance",
       label: "Maintenance",
-      description: "Maintenance prÃƒÂ©ventive, corrective et critique.",
+      description: "Maintenance prÃ©ventive, corrective et critique.",
       icon: "settings",
-      category: "OpÃƒÂ©rations",
+      category: "OpÃ©rations",
       enabled: true,
       visible: true,
       order: 40,
@@ -223,9 +223,9 @@ export const coreERPModules: ERPModule[] = [
       softDelete: true,
       fields: [
         { key: "titre", label: "Maintenance", type: "text", required: true, searchable: true, sortable: true },
-        { key: "materielId", label: "MatÃƒÂ©riel", type: "relation", relation: "materiels" },
-        { key: "produitId", label: "Produit consommÃƒÂ©", type: "relation", relation: "produits" },
-        { key: "priorite", label: "PrioritÃƒÂ©", type: "select", filterable: true, options: [{ label: "Basse", value: "basse" }, { label: "Normale", value: "normale" }, { label: "Haute", value: "haute" }, { label: "Critique", value: "critique" }] },
+        { key: "materielId", label: "MatÃ©riel", type: "relation", relation: "materiels" },
+        { key: "produitId", label: "Produit consommÃ©", type: "relation", relation: "produits" },
+        { key: "priorite", label: "PrioritÃ©", type: "select", filterable: true, options: [{ label: "Basse", value: "basse" }, { label: "Normale", value: "normale" }, { label: "Haute", value: "haute" }, { label: "Critique", value: "critique" }] },
         { key: "statut", label: "Statut", type: "status", filterable: true },
       ],
     },
@@ -235,9 +235,9 @@ export const coreERPModules: ERPModule[] = [
     metadata: {
       key: "interventions",
       label: "Interventions",
-      description: "Suivi des interventions terrain, affectations et clÃƒÂ´tures.",
+      description: "Suivi des interventions terrain, affectations et clÃ´tures.",
       icon: "wrench",
-      category: "OpÃƒÂ©rations",
+      category: "OpÃ©rations",
       enabled: true,
       visible: true,
       order: 50,
@@ -264,8 +264,8 @@ export const coreERPModules: ERPModule[] = [
       softDelete: true,
       fields: [
         { key: "titre", label: "Intervention", type: "text", required: true, searchable: true, sortable: true },
-        { key: "materielId", label: "MatÃƒÂ©riel", type: "relation", relation: "materiels" },
-        { key: "produitId", label: "Produit utilisÃƒÂ©", type: "relation", relation: "produits" },
+        { key: "materielId", label: "MatÃ©riel", type: "relation", relation: "materiels" },
+        { key: "produitId", label: "Produit utilisÃ©", type: "relation", relation: "produits" },
         { key: "responsable", label: "Responsable", type: "text", searchable: true },
         { key: "statut", label: "Statut", type: "status", filterable: true },
       ],
@@ -276,7 +276,7 @@ export const coreERPModules: ERPModule[] = [
     metadata: {
       key: "terrains",
       label: "Terrains",
-      description: "Gestion agro-fonciÃƒÂ¨re des terrains, propriÃƒÂ©taires, vocations, surfaces, contrats et exploitations liÃƒÂ©es.",
+      description: "Gestion agro-fonciÃ¨re des terrains, propriÃ©taires, vocations, surfaces, contrats et exploitations liÃ©es.",
       icon: "map",
       category: "Foncier",
       enabled: true,
@@ -306,20 +306,20 @@ export const coreERPModules: ERPModule[] = [
       fields: [
         { key: "nom", label: "Terrain", type: "text", required: true, searchable: true, sortable: true },
 
-        { key: "proprietaireId", label: "PropriÃƒÂ©taire", type: "relation", relation: "utilisateurs", required: true, filterable: true },
+        { key: "proprietaireId", label: "PropriÃ©taire", type: "relation", relation: "utilisateurs", required: true, filterable: true },
 
-        { key: "vocationTerrain", label: "Terrain ÃƒÂ  vocation", type: "select", required: true, filterable: true, options: [
+        { key: "vocationTerrain", label: "Terrain Ã  vocation", type: "select", required: true, filterable: true, options: [
           { label: "Agricole", value: "agricole" },
           { label: "Habitation", value: "habitation" },
           { label: "Piscicole", value: "piscicole" },
-          { label: "Ãƒâ€°levage", value: "elevage" },
+          { label: "Ã‰levage", value: "elevage" },
           { label: "Mixte", value: "mixte" },
-          { label: "RÃƒÂ©serve fonciÃƒÂ¨re", value: "reserve_fonciere" },
+          { label: "RÃ©serve fonciÃ¨re", value: "reserve_fonciere" },
         ] },
 
         { key: "surfaceTotale", label: "Surface totale", type: "number", required: true, sortable: true },
 
-        //  VisibilitÃƒÂ© conditionnelle ajoutÃƒÂ©e sur les champs demandÃƒÂ©s
+        //  VisibilitÃ© conditionnelle ajoutÃ©e sur les champs demandÃ©s
         { 
           key: "surfaceAgricole", 
           label: "Surface agricole", 
@@ -341,7 +341,7 @@ export const coreERPModules: ERPModule[] = [
           },
         },
 
-	  //  Champ computed ajoutÃƒÂ©
+	  //  Champ computed ajoutÃ©
   {
     key: "surfaceDisponible",
     label: "Surface disponible",
@@ -364,10 +364,10 @@ export const coreERPModules: ERPModule[] = [
           { label: "Bail rural", value: "bail_rural" },
           { label: "Concession", value: "concession" },
           { label: "Donation", value: "donation" },
-          { label: "HÃƒÂ©ritage", value: "heritage" },
+          { label: "HÃ©ritage", value: "heritage" },
         ] },
 
-        { key: "referenceContrat", label: "RÃƒÂ©fÃƒÂ©rence contrat", type: "text", searchable: true },
+        { key: "referenceContrat", label: "RÃ©fÃ©rence contrat", type: "text", searchable: true },
 
         { key: "statut", label: "Statut", type: "status", required: true, filterable: true },
       ],
@@ -412,96 +412,29 @@ export const coreERPModules: ERPModule[] = [
       ],
     },
 
-    // VisibilitÃƒÂ© au niveau du module (conservÃƒÂ©e de la demande prÃƒÂ©cÃƒÂ©dente)
+    // VisibilitÃ© au niveau du module (conservÃ©e de la demande prÃ©cÃ©dente)
     visibility: {
       field: "vocationTerrain",
       equals: "agricole",
     },
 
     actions: [
-      { key: "create", label: "CrÃƒÂ©er", type: "primary", href: "/terrains/nouveau", event: "TERRAIN_CREATED" },
+      { key: "create", label: "CrÃ©er", type: "primary", href: "/terrains/nouveau", event: "TERRAIN_CREATED" },
       { key: "edit", label: "Modifier", type: "secondary", event: "TERRAIN_UPDATED" },
       { key: "archive", label: "Archiver", type: "danger", event: "TERRAIN_ARCHIVED" },
     ],
     relations: [
-      { key: "proprietaire", label: "PropriÃƒÂ©taire", targetModule: "utilisateurs", type: "many-to-one" },
-      { key: "exploitations", label: "Exploitations liÃƒÂ©es", targetModule: "exploitations", type: "one-to-many" },
+      { key: "proprietaire", label: "PropriÃ©taire", targetModule: "utilisateurs", type: "many-to-one" },
+      { key: "exploitations", label: "Exploitations liÃ©es", targetModule: "exploitations", type: "one-to-many" },
       { key: "contrats", label: "Contrats fonciers", targetModule: "contrats", type: "one-to-many" },
     ],
     workflows: [
       {
         key: "create-terrain",
-        label: "CrÃƒÂ©ation terrain",
+        label: "CrÃ©ation terrain",
         initialState: "draft",
         states: ["draft", "validated", "active", "archived"],
       },
     ],
   }
-  ,
-
-  {
-    metadata: {
-      key: "fournisseurs",
-      label: "Fournisseurs",
-      description: "Gestion des fournisseurs, partenaires et prestataires.",
-      icon: "building",
-      category: "RÃ©fÃ©rentiel",
-      enabled: true,
-      visible: true,
-      order: 90,
-      routes: {
-        list: "/fournisseurs",
-        create: "/fournisseurs/nouveau",
-        details: "/fournisseurs",
-        edit: "/fournisseurs",
-      },
-      features: {
-        dashboard: true,
-        analytics: true,
-        workflows: true,
-        automation: true,
-        notifications: true,
-        audit: true,
-        realtime: true,
-      },
-    },
-    schema: {
-      module: "fournisseurs",
-      collection: "fournisseurs",
-      timestamps: true,
-      softDelete: true,
-      fields: [
-        { key: "nom", label: "Nom", type: "text", required: true, searchable: true, sortable: true },
-        { key: "email", label: "Email", type: "email", searchable: true },
-        { key: "telephone", label: "TÃ©lÃ©phone", type: "text", searchable: true },
-        {
-          key: "categorie",
-          label: "CatÃ©gorie",
-          type: "select",
-          options: [
-            { label: "Agricole", value: "agricole" },
-            { label: "MatÃ©riel", value: "materiel" },
-            { label: "Service", value: "service" },
-            { label: "Transport", value: "transport" },
-            { label: "Autre", value: "autre" },
-          ],
-        },
-        { key: "statut", label: "Statut", type: "status", required: true, filterable: true },
-      ],
-    },
-    actions: [
-      { key: "create", label: "CrÃ©er", type: "primary", href: "/fournisseurs/nouveau", event: "FOURNISSEUR_CREATED" },
-      { key: "edit", label: "Modifier", type: "secondary", event: "FOURNISSEUR_UPDATED" },
-      { key: "archive", label: "Archiver", type: "danger", event: "FOURNISSEUR_ARCHIVED" },
-    ],
-    workflows: [
-      {
-        key: "create-fournisseur",
-        label: "CrÃ©ation fournisseur",
-        initialState: "draft",
-        states: ["draft", "validated", "active", "archived"],
-      },
-    ],
-  }
-
 ];

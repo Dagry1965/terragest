@@ -1,0 +1,14 @@
+import {
+  GenericCreatePage
+}
+from "@/components/erp/generic/GenericCreatePage";
+
+export default function CreateFournisseursPage() {
+
+  return (
+
+    <GenericCreatePage
+      module="fournisseurs"
+    />
+  );
+}

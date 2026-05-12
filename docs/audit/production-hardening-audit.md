@@ -1,0 +1,7057 @@
+# Terragest_V2 - Production Hardening Audit
+
+Generated: 2026-05-12 07:09:25
+
+## Summary
+
+- Files scanned: 2110
+- Patterns scanned: 25
+
+## Pattern: retry
+
+Matches: 86
+
+- $relative:15 title="Queue, Retry & DLQ Runtime"
+- $relative:17 ERPRuntimeRetryPanel,
+- $relative:109 <ERPRuntimeRetryPanel
+- $relative:114 status: "retrying",
+- $relative:9 interface ERPRuntimeRetry {
+- $relative:16 | "retrying"
+- $relative:21 interface ERPRuntimeRetryPanelProps {
+- $relative:24 ERPRuntimeRetry[];
+- $relative:27 export function ERPRuntimeRetryPanel({
+- $relative:29 }: ERPRuntimeRetryPanelProps) {
+- $relative:62 : status === "retrying"
+- $relative:75 retry => ({
+- $relative:76 jobId: retry.jobId,
+- $relative:77 retries: retry.retries,
+- $relative:78 status: retry.status,
+- $relative:8 export * from "./ERPRuntimeRetryPanel";
+- $relative:15 export async function retryJob(
+- $relative:33 action: "retry",
+- $relative:60 action: "retry",
+- $relative:66 `Retry job ${job.name} (${job.retries})`,
+- $relative:70 "ERP JOB RETRY",
+- $relative:19 retryJob,
+- $relative:20 } from "@/core/retry/retry-engine";
+- $relative:61 const retry =
+- $relative:62 await retryJob(job);
+- $relative:64 if (!retry) {
+- $relative:10 import RetryMonitor
+- $relative:11 from "../widgets/RetryMonitor";
+- $relative:31 <RetryMonitor />
+- $relative:2 RetryActivityPanel() {
+- $relative:21 Retry Activity
+- $relative:25 Retry activity
+- $relative:1 export default function RetryMonitor() {
+- $relative:15 Retry Monitor
+- $relative:19 Retry activity will appear here.
+- $relative:9 import { RetryPolicy }
+- $relative:10 from "@/platform/resilience/RetryPolicy";
+- $relative:90 await RetryPolicy.execute(
+- $relative:1 // src/platform/resilience/RetryPolicy.ts
+- $relative:3 export class RetryPolicy {
+- $relative:27 `[RETRY]
+- $relative:33 runtimeRetryRegistry,
+- $relative:34 } from "./RuntimeRetryRegistry";
+- $relative:122 return runtimeRetryRegistry.getRetries();
+- $relative:14 runtimeRetryRegistry,
+- $relative:15 } from "./RuntimeRetryRegistry";
+- $relative:71 retryJob(
+- $relative:75 runtimeRetryRegistry.registerRetry({
+- $relative:78 status: "retrying",
+- $relative:79 lastRetryAt:
+- $relative:1 export interface RuntimeRetryJob {
+- $relative:7 lastRetryAt?: string;
+- $relative:11 | "retrying"
+- $relative:16 export class RuntimeRetryRegistry {
+- $relative:19 RuntimeRetryJob[] = [];
+- $relative:21 registerRetry(
+- $relative:22 job: RuntimeRetryJob
+- $relative:41 getRetryingJobs() {
+- $relative:45 job.status === "retrying"
+- $relative:50 export const runtimeRetryRegistry =
+- $relative:51 new RuntimeRetryRegistry();
+- $relative:65 RETRY_TRIGGERED:
+- $relative:66 "RETRY_TRIGGERED",
+- $relative:38 type: "PAYMENT_RETRY",
+- $relative:74 description: "Retry paiement execute.",
+- $relative:1 export type ERPRetryPolicy = {
+- $relative:7 export const DefaultERPRetryPolicy: ERPRetryPolicy = {
+- $relative:13 export function computeRetryDelay(
+- $relative:15 policy: ERPRetryPolicy = DefaultERPRetryPolicy
+- $relative:1 export type RetryOptions = {
+- $relative:6 export class RetryEngine {
+- $relative:10 options: RetryOptions = {}
+- $relative:154 traceId: createId("trace_retry"),
+- $relative:156 action: `QUEUE_RETRY:${job.type}`,
+- $relative:22 type: "PAYMENT_RETRY",
+- $relative:3 export * from "./retry/ERPRetryPolicy";
+- $relative:1 export class RetryPolicy {
+- $relative:23 "[RetryPolicy]",
+- $relative:16 id: "task_payment_retry",
+- $relative:17 label: "Retry paiements",
+- $relative:30 "PAYMENT_RETRY",
+- $relative:22 RetryEngine
+- $relative:24 from "@/runtime/resilience/retry/RetryEngine";
+- $relative:39 private retryEngine =
+- $relative:40 new RetryEngine();
+- $relative:101 await this.retryEngine.execute(
+
+## Pattern: queue
+
+Matches: 369
+
+- $relative:8 AutomationRuntimeQueue,
+- $relative:23 useState<AutomationRuntimeJob[]>(AutomationRuntimeQueue.all());
+- $relative:32 setJobs([...AutomationRuntimeQueue.all()]);
+- $relative:37 setJobs([...AutomationRuntimeQueue.all()]);
+- $relative:91 Executer queue
+- $relative:20 <ERPStatCard label="Queues" value="Stable" />
+- $relative:11 } from "@/core/dead-letter/dead-letter-queue";
+- $relative:21 getJobQueue,
+- $relative:22 } from "@/core/jobs/job-queue";
+- $relative:29 getJobQueue();
+- $relative:434 Job Queue
+- $relative:21 <ERPStatCard label="Queue" value={metrics.queueJobs} helper="Jobs" />
+- $relative:25 label: "Dead Letter Queue",
+- $relative:23 ["Queue Jobs", snapshot.queueJobs.length],
+- $relative:34 description="Repository runtime tenant-aware pour events, traces, alerts, workflows, queue jobs et audit."
+- $relative:20 <ERPStatCard label="Queue" value={snapshot.queue} helper="Jobs live" />
+- $relative:11 Dead Letter Queue
+- $relative:2 import { ERPQueueStore } from "@/runtime/resilience";
+- $relative:4 export function ERPQueuePanel() {
+- $relative:5 const jobs = ERPQueueStore.all();
+- $relative:11 Queue runtime
+- $relative:3 ERPQueueStore,
+- $relative:9 const jobs = ERPQueueStore.all();
+- $relative:10 const completed = ERPQueueStore.byStatus("completed");
+- $relative:11 const pending = ERPQueueStore.byStatus("pending");
+- $relative:12 const running = ERPQueueStore.byStatus("running");
+- $relative:17 <ERPStatCard label="Jobs" value={jobs.length} helper="Total queue" />
+- $relative:5 import { ERPQueuePanel } from "./ERPQueuePanel";
+- $relative:15 title="Queue, Retry & DLQ Runtime"
+- $relative:22 <ERPQueuePanel />
+- $relative:2 export * from "./ERPQueuePanel";
+- $relative:31 title="Dead Letter Queue"
+- $relative:15 ERPRuntimeQueuesPanel,
+- $relative:38 queues: 5,
+- $relative:51 title: "Queues",
+- $relative:53 helper: "Queues actives",
+- $relative:73 "Queue latency detected",
+- $relative:79 <ERPRuntimeQueuesPanel
+- $relative:80 queues={[
+- $relative:83 queue: "erp-events",
+- $relative:88 queue: "erp-mails",
+- $relative:9 interface ERPRuntimeQueuesPanelProps {
+- $relative:10 queues: {
+- $relative:12 queue: string;
+- $relative:17 export function ERPRuntimeQueuesPanel({
+- $relative:18 queues,
+- $relative:19 }: ERPRuntimeQueuesPanelProps) {
+- $relative:22 title="Runtime Queues"
+- $relative:27 { key: "queue", label: "Queue" },
+- $relative:52 rows={queues.map(queue => ({
+- $relative:53 id: queue.id,
+- $relative:54 queue: queue.queue,
+- $relative:55 status: queue.status,
+- $relative:19 queues: number;
+- $relative:59 label: "Queues",
+- $relative:60 value: runtime.queues,
+- $relative:6 export * from "./ERPRuntimeQueuesPanel";
+- $relative:6 export function ERPWorkerQueue() {
+- $relative:55 Queue: {worker.queue}
+- $relative:3 } from "@/core/jobs/job-queue";
+- $relative:9 const deadLetterQueue:
+- $relative:15 deadLetterQueue.unshift(job);
+- $relative:37 return deadLetterQueue;
+- $relative:44 deadLetterQueue.find(
+- $relative:2 enqueueJob,
+- $relative:3 } from "@/core/jobs/job-queue";
+- $relative:24 enqueueJob({
+- $relative:37 enqueueJob({
+- $relative:50 enqueueJob({
+- $relative:89 enqueueJob({
+- $relative:126 enqueueJob({
+- $relative:28 const jobQueue:
+- $relative:31 export function enqueueJob(
+- $relative:55 jobQueue.push(runtimeJob);
+- $relative:58 "ERP JOB ENQUEUED",
+- $relative:65 export function getJobQueue() {
+- $relative:66 return jobQueue;
+- $relative:70 return jobQueue.filter(
+- $relative:3 } from "@/core/jobs/job-queue";
+- $relative:3 } from "@/core/jobs/job-queue";
+- $relative:3 } from "@/core/jobs/job-queue";
+- $relative:3 } from "@/core/jobs/job-queue";
+- $relative:7 } from "@/core/jobs/job-queue";
+- $relative:3 } from "@/core/jobs/job-queue";
+- $relative:8 } from "@/core/jobs/job-queue";
+- $relative:24 } from "@/core/dead-letter/dead-letter-queue";
+- $relative:3 } from "@/core/jobs/job-queue";
+- $relative:3 } from "@/core/jobs/job-queue";
+- $relative:3 } from "@/core/jobs/job-queue";
+- $relative:3 } from "@/core/jobs/job-queue";
+- $relative:3 } from "@/core/jobs/job-queue";
+- $relative:7 } from "@/core/jobs/job-queue";
+- $relative:5 "offline-queue";
+- $relative:16 export const OfflineQueue = {
+- $relative:18 getQueue():
+- $relative:29 enqueue(
+- $relative:33 const queue =
+- $relative:34 this.getQueue();
+- $relative:36 queue.push(action);
+- $relative:40 queue
+- $relative:2 OfflineQueue,
+- $relative:3 } from "@/features/offline/queue/OfflineQueue";
+- $relative:9 const queue =
+- $relative:10 OfflineQueue.getQueue();
+- $relative:12 if (!queue.length) {
+- $relative:21 of queue
+- $relative:30 OfflineQueue.clear();
+- $relative:34 queue.length,
+- $relative:3 import { WorkflowQueue }
+- $relative:4 from "@/platform/execution/queue/WorkflowQueue";
+- $relative:12 import { DeadLetterQueue }
+- $relative:13 from "@/platform/resilience/DeadLetterQueue";
+- $relative:43 WorkflowQueue.dequeue();
+- $relative:101 DeadLetterQueue.add({
+- $relative:1 // src/platform/execution/queue/WorkflowQueue.ts
+- $relative:14 class WorkflowQueueManager {
+- $relative:19 enqueue(
+- $relative:24 "[QUEUE] enqueue",
+- $relative:37 dequeue() {
+- $relative:48 export const WorkflowQueue =
+- $relative:49 new WorkflowQueueManager();
+- $relative:3 import { DeadLetterQueue }
+- $relative:4 from "@/platform/resilience/DeadLetterQueue";
+- $relative:11 DeadLetterQueue
+- $relative:3 import { WorkflowQueue }
+- $relative:4 from "@/platform/execution/queue/WorkflowQueue";
+- $relative:18 WorkflowQueue.getJobs()
+- $relative:6 from "@/platform/execution/queue/WorkflowQueue";
+- $relative:1 // src/platform/resilience/DeadLetterQueue.ts
+- $relative:12 class DeadLetterQueueManager {
+- $relative:40 export const DeadLetterQueue =
+- $relative:41 new DeadLetterQueueManager();
+- $relative:1 // src/platform/scheduling/DomainQueues.ts
+- $relative:6 from "@/platform/execution/queue/WorkflowQueue";
+- $relative:8 class DomainQueuesManager {
+- $relative:10 private queues:
+- $relative:14 enqueue(
+- $relative:19 if (!this.queues[domain]) {
+- $relative:21 this.queues[domain] = [];
+- $relative:24 this.queues[domain]
+- $relative:27 this.queues[domain]
+- $relative:35 `[DOMAIN QUEUE]
+- $relative:37 enqueue`
+- $relative:41 dequeue(
+- $relative:45 return this.queues[domain]
+- $relative:49 getQueues() {
+- $relative:51 return this.queues;
+- $relative:55 export const DomainQueues =
+- $relative:56 new DomainQueuesManager();
+- $relative:3 import { AutomationRuntimeQueue } from "./AutomationRuntimeQueue";
+- $relative:17 .map((rule) => AutomationRuntimeQueue.enqueue(rule));
+- $relative:23 const jobs = AutomationRuntimeQueue.pending();
+- $relative:29 return AutomationRuntimeQueue.all();
+- $relative:39 const job = AutomationRuntimeQueue.enqueue(rule);
+- $relative:5 import { AutomationRuntimeQueue } from "./AutomationRuntimeQueue";
+- $relative:24 AutomationRuntimeQueue.update(job);
+- $relative:34 return AutomationRuntimeQueue.update(job);
+- $relative:40 return AutomationRuntimeQueue.moveToDeadLetter(job);
+- $relative:45 return AutomationRuntimeQueue.update(job);
+- $relative:6 const queue: AutomationRuntimeJob[] = [];
+- $relative:9 export class AutomationRuntimeQueue {
+- $relative:10 static enqueue(rule: AutomationRuntimeRule): AutomationRuntimeJob {
+- $relative:25 queue.unshift(job);
+- $relative:31 return queue;
+- $relative:35 return queue.filter((job) => job.status === "pending");
+- $relative:41 const index = queue.findIndex((item) => item.id === job.id);
+- $relative:44 queue[index] = job;
+- $relative:56 AutomationRuntimeQueue.update(job);
+- $relative:13 export { AutomationRuntimeQueue } from "./AutomationRuntimeQueue";
+- $relative:29 runtimeQueueRegistry,
+- $relative:30 } from "./RuntimeQueueRegistry";
+- $relative:37 runtimeDeadLetterQueue,
+- $relative:38 } from "./RuntimeDeadLetterQueue";
+- $relative:117 getRuntimeQueues() {
+- $relative:118 return runtimeQueueRegistry.getJobs();
+- $relative:126 return runtimeDeadLetterQueue.getEvents();
+- $relative:14 export class RuntimeDeadLetterQueue {
+- $relative:47 export const runtimeDeadLetterQueue =
+- $relative:48 new RuntimeDeadLetterQueue();
+- $relative:10 runtimeQueueRegistry,
+- $relative:11 } from "./RuntimeQueueRegistry";
+- $relative:18 runtimeDeadLetterQueue,
+- $relative:19 } from "./RuntimeDeadLetterQueue";
+- $relative:56 enqueueJob(
+- $relative:57 queue: string,
+- $relative:61 runtimeQueueRegistry.enqueue({
+- $relative:63 queue,
+- $relative:90 runtimeDeadLetterQueue.push({
+- $relative:1 export interface RuntimeQueueJob {
+- $relative:5 queue: string;
+- $relative:18 export class RuntimeQueueRegistry {
+- $relative:21 RuntimeQueueJob[] = [];
+- $relative:23 enqueue(
+- $relative:24 job: RuntimeQueueJob
+- $relative:35 getQueueJobs(
+- $relative:36 queue: string
+- $relative:41 job.queue === queue
+- $relative:62 export const runtimeQueueRegistry =
+- $relative:63 new RuntimeQueueRegistry();
+- $relative:48 queues:
+- $relative:50 .getRuntimeQueues(),
+- $relative:1 export class DeadLetterQueue {
+- $relative:3 private queue: unknown[] = [];
+- $relative:7 this.queue.push(payload);
+- $relative:10 "[DeadLetterQueue]",
+- $relative:17 return this.queue;
+- $relative:33 description: "Queue et jobs actifs, workers reels a industrialiser.",
+- $relative:6 queueJobs: number;
+- $relative:27 { id: "queue", label: "Queue / DLQ", group: "runtime" },
+- $relative:40 { from: "workflows", to: "queue", label: "async jobs" },
+- $relative:41 { from: "queue", to: "workers", label: "execution" },
+- $relative:5 import { ERPQueueStore } from "@/runtime/resilience";
+- $relative:23 queueJobs: ERPQueueStore.all().length,
+- $relative:11 queueJobs,
+- $relative:19 ERPRuntimePersistenceService.queueJobs.list(),
+- $relative:29 queueJobs,
+- $relative:37 queueJobs.length +
+- $relative:6 queueJobs: "runtime_queue_jobs",
+- $relative:30 queueJobs:
+- $relative:32 ERPPersistenceCollections.queueJobs
+- $relative:37 await ERPRuntimePersistenceService.queueJobs.save({
+- $relative:7 maxQueueJobsPerHour: number;
+- $relative:10 maxQueueJobsPerHour: 2000,
+- $relative:18 maxQueueJobsPerHour: 400,
+- $relative:26 maxQueueJobsPerHour: 100,
+- $relative:5 | "queue"
+- $relative:21 queue: ERPRealtimeBus.byChannel("queue").length,
+- $relative:71 channel: "queue",
+- $relative:73 title: "Job queue traite",
+- $relative:18 export class DeadLetterQueue {
+- $relative:1 import type { ERPQueueJob } from "../queue/ERPQueueJob";
+- $relative:4 private jobs: ERPQueueJob[] = [];
+- $relative:6 add(job: ERPQueueJob) {
+- $relative:1 export type ERPQueueJobStatus =
+- $relative:8 export type ERPQueueJob = {
+- $relative:15 status: ERPQueueJobStatus;
+- $relative:1 import type { ERPQueueJob } from "./ERPQueueJob";
+- $relative:3 class ERPQueueStoreClass {
+- $relative:4 private jobs: ERPQueueJob[] = [];
+- $relative:6 add(job: ERPQueueJob) {
+- $relative:11 update(id: string, patch: Partial<ERPQueueJob>) {
+- $relative:31 byStatus(status: ERPQueueJob["status"]) {
+- $relative:36 export const ERPQueueStore = new ERPQueueStoreClass();
+- $relative:11 ERPQueueStore,
+- $relative:12 } from "../queue/ERPQueueStore";
+- $relative:23 ERPQueueJob,
+- $relative:24 } from "../queue/ERPQueueJob";
+- $relative:30 function shouldFail(job: ERPQueueJob) {
+- $relative:34 export const ERPQueueWorker = {
+- $relative:35 enqueue(
+- $relative:37 ERPQueueJob,
+- $relative:43 const job: ERPQueueJob = {
+- $relative:45 id: createId("queue_job"),
+- $relative:52 ERPQueueStore.add(job);
+- $relative:55 id: createId("evt_queue"),
+- $relative:59 actor: "queue-runtime",
+- $relative:83 const job = ERPQueueStore.pending()[0];
+- $relative:91 ERPQueueStore.update(job.id, {
+- $relative:103 ERPQueueStore.update(job.id, {
+- $relative:110 traceId: createId("trace_queue"),
+- $relative:112 action: `QUEUE_COMPLETED:${job.type}`,
+- $relative:121 : "Unknown queue error";
+- $relative:124 const failedJob: ERPQueueJob = {
+- $relative:132 ERPQueueStore.update(job.id, failedJob);
+- $relative:145 ERPQueueStore.update(job.id, {
+- $relative:156 action: `QUEUE_RETRY:${job.type}`,
+- $relative:1 import { ERPQueueWorker } from "./worker/ERPQueueWorker";
+- $relative:12 ERPQueueWorker.enqueue({
+- $relative:21 ERPQueueWorker.enqueue({
+- $relative:31 ERPQueueWorker.enqueue({
+- $relative:40 ERPQueueWorker.processAll(10);
+- $relative:1 export * from "./queue/ERPQueueJob";
+- $relative:2 export * from "./queue/ERPQueueStore";
+- $relative:6 export * from "./worker/ERPQueueWorker";
+- $relative:10 queueJobs: number;
+- $relative:20 queueJobs: 5,
+- $relative:30 queueJobs: 2,
+- $relative:40 queueJobs: 0,
+- $relative:12 | "queue"
+- $relative:16 queue: string;
+- $relative:9 queue: "runtime",
+- $relative:18 queue: "automation",
+- $relative:27 queue: "reporting",
+- $relative:27 DeadLetterQueue
+- $relative:29 from "@/runtime/resilience/dlq/DeadLetterQueue";
+- $relative:42 private deadLetterQueue =
+- $relative:43 new DeadLetterQueue();
+- $relative:171 await this.deadLetterQueue.store({
+- $relative:118 maxQueueJobsPerHour: 2000,
+- $relative:7 const queue: OfflineAction[] = [];
+- $relative:9 export function enqueueOfflineAction(
+- $relative:12 queue.push(action);
+- $relative:15 export function getOfflineQueue() {
+- $relative:16 return queue;
+- $relative:19 export async function processOfflineQueue(
+- $relative:24 while (queue.length > 0) {
+- $relative:25 const action = queue.shift();
+- $relative:7 const queue: OfflineAction[] = [];
+- $relative:9 export function enqueueOfflineAction(
+- $relative:12 queue.push(action);
+- $relative:15 export function getOfflineQueue() {
+- $relative:16 return queue;
+- $relative:19 export async function processOfflineQueue(
+- $relative:24 while (queue.length > 0) {
+- $relative:25 const action = queue.shift();
+- $relative:7 const queue: OfflineAction[] = [];
+- $relative:9 export function enqueueOfflineAction(
+- $relative:12 queue.push(action);
+- $relative:15 export function getOfflineQueue() {
+- $relative:16 return queue;
+- $relative:19 export async function processOfflineQueue(
+- $relative:24 while (queue.length > 0) {
+- $relative:25 const action = queue.shift();
+- $relative:7 const queue: OfflineAction[] = [];
+- $relative:9 export function enqueueOfflineAction(
+- $relative:12 queue.push(action);
+- $relative:15 export function getOfflineQueue() {
+- $relative:16 return queue;
+- $relative:19 export async function processOfflineQueue(
+- $relative:24 while (queue.length > 0) {
+- $relative:25 const action = queue.shift();
+- $relative:7 const queue: OfflineAction[] = [];
+- $relative:9 export function enqueueOfflineAction(
+- $relative:12 queue.push(action);
+- $relative:15 export function getOfflineQueue() {
+- $relative:16 return queue;
+- $relative:19 export async function processOfflineQueue(
+- $relative:24 while (queue.length > 0) {
+- $relative:25 const action = queue.shift();
+- $relative:7 const queue: OfflineAction[] = [];
+- $relative:9 export function enqueueOfflineAction(
+- $relative:12 queue.push(action);
+- $relative:15 export function getOfflineQueue() {
+- $relative:16 return queue;
+- $relative:19 export async function processOfflineQueue(
+- $relative:24 while (queue.length > 0) {
+- $relative:25 const action = queue.shift();
+- $relative:7 const queue: OfflineAction[] = [];
+- $relative:9 export function enqueueOfflineAction(
+- $relative:12 queue.push(action);
+- $relative:15 export function getOfflineQueue() {
+- $relative:16 return queue;
+- $relative:19 export async function processOfflineQueue(
+- $relative:24 while (queue.length > 0) {
+- $relative:25 const action = queue.shift();
+- $relative:7 const queue: OfflineAction[] = [];
+- $relative:9 export function enqueueOfflineAction(
+- $relative:12 queue.push(action);
+- $relative:15 export function getOfflineQueue() {
+- $relative:16 return queue;
+- $relative:19 export async function processOfflineQueue(
+- $relative:24 while (queue.length > 0) {
+- $relative:25 const action = queue.shift();
+- $relative:7 const queue: OfflineAction[] = [];
+- $relative:9 export function enqueueOfflineAction(
+- $relative:12 queue.push(action);
+- $relative:15 export function getOfflineQueue() {
+- $relative:16 return queue;
+- $relative:19 export async function processOfflineQueue(
+- $relative:24 while (queue.length > 0) {
+- $relative:25 const action = queue.shift();
+- $relative:7 const queue: OfflineAction[] = [];
+- $relative:9 export function enqueueOfflineAction(
+- $relative:12 queue.push(action);
+- $relative:15 export function getOfflineQueue() {
+- $relative:16 return queue;
+- $relative:19 export async function processOfflineQueue(
+- $relative:24 while (queue.length > 0) {
+- $relative:25 const action = queue.shift();
+
+## Pattern: dead
+
+Matches: 112
+
+- $relative:10 getDeadJobs,
+- $relative:11 } from "@/core/dead-letter/dead-letter-queue";
+- $relative:34 const deadJobs =
+- $relative:35 getDeadJobs();
+- $relative:209 Dead Jobs
+- $relative:213 {deadJobs.length}
+- $relative:517 Dead Jobs
+- $relative:521 {deadJobs.length}
+- $relative:25 label: "Dead Letter Queue",
+- $relative:2 import { ERPDeadLetterStore } from "@/runtime/resilience";
+- $relative:5 const jobs = ERPDeadLetterStore.all();
+- $relative:11 Dead Letter Queue
+- $relative:4 ERPDeadLetterStore,
+- $relative:13 const dlq = ERPDeadLetterStore.all();
+- $relative:9 interface ERPRuntimeDeadLetter {
+- $relative:18 interface ERPRuntimeDeadLetterPanelProps {
+- $relative:20 deadLetters:
+- $relative:21 ERPRuntimeDeadLetter[];
+- $relative:24 export function ERPRuntimeDeadLetterPanel({
+- $relative:25 deadLetters,
+- $relative:26 }: ERPRuntimeDeadLetterPanelProps) {
+- $relative:31 title="Dead Letter Queue"
+- $relative:59 deadLetters.map(
+- $relative:18 ERPRuntimeDeadLetterPanel,
+- $relative:119 <ERPRuntimeDeadLetterPanel
+- $relative:120 deadLetters={[
+- $relative:9 export * from "./ERPRuntimeDeadLetterPanel";
+- $relative:9 const deadLetterQueue:
+- $relative:12 export function pushDeadJob(
+- $relative:15 deadLetterQueue.unshift(job);
+- $relative:19 action: "dead-letter",
+- $relative:25 `Dead job : ${job.name}`,
+- $relative:29 "ERP DEAD JOB",
+- $relative:36 export function getDeadJobs() {
+- $relative:37 return deadLetterQueue;
+- $relative:40 export async function replayDeadJob(
+- $relative:44 deadLetterQueue.find(
+- $relative:59 action: "dead-letter-replay",
+- $relative:65 `Replay dead job ${job.name}`,
+- $relative:69 "ERP DEAD JOB REPLAY",
+- $relative:8 deadJobs: number;
+- $relative:23 deadJobs: 0,
+- $relative:28 "deadJobs"
+- $relative:43 "ERP JOB DEAD",
+- $relative:23 pushDeadJob,
+- $relative:24 } from "@/core/dead-letter/dead-letter-queue";
+- $relative:65 pushDeadJob(job);
+- $relative:7 import DeadLetterPanel
+- $relative:8 from "../widgets/DeadLetterPanel";
+- $relative:29 <DeadLetterPanel />
+- $relative:14 deadLetters: 0,
+- $relative:11 deadLetters: number;
+- $relative:2 DeadLetterFeed() {
+- $relative:21 Dead Letters
+- $relative:2 DeadLetterPanel() {
+- $relative:16 Dead Letters
+- $relative:12 import { DeadLetterQueue }
+- $relative:13 from "@/platform/resilience/DeadLetterQueue";
+- $relative:101 DeadLetterQueue.add({
+- $relative:3 import { DeadLetterQueue }
+- $relative:4 from "@/platform/resilience/DeadLetterQueue";
+- $relative:11 DeadLetterQueue
+- $relative:1 // src/platform/resilience/DeadLetterQueue.ts
+- $relative:12 class DeadLetterQueueManager {
+- $relative:40 export const DeadLetterQueue =
+- $relative:41 new DeadLetterQueueManager();
+- $relative:40 return AutomationRuntimeQueue.moveToDeadLetter(job);
+- $relative:7 const deadLetters: AutomationRuntimeJob[] = [];
+- $relative:50 static moveToDeadLetter(job: AutomationRuntimeJob): AutomationRuntimeJob {
+- $relative:51 job.status = "dead_letter";
+- $relative:54 deadLetters.unshift(job);
+- $relative:61 static deadLetters(): AutomationRuntimeJob[] {
+- $relative:62 return deadLetters;
+- $relative:13 | "dead_letter";
+- $relative:37 runtimeDeadLetterQueue,
+- $relative:38 } from "./RuntimeDeadLetterQueue";
+- $relative:125 getRuntimeDeadLetters() {
+- $relative:126 return runtimeDeadLetterQueue.getEvents();
+- $relative:1 export interface DeadLetterEvent {
+- $relative:14 export class RuntimeDeadLetterQueue {
+- $relative:17 DeadLetterEvent[] = [];
+- $relative:20 event: DeadLetterEvent
+- $relative:47 export const runtimeDeadLetterQueue =
+- $relative:48 new RuntimeDeadLetterQueue();
+- $relative:18 runtimeDeadLetterQueue,
+- $relative:19 } from "./RuntimeDeadLetterQueue";
+- $relative:84 pushDeadLetter(
+- $relative:90 runtimeDeadLetterQueue.push({
+- $relative:56 deadLetters:
+- $relative:58 .getRuntimeDeadLetters(),
+- $relative:1 export class DeadLetterQueue {
+- $relative:10 "[DeadLetterQueue]",
+- $relative:2 import { ERPDeadLetterStore } from "@/runtime/resilience";
+- $relative:8 const dlq = ERPDeadLetterStore.all();
+- $relative:10 export type DeadLetterEvent = {
+- $relative:18 export class DeadLetterQueue {
+- $relative:21 event: Omit<DeadLetterEvent, "createdAt">
+- $relative:27 "runtime_dead_letters"
+- $relative:3 class ERPDeadLetterStoreClass {
+- $relative:9 status: "dead_letter",
+- $relative:21 export const ERPDeadLetterStore = new ERPDeadLetterStoreClass();
+- $relative:6 | "dead_letter";
+- $relative:15 ERPDeadLetterStore,
+- $relative:16 } from "../dlq/ERPDeadLetterStore";
+- $relative:127 status: "dead_letter",
+- $relative:133 ERPDeadLetterStore.add(failedJob);
+- $relative:4 export * from "./dlq/ERPDeadLetterStore";
+- $relative:27 DeadLetterQueue
+- $relative:29 from "@/runtime/resilience/dlq/DeadLetterQueue";
+- $relative:42 private deadLetterQueue =
+- $relative:43 new DeadLetterQueue();
+- $relative:171 await this.deadLetterQueue.store({
+
+## Pattern: dlq
+
+Matches: 20
+
+- $relative:4 export function ERPDLQPanel() {
+- $relative:20 title="Aucune DLQ"
+- $relative:13 const dlq = ERPDeadLetterStore.all();
+- $relative:21 <ERPStatCard label="DLQ" value={dlq.length} helper="Echecs isoles" />
+- $relative:6 import { ERPDLQPanel } from "./ERPDLQPanel";
+- $relative:15 title="Queue, Retry & DLQ Runtime"
+- $relative:23 <ERPDLQPanel />
+- $relative:3 export * from "./ERPDLQPanel";
+- $relative:21 "[DLQ]",
+- $relative:68 DLQ_EVENT_STORED:
+- $relative:69 "DLQ_EVENT_STORED",
+- $relative:8 const dlq = ERPDeadLetterStore.all();
+- $relative:14 dlq,
+- $relative:19 dlq.length +
+- $relative:27 { id: "queue", label: "Queue / DLQ", group: "runtime" },
+- $relative:16 } from "../dlq/ERPDeadLetterStore";
+- $relative:137 id: createId("alert_dlq"),
+- $relative:139 title: "Job envoye en DLQ",
+- $relative:4 export * from "./dlq/ERPDeadLetterStore";
+- $relative:29 from "@/runtime/resilience/dlq/DeadLetterQueue";
+
+## Pattern: throttle
+
+Matches: 16
+
+- $relative:1 type ThrottleConfig = {
+- $relative:7 const throttleRegistry:
+- $relative:8 Record<string, ThrottleConfig> = {
+- $relative:37 throttleRegistry[
+- $relative:6 import { WorkflowThrottler }
+- $relative:7 from "@/platform/throttling/WorkflowThrottler";
+- $relative:32 !WorkflowThrottler.canExecute()
+- $relative:36 "[THROTTLER] limit reached"
+- $relative:77 WorkflowThrottler
+- $relative:117 WorkflowThrottler
+- $relative:1 // src/platform/throttling/WorkflowThrottler.ts
+- $relative:3 class WorkflowThrottlerManager {
+- $relative:22 "[THROTTLER] active",
+- $relative:37 "[THROTTLER] active",
+- $relative:55 export const WorkflowThrottler =
+- $relative:56 new WorkflowThrottlerManager();
+
+## Pattern: circuit
+
+Matches: 81
+
+- $relative:14 getCircuits,
+- $relative:15 } from "@/core/circuit-breaker/circuit-breaker-engine";
+- $relative:37 const circuits =
+- $relative:38 getCircuits();
+- $relative:302 Circuit Breakers
+- $relative:307 {Object.entries(circuits).length === 0 && (
+- $relative:309 Aucun circuit breaker.
+- $relative:313 {Object.entries(circuits).map(
+- $relative:314 ([key, circuit]) => (
+- $relative:326 Failures : {circuit.failures}
+- $relative:341 {circuit.state}
+- $relative:610 Circuit Breakers
+- $relative:615 {Object.entries(circuits).length === 0 && (
+- $relative:617 Aucun circuit breaker.
+- $relative:621 {Object.entries(circuits).map(
+- $relative:622 ([key, circuit]) => (
+- $relative:634 Failures : {circuit.failures}
+- $relative:649 {circuit.state}
+- $relative:5 ERPCircuitBreaker,
+- $relative:22 <ERPStatCard label="Circuit" value={ERPCircuitBreaker.currentState()} helper="Etat resilience" />
+- $relative:16 description="Supervision des jobs asynchrones, reprises, echecs isoles et circuit breaker ERP."
+- $relative:1 type CircuitState =
+- $relative:6 type CircuitBreaker = {
+- $relative:15 state: CircuitState;
+- $relative:18 const circuits:
+- $relative:21 CircuitBreaker
+- $relative:24 function getCircuit(
+- $relative:27 if (!circuits[key]) {
+- $relative:28 circuits[key] = {
+- $relative:39 return circuits[key];
+- $relative:42 export function canExecuteCircuit(
+- $relative:45 const circuit =
+- $relative:46 getCircuit(key);
+- $relative:49 circuit.state === "open"
+- $relative:55 circuit.lastFailure &&
+- $relative:57 circuit.lastFailure >
+- $relative:58 circuit.timeoutMs
+- $relative:60 circuit.state =
+- $relative:75 const circuit =
+- $relative:76 getCircuit(key);
+- $relative:78 circuit.failures += 1;
+- $relative:80 circuit.lastFailure =
+- $relative:84 circuit.failures >=
+- $relative:85 circuit.threshold
+- $relative:87 circuit.state = "open";
+- $relative:94 const circuit =
+- $relative:95 getCircuit(key);
+- $relative:97 circuit.failures = 0;
+- $relative:99 circuit.state = "closed";
+- $relative:102 export function getCircuits() {
+- $relative:103 return circuits;
+- $relative:1 // src/platform/circuit-breaker/CircuitBreaker.ts
+- $relative:3 export class CircuitBreaker {
+- $relative:20 "[CIRCUIT BREAKER] OPEN"
+- $relative:37 "[CIRCUIT BREAKER] failure",
+- $relative:49 "[CIRCUIT BREAKER] TRIPPED"
+- $relative:15 import { CircuitBreaker }
+- $relative:16 from "@/platform/circuit-breaker/CircuitBreaker";
+- $relative:24 const workflowCircuitBreaker =
+- $relative:25 new CircuitBreaker(3);
+- $relative:87 await workflowCircuitBreaker.execute(
+- $relative:2 import { ERPCircuitBreaker } from "@/runtime/resilience";
+- $relative:36 key: "circuit-breaker",
+- $relative:37 label: "Circuit Breaker",
+- $relative:39 ERPCircuitBreaker.currentState() === "open"
+- $relative:42 description: `Etat: ${ERPCircuitBreaker.currentState()}`,
+- $relative:1 export type ERPCircuitBreakerState =
+- $relative:6 class ERPCircuitBreakerClass {
+- $relative:7 private state: ERPCircuitBreakerState = "closed";
+- $relative:38 export const ERPCircuitBreaker = new ERPCircuitBreakerClass();
+- $relative:19 ERPCircuitBreaker,
+- $relative:20 } from "../circuit-breaker/ERPCircuitBreaker";
+- $relative:70 if (!ERPCircuitBreaker.canExecute()) {
+- $relative:72 id: createId("alert_circuit"),
+- $relative:74 title: "Circuit breaker ouvert",
+- $relative:107 ERPCircuitBreaker.recordSuccess();
+- $relative:134 ERPCircuitBreaker.recordFailure();
+- $relative:151 ERPCircuitBreaker.recordFailure();
+- $relative:1 export class CircuitBreaker {
+- $relative:16 "Circuit breaker opened"
+- $relative:5 export * from "./circuit-breaker/ERPCircuitBreaker";
+
+## Pattern: tenant
+
+Matches: 407
+
+- $relative:2 ERPTenantDashboard,
+- $relative:3 } from "@/components/erp/tenant";
+- $relative:8 <ERPTenantDashboard />
+- $relative:49 tenant:
+- $relative:18 <ERPStatCard label="Tenants" value={metrics.tenants} helper="SaaS runtime" />
+- $relative:34 description="Repository runtime tenant-aware pour events, traces, alerts, workflows, queue jobs et audit."
+- $relative:17 description="Gouvernance SaaS, readiness cloud, quotas tenant, rate limits, backup et policies runtime."
+- $relative:17 <ERPStatCard label="Quotas" value={metrics.quotas} helper="Tenant limits" />
+- $relative:15 Tenant Quotas
+- $relative:18 Limites SaaS par tenant.
+- $relative:25 key={quota.tenantId}
+- $relative:29 {quota.tenantId}
+- $relative:21 <ERPStatCard label="Tenant" value={snapshot.session.tenantId ?? "default"} helper="Isolation preparee" />
+- $relative:6 getERPTenantSnapshot,
+- $relative:7 seedERPTenantRuntime,
+- $relative:8 } from "@/runtime/tenant";
+- $relative:11 ERPTenantMetricsGrid,
+- $relative:12 } from "./ERPTenantMetricsGrid";
+- $relative:15 ERPTenantRegistryPanel,
+- $relative:16 } from "./ERPTenantRegistryPanel";
+- $relative:19 ERPTenantMetricsPanel,
+- $relative:20 } from "./ERPTenantMetricsPanel";
+- $relative:22 seedERPTenantRuntime();
+- $relative:24 export function ERPTenantDashboard() {
+- $relative:27 getERPTenantSnapshot();
+- $relative:33 eyebrow="ERP Multi-Tenant"
+- $relative:34 title="Tenant Runtime Dashboard"
+- $relative:35 description="Isolation tenant, contexte runtime, modules, quotas et activite SaaS."
+- $relative:38 <ERPTenantMetricsGrid
+- $relative:44 <ERPTenantRegistryPanel
+- $relative:48 <ERPTenantMetricsPanel
+- $relative:4 getERPTenantSnapshot,
+- $relative:5 } from "@/runtime/tenant";
+- $relative:9 typeof getERPTenantSnapshot
+- $relative:16 export function ERPTenantMetricsGrid({
+- $relative:24 label="Tenants"
+- $relative:25 value={snapshot.tenantsCount}
+- $relative:26 helper="Tenants ERP"
+- $relative:31 value={snapshot.activeTenants}
+- $relative:32 helper="Tenants actifs"
+- $relative:7 getERPTenantSnapshot,
+- $relative:8 } from "@/runtime/tenant";
+- $relative:12 typeof getERPTenantSnapshot
+- $relative:19 export function ERPTenantMetricsPanel({
+- $relative:32 Tenant Metrics
+- $relative:36 Activite runtime du tenant courant.
+- $relative:45 description="Les metriques tenant apparaitront ici."
+- $relative:6 getERPTenantSnapshot,
+- $relative:7 } from "@/runtime/tenant";
+- $relative:11 typeof getERPTenantSnapshot
+- $relative:18 export function ERPTenantRegistryPanel({
+- $relative:28 Tenant Registry
+- $relative:32 Registre des tenants ERP.
+- $relative:39 {snapshot.tenants.map((tenant) => (
+- $relative:42 key={tenant.id}
+- $relative:51 {tenant.name}
+- $relative:55 {tenant.plan}
+- $relative:61 {tenant.status}
+- $relative:68 {tenant.modules.map((module) => (
+- $relative:1 export * from "./ERPTenantMetricsGrid";
+- $relative:2 export * from "./ERPTenantRegistryPanel";
+- $relative:3 export * from "./ERPTenantMetricsPanel";
+- $relative:4 export * from "./ERPTenantDashboard";
+- $relative:35 description="Validation runtime, workflows, workers, securite, multi-tenant et observability."
+- $relative:49 tenant:
+- $relative:49 tenant:
+- $relative:56 tenant:
+- $relative:57 tenant:
+- $relative:10 tenantId?: string;
+- $relative:12 tenantName?: string;
+- $relative:64 export function getAuditsByTenant(
+- $relative:65 tenantId: string
+- $relative:69 entry.tenantId ===
+- $relative:70 tenantId
+- $relative:1 export type ERPTenant = {
+- $relative:11 let currentTenant:
+- $relative:12 ERPTenant | null = null;
+- $relative:14 const tenantRegistry:
+- $relative:15 ERPTenant[] = [];
+- $relative:17 export function registerTenant(
+- $relative:18 tenant: ERPTenant
+- $relative:21 tenantRegistry.find(
+- $relative:24 tenant.id
+- $relative:31 tenantRegistry.push(
+- $relative:32 tenant
+- $relative:36 "ERP TENANT REGISTERED",
+- $relative:37 tenant.name
+- $relative:41 export function setCurrentTenant(
+- $relative:42 tenant: ERPTenant
+- $relative:44 currentTenant =
+- $relative:45 tenant;
+- $relative:48 "ERP CURRENT TENANT",
+- $relative:49 tenant.name
+- $relative:53 export function getCurrentTenant() {
+- $relative:54 return currentTenant;
+- $relative:57 export function getTenants() {
+- $relative:58 return tenantRegistry;
+- $relative:61 export function assertTenant() {
+- $relative:62 if (!currentTenant) {
+- $relative:64 "Aucun tenant ERP actif"
+- $relative:68 return currentTenant;
+- $relative:32 "Multi-tenant",
+- $relative:22 tenantId: string;
+- $relative:64 tenantId:
+- $relative:65 exploitation.tenantId,
+- $relative:49 tenantId:
+- $relative:50 "tenant-demo",
+- $relative:21 tenantId: string
+- $relative:43 "tenantId",
+- $relative:45 tenantId
+- $relative:81 }, [tenantId]);
+- $relative:26 tenantId: string
+- $relative:63 "tenantId",
+- $relative:65 tenantId
+- $relative:131 "tenantId",
+- $relative:133 tenantId
+- $relative:192 }, [tenantId]);
+- $relative:88 tenantId: string,
+- $relative:95 "tenantId",
+- $relative:97 tenantId
+- $relative:7 tenantId:
+- $relative:5 tenantId: string;
+- $relative:29 tenantId: "tenant-demo",
+- $relative:90 tenantId:
+- $relative:91 invitation.tenantId,
+- $relative:22 tenantId: string;
+- $relative:16 tenantId: string;
+- $relative:1 interface TenantGuardProps {
+- $relative:10 export const TenantGuard = ({
+- $relative:14 }: TenantGuardProps) => {
+- $relative:1 export const isSameTenant = (
+- $relative:18 tenantId: string;
+- $relative:3 import { useTenant }
+- $relative:4 from "@/features/tenancy/hooks/useTenant";
+- $relative:9 const tenant =
+- $relative:10 useTenant() as any;
+- $relative:12 if (!tenant) {
+- $relative:21 } = tenant;
+- $relative:12 TenantService,
+- $relative:13 TenantContextType,
+- $relative:14 } from "@/features/tenancy/services/TenantService";
+- $relative:19 tenantId: "tenant-demo",
+- $relative:27 tenantId: "tenant-farm",
+- $relative:35 const TenantContext =
+- $relative:43 export const TenantProvider = ({
+- $relative:63 ...TenantService.buildContext(
+- $relative:77 <TenantContext.Provider
+- $relative:81 </TenantContext.Provider>
+- $relative:85 export const useTenantContext =
+- $relative:89 TenantContext
+- $relative:4 useTenantContext,
+- $relative:5 } from "@/features/tenancy/context/TenantProvider";
+- $relative:7 export function useTenant() {
+- $relative:9 return useTenantContext();
+- $relative:7 export type TenantContextType = {
+- $relative:15 tenantId:
+- $relative:25 export const TenantService = {
+- $relative:30 ): TenantContextType {
+- $relative:38 tenantId:
+- $relative:39 organization?.tenantId || null,
+- $relative:11 tenant: string;
+- $relative:32 tenant:
+- $relative:1 // src/platform/governance/tenants/TenantRegistry.ts
+- $relative:3 class TenantRegistryManager {
+- $relative:5 private tenants:
+- $relative:9 tenant: string
+- $relative:13 !this.tenants.includes(
+- $relative:14 tenant
+- $relative:18 this.tenants.push(
+- $relative:19 tenant
+- $relative:25 tenant: string
+- $relative:28 return this.tenants.includes(
+- $relative:29 tenant
+- $relative:34 export const TenantRegistry =
+- $relative:35 new TenantRegistryManager();
+- $relative:5 tenant?: string;
+- $relative:43 tenant:
+- $relative:44 context.tenant,
+- $relative:67 tenant:
+- $relative:68 context.tenant
+- $relative:140 tenant:
+- $relative:141 context.tenant
+- $relative:158 tenant:
+- $relative:159 context.tenant,
+- $relative:182 tenant:
+- $relative:183 context.tenant
+- $relative:216 tenant:
+- $relative:217 context.tenant
+- $relative:234 tenant:
+- $relative:235 context.tenant,
+- $relative:258 tenant:
+- $relative:259 context.tenant
+- $relative:292 tenant:
+- $relative:293 context.tenant
+- $relative:19 tenant?: string;
+- $relative:4 tenantId?: string;
+- $relative:15 tenant?: string;
+- $relative:9 const TenantContext =
+- $relative:12 export const TenantProvider = ({
+- $relative:16 const [tenant,
+- $relative:17 setTenant] =
+- $relative:29 <TenantContext.Provider
+- $relative:31 tenant,
+- $relative:32 setTenant,
+- $relative:38 </TenantContext.Provider>
+- $relative:42 export const useTenant =
+- $relative:43 () => useContext(TenantContext);
+- $relative:18 content: "Priorite recommandee : brancher la persistance reelle et renforcer les tests RBAC multi-tenant.",
+- $relative:35 description: "Les couches tenant, security, persistence, workers et streams sont presentes.",
+- $relative:12 description: "Ajouter des cas RBAC par role, module et tenant avant production.",
+- $relative:21 description: "Remplacer progressivement le driver in-memory par un driver Firestore tenant-aware.",
+- $relative:2 tenantId?: string;
+- $relative:9 | "tenant"
+- $relative:3 import { ERPTenantRegistry } from "@/runtime/tenant";
+- $relative:10 const tenants = ERPTenantRegistry;
+- $relative:28 key: "tenants",
+- $relative:29 label: "Tenants",
+- $relative:30 status: tenants.some((tenant) => tenant.status === "active")
+- $relative:33 description: `${tenants.length} tenants declares`,
+- $relative:3 tenants: number;
+- $relative:30 { id: "tenant", label: "Multi-Tenant", group: "saas" },
+- $relative:43 { from: "security", to: "tenant", label: "access context" },
+- $relative:44 { from: "tenant", to: "persistence", label: "isolation" },
+- $relative:2 import { ERPTenantRegistry } from "@/runtime/tenant";
+- $relative:20 tenants: ERPTenantRegistry.length,
+- $relative:4 tenantId: string
+- $relative:9 tenantId
+- $relative:1 export class TenantManager {
+- $relative:3 private currentTenant:
+- $relative:6 setTenant(
+- $relative:7 tenantId: string
+- $relative:10 this.currentTenant =
+- $relative:11 tenantId;
+- $relative:14 "[Tenant]",
+- $relative:15 tenantId
+- $relative:19 getTenant() {
+- $relative:21 return this.currentTenant;
+- $relative:11 time: "Maintenant",
+- $relative:20 item.tenantId === record.tenantId &&
+- $relative:28 item.tenantId === record.tenantId &&
+- $relative:47 tenantId: string
+- $relative:52 record.tenantId === tenantId
+- $relative:58 tenantId: string,
+- $relative:64 record.tenantId === tenantId &&
+- $relative:3 tenantId: string;
+- $relative:18 tenantId: string
+- $relative:23 tenantId: string,
+- $relative:2 ERPTenantContext,
+- $relative:3 } from "@/runtime/tenant";
+- $relative:28 const tenant =
+- $relative:29 ERPTenantContext.current();
+- $relative:36 tenantId: tenant.id,
+- $relative:52 const tenant =
+- $relative:53 ERPTenantContext.current();
+- $relative:57 tenant.id
+- $relative:62 const tenant =
+- $relative:63 ERPTenantContext.current();
+- $relative:67 tenant.id,
+- $relative:12 key: "tenant-config-backup",
+- $relative:13 label: "Tenant Config Backup",
+- $relative:14 target: "tenant registry",
+- $relative:19 key: "tenant-isolation",
+- $relative:20 label: "Tenant Isolation",
+- $relative:23 description: "Le contexte tenant et l'isolation module sont presents.",
+- $relative:44 description: "Les limites runtime doivent etre appliquees par tenant.",
+- $relative:3 scope: "tenant" | "user" | "module" | "global";
+- $relative:5 key: "api-tenant-minute",
+- $relative:6 scope: "tenant",
+- $relative:11 key: "workflow-tenant-hour",
+- $relative:12 scope: "tenant",
+- $relative:1 export type ERPTenantQuota = {
+- $relative:2 tenantId: string;
+- $relative:1 import type { ERPTenantQuota } from "./ERPTenantQuota";
+- $relative:3 export const ERPTenantQuotaRegistry: ERPTenantQuota[] = [
+- $relative:5 tenantId: "tenant_demo",
+- $relative:13 tenantId: "tenant_agricorp",
+- $relative:21 tenantId: "tenant_farmgroup",
+- $relative:2 import { ERPTenantQuotaRegistry } from "../quotas/ERPTenantQuotaRegistry";
+- $relative:9 const quotas = ERPTenantQuotaRegistry;
+- $relative:8 | "tenant";
+- $relative:7 tenantId?: string;
+- $relative:7 tenantId: "default",
+- $relative:37 id: "stream_tenants",
+- $relative:38 key: "tenants",
+- $relative:39 label: "Tenant Stream",
+- $relative:8 tenantId?: string;
+- $relative:1 import type { ERPTenant } from "../registry/ERPTenant";
+- $relative:4 ERPTenantRegistry,
+- $relative:5 } from "../registry/ERPTenantRegistry";
+- $relative:7 let currentTenant =
+- $relative:8 ERPTenantRegistry[0];
+- $relative:10 export const ERPTenantContext = {
+- $relative:12 current(): ERPTenant {
+- $relative:14 return currentTenant;
+- $relative:17 setTenant(
+- $relative:18 tenantId: string
+- $relative:21 const tenant =
+- $relative:22 ERPTenantRegistry.find(
+- $relative:24 item.id === tenantId
+- $relative:27 if (!tenant) {
+- $relative:31 currentTenant = tenant;
+- $relative:2 ERPTenantContext,
+- $relative:3 } from "../context/ERPTenantContext";
+- $relative:5 export const ERPTenantIsolation = {
+- $relative:11 const tenant =
+- $relative:12 ERPTenantContext.current();
+- $relative:14 return tenant.modules.includes(
+- $relative:31 `Tenant cannot access module: ${moduleKey}`
+- $relative:1 export type ERPTenantMetrics = {
+- $relative:2 tenantId: string;
+- $relative:2 ERPTenantMetrics,
+- $relative:3 } from "./ERPTenantMetrics";
+- $relative:5 class ERPTenantMetricsStoreClass {
+- $relative:8 ERPTenantMetrics[] = [];
+- $relative:11 metrics: ERPTenantMetrics
+- $relative:17 item.tenantId === metrics.tenantId
+- $relative:25 item.tenantId === metrics.tenantId
+- $relative:41 byTenant(
+- $relative:42 tenantId: string
+- $relative:47 item.tenantId === tenantId
+- $relative:52 export const ERPTenantMetricsStore =
+- $relative:53 new ERPTenantMetricsStoreClass();
+- $relative:1 export type ERPTenantStatus =
+- $relative:6 export type ERPTenantPlan =
+- $relative:11 export type ERPTenant = {
+- $relative:15 status: ERPTenantStatus;
+- $relative:16 plan: ERPTenantPlan;
+- $relative:1 import type { ERPTenant } from "./ERPTenant";
+- $relative:3 export const ERPTenantRegistry: ERPTenant[] = [
+- $relative:5 id: "tenant_demo",
+- $relative:22 id: "tenant_agricorp",
+- $relative:36 id: "tenant_farmgroup",
+- $relative:2 ERPTenantMetricsStore,
+- $relative:3 } from "./metrics/ERPTenantMetricsStore";
+- $relative:7 export function seedERPTenantRuntime() {
+- $relative:15 ERPTenantMetricsStore.set({
+- $relative:16 tenantId: "tenant_demo",
+- $relative:25 ERPTenantMetricsStore.set({
+- $relative:26 tenantId: "tenant_agricorp",
+- $relative:35 ERPTenantMetricsStore.set({
+- $relative:36 tenantId: "tenant_farmgroup",
+- $relative:2 ERPTenantRegistry,
+- $relative:3 } from "./registry/ERPTenantRegistry";
+- $relative:6 ERPTenantContext,
+- $relative:7 } from "./context/ERPTenantContext";
+- $relative:10 ERPTenantMetricsStore,
+- $relative:11 } from "./metrics/ERPTenantMetricsStore";
+- $relative:13 export function getERPTenantSnapshot() {
+- $relative:16 ERPTenantContext.current();
+- $relative:22 tenants:
+- $relative:23 ERPTenantRegistry,
+- $relative:26 ERPTenantMetricsStore.all(),
+- $relative:29 ERPTenantMetricsStore.byTenant(
+- $relative:33 tenantsCount:
+- $relative:34 ERPTenantRegistry.length,
+- $relative:36 activeTenants:
+- $relative:37 ERPTenantRegistry.filter(
+- $relative:38 (tenant) =>
+- $relative:39 tenant.status === "active"
+- $relative:1 export * from "./registry/ERPTenant";
+- $relative:2 export * from "./registry/ERPTenantRegistry";
+- $relative:4 export * from "./context/ERPTenantContext";
+- $relative:6 export * from "./metrics/ERPTenantMetrics";
+- $relative:7 export * from "./metrics/ERPTenantMetricsStore";
+- $relative:9 export * from "./isolation/ERPTenantIsolation";
+- $relative:11 export * from "./ERPTenantSnapshot";
+- $relative:12 export * from "./ERPTenantSeed";
+- $relative:11 | "tenant"
+- $relative:29 id: "tenant_isolation",
+- $relative:30 label: "Tenant Isolation",
+- $relative:31 type: "tenant",
+- $relative:8 Les schemas sont maintenant
+- $relative:81 key: "tenant-config-backup",
+- $relative:82 label: "Tenant Config Backup",
+- $relative:83 target: "tenant registry",
+- $relative:113 tenantId: "tenant_demo",
+- $relative:124 key: "api-tenant-minute",
+- $relative:125 scope: "tenant" as const,
+- $relative:2 TenantService,
+- $relative:3 } from "@/saas/tenants/TenantService";
+- $relative:15 initializeTenant(
+- $relative:16 tenantId: string
+- $relative:19 const tenant =
+- $relative:20 TenantService.resolveTenant(
+- $relative:21 tenantId
+- $relative:26 tenantId
+- $relative:31 tenant,
+- $relative:4 tenantId: string
+- $relative:9 tenantId,
+- $relative:1 export const TenantService = {
+- $relative:3 resolveTenant(
+- $relative:4 tenantId: string
+- $relative:9 id: tenantId,
+- $relative:12 "Tenant Enterprise",
+- $relative:8 interface TenantContextValue {
+- $relative:10 tenantId: string;
+- $relative:15 const TenantContext =
+- $relative:17 TenantContextValue | null
+- $relative:20 export const TenantProvider = ({
+- $relative:28 <TenantContext.Provider
+- $relative:31 tenantId:
+- $relative:32 "tenant-demo",
+- $relative:41 </TenantContext.Provider>
+- $relative:45 export const useTenant =
+- $relative:50 TenantContext
+- $relative:56 "useTenant must be used within TenantProvider"
+- $relative:1 export const TenantMiddleware = {
+
+## Pattern: governance
+
+Matches: 78
+
+- $relative:4 import { EnterpriseRuntimeGovernancePanel } from "./EnterpriseRuntimeGovernancePanel";
+- $relative:23 <EnterpriseRuntimeGovernancePanel />
+- $relative:2 import { EnterpriseRuntimeGovernance } from "@/runtime/enterprise-runtime";
+- $relative:4 export function EnterpriseRuntimeGovernancePanel() {
+- $relative:5 const checks = EnterpriseRuntimeGovernance.checks();
+- $relative:3 export { EnterpriseRuntimeGovernancePanel } from "./EnterpriseRuntimeGovernancePanel";
+- $relative:16 title="Production Governance Core"
+- $relative:7 from "@/platform/governance/registerPolicies";
+- $relative:1 // src/platform/governance/features/FeatureFlags.ts
+- $relative:1 // src/platform/governance/permissions/DomainPermissions.ts
+- $relative:4 GovernanceContext
+- $relative:6 from "@/platform/governance/GovernanceContext";
+- $relative:11 context: GovernanceContext
+- $relative:1 // src/platform/governance/policies/engine/RuntimePoliciesEngine.ts
+- $relative:4 GovernanceContext
+- $relative:6 from "@/platform/governance/GovernanceContext";
+- $relative:9 from "@/platform/governance/policies/registry/PolicyRegistry";
+- $relative:14 context: GovernanceContext
+- $relative:1 // src/platform/governance/policies/registry/PolicyRegistry.ts
+- $relative:6 from "@/platform/governance/policies/types/RuntimePolicy";
+- $relative:1 // src/platform/governance/policies/types/RuntimePolicy.ts
+- $relative:4 GovernanceContext
+- $relative:6 from "@/platform/governance/GovernanceContext";
+- $relative:15 context: GovernanceContext
+- $relative:1 // src/platform/governance/policies/DefaultRuntimePolicy.ts
+- $relative:6 from "@/platform/governance/policies/types/RuntimePolicy";
+- $relative:1 // src/platform/governance/tenants/TenantRegistry.ts
+- $relative:1 // src/platform/governance/GovernanceContext.ts
+- $relative:3 export interface GovernanceContext {
+- $relative:1 // src/platform/governance/GovernanceRuntime.ts
+- $relative:4 GovernanceContext
+- $relative:6 from "@/platform/governance/GovernanceContext";
+- $relative:9 from "@/platform/governance/features/FeatureFlags";
+- $relative:12 from "@/platform/governance/permissions/DomainPermissions";
+- $relative:15 from "@/platform/governance/policies/engine/RuntimePoliciesEngine";
+- $relative:17 export class GovernanceRuntime {
+- $relative:20 context: GovernanceContext
+- $relative:53 "[GOVERNANCE OK]",
+- $relative:1 // src/platform/governance/registerPolicies.ts
+- $relative:4 from "@/platform/governance/policies/registry/PolicyRegistry";
+- $relative:7 from "@/platform/governance/policies/DefaultRuntimePolicy";
+- $relative:26 import { GovernanceRuntime }
+- $relative:27 from "@/platform/governance/GovernanceRuntime";
+- $relative:35 GovernanceRuntime.validate({
+- $relative:150 GovernanceRuntime.validate({
+- $relative:226 GovernanceRuntime.validate({
+- $relative:19 import { GovernanceEngine }
+- $relative:20 from "../os/governance/GovernanceEngine";
+- $relative:56 const governance =
+- $relative:57 new GovernanceEngine();
+- $relative:88 governance,
+- $relative:32 governance:
+- $relative:33 !!runtime.governance,
+- $relative:1 export interface EnterpriseGovernanceCheck {
+- $relative:7 export class EnterpriseRuntimeGovernance {
+- $relative:8 static checks(): EnterpriseGovernanceCheck[] {
+- $relative:8 export { EnterpriseRuntimeGovernance } from "./EnterpriseRuntimeGovernance";
+- $relative:9 export type { EnterpriseGovernanceCheck } from "./EnterpriseRuntimeGovernance";
+- $relative:7 "[Governance] domain boundaries verified"
+- $relative:9 "[Governance] contract validated",
+- $relative:9 "[Governance] duplication checked",
+- $relative:9 "[Governance] naming validated",
+- $relative:9 "[Governance] pattern registered",
+- $relative:7 "[Governance] architecture policies validated"
+- $relative:32 EnterpriseGovernanceEngine {
+- $relative:75 "[Governance] enterprise governance executed"
+- $relative:2 EnterpriseGovernanceEngine
+- $relative:4 from "./EnterpriseGovernanceEngine";
+- $relative:6 const governance =
+- $relative:7 new EnterpriseGovernanceEngine();
+- $relative:9 governance.execute();
+- $relative:1 export class GovernanceEngine {
+- $relative:8 "[Governance]",
+- $relative:1 import { ERPProductionPolicyRegistry } from "../governance/ERPProductionPolicyRegistry";
+- $relative:89 "Production governance initialized",
+- $relative:90 "governance"
+- $relative:182 scope: "governance",
+- $relative:183 message: "Production governance initialized",
+
+## Pattern: policy
+
+Matches: 179
+
+- $relative:23 {snapshot.policies.map((policy) => (
+- $relative:25 key={policy.key}
+- $relative:31 {policy.label}
+- $relative:34 {policy.description}
+- $relative:41 policy.status === "ok"
+- $relative:43 : policy.status === "warning"
+- $relative:48 {policy.status}
+- $relative:25 {snapshot.policies.slice(0, 12).map((policy) => (
+- $relative:27 key={`${policy.role}-${policy.module}`}
+- $relative:32 {policy.module}
+- $relative:35 {policy.role}
+- $relative:40 {policy.actions.join(", ")}
+- $relative:9 import { RetryPolicy }
+- $relative:10 from "@/platform/resilience/RetryPolicy";
+- $relative:18 import { ExecutionPolicy }
+- $relative:19 from "@/platform/security/ExecutionPolicy";
+- $relative:60 ExecutionPolicy.canExecute({
+- $relative:90 await RetryPolicy.execute(
+- $relative:8 import { PolicyRegistry }
+- $relative:9 from "@/platform/governance/policies/registry/PolicyRegistry";
+- $relative:18 PolicyRegistry
+- $relative:21 for (const policy of policies) {
+- $relative:24 policy.execute(
+- $relative:31 `Policy denied: ${policy.name}`
+- $relative:1 // src/platform/governance/policies/registry/PolicyRegistry.ts
+- $relative:4 RuntimePolicy
+- $relative:6 from "@/platform/governance/policies/types/RuntimePolicy";
+- $relative:8 class PolicyRegistryManager {
+- $relative:11 RuntimePolicy[] = [];
+- $relative:14 policy: RuntimePolicy
+- $relative:18 "[POLICY REGISTERED]",
+- $relative:19 policy.name
+- $relative:23 policy
+- $relative:39 export const PolicyRegistry =
+- $relative:40 new PolicyRegistryManager();
+- $relative:1 // src/platform/governance/policies/types/RuntimePolicy.ts
+- $relative:8 export interface RuntimePolicy {
+- $relative:1 // src/platform/governance/policies/DefaultRuntimePolicy.ts
+- $relative:4 RuntimePolicy
+- $relative:6 from "@/platform/governance/policies/types/RuntimePolicy";
+- $relative:8 export const DefaultRuntimePolicy:
+- $relative:9 RuntimePolicy = {
+- $relative:12 "default-runtime-policy",
+- $relative:22 "[POLICY]",
+- $relative:3 import { PolicyRegistry }
+- $relative:4 from "@/platform/governance/policies/registry/PolicyRegistry";
+- $relative:6 import { DefaultRuntimePolicy }
+- $relative:7 from "@/platform/governance/policies/DefaultRuntimePolicy";
+- $relative:11 PolicyRegistry.register(
+- $relative:12 DefaultRuntimePolicy
+- $relative:2 Policy,
+- $relative:3 RuntimePolicyContext,
+- $relative:5 from "../types/Policy";
+- $relative:7 export class PolicyEngine {
+- $relative:10 Policy[] = [];
+- $relative:13 policy: Policy
+- $relative:17 policy
+- $relative:23 RuntimePolicyContext
+- $relative:27 const policy
+- $relative:31 if (!policy.enabled) {
+- $relative:36 await policy.evaluate(
+- $relative:43 "[POLICY DENIED]",
+- $relative:44 policy.name
+- $relative:2 Policy,
+- $relative:3 RuntimePolicyContext,
+- $relative:5 from "../types/Policy";
+- $relative:8 MaintenancePolicy:
+- $relative:9 Policy = {
+- $relative:12 "MaintenancePolicy",
+- $relative:19 RuntimePolicyContext
+- $relative:28 "[POLICY BLOCKED]",
+- $relative:1 export type RuntimePolicyContext = {
+- $relative:9 export interface Policy {
+- $relative:16 context: RuntimePolicyContext
+- $relative:1 // src/platform/resilience/RetryPolicy.ts
+- $relative:3 export class RetryPolicy {
+- $relative:22 import { RuleSecurityPolicy }
+- $relative:23 from "@/platform/rules/security/RuleSecurityPolicy";
+- $relative:75 RuleSecurityPolicy
+- $relative:1 // src/platform/rules/security/RuleSecurityPolicy.ts
+- $relative:8 export class RuleSecurityPolicy {
+- $relative:1 // src/platform/scheduling/WorkflowSchedulerPolicy.ts
+- $relative:6 export class WorkflowSchedulerPolicy {
+- $relative:1 // src/platform/security/ExecutionPolicy.ts
+- $relative:12 export class ExecutionPolicy {
+- $relative:53 runtimePolicyRegistry,
+- $relative:54 } from "./RuntimePolicyRegistry";
+- $relative:142 return runtimePolicyRegistry.getPolicies();
+- $relative:1 export interface RuntimePolicy {
+- $relative:14 export class RuntimePolicyRegistry {
+- $relative:17 RuntimePolicy[] = [];
+- $relative:19 registerPolicy(
+- $relative:20 policy: RuntimePolicy
+- $relative:23 this.policies.push(policy);
+- $relative:36 policy =>
+- $relative:37 policy.moduleId === moduleId
+- $relative:44 policy =>
+- $relative:45 policy.enabled
+- $relative:50 export const runtimePolicyRegistry =
+- $relative:51 new RuntimePolicyRegistry();
+- $relative:2 ArchitecturePolicyEngine {
+- $relative:2 ArchitecturePolicyEngine
+- $relative:4 from "./policies/ArchitecturePolicyEngine";
+- $relative:35 new ArchitecturePolicyEngine();
+- $relative:1 export const SecurityPolicy = {
+- $relative:6 "[SecurityPolicy]"
+- $relative:1 export interface ERPPolicy {
+- $relative:14 export class ERPPolicyEngine {
+- $relative:17 ERPPolicy[] = [];
+- $relative:19 registerPolicy(
+- $relative:20 policy: ERPPolicy
+- $relative:24 policy
+- $relative:33 policy =>
+- $relative:34 policy.module === module
+- $relative:47 policy =>
+- $relative:48 policy.action === action
+- $relative:59 policy =>
+- $relative:60 policy.evaluate(
+- $relative:67 export const erpPolicyEngine =
+- $relative:68 new ERPPolicyEngine();
+- $relative:2 erpPolicyEngine,
+- $relative:3 } from "./ERPPolicyEngine";
+- $relative:14 return erpPolicyEngine
+- $relative:1 export * from "./ERPPolicyEngine";
+- $relative:1 export type ERPProductionPolicyLevel =
+- $relative:6 export type ERPProductionPolicyStatus =
+- $relative:11 export type ERPProductionPolicy = {
+- $relative:14 level: ERPProductionPolicyLevel;
+- $relative:15 status: ERPProductionPolicyStatus;
+- $relative:1 import type { ERPProductionPolicy } from "./ERPProductionPolicy";
+- $relative:3 export const ERPProductionPolicyRegistry: ERPProductionPolicy[] = [
+- $relative:1 import { ERPProductionPolicyRegistry } from "../governance/ERPProductionPolicyRegistry";
+- $relative:8 const policies = ERPProductionPolicyRegistry;
+- $relative:15 policies.filter((policy) => policy.status === "ok").length;
+- $relative:11 ...snapshot.policies.map((policy) => ({
+- $relative:12 key: policy.key,
+- $relative:13 label: policy.label,
+- $relative:14 status: policy.status,
+- $relative:15 description: policy.description,
+- $relative:1 export type ERPRetryPolicy = {
+- $relative:7 export const DefaultERPRetryPolicy: ERPRetryPolicy = {
+- $relative:15 policy: ERPRetryPolicy = DefaultERPRetryPolicy
+- $relative:17 return policy.baseDelayMs * Math.pow(policy.backoffFactor, Math.max(0, attempt - 1));
+- $relative:3 export * from "./retry/ERPRetryPolicy";
+- $relative:1 export class RetryPolicy {
+- $relative:23 "[RetryPolicy]",
+- $relative:7 export class PolicyEngine {
+- $relative:4 import { ERPPolicyRegistry } from "../policies/ERPPolicyRegistry";
+- $relative:18 const policy =
+- $relative:19 ERPPolicyRegistry.find(
+- $relative:26 Boolean(policy?.actions.includes(action));
+- $relative:4 export type ERPPolicy = {
+- $relative:2 import type { ERPPolicy } from "./ERPPolicy";
+- $relative:38 export const ERPPolicyRegistry: ERPPolicy[] =
+- $relative:3 import { ERPPolicyRegistry } from "./policies/ERPPolicyRegistry";
+- $relative:14 policies: ERPPolicyRegistry,
+- $relative:19 policiesCount: ERPPolicyRegistry.length,
+- $relative:5 export * from "./policies/ERPPolicy";
+- $relative:6 export * from "./policies/ERPPolicyRegistry";
+- $relative:2 PolicyEngine
+- $relative:4 from "@/platform/policies/engine/PolicyEngine";
+- $relative:7 MaintenancePolicy
+- $relative:9 from "@/platform/policies/rules/MaintenancePolicy";
+- $relative:30 new PolicyEngine();
+- $relative:38 MaintenancePolicy
+- $relative:94 "[SECURITY] Policy denied"
+- $relative:5 export { runtimeRolePermissions } from "./RuntimePolicyRegistry";
+- $relative:6 export { RuntimePolicyEngine } from "./RuntimePolicyEngine";
+- $relative:3 import { RuntimePolicyEngine } from "./RuntimePolicyEngine";
+- $relative:15 return RuntimePolicyEngine.can(user, permission);
+- $relative:3 import { runtimeRolePermissions } from "./RuntimePolicyRegistry";
+- $relative:5 export class RuntimePolicyEngine {
+- $relative:22 return RuntimePolicyEngine.can(user, item.permission);
+- $relative:2 import { RuntimePolicyEngine } from "./RuntimePolicyEngine";
+- $relative:8 return RuntimePolicyEngine.can(user, "workflow.start");
+- $relative:14 return RuntimePolicyEngine.can(user, "workflow.transition");
+- $relative:20 return RuntimePolicyEngine.can(user, "workflow.validate");
+- $relative:132 policies.filter((policy) =>
+- $relative:133 policy.status === "ok"
+
+## Pattern: audit
+
+Matches: 332
+
+- $relative:7 type="audit"
+- $relative:8 actionLabel="Audit"
+- $relative:7 type="audit"
+- $relative:8 actionLabel="Audit"
+- $relative:7 type="audit"
+- $relative:8 actionLabel="Audit"
+- $relative:7 type="audit"
+- $relative:8 actionLabel="Audit"
+- $relative:7 type="audit"
+- $relative:8 actionLabel="Audit"
+- $relative:7 type="audit"
+- $relative:8 actionLabel="Audit"
+- $relative:7 type="audit"
+- $relative:8 actionLabel="Audit"
+- $relative:7 type="audit"
+- $relative:8 actionLabel="Audit"
+- $relative:7 type="audit"
+- $relative:8 actionLabel="Audit"
+- $relative:21 "audit_logs",
+- $relative:3 export function ERPAuditTrail() {
+- $relative:42 <p>3. Mise a jour de l'audit</p>
+- $relative:15 <ERPButton variant="ghost" type="button">Audit</ERPButton>
+- $relative:32 Actions globales connectables aux workflows, rÃ¨gles et audit.
+- $relative:37 <ERPButton variant="secondary" type="button">Journal audit</ERPButton>
+- $relative:5 "Audit",
+- $relative:36 label: "Audit",
+- $relative:23 <ERPStatCard label="Security" value={metrics.securityAudits} helper="Audit logs" />
+- $relative:24 ["Audit", snapshot.audit.length],
+- $relative:25 ["Security Audit", snapshot.securityAudit.length],
+- $relative:34 description="Repository runtime tenant-aware pour events, traces, alerts, workflows, queue jobs et audit."
+- $relative:6 type ERPSecurityAuditPanelProps = {
+- $relative:10 export function ERPSecurityAuditPanel({
+- $relative:12 }: ERPSecurityAuditPanelProps) {
+- $relative:17 Audit securite
+- $relative:24 {snapshot.audit.length === 0 ? (
+- $relative:26 title="Aucun audit"
+- $relative:31 {snapshot.audit.map((entry) => (
+- $relative:10 import { ERPSecurityAuditPanel } from "./ERPSecurityAuditPanel";
+- $relative:22 description="Roles, permissions, policies, guards, session runtime et audit securite."
+- $relative:30 <ERPSecurityAuditPanel snapshot={snapshot} />
+- $relative:18 <ERPStatCard label="Audit" value={snapshot.auditCount} helper="Controles traces" />
+- $relative:18 label: "Audit logs",
+- $relative:4 export * from "./ERPSecurityAuditPanel";
+- $relative:51 case "audit":
+- $relative:52 return "Audit";
+- $relative:22 <option>Vue audit</option>
+- $relative:12 const auditEnabled = module.metadata.features?.audit === true;
+- $relative:22 Actions operationnelles, workflows et audit discret.
+- $relative:28 {auditEnabled && <ERPBadge tone="success">Audit</ERPBadge>}
+- $relative:12 | "audit"
+- $relative:46 audit: GenericERPTemplate,
+- $relative:6 "Audit",
+- $relative:22 auditId?: string;
+- $relative:95 console.log("AUDIT ENTRY CREATED");
+- $relative:100 type: "audit",
+- $relative:104 "Audit runtime enregistré",
+- $relative:146 auditId:
+- $relative:147 `AUDIT-${Date.now()}`,
+- $relative:1 export type AuditEntry = {
+- $relative:7 export function createAuditEntry(
+- $relative:8 entry: AuditEntry
+- $relative:11 "ERP AUDIT ENTRY",
+- $relative:16 id: `AUDIT-${Date.now()}`,
+- $relative:20 type: "audit",
+- $relative:18 audit?: boolean;
+- $relative:137 audit:
+- $relative:139 module.metadata.features?.audit
+- $relative:15 | "audit"
+- $relative:76 audit: true,
+- $relative:68 audit: true,
+- $relative:68 audit: true,
+- $relative:42 audit?: boolean;
+- $relative:1 export type SecurityAuditEntry = {
+- $relative:28 const auditEntries:
+- $relative:29 SecurityAuditEntry[] = [];
+- $relative:31 export function logSecurityAudit(
+- $relative:33 SecurityAuditEntry,
+- $relative:37 const auditEntry:
+- $relative:38 SecurityAuditEntry = {
+- $relative:48 auditEntries.unshift(
+- $relative:49 auditEntry
+- $relative:53 "ERP SECURITY AUDIT",
+- $relative:54 auditEntry.type
+- $relative:57 return auditEntry;
+- $relative:60 export function getSecurityAudits() {
+- $relative:61 return auditEntries;
+- $relative:64 export function getAuditsByTenant(
+- $relative:67 return auditEntries.filter(
+- $relative:74 export function getAuditsByUser(
+- $relative:77 return auditEntries.filter(
+- $relative:13 export const AuditService = {
+- $relative:18 collection(db, "audit_logs"),
+- $relative:28 collection(db, "audit_logs"),
+- $relative:1 export interface AuditLog {
+- $relative:2 BaseAuditEntity,
+- $relative:18 BaseAuditEntity & {
+- $relative:2 BaseAuditEntity,
+- $relative:16 BaseAuditEntity & {
+- $relative:2 BaseAuditEntity,
+- $relative:10 BaseAuditEntity & {
+- $relative:3 import { useAuditEvents }
+- $relative:4 from "@/features/observability/hooks/useAuditEvents";
+- $relative:6 export const AuditTable =
+- $relative:10 useAuditEvents();
+- $relative:33 Audit Trail
+- $relative:9 AuditEvent,
+- $relative:10 } from "@/features/observability/types/AuditEvent";
+- $relative:12 import { AuditService }
+- $relative:13 from "@/features/observability/services/AuditService";
+- $relative:15 export function useAuditEvents() {
+- $relative:21 AuditEvent[]
+- $relative:29 await AuditService
+- $relative:2 AuditEvent,
+- $relative:3 } from "@/features/observability/types/AuditEvent";
+- $relative:6 AuditEvent[] = [];
+- $relative:8 export const AuditService = {
+- $relative:11 event: AuditEvent
+- $relative:25 "[AUDIT]",
+- $relative:33 Promise<AuditEvent[]> {
+- $relative:1 export type AuditSeverity =
+- $relative:6 export type AuditEvent = {
+- $relative:21 AuditSeverity;
+- $relative:2 BaseAuditEntity,
+- $relative:12 BaseAuditEntity & {
+- $relative:2 BaseAuditEntity,
+- $relative:7 BaseAuditEntity & {
+- $relative:1 // src/platform/audit/AuditTrail.ts
+- $relative:3 export class AuditTrail {
+- $relative:11 "[AUDIT]",
+- $relative:21 import { SecurityAudit }
+- $relative:22 from "@/platform/security/SecurityAudit";
+- $relative:69 SecurityAudit.log(
+- $relative:82 SecurityAudit.log(
+- $relative:112 SecurityAudit.log(
+- $relative:9 import { initializeERPAudit }
+- $relative:10 from "@/platform/workflows/ERPAudit";
+- $relative:27 initializeERPAudit();
+- $relative:1 // src/platform/rules/audit/RuleAudit.ts
+- $relative:3 export class RuleAudit {
+- $relative:13 "[RULE AUDIT]",
+- $relative:19 import { RuleAudit }
+- $relative:20 from "@/platform/rules/audit/RuleAudit";
+- $relative:91 RuleAudit.log(
+- $relative:111 RuleAudit.log(
+- $relative:1 // src/platform/security/SecurityAudit.ts
+- $relative:3 export class SecurityAudit {
+- $relative:13 "[SECURITY AUDIT]",
+- $relative:1 // src/platform/workflows/ERPAudit.ts
+- $relative:6 import { AuditTrail }
+- $relative:7 from "@/platform/audit/AuditTrail";
+- $relative:9 export function initializeERPAudit() {
+- $relative:26 AuditTrail.log(
+- $relative:9 | "audit"
+- $relative:21 case "audit":
+- $relative:22 toast.success("Consultation audit");
+- $relative:49 key: "audit",
+- $relative:50 label: "Audit",
+- $relative:51 href: `${basePath}/${safeId}/audit`,
+- $relative:39 key: "audit",
+- $relative:40 label: "Audit",
+- $relative:41 href: `${basePath}/audit`,
+- $relative:28 action: "AUDIT",
+- $relative:29 description: "Audit creation paiement.",
+- $relative:9 | "AUDIT"
+- $relative:39 { type: "audit", label: "Tracer relance automatique" },
+- $relative:62 { type: "audit", label: "Tracer modification produit" },
+- $relative:111 { type: "audit", label: "Tracer relance paiement" },
+- $relative:26 | "audit"
+- $relative:69 if (!module.auditEnabled) {
+- $relative:73 code: "AUDIT_DISABLED",
+- $relative:74 message: "Audit ERP dÃ©sactivÃ©.",
+- $relative:75 recommendation: "Activer auditEnabled.",
+- $relative:49 runtimeAuditRegistry,
+- $relative:50 } from "./RuntimeAuditRegistry";
+- $relative:137 getRuntimeAudit() {
+- $relative:138 return runtimeAuditRegistry.getEntries();
+- $relative:1 export interface RuntimeAuditEntry {
+- $relative:16 export class RuntimeAuditRegistry {
+- $relative:19 RuntimeAuditEntry[] = [];
+- $relative:22 entry: RuntimeAuditEntry
+- $relative:49 export const runtimeAuditRegistry =
+- $relative:50 new RuntimeAuditRegistry();
+- $relative:18 | "audit"
+- $relative:12 | "audit";
+- $relative:4 | "audit";
+- $relative:16 | "audit"
+- $relative:257 category: "audit",
+- $relative:275 severity: "audit",
+- $relative:318 severity: "audit",
+- $relative:344 severity: "audit",
+- $relative:366 code: "AUDIT_SENSITIVE_ACTIONS",
+- $relative:367 label: "Audit des actions sensibles",
+- $relative:368 module: "audit",
+- $relative:369 category: "audit",
+- $relative:370 severity: "audit",
+- $relative:371 description: "Toute action sensible doit Ãªtre auditÃ©e : contrat, paiement, stock, suppression, statut.",
+- $relative:36 severity: "audit",
+- $relative:42 severity: "audit",
+- $relative:48 severity: "audit",
+- $relative:60 severity: "audit",
+- $relative:25 id: "workflow-completed-to-audit",
+- $relative:28 handlerLabel: "Tracer audit exploitation",
+- $relative:23 collection(db, "audit_logs"),
+- $relative:56 "audit",
+- $relative:65 audit: true,
+- $relative:131 audit: true,
+- $relative:171 audit: true,
+- $relative:215 audit: true,
+- $relative:256 audit: true,
+- $relative:295 audit: true,
+- $relative:4 export class ERPModuleAuditor {
+- $relative:6 static audit() {
+- $relative:33 audit?: boolean;
+- $relative:57 auditEnabled?: boolean;
+- $relative:4 import { ERPSecurityAuditStore } from "@/runtime/security";
+- $relative:10 const denied = ERPSecurityAuditStore.denied();
+- $relative:8 securityAudits: number;
+- $relative:7 import { ERPSecurityAuditStore } from "@/runtime/security";
+- $relative:25 securityAudits: ERPSecurityAuditStore.all().length,
+- $relative:7 erpRuntimeAuditTrail,
+- $relative:8 } from "./ERPRuntimeAuditTrail";
+- $relative:10 export class ERPRuntimeAuditBridge {
+- $relative:19 erpRuntimeAuditTrail
+- $relative:43 export const erpRuntimeAuditBridge =
+- $relative:44 new ERPRuntimeAuditBridge();
+- $relative:1 export interface ERPAuditEntry {
+- $relative:17 export class ERPRuntimeAuditTrail {
+- $relative:20 ERPAuditEntry[] = [];
+- $relative:23 entry: ERPAuditEntry
+- $relative:47 export const erpRuntimeAuditTrail =
+- $relative:48 new ERPRuntimeAuditTrail();
+- $relative:1 export * from "./ERPRuntimeAuditTrail";
+- $relative:2 export * from "./ERPRuntimeAuditBridge";
+- $relative:14 import { AuditStream }
+- $relative:15 from "../os/audit/AuditStream";
+- $relative:32 private audit =
+- $relative:33 new AuditStream();
+- $relative:59 this.audit.log(
+- $relative:22 PersistentAuditStream
+- $relative:24 from "../os/audit/PersistentAuditStream";
+- $relative:41 private audit =
+- $relative:42 new PersistentAuditStream();
+- $relative:68 await this.audit.log(
+- $relative:1 export class AuditStream {
+- $relative:9 "[Audit]",
+- $relative:2 AuditRepository
+- $relative:4 from "../../persistence/audit/AuditRepository";
+- $relative:7 PersistentAuditStream {
+- $relative:10 new AuditRepository();
+- $relative:23 "[PersistentAudit]",
+- $relative:35 id: "audit",
+- $relative:36 label: "Consulter les audits",
+- $relative:38 href: "/exploitations/audit",
+- $relative:4 workspaceMode: "operations" | "direction" | "audit";
+- $relative:10 export class AuditRepository {
+- $relative:13 audit: unknown
+- $relative:19 "runtime_audit"
+- $relative:22 audit,
+- $relative:12 audit,
+- $relative:13 securityAudit,
+- $relative:20 ERPRuntimePersistenceService.audit.list(),
+- $relative:21 ERPRuntimePersistenceService.securityAudit.list(),
+- $relative:30 audit,
+- $relative:31 securityAudit,
+- $relative:38 audit.length +
+- $relative:39 securityAudit.length,
+- $relative:7 audit: "runtime_audit",
+- $relative:8 securityAudit: "runtime_security_audit",
+- $relative:35 audit:
+- $relative:37 ERPPersistenceCollections.audit
+- $relative:40 securityAudit:
+- $relative:42 ERPPersistenceCollections.securityAudit
+- $relative:43 await ERPRuntimePersistenceService.audit.save({
+- $relative:49 await ERPRuntimePersistenceService.securityAudit.save({
+- $relative:51 action: "audit",
+- $relative:19 key: "audit-log-backup",
+- $relative:20 label: "Audit Log Backup",
+- $relative:21 target: "security and business audit",
+- $relative:8 description: "Les variables env existent mais doivent etre auditees.",
+- $relative:1 export type ERPSecurityAuditLevel =
+- $relative:6 export type ERPSecurityAuditEntry = {
+- $relative:13 level: ERPSecurityAuditLevel;
+- $relative:1 import type { ERPSecurityAuditEntry } from "./ERPSecurityAuditLog";
+- $relative:3 class ERPSecurityAuditStoreClass {
+- $relative:4 private entries: ERPSecurityAuditEntry[] = [];
+- $relative:6 add(entry: ERPSecurityAuditEntry) {
+- $relative:20 export const ERPSecurityAuditStore =
+- $relative:21 new ERPSecurityAuditStoreClass();
+- $relative:6 import { ERPSecurityAuditStore } from "../audit/ERPSecurityAuditStore";
+- $relative:28 ERPSecurityAuditStore.add({
+- $relative:29 id: createId("sec_audit"),
+- $relative:9 | "audit"
+- $relative:12 "audit",
+- $relative:12 "audit",
+- $relative:23 "audit",
+- $relative:14 ERPAccessGuard.can("paiements", "audit");
+- $relative:4 import { ERPSecurityAuditStore } from "./audit/ERPSecurityAuditStore";
+- $relative:8 const audit = ERPSecurityAuditStore.all();
+- $relative:15 audit,
+- $relative:16 denied: ERPSecurityAuditStore.denied(),
+- $relative:20 auditCount: audit.length,
+- $relative:21 deniedCount: ERPSecurityAuditStore.denied().length,
+- $relative:9 export * from "./audit/ERPSecurityAuditLog";
+- $relative:10 export * from "./audit/ERPSecurityAuditStore";
+- $relative:25 case "audit":
+- $relative:26 return "audit.read";
+- $relative:11 | "audit.read"
+- $relative:15 "audit.read",
+- $relative:28 "audit.read",
+- $relative:43 "audit.read",
+- $relative:8 id: `${module.metadata.key}-audit-review`,
+- $relative:10 title: "Verifier l'audit recent",
+- $relative:13 actionLabel: "Ouvrir audit",
+- $relative:24 tabs: ["Vue generale", "Liste", "Activite", "Workflows", "Audit"],
+- $relative:14 export { WorkflowRuntimeAudit } from "./WorkflowRuntimeAudit";
+- $relative:3 export class WorkflowRuntimeAudit {
+- $relative:5 console.log("WORKFLOW AUDIT", {
+- $relative:4 import { WorkflowRuntimeAudit } from "./WorkflowRuntimeAudit";
+- $relative:16 WorkflowRuntimeAudit.log(instance, "Workflow demarre");
+- $relative:67 WorkflowRuntimeAudit.log(instance, transition.label);
+- $relative:1 export const AuditService = {
+- $relative:10 "[AUDIT]",
+- $relative:9 export type BaseAuditEntity =
+- $relative:17 "audit",
+- $relative:39 "audit",
+- $relative:61 "audit",
+- $relative:83 "audit",
+- $relative:105 "audit",
+- $relative:127 "audit",
+- $relative:149 "audit",
+- $relative:171 "audit",
+- $relative:195 "audit",
+
+## Pattern: metrics
+
+Matches: 311
+
+- $relative:2 static async buildDashboardMetrics() {
+- $relative:5 const metrics =
+- $relative:6 await AggregationService.buildDashboardMetrics();
+- $relative:9 metrics,
+- $relative:2 async buildDashboardMetrics() {
+- $relative:6 import { OperationsMetrics }
+- $relative:7 from "@/components/operations/OperationsMetrics";
+- $relative:94 <OperationsMetrics
+- $relative:4 import { ERPAIMetricsGrid } from "./ERPAIMetricsGrid";
+- $relative:21 <ERPAIMetricsGrid snapshot={snapshot} />
+- $relative:10 export function ERPAIMetricsGrid({
+- $relative:15 <ERPStatCard label="Insights" value={snapshot.metrics.insights} helper="Runtime intelligence" />
+- $relative:16 <ERPStatCard label="Recommendations" value={snapshot.metrics.recommendations} helper="AI guidance" />
+- $relative:17 <ERPStatCard label="Anomalies" value={snapshot.metrics.anomalies} helper="Detection" />
+- $relative:18 <ERPStatCard label="Search" value={snapshot.metrics.searchResults} helper="Semantic results" />
+- $relative:1 export * from "./ERPAIMetricsGrid";
+- $relative:6 getMetrics,
+- $relative:7 } from "@/core/metrics/metrics-engine";
+- $relative:31 const metrics =
+- $relative:32 getMetrics();
+- $relative:183 {metrics.processedJobs}
+- $relative:193 {metrics.failedJobs}
+- $relative:203 {metrics.retriedJobs}
+- $relative:491 {metrics.processedJobs}
+- $relative:501 {metrics.failedJobs}
+- $relative:511 {metrics.retriedJobs}
+- $relative:19 interface ERPDashboardMetricsProps {
+- $relative:21 metrics:
+- $relative:25 export function ERPDashboardMetrics({
+- $relative:26 metrics,
+- $relative:27 }: ERPDashboardMetricsProps) {
+- $relative:37 metrics.map(
+- $relative:1 export * from "./ERPDashboardMetrics";
+- $relative:4 const metrics = EnterpriseRuntimePerformance.metrics();
+- $relative:8 {metrics.map((metric) => (
+- $relative:5 const metrics = [
+- $relative:28 {metrics.map((metric) => (
+- $relative:4 import { ERPMonitoringMetricsGrid } from "./ERPMonitoringMetricsGrid";
+- $relative:17 description="Health checks, topology, runtime metrics, dependency graph et error analytics."
+- $relative:20 <ERPMonitoringMetricsGrid snapshot={snapshot} />
+- $relative:10 export function ERPMonitoringMetricsGrid({
+- $relative:13 const metrics = snapshot.metrics;
+- $relative:17 <ERPStatCard label="Modules" value={metrics.modules} helper="Registry" />
+- $relative:18 <ERPStatCard label="Tenants" value={metrics.tenants} helper="SaaS runtime" />
+- $relative:19 <ERPStatCard label="Workers" value={metrics.workers} helper="Execution" />
+- $relative:20 <ERPStatCard label="Workflows" value={metrics.workflows} helper="Instances" />
+- $relative:21 <ERPStatCard label="Queue" value={metrics.queueJobs} helper="Jobs" />
+- $relative:22 <ERPStatCard label="Realtime" value={metrics.realtimeMessages} helper="Messages" />
+- $relative:23 <ERPStatCard label="Security" value={metrics.securityAudits} helper="Audit logs" />
+- $relative:1 export * from "./ERPMonitoringMetricsGrid";
+- $relative:8 const metrics = [
+- $relative:35 {metrics.map((metric) => (
+- $relative:4 import { ERPProductionMetricsGrid } from "./ERPProductionMetricsGrid";
+- $relative:20 <ERPProductionMetricsGrid snapshot={snapshot} />
+- $relative:10 export function ERPProductionMetricsGrid({ snapshot }: Props) {
+- $relative:11 const metrics = snapshot.metrics;
+- $relative:15 <ERPStatCard label="Readiness" value={`${metrics.readinessScore}%`} helper="Production score" />
+- $relative:16 <ERPStatCard label="Policies" value={metrics.policies} helper={`${metrics.okPolicies} OK`} />
+- $relative:17 <ERPStatCard label="Quotas" value={metrics.quotas} helper="Tenant limits" />
+- $relative:18 <ERPStatCard label="Rate Limits" value={metrics.limits} helper="Runtime limits" />
+- $relative:19 <ERPStatCard label="Backups" value={metrics.backups} helper={`${metrics.configuredBackups} configured`} />
+- $relative:20 <ERPStatCard label="Cloud Checks" value={metrics.cloudChecks} helper={`${metrics.readyCloud} ready`} />
+- $relative:1 export * from "./ERPProductionMetricsGrid";
+- $relative:29 value={`${snapshot.metrics.readinessScore}%`}
+- $relative:35 value={snapshot.metrics.policies}
+- $relative:36 helper={`${snapshot.metrics.okPolicies} OK`}
+- $relative:41 value={snapshot.metrics.cloudChecks}
+- $relative:42 helper={`${snapshot.metrics.readyCloud} ready`}
+- $relative:47 value={snapshot.metrics.backups}
+- $relative:48 helper={`${snapshot.metrics.configuredBackups} configured`}
+- $relative:6 type ERPRealtimeMetricsProps = {
+- $relative:10 export function ERPRealtimeMetrics({
+- $relative:12 }: ERPRealtimeMetricsProps) {
+- $relative:7 import { ERPRealtimeMetrics } from "./ERPRealtimeMetrics";
+- $relative:24 <ERPRealtimeMetrics snapshot={snapshot} />
+- $relative:1 export * from "./ERPRealtimeMetrics";
+- $relative:8 export function ERPResilienceMetrics() {
+- $relative:4 import { ERPResilienceMetrics } from "./ERPResilienceMetrics";
+- $relative:19 <ERPResilienceMetrics />
+- $relative:1 export * from "./ERPResilienceMetrics";
+- $relative:18 interface ERPRuntimeMetricsPanelProps {
+- $relative:20 metrics:
+- $relative:24 export function ERPRuntimeMetricsPanel({
+- $relative:25 metrics,
+- $relative:26 }: ERPRuntimeMetricsPanelProps) {
+- $relative:31 title="Runtime Metrics"
+- $relative:41 metrics.map(
+- $relative:13 ERPRuntimeMetricsPanel,
+- $relative:43 <ERPRuntimeMetricsPanel
+- $relative:44 metrics={[
+- $relative:5 export * from "./ERPRuntimeMetricsPanel";
+- $relative:7 import { ERPSecurityMetrics } from "./ERPSecurityMetrics";
+- $relative:25 <ERPSecurityMetrics snapshot={snapshot} />
+- $relative:6 type ERPSecurityMetricsProps = {
+- $relative:10 export function ERPSecurityMetrics({
+- $relative:12 }: ERPSecurityMetricsProps) {
+- $relative:1 export * from "./ERPSecurityMetrics";
+- $relative:11 ERPStreamsMetricsGrid,
+- $relative:12 } from "./ERPStreamsMetricsGrid";
+- $relative:38 <ERPStreamsMetricsGrid
+- $relative:18 export function ERPStreamsMetricsGrid({
+- $relative:22 const metrics =
+- $relative:23 snapshot.metrics;
+- $relative:30 value={metrics.totalStreams}
+- $relative:36 value={metrics.totalEvents}
+- $relative:42 value={metrics.criticalEvents}
+- $relative:48 value={metrics.activeChannels}
+- $relative:1 export * from "./ERPStreamsMetricsGrid";
+- $relative:11 ERPTenantMetricsGrid,
+- $relative:12 } from "./ERPTenantMetricsGrid";
+- $relative:19 ERPTenantMetricsPanel,
+- $relative:20 } from "./ERPTenantMetricsPanel";
+- $relative:38 <ERPTenantMetricsGrid
+- $relative:48 <ERPTenantMetricsPanel
+- $relative:16 export function ERPTenantMetricsGrid({
+- $relative:19 export function ERPTenantMetricsPanel({
+- $relative:23 const metrics =
+- $relative:24 snapshot.currentMetrics;
+- $relative:32 Tenant Metrics
+- $relative:41 {!metrics ? (
+- $relative:55 {metrics.activeUsers}
+- $relative:62 {metrics.workflows}
+- $relative:69 {metrics.automations}
+- $relative:76 {metrics.storage}%
+- $relative:1 export * from "./ERPTenantMetricsGrid";
+- $relative:3 export * from "./ERPTenantMetricsPanel";
+- $relative:11 ERPTestingMetricsGrid,
+- $relative:12 } from "./ERPTestingMetricsGrid";
+- $relative:38 <ERPTestingMetricsGrid
+- $relative:18 export function ERPTestingMetricsGrid({
+- $relative:1 export * from "./ERPTestingMetricsGrid";
+- $relative:11 ERPWorkersMetricsGrid,
+- $relative:12 } from "./ERPWorkersMetricsGrid";
+- $relative:42 <ERPWorkersMetricsGrid
+- $relative:18 export function ERPWorkersMetricsGrid({
+- $relative:22 const metrics =
+- $relative:23 snapshot.metrics;
+- $relative:30 value={metrics.activeWorkers}
+- $relative:36 value={metrics.completedJobs}
+- $relative:42 value={metrics.failedJobs}
+- $relative:48 value={metrics.scheduledTasks}
+- $relative:1 export * from "./ERPWorkersMetricsGrid";
+- $relative:1 // src/components/operations/OperationsMetrics.tsx
+- $relative:3 interface OperationsMetricsProps {
+- $relative:12 export function OperationsMetrics({
+- $relative:19 }: OperationsMetricsProps) {
+- $relative:3 } from "@/core/metrics/metrics-engine";
+- $relative:1 export type ERPMetrics = {
+- $relative:15 const metrics:
+- $relative:16 ERPMetrics = {
+- $relative:31 key: keyof ERPMetrics
+- $relative:33 metrics[key] += 1;
+- $relative:38 metrics[key]
+- $relative:42 export function getMetrics() {
+- $relative:43 return metrics;
+- $relative:12 runtimeMetrics?: boolean;
+- $relative:45 runtimeMetrics: true,
+- $relative:70 runtimeMetrics: true,
+- $relative:87 "erp_runtime_metrics"
+- $relative:93 async loadMetrics() {
+- $relative:98 "erp_runtime_metrics"
+- $relative:34 loadMetrics(): Promise<
+- $relative:3 } from "@/core/metrics/metrics-engine";
+- $relative:3 } from "@/core/metrics/metrics-engine";
+- $relative:3 } from "@/core/metrics/metrics-engine";
+- $relative:4 metrics: any
+- $relative:18 metrics,
+- $relative:14 const [metrics, setMetrics] =
+- $relative:23 .getMetrics();
+- $relative:25 setMetrics(data);
+- $relative:32 if (!metrics) {
+- $relative:40 value: metrics.users,
+- $relative:44 value: metrics.activeUsers,
+- $relative:48 value: metrics.products,
+- $relative:52 value: metrics.stocks,
+- $relative:56 value: metrics.exploitations,
+- $relative:60 value: metrics.alerts,
+- $relative:14 const [metrics, setMetrics] =
+- $relative:23 .getMetrics();
+- $relative:25 setMetrics(data);
+- $relative:32 if (!metrics) {
+- $relative:78 {metrics.plan}
+- $relative:93 metrics.limits.maxUsers
+- $relative:109 metrics.limits.analytics
+- $relative:6 async getMetrics() {
+- $relative:2 RuntimeMetricsPanel() {
+- $relative:21 Runtime Metrics
+- $relative:7 import RuntimeMetricsPanel
+- $relative:8 from "../components/runtime/RuntimeMetricsPanel";
+- $relative:27 <RuntimeMetricsPanel />
+- $relative:1 import RuntimeMetricsPanel
+- $relative:2 from "../components/runtime/RuntimeMetricsPanel";
+- $relative:27 <RuntimeMetricsPanel />
+- $relative:1 // src/features/platform-monitoring/components/graphs/MetricsPanel.tsx
+- $relative:7 metrics:
+- $relative:11 export function MetricsPanel({
+- $relative:12 metrics
+- $relative:20 Metrics
+- $relative:25 {Object.entries(metrics)
+- $relative:6 import { MetricsRegistry }
+- $relative:7 from "@/platform/observability/MetricsRegistry";
+- $relative:57 MetricsRegistry.increment(
+- $relative:3 import { MetricsRegistry }
+- $relative:4 from "@/platform/observability/MetricsRegistry";
+- $relative:10 const metrics =
+- $relative:11 MetricsRegistry
+- $relative:12 .getMetrics();
+- $relative:16 of Object.entries(metrics)
+- $relative:6 import { MetricsRegistry }
+- $relative:7 from "@/platform/observability/MetricsRegistry";
+- $relative:22 metrics:
+- $relative:23 MetricsRegistry
+- $relative:24 .getMetrics(),
+- $relative:1 // src/platform/observability/MetricsRegistry.ts
+- $relative:3 class MetricsRegistryManager {
+- $relative:25 getMetrics() {
+- $relative:31 export const MetricsRegistry =
+- $relative:32 new MetricsRegistryManager();
+- $relative:23 if (monitoring.metrics.healthCritical > 0) {
+- $relative:29 metrics: {
+- $relative:10 import { RuntimeMetrics }
+- $relative:11 from "../metrics/RuntimeMetrics";
+- $relative:47 const metrics =
+- $relative:48 new RuntimeMetrics();
+- $relative:82 metrics,
+- $relative:23 metrics:
+- $relative:24 !!runtime.metrics,
+- $relative:10 export class RuntimeMetricsRegistry {
+- $relative:12 private metrics:
+- $relative:19 this.metrics.push(metric);
+- $relative:22 getMetrics() {
+- $relative:24 return this.metrics;
+- $relative:31 return this.metrics.filter(
+- $relative:38 export const runtimeMetricsRegistry =
+- $relative:39 new RuntimeMetricsRegistry();
+- $relative:5 metrics: string[];
+- $relative:2 static metrics() {
+- $relative:1 export class RuntimeMetrics {
+- $relative:1 export type ERPMonitoringMetrics = {
+- $relative:45 { from: "workers", to: "monitoring", label: "metrics" },
+- $relative:18 metrics: {
+- $relative:3 export * from "./metrics/ERPMonitoringMetrics";
+- $relative:29 metrics: {
+- $relative:29 .metrics
+- $relative:2 LiveMetricsStream {
+- $relative:10 ERPStreamMetricsStore,
+- $relative:11 } from "../metrics/ERPStreamMetricsStore";
+- $relative:54 this.refreshMetrics();
+- $relative:59 refreshMetrics() {
+- $relative:64 ERPStreamMetricsStore.set({
+- $relative:1 export type ERPStreamMetrics = {
+- $relative:8 let metrics: ERPStreamMetrics = {
+- $relative:15 export const ERPStreamMetricsStore = {
+- $relative:18 next: ERPStreamMetrics
+- $relative:21 metrics = next;
+- $relative:26 return metrics;
+- $relative:43 ERPRealtimeGateway.refreshMetrics();
+- $relative:10 ERPStreamMetricsStore,
+- $relative:11 } from "./metrics/ERPStreamMetricsStore";
+- $relative:23 metrics:
+- $relative:24 ERPStreamMetricsStore.get(),
+- $relative:8 export * from "./metrics/ERPStreamMetricsStore";
+- $relative:1 export type ERPTenantMetrics = {
+- $relative:2 ERPTenantMetrics,
+- $relative:3 } from "./ERPTenantMetrics";
+- $relative:5 class ERPTenantMetricsStoreClass {
+- $relative:7 private metrics:
+- $relative:8 ERPTenantMetrics[] = [];
+- $relative:11 metrics: ERPTenantMetrics
+- $relative:15 this.metrics.some(
+- $relative:17 item.tenantId === metrics.tenantId
+- $relative:22 this.metrics =
+- $relative:23 this.metrics.map(
+- $relative:25 item.tenantId === metrics.tenantId
+- $relative:26 ? metrics
+- $relative:33 this.metrics.push(metrics);
+- $relative:38 return this.metrics;
+- $relative:45 return this.metrics.find(
+- $relative:52 export const ERPTenantMetricsStore =
+- $relative:53 new ERPTenantMetricsStoreClass();
+- $relative:2 ERPTenantMetricsStore,
+- $relative:3 } from "./metrics/ERPTenantMetricsStore";
+- $relative:15 ERPTenantMetricsStore.set({
+- $relative:25 ERPTenantMetricsStore.set({
+- $relative:35 ERPTenantMetricsStore.set({
+- $relative:10 ERPTenantMetricsStore,
+- $relative:11 } from "./metrics/ERPTenantMetricsStore";
+- $relative:25 metrics:
+- $relative:26 ERPTenantMetricsStore.all(),
+- $relative:28 currentMetrics:
+- $relative:29 ERPTenantMetricsStore.byTenant(
+- $relative:6 export * from "./metrics/ERPTenantMetrics";
+- $relative:7 export * from "./metrics/ERPTenantMetricsStore";
+- $relative:14 ERPWorkerMetricsStore,
+- $relative:15 } from "../metrics/ERPWorkerMetricsStore";
+- $relative:66 this.refreshMetrics();
+- $relative:71 refreshMetrics() {
+- $relative:79 ERPWorkerMetricsStore.set({
+- $relative:1 export type ERPWorkerMetrics = {
+- $relative:9 let metrics: ERPWorkerMetrics = {
+- $relative:17 export const ERPWorkerMetricsStore = {
+- $relative:20 next: ERPWorkerMetrics
+- $relative:23 metrics = next;
+- $relative:28 return metrics;
+- $relative:34 ERPWorkerEngine.refreshMetrics();
+- $relative:14 ERPWorkerMetricsStore,
+- $relative:15 } from "./metrics/ERPWorkerMetricsStore";
+- $relative:30 metrics:
+- $relative:31 ERPWorkerMetricsStore.get(),
+- $relative:5 export * from "./metrics/ERPWorkerMetricsStore";
+- $relative:148 metrics: {
+
+## Pattern: trace
+
+Matches: 82
+
+- $relative:15 ERPTracesPanel,
+- $relative:16 } from "./ERPTracesPanel";
+- $relative:32 description="Timeline centralisee des events, traces et alertes runtime."
+- $relative:56 Traces
+- $relative:61 <ERPTracesPanel />
+- $relative:5 export function ERPTracesPanel() {
+- $relative:7 const traces =
+- $relative:8 ERPObservabilityTimeline.traces();
+- $relative:13 {traces.map((trace) => (
+- $relative:16 key={trace.traceId}
+- $relative:25 {trace.action}
+- $relative:29 {trace.module}
+- $relative:38 trace.status === "success"
+- $relative:40 : trace.status === "warning"
+- $relative:46 {trace.status}
+- $relative:3 export * from "./ERPTracesPanel";
+- $relative:20 ["Traces", snapshot.traces.length],
+- $relative:34 description="Repository runtime tenant-aware pour events, traces, alerts, workflows, queue jobs et audit."
+- $relative:20 Traces des controles d'acces runtime.
+- $relative:18 <ERPStatCard label="Audit" value={snapshot.auditCount} helper="Controles traces" />
+- $relative:17 description="Orchestration des processus metier, executions, timelines, events et traces runtime."
+- $relative:39 { type: "audit", label: "Tracer relance automatique" },
+- $relative:62 { type: "audit", label: "Tracer modification produit" },
+- $relative:111 { type: "audit", label: "Tracer relance paiement" },
+- $relative:28 handlerLabel: "Tracer audit exploitation",
+- $relative:6 ERPTraceStore,
+- $relative:7 } from "../traces/ERPTraceStore";
+- $relative:20 traces() {
+- $relative:22 return ERPTraceStore.all();
+- $relative:1 export type ERPTrace = {
+- $relative:2 traceId: string;
+- $relative:2 ERPTrace,
+- $relative:3 } from "./ERPTrace";
+- $relative:5 class ERPTraceStoreClass {
+- $relative:7 private traces:
+- $relative:8 ERPTrace[] = [];
+- $relative:11 trace: ERPTrace
+- $relative:14 this.traces.unshift(trace);
+- $relative:16 this.traces =
+- $relative:17 this.traces.slice(0, 200);
+- $relative:22 return this.traces;
+- $relative:26 export const ERPTraceStore =
+- $relative:27 new ERPTraceStoreClass();
+- $relative:8 traceId?: string;
+- $relative:33 static traces() {
+- $relative:6 ERPTraceStore,
+- $relative:7 } from "./traces/ERPTraceStore";
+- $relative:40 ERPTraceStore.add({
+- $relative:41 traceId: "trace_1",
+- $relative:49 ERPTraceStore.add({
+- $relative:50 traceId: "trace_2",
+- $relative:5 export interface ERPTraceItem
+- $relative:7 traceId?: string;
+- $relative:11 export class ERPTraceStore {
+- $relative:12 private static items: ERPTraceItem[] = [];
+- $relative:18 static traces() {
+- $relative:22 static add(item: ERPTraceItem) {
+- $relative:31 export const erpTraceStore =
+- $relative:32 new ERPTraceStore();
+- $relative:6 export * from "./ERPTraceStore";
+- $relative:37 description: "Verifier les traces operationnelles.",
+- $relative:8 traces,
+- $relative:16 ERPRuntimePersistenceService.traces.list(),
+- $relative:26 traces,
+- $relative:34 traces.length +
+- $relative:3 traces: "runtime_traces",
+- $relative:15 traces:
+- $relative:17 ERPPersistenceCollections.traces
+- $relative:20 await ERPRuntimePersistenceService.traces.save({
+- $relative:6 ERPTraceStore,
+- $relative:109 ERPTraceStore.add({
+- $relative:110 traceId: createId("trace_queue"),
+- $relative:153 ERPTraceStore.add({
+- $relative:154 traceId: createId("trace_retry"),
+- $relative:1 export class ExecutionTrace {
+- $relative:3 trace(
+- $relative:9 "[Trace]",
+- $relative:6 ERPTraceStore,
+- $relative:82 ERPTraceStore.add({
+- $relative:83 traceId: createId("trace_workflow"),
+- $relative:135 ERPTraceStore.add({
+- $relative:136 traceId: createId("trace_workflow"),
+
+## Pattern: observability
+
+Matches: 135
+
+- $relative:2 ERPRuntimeObservabilityDashboard,
+- $relative:3 } from "@/components/erp/observability";
+- $relative:8 <ERPRuntimeObservabilityDashboard />
+- $relative:97 Observability, supervision, runtime timeline,
+- $relative:16 title="Advanced Observability"
+- $relative:12 ["Observability", "warning"],
+- $relative:2 ERPObservabilityTimeline,
+- $relative:3 } from "@/runtime/observability";
+- $relative:8 ERPObservabilityTimeline.alerts();
+- $relative:2 ERPObservabilityTimeline,
+- $relative:3 } from "@/runtime/observability";
+- $relative:8 ERPObservabilityTimeline.events();
+- $relative:6 export function ERPObservabilityCenter() {
+- $relative:7 seedERPRuntimeObservability,
+- $relative:8 } from "@/runtime/observability";
+- $relative:22 seedERPRuntimeObservability();
+- $relative:24 export function ERPRuntimeObservabilityDashboard() {
+- $relative:30 eyebrow="ERP Observability"
+- $relative:2 ERPObservabilityTimeline,
+- $relative:3 } from "@/runtime/observability";
+- $relative:8 ERPObservabilityTimeline.traces();
+- $relative:7 export * from "./ERPRuntimeObservabilityDashboard";
+- $relative:18 name: "Observability",
+- $relative:35 description="Live runtime streams, realtime events, workers feeds et observability timeline."
+- $relative:35 description="Validation runtime, workflows, workers, securite, multi-tenant et observability."
+- $relative:20 name: "observability-worker",
+- $relative:15 ["Observability", "/observability"],
+- $relative:144 module.metadata.features?.observability
+- $relative:30 "observability",
+- $relative:30 "observability",
+- $relative:19 "observability",
+- $relative:4 from "@/features/observability/hooks/useAuditEvents";
+- $relative:10 } from "@/features/observability/types/AuditEvent";
+- $relative:13 from "@/features/observability/services/AuditService";
+- $relative:7 import { RuntimeObservabilityService }
+- $relative:8 from "../services/RuntimeObservabilityService";
+- $relative:20 new RuntimeObservabilityService();
+- $relative:19 export class LiveObservabilityService {
+- $relative:3 } from "@/features/observability/types/AuditEvent";
+- $relative:4 export class RuntimeObservabilityService {
+- $relative:1 export const observabilityStore = {
+- $relative:16 LiveObservabilityService
+- $relative:18 from "../../services/live/LiveObservabilityService";
+- $relative:31 new LiveObservabilityService();
+- $relative:6 export const ObservabilityFeature:
+- $relative:10 "observability",
+- $relative:13 "Observability",
+- $relative:22 "/observability",
+- $relative:30 "observability",
+- $relative:2 from "../../../observability/widgets/live/LiveEventStream";
+- $relative:2 from "../../../observability/widgets/live/EventReplayConsole";
+- $relative:2 from "../../observability/dashboards/LiveRuntimeDashboard";
+- $relative:30 "observability",
+- $relative:11 from "@/runtime/observability/RuntimeLogsPanel";
+- $relative:30 "observability",
+- $relative:30 "observability",
+- $relative:46 ObservabilityFeature
+- $relative:48 from "@/features/observability/observability.feature";
+- $relative:67 if (module.metadata.features?.observability) {
+- $relative:68 capabilities.push("observability");
+- $relative:134 ObservabilityFeature,
+- $relative:4 from "@/platform/observability/EventStore";
+- $relative:7 from "@/platform/observability/MetricsRegistry";
+- $relative:4 from "@/platform/observability/MetricsRegistry";
+- $relative:7 from "@/platform/observability/MetricsRegistry";
+- $relative:10 from "@/platform/observability/EventStore";
+- $relative:1 // src/platform/observability/ERPLogger.ts
+- $relative:1 // src/platform/observability/EventStore.ts
+- $relative:1 // src/platform/observability/MetricsRegistry.ts
+- $relative:7 | "observability"
+- $relative:24 "observability",
+- $relative:61 "observability",
+- $relative:23 } from "@/runtime/observability";
+- $relative:89 if (!module.observabilityEnabled) {
+- $relative:93 code: "OBSERVABILITY_DISABLED",
+- $relative:95 recommendation: "Activer observabilityEnabled.",
+- $relative:26 | "observability";
+- $relative:1 export interface RuntimeObservabilityEntry {
+- $relative:12 export class RuntimeObservabilityRegistry {
+- $relative:17 RuntimeObservabilityEntry
+- $relative:21 entry: RuntimeObservabilityEntry
+- $relative:30 getModuleObservability(
+- $relative:47 export const runtimeObservabilityRegistry =
+- $relative:48 new RuntimeObservabilityRegistry();
+- $relative:9 "observability",
+- $relative:18 RuntimeObservabilityEngine,
+- $relative:19 } from "@/runtime/observability/RuntimeObservabilityEngine";
+- $relative:39 observabilityEngine?: RuntimeBridgeTarget;
+- $relative:183 observabilityEngine:
+- $relative:184 dependencies.observabilityEngine ??
+- $relative:185 RuntimeObservabilityEngine,
+- $relative:218 resolvedDependencies.observabilityEngine,
+- $relative:286 await resolvedDependencies.observabilityEngine?.log?.({
+- $relative:60 "observability",
+- $relative:214 observability: true,
+- $relative:32 observability?: boolean;
+- $relative:59 observabilityEnabled?: boolean;
+- $relative:1 import { ERPAlertStore } from "@/runtime/observability";
+- $relative:24 { id: "observability", label: "Observability", group: "runtime" },
+- $relative:37 { from: "events", to: "observability", label: "timeline" },
+- $relative:9 from "../../features/observability/stores/live/liveEventStore";
+- $relative:11 LiveObservabilityService
+- $relative:13 from "../../features/observability/services/live/LiveObservabilityService";
+- $relative:18 new LiveObservabilityService();
+- $relative:13 export const ERPObservabilityTimeline = {
+- $relative:5 export interface ERPObservabilityTimelineItem
+- $relative:13 export class ERPObservabilityTimeline {
+- $relative:16 ERPObservabilityTimelineItem[] = [];
+- $relative:40 ERPObservabilityTimelineItem
+- $relative:15 export function seedERPRuntimeObservability() {
+- $relative:3 export * from "./ERPObservabilityTimeline";
+- $relative:4 export * from "./seedERPRuntimeObservability";
+- $relative:14 from "@/runtime/observability/RuntimeLog";
+- $relative:16 export class RuntimeObservabilityEngine {
+- $relative:2 ERPObservabilityTimeline,
+- $relative:3 } from "./ERPObservabilityTimeline";
+- $relative:5 export function seedERPRuntimeObservability() {
+- $relative:6 ERPObservabilityTimeline.add({
+- $relative:7 id: "observability-1",
+- $relative:8 title: "Runtime observability initialized",
+- $relative:9 description: "Le module observability ERP est initialisé.",
+- $relative:11 action: "observability.bootstrap",
+- $relative:8 } from "@/runtime/observability";
+- $relative:14 from "@/features/observability/stores/workflows/workflowExecutionStore";
+- $relative:7 } from "@/runtime/observability";
+- $relative:23 observability:
+- $relative:21 "observability",
+- $relative:43 "observability",
+- $relative:65 "observability",
+- $relative:87 "observability",
+- $relative:109 "observability",
+- $relative:131 "observability",
+- $relative:153 "observability",
+- $relative:175 "observability",
+- $relative:199 "observability",
+
+## Pattern: health
+
+Matches: 174
+
+- $relative:8 runtimeHealth: "healthy",
+- $relative:9 runtimeHealth: "healthy",
+- $relative:23 import { ERPHealthBadge }
+- $relative:24 from "@/components/erp/badges/ERPHealthBadge";
+- $relative:79 label="HEALTHY"
+- $relative:129 <ERPHealthBadge health="healthy" />
+- $relative:3 export function ERPHealthBadge({
+- $relative:4 health,
+- $relative:6 health: "healthy" | "warning" | "critical";
+- $relative:11 healthy:
+- $relative:31 ${styles[health]}
+- $relative:34 {health.toUpperCase()}
+- $relative:6 type ERPCockpitHealthPanelProps = {
+- $relative:10 export function ERPCockpitHealthPanel({
+- $relative:12 }: ERPCockpitHealthPanelProps) {
+- $relative:44 Health system ERP
+- $relative:21 <ERPStatCard label="Health" value="OK" />
+- $relative:7 import { ERPCockpitHealthPanel } from "./ERPCockpitHealthPanel";
+- $relative:24 <ERPCockpitHealthPanel snapshot={snapshot} />
+- $relative:4 export * from "./ERPCockpitHealthPanel";
+- $relative:40 service.status === "healthy"
+- $relative:34 <div className="text-green-600 font-semibold mt-2">Healthy</div>
+- $relative:3 import { ERPHealthBadge }
+- $relative:4 from "@/components/erp/badges/ERPHealthBadge";
+- $relative:63 <ERPHealthBadge health="healthy" />
+- $relative:1 export function ERPRuntimeHealthPanel() {
+- $relative:4 export { ERPRuntimeHealthPanel } from "./ERPRuntimeHealthPanel";
+- $relative:10 export function ERPHealthPanel({
+- $relative:17 Health Checks
+- $relative:25 {snapshot.health.map((check) => (
+- $relative:42 check.status === "healthy"
+- $relative:5 import { ERPHealthPanel } from "./ERPHealthPanel";
+- $relative:17 description="Health checks, topology, runtime metrics, dependency graph et error analytics."
+- $relative:23 <ERPHealthPanel snapshot={snapshot} />
+- $relative:3 import { ERPHealthBadge }
+- $relative:4 from "@/components/erp/badges/ERPHealthBadge";
+- $relative:6 export function ERPSystemHealth() {
+- $relative:10 ["Runtime", "healthy"],
+- $relative:11 ["Workflows", "healthy"],
+- $relative:13 ["Automation", "healthy"],
+- $relative:14 ].map(([label, health]) => (
+- $relative:22 <ERPHealthBadge
+- $relative:23 health={health as "healthy" | "warning" | "critical"}
+- $relative:2 export * from "./ERPHealthPanel";
+- $relative:3 import { ERPHealthBadge }
+- $relative:4 from "@/components/erp/badges/ERPHealthBadge";
+- $relative:12 health: "healthy",
+- $relative:17 health: "warning",
+- $relative:22 health: "healthy",
+- $relative:27 health: "warning",
+- $relative:60 <ERPHealthBadge
+- $relative:61 health={
+- $relative:62 metric.health as
+- $relative:63 | "healthy"
+- $relative:35 status: "healthy",
+- $relative:3 import { ERPHealthBadge }
+- $relative:4 from "@/components/erp/badges/ERPHealthBadge";
+- $relative:11 health: "healthy",
+- $relative:15 health: "healthy",
+- $relative:19 health: "warning",
+- $relative:23 health: "healthy",
+- $relative:27 health: "healthy",
+- $relative:31 health: "healthy",
+- $relative:67 <ERPHealthBadge
+- $relative:68 health={
+- $relative:69 service.health as
+- $relative:70 | "healthy"
+- $relative:38 runtime.status === "healthy"
+- $relative:3 import { ERPHealthBadge }
+- $relative:4 from "@/components/erp/badges/ERPHealthBadge";
+- $relative:11 health: "healthy",
+- $relative:15 health: "healthy",
+- $relative:19 health: "healthy",
+- $relative:23 health: "warning",
+- $relative:59 <ERPHealthBadge
+- $relative:60 health={
+- $relative:61 check.health as
+- $relative:62 | "healthy"
+- $relative:3 import { ERPHealthBadge }
+- $relative:4 from "@/components/erp/badges/ERPHealthBadge";
+- $relative:12 health: "healthy",
+- $relative:17 health: "healthy",
+- $relative:22 health: "warning",
+- $relative:27 health: "healthy",
+- $relative:77 <ERPHealthBadge
+- $relative:78 health={
+- $relative:79 worker.health as
+- $relative:80 | "healthy"
+- $relative:11 runtimeHealth: "healthy",
+- $relative:1 import { useRuntimeHealth }
+- $relative:2 from "../hooks/useRuntimeHealth";
+- $relative:7 const health =
+- $relative:8 useRuntimeHealth();
+- $relative:27 {health?.status}
+- $relative:14 RuntimeHealthDashboard() {
+- $relative:4 import type { RuntimeHealth }
+- $relative:5 from "../types/RuntimeHealth";
+- $relative:10 export function useRuntimeHealth() {
+- $relative:12 const [health, setHealth] =
+- $relative:13 useState<RuntimeHealth | null>(
+- $relative:23 .getRuntimeHealth()
+- $relative:24 .then(setHealth);
+- $relative:28 return health;
+- $relative:1 import type { RuntimeHealth }
+- $relative:2 from "../types/RuntimeHealth";
+- $relative:6 async getRuntimeHealth():
+- $relative:7 Promise<RuntimeHealth> {
+- $relative:10 status: "HEALTHY",
+- $relative:3 runtimeStatus: "HEALTHY",
+- $relative:1 export type RuntimeHealth = {
+- $relative:1 // src/platform/health/ERPHealthCheck.ts
+- $relative:6 export class ERPHealthCheck {
+- $relative:11 "[ERP HEALTH CHECK]"
+- $relative:23 if (monitoring.metrics.healthCritical > 0) {
+- $relative:26 module: "health",
+- $relative:27 signal: "CRITICAL_HEALTH",
+- $relative:29 description: "Des health checks critiques sont presents.",
+- $relative:12 "[HealthCheck]",
+- $relative:17 runtimeHealthRegistry,
+- $relative:18 } from "./RuntimeHealthRegistry";
+- $relative:105 getRuntimeHealth() {
+- $relative:106 return runtimeHealthRegistry.getAll();
+- $relative:1 export interface RuntimeHealthEntry {
+- $relative:6 | "healthy"
+- $relative:15 export class RuntimeHealthRegistry {
+- $relative:20 RuntimeHealthEntry
+- $relative:24 entry: RuntimeHealthEntry
+- $relative:66 export const runtimeHealthRegistry =
+- $relative:67 new RuntimeHealthRegistry();
+- $relative:29 healthCheck() {
+- $relative:36 health:
+- $relative:38 .getRuntimeHealth(),
+- $relative:7 const healthy = services.filter((service) => service.status === "healthy").length;
+- $relative:13 healthy,
+- $relative:16 score: Math.round((healthy / services.length) * 100),
+- $relative:3 status: "healthy" | "warning" | "critical";
+- $relative:12 status: "healthy",
+- $relative:17 status: "healthy",
+- $relative:22 status: "healthy",
+- $relative:37 status: "healthy",
+- $relative:5 import type { ERPHealthCheck } from "./ERPHealthCheck";
+- $relative:7 export function getERPHealthChecks(): ERPHealthCheck[] {
+- $relative:16 status: modules.length > 0 ? "healthy" : "critical",
+- $relative:23 ? "healthy"
+- $relative:31 ? "healthy"
+- $relative:41 : "healthy",
+- $relative:1 export type ERPHealthStatus =
+- $relative:2 | "healthy"
+- $relative:6 export type ERPHealthCheck = {
+- $relative:9 status: ERPHealthStatus;
+- $relative:10 healthWarnings: number;
+- $relative:11 healthCritical: number;
+- $relative:8 import { getERPHealthChecks } from "./health/ERPHealthCenter";
+- $relative:13 const health = getERPHealthChecks();
+- $relative:27 healthWarnings: health.filter((check) => check.status === "warning").length,
+- $relative:28 healthCritical: health.filter((check) => check.status === "critical").length,
+- $relative:30 health,
+- $relative:1 export * from "./health/ERPHealthCheck";
+- $relative:2 export * from "./health/ERPHealthCenter";
+- $relative:7 firestoreHealthCheck() {
+- $relative:16 "[Firestore Health]",
+- $relative:3 export class RuntimeHealthMonitor {
+- $relative:12 status: errors.length > 0 ? "warning" : "healthy",
+- $relative:7 DependencyHealthChecker
+- $relative:9 from "../health/DependencyHealthChecker";
+- $relative:33 new DependencyHealthChecker();
+- $relative:2 DependencyHealthChecker {
+- $relative:7 "[Quality] dependencies healthy"
+- $relative:38 type: "HEALTH_CRITICAL",
+- $relative:39 message: "Health check critique",
+- $relative:4 | "healthy"
+- $relative:9 export const RuntimeHealthMonitor = {
+- $relative:16 status: "healthy" as const,
+- $relative:32 status: "healthy" as const,
+
+## Pattern: resilience
+
+Matches: 27
+
+- $relative:1 import { ERPRuntimeResilienceDashboard } from "@/components/erp/resilience";
+- $relative:4 return <ERPRuntimeResilienceDashboard />;
+- $relative:2 import { ERPDeadLetterStore } from "@/runtime/resilience";
+- $relative:2 import { ERPQueueStore } from "@/runtime/resilience";
+- $relative:6 } from "@/runtime/resilience";
+- $relative:8 export function ERPResilienceMetrics() {
+- $relative:22 <ERPStatCard label="Circuit" value={ERPCircuitBreaker.currentState()} helper="Etat resilience" />
+- $relative:2 import { seedERPRuntimeResilience } from "@/runtime/resilience";
+- $relative:4 import { ERPResilienceMetrics } from "./ERPResilienceMetrics";
+- $relative:8 seedERPRuntimeResilience();
+- $relative:10 export function ERPRuntimeResilienceDashboard() {
+- $relative:14 eyebrow="ERP Resilience"
+- $relative:19 <ERPResilienceMetrics />
+- $relative:1 export * from "./ERPResilienceMetrics";
+- $relative:4 export * from "./ERPRuntimeResilienceDashboard";
+- $relative:10 from "@/platform/resilience/RetryPolicy";
+- $relative:13 from "@/platform/resilience/DeadLetterQueue";
+- $relative:4 from "@/platform/resilience/DeadLetterQueue";
+- $relative:1 // src/platform/resilience/DeadLetterQueue.ts
+- $relative:1 // src/platform/resilience/RetryPolicy.ts
+- $relative:2 import { ERPDeadLetterStore } from "@/runtime/resilience";
+- $relative:2 import { ERPCircuitBreaker } from "@/runtime/resilience";
+- $relative:5 import { ERPQueueStore } from "@/runtime/resilience";
+- $relative:5 export function seedERPRuntimeResilience() {
+- $relative:7 export * from "./ERPRuntimeResilienceSeed";
+- $relative:24 from "@/runtime/resilience/retry/RetryEngine";
+- $relative:29 from "@/runtime/resilience/dlq/DeadLetterQueue";
+
+## Pattern: security
+
+Matches: 187
+
+- $relative:1 import { ERPSecurityDashboard } from "@/components/erp/security";
+- $relative:4 return <ERPSecurityDashboard />;
+- $relative:2 import { RuntimeActionGuard } from "@/runtime/security-runtime";
+- $relative:3 import { RuntimeActionGuard } from "@/runtime/security-runtime";
+- $relative:23 <ERPStatCard label="Security" value={metrics.securityAudits} helper="Audit logs" />
+- $relative:25 ["Security Audit", snapshot.securityAudit.length],
+- $relative:25 key: "security-rbac",
+- $relative:26 scope: "security",
+- $relative:27 label: "Security RBAC",
+- $relative:2 import type { getERPSecuritySnapshot } from "@/runtime/security";
+- $relative:4 type Snapshot = ReturnType<typeof getERPSecuritySnapshot>;
+- $relative:2 import type { getERPSecuritySnapshot } from "@/runtime/security";
+- $relative:4 type Snapshot = ReturnType<typeof getERPSecuritySnapshot>;
+- $relative:2 import type { getERPSecuritySnapshot } from "@/runtime/security";
+- $relative:4 type Snapshot = ReturnType<typeof getERPSecuritySnapshot>;
+- $relative:6 type ERPSecurityAuditPanelProps = {
+- $relative:10 export function ERPSecurityAuditPanel({
+- $relative:12 }: ERPSecurityAuditPanelProps) {
+- $relative:3 getERPSecuritySnapshot,
+- $relative:4 seedERPSecurityRuntime,
+- $relative:5 } from "@/runtime/security";
+- $relative:7 import { ERPSecurityMetrics } from "./ERPSecurityMetrics";
+- $relative:10 import { ERPSecurityAuditPanel } from "./ERPSecurityAuditPanel";
+- $relative:12 seedERPSecurityRuntime();
+- $relative:14 export function ERPSecurityDashboard() {
+- $relative:15 const snapshot = getERPSecuritySnapshot();
+- $relative:20 eyebrow="ERP Security"
+- $relative:21 title="Security & RBAC Enterprise"
+- $relative:25 <ERPSecurityMetrics snapshot={snapshot} />
+- $relative:30 <ERPSecurityAuditPanel snapshot={snapshot} />
+- $relative:2 import type { getERPSecuritySnapshot } from "@/runtime/security";
+- $relative:4 type Snapshot = ReturnType<typeof getERPSecuritySnapshot>;
+- $relative:6 type ERPSecurityMetricsProps = {
+- $relative:10 export function ERPSecurityMetrics({
+- $relative:12 }: ERPSecurityMetricsProps) {
+- $relative:6 export function ERPSecurityPanel() {
+- $relative:1 export * from "./ERPSecurityMetrics";
+- $relative:4 export * from "./ERPSecurityAuditPanel";
+- $relative:5 export * from "./ERPSecurityDashboard";
+- $relative:5 import { RuntimeActionGuard } from "@/runtime/security-runtime";
+- $relative:2 import { RuntimeSecurityContext } from "@/runtime/security-runtime";
+- $relative:4 export function ERPRuntimeSecurityBadge() {
+- $relative:5 const user = RuntimeSecurityContext.currentUser();
+- $relative:3 RuntimeSecurityContext,
+- $relative:5 } from "@/runtime/security-runtime";
+- $relative:7 export function ERPSecurityContextPanel() {
+- $relative:8 const user = RuntimeSecurityContext.currentUser();
+- $relative:1 export { ERPRuntimeSecurityBadge } from "./ERPRuntimeSecurityBadge";
+- $relative:2 export { ERPSecurityContextPanel } from "./ERPSecurityContextPanel";
+- $relative:11 import { RuntimeWorkflowGuard } from "@/runtime/security-runtime";
+- $relative:3 import { ERPSecurityContextPanel } from "@/components/erp/security-runtime";
+- $relative:47 <ERPSecurityContextPanel />
+- $relative:1 export type SecurityAuditEntry = {
+- $relative:29 SecurityAuditEntry[] = [];
+- $relative:31 export function logSecurityAudit(
+- $relative:33 SecurityAuditEntry,
+- $relative:38 SecurityAuditEntry = {
+- $relative:53 "ERP SECURITY AUDIT",
+- $relative:60 export function getSecurityAudits() {
+- $relative:58 RuntimeSecurityManager
+- $relative:60 from "@/runtime/security/RuntimeSecurityManager";
+- $relative:65 from "@/platform/security/roles/RoleDefinition";
+- $relative:86 private security =
+- $relative:87 new RuntimeSecurityManager();
+- $relative:39 nom: "Security Alert Workflow",
+- $relative:19 from "@/platform/security/ExecutionPolicy";
+- $relative:21 import { SecurityAudit }
+- $relative:22 from "@/platform/security/SecurityAudit";
+- $relative:69 SecurityAudit.log(
+- $relative:82 SecurityAudit.log(
+- $relative:112 SecurityAudit.log(
+- $relative:9 from "../security/guards/FeatureGuard";
+- $relative:14 from "../security/roles/RoleDefinition";
+- $relative:22 import { RuleSecurityPolicy }
+- $relative:23 from "@/platform/rules/security/RuleSecurityPolicy";
+- $relative:75 RuleSecurityPolicy
+- $relative:1 // src/platform/rules/security/RuleSecurityPolicy.ts
+- $relative:8 export class RuleSecurityPolicy {
+- $relative:1 // src/platform/security/ExecutionPolicy.ts
+- $relative:32 "[SECURITY] critical workflow denied"
+- $relative:1 // src/platform/security/SecurityAudit.ts
+- $relative:3 export class SecurityAudit {
+- $relative:13 "[SECURITY AUDIT]",
+- $relative:35 description: "Les couches tenant, security, persistence, workers et streams sont presentes.",
+- $relative:13 module: "security",
+- $relative:57 runtimeSecurityRegistry,
+- $relative:58 } from "./RuntimeSecurityRegistry";
+- $relative:145 getRuntimeSecurity() {
+- $relative:146 return runtimeSecurityRegistry.getRules();
+- $relative:1 export interface RuntimeSecurityRule {
+- $relative:22 export class RuntimeSecurityRegistry {
+- $relative:25 RuntimeSecurityRule[] = [];
+- $relative:28 rule: RuntimeSecurityRule
+- $relative:58 export const runtimeSecurityRegistry =
+- $relative:59 new RuntimeSecurityRegistry();
+- $relative:26 name: "Security Runtime",
+- $relative:5 | "security"
+- $relative:22 { key: "security", label: "Security runtime", completed: true },
+- $relative:4 import { ERPSecurityAuditStore } from "@/runtime/security";
+- $relative:10 const denied = ERPSecurityAuditStore.denied();
+- $relative:8 securityAudits: number;
+- $relative:29 { id: "security", label: "Security RBAC", group: "security" },
+- $relative:43 { from: "security", to: "tenant", label: "access context" },
+- $relative:7 import { ERPSecurityAuditStore } from "@/runtime/security";
+- $relative:25 securityAudits: ERPSecurityAuditStore.all().length,
+- $relative:1 export const SecurityPolicy = {
+- $relative:6 "[SecurityPolicy]"
+- $relative:13 securityAudit,
+- $relative:21 ERPRuntimePersistenceService.securityAudit.list(),
+- $relative:31 securityAudit,
+- $relative:39 securityAudit.length,
+- $relative:8 securityAudit: "runtime_security_audit",
+- $relative:40 securityAudit:
+- $relative:42 ERPPersistenceCollections.securityAudit
+- $relative:49 await ERPRuntimePersistenceService.securityAudit.save({
+- $relative:21 target: "security and business audit",
+- $relative:12 key: "security-rbac",
+- $relative:13 label: "Security RBAC",
+- $relative:104 "Security policies loaded",
+- $relative:105 "security"
+- $relative:25 key: "security-rbac",
+- $relative:26 scope: "security",
+- $relative:27 label: "Security RBAC",
+- $relative:1 export type ERPSecurityAuditLevel =
+- $relative:6 export type ERPSecurityAuditEntry = {
+- $relative:13 level: ERPSecurityAuditLevel;
+- $relative:1 import type { ERPSecurityAuditEntry } from "./ERPSecurityAuditLog";
+- $relative:3 class ERPSecurityAuditStoreClass {
+- $relative:4 private entries: ERPSecurityAuditEntry[] = [];
+- $relative:6 add(entry: ERPSecurityAuditEntry) {
+- $relative:20 export const ERPSecurityAuditStore =
+- $relative:21 new ERPSecurityAuditStoreClass();
+- $relative:2 import type { ERPSecuritySession } from "../sessions/ERPSecuritySession";
+- $relative:6 import { ERPSecurityAuditStore } from "../audit/ERPSecurityAuditStore";
+- $relative:16 session: ERPSecuritySession = ERPSessionContext.current()
+- $relative:28 ERPSecurityAuditStore.add({
+- $relative:45 session?: ERPSecuritySession
+- $relative:3 export type ERPSecuritySession = {
+- $relative:1 import type { ERPSecuritySession } from "./ERPSecuritySession";
+- $relative:3 let currentSession: ERPSecuritySession = {
+- $relative:15 set(session: ERPSecuritySession) {
+- $relative:5 export function seedERPSecurityRuntime() {
+- $relative:4 import { ERPSecurityAuditStore } from "./audit/ERPSecurityAuditStore";
+- $relative:7 export function getERPSecuritySnapshot() {
+- $relative:8 const audit = ERPSecurityAuditStore.all();
+- $relative:16 denied: ERPSecurityAuditStore.denied(),
+- $relative:21 deniedCount: ERPSecurityAuditStore.denied().length,
+- $relative:7 export * from "./sessions/ERPSecuritySession";
+- $relative:9 export * from "./audit/ERPSecurityAuditLog";
+- $relative:10 export * from "./audit/ERPSecurityAuditStore";
+- $relative:12 export * from "./ERPSecuritySnapshot";
+- $relative:13 export * from "./ERPSecuritySeed";
+- $relative:14 from "@/platform/security/guards/FeatureGuard";
+- $relative:19 from "@/platform/security/roles/RoleDefinition";
+- $relative:27 RuntimeSecurityManager {
+- $relative:57 "[SECURITY] Feature not found"
+- $relative:72 "[SECURITY] Permission denied"
+- $relative:94 "[SECURITY] Policy denied"
+- $relative:4 export { RuntimeSecurityContext } from "./RuntimeSecurityContext";
+- $relative:2 import { RuntimeSecurityContext } from "./RuntimeSecurityContext";
+- $relative:8 const user = RuntimeSecurityContext.currentUser();
+- $relative:13 | "security.manage";
+- $relative:17 "security.manage",
+- $relative:3 export class RuntimeSecurityContext {
+- $relative:1 import { RuntimeSecurityContext } from "./RuntimeSecurityContext";
+- $relative:6 const user = RuntimeSecurityContext.currentUser();
+- $relative:12 const user = RuntimeSecurityContext.currentUser();
+- $relative:18 const user = RuntimeSecurityContext.currentUser();
+- $relative:23 id: "stream_security",
+- $relative:24 key: "security",
+- $relative:25 label: "Security Stream",
+- $relative:30 module: "security",
+- $relative:10 | "security"
+- $relative:39 id: "security_rbac",
+- $relative:40 label: "Security RBAC",
+- $relative:41 type: "security",
+- $relative:42 module: "security",
+- $relative:7 } from "@/runtime/security";
+- $relative:29 simulateSecurity() {
+- $relative:29 key: "security",
+- $relative:30 scope: "security",
+- $relative:31 label: "Security",
+- $relative:34 description: "Security runtime actif.",
+- $relative:55 key: "security-rbac",
+- $relative:56 scope: "security",
+- $relative:57 label: "Security RBAC",
+- $relative:23 "Security",
+
+## Pattern: permission
+
+Matches: 228
+
+- $relative:21 <ERPStatCard label="Permissions" value={snapshot.permissionsCount} helper="Controle acces" />
+- $relative:34 <th className="px-4 py-3 text-left font-semibold text-slate-600">Permissions</th>
+- $relative:47 <td className="px-4 py-3 text-slate-600">{module.permissions.length}</td>
+- $relative:17 description="Supervision centrale des modules, schemas, actions, workflows, events, automation, permissions et navigation."
+- $relative:39 <ERPButton variant="ghost" type="button">Permissions</ERPButton>
+- $relative:25 description="Source unique de verite ERP pour modules, schemas, actions, workflows, permissions et automation."
+- $relative:22 description="Roles, permissions, policies, guards, session runtime et audit securite."
+- $relative:16 <ERPStatCard label="Permissions" value={snapshot.permissionsCount} helper="Actions securisees" />
+- $relative:14 label: "Permissions",
+- $relative:4 runtimeRolePermissions,
+- $relative:9 const permissions = runtimeRolePermissions[user.role];
+- $relative:19 Permissions runtime appliquees aux actions et workflows.
+- $relative:43 {permissions.slice(0, 6).map((permission) => (
+- $relative:44 <ERPBadge key={permission} tone="info">
+- $relative:45 {permission}
+- $relative:28 <ERPButton variant="ghost" type="button">Controler permissions</ERPButton>
+- $relative:14 permissions?: boolean;
+- $relative:47 permissions: true,
+- $relative:72 permissions: true,
+- $relative:93 permissions: true,
+- $relative:108 permissions: true,
+- $relative:36 permissions?: string[];
+- $relative:119 permissions:
+- $relative:120 module.permissions
+- $relative:121 ? Object.entries(module.permissions)
+- $relative:123 .map(([permission]) => permission)
+- $relative:10 type PermissionAction =
+- $relative:19 type PermissionRegistry =
+- $relative:24 PermissionAction[]
+- $relative:28 const permissionRegistry:
+- $relative:29 PermissionRegistry = {
+- $relative:102 export function hasPermission(
+- $relative:105 action: PermissionAction
+- $relative:107 const permissions =
+- $relative:108 permissionRegistry[
+- $relative:112 if (!permissions) {
+- $relative:116 return permissions.includes(
+- $relative:121 export function getPermissions(
+- $relative:125 permissionRegistry[
+- $relative:1 export const PERMISSIONS = {
+- $relative:3 import { usePermission } from "@/features/auth/hooks/usePermission";
+- $relative:9 permission: any;
+- $relative:16 permission,
+- $relative:21 usePermission(
+- $relative:23 permission
+- $relative:9 import { usePermissions }
+- $relative:10 from "@/features/auth/hooks/usePermissions";
+- $relative:15 permission:
+- $relative:17 typeof usePermissions
+- $relative:25 permission,
+- $relative:29 const permissions =
+- $relative:30 usePermissions(role);
+- $relative:32 if (!permissions[permission]) {
+- $relative:1 import { Permissions } from "@/features/auth/types/Permissions";
+- $relative:3 export const usePermission = (
+- $relative:5 permission: keyof typeof Permissions
+- $relative:12 return Permissions[
+- $relative:13 permission
+- $relative:1 import { PermissionService } from "@/features/auth/services/PermissionService";
+- $relative:3 export function usePermissions(role: string) {
+- $relative:6 PermissionService.canViewDashboard(role),
+- $relative:9 PermissionService.canViewModules(role),
+- $relative:12 PermissionService.canManageUsers(role),
+- $relative:16 export default usePermissions;
+- $relative:1 export const PermissionService = {
+- $relative:15 export default PermissionService;
+- $relative:14 permissions: string[],
+- $relative:15 permission: string
+- $relative:18 return permissions.includes(
+- $relative:19 permission
+- $relative:4 export const Permissions = {
+- $relative:1 // src/platform/governance/permissions/DomainPermissions.ts
+- $relative:8 class DomainPermissionsManager {
+- $relative:15 "[PERMISSION CHECK]",
+- $relative:24 export const DomainPermissions =
+- $relative:25 new DomainPermissionsManager();
+- $relative:11 import { DomainPermissions }
+- $relative:12 from "@/platform/governance/permissions/DomainPermissions";
+- $relative:36 DomainPermissions
+- $relative:44 `Permission denied: ${context.domain}`
+- $relative:7 PermissionEngine
+- $relative:9 from "../permissions/PermissionEngine";
+- $relative:18 private permissions =
+- $relative:19 new PermissionEngine();
+- $relative:26 return this.permissions.canAccessFeature(
+- $relative:67 export class PermissionEngine {
+- $relative:11 | "permissions";
+- $relative:29 case "permissions":
+- $relative:30 toast.success("Chargement des permissions");
+- $relative:13 permissionsCount: modules.reduce((total, module) => total + module.permissions.length, 0),
+- $relative:9 permissions: string[];
+- $relative:23 | "permissions"
+- $relative:37 permissions: string[];
+- $relative:18 permissions:
+- $relative:19 module.permissions,
+- $relative:5 export class RuntimePermissionRegistry {
+- $relative:7 private permissions =
+- $relative:22 this.permissions.set(
+- $relative:24 binding.permissions
+- $relative:29 getModulePermissions(
+- $relative:33 return this.permissions.get(
+- $relative:38 getAllPermissions() {
+- $relative:41 this.permissions.entries()
+- $relative:46 export const runtimePermissionRegistry =
+- $relative:47 new RuntimePermissionRegistry();
+- $relative:49 runtimePermissionRegistry.initialize();
+- $relative:6 "permission",
+- $relative:49 generatePermissions() {
+- $relative:54 permissions: [
+- $relative:1 export interface ERPGeneratedPermission {
+- $relative:5 permissions: string[];
+- $relative:8 export class ERPPermissionsGenerationEngine {
+- $relative:10 generatePermissions(
+- $relative:12 ): ERPGeneratedPermission {
+- $relative:18 permissions: [
+- $relative:30 export const erpPermissionsGenerationEngine =
+- $relative:31 new ERPPermissionsGenerationEngine();
+- $relative:8 export * from "./ERPPermissionsGenerationEngine";
+- $relative:11 erpPermissionsGenerationEngine,
+- $relative:60 permissions:
+- $relative:61 erpPermissionsGenerationEngine.generatePermissions(
+- $relative:57 "permissions",
+- $relative:72 permissions:
+- $relative:73 module.permissions
+- $relative:74 ? Object.entries(module.permissions)
+- $relative:132 permissions:
+- $relative:133 module.permissions
+- $relative:134 ? Object.entries(module.permissions)
+- $relative:13 permissions: {
+- $relative:15 permissions?: string[];
+- $relative:8 permission?: string;
+- $relative:41 export interface ERPModulePermissions {
+- $relative:65 permissions?: ERPModulePermissions;
+- $relative:34 permission?: string;
+- $relative:1 import { PermissionEngine }
+- $relative:2 from "../permissions/PermissionEngine";
+- $relative:6 private permissions =
+- $relative:7 new PermissionEngine();
+- $relative:13 return this.permissions.can(
+- $relative:1 export class PermissionEngine {
+- $relative:8 "[Permission]",
+- $relative:4 RuntimePermissionsEngine,
+- $relative:6 from "@/runtime/permissions/RuntimePermissionsEngine";
+- $relative:33 RuntimePermissionsEngine.can(
+- $relative:1 export interface RuntimePermission {
+- $relative:2 RuntimePermission,
+- $relative:4 from "@/runtime/permissions/RuntimePermission";
+- $relative:6 export const runtimePermissions:
+- $relative:7 RuntimePermission[] = [
+- $relative:2 runtimePermissions,
+- $relative:4 from "@/runtime/permissions/runtimePermissions";
+- $relative:6 export class RuntimePermissionsEngine {
+- $relative:18 const permission =
+- $relative:19 runtimePermissions.find(
+- $relative:30 if (!permission) {
+- $relative:34 return permission.roles.includes(
+- $relative:47 return runtimePermissions.filter(
+- $relative:16 description: "La couche roles, permissions et policies existe.",
+- $relative:71 permissions: [
+- $relative:45 permissions(
+- $relative:51 ?.permissions ?? []
+- $relative:15 export type ERPRegistryPermission = {
+- $relative:54 permissions: ERPRegistryPermission[];
+- $relative:1 import type { ERPPermissionAction } from "../permissions/ERPPermission";
+- $relative:15 action: ERPPermissionAction,
+- $relative:44 action: ERPPermissionAction,
+- $relative:1 export type ERPPermissionAction =
+- $relative:13 export type ERPPermission = {
+- $relative:16 action: ERPPermissionAction;
+- $relative:2 import type { ERPPermission } from "./ERPPermission";
+- $relative:17 export const ERPPermissionRegistry: ERPPermission[] =
+- $relative:2 import type { ERPPermissionAction } from "../permissions/ERPPermission";
+- $relative:7 actions: ERPPermissionAction[];
+- $relative:2 import { ERPPermissionRegistry } from "./permissions/ERPPermissionRegistry";
+- $relative:13 permissions: ERPPermissionRegistry,
+- $relative:18 permissionsCount: ERPPermissionRegistry.length,
+- $relative:3 export * from "./permissions/ERPPermission";
+- $relative:4 export * from "./permissions/ERPPermissionRegistry";
+- $relative:72 "[SECURITY] Permission denied"
+- $relative:2 export type { RuntimePermission } from "./RuntimePermission";
+- $relative:5 export { runtimeRolePermissions } from "./RuntimePolicyRegistry";
+- $relative:7 export { RuntimeActionPermissionMapper } from "./RuntimeActionPermissionMapper";
+- $relative:4 import { RuntimeActionPermissionMapper } from "./RuntimeActionPermissionMapper";
+- $relative:9 const permission = RuntimeActionPermissionMapper.permissionFor(action);
+- $relative:11 if (!permission) {
+- $relative:15 return RuntimePolicyEngine.can(user, permission);
+- $relative:2 import type { RuntimePermission } from "./RuntimePermission";
+- $relative:4 export class RuntimeActionPermissionMapper {
+- $relative:5 static permissionFor(action: ERPAction): RuntimePermission | undefined {
+- $relative:1 export type RuntimePermission =
+- $relative:1 import type { RuntimePermission } from "./RuntimePermission";
+- $relative:3 import { runtimeRolePermissions } from "./RuntimePolicyRegistry";
+- $relative:8 permission: RuntimePermission
+- $relative:10 return runtimeRolePermissions[user.role].includes(permission);
+- $relative:13 static filterByPermission<T extends { permission?: RuntimePermission }>(
+- $relative:18 if (!item.permission) {
+- $relative:22 return RuntimePolicyEngine.can(user, item.permission);
+- $relative:2 import type { RuntimePermission } from "./RuntimePermission";
+- $relative:4 export const runtimeRolePermissions: Record<RuntimeRole, RuntimePermission[]> = {
+- $relative:7 RuntimePermissionsEngine,
+- $relative:9 from "@/runtime/permissions/RuntimePermissionsEngine";
+- $relative:64 RuntimePermissionsEngine.can(
+- $relative:7 permissions: [
+- $relative:23 permissions: [
+- $relative:37 permissions: [
+- $relative:52 permissions: [
+- $relative:67 permissions: [
+- $relative:82 permissions: [
+- $relative:97 permissions: [
+- $relative:112 permissions: [
+- $relative:18 "permissions",
+- $relative:26 permissions: [],
+- $relative:40 "permissions",
+- $relative:48 permissions: [],
+- $relative:62 "permissions",
+- $relative:70 permissions: [],
+- $relative:84 "permissions",
+- $relative:92 permissions: [],
+- $relative:106 "permissions",
+- $relative:114 permissions: [],
+- $relative:128 "permissions",
+- $relative:136 permissions: [],
+- $relative:150 "permissions",
+- $relative:158 permissions: [],
+- $relative:172 "permissions",
+- $relative:180 permissions: [],
+- $relative:196 "permissions",
+- $relative:204 permissions: [],
+
+## Pattern: role
+
+Matches: 260
+
+- $relative:47 Controle minimal de coherence du runtime.
+- $relative:21 <ERPStatCard label="Permissions" value={snapshot.permissionsCount} helper="Controle acces" />
+- $relative:20 Controle de couverture runtime par module.
+- $relative:133 value: "a-controler",
+- $relative:20 Controle du formulaire
+- $relative:29 Role
+- $relative:32 {context.role}
+- $relative:36 {user.role} - {user.module ?? "global"}
+- $relative:26 : "A controler";
+- $relative:27 key={`${policy.role}-${policy.module}`}
+- $relative:35 {policy.role}
+- $relative:6 type ERPRolesPanelProps = {
+- $relative:10 export function ERPRolesPanel({
+- $relative:12 }: ERPRolesPanelProps) {
+- $relative:17 Roles ERP
+- $relative:20 Roles globaux disponibles dans le runtime.
+- $relative:25 {snapshot.roles.map((role) => (
+- $relative:27 key={role.key}
+- $relative:30 <p className="font-semibold text-slate-900">{role.label}</p>
+- $relative:32 {role.description}
+- $relative:20 Traces des controles d'acces runtime.
+- $relative:27 description="Les controles d'acces apparaitront ici."
+- $relative:42 {entry.userId} - {entry.role}
+- $relative:8 import { ERPRolesPanel } from "./ERPRolesPanel";
+- $relative:22 description="Roles, permissions, policies, guards, session runtime et audit securite."
+- $relative:28 <ERPRolesPanel snapshot={snapshot} />
+- $relative:15 <ERPStatCard label="Roles" value={snapshot.rolesCount} helper="RBAC" />
+- $relative:18 <ERPStatCard label="Audit" value={snapshot.auditCount} helper="Controles traces" />
+- $relative:20 <ERPStatCard label="Session" value={snapshot.session.role} helper={snapshot.session.displayName} />
+- $relative:2 export * from "./ERPRolesPanel";
+- $relative:9 Role {user.role}
+- $relative:4 runtimeRolePermissions,
+- $relative:9 const permissions = runtimeRolePermissions[user.role];
+- $relative:35 Role
+- $relative:38 {user.role}
+- $relative:16 <option>A controler</option>
+- $relative:11 "Controle de coherence effectue",
+- $relative:28 <ERPButton variant="ghost" type="button">Controler permissions</ERPButton>
+- $relative:1 export type ERPUserRole =
+- $relative:23 ERPUserRole,
+- $relative:104 role: ERPUserRole,
+- $relative:110 ]?.[role];
+- $relative:1 export enum ROLE_UTILISATEUR {
+- $relative:1 import { UserRole }
+- $relative:2 from "@/features/auth/types/UserRole";
+- $relative:4 interface RoleBadgeProps {
+- $relative:6 role: UserRole;
+- $relative:9 export const RoleBadge = ({
+- $relative:10 role,
+- $relative:11 }: RoleBadgeProps) => {
+- $relative:15 switch (role) {
+- $relative:48 {role}
+- $relative:5 interface RoleGuardProps {
+- $relative:7 role: string | undefined;
+- $relative:14 export const RoleGuard = ({
+- $relative:15 role,
+- $relative:18 }: RoleGuardProps) => {
+- $relative:22 role,
+- $relative:6 import { UserRole }
+- $relative:7 from "@/features/auth/types/UserRole";
+- $relative:13 role?: UserRole;
+- $relative:23 export const RoleGuard = ({
+- $relative:24 role = "admin",
+- $relative:30 usePermissions(role);
+- $relative:4 role: string | undefined,
+- $relative:8 if (!role) {
+- $relative:14 ].includes(role as any);
+- $relative:3 export function usePermissions(role: string) {
+- $relative:6 PermissionService.canViewDashboard(role),
+- $relative:9 PermissionService.canViewModules(role),
+- $relative:12 PermissionService.canManageUsers(role),
+- $relative:2 canViewDashboard(role: string) {
+- $relative:3 return ["admin", "manager", "user"].includes(role);
+- $relative:6 canViewModules(role: string) {
+- $relative:7 return ["admin", "manager"].includes(role);
+- $relative:10 canManageUsers(role: string) {
+- $relative:11 return role === "admin";
+- $relative:3 hasRole(
+- $relative:4 role: string,
+- $relative:5 allowedRoles: string[]
+- $relative:8 return allowedRoles.includes(
+- $relative:9 role
+- $relative:1 import { UserRole }
+- $relative:2 from "@/features/auth/types/UserRole";
+- $relative:10 ] satisfies UserRole[],
+- $relative:16 ] satisfies UserRole[],
+- $relative:21 ] satisfies UserRole[],
+- $relative:26 ] satisfies UserRole[],
+- $relative:31 ] satisfies UserRole[],
+- $relative:38 ] satisfies UserRole[],
+- $relative:1 export type UserRole =
+- $relative:1 export type USER_ROLE =
+- $relative:16 const [role, setRole] =
+- $relative:27 role: role as any,
+- $relative:86 value={role}
+- $relative:88 setRole(
+- $relative:92 role:
+- $relative:93 invitation.role,
+- $relative:6 import { UserRole }
+- $relative:7 from "@/features/auth/types/UserRole";
+- $relative:24 role: UserRole;
+- $relative:63 ERPUserRole
+- $relative:65 from "@/platform/security/roles/RoleDefinition";
+- $relative:6 import { UserRole }
+- $relative:7 from "@/features/auth/types/UserRole";
+- $relative:18 role: UserRole;
+- $relative:8 import { UserRole }
+- $relative:9 from "@/features/auth/types/UserRole";
+- $relative:45 async function handleRoleChange(
+- $relative:47 role: UserRole
+- $relative:50 await TeamService.updateRole(
+- $relative:52 role
+- $relative:140 value={member.role}
+- $relative:142 handleRoleChange(
+- $relative:144 e.target.value as UserRole
+- $relative:1 import { UserRole }
+- $relative:2 from "@/features/auth/types/UserRole";
+- $relative:28 async updateRole(
+- $relative:30 role: UserRole
+- $relative:37 role,
+- $relative:55 role: "admin",
+- $relative:21 role:
+- $relative:44 role:
+- $relative:45 membership?.role || null,
+- $relative:9 role: string;
+- $relative:29 role:
+- $relative:64 role: "admin"
+- $relative:12 ERPUserRole
+- $relative:14 from "../security/roles/RoleDefinition";
+- $relative:26 role: ERPUserRole
+- $relative:43 role,
+- $relative:5 role?: string;
+- $relative:12 ERPUserRole
+- $relative:14 from "../roles/RoleDefinition";
+- $relative:22 role: ERPUserRole,
+- $relative:27 role,
+- $relative:7 ERPUserRole,
+- $relative:8 RoleDefinition,
+- $relative:10 from "../roles/RoleDefinition";
+- $relative:12 const roles:
+- $relative:13 RoleDefinition[] = [
+- $relative:15 role: "ADMIN",
+- $relative:19 role: "MANAGER",
+- $relative:29 role: "MAINTENANCE",
+- $relative:41 role: "FINANCE",
+- $relative:52 role: "OPERATOR",
+- $relative:59 role: "VIEWER",
+- $relative:70 role: ERPUserRole,
+- $relative:75 roles.find(
+- $relative:77 item.role === role
+- $relative:1 export type ERPUserRole =
+- $relative:9 export type RoleDefinition = {
+- $relative:10 role: ERPUserRole;
+- $relative:7 role?: string;
+- $relative:19 context.role === "admin"
+- $relative:11 role: "system",
+- $relative:17 role: "assistant",
+- $relative:3 role: "assistant" | "system";
+- $relative:12 description: "Ajouter des cas RBAC par role, module et tenant avant production.",
+- $relative:45 label: "Controle terrain recommande",
+- $relative:46 description: "Cree un rappel lorsqu'un terrain necessite un controle.",
+- $relative:50 { type: "task", label: "Creer tache controle terrain" },
+- $relative:9 role:
+- $relative:10 data.role,
+- $relative:14 "role",
+- $relative:23 role?: string;
+- $relative:70 context.role ===
+- $relative:32 { key: "role", label: "RÃ´le", type: "text", filterable: true },
+- $relative:39 group: "Controle",
+- $relative:3 role: string;
+- $relative:11 role: "Administrateur",
+- $relative:10 role: string;
+- $relative:22 role,
+- $relative:35 role,
+- $relative:7 roles: string[];
+- $relative:12 roles: ["technicien", "superviseur"],
+- $relative:18 roles: ["superviseur"],
+- $relative:24 roles: ["superviseur"],
+- $relative:30 roles: ["technicien", "superviseur"],
+- $relative:36 roles: ["superviseur"],
+- $relative:42 roles: ["superviseur"],
+- $relative:48 roles: ["gestionnaire"],
+- $relative:54 roles: ["gestionnaire"],
+- $relative:60 roles: ["gestionnaire", "superviseur"],
+- $relative:10 role: string,
+- $relative:34 return permission.roles.includes(
+- $relative:35 role
+- $relative:41 role: string,
+- $relative:54 item.roles.includes(
+- $relative:55 role
+- $relative:16 description: "La couche roles, permissions et policies existe.",
+- $relative:4 role: string;
+- $relative:27 role: "Superviseur",
+- $relative:36 role: "Operations",
+- $relative:94 : "A controler";
+- $relative:9 role: string;
+- $relative:21 item.role === session.role &&
+- $relative:31 role: session.role,
+- $relative:1 import type { ERPRoleKey } from "../roles/ERPRole";
+- $relative:5 role: ERPRoleKey;
+- $relative:41 role: "super_admin",
+- $relative:46 role: "admin",
+- $relative:51 role: "manager",
+- $relative:56 role: "operator",
+- $relative:61 role: "viewer",
+- $relative:1 export type ERPRoleKey =
+- $relative:8 export type ERPRole = {
+- $relative:9 key: ERPRoleKey;
+- $relative:1 import type { ERPRole } from "./ERPRole";
+- $relative:3 export const ERPRoleRegistry: ERPRole[] = [
+- $relative:1 import type { ERPRoleKey } from "../roles/ERPRole";
+- $relative:6 role: ERPRoleKey;
+- $relative:6 role: "super_admin",
+- $relative:1 import { ERPRoleRegistry } from "./roles/ERPRoleRegistry";
+- $relative:12 roles: ERPRoleRegistry,
+- $relative:17 rolesCount: ERPRoleRegistry.length,
+- $relative:1 export * from "./roles/ERPRole";
+- $relative:2 export * from "./roles/ERPRoleRegistry";
+- $relative:17 ERPUserRole
+- $relative:19 from "@/platform/security/roles/RoleDefinition";
+- $relative:43 role: ERPUserRole,
+- $relative:63 const allowedByRole =
+- $relative:65 role,
+- $relative:69 if (!allowedByRole) {
+- $relative:86 role,
+- $relative:1 export type { RuntimeRole, RuntimeUser } from "./RuntimeRole";
+- $relative:5 export { runtimeRolePermissions } from "./RuntimePolicyRegistry";
+- $relative:2 import type { RuntimeUser } from "./RuntimeRole";
+- $relative:3 import { runtimeRolePermissions } from "./RuntimePolicyRegistry";
+- $relative:10 return runtimeRolePermissions[user.role].includes(permission);
+- $relative:1 import type { RuntimeRole } from "./RuntimeRole";
+- $relative:4 export const runtimeRolePermissions: Record<RuntimeRole, RuntimePermission[]> = {
+- $relative:1 export type RuntimeRole =
+- $relative:10 role: RuntimeRole;
+- $relative:1 import type { RuntimeUser } from "./RuntimeRole";
+- $relative:8 role: "admin",
+- $relative:26 role?: string;
+- $relative:21 value: "1 controle recommande",
+- $relative:9 "Controler les dependances metier.",
+- $relative:23 "Maintenir les controles actuels.",
+- $relative:26 label: "Controle exploitation",
+- $relative:47 { key: "review", label: "Controle" },
+- $relative:96 { key: "control", label: "Controle" },
+- $relative:102 { from: "running", to: "control", label: "Controler" },
+- $relative:14 role?: string;
+- $relative:28 role,
+- $relative:42 role,
+- $relative:75 roles: [
+- $relative:91 roles: [
+- $relative:106 roles: [
+- $relative:20 roles?: string[];
+- $relative:39 role?: string,
+- $relative:65 role || "",
+- $relative:80 label: "Controle paiement",
+- $relative:1 export type UserRole =
+- $relative:12 role: string;
+- $relative:34 role:
+- $relative:15 role:
+- $relative:1 import { UserRole } from "@/features/auth/types/UserRole";
+- $relative:13 role: UserRole;
+
+## Pattern: feature flag
+
+Matches: 0
+
+
+## Pattern: worker
+
+Matches: 349
+
+- $relative:2 ERPWorkersDashboard,
+- $relative:3 } from "@/components/erp/workers";
+- $relative:8 <ERPWorkersDashboard />
+- $relative:19 <ERPStatCard label="Workers" value={metrics.workers} helper="Execution" />
+- $relative:24 <ERPStatCard label="Runtime" value="Actif" helper="Worker simulation" />
+- $relative:16 ERPRuntimeWorkersPanel,
+- $relative:37 workers: 12,
+- $relative:56 title: "Workers",
+- $relative:58 helper: "Workers runtime",
+- $relative:94 <ERPRuntimeWorkersPanel
+- $relative:95 workers={[
+- $relative:17 workers: number;
+- $relative:55 label: "Workers",
+- $relative:56 value: runtime.workers,
+- $relative:9 interface ERPRuntimeWorker {
+- $relative:21 interface ERPRuntimeWorkersPanelProps {
+- $relative:23 workers:
+- $relative:24 ERPRuntimeWorker[];
+- $relative:27 export function ERPRuntimeWorkersPanel({
+- $relative:28 workers,
+- $relative:29 }: ERPRuntimeWorkersPanelProps) {
+- $relative:34 title="Runtime Workers"
+- $relative:35 description="Workers et exécuteurs runtime."
+- $relative:70 workers.map(
+- $relative:71 worker => ({
+- $relative:72 id: worker.id,
+- $relative:73 module: worker.module,
+- $relative:74 status: worker.status,
+- $relative:7 export * from "./ERPRuntimeWorkersPanel";
+- $relative:35 description="Live runtime streams, realtime events, workers feeds et observability timeline."
+- $relative:35 description="Validation runtime, workflows, workers, securite, multi-tenant et observability."
+- $relative:6 getERPWorkersSnapshot,
+- $relative:7 } from "@/runtime/workers";
+- $relative:11 typeof getERPWorkersSnapshot
+- $relative:6 getERPWorkersSnapshot,
+- $relative:7 } from "@/runtime/workers";
+- $relative:11 typeof getERPWorkersSnapshot
+- $relative:18 export function ERPWorkerHistoryPanel({
+- $relative:32 Historique des jobs workers.
+- $relative:6 export function ERPWorkerQueue() {
+- $relative:8 const workers = [
+- $relative:10 name: "maintenance-worker",
+- $relative:15 name: "notifications-worker",
+- $relative:20 name: "observability-worker",
+- $relative:25 name: "automation-worker",
+- $relative:35 {workers.map((worker) => (
+- $relative:38 key={worker.name}
+- $relative:62 {worker.name}
+- $relative:72 {worker.jobs} jobs actifs
+- $relative:79 worker.health as
+- $relative:6 getERPWorkersSnapshot,
+- $relative:7 seedERPWorkersRuntime,
+- $relative:8 } from "@/runtime/workers";
+- $relative:11 ERPWorkersMetricsGrid,
+- $relative:12 } from "./ERPWorkersMetricsGrid";
+- $relative:15 ERPWorkersRegistryPanel,
+- $relative:16 } from "./ERPWorkersRegistryPanel";
+- $relative:23 ERPWorkerHistoryPanel,
+- $relative:24 } from "./ERPWorkerHistoryPanel";
+- $relative:26 seedERPWorkersRuntime();
+- $relative:28 export function ERPWorkersDashboard() {
+- $relative:31 getERPWorkersSnapshot();
+- $relative:38 title="Workers & Scheduler Engine"
+- $relative:39 description="Workers distribues, scheduler runtime, batch processing et orchestration longue duree."
+- $relative:42 <ERPWorkersMetricsGrid
+- $relative:48 <ERPWorkersRegistryPanel
+- $relative:58 <ERPWorkerHistoryPanel
+- $relative:6 getERPWorkersSnapshot,
+- $relative:7 } from "@/runtime/workers";
+- $relative:11 typeof getERPWorkersSnapshot
+- $relative:18 export function ERPWorkersMetricsGrid({
+- $relative:29 label="Workers"
+- $relative:30 value={metrics.activeWorkers}
+- $relative:31 helper="Workers actifs"
+- $relative:6 getERPWorkersSnapshot,
+- $relative:7 } from "@/runtime/workers";
+- $relative:11 typeof getERPWorkersSnapshot
+- $relative:18 export function ERPWorkersRegistryPanel({
+- $relative:28 Distributed Workers
+- $relative:32 Workers runtime distribues.
+- $relative:39 {snapshot.workers.map((worker) => (
+- $relative:42 key={worker.id}
+- $relative:51 {worker.label}
+- $relative:55 Queue: {worker.queue}
+- $relative:61 {worker.status}
+- $relative:1 export * from "./ERPWorkersMetricsGrid";
+- $relative:2 export * from "./ERPWorkersRegistryPanel";
+- $relative:4 export * from "./ERPWorkerHistoryPanel";
+- $relative:5 export * from "./ERPWorkersDashboard";
+- $relative:2 startWorkerLoop,
+- $relative:3 } from "@/core/worker-loop/worker-loop";
+- $relative:31 await startWorkerLoop();
+- $relative:7 } from "@/core/jobs/job-worker";
+- $relative:9 export async function startJobWorker() {
+- $relative:11 "ERP JOB WORKER STARTED"
+- $relative:6 getWorker,
+- $relative:7 ERPWorkerType,
+- $relative:8 } from "@/core/workers/worker-registry";
+- $relative:10 import "@/core/workers/register-workers";
+- $relative:16 export function resolveWorkerType(
+- $relative:18 ): ERPWorkerType {
+- $relative:57 const workerType =
+- $relative:58 resolveWorkerType(job);
+- $relative:60 const worker =
+- $relative:61 getWorker(workerType);
+- $relative:63 if (!worker) {
+- $relative:66 action: "worker-router",
+- $relative:72 `Aucun worker trouvé : ${workerType}`,
+- $relative:80 action: "worker-router",
+- $relative:86 `Job routé vers ${workerType}-worker`,
+- $relative:89 await worker.execute(job);
+- $relative:34 workerType: string
+- $relative:38 workerType
+- $relative:49 workerType
+- $relative:53 workerType
+- $relative:58 workerType
+- $relative:61 workerType
+- $relative:70 workerType
+- $relative:78 workerType
+- $relative:16 } from "@/core/router/worker-router";
+- $relative:36 action: "worker-loop",
+- $relative:55 "ERP WORKER LOOP ERROR",
+- $relative:70 export async function startWorkerLoop() {
+- $relative:72 "ERP WORKER LOOP STARTED"
+- $relative:9 export async function executeAnalyticsWorker(
+- $relative:14 action: "analytics-worker",
+- $relative:20 `Analytics worker exécuté : ${job.name}`,
+- $relative:24 "ANALYTICS WORKER",
+- $relative:9 export async function executeExportWorker(
+- $relative:14 action: "export-worker",
+- $relative:20 `Export worker exécuté : ${job.name}`,
+- $relative:24 "EXPORT WORKER",
+- $relative:9 export async function executeMaintenanceWorker(
+- $relative:14 action: "maintenance-worker",
+- $relative:20 `Maintenance worker exécuté : ${job.name}`,
+- $relative:24 "MAINTENANCE WORKER",
+- $relative:9 export async function executeNotificationWorker(
+- $relative:14 action: "notification-worker",
+- $relative:24 "NOTIFICATION WORKER",
+- $relative:2 registerWorker,
+- $relative:3 } from "@/core/workers/worker-registry";
+- $relative:6 executeWorkflowWorker,
+- $relative:7 } from "@/core/workers/workflow-worker";
+- $relative:10 executeNotificationWorker,
+- $relative:11 } from "@/core/workers/notification-worker";
+- $relative:14 executeAnalyticsWorker,
+- $relative:15 } from "@/core/workers/analytics-worker";
+- $relative:18 executeMaintenanceWorker,
+- $relative:19 } from "@/core/workers/maintenance-worker";
+- $relative:22 executeExportWorker,
+- $relative:23 } from "@/core/workers/export-worker";
+- $relative:25 registerWorker({
+- $relative:28 executeWorkflowWorker,
+- $relative:31 registerWorker({
+- $relative:34 executeNotificationWorker,
+- $relative:37 registerWorker({
+- $relative:40 executeAnalyticsWorker,
+- $relative:43 registerWorker({
+- $relative:46 executeMaintenanceWorker,
+- $relative:49 registerWorker({
+- $relative:52 executeExportWorker,
+- $relative:5 export type ERPWorkerType =
+- $relative:12 export type ERPWorker = {
+- $relative:13 type: ERPWorkerType;
+- $relative:20 const workers:
+- $relative:21 ERPWorker[] = [];
+- $relative:23 export function registerWorker(
+- $relative:24 worker: ERPWorker
+- $relative:26 workers.push(worker);
+- $relative:29 export function getWorker(
+- $relative:30 type: ERPWorkerType
+- $relative:32 return workers.find(
+- $relative:33 (worker) =>
+- $relative:34 worker.type === type
+- $relative:13 export async function executeWorkflowWorker(
+- $relative:18 action: "workflow-worker",
+- $relative:24 `Workflow worker exécuté : ${job.name}`,
+- $relative:32 "WORKFLOW WORKER",
+- $relative:1 // src/platform/workers/ERPWorker.ts
+- $relative:6 export class ERPWorker {
+- $relative:15 `[WORKER]
+- $relative:1 // src/platform/workers/WorkerPool.ts
+- $relative:3 import { ERPWorker }
+- $relative:4 from "@/platform/workers/ERPWorker";
+- $relative:6 class WorkerPoolManager {
+- $relative:8 private workers:
+- $relative:9 ERPWorker[] = [];
+- $relative:11 startWorkers(
+- $relative:21 const worker =
+- $relative:22 new ERPWorker(
+- $relative:23 `worker-${index + 1}`
+- $relative:26 worker.start();
+- $relative:28 this.workers.push(worker);
+- $relative:32 `[WORKERS]
+- $relative:34 workers active`
+- $relative:38 getWorkers() {
+- $relative:40 return this.workers;
+- $relative:44 export const WorkerPool =
+- $relative:45 new WorkerPoolManager();
+- $relative:35 description: "Les couches tenant, security, persistence, workers et streams sont presentes.",
+- $relative:25 runtimeWorkerRegistry,
+- $relative:26 } from "./RuntimeWorkerRegistry";
+- $relative:113 getRuntimeWorkers() {
+- $relative:114 return runtimeWorkerRegistry.getWorkers();
+- $relative:44 workers:
+- $relative:46 .getRuntimeWorkers(),
+- $relative:1 export interface RuntimeWorker {
+- $relative:17 export class RuntimeWorkerRegistry {
+- $relative:19 private workers:
+- $relative:20 RuntimeWorker[] = [];
+- $relative:22 registerWorker(
+- $relative:23 worker: RuntimeWorker
+- $relative:26 this.workers.push(worker);
+- $relative:29 getWorkers() {
+- $relative:31 return this.workers;
+- $relative:34 getModuleWorkers(
+- $relative:38 return this.workers.filter(
+- $relative:39 worker =>
+- $relative:40 worker.moduleId === moduleId
+- $relative:44 getRunningWorkers() {
+- $relative:46 return this.workers.filter(
+- $relative:47 worker =>
+- $relative:48 worker.status === "running"
+- $relative:53 export const runtimeWorkerRegistry =
+- $relative:54 new RuntimeWorkerRegistry();
+- $relative:33 description: "Queue et jobs actifs, workers reels a industrialiser.",
+- $relative:3 import { ERPWorkerHistoryStore } from "@/runtime/workers";
+- $relative:9 const failedWorkers = ERPWorkerHistoryStore.failed();
+- $relative:15 failedWorkers,
+- $relative:20 failedWorkers.length +
+- $relative:4 import { ERPWorkerRegistry } from "@/runtime/workers";
+- $relative:9 const workers = ERPWorkerRegistry;
+- $relative:20 key: "workers",
+- $relative:21 label: "Workers",
+- $relative:22 status: workers.some((worker) => worker.status === "running")
+- $relative:25 description: `${workers.length} workers declares`,
+- $relative:4 workers: number;
+- $relative:32 { id: "workers", label: "Workers", group: "runtime" },
+- $relative:41 { from: "queue", to: "workers", label: "execution" },
+- $relative:45 { from: "workers", to: "monitoring", label: "metrics" },
+- $relative:3 import { ERPWorkerRegistry, ERPWorkerHistoryStore } from "@/runtime/workers";
+- $relative:21 workers: ERPWorkerRegistry.length,
+- $relative:33 workerHistory: ERPWorkerHistoryStore.all(),
+- $relative:34 export const ERPQueueWorker = {
+- $relative:75 description: "Le worker runtime est temporairement bloque.",
+- $relative:1 import { ERPQueueWorker } from "./worker/ERPQueueWorker";
+- $relative:12 ERPQueueWorker.enqueue({
+- $relative:21 ERPQueueWorker.enqueue({
+- $relative:31 ERPQueueWorker.enqueue({
+- $relative:40 ERPQueueWorker.processAll(10);
+- $relative:6 export * from "./worker/ERPQueueWorker";
+- $relative:16 id: "stream_workers",
+- $relative:17 key: "workers",
+- $relative:18 label: "Workers Stream",
+- $relative:23 module: "workers",
+- $relative:25 message: "Worker execution terminee",
+- $relative:9 | "worker"
+- $relative:19 id: "worker_payments",
+- $relative:20 label: "Worker Payments",
+- $relative:21 type: "worker",
+- $relative:2 ERPWorkerEngine,
+- $relative:3 } from "@/runtime/workers";
+- $relative:21 simulateWorker() {
+- $relative:22 return ERPWorkerEngine.executeJob(
+- $relative:23 "worker_runtime_1",
+- $relative:2 ERPWorkerRegistry,
+- $relative:3 } from "../registry/ERPWorkerRegistry";
+- $relative:10 ERPWorkerHistoryStore,
+- $relative:11 } from "../history/ERPWorkerHistoryStore";
+- $relative:14 ERPWorkerMetricsStore,
+- $relative:15 } from "../metrics/ERPWorkerMetricsStore";
+- $relative:18 ERPWorkerJob,
+- $relative:19 } from "./ERPWorkerTypes";
+- $relative:28 export const ERPWorkerEngine = {
+- $relative:30 workers() {
+- $relative:32 return ERPWorkerRegistry;
+- $relative:41 workerId: string,
+- $relative:50 const job: ERPWorkerJob = {
+- $relative:51 id: createId("worker_job"),
+- $relative:52 workerId,
+- $relative:64 ERPWorkerHistoryStore.add(job);
+- $relative:73 const workers =
+- $relative:74 ERPWorkerRegistry;
+- $relative:77 ERPWorkerHistoryStore.all();
+- $relative:79 ERPWorkerMetricsStore.set({
+- $relative:80 activeWorkers:
+- $relative:81 workers.filter(
+- $relative:82 (worker) =>
+- $relative:83 worker.status === "running"
+- $relative:93 ERPWorkerHistoryStore.completed().length,
+- $relative:96 ERPWorkerHistoryStore.failed().length,
+- $relative:1 export type ERPWorkerStatus =
+- $relative:7 export type ERPWorkerJobStatus =
+- $relative:13 export type ERPWorker = {
+- $relative:17 status: ERPWorkerStatus;
+- $relative:22 export type ERPWorkerJob = {
+- $relative:24 workerId: string;
+- $relative:27 status: ERPWorkerJobStatus;
+- $relative:2 ERPWorkerJob,
+- $relative:3 } from "../engine/ERPWorkerTypes";
+- $relative:5 class ERPWorkerHistoryStoreClass {
+- $relative:8 ERPWorkerJob[] = [];
+- $relative:11 job: ERPWorkerJob
+- $relative:42 export const ERPWorkerHistoryStore =
+- $relative:43 new ERPWorkerHistoryStoreClass();
+- $relative:1 export type ERPWorkerMetrics = {
+- $relative:2 activeWorkers: number;
+- $relative:9 let metrics: ERPWorkerMetrics = {
+- $relative:10 activeWorkers: 0,
+- $relative:17 export const ERPWorkerMetricsStore = {
+- $relative:20 next: ERPWorkerMetrics
+- $relative:2 ERPWorker,
+- $relative:3 } from "../engine/ERPWorkerTypes";
+- $relative:5 export const ERPWorkerRegistry: ERPWorker[] = [
+- $relative:7 id: "worker_runtime_1",
+- $relative:8 label: "Runtime Worker 1",
+- $relative:16 id: "worker_automation_1",
+- $relative:17 label: "Automation Worker",
+- $relative:25 id: "worker_reporting_1",
+- $relative:26 label: "Reporting Worker",
+- $relative:3 } from "../engine/ERPWorkerTypes";
+- $relative:2 ERPWorkerEngine,
+- $relative:3 } from "./engine/ERPWorkerEngine";
+- $relative:7 export function seedERPWorkersRuntime() {
+- $relative:15 ERPWorkerEngine.executeJob(
+- $relative:16 "worker_runtime_1",
+- $relative:21 ERPWorkerEngine.executeJob(
+- $relative:22 "worker_automation_1",
+- $relative:27 ERPWorkerEngine.executeJob(
+- $relative:28 "worker_runtime_1",
+- $relative:34 ERPWorkerEngine.refreshMetrics();
+- $relative:2 ERPWorkerRegistry,
+- $relative:3 } from "./registry/ERPWorkerRegistry";
+- $relative:10 ERPWorkerHistoryStore,
+- $relative:11 } from "./history/ERPWorkerHistoryStore";
+- $relative:14 ERPWorkerMetricsStore,
+- $relative:15 } from "./metrics/ERPWorkerMetricsStore";
+- $relative:17 export function getERPWorkersSnapshot() {
+- $relative:21 workers:
+- $relative:22 ERPWorkerRegistry,
+- $relative:28 ERPWorkerHistoryStore.all(),
+- $relative:31 ERPWorkerMetricsStore.get(),
+- $relative:1 export * from "./engine/ERPWorkerTypes";
+- $relative:2 export * from "./registry/ERPWorkerRegistry";
+- $relative:4 export * from "./history/ERPWorkerHistoryStore";
+- $relative:5 export * from "./metrics/ERPWorkerMetricsStore";
+- $relative:6 export * from "./engine/ERPWorkerEngine";
+- $relative:7 export * from "./ERPWorkersSeed";
+- $relative:8 export * from "./ERPWorkersSnapshot";
+
+## Pattern: scheduler
+
+Matches: 52
+
+- $relative:18 export function ERPSchedulerPanel({
+- $relative:28 Scheduler Engine
+- $relative:19 ERPSchedulerPanel,
+- $relative:20 } from "./ERPSchedulerPanel";
+- $relative:38 title="Workers & Scheduler Engine"
+- $relative:39 description="Workers distribues, scheduler runtime, batch processing et orchestration longue duree."
+- $relative:52 <ERPSchedulerPanel
+- $relative:3 export * from "./ERPSchedulerPanel";
+- $relative:52 AutomationScheduler
+- $relative:54 from "@/runtime/automation/scheduler/AutomationScheduler";
+- $relative:105 private automationScheduler =
+- $relative:106 new AutomationScheduler();
+- $relative:114 this.automationScheduler.register(
+- $relative:147 this.automationScheduler.getAll(),
+- $relative:1 // src/platform/execution/WorkflowScheduler.ts
+- $relative:6 export class WorkflowScheduler {
+- $relative:11 "[SCHEDULER] started"
+- $relative:1 // src/platform/intelligence/OperationalIntelligenceScheduler.ts
+- $relative:9 export class OperationalIntelligenceScheduler {
+- $relative:1 // src/platform/persistence/RuntimeRecoveryScheduler.ts
+- $relative:6 export class RuntimeRecoveryScheduler {
+- $relative:11 "[RECOVERY SCHEDULER] started"
+- $relative:1 // src/platform/scheduling/WorkflowSchedulerPolicy.ts
+- $relative:6 export class WorkflowSchedulerPolicy {
+- $relative:6 export class AutomationScheduler {
+- $relative:1 export class Scheduler {
+- $relative:8 "[Scheduler]",
+- $relative:3 export class AutomationRuntimeScheduler {
+- $relative:16 export { AutomationRuntimeScheduler } from "./AutomationRuntimeScheduler";
+- $relative:45 runtimeScheduler,
+- $relative:46 } from "./RuntimeScheduler";
+- $relative:133 getRuntimeScheduler() {
+- $relative:134 return runtimeScheduler;
+- $relative:14 export class RuntimeScheduler {
+- $relative:57 export const runtimeScheduler =
+- $relative:58 new RuntimeScheduler();
+- $relative:6 export class RuntimeScheduler {
+- $relative:23 "ERP Runtime Scheduler started"
+- $relative:34 "Scheduler tick..."
+- $relative:9 RuntimeScheduler,
+- $relative:11 from "@/runtime/scheduler/RuntimeScheduler";
+- $relative:13 export function RuntimeSchedulerBootstrap() {
+- $relative:17 RuntimeScheduler.start();
+- $relative:6 ERPSchedulerRegistry,
+- $relative:7 } from "../scheduler/ERPSchedulerRegistry";
+- $relative:37 return ERPSchedulerRegistry;
+- $relative:99 ERPSchedulerRegistry.length,
+- $relative:5 export const ERPSchedulerRegistry: ERPScheduledTask[] = [
+- $relative:6 ERPSchedulerRegistry,
+- $relative:7 } from "./scheduler/ERPSchedulerRegistry";
+- $relative:25 ERPSchedulerRegistry,
+- $relative:3 export * from "./scheduler/ERPSchedulerRegistry";
+
+## Pattern: monitoring
+
+Matches: 145
+
+- $relative:1 import { ERPMonitoringDashboard } from "@/components/erp/monitoring";
+- $relative:4 return <ERPMonitoringDashboard />;
+- $relative:3 import { ERPStatusDashboard } from "@/features/platform-monitoring/components/ERPStatusDashboard";
+- $relative:6 import { ERPMonitoringService }
+- $relative:7 from "@/platform/monitoring/ERPMonitoringService";
+- $relative:12 ERPMonitoringService
+- $relative:20 label: "Workflow monitoring",
+- $relative:25 label: "Automation monitoring",
+- $relative:14 description="Monitoring ERP enterprise."
+- $relative:19 <ERPStatCard label="Workflows" value="Monitoring" />
+- $relative:98 workflows, événements, règles métier et monitoring ERP.
+- $relative:2 import type { getERPMonitoringSnapshot } from "@/runtime/monitoring";
+- $relative:4 type Snapshot = ReturnType<typeof getERPMonitoringSnapshot>;
+- $relative:2 import { getERPMonitoringSnapshot } from "@/runtime/monitoring";
+- $relative:4 import { ERPMonitoringMetricsGrid } from "./ERPMonitoringMetricsGrid";
+- $relative:9 export function ERPMonitoringDashboard() {
+- $relative:10 const snapshot = getERPMonitoringSnapshot();
+- $relative:15 eyebrow="ERP Monitoring Center"
+- $relative:20 <ERPMonitoringMetricsGrid snapshot={snapshot} />
+- $relative:2 import type { getERPMonitoringSnapshot } from "@/runtime/monitoring";
+- $relative:4 type Snapshot = ReturnType<typeof getERPMonitoringSnapshot>;
+- $relative:10 export function ERPMonitoringMetricsGrid({
+- $relative:2 import type { getERPMonitoringSnapshot } from "@/runtime/monitoring";
+- $relative:4 type Snapshot = ReturnType<typeof getERPMonitoringSnapshot>;
+- $relative:1 export * from "./ERPMonitoringMetricsGrid";
+- $relative:5 export * from "./ERPMonitoringDashboard";
+- $relative:4 from "../../../runtime/monitoring/PersistentRuntimePublisher";
+- $relative:11 Monitoring temps réel du runtime ERP Terragest.
+- $relative:25 Replay engine monitoring
+- $relative:4 // src/features/platform-monitoring/components/graphs/EventTimeline.tsx
+- $relative:1 // src/features/platform-monitoring/components/graphs/MetricsPanel.tsx
+- $relative:8 Platform Monitoring
+- $relative:1 // src/platform/monitoring/ERPMonitoringService.ts
+- $relative:12 export class ERPMonitoringService {
+- $relative:1 // src/platform/rules/monitoring/RuleMonitoring.ts
+- $relative:3 export class RuleMonitoring {
+- $relative:16 import { RuleMonitoring }
+- $relative:17 from "@/platform/rules/monitoring/RuleMonitoring";
+- $relative:87 RuleMonitoring.started(
+- $relative:100 RuleMonitoring.completed(
+- $relative:106 RuleMonitoring.failed(
+- $relative:1 import { getERPMonitoringSnapshot } from "@/runtime/monitoring";
+- $relative:9 const monitoring = getERPMonitoringSnapshot();
+- $relative:12 if (monitoring.errors.total > 0) {
+- $relative:15 module: "monitoring",
+- $relative:18 description: `${monitoring.errors.total} signaux d'erreur detectes.`,
+- $relative:23 if (monitoring.metrics.healthCritical > 0) {
+- $relative:2 import { getERPMonitoringSnapshot } from "@/runtime/monitoring";
+- $relative:10 const monitoring = getERPMonitoringSnapshot();
+- $relative:26 description: `${monitoring.errors.total} signaux d'erreur sont suivis par le Monitoring Center.`,
+- $relative:27 module: "monitoring",
+- $relative:28 level: monitoring.errors.total > 0 ? "warning" : "info",
+- $relative:65 "workflow-monitoring",
+- $relative:68 "Workflow Monitoring",
+- $relative:80 "Running workflow monitoring..."
+- $relative:2 from "../../monitoring/RuntimeEventPublisher";
+- $relative:1 export type ERPMonitoringMetrics = {
+- $relative:33 { id: "monitoring", label: "Monitoring", group: "ops" },
+- $relative:45 { from: "workers", to: "monitoring", label: "metrics" },
+- $relative:46 { from: "persistence", to: "monitoring", label: "records" },
+- $relative:12 export function getERPMonitoringSnapshot() {
+- $relative:3 export * from "./metrics/ERPMonitoringMetrics";
+- $relative:6 export * from "./ERPMonitoringSnapshot";
+- $relative:4 from "../monitoring/PersistentRuntimePublisher";
+- $relative:23 key: "monitoring",
+- $relative:24 label: "Monitoring",
+- $relative:26 description: "Le monitoring center est en place.",
+- $relative:47 key: "monitoring",
+- $relative:48 label: "Monitoring Center",
+- $relative:51 description: "Le monitoring center est disponible.",
+- $relative:99 "Runtime monitoring active",
+- $relative:100 "monitoring"
+- $relative:30 id: "stream_monitoring",
+- $relative:31 key: "monitoring",
+- $relative:32 label: "Monitoring Stream",
+- $relative:37 module: "monitoring",
+- $relative:14 | "monitoring"
+- $relative:49 id: "monitoring_center",
+- $relative:50 label: "Monitoring Center",
+- $relative:51 type: "monitoring",
+- $relative:52 module: "monitoring",
+- $relative:196 scope: "monitoring",
+- $relative:197 message: "Runtime monitoring active",
+- $relative:1 export const CloudMonitoringService = {
+- $relative:1 export const MonitoringService = {
+- $relative:9 export function MonitoringBulkActions({
+- $relative:7 export function MonitoringChartWidget({
+- $relative:9 export function MonitoringDashboardCard({
+- $relative:11 export function MonitoringExportActions({
+- $relative:11 export function MonitoringFilters({
+- $relative:8 MonitoringSchema,
+- $relative:9 MonitoringSchemaType,
+- $relative:10 } from "../schemas/Monitoring.schema";
+- $relative:12 import { useCreateMonitoring } from "../hooks/useCreateMonitoring";
+- $relative:14 export function MonitoringForm() {
+- $relative:16 useCreateMonitoring();
+- $relative:18 const form = useForm<MonitoringSchemaType>({
+- $relative:20 MonitoringSchema
+- $relative:25 data: MonitoringSchemaType
+- $relative:13 export function MonitoringPagination({
+- $relative:9 export function MonitoringRealtimeWidget({
+- $relative:13 export function MonitoringSorting({
+- $relative:3 import { useMonitoring } from "../hooks/useMonitoring";
+- $relative:5 export function MonitoringTable() {
+- $relative:9 } = useMonitoring();
+- $relative:3 export interface MonitoringDTO extends BaseDTO {
+- $relative:7 import { MonitoringService } from "../services/MonitoringService";
+- $relative:9 const service = new MonitoringService();
+- $relative:11 export function useCreateMonitoring() {
+- $relative:18 queryKey: ["monitoring"],
+- $relative:7 import { MonitoringService } from "../services/MonitoringService";
+- $relative:9 const service = new MonitoringService();
+- $relative:11 export function useDeleteMonitoring() {
+- $relative:18 queryKey: ["monitoring"],
+- $relative:5 import { MonitoringService } from "../services/MonitoringService";
+- $relative:7 const service = new MonitoringService();
+- $relative:9 export function useMonitoring() {
+- $relative:11 queryKey: ["monitoring"],
+- $relative:7 import { MonitoringService } from "../services/MonitoringService";
+- $relative:9 const service = new MonitoringService();
+- $relative:11 export function useUpdateMonitoring() {
+- $relative:24 queryKey: ["monitoring"],
+- $relative:1 export default function NouveauMonitoringPage() {
+- $relative:5 Nouveau Monitoring
+- $relative:1 export default function EditMonitoringPage() {
+- $relative:5 Modifier Monitoring
+- $relative:1 export default function MonitoringDetailsPage() {
+- $relative:5 DÃ©tails Monitoring
+- $relative:1 export default function MonitoringPage() {
+- $relative:5 Monitoring
+- $relative:2 import { MonitoringDTO } from "../dto/MonitoringDTO";
+- $relative:4 export class MonitoringRepository extends FirestoreRepository<MonitoringDTO> {
+- $relative:6 super("monitoring");
+- $relative:3 export const MonitoringSchema = z.object({
+- $relative:14 export type MonitoringSchemaType =
+- $relative:15 z.infer<typeof MonitoringSchema>;
+- $relative:1 import { MonitoringRepository } from "../repositories/MonitoringRepository";
+- $relative:3 export class MonitoringService {
+- $relative:5 new MonitoringRepository();
+- $relative:3 describe("MonitoringService", () => {
+- $relative:1 export * from "./dto/MonitoringDTO";
+- $relative:2 export * from "./repositories/MonitoringRepository";
+- $relative:3 export * from "./services/MonitoringService";
+- $relative:35 "stock-monitoring",
+- $relative:13 "stock-monitoring-workflow",
+
+## Pattern: alert
+
+Matches: 329
+
+- $relative:22 description: "Gestion des flux, niveaux et alertes de stock.",
+- $relative:1 const alerts = [
+- $relative:7 export const AlertsPanel = () => {
+- $relative:26 Alertes
+- $relative:31 {alerts.map(
+- $relative:32 (alert, index) => (
+- $relative:43 {alert}
+- $relative:16 <ERPButton variant="danger" type="button">Alerte</ERPButton>
+- $relative:1 type ERPErrorAlert = {
+- $relative:11 alerts?: ERPErrorAlert[];
+- $relative:16 alerts?: ERPErrorAlert[];
+- $relative:25 const alerts =
+- $relative:26 errors?.alerts ??
+- $relative:27 snapshot?.errors?.alerts ??
+- $relative:32 {alerts.length === 0 ? (
+- $relative:34 Aucune alerte runtime.
+- $relative:38 {alerts.map((alert: ERPErrorAlert, index: number) => (
+- $relative:40 key={alert.id ?? index}
+- $relative:44 {alert.title ?? "Alerte runtime"}
+- $relative:48 {alert.message ??
+- $relative:49 alert.description ??
+- $relative:50 alert.level ??
+- $relative:5 export function ERPAlertsPanel() {
+- $relative:7 const alerts =
+- $relative:8 ERPObservabilityTimeline.alerts();
+- $relative:13 {alerts.map((alert) => (
+- $relative:16 key={alert.id}
+- $relative:25 {alert.title}
+- $relative:29 {alert.description}
+- $relative:38 alert.level === "critical"
+- $relative:40 : alert.level === "warning"
+- $relative:46 {alert.level}
+- $relative:19 ERPAlertsPanel,
+- $relative:20 } from "./ERPAlertsPanel";
+- $relative:32 description="Timeline centralisee des events, traces et alertes runtime."
+- $relative:70 Alerts
+- $relative:75 <ERPAlertsPanel />
+- $relative:5 export * from "./ERPAlertsPanel";
+- $relative:21 ["Alerts", snapshot.alerts.length],
+- $relative:34 description="Repository runtime tenant-aware pour events, traces, alerts, workflows, queue jobs et audit."
+- $relative:21 <ERPStatCard label="Alerts" value={snapshot.alerts} helper="Alertes live" />
+- $relative:9 interface ERPRuntimeAlert {
+- $relative:21 interface ERPRuntimeAlertsPanelProps {
+- $relative:23 alerts:
+- $relative:24 ERPRuntimeAlert[];
+- $relative:27 export function ERPRuntimeAlertsPanel({
+- $relative:28 alerts,
+- $relative:29 }: ERPRuntimeAlertsPanelProps) {
+- $relative:34 title="Runtime Alerts"
+- $relative:35 description="Alertes et supervision du runtime."
+- $relative:41 alerts.map(
+- $relative:42 alert => (
+- $relative:45 key={alert.id}
+- $relative:63 {alert.title}
+- $relative:67 tone={alert.level}
+- $relative:69 {alert.level}
+- $relative:14 ERPRuntimeAlertsPanel,
+- $relative:68 <ERPRuntimeAlertsPanel
+- $relative:69 alerts={[
+- $relative:4 export * from "./ERPRuntimeAlertsPanel";
+- $relative:43 helper="Critical alerts"
+- $relative:86 "EVENT BUS : stock alert"
+- $relative:110 "Alerte stock faible via Event Bus",
+- $relative:43 id: "low-stock-alert",
+- $relative:71 "Alerte stock faible détectée",
+- $relative:3 import { useAlerts }
+- $relative:4 from "@/features/alerts/hooks/useAlerts";
+- $relative:6 export const AlertsPanel = () => {
+- $relative:9 alerts,
+- $relative:11 } = useAlerts();
+- $relative:17 Chargement alertes...
+- $relative:22 if (alerts.length === 0) {
+- $relative:39 Alertes
+- $relative:48 Aucune alerte active
+- $relative:77 Alertes
+- $relative:90 {alerts.length}
+- $relative:96 {alerts.map((alert) => (
+- $relative:99 key={alert.id}
+- $relative:106 alert.level ===
+- $relative:113 alert.level ===
+- $relative:120 alert.level ===
+- $relative:132 {alert.title}
+- $relative:141 {alert.description}
+- $relative:9 import { AlertService }
+- $relative:10 from "@/features/alerts/services/AlertService";
+- $relative:12 export function useAlerts() {
+- $relative:19 const alerts =
+- $relative:22 return AlertService
+- $relative:23 .generateProductsAlerts(
+- $relative:31 alerts,
+- $relative:1 export type AlertItem = {
+- $relative:14 export const AlertService = {
+- $relative:16 generateProductsAlerts(
+- $relative:18 ): AlertItem[] {
+- $relative:20 const alerts: AlertItem[] = [];
+- $relative:37 alerts.push({
+- $relative:50 alerts.push({
+- $relative:63 alerts.push({
+- $relative:76 return alerts;
+- $relative:11 seuilAlerte: number;
+- $relative:20 StockAlerts({
+- $relative:26 const alerts =
+- $relative:32 produit.seuilAlerte
+- $relative:35 if (alerts.length === 0) {
+- $relative:55 Alertes Stock
+- $relative:84 Alertes Stock
+- $relative:90 alerts.map(
+- $relative:3 const ALERTS = [
+- $relative:24 export const DashboardAlertCenter =
+- $relative:44 Alertes
+- $relative:50 {ALERTS.map(
+- $relative:52 alert,
+- $relative:69 {alert.level}
+- $relative:78 {alert.message}
+- $relative:42 alert(
+- $relative:5 createStockAlert(
+- $relative:59 label: "Alertes",
+- $relative:60 value: metrics.alerts,
+- $relative:20 alerts: 4,
+- $relative:66 alert("Produit modifiÃ©");
+- $relative:41 alert("Produit crÃ©Ã©");
+- $relative:31 seuilAlerte: 10,
+- $relative:22 seuilAlerte: number;
+- $relative:37 id: "alert",
+- $relative:39 nom: "Security Alert Workflow",
+- $relative:42 "Gestion alertes critiques",
+- $relative:21 "IOT_ALERT",
+- $relative:10 name: "auto-stock-alert",
+- $relative:17 "[AUTOMATION] stock alert triggered",
+- $relative:10 name: "stock-alert-rule",
+- $relative:21 "[RULE] stock alert",
+- $relative:22 ERPAlertStore,
+- $relative:92 rule.action === "ALERT"
+- $relative:95 ERPAlertStore.add({
+- $relative:98 `alert_${Date.now()}`,
+- $relative:104 "Automation alert",
+- $relative:12 action: "ALERT",
+- $relative:13 description: "Declenchement alerte stock.",
+- $relative:7 | "ALERT"
+- $relative:7 label: "Alerte stock critique",
+- $relative:8 description: "Declenche une alerte lorsque le stock passe sous le seuil.",
+- $relative:12 { type: "alert", label: "Creer alerte stock" },
+- $relative:25 { type: "alert", label: "Creer incident maintenance" },
+- $relative:67 key: "intervention-delay-alert",
+- $relative:69 label: "Alerte retard intervention",
+- $relative:70 description: "Alerte lorsqu'une intervention reste ouverte trop longtemps.",
+- $relative:74 { type: "alert", label: "Creer alerte intervention" },
+- $relative:79 key: "maintenance-critical-alert",
+- $relative:86 { type: "alert", label: "Creer incident critique" },
+- $relative:94 description: "Alerte avant echeance ou renouvellement de contrat.",
+- $relative:28 | "alert";
+- $relative:20 "stock-low-alert",
+- $relative:32 payload.seuilAlerte,
+- $relative:21 runtimeAlertRegistry,
+- $relative:22 } from "./RuntimeAlertRegistry";
+- $relative:109 getRuntimeAlerts() {
+- $relative:110 return runtimeAlertRegistry.getAlerts();
+- $relative:1 export interface RuntimeAlert {
+- $relative:15 export class RuntimeAlertRegistry {
+- $relative:17 private alerts:
+- $relative:18 RuntimeAlert[] = [];
+- $relative:20 pushAlert(
+- $relative:21 alert: RuntimeAlert
+- $relative:24 this.alerts.push(alert);
+- $relative:27 getAlerts() {
+- $relative:29 return this.alerts;
+- $relative:32 getCriticalAlerts() {
+- $relative:34 return this.alerts.filter(
+- $relative:35 alert =>
+- $relative:36 alert.level === "critical"
+- $relative:42 return this.alerts.filter(
+- $relative:43 alert =>
+- $relative:44 alert.level === "warning"
+- $relative:49 export const runtimeAlertRegistry =
+- $relative:50 new RuntimeAlertRegistry();
+- $relative:9 alerts: string[];
+- $relative:40 alerts:
+- $relative:42 .getRuntimeAlerts(),
+- $relative:182 "seuilAlerte",
+- $relative:139 description: "Un contrat expirant bientÃ´t doit gÃ©nÃ©rer une alerte.",
+- $relative:198 description: "Une campagne qui dÃ©passe son budget doit gÃ©nÃ©rer une alerte.",
+- $relative:245 code: "STOCK_LOW_ALERT",
+- $relative:246 label: "Alerte stock bas",
+- $relative:250 description: "Un stock infÃ©rieur au seuil doit gÃ©nÃ©rer une alerte.",
+- $relative:357 code: "REAL_ESTATE_RENT_OVERDUE_ALERT",
+- $relative:362 description: "Un loyer impayÃ© doit gÃ©nÃ©rer une alerte.",
+- $relative:9 | "ALERT_TRIGGERED";
+- $relative:42 STOCK_ALERT_TRIGGERED:
+- $relative:43 "STOCK_ALERT_TRIGGERED",
+- $relative:144 { key: "seuilAlerte", label: "Seuil alerte", type: "number", sortable: true },
+- $relative:1 import { ERPAlertStore } from "@/runtime/observability";
+- $relative:7 const alerts = ERPAlertStore.all();
+- $relative:13 alerts: alerts.filter((alert) => alert.level !== "info"),
+- $relative:18 alerts.filter((alert) => alert.level !== "info").length +
+- $relative:1 export type ERPAlertLevel =
+- $relative:6 export type ERPAlert = {
+- $relative:16 level: ERPAlertLevel;
+- $relative:2 ERPAlert,
+- $relative:3 } from "./ERPAlert";
+- $relative:5 class ERPAlertStoreClass {
+- $relative:7 private alerts:
+- $relative:8 ERPAlert[] = [];
+- $relative:11 alert: ERPAlert
+- $relative:14 this.alerts.unshift(alert);
+- $relative:16 this.alerts =
+- $relative:17 this.alerts.slice(0, 100);
+- $relative:22 return this.alerts;
+- $relative:26 export const ERPAlertStore =
+- $relative:27 new ERPAlertStoreClass();
+- $relative:10 ERPAlertStore,
+- $relative:11 } from "../alerts/ERPAlertStore";
+- $relative:25 alerts() {
+- $relative:27 return ERPAlertStore.all();
+- $relative:5 export interface ERPAlertItem
+- $relative:8 export class ERPAlertStore {
+- $relative:9 private static items: ERPAlertItem[] = [];
+- $relative:15 static alerts() {
+- $relative:19 static add(item: ERPAlertItem) {
+- $relative:23 static alerts() {
+- $relative:10 ERPAlertStore,
+- $relative:11 } from "./alerts/ERPAlertStore";
+- $relative:58 ERPAlertStore.add({
+- $relative:59 id: "alert_1",
+- $relative:67 ERPAlertStore.add({
+- $relative:68 id: "alert_2",
+- $relative:5 export * from "./ERPAlertStore";
+- $relative:21 description: "Surveillance des niveaux et alertes.",
+- $relative:9 alerts,
+- $relative:17 ERPRuntimePersistenceService.alerts.list(),
+- $relative:27 alerts,
+- $relative:35 alerts.length +
+- $relative:4 alerts: "runtime_alerts",
+- $relative:20 alerts:
+- $relative:22 ERPPersistenceCollections.alerts
+- $relative:26 await ERPRuntimePersistenceService.alerts.save({
+- $relative:6 | "alerts"
+- $relative:22 alerts: ERPRealtimeBus.byChannel("alerts").length,
+- $relative:65 description: "Alerte stock faible traitee.",
+- $relative:80 channel: "alerts",
+- $relative:82 title: "Alerte critique",
+- $relative:7 ERPAlertStore,
+- $relative:71 ERPAlertStore.add({
+- $relative:72 id: createId("alert_circuit"),
+- $relative:136 ERPAlertStore.add({
+- $relative:137 id: createId("alert_dlq"),
+- $relative:12 alerts: number;
+- $relative:21 alerts: 2,
+- $relative:31 alerts: 1,
+- $relative:41 alerts: 0,
+- $relative:42 label: "Alertes",
+- $relative:56 key: "stock-alert",
+- $relative:58 label: "Workflow alerte stock",
+- $relative:62 { key: "alert", label: "Alerte" },
+- $relative:67 { from: "normal", to: "alert", label: "Detecter alerte" },
+- $relative:68 { from: "alert", to: "order", label: "Creer commande" },
+- $relative:21 seuilAlerte?: number;
+- $relative:9 export function AlertesBulkActions({
+- $relative:7 export function AlertesChartWidget({
+- $relative:9 export function AlertesDashboardCard({
+- $relative:11 export function AlertesExportActions({
+- $relative:11 export function AlertesFilters({
+- $relative:8 AlertesSchema,
+- $relative:9 AlertesSchemaType,
+- $relative:10 } from "../schemas/Alertes.schema";
+- $relative:12 import { useCreateAlertes } from "../hooks/useCreateAlertes";
+- $relative:14 export function AlertesForm() {
+- $relative:16 useCreateAlertes();
+- $relative:18 const form = useForm<AlertesSchemaType>({
+- $relative:20 AlertesSchema
+- $relative:25 data: AlertesSchemaType
+- $relative:13 export function AlertesPagination({
+- $relative:9 export function AlertesRealtimeWidget({
+- $relative:13 export function AlertesSorting({
+- $relative:3 import { useAlertes } from "../hooks/useAlertes";
+- $relative:5 export function AlertesTable() {
+- $relative:9 } = useAlertes();
+- $relative:3 export interface AlertesDTO extends BaseDTO {
+- $relative:5 import { AlertesService } from "../services/AlertesService";
+- $relative:7 const service = new AlertesService();
+- $relative:9 export function useAlertes() {
+- $relative:11 queryKey: ["alertes"],
+- $relative:7 import { AlertesService } from "../services/AlertesService";
+- $relative:9 const service = new AlertesService();
+- $relative:11 export function useCreateAlertes() {
+- $relative:18 queryKey: ["alertes"],
+- $relative:7 import { AlertesService } from "../services/AlertesService";
+- $relative:9 const service = new AlertesService();
+- $relative:11 export function useDeleteAlertes() {
+- $relative:18 queryKey: ["alertes"],
+- $relative:7 import { AlertesService } from "../services/AlertesService";
+- $relative:9 const service = new AlertesService();
+- $relative:11 export function useUpdateAlertes() {
+- $relative:24 queryKey: ["alertes"],
+- $relative:1 export default function NouveauAlertesPage() {
+- $relative:5 Nouveau Alertes
+- $relative:1 export default function EditAlertesPage() {
+- $relative:5 Modifier Alertes
+- $relative:1 export default function AlertesDetailsPage() {
+- $relative:5 DÃ©tails Alertes
+- $relative:1 export default function AlertesPage() {
+- $relative:5 Alertes
+- $relative:2 import { AlertesDTO } from "../dto/AlertesDTO";
+- $relative:4 export class AlertesRepository extends FirestoreRepository<AlertesDTO> {
+- $relative:6 super("alertes");
+- $relative:3 export const AlertesSchema = z.object({
+- $relative:14 export type AlertesSchemaType =
+- $relative:15 z.infer<typeof AlertesSchema>;
+- $relative:1 import { AlertesRepository } from "../repositories/AlertesRepository";
+- $relative:3 export class AlertesService {
+- $relative:5 new AlertesRepository();
+- $relative:8 export function subscribeToAlertes(
+- $relative:14 "alertes"
+- $relative:3 describe("AlertesService", () => {
+- $relative:1 export * from "./dto/AlertesDTO";
+- $relative:2 export * from "./repositories/AlertesRepository";
+- $relative:3 export * from "./services/AlertesService";
+- $relative:35 name: "seuilAlerte",
+- $relative:36 label: "Seuil alerte",
+- $relative:14 "stock-alert-workflow",
+- $relative:7 STOCK_ALERT,
+- $relative:31 result.alert
+- $relative:35 STOCK_ALERT,
+- $relative:4 export const STOCK_ALERT =
+- $relative:5 "STOCK_ALERT";
+- $relative:6 STOCK_ALERT,
+- $relative:15 STOCK_ALERT,
+- $relative:23 "Alerte stock",
+- $relative:13 alert: true,
+- $relative:22 alert: false,
+
+## Pattern: log
+
+Matches: 504
+
+- $relative:27 description: "Catalogue des produits, intrants et references.",
+- $relative:1 // src/app/login/page.tsx
+- $relative:14 export default function LoginPage() {
+- $relative:25 function handleLogin() {
+- $relative:28 AuthService.login(
+- $relative:134 handleLogin
+- $relative:50 "/login"
+- $relative:13 export const ConfirmDialog = ({
+- $relative:21 "audit_logs",
+- $relative:3 interface ConfirmDialogProps {
+- $relative:20 export const ConfirmDialog = ({
+- $relative:28 }: ConfirmDialogProps) => {
+- $relative:7 import { ConfirmDialog } from "@/components/dialogs/ConfirmDialog";
+- $relative:65 <ConfirmDialog
+- $relative:43 Vision logique des flux ERP connectes au registre central.
+- $relative:161 console.log(
+- $relative:223 console.log(
+- $relative:349 console.log(
+- $relative:46 console.log(
+- $relative:6 import { ERPTopologyPanel } from "./ERPTopologyPanel";
+- $relative:17 description="Health checks, topology, runtime metrics, dependency graph et error analytics."
+- $relative:27 <ERPTopologyPanel snapshot={snapshot} />
+- $relative:23 <ERPStatCard label="Security" value={metrics.securityAudits} helper="Audit logs" />
+- $relative:10 export function ERPTopologyPanel({
+- $relative:17 Runtime Topology
+- $relative:20 Graphe logique des dependances ERP.
+- $relative:3 export * from "./ERPTopologyPanel";
+- $relative:10 label: "Logs runtime",
+- $relative:2 import { ProductionLogger } from "@/runtime/production";
+- $relative:4 export function ProductionLogsPanel() {
+- $relative:5 const logs = ProductionLogger.all().slice(0, 8);
+- $relative:11 <h2 className="text-lg font-black text-slate-950">Logs runtime</h2>
+- $relative:17 <ERPBadge tone="info">{logs.length}</ERPBadge>
+- $relative:21 {logs.length === 0 ? (
+- $relative:22 <p className="text-sm text-slate-500">Aucun log pour le moment.</p>
+- $relative:24 logs.map((log) => (
+- $relative:26 key={log.id}
+- $relative:32 {log.scope}
+- $relative:34 <p className="mt-1 text-sm text-slate-500">{log.message}</p>
+- $relative:39 log.level === "error"
+- $relative:41 : log.level === "warning"
+- $relative:46 {log.level}
+- $relative:18 label: "Audit logs",
+- $relative:3 LOGIN: "/login",
+- $relative:28 console.log("ERP ACTION EXECUTION", payload);
+- $relative:68 console.log("DOMAIN EVENT", event);
+- $relative:80 console.log("WORKFLOW EXECUTION", {
+- $relative:95 console.log("AUDIT ENTRY CREATED");
+- $relative:107 console.log("SUPERVISION UPDATED");
+- $relative:10 console.log(
+- $relative:30 console.log(
+- $relative:63 export async function logout() {
+- $relative:41 console.log(
+- $relative:25 console.log(
+- $relative:44 console.log(
+- $relative:23 console.log(
+- $relative:33 console.log(
+- $relative:36 console.log(
+- $relative:59 console.log(
+- $relative:28 console.log(
+- $relative:68 console.log(
+- $relative:41 console.log(
+- $relative:20 console.log(
+- $relative:85 console.log(
+- $relative:122 console.log(
+- $relative:49 console.log(
+- $relative:77 console.log(
+- $relative:11 console.log(
+- $relative:14 console.log(
+- $relative:18 console.log(
+- $relative:22 console.log(
+- $relative:43 console.log(
+- $relative:47 console.log(
+- $relative:61 console.log(
+- $relative:57 console.log(
+- $relative:12 console.log(
+- $relative:48 console.log(
+- $relative:10 console.log(
+- $relative:28 console.log(
+- $relative:35 console.log(
+- $relative:13 | "Logistique"
+- $relative:48 case "Logistique":
+- $relative:65 console.log(
+- $relative:13 console.log(
+- $relative:30 console.log(
+- $relative:60 console.log(
+- $relative:42 console.log(
+- $relative:69 console.log(
+- $relative:26 console.log(
+- $relative:60 console.log(
+- $relative:93 console.log(
+- $relative:55 console.log(
+- $relative:53 console.log(
+- $relative:31 export function logSecurityAudit(
+- $relative:52 console.log(
+- $relative:13 console.log(
+- $relative:35 console.log(
+- $relative:47 console.log(
+- $relative:23 console.log(
+- $relative:29 console.log(
+- $relative:41 console.log(
+- $relative:71 console.log(
+- $relative:23 console.log(
+- $relative:23 console.log(
+- $relative:23 console.log(
+- $relative:23 console.log(
+- $relative:31 console.log(
+- $relative:14 console.log(
+- $relative:8 console.log(
+- $relative:21 console.log(
+- $relative:8 console.log(
+- $relative:27 console.log(
+- $relative:38 console.log(
+- $relative:55 console.log(
+- $relative:34 console.log(
+- $relative:49 console.log(
+- $relative:68 console.log(
+- $relative:31 console.log(
+- $relative:33 console.log(
+- $relative:39 console.log(
+- $relative:91 console.log(
+- $relative:15 async log(data: any) {
+- $relative:18 collection(db, "audit_logs"),
+- $relative:28 collection(db, "audit_logs"),
+- $relative:1 export interface AuditLog {
+- $relative:15 export const LoginForm = () => {
+- $relative:36 const handleLogin =
+- $relative:45 await AuthService.login(
+- $relative:84 Login
+- $relative:140 onClick={handleLogin}
+- $relative:35 "/login"
+- $relative:22 async login(
+- $relative:40 async logout() {
+- $relative:24 console.log(
+- $relative:6 console.log(
+- $relative:171 console.log(
+- $relative:8 console.log(
+- $relative:29 console.log(
+- $relative:47 console.log(
+- $relative:65 console.log(
+- $relative:83 console.log(
+- $relative:5 console.log(
+- $relative:10 async log(
+- $relative:24 console.log(
+- $relative:20 console.log(
+- $relative:24 console.log(
+- $relative:11 logo?: string;
+- $relative:19 import { ConfirmDialog }
+- $relative:20 from "@/components/crud/ConfirmDialog";
+- $relative:219 <ConfirmDialog
+- $relative:9 RuntimeLogsPanel,
+- $relative:11 from "@/runtime/observability/RuntimeLogsPanel";
+- $relative:57 <RuntimeLogsPanel />
+- $relative:13 console.log(
+- $relative:26 console.log(
+- $relative:8 console.log(
+- $relative:13 const logs: any[] = [];
+- $relative:20 logs.push({
+- $relative:29 console.log(
+- $relative:39 logs,
+- $relative:9 console.log("CREATE", this.collectionName, data);
+- $relative:13 console.log("UPDATE", this.collectionName, id, data);
+- $relative:17 console.log("DELETE", this.collectionName, id);
+- $relative:21 console.log("FIND BY ID", this.collectionName, id);
+- $relative:27 console.log("FIND ALL", this.collectionName);
+- $relative:3 console.log("GET", url);
+- $relative:11 console.log("POST", url, data);
+- $relative:19 console.log("PUT", url, data);
+- $relative:27 console.log("DELETE", url);
+- $relative:5 "/login",
+- $relative:3 console.log("Creating product", data);
+- $relative:5 static log(
+- $relative:10 console.log(
+- $relative:10 static login(
+- $relative:17 console.log(
+- $relative:18 "[LOGIN]",
+- $relative:39 static logout() {
+- $relative:43 console.log(
+- $relative:44 "[LOGOUT]"
+- $relative:23 console.log(
+- $relative:16 console.log(
+- $relative:31 console.log(
+- $relative:46 console.log(
+- $relative:11 console.log(
+- $relative:19 console.log(
+- $relative:5 console.log(
+- $relative:52 console.log(
+- $relative:153 console.log(
+- $relative:43 console.log(
+- $relative:47 console.log(
+- $relative:54 console.log(
+- $relative:69 SecurityAudit.log(
+- $relative:82 SecurityAudit.log(
+- $relative:112 SecurityAudit.log(
+- $relative:23 console.log(
+- $relative:10 console.log(
+- $relative:14 console.log(
+- $relative:36 console.log(
+- $relative:17 console.log(
+- $relative:21 console.log(
+- $relative:52 console.log(
+- $relative:15 console.log(
+- $relative:10 console.log(
+- $relative:17 console.log(
+- $relative:24 console.log(
+- $relative:25 console.log(
+- $relative:21 console.log(
+- $relative:16 console.log(
+- $relative:13 console.log(
+- $relative:72 console.log(
+- $relative:187 console.log(
+- $relative:263 console.log(
+- $relative:37 console.log(
+- $relative:7 console.log(
+- $relative:15 console.log(
+- $relative:23 console.log(
+- $relative:31 console.log(
+- $relative:1 // src/platform/observability/ERPLogger.ts
+- $relative:3 export class ERPLogger {
+- $relative:10 console.log(
+- $relative:20 console.log(
+- $relative:18 console.log(
+- $relative:19 console.log(
+- $relative:31 console.log(
+- $relative:30 console.log(
+- $relative:37 console.log(
+- $relative:10 console.log(
+- $relative:24 console.log(
+- $relative:42 console.log(
+- $relative:27 console.log(
+- $relative:26 console.log(
+- $relative:5 static log(
+- $relative:12 console.log(
+- $relative:26 console.log(
+- $relative:9 console.log(
+- $relative:19 console.log(
+- $relative:17 console.log(
+- $relative:34 console.log(
+- $relative:65 console.log(
+- $relative:91 RuleAudit.log(
+- $relative:111 RuleAudit.log(
+- $relative:20 console.log(
+- $relative:40 console.log(
+- $relative:10 console.log(
+- $relative:18 console.log(
+- $relative:20 console.log(
+- $relative:41 console.log(
+- $relative:28 console.log(
+- $relative:34 console.log(
+- $relative:5 static log(
+- $relative:12 console.log(
+- $relative:21 console.log(
+- $relative:36 console.log(
+- $relative:25 console.log(
+- $relative:14 console.log(
+- $relative:31 console.log(
+- $relative:26 console.log(
+- $relative:49 console.log(
+- $relative:18 console.log(
+- $relative:21 console.log(
+- $relative:26 AuditTrail.log(
+- $relative:12 console.log(
+- $relative:23 console.log(
+- $relative:34 console.log(
+- $relative:8 console.log(
+- $relative:8 console.log(
+- $relative:7 console.log(
+- $relative:7 console.log(
+- $relative:45 console.log(
+- $relative:39 console.log(
+- $relative:7 console.log(
+- $relative:7 console.log(
+- $relative:8 console.log(
+- $relative:25 console.log(
+- $relative:34 console.log(
+- $relative:79 console.log(
+- $relative:12 console.log("AUTOMATION ACTION", {
+- $relative:34 console.log(
+- $relative:70 console.log(
+- $relative:16 console.log(
+- $relative:34 console.log(
+- $relative:30 console.log(
+- $relative:18 console.log(
+- $relative:25 console.log(
+- $relative:17 console.log(
+- $relative:11 console.log(
+- $relative:11 console.log(
+- $relative:38 console.log(
+- $relative:21 log(
+- $relative:2 GeneratedRuntimeTopology,
+- $relative:3 } from "../generated/GeneratedRuntimeTopology";
+- $relative:5 export interface RuntimeTopologyNode {
+- $relative:10 export class RuntimeEventTopology {
+- $relative:12 private topology =
+- $relative:15 RuntimeTopologyNode
+- $relative:21 const [moduleId, topology]
+- $relative:23 GeneratedRuntimeTopology
+- $relative:27 this.topology.set(
+- $relative:29 topology
+- $relative:34 getModuleTopology(
+- $relative:38 return this.topology.get(
+- $relative:43 getAllTopologies() {
+- $relative:46 this.topology.entries()
+- $relative:51 export const runtimeEventTopology =
+- $relative:52 new RuntimeEventTopology();
+- $relative:54 runtimeEventTopology.initialize();
+- $relative:7 logs: string[];
+- $relative:9 console.log(
+- $relative:13 console.log(
+- $relative:18 console.log(
+- $relative:7 console.log(
+- $relative:22 console.log(
+- $relative:7 console.log(
+- $relative:17 console.log(
+- $relative:7 console.log(
+- $relative:7 console.log(
+- $relative:7 console.log(
+- $relative:12 console.log(
+- $relative:25 console.log(
+- $relative:48 console.log(
+- $relative:7 console.log(
+- $relative:7 console.log(
+- $relative:7 console.log(
+- $relative:7 console.log(
+- $relative:7 console.log(
+- $relative:32 log?: (entry: any) => Promise<void> | void;
+- $relative:286 await resolvedDependencies.observabilityEngine?.log?.({
+- $relative:39 console.log("ERP EVENT EMITTED", event);
+- $relative:8 console.log(
+- $relative:38 console.log(
+- $relative:22 console.log(
+- $relative:7 console.log(
+- $relative:98 console.log("ERP FORM SUBMIT", {
+- $relative:1 export const GeneratedRuntimeTopology = {
+- $relative:6 console.log(
+- $relative:8 console.log(
+- $relative:8 console.log(
+- $relative:8 console.log(
+- $relative:8 console.log(
+- $relative:6 console.log(
+- $relative:74 console.log(
+- $relative:7 console.log(
+- $relative:7 console.log(
+- $relative:7 console.log(
+- $relative:8 console.log(
+- $relative:14 console.log(
+- $relative:7 console.log(
+- $relative:7 console.log(
+- $relative:8 console.log(
+- $relative:23 collection(db, "audit_logs"),
+- $relative:5 console.log(
+- $relative:16 console.log(
+- $relative:115 category: "Logistique",
+- $relative:157 category: "Logistique",
+- $relative:87 * CONDITIONAL LOGIC
+- $relative:34 console.log(
+- $relative:9 import { getERPDependencyGraph } from "./topology/ERPDependencyGraph";
+- $relative:4 export * from "./topology/ERPDependencyGraph";
+- $relative:35 console.log(
+- $relative:25 console.log(
+- $relative:20 .log({
+- $relative:22 log(
+- $relative:1 export interface RuntimeLog {
+- $relative:24 export function RuntimeLogsPanel() {
+- $relative:27 logs,
+- $relative:28 setLogs,
+- $relative:38 "runtime_logs"
+- $relative:54 setLogs(
+- $relative:91 Runtime Logs
+- $relative:100 {logs.length === 0 && (
+- $relative:103 Aucun log runtime.
+- $relative:107 {logs.map(
+- $relative:12 RuntimeLog,
+- $relative:14 from "@/runtime/observability/RuntimeLog";
+- $relative:18 static async log(
+- $relative:19 log: RuntimeLog
+- $relative:22 console.log(
+- $relative:23 "ERP Runtime Log",
+- $relative:24 log
+- $relative:31 "runtime_logs"
+- $relative:36 ...log,
+- $relative:45 console.log(
+- $relative:59 this.audit.log(
+- $relative:68 await this.audit.log(
+- $relative:73 console.log(
+- $relative:5 console.log("[Orchestrator]", processName);
+- $relative:33 console.log(
+- $relative:7 console.log(
+- $relative:3 log(
+- $relative:8 console.log(
+- $relative:12 async log(
+- $relative:22 console.log(
+- $relative:5 console.log(
+- $relative:7 console.log(
+- $relative:7 console.log(
+- $relative:5 console.log(
+- $relative:7 console.log(
+- $relative:13 console.log(
+- $relative:15 console.log(
+- $relative:7 console.log(
+- $relative:19 console.log(
+- $relative:8 console.log(
+- $relative:7 console.log(
+- $relative:17 console.log(
+- $relative:7 console.log(
+- $relative:10 console.log(
+- $relative:8 console.log(
+- $relative:22 console.log(
+- $relative:19 key: "audit-log-backup",
+- $relative:20 label: "Audit Log Backup",
+- $relative:1 export type ProductionLogLevel =
+- $relative:6 export type ProductionLog = {
+- $relative:8 level: ProductionLogLevel;
+- $relative:21 class ProductionLoggerClass {
+- $relative:22 private logs: ProductionLog[] = [];
+- $relative:58 level: ProductionLogLevel,
+- $relative:62 const log: ProductionLog = {
+- $relative:63 id: createId("prod_log"),
+- $relative:71 this.logs.unshift(log);
+- $relative:73 this.logs =
+- $relative:74 this.logs.slice(0, 300);
+- $relative:76 return log;
+- $relative:80 if (this.logs.length === 0) {
+- $relative:84 return this.logs;
+- $relative:110 export const ProductionLogger =
+- $relative:111 new ProductionLoggerClass();
+- $relative:2 ProductionLogger,
+- $relative:3 } from "./ProductionLogger";
+- $relative:41 ProductionLogger.error(
+- $relative:1 import { ProductionLogger } from "./ProductionLogger";
+- $relative:5 const logs = ProductionLogger.all();
+- $relative:7 const errors = logs.filter(
+- $relative:8 (log) => log.level === "error"
+- $relative:13 logs: logs.length,
+- $relative:6 console.log(
+- $relative:6 console.log(
+- $relative:56 console.log(
+- $relative:6 console.log(
+- $relative:6 console.log(
+- $relative:6 console.log(
+- $relative:8 console.log(
+- $relative:18 console.log(
+- $relative:35 console.log(
+- $relative:9 console.log(
+- $relative:9 console.log(
+- $relative:8 console.log(
+- $relative:6 console.log(
+- $relative:16 console.log(
+- $relative:7 console.log(
+- $relative:7 console.log(
+- $relative:39 console.log(
+- $relative:11 console.log(
+- $relative:38 console.log(
+- $relative:22 console.log(
+- $relative:33 console.log(
+- $relative:1 import type { ERPSecurityAuditEntry } from "./ERPSecurityAuditLog";
+- $relative:9 export * from "./audit/ERPSecurityAuditLog";
+- $relative:56 console.log(
+- $relative:71 console.log(
+- $relative:93 console.log(
+- $relative:7 console.log(
+- $relative:8 console.log(
+- $relative:26 console.log(
+- $relative:4 static log(instance: WorkflowRuntimeInstance, label: string) {
+- $relative:5 console.log("WORKFLOW AUDIT", {
+- $relative:16 WorkflowRuntimeAudit.log(instance, "Workflow demarre");
+- $relative:67 WorkflowRuntimeAudit.log(instance, transition.label);
+- $relative:5 console.log("[Workflow]", workflow);
+- $relative:162 export type ProductionLogLevel =
+- $relative:168 export type ProductionLog = {
+- $relative:170 level: ProductionLogLevel;
+- $relative:176 export const ProductionLogger = {
+- $relative:177 all(): ProductionLog[] {
+- $relative:180 id: "prod_log_1",
+- $relative:187 id: "prod_log_2",
+- $relative:194 id: "prod_log_3",
+- $relative:205 id: `prod_log_${Date.now()}`,
+- $relative:215 id: `prod_log_${Date.now()}`,
+- $relative:225 id: `prod_log_${Date.now()}`,
+- $relative:236 return ProductionLogger.error(
+- $relative:3 log(
+- $relative:8 console.log(
+- $relative:20 console.log(
+- $relative:3 log(
+- $relative:8 console.log(
+- $relative:20 console.log(
+- $relative:3 log(
+- $relative:8 console.log(
+- $relative:3 async login(
+- $relative:13 async logout() {
+- $relative:65 console.log(
+- $relative:1 export const ApiLogger = {
+- $relative:7 console.log(
+- $relative:1 export const LoggingMiddleware = {
+- $relative:3 log(
+- $relative:8 console.log({
+- $relative:24 dernierLogin?: string;
+- $relative:18 async function handleLogout() {
+- $relative:22 router.push("/login");
+- $relative:87 onClick={handleLogout}
+- $relative:97 Logout
+- $relative:8 console.log(
+- $relative:29 "/login",
+- $relative:37 pathname === "/login"
+
+## Pattern: runtime
+
+Matches: 2460
+
+- $relative:8 runtimeHealth: "healthy",
+- $relative:9 runtimeHealth: "healthy",
+- $relative:2 ERPRuntimeAutomationDashboard,
+- $relative:8 <ERPRuntimeAutomationDashboard />
+- $relative:1 import { ERPComplianceChecker } from "@/runtime/compliance/ERPComplianceChecker";
+- $relative:2 import { ERPModuleRegistry } from "@/runtime/modules/ERPModuleRegistry";
+- $relative:3 import { registerCoreERPModules } from "@/runtime/modules/registerCoreERPModules";
+- $relative:9 description="Page raccordee au template ERP enterprise centralise pour stabiliser le build et preparer la convergence runtime."
+- $relative:6 import { EnterpriseRuntimeConsolidationPanel } from "@/components/erp/enterprise-runtime";
+- $relative:41 <ERPBadge tone="success">Runtime protege</ERPBadge>
+- $relative:49 Vue globale du runtime, de la consolidation enterprise et de la readiness production.
+- $relative:63 <EnterpriseRuntimeConsolidationPanel />
+- $relative:126 Runtime exploitation
+- $relative:9 description="Page raccordee au template ERP enterprise centralise pour stabiliser le build et preparer la convergence runtime."
+- $relative:28 description="Le runtime ERP a enregistré une anomalie."
+- $relative:9 description="Page raccordee au template ERP enterprise centralise pour stabiliser le build et preparer la convergence runtime."
+- $relative:9 description="Page raccordee au template ERP enterprise centralise pour stabiliser le build et preparer la convergence runtime."
+- $relative:9 description="Page raccordee au template ERP enterprise centralise pour stabiliser le build et preparer la convergence runtime."
+- $relative:2 ERPRuntimeObservabilityDashboard,
+- $relative:8 <ERPRuntimeObservabilityDashboard />
+- $relative:90 Supervision runtime ERP
+- $relative:9 description="Page raccordee au template ERP enterprise centralise pour stabiliser le build et preparer la convergence runtime."
+- $relative:1 import { ERPRuntimeRealtimeDashboard } from "@/components/erp/realtime";
+- $relative:4 return <ERPRuntimeRealtimeDashboard />;
+- $relative:1 import { ERPRuntimeResilienceDashboard } from "@/components/erp/resilience";
+- $relative:4 return <ERPRuntimeResilienceDashboard />;
+- $relative:1 import { ERPModuleRegistry } from "@/runtime/modules/ERPModuleRegistry";
+- $relative:2 import { registerCoreERPModules } from "@/runtime/modules/registerCoreERPModules";
+- $relative:3 import { ERPModuleListRenderer } from "@/runtime/modules/renderer/ERPModuleListRenderer";
+- $relative:11 export default async function RuntimeModulePage({ params }: Props) {
+- $relative:16 const runtimeModule = ERPModuleRegistry.get(module);
+- $relative:18 if (!runtimeModule) {
+- $relative:22 Module runtime introuvable
+- $relative:34 <ERPModuleListRenderer module={runtimeModule} />
+- $relative:1 import { ERPRuntimeCockpitDashboard } from "@/components/erp/cockpit";
+- $relative:4 return <ERPRuntimeCockpitDashboard />;
+- $relative:2 ERPRuntimeRegistryDashboard,
+- $relative:3 } from "@/components/erp/runtime-ui";
+- $relative:8 <ERPRuntimeRegistryDashboard />
+- $relative:2 RuntimeSupervisionDashboard,
+- $relative:4 from "@/features/runtime-supervision/RuntimeSupervisionDashboard";
+- $relative:6 export default function RuntimeSupervisionPage() {
+- $relative:9 <RuntimeSupervisionDashboard />
+- $relative:9 description="Page raccordee au template ERP enterprise centralise pour stabiliser le build et preparer la convergence runtime."
+- $relative:1 import { ERPRuntimeWorkflowDashboard } from "@/components/erp/workflows";
+- $relative:4 return <ERPRuntimeWorkflowDashboard />;
+- $relative:6 RuntimeBootstrapProvider
+- $relative:8 from "@/components/bootstrap/RuntimeBootstrapProvider";
+- $relative:25 <RuntimeBootstrapProvider>
+- $relative:29 </RuntimeBootstrapProvider>
+- $relative:1 // src/components/bootstrap/RuntimeBootstrapProvider.tsx
+- $relative:12 import { RuntimeBootstrap }
+- $relative:13 from "@/platform/runtime/RuntimeBootstrap";
+- $relative:15 interface RuntimeBootstrapProviderProps {
+- $relative:21 export function RuntimeBootstrapProvider({
+- $relative:24 }: RuntimeBootstrapProviderProps) {
+- $relative:33 await RuntimeBootstrap
+- $relative:55 Chargement runtime ERP...
+- $relative:14 import { ModuleRuntime }
+- $relative:15 from "@/platform/modules/runtime/ModuleRuntime";
+- $relative:35 await ModuleRuntime.create({
+- $relative:5 import type { ERPAction } from "@/runtime/actions";
+- $relative:6 import { ERPActionExecutor } from "@/runtime/actions/ERPActionExecutor";
+- $relative:1 import type { ERPAction } from "@/runtime/actions";
+- $relative:2 import { RuntimeActionGuard } from "@/runtime/security-runtime";
+- $relative:12 const allowedActions = RuntimeActionGuard.filter(actions);
+- $relative:1 import type { ERPModule } from "@/runtime/modules";
+- $relative:2 import { ERPActionRegistry } from "@/runtime/actions";
+- $relative:3 import { RuntimeActionGuard } from "@/runtime/security-runtime";
+- $relative:16 RuntimeActionGuard.filter(
+- $relative:2 import type { getERPAISnapshot } from "@/runtime/ai";
+- $relative:20 Detection des signaux runtime inhabituels.
+- $relative:2 import { getERPAISnapshot } from "@/runtime/ai";
+- $relative:17 title="Enterprise AI Runtime Layer"
+- $relative:18 description="Insights, recommandations, detection d'anomalies et recherche semantique runtime."
+- $relative:2 import type { getERPAISnapshot } from "@/runtime/ai";
+- $relative:20 Analyse intelligente du runtime ERP.
+- $relative:2 import type { getERPAISnapshot } from "@/runtime/ai";
+- $relative:15 <ERPStatCard label="Insights" value={snapshot.metrics.insights} helper="Runtime intelligence" />
+- $relative:2 import type { getERPAISnapshot } from "@/runtime/ai";
+- $relative:2 import type { getERPAISnapshot } from "@/runtime/ai";
+- $relative:17 Semantic Runtime Search
+- $relative:16 label: "Synchronisation runtime effectuée",
+- $relative:3 } from "@/runtime/automation";
+- $relative:3 } from "@/runtime/automation";
+- $relative:7 seedERPRuntimeAutomation,
+- $relative:8 } from "@/runtime/automation";
+- $relative:18 seedERPRuntimeAutomation();
+- $relative:20 export function ERPRuntimeAutomationDashboard() {
+- $relative:27 title="Automation Runtime Engine"
+- $relative:28 description="Execution des automations, hooks runtime et notifications ERP."
+- $relative:5 export * from "./ERPRuntimeAutomationDashboard";
+- $relative:5 import type { ERPModule } from "@/runtime/modules";
+- $relative:7 AutomationRuntimeEngine,
+- $relative:8 AutomationRuntimeQueue,
+- $relative:9 AutomationRuntimeRegistry,
+- $relative:10 type AutomationRuntimeJob,
+- $relative:11 } from "@/runtime/automation-runtime";
+- $relative:13 interface ERPAutomationRuntimePanelProps {
+- $relative:17 export function ERPAutomationRuntimePanel({
+- $relative:19 }: ERPAutomationRuntimePanelProps) {
+- $relative:20 const rules = AutomationRuntimeRegistry.forModule(module.metadata.key);
+- $relative:23 useState<AutomationRuntimeJob[]>(AutomationRuntimeQueue.all());
+- $relative:26 AutomationRuntimeEngine.evaluate(module.metadata.key, {
+- $relative:32 setJobs([...AutomationRuntimeQueue.all()]);
+- $relative:36 await AutomationRuntimeEngine.runPending();
+- $relative:37 setJobs([...AutomationRuntimeQueue.all()]);
+- $relative:45 Automation runtime
+- $relative:1 export { ERPAutomationRuntimePanel } from "./ERPAutomationRuntimePanel";
+- $relative:2 import type { getERPCockpitSnapshot } from "@/runtime/cockpit";
+- $relative:47 Controle minimal de coherence du runtime.
+- $relative:2 import type { getERPCockpitSnapshot } from "@/runtime/cockpit";
+- $relative:15 <ERPStatCard label="Modules" value={snapshot.modulesCount} helper="Modules runtime" />
+- $relative:2 import type { getERPCockpitSnapshot } from "@/runtime/cockpit";
+- $relative:20 Controle de couverture runtime par module.
+- $relative:2 import type { getERPCockpitSnapshot } from "@/runtime/cockpit";
+- $relative:40 Flux runtime
+- $relative:8 export function ERPRuntimeCockpit() {
+- $relative:13 title="Supervision runtime"
+- $relative:26 title="Cockpit runtime pret"
+- $relative:27 description="Connecter les flux runtime reels."
+- $relative:2 import { getERPCockpitSnapshot } from "@/runtime/cockpit";
+- $relative:9 export function ERPRuntimeCockpitDashboard() {
+- $relative:16 title="Cockpit runtime Terragest"
+- $relative:5 export * from "./ERPRuntimeCockpitDashboard";
+- $relative:18 getRuntimeTimeline,
+- $relative:19 } from "@/core/runtime/runtime-timeline";
+- $relative:25 const runtime =
+- $relative:26 getRuntimeTimeline();
+- $relative:44 runtime.filter(
+- $relative:50 runtime.filter(
+- $relative:56 runtime.filter(
+- $relative:62 runtime.filter(
+- $relative:93 Supervision Runtime ERP
+- $relative:97 Observability, supervision, runtime timeline,
+- $relative:105 Runtime Events
+- $relative:135 Runtime Failures
+- $relative:742 Runtime Timeline
+- $relative:747 {runtime.length === 0 && (
+- $relative:749 Aucun événement runtime ERP.
+- $relative:753 {runtime.map((entry) => (
+- $relative:17 Runtime ERP opérationnel.
+- $relative:38 title="Activité Runtime"
+- $relative:39 description="Flux d'activité centralisé du runtime ERP."
+- $relative:1 import type { ERPAction } from "@/runtime/actions/ERPAction";
+- $relative:3 import { ERPActionRegistry } from "@/runtime/actions";
+- $relative:5 import { ERPModuleBuilder } from "@/runtime/modules";
+- $relative:6 import type { ERPModule } from "@/runtime/modules";
+- $relative:7 import { ERPRuntimeFieldValue } from "@/components/erp/runtime/ERPRuntimeFieldValue";
+- $relative:8 import type { ERPModuleField } from "@/runtime/modules/schemas/ERPModuleSchema";
+- $relative:67 <ERPRuntimeFieldValue field={field} value={row[column.key]} />
+- $relative:1 import { EnterpriseRuntimePerformancePanel } from "./EnterpriseRuntimePerformancePanel";
+- $relative:2 import { EnterpriseRuntimeDiagnosticsPanel } from "./EnterpriseRuntimeDiagnosticsPanel";
+- $relative:3 import { EnterpriseRuntimeLifecyclePanel } from "./EnterpriseRuntimeLifecyclePanel";
+- $relative:4 import { EnterpriseRuntimeGovernancePanel } from "./EnterpriseRuntimeGovernancePanel";
+- $relative:6 export function EnterpriseRuntimeConsolidationPanel() {
+- $relative:11 Enterprise Runtime Consolidation
+- $relative:18 <EnterpriseRuntimePerformancePanel />
+- $relative:21 <EnterpriseRuntimeDiagnosticsPanel />
+- $relative:22 <EnterpriseRuntimeLifecyclePanel />
+- $relative:23 <EnterpriseRuntimeGovernancePanel />
+- $relative:2 import { EnterpriseRuntimeDiagnostics } from "@/runtime/enterprise-runtime";
+- $relative:4 export function EnterpriseRuntimeDiagnosticsPanel() {
+- $relative:5 const diagnostics = EnterpriseRuntimeDiagnostics.summary();
+- $relative:12 Diagnostics runtime
+- $relative:2 import { EnterpriseRuntimeGovernance } from "@/runtime/enterprise-runtime";
+- $relative:4 export function EnterpriseRuntimeGovernancePanel() {
+- $relative:5 const checks = EnterpriseRuntimeGovernance.checks();
+- $relative:2 import { EnterpriseRuntimeLifecycle } from "@/runtime/enterprise-runtime";
+- $relative:4 export function EnterpriseRuntimeLifecyclePanel() {
+- $relative:5 const steps = EnterpriseRuntimeLifecycle.steps();
+- $relative:1 import { EnterpriseRuntimePerformance } from "@/runtime/enterprise-runtime";
+- $relative:3 export function EnterpriseRuntimePerformancePanel() {
+- $relative:4 const metrics = EnterpriseRuntimePerformance.metrics();
+- $relative:1 export { EnterpriseRuntimeDiagnosticsPanel } from "./EnterpriseRuntimeDiagnosticsPanel";
+- $relative:2 export { EnterpriseRuntimeLifecyclePanel } from "./EnterpriseRuntimeLifecyclePanel";
+- $relative:3 export { EnterpriseRuntimeGovernancePanel } from "./EnterpriseRuntimeGovernancePanel";
+- $relative:4 export { EnterpriseRuntimePerformancePanel } from "./EnterpriseRuntimePerformancePanel";
+- $relative:5 export { EnterpriseRuntimeConsolidationPanel } from "./EnterpriseRuntimeConsolidationPanel";
+- $relative:5 import { RuntimeErrorReporter } from "@/runtime/production";
+- $relative:33 RuntimeErrorReporter.capture(error, "ui-error-boundary");
+- $relative:45 Le runtime ERP a intercepte une erreur afin de proteger l'interface.
+- $relative:5 import type { ERPModule } from "@/runtime/modules";
+- $relative:7 ERPEventRuntimeBus,
+- $relative:8 ERPEventRuntimeOrchestrator,
+- $relative:9 ERPEventRuntimeSubscriptionRegistry,
+- $relative:10 type ERPEventRuntimeEvent,
+- $relative:11 } from "@/runtime/event-runtime";
+- $relative:13 interface ERPEventRuntimePanelProps {
+- $relative:17 export function ERPEventRuntimePanel({
+- $relative:19 }: ERPEventRuntimePanelProps) {
+- $relative:21 useState<ERPEventRuntimeEvent[]>(
+- $relative:22 ERPEventRuntimeBus.replay(module.metadata.key)
+- $relative:26 ERPEventRuntimeSubscriptionRegistry.forModule(
+- $relative:32 ...ERPEventRuntimeBus.replay(module.metadata.key),
+- $relative:37 ERPEventRuntimeOrchestrator.simulateMaterielBreakdown();
+- $relative:42 ERPEventRuntimeOrchestrator.simulateStockCritical();
+- $relative:47 ERPEventRuntimeOrchestrator.simulateWorkflowCompleted();
+- $relative:56 Event runtime cross-modules
+- $relative:113 Aucun evenement runtime.
+- $relative:1 export { ERPEventRuntimePanel } from "./ERPEventRuntimePanel";
+- $relative:33 <div className="text-sm text-gray-500">Santé runtime</div>
+- $relative:6 import type { ERPModule } from "@/runtime/modules";
+- $relative:7 import { ERPModuleBuilder } from "@/runtime/modules";
+- $relative:8 import { RuntimeDataBinding } from "@/runtime/data-binding";
+- $relative:18 RuntimeValidationEngine,
+- $relative:19 } from "@/runtime/validation/RuntimeValidationEngine";
+- $relative:22 RuntimeVisibilityEngine,
+- $relative:23 } from "@/runtime/visibility/RuntimeVisibilityEngine";
+- $relative:26 RuntimeComputedEngine,
+- $relative:27 } from "@/runtime/computed/RuntimeComputedEngine";
+- $relative:30 RuntimeValidationError,
+- $relative:31 } from "@/runtime/validation/RuntimeValidationTypes";
+- $relative:34 erpRuntimeValidationBridge,
+- $relative:35 } from "@/runtime/rules/ERPRuntimeValidationBridge";
+- $relative:51 useState<RuntimeValidationError[]>([]);
+- $relative:72 RuntimeComputedEngine.compute(
+- $relative:89 RuntimeVisibilityEngine.isVisible(
+- $relative:153 RuntimeValidationEngine.validate(
+- $relative:173 erpRuntimeValidationBridge.validate(
+- $relative:201 await RuntimeDataBinding.create(
+- $relative:209 await RuntimeDataBinding.update(
+- $relative:260 Formulaire métier connecté au binding runtime.
+- $relative:3 import type { ERPModule } from "@/runtime/modules";
+- $relative:4 import type { ERPModuleField } from "@/runtime/modules";
+- $relative:5 import { ERPRelationDataLoader } from "@/runtime/modules/lifecycle/ERPRelationDataLoader";
+- $relative:2 import type { ERPModule } from "@/runtime/modules";
+- $relative:3 import type { ERPModuleField } from "@/runtime/modules/schemas/ERPModuleSchema";
+- $relative:8 } from "@/runtime/modules";
+- $relative:11 RuntimeVisibilityEngine,
+- $relative:12 } from "@/runtime/visibility/RuntimeVisibilityEngine";
+- $relative:50 RuntimeVisibilityEngine.isVisible(
+- $relative:12 from "@/runtime/forms/DynamicFormRegistry";
+- $relative:15 RuntimeContextEngine,
+- $relative:17 from "@/runtime/context/RuntimeContextEngine";
+- $relative:22 from "@/runtime/selects/ERPDynamicSelect";
+- $relative:39 const runtimeContext =
+- $relative:42 return RuntimeContextEngine
+- $relative:55 runtimeContext
+- $relative:60 runtimeContext,
+- $relative:107 ...runtimeContext,
+- $relative:3 import type { ERPGeneratedSchema } from "@/runtime/ui-generation";
+- $relative:1 import { ERPRuntimePage } from "@/components/erp/runtime";
+- $relative:2 import { coreERPModules } from "@/runtime/modules/definitions/coreModules";
+- $relative:3 import type { ERPModule } from "@/runtime/modules";
+- $relative:14 const runtimeModule =
+- $relative:18 return <ERPRuntimePage module={runtimeModule} type="create" />;
+- $relative:5 import { ERPRuntimePage } from "@/components/erp/runtime";
+- $relative:6 import { coreERPModules } from "@/runtime/modules";
+- $relative:7 import { RuntimeDataBinding } from "@/runtime/data-binding";
+- $relative:9 import type { ERPModule } from "@/runtime/modules";
+- $relative:24 const runtimeModule =
+- $relative:30 const [runtimeRecord, setRuntimeRecord] =
+- $relative:38 if (!runtimeModule || !id) {
+- $relative:45 await RuntimeDataBinding.detail(
+- $relative:46 runtimeModule,
+- $relative:50 setRuntimeRecord(
+- $relative:59 setRuntimeRecord(undefined);
+- $relative:66 }, [runtimeModule, id]);
+- $relative:69 <ERPRuntimePage
+- $relative:70 module={runtimeModule}
+- $relative:75 : runtimeRecord ?? undefined
+- $relative:4 import { ERPRuntimePage } from "@/components/erp/runtime";
+- $relative:5 import { coreERPModules } from "@/runtime/modules";
+- $relative:6 import { RuntimeDataBinding } from "@/runtime/data-binding";
+- $relative:7 import type { ERPModule } from "@/runtime/modules";
+- $relative:22 const runtimeModule =
+- $relative:26 const [runtimeRecord, setRuntimeRecord] =
+- $relative:33 if (!runtimeModule || !id) {
+- $relative:40 await RuntimeDataBinding.detail(runtimeModule, id);
+- $relative:42 setRuntimeRecord(loadedRecord ?? undefined);
+- $relative:45 setRuntimeRecord(undefined);
+- $relative:52 }, [runtimeModule, id]);
+- $relative:55 <ERPRuntimePage
+- $relative:56 module={runtimeModule}
+- $relative:58 record={loading ? undefined : runtimeRecord ?? undefined}
+- $relative:5 import { ERPRuntimePage } from "@/components/erp/runtime";
+- $relative:6 import { coreERPModules } from "@/runtime/modules";
+- $relative:7 import { RuntimeDataBinding } from "@/runtime/data-binding";
+- $relative:9 import type { ERPModule } from "@/runtime/modules";
+- $relative:10 import type { RuntimeRecord } from "@/runtime/data-binding";
+- $relative:21 const runtimeModule =
+- $relative:28 useState<RuntimeRecord[]>([]);
+- $relative:35 if (!runtimeModule) {
+- $relative:42 await RuntimeDataBinding.list(
+- $relative:43 runtimeModule
+- $relative:48 runtimeModule.metadata.key,
+- $relative:64 }, [runtimeModule]);
+- $relative:67 <ERPRuntimePage
+- $relative:68 module={runtimeModule}
+- $relative:13 Fonctions activÃ©es depuis la dÃ©finition runtime du module.
+- $relative:1 export function ERPRuntimeHealthPanel() {
+- $relative:4 export { ERPRuntimeHealthPanel } from "./ERPRuntimeHealthPanel";
+- $relative:1 import type { ERPModule } from "@/runtime/modules";
+- $relative:26 label: "Runtime",
+- $relative:34 Aucune alerte runtime.
+- $relative:44 {alert.title ?? "Alerte runtime"}
+- $relative:2 import type { getERPMonitoringSnapshot } from "@/runtime/monitoring";
+- $relative:2 import { getERPMonitoringSnapshot } from "@/runtime/monitoring";
+- $relative:17 description="Health checks, topology, runtime metrics, dependency graph et error analytics."
+- $relative:2 import type { getERPMonitoringSnapshot } from "@/runtime/monitoring";
+- $relative:18 <ERPStatCard label="Tenants" value={metrics.tenants} helper="SaaS runtime" />
+- $relative:10 ["Runtime", "healthy"],
+- $relative:2 import type { getERPMonitoringSnapshot } from "@/runtime/monitoring";
+- $relative:17 Runtime Topology
+- $relative:3 import type { ERPAction } from "@/runtime/actions";
+- $relative:1 import type { ERPAction } from "@/runtime/actions";
+- $relative:2 import type { ERPModule } from "@/runtime/modules";
+- $relative:3 } from "@/runtime/observability";
+- $relative:3 } from "@/runtime/observability";
+- $relative:10 label: "Logs runtime",
+- $relative:7 seedERPRuntimeObservability,
+- $relative:8 } from "@/runtime/observability";
+- $relative:22 seedERPRuntimeObservability();
+- $relative:24 export function ERPRuntimeObservabilityDashboard() {
+- $relative:31 title="Runtime Timeline"
+- $relative:32 description="Timeline centralisee des events, traces et alertes runtime."
+- $relative:3 } from "@/runtime/observability";
+- $relative:7 export * from "./ERPRuntimeObservabilityDashboard";
+- $relative:2 import { ERPCommandCenter } from "@/runtime/os-enterprise";
+- $relative:2 import { ERPNotificationCenter as NotificationRuntime } from "@/runtime/os-enterprise";
+- $relative:5 const notifications = NotificationRuntime.notifications();
+- $relative:2 import { ERPSavedViews } from "@/runtime/os-enterprise";
+- $relative:2 import { ERPUserContextProvider } from "@/runtime/os-enterprise";
+- $relative:9 seedERPPersistenceRuntime,
+- $relative:10 } from "@/runtime/persistence";
+- $relative:13 await seedERPPersistenceRuntime();
+- $relative:33 title="Persistence Runtime Enterprise"
+- $relative:34 description="Repository runtime tenant-aware pour events, traces, alerts, workflows, queue jobs et audit."
+- $relative:43 helper="Persisted runtime"
+- $relative:51 Collections runtime
+- $relative:2 import type { getERPProductionReadinessSnapshot } from "@/runtime/production";
+- $relative:2 import { getERPProductionReadinessSnapshot } from "@/runtime/production";
+- $relative:17 description="Gouvernance SaaS, readiness cloud, quotas tenant, rate limits, backup et policies runtime."
+- $relative:2 import type { getERPProductionReadinessSnapshot } from "@/runtime/production";
+- $relative:18 <ERPStatCard label="Rate Limits" value={metrics.limits} helper="Runtime limits" />
+- $relative:21 <ERPStatCard label="Runtime" value="Governed" helper="SaaS policies" />
+- $relative:2 import type { getERPProductionReadinessSnapshot } from "@/runtime/production";
+- $relative:18 Gouvernance runtime SaaS.
+- $relative:2 import type { getERPProductionReadinessSnapshot } from "@/runtime/production";
+- $relative:8 } from "@/runtime/production";
+- $relative:22 Gouvernance production, readiness cloud, quotas, backups et limites runtime.
+- $relative:2 import { ProductionLogger } from "@/runtime/production";
+- $relative:11 <h2 className="text-lg font-black text-slate-950">Logs runtime</h2>
+- $relative:2 import { ProductionReadiness } from "@/runtime/production";
+- $relative:1 // src/runtime/production/readiness.ts
+- $relative:35 id: "runtime",
+- $relative:36 label: "Runtime Next.js",
+- $relative:18 key: "runtime-registry",
+- $relative:20 label: "Runtime Registry",
+- $relative:2 import type { getERPRealtimeSnapshot } from "@/runtime/realtime";
+- $relative:20 Flux des messages runtime en temps reel.
+- $relative:2 import type { getERPRealtimeSnapshot } from "@/runtime/realtime";
+- $relative:22 <ERPStatCard label="System" value={snapshot.system} helper="Runtime" />
+- $relative:2 import type { getERPRealtimeSnapshot } from "@/runtime/realtime";
+- $relative:17 Presence runtime
+- $relative:20 Utilisateurs et services connectes au runtime.
+- $relative:14 } from "@/runtime/modules";
+- $relative:17 FirestoreRuntimeRealtime,
+- $relative:18 } from "@/runtime/firestore";
+- $relative:34 FirestoreRuntimeRealtime.subscribe(
+- $relative:4 seedERPRealtimeRuntime,
+- $relative:5 } from "@/runtime/realtime";
+- $relative:11 seedERPRealtimeRuntime();
+- $relative:13 export function ERPRuntimeRealtimeDashboard() {
+- $relative:19 eyebrow="ERP Realtime Runtime"
+- $relative:21 description="Supervision des messages live, channels, subscriptions et presence runtime."
+- $relative:4 export * from "./ERPRuntimeRealtimeDashboard";
+- $relative:5 import type { ERPModuleField } from "@/runtime/modules";
+- $relative:8 from "@/runtime/modules/lifecycle/ERPRelationDataLoader";
+- $relative:2 import { ERPDeadLetterStore } from "@/runtime/resilience";
+- $relative:2 import { ERPQueueStore } from "@/runtime/resilience";
+- $relative:11 Queue runtime
+- $relative:14 Jobs asynchrones traites par le runtime ERP.
+- $relative:6 } from "@/runtime/resilience";
+- $relative:24 <ERPStatCard label="Runtime" value="Actif" helper="Worker simulation" />
+- $relative:2 import { seedERPRuntimeResilience } from "@/runtime/resilience";
+- $relative:8 seedERPRuntimeResilience();
+- $relative:10 export function ERPRuntimeResilienceDashboard() {
+- $relative:15 title="Queue, Retry & DLQ Runtime"
+- $relative:4 export * from "./ERPRuntimeResilienceDashboard";
+- $relative:9 interface ERPRuntimeAlert {
+- $relative:21 interface ERPRuntimeAlertsPanelProps {
+- $relative:24 ERPRuntimeAlert[];
+- $relative:27 export function ERPRuntimeAlertsPanel({
+- $relative:29 }: ERPRuntimeAlertsPanelProps) {
+- $relative:34 title="Runtime Alerts"
+- $relative:35 description="Alertes et supervision du runtime."
+- $relative:9 interface ERPRuntimeDeadLetter {
+- $relative:18 interface ERPRuntimeDeadLetterPanelProps {
+- $relative:21 ERPRuntimeDeadLetter[];
+- $relative:24 export function ERPRuntimeDeadLetterPanel({
+- $relative:26 }: ERPRuntimeDeadLetterPanelProps) {
+- $relative:32 description="Événements runtime en erreur."
+- $relative:2 import type { ERPModule } from "@/runtime/modules";
+- $relative:3 import { ERPModuleBuilder } from "@/runtime/modules";
+- $relative:4 import { ERPRuntimeFieldValue } from "./ERPRuntimeFieldValue";
+- $relative:6 interface ERPRuntimeDetailsProps {
+- $relative:11 export function ERPRuntimeDetails({
+- $relative:14 }: ERPRuntimeDetailsProps) {
+- $relative:20 description="Vue détail générée automatiquement par le Runtime ERP."
+- $relative:33 <ERPRuntimeFieldValue
+- $relative:2 import type { ERPModuleField } from "@/runtime/modules";
+- $relative:4 interface ERPRuntimeFieldValueProps {
+- $relative:9 export function ERPRuntimeFieldValue({
+- $relative:12 }: ERPRuntimeFieldValueProps) {
+- $relative:2 import type { ERPModule } from "@/runtime/modules";
+- $relative:3 import { ERPModuleBuilder } from "@/runtime/modules";
+- $relative:5 interface ERPRuntimeFormProps {
+- $relative:9 export function ERPRuntimeForm({ module }: ERPRuntimeFormProps) {
+- $relative:15 description="Formulaire généré automatiquement par le Runtime ERP."
+- $relative:9 interface ERPRuntimeMetric {
+- $relative:18 interface ERPRuntimeMetricsPanelProps {
+- $relative:21 ERPRuntimeMetric[];
+- $relative:24 export function ERPRuntimeMetricsPanel({
+- $relative:26 }: ERPRuntimeMetricsPanelProps) {
+- $relative:31 title="Runtime Metrics"
+- $relative:32 description="Indicateurs du runtime ERP."
+- $relative:12 ERPRuntimeStatusPanel,
+- $relative:13 ERPRuntimeMetricsPanel,
+- $relative:14 ERPRuntimeAlertsPanel,
+- $relative:15 ERPRuntimeQueuesPanel,
+- $relative:16 ERPRuntimeWorkersPanel,
+- $relative:17 ERPRuntimeRetryPanel,
+- $relative:18 ERPRuntimeDeadLetterPanel,
+- $relative:21 export function ERPRuntimeOverviewPage() {
+- $relative:26 title="Runtime ERP"
+- $relative:27 description="Cockpit runtime enterprise centralisé."
+- $relative:33 <ERPRuntimeStatusPanel
+- $relative:34 runtime={{
+- $relative:43 <ERPRuntimeMetricsPanel
+- $relative:48 helper: "Runtime events",
+- $relative:58 helper: "Workers runtime",
+- $relative:68 <ERPRuntimeAlertsPanel
+- $relative:79 <ERPRuntimeQueuesPanel
+- $relative:94 <ERPRuntimeWorkersPanel
+- $relative:109 <ERPRuntimeRetryPanel
+- $relative:119 <ERPRuntimeDeadLetterPanel
+- $relative:11 import { ERPRuntimeDetails } from "./ERPRuntimeDetails";
+- $relative:12 import { ERPRuntimeTable } from "./ERPRuntimeTable";
+- $relative:14 import type { ERPModule } from "@/runtime/modules/ERPModule";
+- $relative:16 interface ERPRuntimePageProps {
+- $relative:25 export function ERPRuntimePage({
+- $relative:32 }: ERPRuntimePageProps) {
+- $relative:48 "Page générée automatiquement par le Runtime ERP."
+- $relative:81 <ERPRuntimeDetails
+- $relative:102 <ERPRuntimeTable
+- $relative:112 description="Aucun module runtime n'a été trouvé."
+- $relative:9 interface ERPRuntimeQueuesPanelProps {
+- $relative:17 export function ERPRuntimeQueuesPanel({
+- $relative:19 }: ERPRuntimeQueuesPanelProps) {
+- $relative:22 title="Runtime Queues"
+- $relative:23 description="État des files runtime."
+- $relative:9 interface ERPRuntimeRetry {
+- $relative:21 interface ERPRuntimeRetryPanelProps {
+- $relative:24 ERPRuntimeRetry[];
+- $relative:27 export function ERPRuntimeRetryPanel({
+- $relative:29 }: ERPRuntimeRetryPanelProps) {
+- $relative:34 title="Runtime Retries"
+- $relative:35 description="Suivi des retries runtime."
+- $relative:6 export function ERPRuntimeStatus() {
+- $relative:9 interface ERPRuntimeStatusPanelProps {
+- $relative:11 runtime: {
+- $relative:25 export function ERPRuntimeStatusPanel({
+- $relative:26 runtime,
+- $relative:27 }: ERPRuntimeStatusPanelProps) {
+- $relative:32 title="Runtime ERP"
+- $relative:33 description="État global du runtime enterprise."
+- $relative:38 runtime.status === "healthy"
+- $relative:43 {runtime.status}
+- $relative:52 value: runtime.modules,
+- $relative:56 value: runtime.workers,
+- $relative:60 value: runtime.queues,
+- $relative:64 value: runtime.retries,
+- $relative:3 import type { ERPModule } from "@/runtime/modules";
+- $relative:4 import { ERPModuleBuilder } from "@/runtime/modules";
+- $relative:5 import { ERPRuntimeFieldValue } from "./ERPRuntimeFieldValue";
+- $relative:6 import type { ERPModuleField } from "@/runtime/modules/schemas/ERPModuleSchema";
+- $relative:8 interface ERPRuntimeTableProps {
+- $relative:39 export function ERPRuntimeTable({
+- $relative:42 }: ERPRuntimeTableProps) {
+- $relative:56 <ERPRuntimeFieldValue field={field} value={row[column.key]} />
+- $relative:112 {/*  ACTIONS RUNTIME */}
+- $relative:9 interface ERPRuntimeWorker {
+- $relative:21 interface ERPRuntimeWorkersPanelProps {
+- $relative:24 ERPRuntimeWorker[];
+- $relative:27 export function ERPRuntimeWorkersPanel({
+- $relative:29 }: ERPRuntimeWorkersPanelProps) {
+- $relative:34 title="Runtime Workers"
+- $relative:35 description="Workers et exécuteurs runtime."
+- $relative:1 export * from "./ERPRuntimePage";
+- $relative:2 export * from "./ERPRuntimeOverviewPage";
+- $relative:3 export * from "./ERPRuntimeStatusPanel";
+- $relative:4 export * from "./ERPRuntimeAlertsPanel";
+- $relative:5 export * from "./ERPRuntimeMetricsPanel";
+- $relative:6 export * from "./ERPRuntimeQueuesPanel";
+- $relative:7 export * from "./ERPRuntimeWorkersPanel";
+- $relative:8 export * from "./ERPRuntimeRetryPanel";
+- $relative:9 export * from "./ERPRuntimeDeadLetterPanel";
+- $relative:13 subscribeRuntimeChannel,
+- $relative:14 } from "@/core/realtime/runtime-realtime-channel";
+- $relative:16 export function ERPRuntimeTimeline() {
+- $relative:24 subscribeRuntimeChannel(
+- $relative:42 Runtime Activity
+- $relative:49 Aucune activité runtime.
+- $relative:78 Runtime Event
+- $relative:1 import type { ERPGeneratedSchema } from "@/runtime/ui-generation";
+- $relative:4 type ERPDataTableRuntimeProps = {
+- $relative:9 export function ERPDataTableRuntime({
+- $relative:12 }: ERPDataTableRuntimeProps) {
+- $relative:17 description="Aucune donnee pour le moment. La table runtime est prete a recevoir les donnees reelles."
+- $relative:8 import { ERPDataTableRuntime } from "./ERPDataTableRuntime";
+- $relative:12 } from "@/runtime/ui-generation";
+- $relative:14 type ERPRuntimeModulePageProps = {
+- $relative:20 export function ERPRuntimeModulePage({
+- $relative:24 }: ERPRuntimeModulePageProps) {
+- $relative:34 eyebrow="Runtime UI Generation"
+- $relative:38 "Module genere par le runtime ERP."
+- $relative:44 <ERPStatCard label="Mode" value={mode} helper="Template runtime" />
+- $relative:46 <ERPStatCard label="Runtime" value="Pret" helper="Generation active" />
+- $relative:53 <ERPDataTableRuntime schema={schema} rows={rows} />
+- $relative:9 } from "@/runtime/registry";
+- $relative:11 export function ERPRuntimeRegistryDashboard() {
+- $relative:23 eyebrow="ERP Runtime"
+- $relative:24 title="Central Runtime Registry"
+- $relative:39 helper="Routes runtime"
+- $relative:51 helper="Runtime ERP"
+- $relative:1 export * from "./ERPDataTableRuntime";
+- $relative:3 export * from "./ERPRuntimeModulePage";
+- $relative:5 export * from "./ERPRuntimeRegistryDashboard";
+- $relative:2 import type { getERPSecuritySnapshot } from "@/runtime/security";
+- $relative:2 import type { getERPSecuritySnapshot } from "@/runtime/security";
+- $relative:20 Roles globaux disponibles dans le runtime.
+- $relative:2 import type { getERPSecuritySnapshot } from "@/runtime/security";
+- $relative:20 Traces des controles d'acces runtime.
+- $relative:4 seedERPSecurityRuntime,
+- $relative:5 } from "@/runtime/security";
+- $relative:12 seedERPSecurityRuntime();
+- $relative:22 description="Roles, permissions, policies, guards, session runtime et audit securite."
+- $relative:2 import type { getERPSecuritySnapshot } from "@/runtime/security";
+- $relative:22 <ERPStatCard label="Runtime" value="Actif" helper="Access guard" />
+- $relative:4 import type { ERPAction } from "@/runtime/actions";
+- $relative:5 import { RuntimeActionGuard } from "@/runtime/security-runtime";
+- $relative:16 if (!RuntimeActionGuard.canExecute(action)) {
+- $relative:2 import { RuntimeSecurityContext } from "@/runtime/security-runtime";
+- $relative:4 export function ERPRuntimeSecurityBadge() {
+- $relative:5 const user = RuntimeSecurityContext.currentUser();
+- $relative:3 RuntimeSecurityContext,
+- $relative:4 runtimeRolePermissions,
+- $relative:5 } from "@/runtime/security-runtime";
+- $relative:8 const user = RuntimeSecurityContext.currentUser();
+- $relative:9 const permissions = runtimeRolePermissions[user.role];
+- $relative:19 Permissions runtime appliquees aux actions et workflows.
+- $relative:1 export { ERPRuntimeSecurityBadge } from "./ERPRuntimeSecurityBadge";
+- $relative:1 import type { ERPModule } from "@/runtime/modules";
+- $relative:2 import { SmartAnomalyDetector } from "@/runtime/smart-intelligence";
+- $relative:1 import type { ERPModule } from "@/runtime/modules";
+- $relative:1 import type { ERPModule } from "@/runtime/modules";
+- $relative:2 import { SmartPredictionEngine } from "@/runtime/smart-intelligence";
+- $relative:2 import type { ERPModule } from "@/runtime/modules";
+- $relative:3 import { SmartRecommendationEngine } from "@/runtime/smart-intelligence";
+- $relative:2 import type { SmartRiskLevel } from "@/runtime/smart-intelligence";
+- $relative:1 import type { ERPModule } from "@/runtime/modules";
+- $relative:2 import { SmartScoringEngine } from "@/runtime/smart-intelligence";
+- $relative:2 import type { ERPModule } from "@/runtime/modules";
+- $relative:3 import { ERPSmartRuntimeEngine } from "@/runtime/smart-runtime";
+- $relative:14 ERPSmartRuntimeEngine.analyse(module);
+- $relative:25 Analyse operationnelle du runtime ERP.
+- $relative:2 import type { ERPModule } from "@/runtime/modules";
+- $relative:3 import { ERPSmartPriorityEngine } from "@/runtime/smart-runtime";
+- $relative:1 import type { ERPModule } from "@/runtime/modules";
+- $relative:2 import { ERPSmartRecommendations } from "@/runtime/smart-runtime";
+- $relative:24 Suggestions generees par le runtime intelligent.
+- $relative:1 import type { ERPModule } from "@/runtime/modules";
+- $relative:6 interface ERPSmartRuntimePanelProps {
+- $relative:10 export function ERPSmartRuntimePanel({
+- $relative:12 }: ERPSmartRuntimePanelProps) {
+- $relative:1 export { ERPSmartRuntimePanel } from "./ERPSmartRuntimePanel";
+- $relative:7 } from "@/runtime/streams";
+- $relative:32 Canaux realtime runtime.
+- $relative:7 seedERPStreamsRuntime,
+- $relative:8 } from "@/runtime/streams";
+- $relative:22 seedERPStreamsRuntime();
+- $relative:33 eyebrow="ERP Live Runtime"
+- $relative:35 description="Live runtime streams, realtime events, workers feeds et observability timeline."
+- $relative:7 } from "@/runtime/streams";
+- $relative:7 } from "@/runtime/streams";
+- $relative:32 Flux temps reel du runtime ERP.
+- $relative:11 } from "@/runtime/ui-generation";
+- $relative:122 <ERPStatCard label="Runtime" value="Pret" helper="Generation UI active" />
+- $relative:131 description="Cette page est stabilisee et prete pour le branchement des donnees runtime reelles."
+- $relative:2 import type { ERPModule } from "@/runtime/modules";
+- $relative:1 import type { ERPModule } from "@/runtime/modules";
+- $relative:2 import type { ERPModule } from "@/runtime/modules";
+- $relative:5 import { ERPUIComposer } from "@/runtime/ui/ERPUIComposition";
+- $relative:1 import type { ERPModule } from "@/runtime/modules";
+- $relative:2 import { ERPUIComposer } from "@/runtime/ui/ERPUIComposition";
+- $relative:1 import type { ERPModule } from "@/runtime/modules";
+- $relative:1 import type { ERPModule } from "@/runtime/modules";
+- $relative:2 import { ERPUIComposer } from "@/runtime/ui/ERPUIComposition";
+- $relative:2 import type { ERPModule } from "@/runtime/modules";
+- $relative:2 import type { ERPModule } from "@/runtime/modules";
+- $relative:7 seedERPTenantRuntime,
+- $relative:8 } from "@/runtime/tenant";
+- $relative:22 seedERPTenantRuntime();
+- $relative:34 title="Tenant Runtime Dashboard"
+- $relative:35 description="Isolation tenant, contexte runtime, modules, quotas et activite SaaS."
+- $relative:5 } from "@/runtime/tenant";
+- $relative:8 } from "@/runtime/tenant";
+- $relative:36 Activite runtime du tenant courant.
+- $relative:7 } from "@/runtime/tenant";
+- $relative:8 } from "@/runtime/testing";
+- $relative:35 description="Validation runtime, workflows, workers, securite, multi-tenant et observability."
+- $relative:7 } from "@/runtime/testing";
+- $relative:7 } from "@/runtime/testing";
+- $relative:31 helper="Runtime tests"
+- $relative:49 helper="Qualite runtime"
+- $relative:7 } from "@/runtime/testing";
+- $relative:28 Runtime Tests
+- $relative:32 Validation des couches runtime.
+- $relative:19 title: "Synchronisation runtime",
+- $relative:7 } from "@/runtime/workers";
+- $relative:32 Taches cron runtime.
+- $relative:7 } from "@/runtime/workers";
+- $relative:7 seedERPWorkersRuntime,
+- $relative:8 } from "@/runtime/workers";
+- $relative:26 seedERPWorkersRuntime();
+- $relative:37 eyebrow="ERP Distributed Runtime"
+- $relative:39 description="Workers distribues, scheduler runtime, batch processing et orchestration longue duree."
+- $relative:7 } from "@/runtime/workers";
+- $relative:7 } from "@/runtime/workers";
+- $relative:32 Workers runtime distribues.
+- $relative:15 description="Anomalie détectée par le runtime ERP."
+- $relative:80 "runtime"
+- $relative:203 Workflow Runtime
+- $relative:5 import type { ERPModule } from "@/runtime/modules";
+- $relative:7 WorkflowRuntimeEngine,
+- $relative:8 WorkflowRuntimeRegistry,
+- $relative:9 type WorkflowRuntimeInstance,
+- $relative:10 } from "@/runtime/workflow-runtime";
+- $relative:11 import { RuntimeWorkflowGuard } from "@/runtime/security-runtime";
+- $relative:13 interface ERPWorkflowRuntimePanelProps {
+- $relative:18 export function ERPWorkflowRuntimePanel({
+- $relative:21 }: ERPWorkflowRuntimePanelProps) {
+- $relative:22 const workflows = WorkflowRuntimeRegistry.forModule(module.metadata.key);
+- $relative:26 useState<WorkflowRuntimeInstance | null>(null);
+- $relative:48 if (!RuntimeWorkflowGuard.canStart()) {
+- $relative:53 WorkflowRuntimeEngine.start(workflow.key, recordId)
+- $relative:58 if (requiresValidation && !RuntimeWorkflowGuard.canValidate()) {
+- $relative:62 if (!RuntimeWorkflowGuard.canTransition()) {
+- $relative:67 WorkflowRuntimeEngine.transition(workflow.key, recordId, to)
+- $relative:76 Workflow runtime
+- $relative:109 {!instance && RuntimeWorkflowGuard.canStart() && (
+- $relative:118 !RuntimeWorkflowGuard.canValidate();
+- $relative:120 if (hidden || !RuntimeWorkflowGuard.canTransition()) {
+- $relative:1 export { ERPWorkflowRuntimePanel } from "./ERPWorkflowRuntimePanel";
+- $relative:2 import { seedERPRuntimeWorkflows } from "@/runtime/workflows/enterprise";
+- $relative:9 seedERPRuntimeWorkflows();
+- $relative:11 export function ERPRuntimeWorkflowDashboard() {
+- $relative:17 description="Orchestration des processus metier, executions, timelines, events et traces runtime."
+- $relative:2 import { ERPWorkflowEngine } from "@/runtime/workflows/enterprise";
+- $relative:2 import { ERPWorkflowExecutionStore } from "@/runtime/workflows/enterprise";
+- $relative:12 Executions runtime
+- $relative:6 } from "@/runtime/workflows/enterprise";
+- $relative:24 <ERPStatCard label="Executions" value={executions.length} helper="Instances runtime" />
+- $relative:2 import { ERPWorkflowTimelineStore } from "@/runtime/workflows/enterprise";
+- $relative:5 export * from "./ERPRuntimeWorkflowDashboard";
+- $relative:2 import type { ERPModule } from "@/runtime/modules";
+- $relative:2 import type { ERPModule } from "@/runtime/modules";
+- $relative:3 import { ERPWorkflowRuntimePanel } from "@/components/erp/workflow-runtime";
+- $relative:4 import { ERPAutomationRuntimePanel } from "@/components/erp/automation-runtime";
+- $relative:5 import { ERPEventRuntimePanel } from "@/components/erp/event-runtime";
+- $relative:32 <ERPWorkflowRuntimePanel module={module} />
+- $relative:34 <ERPAutomationRuntimePanel module={module} />
+- $relative:36 <ERPEventRuntimePanel module={module} />
+- $relative:2 import type { ERPModule } from "@/runtime/modules";
+- $relative:3 import { ERPSecurityContextPanel } from "@/components/erp/security-runtime";
+- $relative:2 import type { ERPModule } from "@/runtime/modules";
+- $relative:11 import { ERPSmartRuntimePanel } from "@/components/erp/smart-runtime";
+- $relative:31 <ERPSmartRuntimePanel module={module} />
+- $relative:2 import { ERPActionRegistry } from "@/runtime/actions";
+- $relative:3 import type { ERPModule } from "@/runtime/modules";
+- $relative:14 import { ModuleRuntime }
+- $relative:15 from "@/platform/modules/runtime/ModuleRuntime";
+- $relative:35 await ModuleRuntime.create({
+- $relative:14 import { ModuleRuntime }
+- $relative:15 from "@/platform/modules/runtime/ModuleRuntime";
+- $relative:35 await ModuleRuntime.create({
+- $relative:14 import { ModuleRuntime }
+- $relative:15 from "@/platform/modules/runtime/ModuleRuntime";
+- $relative:42 await ModuleRuntime.create({
+- $relative:39 Activité runtime
+- $relative:14 import { ModuleRuntime }
+- $relative:15 from "@/platform/modules/runtime/ModuleRuntime";
+- $relative:43 await ModuleRuntime.create({
+- $relative:3 import { pushRuntimeEntry } from "@/core/runtime/runtime-timeline";
+- $relative:30 pushRuntimeEntry({
+- $relative:70 pushRuntimeEntry({
+- $relative:85 pushRuntimeEntry({
+- $relative:97 pushRuntimeEntry({
+- $relative:104 "Audit runtime enregistré",
+- $relative:114 pushRuntimeEntry({
+- $relative:121 "Supervision runtime mise à jour",
+- $relative:7 } from "@/runtime/automation/engine/ERPAutomationEngine";
+- $relative:10 TerragestDomainRuntimeBridge,
+- $relative:11 } from "@/runtime/domain/TerragestDomainRuntimeBridge";
+- $relative:13 let runtimeStarted =
+- $relative:17 if (runtimeStarted) {
+- $relative:21 runtimeStarted = true;
+- $relative:24 "ERP RUNTIME BOOTSTRAP STARTED"
+- $relative:29 await TerragestDomainRuntimeBridge.boot();
+- $relative:34 "ERP RUNTIME ACTIVE"
+- $relative:1 export type RuntimePresence = {
+- $relative:16 RuntimePresence[] = [];
+- $relative:18 export function joinRuntime(
+- $relative:19 presence: RuntimePresence
+- $relative:37 "ERP USER JOINED RUNTIME",
+- $relative:42 export function leaveRuntime(
+- $relative:60 "ERP USER LEFT RUNTIME",
+- $relative:65 export function updateRuntimeActivity(
+- $relative:84 export function getRuntimePresence() {
+- $relative:6 pushRuntimeEntry,
+- $relative:7 } from "@/core/runtime/runtime-timeline";
+- $relative:17 pushRuntimeEntry({
+- $relative:57 pushRuntimeEntry({
+- $relative:47 "runtimeEvents"
+- $relative:10 pushRuntimeEntry,
+- $relative:11 } from "@/core/runtime/runtime-timeline";
+- $relative:63 pushRuntimeEntry({
+- $relative:102 pushRuntimeEntry({
+- $relative:139 pushRuntimeEntry({
+- $relative:40 const runtimeJob:
+- $relative:55 jobQueue.push(runtimeJob);
+- $relative:59 runtimeJob
+- $relative:62 return runtimeJob;
+- $relative:6 pushRuntimeEntry,
+- $relative:7 } from "@/core/runtime/runtime-timeline";
+- $relative:19 pushRuntimeEntry({
+- $relative:37 pushRuntimeEntry({
+- $relative:31 Enterprise Runtime
+- $relative:6 pushRuntimeEntry,
+- $relative:7 } from "@/core/runtime/runtime-timeline";
+- $relative:17 pushRuntimeEntry({
+- $relative:12 runtimeEvents: number;
+- $relative:27 runtimeEvents: 0,
+- $relative:12 runtimeMetrics?: boolean;
+- $relative:45 runtimeMetrics: true,
+- $relative:70 runtimeMetrics: true,
+- $relative:3 } from "@/runtime/modules";
+- $relative:3 RuntimeEvent,
+- $relative:4 RuntimeJob,
+- $relative:5 RuntimeMetric,
+- $relative:6 RuntimeTimelineEntry,
+- $relative:7 RuntimeTransaction,
+- $relative:24 job: RuntimeJob
+- $relative:29 "erp_runtime_jobs"
+- $relative:40 "erp_runtime_jobs"
+- $relative:53 event: RuntimeEvent
+- $relative:58 "erp_runtime_events"
+- $relative:69 "erp_runtime_events"
+- $relative:82 metric: RuntimeMetric
+- $relative:87 "erp_runtime_metrics"
+- $relative:98 "erp_runtime_metrics"
+- $relative:111 entry: RuntimeTimelineEntry
+- $relative:116 "erp_runtime_timeline"
+- $relative:127 "erp_runtime_timeline"
+- $relative:140 transaction: RuntimeTransaction
+- $relative:145 "erp_runtime_transactions"
+- $relative:156 "erp_runtime_transactions"
+- $relative:1 export type RuntimeJob = any;
+- $relative:3 export type RuntimeEvent = any;
+- $relative:5 export type RuntimeMetric = any;
+- $relative:7 export type RuntimeTimelineEntry =
+- $relative:10 export type RuntimeTransaction =
+- $relative:15 job: RuntimeJob
+- $relative:19 RuntimeJob[]
+- $relative:23 event: RuntimeEvent
+- $relative:27 RuntimeEvent[]
+- $relative:31 metric: RuntimeMetric
+- $relative:35 RuntimeMetric[]
+- $relative:39 entry: RuntimeTimelineEntry
+- $relative:43 RuntimeTimelineEntry[]
+- $relative:47 transaction: RuntimeTransaction
+- $relative:51 RuntimeTransaction[]
+- $relative:2 ERPRuntimeEntry,
+- $relative:3 } from "@/core/runtime/runtime-timeline";
+- $relative:5 const persistedRuntime:
+- $relative:6 ERPRuntimeEntry[] = [];
+- $relative:8 export async function persistRuntimeEntry(
+- $relative:9 entry: ERPRuntimeEntry
+- $relative:11 persistedRuntime.unshift(entry);
+- $relative:14 "ERP RUNTIME PERSISTED",
+- $relative:21 export async function getPersistedRuntime() {
+- $relative:22 return persistedRuntime;
+- $relative:25 export async function getPersistedModuleRuntime(
+- $relative:28 return persistedRuntime.filter(
+- $relative:1 type RuntimeListener = (
+- $relative:5 const runtimeChannels =
+- $relative:8 RuntimeListener[]
+- $relative:11 export function subscribeRuntimeChannel(
+- $relative:13 listener: RuntimeListener
+- $relative:16 !runtimeChannels.has(
+- $relative:20 runtimeChannels.set(
+- $relative:26 runtimeChannels
+- $relative:37 runtimeChannels.get(
+- $relative:41 runtimeChannels.set(
+- $relative:51 export function publishRuntimeEvent(
+- $relative:56 runtimeChannels.get(
+- $relative:70 export function getRuntimeChannels() {
+- $relative:71 return runtimeChannels;
+- $relative:10 pushRuntimeEntry,
+- $relative:11 } from "@/core/runtime/runtime-timeline";
+- $relative:31 pushRuntimeEntry({
+- $relative:58 pushRuntimeEntry({
+- $relative:13 pushRuntimeEntry,
+- $relative:14 } from "@/core/runtime/runtime-timeline";
+- $relative:64 pushRuntimeEntry({
+- $relative:78 pushRuntimeEntry({
+- $relative:6 pushRuntimeEntry,
+- $relative:7 } from "@/core/runtime/runtime-timeline";
+- $relative:30 pushRuntimeEntry({
+- $relative:64 pushRuntimeEntry({
+- $relative:97 pushRuntimeEntry({
+- $relative:1 import { persistRuntimeEntry } from "@/core/persistence/runtime-persistence";
+- $relative:3 export type ERPRuntimeEntry = {
+- $relative:31 const runtimeTimeline:
+- $relative:32 ERPRuntimeEntry[] = [];
+- $relative:34 export function pushRuntimeEntry(
+- $relative:36 ERPRuntimeEntry,
+- $relative:40 const runtimeEntry:
+- $relative:41 ERPRuntimeEntry = {
+- $relative:49 runtimeTimeline.unshift(
+- $relative:50 runtimeEntry
+- $relative:54 "ERP RUNTIME ENTRY",
+- $relative:55 runtimeEntry
+- $relative:58 persistRuntimeEntry(
+- $relative:59 runtimeEntry
+- $relative:62 return runtimeEntry;
+- $relative:65 export function getRuntimeTimeline() {
+- $relative:66 return runtimeTimeline;
+- $relative:72 return runtimeTimeline.filter(
+- $relative:6 pushRuntimeEntry,
+- $relative:7 } from "@/core/runtime/runtime-timeline";
+- $relative:36 pushRuntimeEntry({
+- $relative:54 pushRuntimeEntry({
+- $relative:27 pushRuntimeEntry,
+- $relative:28 } from "@/core/runtime/runtime-timeline";
+- $relative:34 pushRuntimeEntry({
+- $relative:6 pushRuntimeEntry,
+- $relative:7 } from "@/core/runtime/runtime-timeline";
+- $relative:12 pushRuntimeEntry({
+- $relative:6 pushRuntimeEntry,
+- $relative:7 } from "@/core/runtime/runtime-timeline";
+- $relative:12 pushRuntimeEntry({
+- $relative:6 pushRuntimeEntry,
+- $relative:7 } from "@/core/runtime/runtime-timeline";
+- $relative:12 pushRuntimeEntry({
+- $relative:6 pushRuntimeEntry,
+- $relative:7 } from "@/core/runtime/runtime-timeline";
+- $relative:12 pushRuntimeEntry({
+- $relative:10 pushRuntimeEntry,
+- $relative:11 } from "@/core/runtime/runtime-timeline";
+- $relative:16 pushRuntimeEntry({
+- $relative:3 import { RulePipelineRuntime }
+- $relative:4 from "@/platform/rules/runtime/RulePipelineRuntime";
+- $relative:11 RulePipelineRuntime.register(
+- $relative:3 import { RulePipelineRuntime }
+- $relative:4 from "@/platform/rules/runtime/RulePipelineRuntime";
+- $relative:11 RulePipelineRuntime.register(
+- $relative:3 import { ModuleRuntime }
+- $relative:4 from "@/platform/modules/runtime/ModuleRuntime";
+- $relative:15 await ModuleRuntime.create({
+- $relative:11 runtimeHealth: "healthy",
+- $relative:26 "runtime",
+- $relative:2 RuntimeModuleOrchestrator
+- $relative:4 from "@/runtime/orchestration/RuntimeModuleOrchestrator";
+- $relative:7 RuntimeEventRegistry
+- $relative:9 from "@/runtime/events/RuntimeEventRegistry";
+- $relative:13 new RuntimeModuleOrchestrator();
+- $relative:20 RuntimeEventRegistry.FOURNISSEURS_CREATED,
+- $relative:26 "runtime",
+- $relative:35 to runtime platform.
+- $relative:2 RuntimeEventRegistry
+- $relative:4 from "@/runtime/events/RuntimeEventRegistry";
+- $relative:7 RuntimeEventRegistry
+- $relative:9 from "@/runtime/events/RuntimeEventRegistry";
+- $relative:16 } = RuntimeEventRegistry;
+- $relative:2 RuntimeRealtimeGateway
+- $relative:4 from "../../../runtime/realtime/gateway/RuntimeRealtimeGateway";
+- $relative:10 new RuntimeRealtimeGateway();
+- $relative:17 RuntimeModuleOrchestrator
+- $relative:19 from "@/runtime/orchestration/RuntimeModuleOrchestrator";
+- $relative:24 from "@/runtime/workflows/engine/WorkflowExecutor";
+- $relative:34 from "@/runtime/rules/registry/RuleRegistry";
+- $relative:39 from "@/runtime/rules/engine/RuleExecutor";
+- $relative:44 from "@/runtime/rules/MaterielCriticalRule";
+- $relative:49 from "@/runtime/automation/runner/AutomationRunner";
+- $relative:54 from "@/runtime/automation/scheduler/AutomationScheduler";
+- $relative:58 RuntimeSecurityManager
+- $relative:60 from "@/runtime/security/RuntimeSecurityManager";
+- $relative:71 from "@/runtime/automation/rules/MaterielBreakdownRule";
+- $relative:74 RuntimeEvent
+- $relative:76 from "@/runtime/core/types/RuntimeEvent";
+- $relative:81 new RuntimeModuleOrchestrator();
+- $relative:87 new RuntimeSecurityManager();
+- $relative:134 const runtimeEvent: RuntimeEvent = {
+- $relative:148 runtimeEvent
+- $relative:2 PersistentRuntimePublisher
+- $relative:4 from "../../../runtime/monitoring/PersistentRuntimePublisher";
+- $relative:7 MaterielRuntimeHook {
+- $relative:9 private runtime =
+- $relative:10 new PersistentRuntimePublisher();
+- $relative:17 await this.runtime.publish(
+- $relative:35 to runtime platform.
+- $relative:4 from "@/runtime/workflows/types/WorkflowDefinition";
+- $relative:38 "REGISTER_RUNTIME_EVENT",
+- $relative:41 "Register Runtime Event",
+- $relative:48 "[Workflow] Register Runtime Event",
+- $relative:15 "runtime",
+- $relative:1 import { useRuntimeHealth }
+- $relative:2 from "../hooks/useRuntimeHealth";
+- $relative:5 RuntimeStatusCard() {
+- $relative:8 useRuntimeHealth();
+- $relative:22 Runtime Status
+- $relative:3 export default function LiveRuntimeDashboard() {
+- $relative:7 Live Runtime Dashboard
+- $relative:11 Monitoring temps réel du runtime ERP Terragest.
+- $relative:1 import RuntimeStatusCard
+- $relative:2 from "../components/RuntimeStatusCard";
+- $relative:14 RuntimeHealthDashboard() {
+- $relative:25 <RuntimeStatusCard />
+- $relative:4 import type { RuntimeHealth }
+- $relative:5 from "../types/RuntimeHealth";
+- $relative:7 import { RuntimeObservabilityService }
+- $relative:8 from "../services/RuntimeObservabilityService";
+- $relative:10 export function useRuntimeHealth() {
+- $relative:13 useState<RuntimeHealth | null>(
+- $relative:20 new RuntimeObservabilityService();
+- $relative:23 .getRuntimeHealth()
+- $relative:15 type LiveRuntimeEvent,
+- $relative:34 subscribeToRuntimeEvents() {
+- $relative:36 const runtimeEventsQuery =
+- $relative:40 "runtime_events"
+- $relative:50 runtimeEventsQuery,
+- $relative:76 } satisfies LiveRuntimeEvent;
+- $relative:28 "runtime_workflow_executions"
+- $relative:1 import type { RuntimeHealth }
+- $relative:2 from "../types/RuntimeHealth";
+- $relative:4 export class RuntimeObservabilityService {
+- $relative:6 async getRuntimeHealth():
+- $relative:7 Promise<RuntimeHealth> {
+- $relative:1 export type LiveRuntimeEvent = {
+- $relative:10 private events: LiveRuntimeEvent[] = [];
+- $relative:14 push(event: LiveRuntimeEvent) {
+- $relative:28 replaceAll(events: LiveRuntimeEvent[]) {
+- $relative:4 from "@/runtime/workflows/types/WorkflowExecution";
+- $relative:3 runtimeStatus: "HEALTHY",
+- $relative:1 export type RuntimeHealth = {
+- $relative:25 Failed runtime events
+- $relative:34 service.subscribeToRuntimeEvents();
+- $relative:73 Aucun événement runtime pour le moment.
+- $relative:19 Runtime events will appear here.
+- $relative:26 "runtime",
+- $relative:15 "Runtime",
+- $relative:26 Runtime notifications
+- $relative:22 Realtime Runtime Stream
+- $relative:26 Live runtime stream
+- $relative:2 runtimeActivityStore
+- $relative:4 from "./runtimeActivityStore";
+- $relative:7 RuntimeActivityFeed() {
+- $relative:10 runtimeActivityStore.getAll();
+- $relative:30 Runtime Activity
+- $relative:1 export type RuntimeActivity = {
+- $relative:10 class RuntimeActivityStore {
+- $relative:13 RuntimeActivity[] = [];
+- $relative:16 activity: RuntimeActivity
+- $relative:30 export const runtimeActivityStore =
+- $relative:31 new RuntimeActivityStore();
+- $relative:5 RuntimeConsole() {
+- $relative:2 RuntimeMetricsPanel() {
+- $relative:21 Runtime Metrics
+- $relative:1 import RuntimeActivityFeed
+- $relative:2 from "../components/runtime/RuntimeActivityFeed";
+- $relative:5 from "../components/runtime/WorkflowStatusPanel";
+- $relative:7 import RuntimeMetricsPanel
+- $relative:8 from "../components/runtime/RuntimeMetricsPanel";
+- $relative:14 ConnectedRuntimeDashboard() {
+- $relative:27 <RuntimeMetricsPanel />
+- $relative:31 <RuntimeActivityFeed />
+- $relative:1 import LiveRuntimeDashboard
+- $relative:2 from "../../observability/dashboards/LiveRuntimeDashboard";
+- $relative:21 <LiveRuntimeDashboard />
+- $relative:1 import RuntimeMetricsPanel
+- $relative:2 from "../components/runtime/RuntimeMetricsPanel";
+- $relative:5 from "../components/runtime/WorkflowStatusPanel";
+- $relative:8 from "../components/runtime/RealtimeActivityPanel";
+- $relative:14 RealtimeRuntimeDashboard() {
+- $relative:27 <RuntimeMetricsPanel />
+- $relative:7 import ConnectedRuntimeDashboard
+- $relative:8 from "../dashboards/ConnectedRuntimeDashboard";
+- $relative:40 <ConnectedRuntimeDashboard />
+- $relative:26 "runtime",
+- $relative:6 from "@/runtime/notifications/ERPNotificationsPanel";
+- $relative:9 RuntimeLogsPanel,
+- $relative:11 from "@/runtime/observability/RuntimeLogsPanel";
+- $relative:13 export function RuntimeSupervisionDashboard() {
+- $relative:32 Runtime Supervision
+- $relative:41 Supervision temps réel du runtime ERP
+- $relative:57 <RuntimeLogsPanel />
+- $relative:26 "runtime",
+- $relative:26 "runtime",
+- $relative:9 subscribeRuntimeChannel,
+- $relative:10 } from "@/core/realtime/runtime-realtime-channel";
+- $relative:12 export function useRuntimeChannel(
+- $relative:20 subscribeRuntimeChannel(
+- $relative:13 } from "@/runtime/modules";
+- $relative:56 "runtime",
+- $relative:86 function toRuntimeFeature(
+- $relative:137 const runtimeFeatures =
+- $relative:139 toRuntimeFeature
+- $relative:144 ...runtimeFeatures,
+- $relative:3 import { ModuleRuntime }
+- $relative:4 from "@/platform/modules/runtime/ModuleRuntime";
+- $relative:19 await ModuleRuntime.create({
+- $relative:1 // src/platform/governance/policies/engine/RuntimePoliciesEngine.ts
+- $relative:11 export class RuntimePoliciesEngine {
+- $relative:4 RuntimePolicy
+- $relative:6 from "@/platform/governance/policies/types/RuntimePolicy";
+- $relative:11 RuntimePolicy[] = [];
+- $relative:14 policy: RuntimePolicy
+- $relative:1 // src/platform/governance/policies/types/RuntimePolicy.ts
+- $relative:8 export interface RuntimePolicy {
+- $relative:1 // src/platform/governance/policies/DefaultRuntimePolicy.ts
+- $relative:4 RuntimePolicy
+- $relative:6 from "@/platform/governance/policies/types/RuntimePolicy";
+- $relative:8 export const DefaultRuntimePolicy:
+- $relative:9 RuntimePolicy = {
+- $relative:12 "default-runtime-policy",
+- $relative:1 // src/platform/governance/GovernanceRuntime.ts
+- $relative:14 import { RuntimePoliciesEngine }
+- $relative:15 from "@/platform/governance/policies/engine/RuntimePoliciesEngine";
+- $relative:17 export class GovernanceRuntime {
+- $relative:48 RuntimePoliciesEngine.validate(
+- $relative:6 import { DefaultRuntimePolicy }
+- $relative:7 from "@/platform/governance/policies/DefaultRuntimePolicy";
+- $relative:12 DefaultRuntimePolicy
+- $relative:3 import { RuntimeAnomalyDetector }
+- $relative:4 from "@/platform/intelligence/RuntimeAnomalyDetector";
+- $relative:20 RuntimeAnomalyDetector
+- $relative:1 // src/platform/intelligence/RuntimeAnomalyDetector.ts
+- $relative:6 export class RuntimeAnomalyDetector {
+- $relative:1 // src/platform/modules/runtime/ModuleRuntime.ts
+- $relative:11 import { RulePipelineRuntime }
+- $relative:12 from "@/platform/rules/runtime/RulePipelineRuntime";
+- $relative:17 import { WorkflowRuntime }
+- $relative:18 from "@/platform/workflows/runtime/WorkflowRuntime";
+- $relative:26 import { GovernanceRuntime }
+- $relative:27 from "@/platform/governance/GovernanceRuntime";
+- $relative:29 export class ModuleRuntime {
+- $relative:35 GovernanceRuntime.validate({
+- $relative:50 await RulePipelineRuntime.execute(
+- $relative:123 await RulePipelineRuntime.execute(
+- $relative:150 GovernanceRuntime.validate({
+- $relative:165 await RulePipelineRuntime.execute(
+- $relative:199 await RulePipelineRuntime.execute(
+- $relative:226 GovernanceRuntime.validate({
+- $relative:241 await RulePipelineRuntime.execute(
+- $relative:275 await RulePipelineRuntime.execute(
+- $relative:1 // src/platform/persistence/RuntimePersistenceService.ts
+- $relative:6 import { RuntimeSnapshotStore }
+- $relative:7 from "@/platform/persistence/RuntimeSnapshotStore";
+- $relative:9 export class RuntimePersistenceService {
+- $relative:13 RuntimeSnapshotStore.save({
+- $relative:25 RuntimeSnapshotStore
+- $relative:1 // src/platform/persistence/RuntimeRecoveryScheduler.ts
+- $relative:3 import { RuntimePersistenceService }
+- $relative:4 from "@/platform/persistence/RuntimePersistenceService";
+- $relative:6 export class RuntimeRecoveryScheduler {
+- $relative:17 RuntimePersistenceService
+- $relative:1 // src/platform/persistence/RuntimeSnapshotStore.ts
+- $relative:8 export interface RuntimeSnapshot {
+- $relative:15 class RuntimeSnapshotStoreManager {
+- $relative:18 RuntimeSnapshot[] = [];
+- $relative:21 snapshot: RuntimeSnapshot
+- $relative:45 export const RuntimeSnapshotStore =
+- $relative:46 new RuntimeSnapshotStoreManager();
+- $relative:3 RuntimePolicyContext,
+- $relative:23 RuntimePolicyContext
+- $relative:3 RuntimePolicyContext,
+- $relative:19 RuntimePolicyContext
+- $relative:1 export type RuntimePolicyContext = {
+- $relative:16 context: RuntimePolicyContext
+- $relative:3 | "runtime"
+- $relative:1 // src/platform/rules/runtime/RulePipelineRuntime.ts
+- $relative:25 class RulePipelineRuntimeManager {
+- $relative:66 "[PIPELINE RUNTIME]",
+- $relative:120 export const RulePipelineRuntime =
+- $relative:121 new RulePipelineRuntimeManager();
+- $relative:1 // src/platform/runtime/RuntimeBootstrap.ts
+- $relative:6 export class RuntimeBootstrap {
+- $relative:11 "[BOOTSTRAP] Runtime initialization"
+- $relative:19 "[BOOTSTRAP] Runtime realtime ready"
+- $relative:22 "runtime",
+- $relative:1 // src/platform/workflows/runtime/WorkflowRuntime.ts
+- $relative:9 export class WorkflowRuntime {
+- $relative:1 import type { ERPModule } from "@/runtime/modules";
+- $relative:1 import type { ERPModule } from "@/runtime/modules";
+- $relative:1 import { getERPMonitoringSnapshot } from "@/runtime/monitoring";
+- $relative:12 content: "AI Runtime Assistant initialise sur le contexte ERP Terragest.",
+- $relative:1 import { ERPRegistry } from "@/runtime/registry";
+- $relative:2 import { getERPMonitoringSnapshot } from "@/runtime/monitoring";
+- $relative:16 title: "Couverture runtime elevee",
+- $relative:18 module: "runtime",
+- $relative:1 import { ERPRegistry } from "@/runtime/registry";
+- $relative:4 export function searchERPRuntime(
+- $relative:19 source: "Runtime Registry",
+- $relative:23 "Module ERP runtime.",
+- $relative:4 import { searchERPRuntime } from "./search/ERPSemanticRuntimeSearch";
+- $relative:18 searchERPRuntime("materiels");
+- $relative:11 export * from "./search/ERPSemanticRuntimeSearch";
+- $relative:3 } from "@/runtime/events/bus/ERPEventBus";
+- $relative:7 } from "@/runtime/events/ERPDomainEvent";
+- $relative:23 } from "@/runtime/observability";
+- $relative:26 ERPRuntimeHooks,
+- $relative:27 } from "../hooks/ERPRuntimeHooks";
+- $relative:118 ERPRuntimeHooks.trigger(
+- $relative:3 } from "@/runtime/events/ERPDomainEvent";
+- $relative:3 } from "@/runtime/events/ERPDomainEvent";
+- $relative:5 type ERPRuntimeHook =
+- $relative:8 class ERPRuntimeHooksClass {
+- $relative:11 ERPRuntimeHook[] = [];
+- $relative:14 hook: ERPRuntimeHook
+- $relative:34 export const ERPRuntimeHooks =
+- $relative:35 new ERPRuntimeHooksClass();
+- $relative:7 RuntimeEventRegistry
+- $relative:9 from "@/runtime/events/RuntimeEventRegistry";
+- $relative:25 RuntimeEventRegistry.MATERIEL_CREATED,
+- $relative:3 RuntimeEvent
+- $relative:5 from "@/runtime/core/types/RuntimeEvent";
+- $relative:24 event: RuntimeEvent
+- $relative:2 RuntimeEvent
+- $relative:4 from "@/runtime/core/types/RuntimeEvent";
+- $relative:15 event: RuntimeEvent
+- $relative:2 RuntimeEvent
+- $relative:4 from "@/runtime/core/types/RuntimeEvent";
+- $relative:7 event: RuntimeEvent;
+- $relative:3 } from "@/runtime/events/bus/ERPEventBus";
+- $relative:11 export function seedERPRuntimeAutomation() {
+- $relative:26 actor: "automation-runtime",
+- $relative:42 actor: "payments-runtime",
+- $relative:5 export * from "./seedERPRuntimeAutomation";
+- $relative:1 export interface RuntimeAutomation {
+- $relative:2 runtimeAutomations,
+- $relative:4 from "@/runtime/automation/runtimeAutomations";
+- $relative:6 export class RuntimeAutomationEngine {
+- $relative:12 runtimeAutomations
+- $relative:2 RuntimeAutomation,
+- $relative:4 from "@/runtime/automation/RuntimeAutomation";
+- $relative:7 RuntimeNotificationEngine,
+- $relative:9 from "@/runtime/notifications/RuntimeNotificationEngine";
+- $relative:11 export const runtimeAutomations:
+- $relative:12 RuntimeAutomation[] = [
+- $relative:38 await RuntimeNotificationEngine
+- $relative:83 await RuntimeNotificationEngine
+- $relative:9 export function seedERPRuntimeAutomation() {
+- $relative:12 action: "Runtime automation initialized",
+- $relative:16 module: "runtime",
+- $relative:22 title: "Automation runtime",
+- $relative:23 message: "Le runtime automation ERP est initialisé.",
+- $relative:1 import { AutomationRuntimeRegistry } from "./AutomationRuntimeRegistry";
+- $relative:2 import { AutomationRuntimeTriggerEngine } from "./AutomationRuntimeTriggerEngine";
+- $relative:3 import { AutomationRuntimeQueue } from "./AutomationRuntimeQueue";
+- $relative:4 import { AutomationRuntimeExecutor } from "./AutomationRuntimeExecutor";
+- $relative:6 export class AutomationRuntimeEngine {
+- $relative:11 const rules = AutomationRuntimeRegistry.forModule(moduleKey);
+- $relative:15 AutomationRuntimeTriggerEngine.matches(rule, payload)
+- $relative:17 .map((rule) => AutomationRuntimeQueue.enqueue(rule));
+- $relative:23 const jobs = AutomationRuntimeQueue.pending();
+- $relative:26 await AutomationRuntimeExecutor.execute(job);
+- $relative:29 return AutomationRuntimeQueue.all();
+- $relative:33 const rule = AutomationRuntimeRegistry.get(ruleKey);
+- $relative:39 const job = AutomationRuntimeQueue.enqueue(rule);
+- $relative:41 return AutomationRuntimeExecutor.execute(job);
+- $relative:2 AutomationRuntimeAction,
+- $relative:3 AutomationRuntimeJob,
+- $relative:4 } from "./AutomationRuntimeTypes";
+- $relative:5 import { AutomationRuntimeQueue } from "./AutomationRuntimeQueue";
+- $relative:7 export class AutomationRuntimeExecutor {
+- $relative:9 action: AutomationRuntimeAction,
+- $relative:10 job: AutomationRuntimeJob
+- $relative:20 static async execute(job: AutomationRuntimeJob): Promise<AutomationRuntimeJob> {
+- $relative:24 AutomationRuntimeQueue.update(job);
+- $relative:28 await AutomationRuntimeExecutor.executeAction(action, job);
+- $relative:34 return AutomationRuntimeQueue.update(job);
+- $relative:40 return AutomationRuntimeQueue.moveToDeadLetter(job);
+- $relative:45 return AutomationRuntimeQueue.update(job);
+- $relative:2 AutomationRuntimeJob,
+- $relative:3 AutomationRuntimeRule,
+- $relative:4 } from "./AutomationRuntimeTypes";
+- $relative:6 const queue: AutomationRuntimeJob[] = [];
+- $relative:7 const deadLetters: AutomationRuntimeJob[] = [];
+- $relative:9 export class AutomationRuntimeQueue {
+- $relative:10 static enqueue(rule: AutomationRuntimeRule): AutomationRuntimeJob {
+- $relative:13 const job: AutomationRuntimeJob = {
+- $relative:30 static all(): AutomationRuntimeJob[] {
+- $relative:34 static pending(): AutomationRuntimeJob[] {
+- $relative:38 static update(job: AutomationRuntimeJob): AutomationRuntimeJob {
+- $relative:50 static moveToDeadLetter(job: AutomationRuntimeJob): AutomationRuntimeJob {
+- $relative:56 AutomationRuntimeQueue.update(job);
+- $relative:61 static deadLetters(): AutomationRuntimeJob[] {
+- $relative:1 import type { AutomationRuntimeRule } from "./AutomationRuntimeTypes";
+- $relative:2 import { automationRuntimeRules } from "./AutomationRuntimeRules";
+- $relative:4 export class AutomationRuntimeRegistry {
+- $relative:5 static all(): AutomationRuntimeRule[] {
+- $relative:6 return automationRuntimeRules;
+- $relative:9 static forModule(moduleKey: string): AutomationRuntimeRule[] {
+- $relative:10 return automationRuntimeRules.filter(
+- $relative:15 static get(ruleKey: string): AutomationRuntimeRule | undefined {
+- $relative:16 return automationRuntimeRules.find((rule) => rule.key === ruleKey);
+- $relative:1 import type { AutomationRuntimeRule } from "./AutomationRuntimeTypes";
+- $relative:3 export const automationRuntimeRules: AutomationRuntimeRule[] = [
+- $relative:1 import { AutomationRuntimeEngine } from "./AutomationRuntimeEngine";
+- $relative:3 export class AutomationRuntimeScheduler {
+- $relative:5 return AutomationRuntimeEngine.runPending();
+- $relative:2 AutomationRuntimeRule,
+- $relative:3 AutomationRuntimeTrigger,
+- $relative:4 } from "./AutomationRuntimeTypes";
+- $relative:8 operator: AutomationRuntimeTrigger["operator"],
+- $relative:30 export class AutomationRuntimeTriggerEngine {
+- $relative:32 rule: AutomationRuntimeRule,
+- $relative:1 export type AutomationRuntimeTriggerType =
+- $relative:8 export type AutomationRuntimeJobStatus =
+- $relative:15 export interface AutomationRuntimeTrigger {
+- $relative:16 type: AutomationRuntimeTriggerType;
+- $relative:22 export interface AutomationRuntimeAction {
+- $relative:34 export interface AutomationRuntimeRule {
+- $relative:39 trigger: AutomationRuntimeTrigger;
+- $relative:40 actions: AutomationRuntimeAction[];
+- $relative:44 export interface AutomationRuntimeJob {
+- $relative:48 status: AutomationRuntimeJobStatus;
+- $relative:54 actions: AutomationRuntimeAction[];
+- $relative:2 AutomationRuntimeAction,
+- $relative:3 AutomationRuntimeJob,
+- $relative:4 AutomationRuntimeJobStatus,
+- $relative:5 AutomationRuntimeRule,
+- $relative:6 AutomationRuntimeTrigger,
+- $relative:7 AutomationRuntimeTriggerType,
+- $relative:8 } from "./AutomationRuntimeTypes";
+- $relative:10 export { automationRuntimeRules } from "./AutomationRuntimeRules";
+- $relative:11 export { AutomationRuntimeRegistry } from "./AutomationRuntimeRegistry";
+- $relative:12 export { AutomationRuntimeTriggerEngine } from "./AutomationRuntimeTriggerEngine";
+- $relative:13 export { AutomationRuntimeQueue } from "./AutomationRuntimeQueue";
+- $relative:14 export { AutomationRuntimeExecutor } from "./AutomationRuntimeExecutor";
+- $relative:15 export { AutomationRuntimeEngine } from "./AutomationRuntimeEngine";
+- $relative:16 export { AutomationRuntimeScheduler } from "./AutomationRuntimeScheduler";
+- $relative:10 import { RuntimeMetrics }
+- $relative:11 from "../metrics/RuntimeMetrics";
+- $relative:32 bootstrapEnterpriseRuntime() {
+- $relative:35 "[EnterpriseRuntime] bootstrapping..."
+- $relative:48 new RuntimeMetrics();
+- $relative:71 "[EnterpriseRuntime] initialized"
+- $relative:8 bootstrapRuntime() {
+- $relative:17 "[Runtime] initialized"
+- $relative:18 initializeRuntime() {
+- $relative:35 "[Runtime] fully initialized"
+- $relative:31 "[Runtime] breakdown flow registered"
+- $relative:19 "[Runtime] handling breakdown",
+- $relative:26 "[Runtime] domain events registered"
+- $relative:18 "[Runtime] materiel workflows registered"
+- $relative:2 bootstrapEnterpriseRuntime
+- $relative:4 from "./bootstrapEnterpriseRuntime";
+- $relative:8 const runtime =
+- $relative:9 await bootstrapEnterpriseRuntime();
+- $relative:15 !!runtime.eventBus,
+- $relative:18 !!runtime.workflowRegistry,
+- $relative:21 !!runtime.ruleRegistry,
+- $relative:24 !!runtime.metrics,
+- $relative:27 !!runtime.analytics,
+- $relative:30 !!runtime.integrations,
+- $relative:33 !!runtime.governance,
+- $relative:36 !!runtime.supervision,
+- $relative:1 import { initializeRuntime }
+- $relative:2 from "./initializeRuntime";
+- $relative:11 const runtime =
+- $relative:12 await initializeRuntime();
+- $relative:14 runtime.eventBus.emit(
+- $relative:2 bootstrapEnterpriseRuntime
+- $relative:4 from "./bootstrapEnterpriseRuntime";
+- $relative:18 const runtime =
+- $relative:19 await bootstrapEnterpriseRuntime();
+- $relative:22 runtime.eventBus
+- $relative:25 runtime.eventBus.emit(
+- $relative:2 bootstrapEnterpriseRuntime
+- $relative:4 from "./bootstrapEnterpriseRuntime";
+- $relative:8 const runtime =
+- $relative:9 await bootstrapEnterpriseRuntime();
+- $relative:12 "[Terragest Runtime Started]",
+- $relative:13 runtime
+- $relative:3 class RuntimeEventBus {
+- $relative:23 export const runtimeEventBus =
+- $relative:24 new RuntimeEventBus();
+- $relative:1 export interface RuntimeBusinessRule {
+- $relative:2 RuntimeBusinessRule,
+- $relative:4 from "@/runtime/business-rules/RuntimeBusinessRule";
+- $relative:7 RuntimeNotificationEngine,
+- $relative:9 from "@/runtime/notifications/RuntimeNotificationEngine";
+- $relative:11 export const runtimeBusinessRules:
+- $relative:12 RuntimeBusinessRule[] = [
+- $relative:37 await RuntimeNotificationEngine
+- $relative:81 await RuntimeNotificationEngine
+- $relative:2 runtimeBusinessRules,
+- $relative:4 from "@/runtime/business-rules/runtimeBusinessRules";
+- $relative:6 export class RuntimeBusinessRulesEngine {
+- $relative:17 runtimeBusinessRules.filter(
+- $relative:1 import { ERPRegistry } from "@/runtime/registry";
+- $relative:1 import type { ERPModuleDefinition } from "@/runtime/modules/ERPModuleDefinition";
+- $relative:1 export class RuntimeComputedEngine {
+- $relative:30 "RUNTIME COMPUTED ERROR",
+- $relative:1 export class RuntimeContextEngine {
+- $relative:1 export type RuntimeContext = {
+- $relative:1 import type { RuntimeEvent }
+- $relative:2 from "../types/RuntimeEvent";
+- $relative:4 import { RuntimeRegistry }
+- $relative:5 from "../registry/RuntimeRegistry";
+- $relative:7 export class RuntimeExecutor {
+- $relative:10 private registry: RuntimeRegistry
+- $relative:14 event: RuntimeEvent
+- $relative:1 import type { RuntimeEvent }
+- $relative:2 from "../types/RuntimeEvent";
+- $relative:4 type RuntimeHandler =
+- $relative:5 (event: RuntimeEvent) => void | Promise<void>;
+- $relative:7 export class RuntimeRegistry {
+- $relative:10 new Map<string, RuntimeHandler[]>();
+- $relative:14 handler: RuntimeHandler
+- $relative:1 import { RuntimeEventPublisher }
+- $relative:2 from "../../monitoring/RuntimeEventPublisher";
+- $relative:4 import type { RuntimeContext }
+- $relative:5 from "../context/RuntimeContext";
+- $relative:7 import type { RuntimeEvent }
+- $relative:8 from "../types/RuntimeEvent";
+- $relative:10 export class RuntimePublisher {
+- $relative:13 new RuntimeEventPublisher();
+- $relative:16 event: Omit<RuntimeEvent, "timestamp">,
+- $relative:17 context?: RuntimeContext
+- $relative:20 const runtimeEvent: RuntimeEvent = {
+- $relative:31 runtimeEvent.type,
+- $relative:32 runtimeEvent
+- $relative:35 return runtimeEvent;
+- $relative:4 import type { RuntimeEvent }
+- $relative:5 from "../types/RuntimeEvent";
+- $relative:7 type RuntimeEventHandler =
+- $relative:8 (event: RuntimeEvent) => void | Promise<void>;
+- $relative:10 export class RuntimeSubscriber {
+- $relative:18 handler: RuntimeEventHandler
+- $relative:26 payload as RuntimeEvent
+- $relative:1 export type RuntimeEvent = {
+- $relative:2 RuntimeModuleContract,
+- $relative:3 RuntimeModuleId,
+- $relative:4 } from "./RuntimeContracts";
+- $relative:7 CoreModuleRuntimeAdapter,
+- $relative:8 } from "@/runtime/modules/adapters/CoreModuleRuntimeAdapter";import {
+- $relative:9 runtimeOrchestrator,
+- $relative:10 } from "./RuntimeOrchestrator";
+- $relative:13 runtimeLifecycle,
+- $relative:14 } from "./RuntimeLifecycle";
+- $relative:17 runtimeHealthRegistry,
+- $relative:18 } from "./RuntimeHealthRegistry";
+- $relative:21 runtimeAlertRegistry,
+- $relative:22 } from "./RuntimeAlertRegistry";
+- $relative:25 runtimeWorkerRegistry,
+- $relative:26 } from "./RuntimeWorkerRegistry";
+- $relative:29 runtimeQueueRegistry,
+- $relative:30 } from "./RuntimeQueueRegistry";
+- $relative:33 runtimeRetryRegistry,
+- $relative:34 } from "./RuntimeRetryRegistry";
+- $relative:37 runtimeDeadLetterQueue,
+- $relative:38 } from "./RuntimeDeadLetterQueue";
+- $relative:41 runtimeStreamRegistry,
+- $relative:42 } from "./RuntimeStreamRegistry";
+- $relative:45 runtimeScheduler,
+- $relative:46 } from "./RuntimeScheduler";
+- $relative:49 runtimeAuditRegistry,
+- $relative:50 } from "./RuntimeAuditRegistry";
+- $relative:53 runtimePolicyRegistry,
+- $relative:54 } from "./RuntimePolicyRegistry";
+- $relative:57 runtimeSecurityRegistry,
+- $relative:58 } from "./RuntimeSecurityRegistry";
+- $relative:60 export class CentralRuntimeRegistry {
+- $relative:62 new Map<RuntimeModuleId, RuntimeModuleContract>();
+- $relative:67 CoreModuleRuntimeAdapter.toRuntimeModules()
+- $relative:73 registerModule(module: RuntimeModuleContract) {
+- $relative:78 getModule(moduleId: RuntimeModuleId) {
+- $relative:86 hasModule(moduleId: RuntimeModuleId) {
+- $relative:94 getRuntimeOrchestrator() {
+- $relative:95 return runtimeOrchestrator;
+- $relative:98 getRuntimeLifecycle() {
+- $relative:100 status: runtimeLifecycle.getStatus(),
+- $relative:101 startedAt: runtimeLifecycle.getStartedAt(),
+- $relative:105 getRuntimeHealth() {
+- $relative:106 return runtimeHealthRegistry.getAll();
+- $relative:109 getRuntimeAlerts() {
+- $relative:110 return runtimeAlertRegistry.getAlerts();
+- $relative:113 getRuntimeWorkers() {
+- $relative:114 return runtimeWorkerRegistry.getWorkers();
+- $relative:117 getRuntimeQueues() {
+- $relative:118 return runtimeQueueRegistry.getJobs();
+- $relative:121 getRuntimeRetries() {
+- $relative:122 return runtimeRetryRegistry.getRetries();
+- $relative:125 getRuntimeDeadLetters() {
+- $relative:126 return runtimeDeadLetterQueue.getEvents();
+- $relative:129 getRuntimeStreams() {
+- $relative:130 return runtimeStreamRegistry.getStreams();
+- $relative:133 getRuntimeScheduler() {
+- $relative:134 return runtimeScheduler;
+- $relative:137 getRuntimeAudit() {
+- $relative:138 return runtimeAuditRegistry.getEntries();
+- $relative:141 getRuntimePolicies() {
+- $relative:142 return runtimePolicyRegistry.getPolicies();
+- $relative:145 getRuntimeSecurity() {
+- $relative:146 return runtimeSecurityRegistry.getRules();
+- $relative:150 export const centralRuntimeRegistry =
+- $relative:151 new CentralRuntimeRegistry();
+- $relative:153 centralRuntimeRegistry.initialize();
+- $relative:1 export * from "./CentralRuntimeRegistry";
+- $relative:1 export interface RuntimeAlert {
+- $relative:15 export class RuntimeAlertRegistry {
+- $relative:18 RuntimeAlert[] = [];
+- $relative:21 alert: RuntimeAlert
+- $relative:49 export const runtimeAlertRegistry =
+- $relative:50 new RuntimeAlertRegistry();
+- $relative:1 export interface RuntimeAuditEntry {
+- $relative:16 export class RuntimeAuditRegistry {
+- $relative:19 RuntimeAuditEntry[] = [];
+- $relative:22 entry: RuntimeAuditEntry
+- $relative:49 export const runtimeAuditRegistry =
+- $relative:50 new RuntimeAuditRegistry();
+- $relative:2 CoreModuleRuntimeAdapter,
+- $relative:3 } from "@/runtime/modules/adapters/CoreModuleRuntimeAdapter";
+- $relative:5 export interface RuntimeBinding {
+- $relative:14 export class RuntimeBindingsRegistry {
+- $relative:19 RuntimeBinding
+- $relative:27 CoreModuleRuntimeAdapter.toRuntimeBindings()
+- $relative:55 export const runtimeBindingsRegistry =
+- $relative:56 new RuntimeBindingsRegistry();
+- $relative:58 runtimeBindingsRegistry.initialize();
+- $relative:2 RuntimeCapability,
+- $relative:3 } from "./RuntimeContracts";
+- $relative:1 export type RuntimeModuleId = string;
+- $relative:3 export type RuntimeStatus =
+- $relative:10 export type RuntimeCapability =
+- $relative:28 export interface RuntimeModuleContract {
+- $relative:29 id: RuntimeModuleId;
+- $relative:33 status: RuntimeStatus;
+- $relative:34 capabilities: RuntimeCapability[];
+- $relative:14 export class RuntimeDeadLetterQueue {
+- $relative:47 export const runtimeDeadLetterQueue =
+- $relative:48 new RuntimeDeadLetterQueue();
+- $relative:2 runtimeEventStore,
+- $relative:3 } from "./RuntimeEventStore";
+- $relative:5 export interface RuntimeEvent {
+- $relative:16 type RuntimeEventHandler =
+- $relative:17 (event: RuntimeEvent) => void;
+- $relative:19 export class RuntimeEventBus {
+- $relative:24 RuntimeEventHandler[]
+- $relative:28 event: RuntimeEvent
+- $relative:31 runtimeEventStore.append(
+- $relative:48 handler: RuntimeEventHandler
+- $relative:72 export const runtimeEventBus =
+- $relative:73 new RuntimeEventBus();
+- $relative:2 RuntimeEvent,
+- $relative:3 } from "./RuntimeEventBus";
+- $relative:5 export class RuntimeEventStore {
+- $relative:8 RuntimeEvent[] = [];
+- $relative:11 event: RuntimeEvent
+- $relative:38 export const runtimeEventStore =
+- $relative:39 new RuntimeEventStore();
+- $relative:2 GeneratedRuntimeTopology,
+- $relative:3 } from "../generated/GeneratedRuntimeTopology";
+- $relative:5 export interface RuntimeTopologyNode {
+- $relative:10 export class RuntimeEventTopology {
+- $relative:15 RuntimeTopologyNode
+- $relative:23 GeneratedRuntimeTopology
+- $relative:51 export const runtimeEventTopology =
+- $relative:52 new RuntimeEventTopology();
+- $relative:54 runtimeEventTopology.initialize();
+- $relative:1 export interface RuntimeExecution {
+- $relative:20 export class RuntimeExecutionRegistry {
+- $relative:23 RuntimeExecution[] = [];
+- $relative:26 execution: RuntimeExecution
+- $relative:58 export const runtimeExecutionRegistry =
+- $relative:59 new RuntimeExecutionRegistry();
+- $relative:1 export interface RuntimeHealthEntry {
+- $relative:15 export class RuntimeHealthRegistry {
+- $relative:20 RuntimeHealthEntry
+- $relative:24 entry: RuntimeHealthEntry
+- $relative:66 export const runtimeHealthRegistry =
+- $relative:67 new RuntimeHealthRegistry();
+- $relative:1 export type RuntimeLifecycleStatus =
+- $relative:8 export class RuntimeLifecycle {
+- $relative:11 RuntimeLifecycleStatus =
+- $relative:51 export const runtimeLifecycle =
+- $relative:52 new RuntimeLifecycle();
+- $relative:1 export interface RuntimeMetric {
+- $relative:10 export class RuntimeMetricsRegistry {
+- $relative:13 RuntimeMetric[] = [];
+- $relative:16 metric: RuntimeMetric
+- $relative:38 export const runtimeMetricsRegistry =
+- $relative:39 new RuntimeMetricsRegistry();
+- $relative:2 RuntimeModuleContract,
+- $relative:3 } from "./RuntimeContracts";
+- $relative:6 RuntimeBinding,
+- $relative:7 } from "./RuntimeBindings";
+- $relative:9 export function connectRuntimeModule(
+- $relative:10 module: RuntimeModuleContract
+- $relative:11 ): RuntimeBinding {
+- $relative:1 export interface RuntimeObservabilityEntry {
+- $relative:12 export class RuntimeObservabilityRegistry {
+- $relative:17 RuntimeObservabilityEntry
+- $relative:21 entry: RuntimeObservabilityEntry
+- $relative:47 export const runtimeObservabilityRegistry =
+- $relative:48 new RuntimeObservabilityRegistry();
+- $relative:2 runtimeEventBus,
+- $relative:3 } from "./RuntimeEventBus";
+- $relative:6 runtimeExecutionRegistry,
+- $relative:7 } from "./RuntimeExecutionRegistry";
+- $relative:10 runtimeQueueRegistry,
+- $relative:11 } from "./RuntimeQueueRegistry";
+- $relative:14 runtimeRetryRegistry,
+- $relative:15 } from "./RuntimeRetryRegistry";
+- $relative:18 runtimeDeadLetterQueue,
+- $relative:19 } from "./RuntimeDeadLetterQueue";
+- $relative:21 export class RuntimeOrchestrator {
+- $relative:32 runtimeExecutionRegistry.startExecution({
+- $relative:41 runtimeEventBus.emit({
+- $relative:61 runtimeQueueRegistry.enqueue({
+- $relative:75 runtimeRetryRegistry.registerRetry({
+- $relative:90 runtimeDeadLetterQueue.push({
+- $relative:101 export const runtimeOrchestrator =
+- $relative:102 new RuntimeOrchestrator();
+- $relative:2 CoreModuleRuntimeAdapter,
+- $relative:3 } from "@/runtime/modules/adapters/CoreModuleRuntimeAdapter";
+- $relative:5 export class RuntimePermissionRegistry {
+- $relative:18 CoreModuleRuntimeAdapter.toRuntimeBindings()
+- $relative:46 export const runtimePermissionRegistry =
+- $relative:47 new RuntimePermissionRegistry();
+- $relative:49 runtimePermissionRegistry.initialize();
+- $relative:1 export const ERP_RUNTIME_PIPELINE = [
+- $relative:12 export type ERPRuntimePipelineStep =
+- $relative:13 typeof ERP_RUNTIME_PIPELINE[number];
+- $relative:1 export interface RuntimePolicy {
+- $relative:14 export class RuntimePolicyRegistry {
+- $relative:17 RuntimePolicy[] = [];
+- $relative:20 policy: RuntimePolicy
+- $relative:50 export const runtimePolicyRegistry =
+- $relative:51 new RuntimePolicyRegistry();
+- $relative:1 export interface RuntimeQueueJob {
+- $relative:18 export class RuntimeQueueRegistry {
+- $relative:21 RuntimeQueueJob[] = [];
+- $relative:24 job: RuntimeQueueJob
+- $relative:62 export const runtimeQueueRegistry =
+- $relative:63 new RuntimeQueueRegistry();
+- $relative:1 export interface RuntimeRetryJob {
+- $relative:16 export class RuntimeRetryRegistry {
+- $relative:19 RuntimeRetryJob[] = [];
+- $relative:22 job: RuntimeRetryJob
+- $relative:50 export const runtimeRetryRegistry =
+- $relative:51 new RuntimeRetryRegistry();
+- $relative:1 export interface RuntimeScheduledTask {
+- $relative:14 export class RuntimeScheduler {
+- $relative:17 RuntimeScheduledTask[] = [];
+- $relative:20 task: RuntimeScheduledTask
+- $relative:57 export const runtimeScheduler =
+- $relative:58 new RuntimeScheduler();
+- $relative:1 export interface RuntimeSecurityRule {
+- $relative:22 export class RuntimeSecurityRegistry {
+- $relative:25 RuntimeSecurityRule[] = [];
+- $relative:28 rule: RuntimeSecurityRule
+- $relative:58 export const runtimeSecurityRegistry =
+- $relative:59 new RuntimeSecurityRegistry();
+- $relative:2 CoreModuleRuntimeAdapter,
+- $relative:3 } from "@/runtime/modules/adapters/CoreModuleRuntimeAdapter";
+- $relative:5 export class RuntimeStateRegistry {
+- $relative:18 CoreModuleRuntimeAdapter.toRuntimeBindings()
+- $relative:46 export const runtimeStateRegistry =
+- $relative:47 new RuntimeStateRegistry();
+- $relative:49 runtimeStateRegistry.initialize();
+- $relative:1 export interface RuntimeStreamEvent {
+- $relative:12 export class RuntimeStreamRegistry {
+- $relative:17 RuntimeStreamEvent[]
+- $relative:22 event: RuntimeStreamEvent
+- $relative:53 export const runtimeStreamRegistry =
+- $relative:54 new RuntimeStreamRegistry();
+- $relative:2 centralRuntimeRegistry,
+- $relative:3 } from "./CentralRuntimeRegistry";
+- $relative:5 export class RuntimeSupervisor {
+- $relative:10 "ERP Runtime Supervisor booting..."
+- $relative:15 centralRuntimeRegistry.getModuleCount()
+- $relative:20 centralRuntimeRegistry
+- $relative:33 centralRuntimeRegistry
+- $relative:34 .getRuntimeLifecycle(),
+- $relative:37 centralRuntimeRegistry
+- $relative:38 .getRuntimeHealth(),
+- $relative:41 centralRuntimeRegistry
+- $relative:42 .getRuntimeAlerts(),
+- $relative:45 centralRuntimeRegistry
+- $relative:46 .getRuntimeWorkers(),
+- $relative:49 centralRuntimeRegistry
+- $relative:50 .getRuntimeQueues(),
+- $relative:53 centralRuntimeRegistry
+- $relative:54 .getRuntimeRetries(),
+- $relative:57 centralRuntimeRegistry
+- $relative:58 .getRuntimeDeadLetters(),
+- $relative:63 export const runtimeSupervisor =
+- $relative:64 new RuntimeSupervisor();
+- $relative:1 export interface RuntimeWorker {
+- $relative:17 export class RuntimeWorkerRegistry {
+- $relative:20 RuntimeWorker[] = [];
+- $relative:23 worker: RuntimeWorker
+- $relative:53 export const runtimeWorkerRegistry =
+- $relative:54 new RuntimeWorkerRegistry();
+- $relative:2 CoreModuleRuntimeAdapter,
+- $relative:3 } from "@/runtime/modules/adapters/CoreModuleRuntimeAdapter";
+- $relative:5 export class RuntimeWorkflowRegistry {
+- $relative:16 CoreModuleRuntimeAdapter.toRuntimeWorkflows()
+- $relative:41 export const runtimeWorkflowRegistry =
+- $relative:42 new RuntimeWorkflowRegistry();
+- $relative:44 runtimeWorkflowRegistry.initialize();
+- $relative:1 import type { ERPModule } from "@/runtime/modules";
+- $relative:2 import { RuntimeMutationEngine } from "@/runtime/mutations/RuntimeMutationEngine";
+- $relative:3 import { erpEventBus } from "@/runtime/events";
+- $relative:4 import { FirestoreRuntimeRepository } from "@/runtime/firestore/FirestoreRuntimeRepository";
+- $relative:8 const data = await RuntimeMutationEngine.create(module, payload);
+- $relative:24 const data = await RuntimeMutationEngine.update(module, id, payload);
+- $relative:36 await RuntimeMutationEngine.delete(module, id);
+- $relative:48 return FirestoreRuntimeRepository.findMany(module);
+- $relative:9 export class ERPModuleRuntimeDataBridge {
+- $relative:41 export const erpModuleRuntimeDataBridge =
+- $relative:42 new ERPModuleRuntimeDataBridge();
+- $relative:3 export * from "./ERPModuleRuntimeDataBridge";
+- $relative:1 export type { RuntimeRecord } from "./RuntimeRecord";
+- $relative:2 export { RuntimeDataBinding } from "./RuntimeDataBinding";
+- $relative:3 } from "@/runtime/modules";
+- $relative:6 FirestoreRuntimeQuery,
+- $relative:7 FirestoreRuntimeMutation,
+- $relative:8 } from "@/runtime/firestore";
+- $relative:10 export class RuntimeDataBinding {
+- $relative:14 return FirestoreRuntimeQuery.list(
+- $relative:23 return FirestoreRuntimeQuery.detail(
+- $relative:33 return FirestoreRuntimeMutation.create(
+- $relative:44 return FirestoreRuntimeMutation.update(
+- $relative:55 return FirestoreRuntimeMutation.delete(
+- $relative:1 export interface RuntimeRecord {
+- $relative:1 import type { ERPBusinessRule } from "@/runtime/rules/ERPBusinessRuleEngine";
+- $relative:7 } from "@/runtime/events/bus/ERPEventBus";
+- $relative:11 } from "@/runtime/rules/ERPBusinessRuleEngine";
+- $relative:14 RuntimeNotificationEngine,
+- $relative:15 } from "@/runtime/notifications/RuntimeNotificationEngine";
+- $relative:18 RuntimeObservabilityEngine,
+- $relative:19 } from "@/runtime/observability/RuntimeObservabilityEngine";
+- $relative:23 } from "@/runtime/domain/adapters/TerragestBusinessRuleAdapter";
+- $relative:25 type RuntimeBridgeTarget = {
+- $relative:35 export type TerragestDomainRuntimeBridgeDependencies = {
+- $relative:36 businessRuleEngine?: RuntimeBridgeTarget;
+- $relative:37 ruleRegistry?: RuntimeBridgeTarget;
+- $relative:38 notificationEngine?: RuntimeBridgeTarget;
+- $relative:39 observabilityEngine?: RuntimeBridgeTarget;
+- $relative:40 eventBus?: RuntimeBridgeTarget;
+- $relative:43 type TerragestRuntimeBinding = {
+- $relative:49 function collectRuntimeBindings(
+- $relative:52 ): TerragestRuntimeBinding[] {
+- $relative:73 binding: TerragestRuntimeBinding
+- $relative:109 target: RuntimeBridgeTarget | undefined,
+- $relative:110 binding: TerragestRuntimeBinding
+- $relative:145 target: RuntimeBridgeTarget | undefined,
+- $relative:171 export function createTerragestDomainRuntimeBridge(
+- $relative:172 dependencies: TerragestDomainRuntimeBridgeDependencies = {}
+- $relative:182 RuntimeNotificationEngine,
+- $relative:185 RuntimeObservabilityEngine,
+- $relative:192 collectRuntimeBindings(
+- $relative:198 collectRuntimeBindings(
+- $relative:204 collectRuntimeBindings(
+- $relative:282 "TERRAGEST_DOMAIN_RUNTIME_BRIDGE_BOOTED",
+- $relative:287 type: "domain-runtime",
+- $relative:289 message: "Terragest domain connected to ERP runtime.",
+- $relative:294 type: "runtime",
+- $relative:296 title: "Terragest runtime bridge",
+- $relative:297 message: "Domaine Terragest connecté au runtime ERP.",
+- $relative:322 export const TerragestDomainRuntimeBridge =
+- $relative:323 createTerragestDomainRuntimeBridge();
+- $relative:1 import { EnterpriseRuntimeKernel } from "./EnterpriseRuntimeKernel";
+- $relative:3 export class EnterpriseRuntimeDiagnostics {
+- $relative:5 const services = EnterpriseRuntimeKernel.status();
+- $relative:7 export class EnterpriseRuntimeGovernance {
+- $relative:16 key: "runtime-actions",
+- $relative:21 key: "forms-runtime",
+- $relative:26 key: "tables-runtime",
+- $relative:1 export interface EnterpriseRuntimeKernelStatus {
+- $relative:7 export class EnterpriseRuntimeKernel {
+- $relative:8 static status(): EnterpriseRuntimeKernelStatus[] {
+- $relative:11 name: "Runtime Core",
+- $relative:16 name: "Firestore Runtime",
+- $relative:21 name: "Workflow Runtime",
+- $relative:26 name: "Security Runtime",
+- $relative:31 name: "Automation Runtime",
+- $relative:36 name: "Event Runtime",
+- $relative:1 export type EnterpriseRuntimeLifecycleStep =
+- $relative:12 export class EnterpriseRuntimeLifecycle {
+- $relative:14 key: EnterpriseRuntimeLifecycleStep;
+- $relative:19 { key: "bootstrap", label: "Bootstrap runtime", completed: true },
+- $relative:22 { key: "security", label: "Security runtime", completed: true },
+- $relative:23 { key: "workflow", label: "Workflow runtime", completed: true },
+- $relative:24 { key: "automation", label: "Automation runtime", completed: true },
+- $relative:25 { key: "events", label: "Event runtime", completed: true },
+- $relative:1 export class EnterpriseRuntimePerformance {
+- $relative:5 label: "Runtime score",
+- $relative:7 helper: "Architecture runtime consolidee",
+- $relative:1 export { EnterpriseRuntimeKernel } from "./EnterpriseRuntimeKernel";
+- $relative:2 export type { EnterpriseRuntimeKernelStatus } from "./EnterpriseRuntimeKernel";
+- $relative:4 export { EnterpriseRuntimeDiagnostics } from "./EnterpriseRuntimeDiagnostics";
+- $relative:5 export { EnterpriseRuntimeLifecycle } from "./EnterpriseRuntimeLifecycle";
+- $relative:6 export type { EnterpriseRuntimeLifecycleStep } from "./EnterpriseRuntimeLifecycle";
+- $relative:8 export { EnterpriseRuntimeGovernance } from "./EnterpriseRuntimeGovernance";
+- $relative:9 export type { EnterpriseGovernanceCheck } from "./EnterpriseRuntimeGovernance";
+- $relative:11 export { EnterpriseRuntimePerformance } from "./EnterpriseRuntimePerformance";
+- $relative:2 ERPEventRuntimeEvent,
+- $relative:3 ERPEventRuntimeLevel,
+- $relative:4 } from "./ERPEventRuntimeTypes";
+- $relative:5 import { ERPEventRuntimeStore } from "./ERPEventRuntimeStore";
+- $relative:6 import { ERPEventRuntimeSubscriptionRegistry } from "./ERPEventRuntimeSubscriptionRegistry";
+- $relative:12 level?: ERPEventRuntimeLevel;
+- $relative:15 export class ERPEventRuntimeBus {
+- $relative:21 }: EmitOptions): ERPEventRuntimeEvent {
+- $relative:23 ERPEventRuntimeSubscriptionRegistry.forEvent(name);
+- $relative:25 const event: ERPEventRuntimeEvent = {
+- $relative:37 ERPEventRuntimeStore.push(event);
+- $relative:46 return ERPEventRuntimeStore.forModule(moduleKey);
+- $relative:49 return ERPEventRuntimeStore.all();
+- $relative:1 import { ERPEventRuntimeBus } from "./ERPEventRuntimeBus";
+- $relative:3 export class ERPEventRuntimeOrchestrator {
+- $relative:5 return ERPEventRuntimeBus.emit({
+- $relative:17 return ERPEventRuntimeBus.emit({
+- $relative:29 return ERPEventRuntimeBus.emit({
+- $relative:2 ERPEventRuntimeEvent,
+- $relative:3 } from "./ERPEventRuntimeTypes";
+- $relative:5 const events: ERPEventRuntimeEvent[] = [];
+- $relative:7 export class ERPEventRuntimeStore {
+- $relative:8 static push(event: ERPEventRuntimeEvent) {
+- $relative:1 import { erpEventRuntimeSubscriptions } from "./ERPEventRuntimeSubscriptions";
+- $relative:3 export class ERPEventRuntimeSubscriptionRegistry {
+- $relative:5 return erpEventRuntimeSubscriptions;
+- $relative:9 return erpEventRuntimeSubscriptions.filter(
+- $relative:15 return erpEventRuntimeSubscriptions.filter(
+- $relative:2 ERPEventRuntimeSubscription,
+- $relative:3 } from "./ERPEventRuntimeTypes";
+- $relative:5 export const erpEventRuntimeSubscriptions: ERPEventRuntimeSubscription[] = [
+- $relative:1 export type ERPEventRuntimeLevel =
+- $relative:7 export interface ERPEventRuntimeEvent {
+- $relative:12 level: ERPEventRuntimeLevel;
+- $relative:17 export interface ERPEventRuntimeSubscription {
+- $relative:2 ERPEventRuntimeEvent,
+- $relative:3 ERPEventRuntimeLevel,
+- $relative:4 ERPEventRuntimeSubscription,
+- $relative:5 } from "./ERPEventRuntimeTypes";
+- $relative:7 export { ERPEventRuntimeStore } from "./ERPEventRuntimeStore";
+- $relative:8 export { erpEventRuntimeSubscriptions } from "./ERPEventRuntimeSubscriptions";
+- $relative:9 export { ERPEventRuntimeSubscriptionRegistry } from "./ERPEventRuntimeSubscriptionRegistry";
+- $relative:10 export { ERPEventRuntimeBus } from "./ERPEventRuntimeBus";
+- $relative:11 export { ERPEventRuntimeOrchestrator } from "./ERPEventRuntimeOrchestrator";
+- $relative:11 export class ERPRuntimeEventOrchestrator {
+- $relative:30 `Runtime event ${event.type}`,
+- $relative:53 "ERP Runtime Event",
+- $relative:72 export const erpRuntimeEventOrchestrator =
+- $relative:73 new ERPRuntimeEventOrchestrator();
+- $relative:3 export * from "./ERPRuntimeEventOrchestrator";
+- $relative:1 export interface RuntimeEvent {
+- $relative:2 RuntimeBusinessRulesEngine,
+- $relative:4 from "@/runtime/business-rules/RuntimeBusinessRulesEngine";
+- $relative:6 export class RuntimeEventBus {
+- $relative:39 "Runtime Event",
+- $relative:48 await RuntimeBusinessRulesEngine
+- $relative:72 export const runtimeEventBus =
+- $relative:73 new RuntimeEventBus();
+- $relative:1 export const RuntimeEventRegistry = {
+- $relative:59 // RUNTIME
+- $relative:62 RUNTIME_ERROR:
+- $relative:63 "RUNTIME_ERROR",
+- $relative:85 export type RuntimeEventType =
+- $relative:86 typeof RuntimeEventRegistry[
+- $relative:87 keyof typeof RuntimeEventRegistry
+- $relative:1 export class RuntimeExecutor {
+- $relative:8 "[RuntimeExecutor]",
+- $relative:32 export const runtimeFirestore =
+- $relative:1 import type { ERPModule } from "@/runtime/modules";
+- $relative:4 FirestoreRuntimeRepository,
+- $relative:5 } from "./FirestoreRuntimeRepository";
+- $relative:7 export class FirestoreRuntimeMutation {
+- $relative:12 return FirestoreRuntimeRepository.create(
+- $relative:23 return FirestoreRuntimeRepository.update(
+- $relative:34 return FirestoreRuntimeRepository.delete(
+- $relative:1 import type { ERPModule } from "@/runtime/modules";
+- $relative:4 FirestoreRuntimeRepository,
+- $relative:5 } from "./FirestoreRuntimeRepository";
+- $relative:7 export class FirestoreRuntimeQuery {
+- $relative:12 return FirestoreRuntimeRepository.findMany(
+- $relative:21 return FirestoreRuntimeRepository.findById(
+- $relative:6 import type { ERPModule } from "@/runtime/modules";
+- $relative:9 runtimeFirestore,
+- $relative:10 } from "@/runtime/firebase/runtime-firestore";
+- $relative:12 export class FirestoreRuntimeRealtime {
+- $relative:23 runtimeFirestore,
+- $relative:11 import type { ERPModule } from "@/runtime/modules";
+- $relative:12 import type { RuntimeRecord } from "@/runtime/data-binding";
+- $relative:14 import { runtimeFirestore } from "@/runtime/firebase/runtime-firestore";
+- $relative:16 export class FirestoreRuntimeRepository {
+- $relative:19 ): Promise<RuntimeRecord[]> {
+- $relative:21 collection(runtimeFirestore, module.schema.collection)
+- $relative:33 ): Promise<RuntimeRecord | null> {
+- $relative:35 doc(runtimeFirestore, module.schema.collection, id)
+- $relative:53 collection(runtimeFirestore, module.schema.collection),
+- $relative:72 doc(runtimeFirestore, module.schema.collection, id),
+- $relative:90 doc(runtimeFirestore, module.schema.collection, id)
+- $relative:2 FirestoreRuntimeRepository,
+- $relative:3 } from "./FirestoreRuntimeRepository";
+- $relative:6 FirestoreRuntimeQuery,
+- $relative:7 } from "./FirestoreRuntimeQuery";
+- $relative:10 FirestoreRuntimeMutation,
+- $relative:11 } from "./FirestoreRuntimeMutation";
+- $relative:14 FirestoreRuntimeRealtime,
+- $relative:15 } from "./FirestoreRuntimeRealtime";
+- $relative:5 from "@/runtime/forms/DynamicField";
+- $relative:5 from "@/runtime/forms/DynamicField";
+- $relative:4 } from "@/runtime/forms/DynamicField";
+- $relative:9 } from "@/runtime/modules";
+- $relative:4 import { ERPRelationDataLoader } from "@/runtime/modules/lifecycle/ERPRelationDataLoader";
+- $relative:25 type RuntimeFormModule = {
+- $relative:36 module: RuntimeFormModule;
+- $relative:1 export const GeneratedRuntimeTopology = {
+- $relative:12 erpModuleRuntimeDataBridge,
+- $relative:15 interface ERPModuleRuntimeFactoryProps {
+- $relative:26 export function ERPModuleRuntimeFactory({
+- $relative:29 }: ERPModuleRuntimeFactoryProps) {
+- $relative:41 erpModuleRuntimeDataBridge
+- $relative:42 description="Page générée automatiquement par le runtime ERP."
+- $relative:11 export * from "./ERPModuleRuntimeFactory";
+- $relative:2 RuntimeContractValidator {
+- $relative:27 RuntimeContractValidator
+- $relative:29 from "./contracts/RuntimeContractValidator";
+- $relative:50 new RuntimeContractValidator();
+- $relative:59 "PersistentRuntimePublisher"
+- $relative:71 "RuntimeEventContract"
+- $relative:9 import { runtimeEventBus }
+- $relative:10 from "@/runtime/bus/RuntimeEventBus";
+- $relative:15 from "@/runtime/events/MaintenanceEvents";
+- $relative:17 runtimeEventBus.on(
+- $relative:9 import { runtimeEventBus }
+- $relative:10 from "@/runtime/bus/RuntimeEventBus";
+- $relative:15 from "@/runtime/events/MaintenanceEvents";
+- $relative:17 runtimeEventBus.on(
+- $relative:1 export class RuntimeMetrics {
+- $relative:4 RuntimeModuleContract,
+- $relative:5 } from "@/runtime/core/RuntimeContracts";
+- $relative:9 } from "@/runtime/ui-generation";
+- $relative:32 export class CoreModuleRuntimeAdapter {
+- $relative:33 static toRuntimeModules():
+- $relative:34 RuntimeModuleContract[] {
+- $relative:122 static toRuntimeBindings() {
+- $relative:152 static toRuntimeWorkflows() {
+- $relative:29 export interface ERPModuleRuntimeDefinition {
+- $relative:73 static buildRuntime(module: ERPModule): ERPModuleRuntimeDefinition {
+- $relative:4 export class RuntimeFormFactory {
+- $relative:4 export type RuntimePageType = "list" | "create" | "edit" | "details";
+- $relative:6 export class RuntimePageFactory {
+- $relative:7 static create(module: ERPModule, pageType: RuntimePageType) {
+- $relative:8 const runtime = ERPModuleBuilder.buildRuntime(module);
+- $relative:14 runtime,
+- $relative:4 export class RuntimeTableFactory {
+- $relative:1 import { RuntimeDataBinding } from "@/runtime/data-binding";
+- $relative:14 const records = await RuntimeDataBinding.list(module);
+- $relative:1 import type { ERPModuleDefinition } from "@/runtime/modules/ERPModuleDefinition";
+- $relative:17 DÃƒÂ©tail runtime du module {module.key}
+- $relative:3 import type { ERPModuleDefinition } from "@/runtime/modules/ERPModuleDefinition";
+- $relative:2 import { RuntimePageFactory, type RuntimePageType } from "../factories/RuntimePageFactory";
+- $relative:5 static renderPage(module: ERPModule, pageType: RuntimePageType) {
+- $relative:6 return RuntimePageFactory.create(module, pageType);
+- $relative:24 type ERPModuleRuntimeDefinition,
+- $relative:28 export { RuntimePageFactory, type RuntimePageType } from "./factories/RuntimePageFactory";
+- $relative:29 export { RuntimeFormFactory } from "./factories/RuntimeFormFactory";
+- $relative:30 export { RuntimeTableFactory } from "./factories/RuntimeTableFactory";
+- $relative:1 import { ERPAlertStore } from "@/runtime/observability";
+- $relative:2 import { ERPDeadLetterStore } from "@/runtime/resilience";
+- $relative:3 import { ERPWorkerHistoryStore } from "@/runtime/workers";
+- $relative:4 import { ERPSecurityAuditStore } from "@/runtime/security";
+- $relative:1 import { ERPRegistry } from "@/runtime/registry";
+- $relative:2 import { ERPCircuitBreaker } from "@/runtime/resilience";
+- $relative:3 import { ERPTenantRegistry } from "@/runtime/tenant";
+- $relative:4 import { ERPWorkerRegistry } from "@/runtime/workers";
+- $relative:15 label: "Runtime Registry",
+- $relative:21 { id: "registry", label: "Runtime Registry", group: "core" },
+- $relative:22 { id: "ui", label: "Runtime UI", group: "ui" },
+- $relative:23 { id: "events", label: "Event Bus", group: "runtime" },
+- $relative:24 { id: "observability", label: "Observability", group: "runtime" },
+- $relative:25 { id: "automation", label: "Automation", group: "runtime" },
+- $relative:26 { id: "workflows", label: "Workflows", group: "runtime" },
+- $relative:27 { id: "queue", label: "Queue / DLQ", group: "runtime" },
+- $relative:28 { id: "realtime", label: "Realtime", group: "runtime" },
+- $relative:32 { id: "workers", label: "Workers", group: "runtime" },
+- $relative:2 runtimeActivityStore
+- $relative:4 from "../../features/platform/components/runtime/runtimeActivityStore";
+- $relative:12 ConnectedRuntimeEventPublisher {
+- $relative:26 runtimeActivityStore.push(
+- $relative:35 "[ConnectedRuntimeEvent]",
+- $relative:1 import { ERPRegistry } from "@/runtime/registry";
+- $relative:2 import { ERPTenantRegistry } from "@/runtime/tenant";
+- $relative:3 import { ERPWorkerRegistry, ERPWorkerHistoryStore } from "@/runtime/workers";
+- $relative:4 import { ERPWorkflowExecutionStore } from "@/runtime/workflows/enterprise";
+- $relative:5 import { ERPQueueStore } from "@/runtime/resilience";
+- $relative:6 import { getERPRealtimeSnapshot } from "@/runtime/realtime";
+- $relative:7 import { ERPSecurityAuditStore } from "@/runtime/security";
+- $relative:2 RuntimeEventRepository
+- $relative:4 from "../persistence/events/RuntimeEventRepository";
+- $relative:7 ConnectedRuntimeEventPublisher
+- $relative:9 from "./ConnectedRuntimeEventPublisher";
+- $relative:12 PersistentRuntimePublisher {
+- $relative:15 new RuntimeEventRepository();
+- $relative:18 new ConnectedRuntimeEventPublisher();
+- $relative:36 "[PersistentRuntimePublisher]",
+- $relative:15 export class RuntimeEventPublisher {
+- $relative:35 "runtime_events"
+- $relative:2 ConnectedRuntimeEventPublisher
+- $relative:4 from "./ConnectedRuntimeEventPublisher";
+- $relative:7 new ConnectedRuntimeEventPublisher();
+- $relative:1 export { RuntimeMutationEngine } from "./RuntimeMutationEngine";
+- $relative:1 import type { ERPModule } from "@/runtime/modules";
+- $relative:2 import { FirestoreRuntimeMutation } from "@/runtime/firestore/FirestoreRuntimeMutation";
+- $relative:4 export class RuntimeMutationEngine {
+- $relative:9 return FirestoreRuntimeMutation.create(
+- $relative:20 return FirestoreRuntimeMutation.update(
+- $relative:31 return FirestoreRuntimeMutation.delete(
+- $relative:7 RuntimeNavigationEngine,
+- $relative:9 from "@/runtime/navigation/RuntimeNavigationEngine";
+- $relative:27 RuntimeNavigationEngine
+- $relative:2 RuntimeRelationsEngine,
+- $relative:4 from "@/runtime/relations/RuntimeRelationsEngine";
+- $relative:7 RuntimeNavigationLink,
+- $relative:9 from "@/runtime/navigation/RuntimeNavigationLink";
+- $relative:11 export class RuntimeNavigationEngine {
+- $relative:16 ): RuntimeNavigationLink[] {
+- $relative:19 RuntimeRelationsEngine
+- $relative:1 export interface RuntimeNavigationLink {
+- $relative:38 "runtime_notifications"
+- $relative:1 export interface RuntimeNotification {
+- $relative:12 RuntimeNotification,
+- $relative:14 from "@/runtime/notifications/RuntimeNotification";
+- $relative:16 export class RuntimeNotificationEngine {
+- $relative:21 RuntimeNotification
+- $relative:34 "runtime_notifications"
+- $relative:3 } from "@/runtime/events/bus/ERPEventBus";
+- $relative:2 ERPBaseRuntimeRecord,
+- $relative:3 } from "../shared/ERPRuntimeTypes";
+- $relative:6 extends ERPBaseRuntimeRecord {}
+- $relative:2 ERPRuntimeEntity,
+- $relative:3 } from "../shared/ERPRuntimeEntity";
+- $relative:6 extends ERPRuntimeEntity {
+- $relative:7 erpRuntimeAuditTrail,
+- $relative:8 } from "./ERPRuntimeAuditTrail";
+- $relative:10 export class ERPRuntimeAuditBridge {
+- $relative:19 erpRuntimeAuditTrail
+- $relative:43 export const erpRuntimeAuditBridge =
+- $relative:44 new ERPRuntimeAuditBridge();
+- $relative:17 export class ERPRuntimeAuditTrail {
+- $relative:47 export const erpRuntimeAuditTrail =
+- $relative:48 new ERPRuntimeAuditTrail();
+- $relative:3 } from "@/runtime/events/bus/ERPEventBus";
+- $relative:15 export function seedERPRuntimeObservability() {
+- $relative:29 actor: "runtime",
+- $relative:2 ERPBaseRuntimeRecord,
+- $relative:3 } from "../shared/ERPRuntimeTypes";
+- $relative:6 extends ERPBaseRuntimeRecord {
+- $relative:1 export * from "./ERPRuntimeAuditTrail";
+- $relative:2 export * from "./ERPRuntimeAuditBridge";
+- $relative:4 export * from "./seedERPRuntimeObservability";
+- $relative:1 export interface RuntimeLog {
+- $relative:24 export function RuntimeLogsPanel() {
+- $relative:38 "runtime_logs"
+- $relative:91 Runtime Logs
+- $relative:103 Aucun log runtime.
+- $relative:12 RuntimeLog,
+- $relative:14 from "@/runtime/observability/RuntimeLog";
+- $relative:16 export class RuntimeObservabilityEngine {
+- $relative:19 log: RuntimeLog
+- $relative:23 "ERP Runtime Log",
+- $relative:31 "runtime_logs"
+- $relative:5 export function seedERPRuntimeObservability() {
+- $relative:8 title: "Runtime observability initialized",
+- $relative:10 module: "runtime",
+- $relative:2 PersistentRuntimePublisher
+- $relative:4 from "../monitoring/PersistentRuntimePublisher";
+- $relative:30 new PersistentRuntimePublisher();
+- $relative:2 RuntimePublisher
+- $relative:4 from "../core/services/RuntimePublisher";
+- $relative:7 RuntimeModuleOrchestrator {
+- $relative:10 new RuntimePublisher();
+- $relative:34 `[RuntimeModuleOrchestrator] ${type}`
+- $relative:1 export class RuntimeIsolationManager {
+- $relative:4 RuntimePermissionsEngine,
+- $relative:6 from "@/runtime/permissions/RuntimePermissionsEngine";
+- $relative:33 RuntimePermissionsEngine.can(
+- $relative:1 export interface RuntimePermission {
+- $relative:2 RuntimePermission,
+- $relative:4 from "@/runtime/permissions/RuntimePermission";
+- $relative:6 export const runtimePermissions:
+- $relative:7 RuntimePermission[] = [
+- $relative:2 runtimePermissions,
+- $relative:4 from "@/runtime/permissions/runtimePermissions";
+- $relative:6 export class RuntimePermissionsEngine {
+- $relative:19 runtimePermissions.find(
+- $relative:47 return runtimePermissions.filter(
+- $relative:19 "runtime_analytics"
+- $relative:19 "runtime_audit"
+- $relative:12 RuntimeEventRepository {
+- $relative:21 "runtime_events"
+- $relative:37 "runtime_events"
+- $relative:19 "runtime_processes"
+- $relative:19 "runtime_projections"
+- $relative:3 } from "@/runtime/tenant";
+- $relative:18 export class ERPRuntimeRepository<T = unknown> {
+- $relative:2 ERPRuntimePersistenceService,
+- $relative:3 } from "../stores/ERPRuntimePersistenceService";
+- $relative:15 ERPRuntimePersistenceService.events.list(),
+- $relative:16 ERPRuntimePersistenceService.traces.list(),
+- $relative:17 ERPRuntimePersistenceService.alerts.list(),
+- $relative:18 ERPRuntimePersistenceService.workflows.list(),
+- $relative:19 ERPRuntimePersistenceService.queueJobs.list(),
+- $relative:20 ERPRuntimePersistenceService.audit.list(),
+- $relative:21 ERPRuntimePersistenceService.securityAudit.list(),
+- $relative:2 events: "runtime_events",
+- $relative:3 traces: "runtime_traces",
+- $relative:4 alerts: "runtime_alerts",
+- $relative:5 workflows: "runtime_workflows",
+- $relative:6 queueJobs: "runtime_queue_jobs",
+- $relative:7 audit: "runtime_audit",
+- $relative:8 securityAudit: "runtime_security_audit",
+- $relative:2 ERPRuntimeRepository,
+- $relative:3 } from "../repositories/ERPRuntimeRepository";
+- $relative:9 export const ERPRuntimePersistenceService = {
+- $relative:11 new ERPRuntimeRepository(
+- $relative:16 new ERPRuntimeRepository(
+- $relative:21 new ERPRuntimeRepository(
+- $relative:26 new ERPRuntimeRepository(
+- $relative:31 new ERPRuntimeRepository(
+- $relative:36 new ERPRuntimeRepository(
+- $relative:41 new ERPRuntimeRepository(
+- $relative:19 "runtime_workflows"
+- $relative:2 ERPRuntimePersistenceService,
+- $relative:3 } from "./stores/ERPRuntimePersistenceService";
+- $relative:7 export async function seedERPPersistenceRuntime() {
+- $relative:14 await ERPRuntimePersistenceService.events.save({
+- $relative:17 actor: "runtime",
+- $relative:20 await ERPRuntimePersistenceService.traces.save({
+- $relative:26 await ERPRuntimePersistenceService.alerts.save({
+- $relative:32 await ERPRuntimePersistenceService.workflows.save({
+- $relative:37 await ERPRuntimePersistenceService.queueJobs.save({
+- $relative:43 await ERPRuntimePersistenceService.audit.save({
+- $relative:49 await ERPRuntimePersistenceService.securityAudit.save({
+- $relative:2 RuntimeEventRepository
+- $relative:4 from "./events/RuntimeEventRepository";
+- $relative:10 new RuntimeEventRepository();
+- $relative:3 export * from "./repositories/ERPRuntimeRepository";
+- $relative:5 export * from "./stores/ERPRuntimePersistenceService";
+- $relative:5 export class ERPRuntimeAuthorizationBridge {
+- $relative:23 export const erpRuntimeAuthorizationBridge =
+- $relative:24 new ERPRuntimeAuthorizationBridge();
+- $relative:2 export * from "./ERPRuntimeAuthorizationBridge";
+- $relative:5 key: "firestore-runtime-backup",
+- $relative:6 label: "Firestore Runtime Backup",
+- $relative:7 target: "runtime collections",
+- $relative:14 description: "Firestore est present mais la persistance runtime doit etre branchee.",
+- $relative:5 key: "runtime-registry",
+- $relative:6 label: "Runtime Registry",
+- $relative:33 key: "backup-runtime",
+- $relative:34 label: "Backup Runtime",
+- $relative:44 description: "Les limites runtime doivent etre appliquees par tenant.",
+- $relative:58 description: "La plateforme de validation runtime est disponible.",
+- $relative:99 "Runtime monitoring active",
+- $relative:18 key: "runtime-registry",
+- $relative:20 label: "Runtime Registry",
+- $relative:8 export class RuntimeCache {
+- $relative:34 const existing = RuntimeCache.get<T>(key);
+- $relative:40 return RuntimeCache.set(key, factory(), ttlMs);
+- $relative:5 export type RuntimeErrorReport = {
+- $relative:13 class RuntimeErrorReporterClass {
+- $relative:14 private reports: RuntimeErrorReport[] = [];
+- $relative:30 const report: RuntimeErrorReport = {
+- $relative:34 source: info?.source ?? "runtime",
+- $relative:51 source = "runtime"
+- $relative:61 export const RuntimeErrorReporter =
+- $relative:62 new RuntimeErrorReporterClass();
+- $relative:3 export class RuntimeHealthMonitor {
+- $relative:3 export class RuntimeRateLimiter {
+- $relative:2 RuntimeValidator
+- $relative:4 from "../validation/RuntimeValidator";
+- $relative:17 RuntimeIntegrityCheck
+- $relative:19 from "../integrity/RuntimeIntegrityCheck";
+- $relative:29 private runtime =
+- $relative:30 new RuntimeValidator();
+- $relative:39 new RuntimeIntegrityCheck();
+- $relative:46 this.runtime.validate();
+- $relative:2 RuntimeIntegrityCheck {
+- $relative:7 "[Quality] runtime integrity verified"
+- $relative:2 RuntimeValidator {
+- $relative:7 "[Quality] runtime validated"
+- $relative:1 export { RuntimeQueryEngine } from "./RuntimeQueryEngine";
+- $relative:1 import type { ERPModule } from "@/runtime/modules";
+- $relative:2 import { RuntimeRepository } from "@/runtime/repositories/RuntimeRepository";
+- $relative:4 export class RuntimeQueryEngine {
+- $relative:6 return RuntimeRepository.findMany(module);
+- $relative:10 return RuntimeRepository.findById(module, id);
+- $relative:2 RuntimeChannelManager {
+- $relative:2 RuntimeWebSocketServer
+- $relative:4 from "../websocket/RuntimeWebSocketServer";
+- $relative:12 RuntimeRealtimeGateway {
+- $relative:15 new RuntimeWebSocketServer();
+- $relative:2 RuntimeWebSocketServer {
+- $relative:15 export function seedERPRealtimeRuntime() {
+- $relative:46 title: "Event runtime recu",
+- $relative:90 title: "Runtime realtime actif",
+- $relative:2 RuntimeRealtimeGateway
+- $relative:4 from "./gateway/RuntimeRealtimeGateway";
+- $relative:7 new RuntimeRealtimeGateway();
+- $relative:2 CoreModuleRuntimeAdapter,
+- $relative:3 } from "@/runtime/modules/adapters/CoreModuleRuntimeAdapter";
+- $relative:7 } from "@/runtime/ui-generation";
+- $relative:14 CoreModuleRuntimeAdapter
+- $relative:18 CoreModuleRuntimeAdapter
+- $relative:19 .toRuntimeModules()
+- $relative:96 label: "Notifications runtime",
+- $relative:3 } from "@/runtime/ui-generation";
+- $relative:1 export interface RuntimeRelation {
+- $relative:2 RuntimeRelation,
+- $relative:4 from "@/runtime/relations/RuntimeRelation";
+- $relative:6 export const runtimeRelations:
+- $relative:7 RuntimeRelation[] = [
+- $relative:2 runtimeRelations,
+- $relative:4 from "@/runtime/relations/runtimeRelations";
+- $relative:6 export class RuntimeRelationsEngine {
+- $relative:12 return runtimeRelations.filter(
+- $relative:28 return runtimeRelations.filter(
+- $relative:41 return runtimeRelations.filter(
+- $relative:1 export { RuntimeRepository } from "./RuntimeRepository";
+- $relative:1 import type { ERPModule } from "@/runtime/modules";
+- $relative:2 import type { RuntimeRecord } from "@/runtime/data-binding/RuntimeRecord";
+- $relative:4 const memoryStore = new Map<string, RuntimeRecord[]>();
+- $relative:6 function getStore(module: ERPModule): RuntimeRecord[] {
+- $relative:16 export class RuntimeRepository {
+- $relative:17 static async findMany(module: ERPModule): Promise<RuntimeRecord[]> {
+- $relative:24 return RuntimeRepository.seed(module);
+- $relative:30 ): Promise<RuntimeRecord | null> {
+- $relative:31 const rows = await RuntimeRepository.findMany(module);
+- $relative:39 ): Promise<RuntimeRecord> {
+- $relative:42 const record: RuntimeRecord = {
+- $relative:56 ): Promise<RuntimeRecord> {
+- $relative:79 static async seed(module: ERPModule): Promise<RuntimeRecord[]> {
+- $relative:81 const row: RuntimeRecord = {
+- $relative:27 "runtime_dead_letters"
+- $relative:3 } from "@/runtime/events/bus/ERPEventBus";
+- $relative:8 } from "@/runtime/observability";
+- $relative:59 actor: "queue-runtime",
+- $relative:73 module: "runtime",
+- $relative:75 description: "Le worker runtime est temporairement bloque.",
+- $relative:100 throw new Error("Forced runtime failure");
+- $relative:5 export function seedERPRuntimeResilience() {
+- $relative:7 export * from "./ERPRuntimeResilienceSeed";
+- $relative:5 export class ERPRuntimeValidationBridge {
+- $relative:20 export const erpRuntimeValidationBridge =
+- $relative:21 new ERPRuntimeValidationBridge();
+- $relative:2 RuntimeAutomationEngine,
+- $relative:4 from "@/runtime/automation/RuntimeAutomationEngine";
+- $relative:6 export class RuntimeScheduler {
+- $relative:23 "ERP Runtime Scheduler started"
+- $relative:37 await RuntimeAutomationEngine
+- $relative:9 RuntimeScheduler,
+- $relative:11 from "@/runtime/scheduler/RuntimeScheduler";
+- $relative:13 export function RuntimeSchedulerBootstrap() {
+- $relative:17 RuntimeScheduler.start();
+- $relative:2 CoreModuleRuntimeAdapter,
+- $relative:3 } from "@/runtime/modules/adapters/CoreModuleRuntimeAdapter";
+- $relative:31 return CoreModuleRuntimeAdapter
+- $relative:1 import { ERPRegistry } from "@/runtime/registry";
+- $relative:1 import { ERPRegistry } from "@/runtime/registry";
+- $relative:5 export function seedERPSecurityRuntime() {
+- $relative:27 RuntimeSecurityManager {
+- $relative:1 export type { RuntimeRole, RuntimeUser } from "./RuntimeRole";
+- $relative:2 export type { RuntimePermission } from "./RuntimePermission";
+- $relative:4 export { RuntimeSecurityContext } from "./RuntimeSecurityContext";
+- $relative:5 export { runtimeRolePermissions } from "./RuntimePolicyRegistry";
+- $relative:6 export { RuntimePolicyEngine } from "./RuntimePolicyEngine";
+- $relative:7 export { RuntimeActionPermissionMapper } from "./RuntimeActionPermissionMapper";
+- $relative:8 export { RuntimeActionGuard } from "./RuntimeActionGuard";
+- $relative:9 export { RuntimeWorkflowGuard } from "./RuntimeWorkflowGuard";
+- $relative:1 import type { ERPAction } from "@/runtime/actions";
+- $relative:2 import { RuntimeSecurityContext } from "./RuntimeSecurityContext";
+- $relative:3 import { RuntimePolicyEngine } from "./RuntimePolicyEngine";
+- $relative:4 import { RuntimeActionPermissionMapper } from "./RuntimeActionPermissionMapper";
+- $relative:6 export class RuntimeActionGuard {
+- $relative:8 const user = RuntimeSecurityContext.currentUser();
+- $relative:9 const permission = RuntimeActionPermissionMapper.permissionFor(action);
+- $relative:15 return RuntimePolicyEngine.can(user, permission);
+- $relative:20 RuntimeActionGuard.canExecute(action)
+- $relative:1 import type { ERPAction } from "@/runtime/actions";
+- $relative:2 import type { RuntimePermission } from "./RuntimePermission";
+- $relative:4 export class RuntimeActionPermissionMapper {
+- $relative:5 static permissionFor(action: ERPAction): RuntimePermission | undefined {
+- $relative:1 export type RuntimePermission =
+- $relative:1 import type { RuntimePermission } from "./RuntimePermission";
+- $relative:2 import type { RuntimeUser } from "./RuntimeRole";
+- $relative:3 import { runtimeRolePermissions } from "./RuntimePolicyRegistry";
+- $relative:5 export class RuntimePolicyEngine {
+- $relative:7 user: RuntimeUser,
+- $relative:8 permission: RuntimePermission
+- $relative:10 return runtimeRolePermissions[user.role].includes(permission);
+- $relative:13 static filterByPermission<T extends { permission?: RuntimePermission }>(
+- $relative:14 user: RuntimeUser,
+- $relative:22 return RuntimePolicyEngine.can(user, item.permission);
+- $relative:1 import type { RuntimeRole } from "./RuntimeRole";
+- $relative:2 import type { RuntimePermission } from "./RuntimePermission";
+- $relative:4 export const runtimeRolePermissions: Record<RuntimeRole, RuntimePermission[]> = {
+- $relative:1 export type RuntimeRole =
+- $relative:7 export interface RuntimeUser {
+- $relative:10 role: RuntimeRole;
+- $relative:1 import type { RuntimeUser } from "./RuntimeRole";
+- $relative:3 export class RuntimeSecurityContext {
+- $relative:4 static currentUser(): RuntimeUser {
+- $relative:1 import { RuntimeSecurityContext } from "./RuntimeSecurityContext";
+- $relative:2 import { RuntimePolicyEngine } from "./RuntimePolicyEngine";
+- $relative:4 export class RuntimeWorkflowGuard {
+- $relative:6 const user = RuntimeSecurityContext.currentUser();
+- $relative:8 return RuntimePolicyEngine.can(user, "workflow.start");
+- $relative:12 const user = RuntimeSecurityContext.currentUser();
+- $relative:14 return RuntimePolicyEngine.can(user, "workflow.transition");
+- $relative:18 const user = RuntimeSecurityContext.currentUser();
+- $relative:20 return RuntimePolicyEngine.can(user, "workflow.validate");
+- $relative:5 from "@/runtime/selects/DynamicSelect.types";
+- $relative:12 from "@/runtime/selects/DynamicSelectEngine";
+- $relative:1 export class ERPRuntimeCollection<T> {
+- $relative:5 } from "./ERPRuntimeTypes";
+- $relative:7 export interface ERPRuntimeEntity {
+- $relative:1 export class ERPRuntimeStore<T> {
+- $relative:18 export interface ERPBaseRuntimeRecord {
+- $relative:1 import type { ERPModule } from "@/runtime/modules";
+- $relative:1 import type { ERPModule } from "@/runtime/modules";
+- $relative:1 import type { ERPModule } from "@/runtime/modules";
+- $relative:1 import type { ERPModule } from "@/runtime/modules";
+- $relative:1 import type { ERPModule } from "@/runtime/modules";
+- $relative:29 "Score calcule a partir des signaux runtime, workflows, events et donnees metier.",
+- $relative:1 import type { ERPModule } from "@/runtime/modules";
+- $relative:1 import type { ERPModule } from "@/runtime/modules";
+- $relative:1 import type { ERPModule } from "@/runtime/modules";
+- $relative:4 export class ERPSmartRuntimeEngine {
+- $relative:6 export { ERPSmartRuntimeEngine } from "./ERPSmartRuntimeEngine";
+- $relative:4 RuntimeStateEngine,
+- $relative:6 from "@/runtime/state/RuntimeStateEngine";
+- $relative:24 RuntimeStateEngine
+- $relative:1 export interface RuntimeState {
+- $relative:2 runtimeStates,
+- $relative:4 from "@/runtime/state/runtimeStates";
+- $relative:6 export class RuntimeStateEngine {
+- $relative:12 return runtimeStates.filter(
+- $relative:29 return runtimeStates.find(
+- $relative:2 RuntimeState,
+- $relative:4 from "@/runtime/state/RuntimeState";
+- $relative:6 export const runtimeStates:
+- $relative:7 RuntimeState[] = [
+- $relative:9 id: "stream_runtime",
+- $relative:10 key: "runtime",
+- $relative:11 label: "Runtime Stream",
+- $relative:7 export function seedERPStreamsRuntime() {
+- $relative:16 module: "runtime",
+- $relative:18 message: "Runtime ERP initialise",
+- $relative:7 export function seedERPTenantRuntime() {
+- $relative:32 module: "runtime",
+- $relative:59 id: "automation_runtime",
+- $relative:60 label: "Automation Runtime",
+- $relative:3 } from "@/runtime/workers";
+- $relative:7 } from "@/runtime/security";
+- $relative:11 } from "@/runtime/automation";
+- $relative:13 export const ERPRuntimeSimulation = {
+- $relative:23 "worker_runtime_1",
+- $relative:4 export * from "./simulation/ERPRuntimeSimulation";
+- $relative:1 import type { ERPModule } from "@/runtime/modules";
+- $relative:2 import { ERPActionRegistry } from "@/runtime/actions";
+- $relative:11 CoreModuleRuntimeAdapter
+- $relative:2 CoreModuleRuntimeAdapter,
+- $relative:3 } from "@/runtime/modules/adapters/CoreModuleRuntimeAdapter";
+- $relative:13 CoreModuleRuntimeAdapter
+- $relative:23 description: "Module ERP runtime.",
+- $relative:2 RuntimeFieldValidation,
+- $relative:3 RuntimeValidationError,
+- $relative:4 } from "./RuntimeValidationTypes";
+- $relative:6 export class RuntimeFieldValidator {
+- $relative:10 validation?: RuntimeFieldValidation
+- $relative:11 ): RuntimeValidationError[] {
+- $relative:16 const errors: RuntimeValidationError[] = [];
+- $relative:4 } from "@/runtime/modules";
+- $relative:7 RuntimeFieldValidator,
+- $relative:8 } from "./RuntimeFieldValidator";
+- $relative:11 RuntimeValidationError,
+- $relative:12 } from "./RuntimeValidationTypes";
+- $relative:14 export class RuntimeValidationEngine {
+- $relative:18 ): RuntimeValidationError[] {
+- $relative:20 const errors: RuntimeValidationError[] = [];
+- $relative:26 RuntimeFieldValidator.validate(
+- $relative:1 export interface RuntimeFieldValidation {
+- $relative:17 export interface RuntimeValidationError {
+- $relative:1 export class RuntimeVisibilityEngine {
+- $relative:7 id: "worker_runtime_1",
+- $relative:8 label: "Runtime Worker 1",
+- $relative:9 queue: "runtime",
+- $relative:7 export function seedERPWorkersRuntime() {
+- $relative:16 "worker_runtime_1",
+- $relative:28 "worker_runtime_1",
+- $relative:14 from "@/runtime/workflow-persistence/WorkflowHistoryEntry";
+- $relative:4 from "@/runtime/workflow-persistence/WorkflowPersistenceEngine";
+- $relative:6 export class WorkflowRuntimeService {
+- $relative:2 WorkflowRuntimeDefinition,
+- $relative:3 WorkflowRuntimeHistoryEntry,
+- $relative:4 WorkflowRuntimeInstance,
+- $relative:5 WorkflowRuntimeStatus,
+- $relative:6 WorkflowRuntimeStep,
+- $relative:7 WorkflowRuntimeTransition,
+- $relative:8 } from "./WorkflowRuntimeTypes";
+- $relative:10 export { workflowRuntimeDefinitions } from "./WorkflowRuntimeDefinitions";
+- $relative:11 export { WorkflowRuntimeRegistry } from "./WorkflowRuntimeRegistry";
+- $relative:12 export { WorkflowRuntimeStore } from "./WorkflowRuntimeStore";
+- $relative:13 export { WorkflowRuntimeValidator } from "./WorkflowRuntimeValidator";
+- $relative:14 export { WorkflowRuntimeAudit } from "./WorkflowRuntimeAudit";
+- $relative:15 export { WorkflowRuntimeEngine } from "./WorkflowRuntimeEngine";
+- $relative:1 import type { WorkflowRuntimeInstance } from "./WorkflowRuntimeTypes";
+- $relative:3 export class WorkflowRuntimeAudit {
+- $relative:4 static log(instance: WorkflowRuntimeInstance, label: string) {
+- $relative:1 import type { WorkflowRuntimeDefinition } from "./WorkflowRuntimeTypes";
+- $relative:3 export const workflowRuntimeDefinitions: WorkflowRuntimeDefinition[] = [
+- $relative:1 import { WorkflowRuntimeRegistry } from "./WorkflowRuntimeRegistry";
+- $relative:2 import { WorkflowRuntimeStore } from "./WorkflowRuntimeStore";
+- $relative:3 import { WorkflowRuntimeValidator } from "./WorkflowRuntimeValidator";
+- $relative:4 import { WorkflowRuntimeAudit } from "./WorkflowRuntimeAudit";
+- $relative:6 export class WorkflowRuntimeEngine {
+- $relative:8 const definition = WorkflowRuntimeRegistry.get(workflowKey);
+- $relative:14 const instance = WorkflowRuntimeStore.create(definition, recordId);
+- $relative:16 WorkflowRuntimeAudit.log(instance, "Workflow demarre");
+- $relative:26 const definition = WorkflowRuntimeRegistry.get(workflowKey);
+- $relative:32 const instance = WorkflowRuntimeStore.create(definition, recordId);
+- $relative:35 WorkflowRuntimeValidator.findTransition(
+- $relative:66 WorkflowRuntimeStore.save(instance);
+- $relative:67 WorkflowRuntimeAudit.log(instance, transition.label);
+- $relative:1 import type { WorkflowRuntimeDefinition } from "./WorkflowRuntimeTypes";
+- $relative:2 import { workflowRuntimeDefinitions } from "./WorkflowRuntimeDefinitions";
+- $relative:4 export class WorkflowRuntimeRegistry {
+- $relative:5 static all(): WorkflowRuntimeDefinition[] {
+- $relative:6 return workflowRuntimeDefinitions;
+- $relative:9 static forModule(moduleKey: string): WorkflowRuntimeDefinition[] {
+- $relative:10 return workflowRuntimeDefinitions.filter(
+- $relative:15 static get(workflowKey: string): WorkflowRuntimeDefinition | undefined {
+- $relative:16 return workflowRuntimeDefinitions.find(
+- $relative:2 WorkflowRuntimeDefinition,
+- $relative:3 WorkflowRuntimeInstance,
+- $relative:4 } from "./WorkflowRuntimeTypes";
+- $relative:6 const instances = new Map<string, WorkflowRuntimeInstance>();
+- $relative:8 export class WorkflowRuntimeStore {
+- $relative:10 definition: WorkflowRuntimeDefinition,
+- $relative:12 ): WorkflowRuntimeInstance {
+- $relative:21 const instance: WorkflowRuntimeInstance = {
+- $relative:43 static get(id: string): WorkflowRuntimeInstance | undefined {
+- $relative:47 static save(instance: WorkflowRuntimeInstance) {
+- $relative:1 export type WorkflowRuntimeStatus =
+- $relative:9 export interface WorkflowRuntimeStep {
+- $relative:13 status?: WorkflowRuntimeStatus;
+- $relative:16 export interface WorkflowRuntimeTransition {
+- $relative:23 export interface WorkflowRuntimeDefinition {
+- $relative:28 steps: WorkflowRuntimeStep[];
+- $relative:29 transitions: WorkflowRuntimeTransition[];
+- $relative:32 export interface WorkflowRuntimeInstance {
+- $relative:38 status: WorkflowRuntimeStatus;
+- $relative:39 history: WorkflowRuntimeHistoryEntry[];
+- $relative:42 export interface WorkflowRuntimeHistoryEntry {
+- $relative:2 WorkflowRuntimeDefinition,
+- $relative:3 WorkflowRuntimeInstance,
+- $relative:4 WorkflowRuntimeTransition,
+- $relative:5 } from "./WorkflowRuntimeTypes";
+- $relative:7 export class WorkflowRuntimeValidator {
+- $relative:9 definition: WorkflowRuntimeDefinition,
+- $relative:10 instance: WorkflowRuntimeInstance,
+- $relative:12 ): WorkflowRuntimeTransition | undefined {
+- $relative:21 definition: WorkflowRuntimeDefinition,
+- $relative:22 instance: WorkflowRuntimeInstance,
+- $relative:26 WorkflowRuntimeValidator.findTransition(
+- $relative:4 WorkflowRuntimeEngine,
+- $relative:6 from "@/runtime/workflow-ui/WorkflowRuntimeEngine";
+- $relative:35 WorkflowRuntimeEngine
+- $relative:5 from "@/runtime/workflow-ui/Workflow.types";
+- $relative:4 from "@/runtime/workflow-ui/maintenance.workflow";
+- $relative:7 RuntimePermissionsEngine,
+- $relative:9 from "@/runtime/permissions/RuntimePermissionsEngine";
+- $relative:12 RuntimeStateEngine,
+- $relative:14 from "@/runtime/state/RuntimeStateEngine";
+- $relative:22 export class WorkflowRuntimeEngine {
+- $relative:57 RuntimeStateEngine
+- $relative:64 RuntimePermissionsEngine.can(
+- $relative:24 from "@/runtime/resilience/retry/RetryEngine";
+- $relative:29 from "@/runtime/resilience/dlq/DeadLetterQueue";
+- $relative:177 "workflow-runtime",
+- $relative:3 } from "@/runtime/events/bus/ERPEventBus";
+- $relative:7 } from "@/runtime/observability";
+- $relative:7 export function seedERPRuntimeWorkflows() {
+- $relative:6 export * from "./ERPRuntimeWorkflowSeed";
+- $relative:30 "runtime_workflow_executions"
+- $relative:56 "runtime_workflow_executions",
+- $relative:8 export class ERPWorkflowRuntimeEngine {
+- $relative:53 export const erpWorkflowRuntimeEngine =
+- $relative:54 new ERPWorkflowRuntimeEngine();
+- $relative:3 export type LegacyRuntimeStatus =
+- $relative:9 export const RuntimeHealthMonitor = {
+- $relative:13 key: "runtime",
+- $relative:14 scope: "runtime",
+- $relative:15 label: "Runtime ERP",
+- $relative:17 message: "Runtime operationnel",
+- $relative:18 description: "Runtime ERP operationnel.",
+- $relative:34 description: "Security runtime actif.",
+- $relative:48 key: "runtime-registry",
+- $relative:50 label: "Runtime Registry",
+- $relative:88 key: "runtime-backup",
+- $relative:89 label: "Runtime Backup",
+- $relative:90 target: "runtime collections",
+- $relative:197 message: "Runtime monitoring active",
+- $relative:234 export const RuntimeErrorReporter = {
+- $relative:235 capture(error: unknown, source = "runtime") {
+- $relative:156 Runtime Driven ERP
+- $relative:4 from "@/runtime/forms/DynamicField";
+- $relative:9 from "@/runtime/forms/DynamicFormDefinition";
+- $relative:5 from "@/runtime/forms/DynamicField";
+- $relative:10 from "@/runtime/forms/DynamicFormDefinition";
+- $relative:5 from "@/runtime/forms/DynamicField";
+- $relative:10 from "@/runtime/forms/DynamicFormDefinition";
+- $relative:5 from "@/runtime/forms/DynamicField";
+- $relative:10 from "@/runtime/forms/DynamicFormDefinition";
+- $relative:5 from "@/runtime/forms/DynamicField";
+- $relative:10 from "@/runtime/forms/DynamicFormDefinition";
+- $relative:4 from "@/runtime/forms/DynamicField";
+- $relative:9 from "@/runtime/forms/DynamicFormDefinition";
+- $relative:4 from "@/runtime/forms/DynamicField";
+- $relative:9 from "@/runtime/forms/DynamicFormDefinition";
+- $relative:4 from "@/runtime/forms/DynamicField";
+- $relative:9 from "@/runtime/forms/DynamicFormDefinition";
+- $relative:5 from "@/runtime/forms/DynamicField";
+- $relative:10 from "@/runtime/forms/DynamicFormDefinition";
+- $relative:1 export const GeneratedRuntimeBindings = {
+- $relative:2 RuntimeModuleContract,
+- $relative:3 } from "../core/RuntimeContracts";
+- $relative:5 export const GeneratedRuntimeModules:
+- $relative:6 RuntimeModuleContract[] = [
+- $relative:1 export const GeneratedRuntimeWorkflows = {
+

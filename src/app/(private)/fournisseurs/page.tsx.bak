@@ -1,0 +1,14 @@
+import {
+  GenericListPage
+}
+from "@/components/erp/generic/GenericListPage";
+
+export default function FournisseursPage() {
+
+  return (
+
+    <GenericListPage
+      module="fournisseurs"
+    />
+  );
+}

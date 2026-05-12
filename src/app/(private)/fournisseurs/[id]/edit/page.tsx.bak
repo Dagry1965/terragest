@@ -1,0 +1,26 @@
+import {
+  GenericEditPage
+}
+from "@/components/erp/generic/GenericEditPage";
+
+type Props = {
+  params: Promise<{
+    id: string;
+  }>;
+};
+
+export default async function EditFournisseursPage({
+  params,
+}: Props) {
+
+  const { id } =
+    await params;
+
+  return (
+
+    <GenericEditPage
+      module="fournisseurs"
+      id={id}
+    />
+  );
+}

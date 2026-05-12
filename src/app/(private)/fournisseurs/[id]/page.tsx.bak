@@ -1,0 +1,26 @@
+import {
+  GenericDetailPage
+}
+from "@/components/erp/generic/GenericDetailPage";
+
+type Props = {
+  params: Promise<{
+    id: string;
+  }>;
+};
+
+export default async function FournisseursDetailPage({
+  params,
+}: Props) {
+
+  const { id } =
+    await params;
+
+  return (
+
+    <GenericDetailPage
+      module="fournisseurs"
+      id={id}
+    />
+  );
+}
