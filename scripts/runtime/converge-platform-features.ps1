@@ -1,3 +1,21 @@
+$ErrorActionPreference = "Stop"
+
+$root = "C:\Users\Admin\terragest"
+
+$file =
+  Join-Path $root `
+  "src\platform\bootstrap\loadFeatures.ts"
+
+if (!(Test-Path $file)) {
+  throw "Fichier introuvable: $file"
+}
+
+Copy-Item `
+  $file `
+  "$file.bak" `
+  -Force
+
+$content = @'
 import {
   FeatureRegistry
 }
@@ -109,16 +127,11 @@ function toRuntimeFeature(
     capabilities:
       toFeatureCapabilities(module),
 
- dependencies:
-  module.relations
-    ?.map(
-      (relation) =>
-        relation.targetModule
-    )
-    .filter(
-      (targetModule): targetModule is string =>
-        Boolean(targetModule)
-    ) ?? [],
+    dependencies:
+      module.relations?.map(
+        (relation) =>
+          relation.targetModule
+      ) ?? [],
   };
 }
 
@@ -155,3 +168,15 @@ loadFeatures() {
     features.length
   );
 }
+'@
+
+[System.IO.File]::WriteAllText(
+  $file,
+  $content,
+  [System.Text.UTF8Encoding]::new($false)
+)
+
+Write-Host "OK - loadFeatures converge vers coreERPModules avec fallback static"
+Write-Host "Backup créé: $file.bak"
+Write-Host ""
+Write-Host "Lance maintenant: pnpm build"

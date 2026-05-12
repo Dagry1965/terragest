@@ -1,3 +1,16 @@
+$ErrorActionPreference = "Stop"
+
+$root = "C:\Users\Admin\terragest"
+
+$file = Join-Path $root "src\runtime\schemas\ERPBusinessSchemaRegistry.ts"
+
+if (!(Test-Path $file)) {
+  throw "Fichier introuvable: $file"
+}
+
+Copy-Item $file "$file.bak" -Force
+
+$content = @'
 import {
   CoreModuleRuntimeAdapter,
 } from "@/runtime/modules/adapters/CoreModuleRuntimeAdapter";
@@ -85,3 +98,15 @@ export class ERPBusinessSchemaRegistry {
 
 export const erpBusinessSchemaRegistry =
   new ERPBusinessSchemaRegistry();
+'@
+
+[System.IO.File]::WriteAllText(
+  $file,
+  $content,
+  [System.Text.UTF8Encoding]::new($false)
+)
+
+Write-Host "OK - ERPBusinessSchemaRegistry converge vers coreERPModules"
+Write-Host "Backup créé: $file.bak"
+Write-Host ""
+Write-Host "Lance maintenant: pnpm build"

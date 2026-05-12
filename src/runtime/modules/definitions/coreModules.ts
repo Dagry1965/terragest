@@ -318,7 +318,6 @@ export const coreERPModules: ERPModule[] = [
         ] },
 
         { key: "surfaceTotale", label: "Surface totale", type: "number", required: true, sortable: true },
-        { key: "surfaceDisponible", label: "Surface disponible", type: "number", sortable: true },
 
         //  VisibilitÃ© conditionnelle ajoutÃ©e sur les champs demandÃ©s
         { 

@@ -1,6 +1,6 @@
 import {
-  CoreModuleRuntimeAdapter,
-} from "@/runtime/modules/adapters/CoreModuleRuntimeAdapter";
+  GeneratedRuntimeBindings,
+} from "../generated/GeneratedRuntimeBindings";
 
 export class RuntimeStateRegistry {
 
@@ -15,7 +15,7 @@ export class RuntimeStateRegistry {
     for (
       const [moduleId, binding]
       of Object.entries(
-        CoreModuleRuntimeAdapter.toRuntimeBindings()
+        GeneratedRuntimeBindings
       )
     ) {
 

@@ -30,6 +30,10 @@ import type {
   RuntimeValidationError,
 } from "@/runtime/validation/RuntimeValidationTypes";
 
+import {
+  erpRuntimeValidationBridge,
+} from "@/runtime/rules/ERPRuntimeValidationBridge";
+
 interface ERPEnterpriseFormProps {
   module: ERPModule;
   mode?: "create" | "edit";
@@ -159,9 +163,38 @@ export function ERPEnterpriseForm({
         validationErrors
       );
 
+
+
       setSaving(false);
       return;
     }
+
+const businessRulesValid =
+  erpRuntimeValidationBridge.validate(
+    module.metadata.key,
+    payload
+  );
+
+if (!businessRulesValid) {
+  console.error(
+    "ERP BUSINESS RULE VALIDATION FAILED",
+    {
+      module: module.metadata.key,
+      payload,
+    }
+  );
+
+  setErrors([
+    {
+      field: "businessRules",
+      message:
+        "Les règles métier ERP bloquent cet enregistrement.",
+    },
+  ]);
+
+  setSaving(false);
+  return;
+}
 
     try {
       if (mode === "create") {

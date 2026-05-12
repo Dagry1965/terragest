@@ -1,3 +1,21 @@
+$ErrorActionPreference = "Stop"
+
+$root = "C:\Users\Admin\terragest"
+
+$file =
+  Join-Path $root `
+  "src\core\modules\module-registry.ts"
+
+if (!(Test-Path $file)) {
+  throw "Fichier introuvable: $file"
+}
+
+Copy-Item `
+  $file `
+  "$file.bak" `
+  -Force
+
+$content = @'
 import {
   coreERPModules,
 } from "@/runtime/modules";
@@ -49,19 +67,19 @@ function normalizeGroup(
       return value;
 
     case "Referentiel":
-    case "RÃ©fÃ©rentiel":
+    case "Référentiel":
       return "Referentiel";
 
     case "Operations":
-    case "OpÃ©rations":
+    case "Opérations":
       return "Operations";
 
     case "Metier":
-    case "MÃ©tier":
+    case "Métier":
       return "Metier";
 
     case "Systeme":
-    case "SystÃ¨me":
+    case "Système":
       return "Systeme";
 
     default:
@@ -171,3 +189,15 @@ export function getModuleByKey(
     (module) => module.key === key
   );
 }
+'@
+
+[System.IO.File]::WriteAllText(
+  $file,
+  $content,
+  [System.Text.UTF8Encoding]::new($false)
+)
+
+Write-Host "OK - core/modules/module-registry.ts converge vers coreERPModules"
+Write-Host "Backup créé: $file.bak"
+Write-Host ""
+Write-Host "Lance maintenant: pnpm build"

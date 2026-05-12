@@ -1,116 +1,60 @@
 import {
+  DynamicField,
   DynamicFormContext,
-}
-from "@/runtime/forms/DynamicField";
+} from "@/runtime/forms/DynamicField";
 
 import {
-  maintenanceForm,
+  coreERPModules,
+  ERPModuleBuilder,
+} from "@/runtime/modules";
+
+function toDynamicField(
+  field: any
+): DynamicField {
+  return {
+    name: field.key,
+    label: field.label,
+
+    type:
+      field.type === "status" ||
+      field.type === "relation"
+        ? "select"
+        : field.type,
+
+    required: field.required,
+    options: field.options,
+  };
 }
-from "@/runtime/forms/definitions/maintenance.form";
-
-import {
-  materielsForm,
-}
-from "@/runtime/forms/definitions/materiels.form";
-
-import {
-  terrainsForm,
-}
-from "@/runtime/forms/definitions/terrains.form";
-
-import {
-  exploitationsForm,
-}
-from "@/runtime/forms/definitions/exploitations.form";
-
-import {
-  stocksForm,
-}
-from "@/runtime/forms/definitions/stocks.form";
-
-import {
-  produitsForm,
-}
-from "@/runtime/forms/definitions/produits.form";
-
-import {
-  interventionsForm,
-}
-from "@/runtime/forms/definitions/interventions.form";
-
-import {
-  contratsForm,
-}
-from "@/runtime/forms/definitions/contrats.form";
-
-import {
-  paiementsForm,
-}
-from "@/runtime/forms/definitions/paiements.form";
-
-const registry = {
-
-  maintenance:
-    maintenanceForm,
-
-  materiels:
-    materielsForm,
-
-  terrains:
-    terrainsForm,
-
-  exploitations:
-    exploitationsForm,
-
-  stocks:
-    stocksForm,
-
-  produits:
-    produitsForm,
-
-  interventions:
-    interventionsForm,
-
-  contrats:
-    contratsForm,
-
-  paiements:
-    paiementsForm,
-};
 
 export class DynamicFormRegistry {
-
   static getForm(
     module: string,
-
-    context:
-      DynamicFormContext
+    _context: DynamicFormContext
   ) {
+    const coreModule =
+      coreERPModules.find(
+        (item) =>
+          item.metadata.key === module
+      );
 
-    const definition =
-      registry[
-        module as keyof typeof registry
-      ];
-
-    if (!definition) {
-
+    if (!coreModule) {
       console.warn(
-        "No dynamic form definition for module:",
+        "No core module definition for module:",
         module
       );
 
       return [];
     }
 
-    return definition.build(
-      context
-    );
+    return ERPModuleBuilder
+      .buildForm(coreModule)
+      .fields
+      .map(toDynamicField);
   }
 
   static getAvailableModules() {
-
-    return Object.keys(
-      registry
+    return coreERPModules.map(
+      (module) => module.metadata.key
     );
   }
 }

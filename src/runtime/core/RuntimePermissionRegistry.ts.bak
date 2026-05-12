@@ -1,6 +1,6 @@
 import {
-  CoreModuleRuntimeAdapter,
-} from "@/runtime/modules/adapters/CoreModuleRuntimeAdapter";
+  GeneratedRuntimeBindings,
+} from "../generated/GeneratedRuntimeBindings";
 
 export class RuntimePermissionRegistry {
 
@@ -15,7 +15,7 @@ export class RuntimePermissionRegistry {
     for (
       const [moduleId, binding]
       of Object.entries(
-        CoreModuleRuntimeAdapter.toRuntimeBindings()
+        GeneratedRuntimeBindings
       )
     ) {
 

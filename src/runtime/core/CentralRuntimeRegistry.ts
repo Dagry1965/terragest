@@ -4,10 +4,8 @@
 } from "./RuntimeContracts";
 
 import {
-  GeneratedRuntimeModules,
-} from "../generated/GeneratedRuntimeModules";
-
-import {
+  CoreModuleRuntimeAdapter,
+} from "@/runtime/modules/adapters/CoreModuleRuntimeAdapter";import {
   runtimeOrchestrator,
 } from "./RuntimeOrchestrator";
 
@@ -64,7 +62,10 @@ export class CentralRuntimeRegistry {
     new Map<RuntimeModuleId, RuntimeModuleContract>();
 
   initialize() {
-    for (const module of GeneratedRuntimeModules) {
+   for (
+  const module of
+  CoreModuleRuntimeAdapter.toRuntimeModules()
+) {
       this.registerModule(module);
     }
   }
