@@ -61,3 +61,39 @@ export const recetteFields = [
   { key: "dateRecette", label: "Date recette", type: "date", required: true, sortable: true },
   { key: "statut", label: "Statut", type: "status", filterable: true },
 ];
+
+export const livraisonFields = [
+  {
+    key: "nom",
+    label: "Nom",
+    type: "text",
+    required: true,
+  },
+];
+
+export const achatFields = [
+  {
+    key: "nom",
+    label: "Nom",
+    type: "text",
+    required: true,
+  },
+];
+
+export const employeFields = [
+  {
+    key: "nom",
+    label: "Nom",
+    type: "text",
+    required: true,
+  },
+];
+
+export const vehiculeFields = [
+  {
+    key: "nom",
+    label: "Nom",
+    type: "text",
+    required: true,
+  },
+];

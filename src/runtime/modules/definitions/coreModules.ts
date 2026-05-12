@@ -1,7 +1,7 @@
 import type { ERPModule } from "../ERPModule";
 import {
   createBusinessModule,
-  clientFields, commandeFields, recetteFields, depenseFields, devisFields, factureFields,
+  clientFields, commandeFields, vehiculeFields, employeFields, achatFields, livraisonFields, recetteFields, depenseFields, devisFields, factureFields,
 }
 from "../factory";
 
@@ -520,129 +520,12 @@ export const coreERPModules: ERPModule[] = [
     description: "Gestion des devis.",
     fields: devisFields,
   }),
-
-  {
-    metadata: {
-      key: "achats",
-      label: "Achats",
-      description: "Module ERP Achats.",
-      icon: "package",
-      category: "Metier",
-      enabled: true,
-
-      routes: {
-        list: "/achats",
-        create: "/achats/nouveau",
-        details: "/achats",
-        edit: "/achats",
-      },
-
-      features: {
-        dashboard: true,
-        analytics: true,
-        workflows: true,
-        audit: true,
-        realtime: true,
-        automation: true,
-        notifications: true,
-        observability: true,
-      },
-    },
-
-     schema: {
-  collection: "achats",
-      fields: [
-        {
-          key: "nom",
-          label: "Nom",
-          type: "text",
-          required: true,
-        },
-      ],
-    },
-  },
-
-  {
-    metadata: {
-      key: "livraisons",
-      label: "Livraisons",
-      description: "Module ERP Livraisons.",
-      icon: "package",
-      category: "Metier",
-      enabled: true,
-
-      routes: {
-        list: "/livraisons",
-        create: "/livraisons/nouveau",
-        details: "/livraisons",
-        edit: "/livraisons",
-      },
-
-      features: {
-        dashboard: true,
-        analytics: true,
-        workflows: true,
-        audit: true,
-        realtime: true,
-        automation: true,
-        notifications: true,
-        observability: true,
-      },
-    },
-
-     schema: {
-  collection: "livraisons",
-      fields: [
-        {
-          key: "nom",
-          label: "Nom",
-          type: "text",
-          required: true,
-        },
-      ],
-    },
-  },
-
-  {
-    metadata: {
-      key: "employes",
-      label: "Employes",
-      description: "Module ERP Employes.",
-      icon: "package",
-      category: "Metier",
-      enabled: true,
-
-      routes: {
-        list: "/employes",
-        create: "/employes/nouveau",
-        details: "/employes",
-        edit: "/employes",
-      },
-
-      features: {
-        dashboard: true,
-        analytics: true,
-        workflows: true,
-        audit: true,
-        realtime: true,
-        automation: true,
-        notifications: true,
-        observability: true,
-      },
-    },
-
-    schema: {
-  collection: "employes",
-      fields: [
-        {
-          key: "nom",
-          label: "Nom",
-          type: "text",
-          required: true,
-        },
-      ],
-    },
-  },
+  createBusinessModule({
+    key: "achats",
+    label: "Achats",
+    description: "Gestion des achats.",
+    fields: achatFields,
+  }),
 
   {
     metadata: {
@@ -725,47 +608,12 @@ export const coreERPModules: ERPModule[] = [
       ],
     },
   },
-
-  {
-    metadata: {
-      key: "vehicules",
-      label: "Vehicules",
-      description: "Module ERP Vehicules.",
-      icon: "package",
-      category: "Metier",
-      enabled: true,
-
-      routes: {
-        list: "/vehicules",
-        create: "/vehicules/nouveau",
-        details: "/vehicules",
-        edit: "/vehicules",
-      },
-
-      features: {
-        dashboard: true,
-        analytics: true,
-        workflows: true,
-        audit: true,
-        realtime: true,
-        automation: true,
-        notifications: true,
-        observability: true,
-      },
-    },
-
-     schema: {
-  collection: "vehicules",
-      fields: [
-        {
-          key: "nom",
-          label: "Nom",
-          type: "text",
-          required: true,
-        },
-      ],
-    },
-  },
+  createBusinessModule({
+    key: "vehicules",
+    label: "VÃ©hicules",
+    description: "Gestion des vÃ©hicules.",
+    fields: vehiculeFields,
+  }),
 
   {
     metadata: {
