@@ -319,3 +319,140 @@ export const intrantFields = [
     type: "number",
   },
 ];
+export const fournisseurFields = [
+  {
+    key: "nom",
+    label: "Nom",
+    type: "text",
+    required: true,
+  },
+  {
+    key: "description",
+    label: "Description",
+    type: "textarea",
+  },
+  {
+    key: "statut",
+    label: "Statut",
+    type: "select",
+    options: [
+      "Actif",
+      "Inactif",
+    ],
+  },
+];
+
+export const interventionFields = [
+  {
+    key: "nom",
+    label: "Nom",
+    type: "text",
+    required: true,
+  },
+  {
+    key: "description",
+    label: "Description",
+    type: "textarea",
+  },
+  {
+    key: "statut",
+    label: "Statut",
+    type: "select",
+    options: [
+      "Actif",
+      "Inactif",
+    ],
+  },
+];
+
+export const maintenanceFields = [
+  {
+    key: "nom",
+    label: "Nom",
+    type: "text",
+    required: true,
+  },
+  {
+    key: "description",
+    label: "Description",
+    type: "textarea",
+  },
+  {
+    key: "statut",
+    label: "Statut",
+    type: "select",
+    options: [
+      "Actif",
+      "Inactif",
+    ],
+  },
+];
+
+export const incidentFields = [
+  {
+    key: "nom",
+    label: "Nom",
+    type: "text",
+    required: true,
+  },
+  {
+    key: "description",
+    label: "Description",
+    type: "textarea",
+  },
+  {
+    key: "statut",
+    label: "Statut",
+    type: "select",
+    options: [
+      "Actif",
+      "Inactif",
+    ],
+  },
+];
+
+export const tacheFields = [
+  {
+    key: "nom",
+    label: "Nom",
+    type: "text",
+    required: true,
+  },
+  {
+    key: "description",
+    label: "Description",
+    type: "textarea",
+  },
+  {
+    key: "statut",
+    label: "Statut",
+    type: "select",
+    options: [
+      "Actif",
+      "Inactif",
+    ],
+  },
+];
+
+export const utilisateurFields = [
+  {
+    key: "nom",
+    label: "Nom",
+    type: "text",
+    required: true,
+  },
+  {
+    key: "description",
+    label: "Description",
+    type: "textarea",
+  },
+  {
+    key: "statut",
+    label: "Statut",
+    type: "select",
+    options: [
+      "Actif",
+      "Inactif",
+    ],
+  },
+];
