@@ -143,7 +143,11 @@ export const coreERPModules: ERPModule[] = [
       timestamps: true,
       softDelete: true,
       fields: [
-        { key: "produitId", label: "Produit", type: "relation", relation: "produits", required: true, filterable: true },
+        { key: "produitId", label: "Produit", type: "relation", relation: {
+      module: "produits",
+      collection: "produits",
+      labelField: "nom",
+    }, required: true, filterable: true },
         { key: "quantite", label: "QuantitÃƒÂ©", type: "number", required: true, sortable: true },
         { key: "unite", label: "UnitÃƒÂ©", type: "text" },
         { key: "seuilAlerte", label: "Seuil alerte", type: "number", sortable: true },
@@ -184,8 +188,16 @@ export const coreERPModules: ERPModule[] = [
       timestamps: true,
       softDelete: true,
       fields: [
-        { key: "produitId", label: "Produit", type: "relation", relation: "produits", required: true, filterable: true },
-        { key: "stockId", label: "Stock", type: "relation", relation: "stocks", required: true },
+        { key: "produitId", label: "Produit", type: "relation", relation: {
+      module: "produits",
+      collection: "produits",
+      labelField: "nom",
+    }, required: true, filterable: true },
+        { key: "stockId", label: "Stock", type: "relation", relation: {
+      module: "stocks",
+      collection: "stocks",
+      labelField: "nom",
+    }, required: true },
         { key: "type", label: "Type mouvement", type: "select", required: true, filterable: true, options: [{ label: "EntrÃƒÂ©e", value: "entree" }, { label: "Sortie", value: "sortie" }, { label: "Transfert", value: "transfert" }, { label: "Correction", value: "correction" }] },
         { key: "quantite", label: "QuantitÃƒÂ©", type: "number", required: true, sortable: true },
         { key: "motif", label: "Motif", type: "text", searchable: true },
@@ -228,8 +240,16 @@ export const coreERPModules: ERPModule[] = [
       softDelete: true,
       fields: [
         { key: "titre", label: "Maintenance", type: "text", required: true, searchable: true, sortable: true },
-        { key: "materielId", label: "MatÃƒÂ©riel", type: "relation", relation: "materiels" },
-        { key: "produitId", label: "Produit consommÃƒÂ©", type: "relation", relation: "produits" },
+        { key: "materielId", label: "MatÃƒÂ©riel", type: "relation", relation: {
+      module: "materiels",
+      collection: "materiels",
+      labelField: "nom",
+    } },
+        { key: "produitId", label: "Produit consommÃƒÂ©", type: "relation", relation: {
+      module: "produits",
+      collection: "produits",
+      labelField: "nom",
+    } },
         { key: "priorite", label: "PrioritÃƒÂ©", type: "select", filterable: true, options: [{ label: "Basse", value: "basse" }, { label: "Normale", value: "normale" }, { label: "Haute", value: "haute" }, { label: "Critique", value: "critique" }] },
         { key: "statut", label: "Statut", type: "status", filterable: true },
       ],
@@ -269,8 +289,16 @@ export const coreERPModules: ERPModule[] = [
       softDelete: true,
       fields: [
         { key: "titre", label: "Intervention", type: "text", required: true, searchable: true, sortable: true },
-        { key: "materielId", label: "MatÃƒÂ©riel", type: "relation", relation: "materiels" },
-        { key: "produitId", label: "Produit utilisÃƒÂ©", type: "relation", relation: "produits" },
+        { key: "materielId", label: "MatÃƒÂ©riel", type: "relation", relation: {
+      module: "materiels",
+      collection: "materiels",
+      labelField: "nom",
+    } },
+        { key: "produitId", label: "Produit utilisÃƒÂ©", type: "relation", relation: {
+      module: "produits",
+      collection: "produits",
+      labelField: "nom",
+    } },
         { key: "responsable", label: "Responsable", type: "text", searchable: true },
         { key: "statut", label: "Statut", type: "status", filterable: true },
       ],
@@ -311,7 +339,11 @@ export const coreERPModules: ERPModule[] = [
       fields: [
         { key: "nom", label: "Terrain", type: "text", required: true, searchable: true, sortable: true },
 
-        { key: "proprietaireId", label: "PropriÃƒÂ©taire", type: "relation", relation: "utilisateurs", required: true, filterable: true },
+        { key: "proprietaireId", label: "PropriÃƒÂ©taire", type: "relation", relation: {
+      module: "utilisateurs",
+      collection: "utilisateurs",
+      labelField: "nom",
+    }, required: true, filterable: true },
 
         { key: "vocationTerrain", label: "Terrain ÃƒÂ  vocation", type: "select", required: true, filterable: true, options: [
           { label: "Agricole", value: "agricole" },

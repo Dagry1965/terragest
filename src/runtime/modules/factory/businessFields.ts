@@ -14,7 +14,11 @@ export const clientFields = [
 
 export const commandeFields = [
   { key: "numero", label: "Numéro commande", type: "text", required: true, searchable: true, sortable: true },
-  { key: "clientId", label: "Client", type: "relation", relation: "clients", required: true, filterable: true },
+  { key: "clientId", label: "Client", type: "relation", relation: {
+      module: "clients",
+      collection: "clients",
+      labelField: "nom",
+    }, required: true, filterable: true },
   { key: "dateCommande", label: "Date commande", type: "date", required: true, sortable: true },
   { key: "montantTotal", label: "Montant total", type: "number", sortable: true },
   { key: "statut", label: "Statut", type: "status", required: true, filterable: true },
@@ -22,8 +26,16 @@ export const commandeFields = [
 
 export const factureFields = [
   { key: "numero", label: "Numéro facture", type: "text", required: true, searchable: true, sortable: true },
-  { key: "clientId", label: "Client", type: "relation", relation: "clients", required: true, filterable: true },
-  { key: "commandeId", label: "Commande", type: "relation", relation: "commandes" },
+  { key: "clientId", label: "Client", type: "relation", relation: {
+      module: "clients",
+      collection: "clients",
+      labelField: "nom",
+    }, required: true, filterable: true },
+  { key: "commandeId", label: "Commande", type: "relation", relation: {
+      module: "commandes",
+      collection: "commandes",
+      labelField: "reference",
+    } },
   { key: "dateFacture", label: "Date facture", type: "date", required: true, sortable: true },
   { key: "montantHT", label: "Montant HT", type: "number", sortable: true },
   { key: "montantTTC", label: "Montant TTC", type: "number", sortable: true },
@@ -33,7 +45,11 @@ export const factureFields = [
 
 export const devisFields = [
   { key: "numero", label: "Numéro devis", type: "text", required: true, searchable: true, sortable: true },
-  { key: "clientId", label: "Client", type: "relation", relation: "clients", required: true, filterable: true },
+  { key: "clientId", label: "Client", type: "relation", relation: {
+      module: "clients",
+      collection: "clients",
+      labelField: "nom",
+    }, required: true, filterable: true },
   { key: "dateDevis", label: "Date devis", type: "date", required: true, sortable: true },
   { key: "dateValidite", label: "Date validité", type: "date", sortable: true },
   { key: "montantTotal", label: "Montant total", type: "number", sortable: true },
@@ -95,5 +111,211 @@ export const vehiculeFields = [
     label: "Nom",
     type: "text",
     required: true,
+  },
+];
+
+
+export const produitFields = [
+  {
+    key: "nom",
+    label: "Nom",
+    type: "text",
+    required: true,
+  },
+  {
+    key: "categorie",
+    label: "CatÃ©gorie",
+    type: "select",
+    required: true,
+    options: [
+      "Agricole",
+      "Animal",
+      "Piscicole",
+      "Immobilier",
+    ],
+  },
+  {
+    key: "modeStock",
+    label: "Mode de stock",
+    type: "select",
+    options: [
+      "Stockable",
+      "Non stockable",
+    ],
+  },
+  {
+    key: "prixAchat",
+    label: "Prix achat",
+    type: "number",
+  },
+  {
+    key: "prixVente",
+    label: "Prix vente",
+    type: "number",
+  },
+];
+
+export const stockFields = [
+  {
+    key: "produitId",
+    label: "Produit",
+    type: "relation",
+    required: true,
+    relation: {
+      module: "produits",
+      collection: "produits",
+      labelField: "nom",
+    },
+  },
+  {
+    key: "quantite",
+    label: "QuantitÃ©",
+    type: "number",
+    required: true,
+  },
+  {
+    key: "unite",
+    label: "UnitÃ©",
+    type: "text",
+  },
+  {
+    key: "seuilAlerte",
+    label: "Seuil alerte",
+    type: "number",
+  },
+];
+
+export const mouvementFields = [
+  {
+    key: "stockId",
+    label: "Stock",
+    type: "relation",
+    required: true,
+    relation: {
+      module: "stocks",
+      collection: "stocks",
+      labelField: "id",
+    },
+  },
+  {
+    key: "type",
+    label: "Type",
+    type: "select",
+    options: [
+      "EntrÃ©e",
+      "Sortie",
+      "Correction",
+      "Transfert",
+    ],
+  },
+  {
+    key: "quantite",
+    label: "QuantitÃ©",
+    type: "number",
+  },
+];
+
+export const terrainFields = [
+  {
+    key: "nom",
+    label: "Nom",
+    type: "text",
+    required: true,
+  },
+  {
+    key: "proprietaireId",
+    label: "PropriÃ©taire",
+    type: "relation",
+    relation: {
+      module: "utilisateurs",
+      collection: "utilisateurs",
+      labelField: "nom",
+    },
+  },
+  {
+    key: "surfaceTotale",
+    label: "Surface totale",
+    type: "number",
+  },
+  {
+    key: "vocation",
+    label: "Vocation",
+    type: "select",
+    options: [
+      "Agricole",
+      "Habitation",
+      "Piscicole",
+      "Commercial",
+    ],
+  },
+];
+
+export const parcelleFields = [
+  {
+    key: "terrainId",
+    label: "Terrain",
+    type: "relation",
+    relation: {
+      module: "terrains",
+      collection: "terrains",
+      labelField: "nom",
+    },
+  },
+  {
+    key: "superficie",
+    label: "Superficie",
+    type: "number",
+  },
+  {
+    key: "culture",
+    label: "Culture",
+    type: "text",
+  },
+];
+
+export const recolteFields = [
+  {
+    key: "parcelleId",
+    label: "Parcelle",
+    type: "relation",
+    relation: {
+      module: "parcelles",
+      collection: "parcelles",
+      labelField: "id",
+    },
+  },
+  {
+    key: "dateRecolte",
+    label: "Date rÃ©colte",
+    type: "date",
+  },
+  {
+    key: "quantite",
+    label: "QuantitÃ©",
+    type: "number",
+  },
+];
+
+export const intrantFields = [
+  {
+    key: "nom",
+    label: "Nom",
+    type: "text",
+  },
+  {
+    key: "categorie",
+    label: "CatÃ©gorie",
+    type: "select",
+    options: [
+      "Semence",
+      "Engrais",
+      "Traitement",
+      "Alimentation",
+    ],
+  },
+  {
+    key: "stockActuel",
+    label: "Stock actuel",
+    type: "number",
   },
 ];
