@@ -1,5 +1,7 @@
 "use client";
 
+import type { Notification as ERPNotification } from "@/features/notifications/types/Notification";
+
 import { useEffect } from "react";
 
 import toast from "react-hot-toast";
@@ -19,7 +21,7 @@ export const RealtimeNotifications = ({
 
   const {
     data: notifications,
-  } = useRealtimeCollection({
+  } = useRealtimeCollection<ERPNotification>({
 
     collectionName:
       "notifications",
@@ -40,7 +42,7 @@ export const RealtimeNotifications = ({
         unread[0];
 
       toast(
-        latest.titre
+        latest.title
       );
     }
 

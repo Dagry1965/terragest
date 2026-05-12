@@ -1,99 +1,60 @@
 "use client";
 
-import {
-  collection,
-  onSnapshot,
-  query,
-  where,
-} from "firebase/firestore";
+import { useEffect, useState } from "react";
 
-import {
-  useEffect,
-  useState,
-} from "react";
+import { coreERPModules } from "@/runtime/modules/definitions/coreModules";
+import { RuntimeRealtimeEngine } from "@/runtime/realtime/engine/RuntimeRealtimeEngine";
 
-import { db } from "@/lib/firebase/config";
-
-interface RealtimeOptions {
-
-  collectionName: string;
-
+type UseRealtimeCollectionOptions = {
+  collectionName?: string;
+  collection?: string;
   organisationId?: string;
-}
+  limit?: number;
+};
 
-export const useRealtimeCollection = ({
+export const useRealtimeCollection = <T = Record<string, any>>({
   collectionName,
-  organisationId,
-}: RealtimeOptions) => {
+  collection,
+}: UseRealtimeCollectionOptions) => {
+  const targetCollection = collectionName ?? collection;
 
-  const [data, setData] =
-    useState<any[]>([]);
+  const module = coreERPModules.find(
+    (item) =>
+      item.schema.collection === targetCollection ||
+      item.metadata.key === targetCollection
+  );
 
-  const [loading, setLoading] =
-    useState(true);
+  const [data, setData] = useState<T[]>([]);
+  const [count, setCount] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-
-    let q;
-
-    if (organisationId) {
-
-      q = query(
-        collection(
-          db,
-          collectionName
-        ),
-
-        where(
-          "organisationId",
-          "==",
-          organisationId
-        )
-      );
-
-    } else {
-
-      q = collection(
-        db,
-        collectionName
-      );
+    if (!module) {
+      setData([]);
+      setCount(0);
+      setLoading(false);
+      return;
     }
 
-    const unsubscribe =
-      onSnapshot(
-        q,
-        (snapshot) => {
+    setLoading(true);
 
-          const results =
-            snapshot.docs.map(
-              (doc) => ({
-                id: doc.id,
-                ...doc.data(),
-              })
-            );
+    const unsubscribe = RuntimeRealtimeEngine.subscribe(
+      module,
+      (payload) => {
+        setCount(payload.count);
+        setData([]);
+        setLoading(false);
+      }
+    );
 
-          setData(results);
-
-          setLoading(false);
-        },
-
-        (error) => {
-
-          console.error(error);
-
-          setLoading(false);
-        }
-      );
-
-    return () => unsubscribe();
-
-  }, [
-    collectionName,
-    organisationId,
-  ]);
+    return () => {
+      unsubscribe();
+    };
+  }, [module]);
 
   return {
     data,
+    count,
     loading,
   };
-}
+};
