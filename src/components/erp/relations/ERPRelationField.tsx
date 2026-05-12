@@ -35,7 +35,11 @@ export function ERPRelationField({
 
   const targetModule =
     field.references?.module ??
-    field.relation;
+    (
+      typeof field.relation === "string"
+        ? field.relation
+        : field.relation?.module
+    );
 
   useEffect(() => {
 

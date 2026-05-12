@@ -77,7 +77,13 @@ export interface ERPModuleField {
   visibleInForm?: boolean;
   visibleInDetails?: boolean;
 
-  relation?: string;
+  relation?:
+    | string
+    | {
+        module: string;
+        collection?: string;
+        labelField?: string;
+      };
   options?: ERPModuleFieldOption[];
   defaultValue?: unknown;
   placeholder?: string;

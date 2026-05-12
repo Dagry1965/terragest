@@ -13,7 +13,13 @@ type ERPField = {
   label: string;
   type?: string;
   required?: boolean;
-  relation?: string;
+  relation?:
+    | string
+    | {
+        module: string;
+        collection?: string;
+        labelField?: string;
+      };
   options?: ERPFieldOption[];
 };
 
@@ -71,7 +77,7 @@ export function ERPFormEngine({
 
         try {
           loadedOptions[field.key] =
-            await ERPRelationDataLoader.load(targetModule);
+            await ERPRelationDataLoader.load(typeof targetModule === "string" ? targetModule : targetModule.module);
         } catch (error) {
           console.error(
             "Erreur chargement relation",

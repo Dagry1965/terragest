@@ -26,9 +26,13 @@ export function ERPFormField({
         return;
       }
 
-      const targetModule =
-        field.references?.module ??
-        field.relation;
+    const targetModule =
+  field.references?.module ??
+  (
+    typeof field.relation === "string"
+      ? field.relation
+      : field.relation?.module
+  );
 
       if (!targetModule) {
         return;
