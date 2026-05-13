@@ -5,8 +5,8 @@ export const campagnesModule: ERPModule = {
     key: "campagnes",
     label: "Campagnes",
     description: "Module ERP gÃƒÂ©nÃƒÂ©rÃƒÂ© pour Campagnes.",
-    icon: "calendar-days",
-    category: "Production",
+    icon: "database",
+    category: "MÃƒÂ©tier",
     routes: {
       list: "/campagnes",
       create: "/campagnes/nouveau",

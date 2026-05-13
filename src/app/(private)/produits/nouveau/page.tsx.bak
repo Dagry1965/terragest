@@ -1,6 +1,7 @@
 import { GenericCreatePage } from "@/components/erp/generic/GenericCreatePage";
 
-export default function NouveauProduitPage() {
+export const dynamic = "force-dynamic";
+
+export default function NewProduitsPage() {
   return <GenericCreatePage moduleKey="produits" />;
 }
-

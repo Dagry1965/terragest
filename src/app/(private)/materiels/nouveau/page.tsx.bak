@@ -1,12 +1,7 @@
-import { ERPModuleActionPageTemplate } from "@/components/erp/templates";
+import { GenericCreatePage } from "@/components/erp/generic/GenericCreatePage";
 
-export default function Page() {
-  return (
-    <ERPModuleActionPageTemplate
-      moduleLabel="Materiels"
-      type="create"
-      actionLabel="Creation"
-      description="Page legacy stabilisee par le template ERP enterprise centralise."
-    />
-  );
+export const dynamic = "force-dynamic";
+
+export default function NewMaterielsPage() {
+  return <GenericCreatePage moduleKey="materiels" />;
 }

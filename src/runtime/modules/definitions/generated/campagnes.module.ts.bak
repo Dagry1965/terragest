@@ -7,12 +7,12 @@ export const campagnesModule: ERPModule = {
     description: "Module ERP gÃƒÂ©nÃƒÂ©rÃƒÂ© pour Campagnes.",
     icon: "calendar-days",
     category: "Production",
-   routes: {
-  list: "/campagnes",
-  create: "/campagnes/nouveau",
-  details: "/campagnes/[id]",
-  edit: "/campagnes/[id]/edit",
-},
+    routes: {
+      list: "/campagnes",
+      create: "/campagnes/nouveau",
+      details: "/campagnes/[id]",
+      edit: "/campagnes/[id]/edit",
+    },
   },
 
   schema: {
@@ -35,15 +35,5 @@ export const campagnesModule: ERPModule = {
         required: true,
       },
     ],
-  },
-
-  features: {
-    dashboard: true,
-    analytics: true,
-    workflows: true,
-    audit: true,
-    realtime: true,
-    automation: true,
-    notifications: true,
   },
 };

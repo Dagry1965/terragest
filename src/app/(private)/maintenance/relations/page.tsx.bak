@@ -1,12 +1,12 @@
-import { ERPModuleActionPageTemplate } from "@/components/erp/templates";
+import { ERPModuleActionPageTemplate } from "@/components/erp/generic/ERPModuleActionPageTemplate";
 
-export default function Page() {
+export const dynamic = "force-dynamic";
+
+export default function MaintenanceRelationsPage() {
   return (
     <ERPModuleActionPageTemplate
-      moduleLabel="Maintenance"
-      type="relations"
-      actionLabel="Relations"
-      description="Page legacy stabilisee par le template ERP enterprise centralise."
+      moduleKey="maintenance"
+      action="relations"
     />
   );
 }
