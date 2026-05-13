@@ -4,9 +4,9 @@ export const facturesModule: ERPModule = {
   metadata: {
     key: "factures",
     label: "Factures",
-    description: "Module ERP gÃƒÂ©nÃƒÂ©rÃƒÂ© pour Factures.",
+    description: "Module ERP gÃ©nÃ©rÃ© pour Factures.",
     icon: "database",
-    category: "MÃƒÂ©tier",
+    category: "MÃ©tier",
     routes: {
       list: "/factures",
       create: "/factures/nouveau",

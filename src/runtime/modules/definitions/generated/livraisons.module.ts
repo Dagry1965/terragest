@@ -4,9 +4,9 @@ export const livraisonsModule: ERPModule = {
   metadata: {
     key: "livraisons",
     label: "Livraisons",
-    description: "Module ERP gÃƒÂ©nÃƒÂ©rÃƒÂ© pour Livraisons.",
+    description: "Module ERP gÃ©nÃ©rÃ© pour Livraisons.",
     icon: "database",
-    category: "MÃƒÂ©tier",
+    category: "MÃ©tier",
     routes: {
       list: "/livraisons",
       create: "/livraisons/nouveau",

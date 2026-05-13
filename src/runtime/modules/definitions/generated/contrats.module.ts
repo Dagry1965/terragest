@@ -4,9 +4,9 @@ export const contratsModule: ERPModule = {
   metadata: {
     key: "contrats",
     label: "Contrats",
-    description: "Module ERP gÃƒÂ©nÃƒÂ©rÃƒÂ© pour Contrats.",
+    description: "Module ERP gÃ©nÃ©rÃ© pour Contrats.",
     icon: "database",
-    category: "MÃƒÂ©tier",
+    category: "MÃ©tier",
     routes: {
       list: "/contrats",
       create: "/contrats/nouveau",

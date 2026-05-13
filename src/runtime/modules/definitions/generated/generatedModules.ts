@@ -3,6 +3,7 @@ import type { ERPModule } from "../../ERPModule";
 import { campagnesModule } from "./campagnes.module";
 import { commandesModule } from "./commandes.module";
 import { contratsModule } from "./contrats.module";
+import { culturesModule } from "./cultures.module";
 import { employesModule } from "./employes.module";
 import { exploitationsModule } from "./exploitations.module";
 import { facturesModule } from "./factures.module";
@@ -20,6 +21,7 @@ export const generatedERPModules: ERPModule[] = [
   campagnesModule,
   commandesModule,
   contratsModule,
+  culturesModule,
   employesModule,
   exploitationsModule,
   facturesModule,

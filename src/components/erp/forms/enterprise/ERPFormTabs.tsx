@@ -88,17 +88,17 @@ export function ERPFormTabs({
       </div>
 
       <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-        <div className="grid gap-6 md:grid-cols-2">
-          {visibleFields.map((field) => (
-            <ERPFormField
-              key={field.key}
-              field={field}
-              initialValue={
-                initialData[field.key]
-              }
-            />
-          ))}
-        </div>
+      <div className="grid grid-cols-12 gap-6">
+  {visibleFields.map((field) => (
+    <ERPFormField
+      key={field.key}
+      field={field}
+      initialValue={
+        initialData[field.key]
+      }
+    />
+  ))}
+</div>
 
         {visibleFields.length === 0 ? (
           <p className="text-sm text-slate-500">

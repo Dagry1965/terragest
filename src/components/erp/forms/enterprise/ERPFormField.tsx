@@ -55,6 +55,24 @@ export function ERPFormField({
     "w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-blue-500";
 
   /*
+   * GRID MAP
+   */
+  const gridClassMap: Record<number, string> = {
+    1: "xl:col-span-1",
+    2: "xl:col-span-2",
+    3: "xl:col-span-3",
+    4: "xl:col-span-4",
+    5: "xl:col-span-5",
+    6: "xl:col-span-6",
+    7: "xl:col-span-7",
+    8: "xl:col-span-8",
+    9: "xl:col-span-9",
+    10: "xl:col-span-10",
+    11: "xl:col-span-11",
+    12: "xl:col-span-12",
+  };
+
+  /*
    * WRAPPER GRID
    */
   const Wrapper = ({ children }: { children: React.ReactNode }) => (
@@ -62,14 +80,14 @@ export function ERPFormField({
       className={`
         space-y-2
         col-span-12
-        ${field.grid?.cols ? `xl:col-span-${field.grid.cols}` : ""}
+        ${field.grid?.cols ? gridClassMap[field.grid.cols] : ""}
       `}
     >
       {children}
 
-      {field.ui?.help && (
+      {field.helperText && (
         <p className="text-xs text-slate-500">
-          {field.ui.help}
+          {field.helperText}
         </p>
       )}
     </div>
@@ -91,7 +109,9 @@ export function ERPFormField({
             defaultValue={String(initialValue ?? "")}
             className={className}
           >
-            <option value="">Sélectionner</option>
+            <option value="">
+              {field.placeholder ?? "Sélectionner"}
+            </option>
 
             {relationOptions.map((option) => (
               <option key={option.id} value={option.id}>
@@ -119,13 +139,11 @@ export function ERPFormField({
             defaultValue={String(initialValue ?? "")}
             className={className}
           >
-            <option value="">Sélectionner</option>
+            <option value="">
+              {field.placeholder ?? "Sélectionner"}
+            </option>
 
-            {(field.options ?? [
-              { label: "Actif", value: "actif" },
-              { label: "En suivi", value: "en-suivi" },
-              { label: "À contrôler", value: "a-controler" },
-            ]).map((option, index) => (
+            {(field.options ?? []).map((option, index) => (
               <option
                 key={option.value ?? option.label ?? index}
                 value={option.value}
@@ -154,7 +172,10 @@ export function ERPFormField({
             defaultValue={String(initialValue ?? "")}
             className={className}
           >
-            <option value="">Sélectionner</option>
+            <option value="">
+              {field.placeholder ?? "Sélectionner"}
+            </option>
+
             <option value="true">Oui</option>
             <option value="false">Non</option>
           </select>
@@ -176,7 +197,7 @@ export function ERPFormField({
             name={field.key}
             required={field.required}
             defaultValue={String(initialValue ?? "")}
-            placeholder={field.ui?.placeholder ?? field.label}
+            placeholder={field.placeholder ?? field.label}
             className="
               min-h-32
               w-full
@@ -215,12 +236,14 @@ export function ERPFormField({
             field.type === "number"
               ? "number"
               : field.type === "date"
-                ? "date"
-                : field.type === "email"
-                  ? "email"
-                  : "text"
+              ? "date"
+              : field.type === "email"
+              ? "email"
+              : field.type === "phone"
+              ? "tel"
+              : "text"
           }
-          placeholder={field.ui?.placeholder ?? field.label}
+          placeholder={field.placeholder ?? field.label}
           className={className}
         />
       </label>

@@ -1,8 +1,8 @@
 # TERRAGEST_V2 - CONTROLE SANTE MODULES ERP
 
-Date: 2026-05-13 20:46:55
+Date: 2026-05-13 21:40:23
 
-Modules detectes dans src/app/(private): 27
+Modules detectes dans src/app/(private): 28
 
 ## achats
 
@@ -343,6 +343,19 @@ Modules detectes dans src/app/(private): 27
 - OK - module declare dans registre ERP
 
 ## vehicules
+
+- OK - Route liste
+- OK - Route creation
+- OK - Route detail
+- OK - Route edition
+- OK - Route audit
+- OK - Route export
+- OK - Route import
+- OK - Route relations
+- OK - Route workflows
+- OK - module declare dans registre ERP
+
+## cultures
 
 - OK - Route liste
 - OK - Route creation

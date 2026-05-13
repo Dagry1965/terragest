@@ -1,22 +1,22 @@
 import type { ERPModule } from "../../ERPModule";
 
-export const {{CamelName}}Module: ERPModule = {
+export const culturesModule: ERPModule = {
   metadata: {
-    key: "{{ModuleKey}}",
-    label: "{{Label}}",
-    description: "{{Description}}",
-    icon: "{{Icon}}",
-    category: "{{Category}}",
+    key: "cultures",
+    label: "Cultures",
+    description: "Module ERP gÃƒÂ©nÃƒÂ©rÃƒÂ© pour Cultures.",
+    icon: "sprout",
+    category: "Production",
     routes: {
-      list: "/{{ModuleKey}}",
-      create: "/{{ModuleKey}}/nouveau",
-      details: "/{{ModuleKey}}/[id]",
-      edit: "/{{ModuleKey}}/[id]/edit",
+      list: "/cultures",
+      create: "/cultures/nouveau",
+      details: "/cultures/[id]",
+      edit: "/cultures/[id]/edit",
     },
   },
 
   schema: {
-    collection: "{{Collection}}",
+    collection: "cultures",
     fields: [
       {
         key: "nom",

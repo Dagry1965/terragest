@@ -16,17 +16,17 @@ export function buildERPNavigation(): ERPNavigationItem[] {
     {
       label: "Workflows",
       href: "/workflows",
-      group: "SystÃƒÂ¨me",
+      group: "SystÃ¨me",
     },
     {
       label: "Supervision",
       href: "/supervision",
-      group: "SystÃƒÂ¨me",
+      group: "SystÃ¨me",
     },
     {
       label: "Admin",
       href: "/admin",
-      group: "SystÃƒÂ¨me",
+      group: "SystÃ¨me",
     },
   ];
 

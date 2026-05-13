@@ -4,9 +4,9 @@ export const paiementsModule: ERPModule = {
   metadata: {
     key: "paiements",
     label: "Paiements",
-    description: "Module ERP gÃƒÂ©nÃƒÂ©rÃƒÂ© pour Paiements.",
+    description: "Module ERP gÃ©nÃ©rÃ© pour Paiements.",
     icon: "database",
-    category: "MÃƒÂ©tier",
+    category: "MÃ©tier",
     routes: {
       list: "/paiements",
       create: "/paiements/nouveau",

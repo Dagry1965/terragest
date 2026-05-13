@@ -4,9 +4,9 @@ export const produitsModule: ERPModule = {
   metadata: {
     key: "produits",
     label: "Produits",
-    description: "Module ERP gÃƒÂ©nÃƒÂ©rÃƒÂ© pour Produits.",
+    description: "Module ERP gÃ©nÃ©rÃ© pour Produits.",
     icon: "database",
-    category: "MÃƒÂ©tier",
+    category: "MÃ©tier",
     routes: {
       list: "/produits",
       create: "/produits/nouveau",

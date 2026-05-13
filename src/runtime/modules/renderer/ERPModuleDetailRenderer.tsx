@@ -14,7 +14,7 @@ export function ERPModuleDetailRenderer({
       <div>
         <h1 className="text-3xl font-bold">{module.label}</h1>
         <p className="text-muted-foreground">
-          DÃƒÂ©tail runtime du module {module.key}
+          DÃ©tail runtime du module {module.key}
         </p>
       </div>
 

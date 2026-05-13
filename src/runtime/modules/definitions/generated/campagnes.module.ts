@@ -4,9 +4,9 @@ export const campagnesModule: ERPModule = {
   metadata: {
     key: "campagnes",
     label: "Campagnes",
-    description: "Module ERP gÃƒÂ©nÃƒÂ©rÃƒÂ© pour Campagnes.",
+    description: "Module ERP gÃ©nÃ©rÃ© pour Campagnes.",
     icon: "database",
-    category: "MÃƒÂ©tier",
+    category: "MÃ©tier",
     routes: {
       list: "/campagnes",
       create: "/campagnes/nouveau",

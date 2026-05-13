@@ -25,7 +25,8 @@ export function ERPFormSection({
         )}
       </div>
 
-      <div className="grid gap-5 md:grid-cols-2">
+      {/* Nouveau container GRID */}
+      <div className="grid grid-cols-12 gap-6">
         {children}
       </div>
     </section>
