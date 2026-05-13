@@ -46,11 +46,18 @@ export interface ERPModulePermissions {
   import?: boolean;
   export?: boolean;
 }
+export interface ERPModuleFormSection {
+  key: string;
+  title: string;
+  description?: string;
+  fields: string[];
 
+}
 export interface ERPModuleFormTab {
   key: string;
   label: string;
   fields: string[];
+sections?: ERPModuleFormSection[];
 }
 
 export interface ERPModuleFormConfig {
