@@ -1,4 +1,4 @@
-// src/components/maintenance/MaintenanceForm.tsx
+﻿// src/components/maintenance/MaintenanceForm.tsx
 
 "use client";
 
@@ -9,7 +9,7 @@ import { useRouter }
 from "next/navigation";
 
 import { ERPFormSection }
-from "@/components/erp/forms/ERPFormSection";
+from "@/components/erp/ui";
 
 import { ModuleRuntime }
 from "@/platform/modules/runtime/ModuleRuntime";

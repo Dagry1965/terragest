@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import {
   useEffect,
@@ -6,7 +6,7 @@ import {
 } from "react";
 
 import { EntityForm }
-from "@/components/crud/EntityForm";
+from "@/components/erp/ui";
 
 import { useDocument }
 from "@/hooks/useDocument";

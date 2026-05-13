@@ -1,24 +1,7 @@
-import { notFound } from "next/navigation";
+﻿import { GenericCreatePage } from "@/components/erp/generic/GenericCreatePage";
 
-import { GenericCreatePage }
-from "@/components/erp/generic/GenericCreatePage";
+export const dynamic = "force-dynamic";
 
-import { coreERPModules }
-from "@/runtime/modules/definitions/coreModules";
-
-export default function DepensesCreatePage() {
-
-  const module = coreERPModules.find(
-    (m) => m.metadata.key === "depenses"
-  );
-
-  if (!module) {
-    notFound();
-  }
-
-  return (
-    <GenericCreatePage
-      module={module}
-    />
-  );
+export default function CreateDepensesPage() {
+  return <GenericCreatePage moduleKey="depenses" />;
 }

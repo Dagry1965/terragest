@@ -1,4 +1,8 @@
 ﻿import type { ERPModule } from "@/runtime/modules";
+import { mouvementsModuleV2 } from "./mouvementsModuleV2";
+import { actifsModuleV2 } from "./actifsModuleV2";
+import { ressourcesModuleV2 } from "./ressourcesModuleV2";
+import { campagnesModuleV2 } from "./campagnesModuleV2";
 
 const enterpriseFeatures = {
   audit: true,
@@ -259,4 +263,9 @@ export const terragestBusinessModelV2: ERPModule[] = [
       ],
     },
   },
+
+  campagnesModuleV2,
+  ressourcesModuleV2,
+  actifsModuleV2,
+  mouvementsModuleV2,
 ];

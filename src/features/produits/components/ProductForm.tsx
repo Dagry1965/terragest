@@ -1,10 +1,10 @@
-"use client";
+﻿"use client";
 
 import { useState }
 from "react";
 
 import { EntityForm }
-from "@/components/crud/EntityForm";
+from "@/components/erp/ui";
 
 import { ProductService }
 from "@/features/produits/services/ProductService";

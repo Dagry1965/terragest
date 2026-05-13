@@ -1,24 +1,7 @@
-import { notFound } from "next/navigation";
+﻿import { GenericListPage } from "@/components/erp/generic/GenericListPage";
 
-import { GenericListPage }
-from "@/components/erp/generic/GenericListPage";
-
-import { coreERPModules }
-from "@/runtime/modules/definitions/coreModules";
+export const dynamic = "force-dynamic";
 
 export default function EmployesPage() {
-
-  const module = coreERPModules.find(
-    (m) => m.metadata.key === "employes"
-  );
-
-  if (!module) {
-    notFound();
-  }
-
-  return (
-    <GenericListPage
-      module={module}
-    />
-  );
+  return <GenericListPage moduleKey="employes" />;
 }

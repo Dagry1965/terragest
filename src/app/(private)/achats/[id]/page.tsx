@@ -1,30 +1,22 @@
-import { notFound } from "next/navigation";
+﻿import { GenericDetailPage } from "@/components/erp/generic/GenericDetailPage";
 
-import { GenericDetailPage }
-from "@/components/erp/generic/GenericDetailPage";
+export const dynamic = "force-dynamic";
 
-import { coreERPModules }
-from "@/runtime/modules/definitions/coreModules";
+type PageProps = {
+  params: Promise<{
+    id: string;
+  }>;
+};
 
-export default async function AchatDetailPage({
+export default async function AchatsDetailPage({
   params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
+}: PageProps) {
 
   const { id } = await params;
 
-  const module = coreERPModules.find(
-    (m) => m.metadata.key === "achats"
-  );
-
-  if (!module) {
-    notFound();
-  }
-
   return (
     <GenericDetailPage
-      module={module}
+      moduleKey="achats"
       id={id}
     />
   );

@@ -1,23 +1,23 @@
-import { GenericDetailPage } from "@/components/erp/generic/GenericDetailPage";
-import { coreERPModules } from "@/runtime/modules/definitions/coreModules";
-import type { ERPModule } from "@/runtime/modules/ERPModule";
+﻿import { GenericDetailPage } from "@/components/erp/generic/GenericDetailPage";
 
-type Props = {
+export const dynamic = "force-dynamic";
+
+type PageProps = {
   params: Promise<{
     id: string;
   }>;
 };
 
-export default async function FournisseursDetailPage({ params }: Props) {
+export default async function FournisseursDetailPage({
+  params,
+}: PageProps) {
+
   const { id } = await params;
 
-  const erpModule = coreERPModules.find(
-    (item) => item.metadata.key === "fournisseurs"
-  ) as ERPModule | undefined;
-
-  if (!erpModule) {
-    throw new Error("Module fournisseurs introuvable");
-  }
-
-  return <GenericDetailPage module={erpModule} id={id} />;
+  return (
+    <GenericDetailPage
+      moduleKey="fournisseurs"
+      id={id}
+    />
+  );
 }

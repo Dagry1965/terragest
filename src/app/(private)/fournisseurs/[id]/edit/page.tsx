@@ -1,23 +1,23 @@
-import { GenericEditPage } from "@/components/erp/generic/GenericEditPage";
-import { coreERPModules } from "@/runtime/modules/definitions/coreModules";
-import type { ERPModule } from "@/runtime/modules/ERPModule";
+﻿import { GenericEditPage } from "@/components/erp/generic/GenericEditPage";
 
-type Props = {
+export const dynamic = "force-dynamic";
+
+type PageProps = {
   params: Promise<{
     id: string;
   }>;
 };
 
-export default async function EditFournisseursPage({ params }: Props) {
+export default async function EditFournisseursPage({
+  params,
+}: PageProps) {
+
   const { id } = await params;
 
-  const erpModule = coreERPModules.find(
-    (item) => item.metadata.key === "fournisseurs"
-  ) as ERPModule | undefined;
-
-  if (!erpModule) {
-    throw new Error("Module fournisseurs introuvable");
-  }
-
-  return <GenericEditPage module={erpModule} id={id} />;
+  return (
+    <GenericEditPage
+      moduleKey="fournisseurs"
+      id={id}
+    />
+  );
 }

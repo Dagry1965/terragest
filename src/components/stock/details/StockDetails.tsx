@@ -12,12 +12,11 @@ import {
 }
 from "@/domains/stock/store/StockStore";
 
-import { WorkflowStatus }
-from "@/components/workflow/WorkflowStatus";
+import { ERPWorkflowStatus }
+from "@/components/erp/workflow/ERPWorkflowStatus";
 
-import { Timeline }
-from "@/components/timeline/Timeline";
-
+import { ERPEventTimeline }
+from "@/components/erp/timeline/ERPEventTimeline";
 import { WorkflowActions }
 from "@/components/erp/workflow/WorkflowActions";
 
@@ -95,7 +94,7 @@ export function StockDetails({
           "
         >
 
-          <WorkflowStatus
+          <ERPWorkflowStatus
             status={
               stock.workflow
             }
@@ -168,7 +167,7 @@ export function StockDetails({
 
       </div>
 
-      <Timeline
+      <ERPEventTimeline
         entries={
           stock.timeline
         }

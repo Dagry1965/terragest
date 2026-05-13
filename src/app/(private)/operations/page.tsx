@@ -1,7 +1,7 @@
 // src/app/(private)/operations/page.tsx
 
-import { ERPLayout }
-from "@/components/layout/ERPLayout";
+import { ERPAppShell }
+from "@/components/erp/layout/ERPAppShell";
 
 import { OperationsMetrics }
 from "@/components/operations/OperationsMetrics";
@@ -60,7 +60,7 @@ export default function OperationsPage() {
 
   return (
 
-    <ERPLayout>
+    <ERPAppShell>
 
       <div
         className="
@@ -112,6 +112,6 @@ export default function OperationsPage() {
 
       </div>
 
-    </ERPLayout>
+    </ERPAppShell>
   );
 }

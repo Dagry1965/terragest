@@ -1,30 +1,22 @@
-import { notFound } from "next/navigation";
+﻿import { GenericEditPage } from "@/components/erp/generic/GenericEditPage";
 
-import { GenericEditPage }
-from "@/components/erp/generic/GenericEditPage";
+export const dynamic = "force-dynamic";
 
-import { coreERPModules }
-from "@/runtime/modules/definitions/coreModules";
+type PageProps = {
+  params: Promise<{
+    id: string;
+  }>;
+};
 
-export default async function EmployesEditPage({
+export default async function EditEmployesPage({
   params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
+}: PageProps) {
 
   const { id } = await params;
 
-  const module = coreERPModules.find(
-    (m) => m.metadata.key === "employes"
-  );
-
-  if (!module) {
-    notFound();
-  }
-
   return (
     <GenericEditPage
-      module={module}
+      moduleKey="employes"
       id={id}
     />
   );

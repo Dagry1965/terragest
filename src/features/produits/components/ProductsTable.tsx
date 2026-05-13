@@ -17,7 +17,7 @@ import { EmptyState }
 from "@/components/erp/ui";
 
 import { ConfirmDialog }
-from "@/components/crud/ConfirmDialog";
+from "@/components/erp/ui";
 
 import { useProducts }
 from "@/features/produits/hooks/useProducts";

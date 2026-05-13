@@ -44,5 +44,6 @@ export * from "./ERPStatusBadge";
 export { ERPTable as DataTable } from "./ERPTable";
 export { ERPEmptyState as EmptyState } from "./ERPEmptyState";
 export * from "./SearchBar";
-export { ERPModal as ConfirmDialog } from "./ERPModal";
-export { ERPEnterpriseForm as EntityForm } from "@/components/erp/forms/enterprise/ERPEnterpriseForm";
+export * from "./ConfirmDialog";
+export * from "./EntityForm";
+export * from "./ERPFormSection";

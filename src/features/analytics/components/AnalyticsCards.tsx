@@ -1,7 +1,7 @@
 "use client";
 
-import { KPICard }
-from "@/components/dashboard/KPICard";
+import { ERPMetricCard as KPICard }
+from "@/components/erp/ui";
 
 import { useAnalytics }
 from "@/features/analytics/hooks/useAnalytics";
@@ -35,39 +35,25 @@ export const AnalyticsCards =
     >
       <KPICard
         title="Produits"
-        value={
-          String(
-            analytics.totalProducts
-          )
-        }
+       value={analytics.totalProducts}
         subtitle="Produits enregistrÃ©s"
       />
 
       <KPICard
         title="QuantitÃ© Totale"
-        value={
-          String(
-            analytics.totalQuantity
-          )
-        }
+        value={analytics.totalQuantity}
         subtitle="Stock global"
       />
 
       <KPICard
         title="Valeur Stock"
-        value={
-          `${analytics.totalStockValue} â‚¬`
-        }
+    value={analytics.totalStockValue}
         subtitle="Valeur totale"
       />
 
       <KPICard
         title="Produits Actifs"
-        value={
-          String(
-            analytics.activeProducts
-          )
-        }
+        value={analytics.totalProducts}
         subtitle="Produits disponibles"
       />
     </div>

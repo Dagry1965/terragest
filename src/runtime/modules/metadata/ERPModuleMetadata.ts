@@ -16,6 +16,40 @@ export interface ERPModuleMetadata {
   dependencies?: string[];
 dashboard?: boolean;
 
+  dashboardConfig?: {
+    widgets?: string[];
+    realtime?: boolean;
+    analytics?: boolean;
+    layout?: "grid" | "timeline" | "cockpit";
+  };
+
+  analyticsConfig?: {
+    enabled?: boolean;
+    kpis?: string[];
+    charts?: string[];
+    dimensions?: string[];
+  };
+
+  workflowConfig?: {
+    enabled?: boolean;
+    workflows?: string[];
+    defaultWorkflow?: string;
+  };
+
+  automationConfig?: {
+    enabled?: boolean;
+    rules?: string[];
+    triggers?: string[];
+  };
+
+  observabilityConfig?: {
+    enabled?: boolean;
+    traces?: boolean;
+    logs?: boolean;
+    metrics?: boolean;
+    alerts?: boolean;
+  };
+
   routes?: {
     list?: string;
     details?: string;

@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { ErpSidebar } from "./ErpSidebar";
-import { ErpTopbar } from "./ErpTopbar";
+import { ERPTopBar } from "@/components/erp/layout/ERPTopBar";
 
 type Props = {
   children: ReactNode;
@@ -13,7 +13,7 @@ export function ErpShell({ children }: Props) {
         <ErpSidebar />
 
         <div className="flex min-w-0 flex-1 flex-col">
-          <ErpTopbar />
+          <ERPTopBar title="Terragest ERP" />
 
           <main className="flex-1 px-6 py-6 lg:px-8">
             {children}

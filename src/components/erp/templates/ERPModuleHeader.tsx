@@ -1,6 +1,6 @@
 import { ERPBadge } from "@/components/erp/ui";
 import type { ERPModule } from "@/runtime/modules";
-import { ERPActionToolbar } from "@/components/erp/navigation/ERPActionToolbar";
+import { ERPActionToolbar } from "@/components/erp/actions";
 import { ERPBreadcrumbs } from "@/components/erp/navigation/ERPBreadcrumbs";
 import { ERPUIComposer } from "@/runtime/ui/ERPUIComposition";
 
