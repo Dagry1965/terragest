@@ -1,12 +1,12 @@
-import { ERPModuleActionPageTemplate } from "@/components/erp/templates";
+import { ERPModuleActionPageTemplate } from "@/components/erp/generic/ERPModuleActionPageTemplate";
 
-export default function Page() {
+export const dynamic = "force-dynamic";
+
+export default function ContratsWorkflowsPage() {
   return (
     <ERPModuleActionPageTemplate
-      moduleLabel="Contrats"
-      type="workflows"
-      actionLabel="Workflows"
-      description="Page legacy stabilisee par le template ERP enterprise centralise."
+      moduleKey="contrats"
+      action="workflows"
     />
   );
 }

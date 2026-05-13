@@ -1,10 +1,13 @@
 import { GenericDetailPage } from "@/components/erp/generic/GenericDetailPage";
 
-export default function ProduitDetailPage({
+export const dynamic = "force-dynamic";
+
+export default async function ProduitsDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  return <GenericDetailPage moduleKey="produits" id={params.id} />;
-}
+  const { id } = await params;
 
+  return <GenericDetailPage moduleKey="produits" id={id} />;
+}

@@ -1,4 +1,4 @@
-﻿import { GenericListPage } from "@/components/erp/generic/GenericListPage";
+import { GenericListPage } from "@/components/erp/generic/GenericListPage";
 
 export const dynamic = "force-dynamic";
 

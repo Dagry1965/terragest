@@ -1,23 +1,13 @@
-﻿import { GenericEditPage } from "@/components/erp/generic/GenericEditPage";
+import { GenericEditPage } from "@/components/erp/generic/GenericEditPage";
 
 export const dynamic = "force-dynamic";
 
-type PageProps = {
-  params: Promise<{
-    id: string;
-  }>;
-};
-
 export default async function EditTachesPage({
   params,
-}: PageProps) {
-
+}: {
+  params: Promise<{ id: string }>;
+}) {
   const { id } = await params;
 
-  return (
-    <GenericEditPage
-      moduleKey="taches"
-      id={id}
-    />
-  );
+  return <GenericEditPage moduleKey="taches" id={id} />;
 }

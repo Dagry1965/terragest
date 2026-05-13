@@ -1,12 +1,13 @@
-import { ERPModuleActionPageTemplate } from "@/components/erp/templates";
+import { GenericEditPage } from "@/components/erp/generic/GenericEditPage";
 
-export default function Page() {
-  return (
-    <ERPModuleActionPageTemplate
-      moduleLabel="Stocks"
-      type="edit"
-      actionLabel="Edition"
-      description="Page legacy stabilisee par le template ERP enterprise centralise."
-    />
-  );
+export const dynamic = "force-dynamic";
+
+export default async function EditStocksPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+
+  return <GenericEditPage moduleKey="stocks" id={id} />;
 }

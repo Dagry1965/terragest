@@ -1,7 +1,7 @@
-﻿import { GenericCreatePage } from "@/components/erp/generic/GenericCreatePage";
+import { GenericCreatePage } from "@/components/erp/generic/GenericCreatePage";
 
 export const dynamic = "force-dynamic";
 
-export default function CreateClientsPage() {
+export default function NewClientsPage() {
   return <GenericCreatePage moduleKey="clients" />;
 }

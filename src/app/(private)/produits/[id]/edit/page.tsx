@@ -1,10 +1,13 @@
 import { GenericEditPage } from "@/components/erp/generic/GenericEditPage";
 
-export default function EditProduitPage({
+export const dynamic = "force-dynamic";
+
+export default async function EditProduitsPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  return <GenericEditPage moduleKey="produits" id={params.id} />;
-}
+  const { id } = await params;
 
+  return <GenericEditPage moduleKey="produits" id={id} />;
+}
