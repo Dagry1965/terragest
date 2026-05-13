@@ -68,6 +68,9 @@ export interface ERPModuleField {
   label: string;
   type: ERPModuleFieldType | string;
 
+  /*
+   * BASE
+   */
   required?: boolean;
   searchable?: boolean;
   sortable?: boolean;
@@ -77,6 +80,27 @@ export interface ERPModuleField {
   visibleInForm?: boolean;
   visibleInDetails?: boolean;
 
+visibility?: {
+  field: string;
+  equals?: unknown;
+  notEquals?: unknown;
+  in?: unknown[];
+  notIn?: unknown[];
+};
+
+ui?: {
+  placeholder?: string;
+  icon?: string;
+  variant?: string;
+  help?: string;
+};
+
+
+
+
+  /*
+   * RELATION
+   */
   relation?:
     | string
     | {
@@ -84,7 +108,20 @@ export interface ERPModuleField {
         collection?: string;
         labelField?: string;
       };
+
+  relationType?: ERPRelationType;
+  references?: ERPModuleFieldReference;
+
+  /*
+   * OPTIONS
+   */
   options?: ERPModuleFieldOption[];
+  dependsOn?: string;
+  optionsByValue?: Record<string, ERPModuleFieldOption[]>;
+
+  /*
+   * DEFAULTS & UI
+   */
   defaultValue?: unknown;
   placeholder?: string;
   helperText?: string;
@@ -97,18 +134,9 @@ export interface ERPModuleField {
   readonlyIf?: ERPConditionalRule;
 
   /*
-   * SIMPLE VISIBILITY METADATA
-   */
-  visibility?: ERPModuleFieldVisibility;
-
-  /*
    * VALIDATION
    */
   validation?: ERPFieldValidation;
-
-  /*
-   * VALIDATION RULES
-   */
   validators?: ERPFieldValidator[];
 
   /*
@@ -121,22 +149,20 @@ export interface ERPModuleField {
   indexed?: boolean;
   cascadeDelete?: boolean;
 
-  relationType?: ERPRelationType;
-  references?: ERPModuleFieldReference;
+  /*
+   * COMPUTED FIELDS
+   */
+  computed?: {
+    formula: string;
+    dependsOn: string[];
+  };
 
   /*
-   * DYNAMIC OPTIONS
+   * GRID LAYOUT (FormEngine)
    */
-  dependsOn?: string;
-  optionsByValue?: Record<string, ERPModuleFieldOption[]>;
-
-  /*
-   * DYNAMIC COMPUTING
-   */
-computed?: {
-  formula: string;
-  dependsOn: string[];
-};
+  grid?: {
+    cols?: number;
+  };
 }
 
 export interface ERPModuleSchema {

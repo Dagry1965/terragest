@@ -75,40 +75,4 @@ export interface ERPModule {
   relations?: ERPModuleRelation[];
 
   workflows?: ERPModuleWorkflow[];
-
-  /*
-   * --- PROPRIÉTÉS ORIGINELLEMENT ORPHELINES ---
-   * (corrigées et replacées proprement dans ERPModule)
-   */
-
-  grid?: {
-    cols?: number;
-  };
-
-  searchable?: boolean;
-
-  async?: boolean;
-
-  multiple?: boolean;
-
-  computed?: {
-    formula: string;
-  };
-
-  ui?: {
-    placeholder?: string;
-    icon?: string;
-    variant?: string;
-    help?: string;
-  };
-
-  relation?: {
-    module: string;
-    labelField?: string;
-  };
-
-  options?: {
-    label: string;
-    value: string;
-  }[];
 }
