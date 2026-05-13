@@ -2,7 +2,7 @@ import type {
   ERPModuleField,
 } from "../schemas/ERPModuleSchema";
 
-import { coreERPModules }
+import { allERPModules }
 from "../definitions/coreModules";
 
 export class ERPRelationResolver {
@@ -12,7 +12,7 @@ export class ERPRelationResolver {
   ) {
 
     const module =
-      coreERPModules.find(
+      allERPModules.find(
         (item) =>
           item.metadata.key === moduleKey
       );
@@ -35,7 +35,7 @@ export class ERPRelationResolver {
       return null;
     }
 
-    return coreERPModules.find(
+    return allERPModules.find(
       (module) =>
         module.metadata.key ===
         field.references?.module
@@ -46,7 +46,7 @@ export class ERPRelationResolver {
 
     const errors: string[] = [];
 
-    for (const module of coreERPModules) {
+    for (const module of allERPModules) {
 
       for (const field of module.schema.fields) {
 
@@ -56,7 +56,7 @@ export class ERPRelationResolver {
         ) {
 
           const targetModule =
-            coreERPModules.find(
+            allERPModules.find(
               (item) =>
                 item.metadata.key ===
                 field.references?.module

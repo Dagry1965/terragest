@@ -1,9 +1,9 @@
 import { RuntimeDataBinding } from "@/runtime/data-binding";
-import { coreERPModules } from "../definitions/coreModules";
+import { allERPModules } from "../definitions/coreModules";
 
 export class ERPRelationDataLoader {
   static async load(moduleKey: string) {
-    const module = coreERPModules.find(
+    const module = allERPModules.find(
       (item) => item.metadata.key === moduleKey
     );
 

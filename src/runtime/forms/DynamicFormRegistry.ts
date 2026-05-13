@@ -4,9 +4,10 @@ import {
 } from "@/runtime/forms/DynamicField";
 
 import {
-  coreERPModules,
   ERPModuleBuilder,
 } from "@/runtime/modules";
+
+import { allERPModules } from "@/runtime/modules/definitions/coreModules";
 
 function toDynamicField(
   field: any
@@ -32,7 +33,7 @@ export class DynamicFormRegistry {
     _context: DynamicFormContext
   ) {
     const coreModule =
-      coreERPModules.find(
+      allERPModules.find(
         (item) =>
           item.metadata.key === module
       );
@@ -53,7 +54,7 @@ export class DynamicFormRegistry {
   }
 
   static getAvailableModules() {
-    return coreERPModules.map(
+    return allERPModules.map(
       (module) => module.metadata.key
     );
   }
