@@ -1,7 +1,7 @@
 import { ERPModuleRegistry } from "../ERPModuleRegistry";
-import { coreERPModules } from "../definitions/coreModules";
+import { allERPModules } from "../definitions/coreModules";
 
 export function registerCoreModules() {
-  ERPModuleRegistry.registerMany(coreERPModules);
+  ERPModuleRegistry.registerMany(allERPModules);
   return ERPModuleRegistry.all();
 }

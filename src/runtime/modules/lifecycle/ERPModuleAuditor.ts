@@ -1,4 +1,4 @@
-import { coreERPModules } from "../definitions/coreModules";
+import { allERPModules } from "../definitions/coreModules";
 import { ERPModuleDependencyGraph } from "./ERPModuleDependencyGraph";
 
 export class ERPModuleAuditor {
@@ -7,7 +7,7 @@ export class ERPModuleAuditor {
 
     const errors: string[] = [];
 
-    for (const module of coreERPModules) {
+    for (const module of allERPModules) {
 
       const moduleKey =
         module.metadata.key;
@@ -20,7 +20,7 @@ export class ERPModuleAuditor {
       for (const dependency of dependencies) {
 
         const dependencyExists =
-          coreERPModules.some(
+          allERPModules.some(
             (item) =>
               item.metadata.key === dependency
           );

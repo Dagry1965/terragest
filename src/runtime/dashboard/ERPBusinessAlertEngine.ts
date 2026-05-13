@@ -7,7 +7,7 @@ import { RuntimeDataBinding }
 from "@/runtime/data-binding";
 
 import {
-  coreERPModules,
+  allERPModules,
 }
 from "@/runtime/modules/definitions/coreModules";
 
@@ -21,7 +21,7 @@ function getModule(
 ): ERPModule | null {
 
   return (
-    coreERPModules.find(
+    allERPModules.find(
       (module) =>
         module.metadata.key === moduleKey
     ) ?? null

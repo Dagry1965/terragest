@@ -1,4 +1,4 @@
-import { coreERPModules } from "../definitions/coreModules";
+import { allERPModules } from "../definitions/coreModules";
 
 import type {
   RuntimeModuleContract,
@@ -32,7 +32,7 @@ function toGeneratedFieldType(
 export class CoreModuleRuntimeAdapter {
   static toRuntimeModules():
     RuntimeModuleContract[] {
-    return coreERPModules.map((module) => ({
+    return allERPModules.map((module) => ({
       id:
         module.metadata.key,
 
@@ -90,7 +90,7 @@ export class CoreModuleRuntimeAdapter {
 
   static toGeneratedSchemas():
     ERPGeneratedSchema[] {
-    return coreERPModules.map((module) => ({
+    return allERPModules.map((module) => ({
       moduleKey:
         module.metadata.key,
 
@@ -121,7 +121,7 @@ export class CoreModuleRuntimeAdapter {
 
   static toRuntimeBindings() {
     return Object.fromEntries(
-      coreERPModules.map((module) => [
+      allERPModules.map((module) => [
         module.metadata.key,
         {
           workflows:
@@ -151,7 +151,7 @@ export class CoreModuleRuntimeAdapter {
   }
   static toRuntimeWorkflows() {
     return Object.fromEntries(
-      coreERPModules.map((module) => [
+      allERPModules.map((module) => [
         module.metadata.key,
         module.workflows?.map(
           (workflow) => workflow.key

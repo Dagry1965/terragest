@@ -1,5 +1,5 @@
 import {
-  coreERPModules,
+  allERPModules,
 } from "./definitions/coreModules";
 
 import {
@@ -10,7 +10,7 @@ export function registerCoreERPModules() {
   ERPModuleRegistry.clear();
 
   ERPModuleRegistry.registerMany(
-    coreERPModules
+    allERPModules
   );
 
   return ERPModuleRegistry.all();
