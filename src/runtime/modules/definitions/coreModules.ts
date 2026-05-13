@@ -1,4 +1,5 @@
 import type { ERPModule } from "../ERPModule";
+import { generatedERPModules } from "./generated/generatedModules";
 import {
   createBusinessModule,
   clientFields, commandeFields, utilisateurFields, tacheFields, incidentFields, maintenanceFields, interventionFields, fournisseurFields, terrainFields, recolteFields, parcelleFields, intrantFields, mouvementFields, stockFields, produitFields, vehiculeFields, employeFields, achatFields, livraisonFields, recetteFields, depenseFields, devisFields, factureFields,
@@ -153,3 +154,25 @@ export const coreERPModules: ERPModule[] = [
   }),
 
 ];
+
+function mergeERPModules(
+  coreModules: ERPModule[],
+  generatedModules: ERPModule[]
+): ERPModule[] {
+  const map = new Map<string, ERPModule>();
+
+  for (const module of generatedModules) {
+    map.set(module.metadata.key, module);
+  }
+
+  for (const module of coreModules) {
+    map.set(module.metadata.key, module);
+  }
+
+  return Array.from(map.values());
+}
+
+export const allERPModules: ERPModule[] = mergeERPModules(
+  coreERPModules,
+  generatedERPModules
+);
