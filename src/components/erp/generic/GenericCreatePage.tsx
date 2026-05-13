@@ -1,6 +1,6 @@
-import { ERPRuntimePage } from "@/components/erp/runtime";
-import { coreERPModules } from "@/runtime/modules/definitions/coreModules";
 import type { ERPModule } from "@/runtime/modules";
+import { allERPModules } from "@/runtime/modules/definitions/coreModules";
+import { ERPRuntimePage } from "@/components/erp/runtime/ERPRuntimePage";
 
 interface GenericCreatePageProps {
   module?: ERPModule;
@@ -13,7 +13,7 @@ export function GenericCreatePage({
 }: GenericCreatePageProps) {
   const runtimeModule =
     module ??
-    coreERPModules.find((item) => item.metadata.key === moduleKey);
+    allERPModules.find((item) => item.metadata.key === moduleKey);
 
   return <ERPRuntimePage module={runtimeModule} type="create" />;
 }

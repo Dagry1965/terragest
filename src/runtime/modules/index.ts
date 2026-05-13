@@ -29,5 +29,8 @@ export { RuntimePageFactory, type RuntimePageType } from "./factories/RuntimePag
 export { RuntimeFormFactory } from "./factories/RuntimeFormFactory";
 export { RuntimeTableFactory } from "./factories/RuntimeTableFactory";
 
-export { coreERPModules } from "./definitions/coreModules";
+export {
+  coreERPModules,
+  allERPModules,
+} from "./definitions/coreModules";
 export { registerCoreModules } from "./registry/registerCoreModules";

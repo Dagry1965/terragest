@@ -1,12 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
-import { ERPRuntimePage } from "@/components/erp/runtime";
-import { coreERPModules } from "@/runtime/modules";
-import { RuntimeDataBinding } from "@/runtime/data-binding";
-
 import type { ERPModule } from "@/runtime/modules";
+import { allERPModules } from "@/runtime/modules/definitions/coreModules";
+import { RuntimeDataBinding } from "@/runtime/data-binding";
+import { ERPRuntimePage } from "@/components/erp/runtime/ERPRuntimePage";
 
 interface GenericDetailPageProps {
   module?: ERPModule;
@@ -23,62 +21,50 @@ export function GenericDetailPage({
 }: GenericDetailPageProps) {
   const runtimeModule =
     module ??
-    coreERPModules.find(
-      (item) => item.metadata.key === moduleKey
-    );
+    allERPModules.find((item) => item.metadata.key === moduleKey);
 
   const [runtimeRecord, setRuntimeRecord] =
     useState<Record<string, unknown> | null | undefined>(record);
 
-  const [loading, setLoading] =
-    useState(true);
+  const [loading, setLoading] = useState(Boolean(id && runtimeModule && !record));
 
   useEffect(() => {
-    async function loadRecord() {
-      if (!runtimeModule || !id) {
-        setLoading(false);
-        return;
-      }
-
-      try {
-        const loadedRecord =
-          await RuntimeDataBinding.detail(
-            runtimeModule,
-            id
-          );
-
-        setRuntimeRecord(
-          loadedRecord ?? undefined
-        );
-      } catch (error) {
-        console.error(
-          "ERP DETAIL LOAD ERROR",
-          error
-        );
-
-        setRuntimeRecord(undefined);
-      } finally {
-        setLoading(false);
-      }
+    if (!id || !runtimeModule || record) {
+      return;
     }
 
-    loadRecord();
-  }, [runtimeModule, id]);
+    let mounted = true;
+
+    RuntimeDataBinding.detail(runtimeModule, id)
+      .then((data) => {
+        if (mounted) {
+          setRuntimeRecord(data);
+        }
+      })
+      .finally(() => {
+        if (mounted) {
+          setLoading(false);
+        }
+      });
+
+    return () => {
+      mounted = false;
+    };
+  }, [id, runtimeModule, record]);
+
+  if (!runtimeModule) {
+    return <div className="p-6">Module introuvable.</div>;
+  }
+
+  if (loading) {
+    return <div className="p-6">Chargement...</div>;
+  }
 
   return (
     <ERPRuntimePage
       module={runtimeModule}
       type="detail"
-      record={
-        loading
-          ? undefined
-          : runtimeRecord ?? undefined
-      }
-      description={
-        loading
-          ? "Chargement de la donnée..."
-          : undefined
-      }
+      record={runtimeRecord ?? undefined}
     />
   );
 }
