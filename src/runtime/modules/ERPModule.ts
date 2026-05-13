@@ -14,7 +14,7 @@ export interface ERPModuleRelation {
   key: string;
   label: string;
   targetModule?: string;
-  targetmodule?: string;
+  targetmodule?: string; // doublon conservé comme demandé
   type: "one-to-one" | "one-to-many" | "many-to-one" | "many-to-many";
 }
 
@@ -75,4 +75,40 @@ export interface ERPModule {
   relations?: ERPModuleRelation[];
 
   workflows?: ERPModuleWorkflow[];
+
+  /*
+   * --- PROPRIÉTÉS ORIGINELLEMENT ORPHELINES ---
+   * (corrigées et replacées proprement dans ERPModule)
+   */
+
+  grid?: {
+    cols?: number;
+  };
+
+  searchable?: boolean;
+
+  async?: boolean;
+
+  multiple?: boolean;
+
+  computed?: {
+    formula: string;
+  };
+
+  ui?: {
+    placeholder?: string;
+    icon?: string;
+    variant?: string;
+    help?: string;
+  };
+
+  relation?: {
+    module: string;
+    labelField?: string;
+  };
+
+  options?: {
+    label: string;
+    value: string;
+  }[];
 }
