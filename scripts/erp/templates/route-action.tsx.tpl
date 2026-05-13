@@ -2,11 +2,11 @@ import { ERPModuleActionPageTemplate } from "@/components/erp/generic/ERPModuleA
 
 export const dynamic = "force-dynamic";
 
-export default function TerrainsRelationsPage() {
+export default function {{PascalName}}{{ActionPascal}}Page() {
   return (
     <ERPModuleActionPageTemplate
-      moduleKey="terrains"
-      action="relations"
+      moduleKey="{{ModuleKey}}"
+      action="{{ActionKey}}"
     />
   );
 }
