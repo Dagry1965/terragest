@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-import { coreERPModules } from "@/runtime/modules/definitions/coreModules";
+import { allERPModules } from "@/runtime/modules";
 import { RuntimeRealtimeEngine } from "@/runtime/realtime/engine/RuntimeRealtimeEngine";
 
 type UseRealtimeCollectionOptions = {
@@ -18,7 +18,7 @@ export const useRealtimeCollection = <T = Record<string, any>>({
 }: UseRealtimeCollectionOptions) => {
   const targetCollection = collectionName ?? collection;
 
-  const module = coreERPModules.find(
+  const module = allERPModules.find(
     (item) =>
       item.schema.collection === targetCollection ||
       item.metadata.key === targetCollection

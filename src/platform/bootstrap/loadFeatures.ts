@@ -9,7 +9,7 @@ import type {
 } from "../registry/FeatureDefinition";
 
 import {
-  coreERPModules,
+  allERPModules,
 } from "@/runtime/modules";
 
 import {
@@ -48,7 +48,7 @@ import {
 from "@/features/observability/observability.feature";
 
 function toFeatureCapabilities(
-  module: (typeof coreERPModules)[number]
+  module: (typeof allERPModules)[number]
 ): FeatureCapability[] {
   const capabilities:
     FeatureCapability[] = [
@@ -84,7 +84,7 @@ function toFeatureCapabilities(
 }
 
 function toRuntimeFeature(
-  module: (typeof coreERPModules)[number]
+  module: (typeof allERPModules)[number]
 ): FeatureDefinition {
   const key =
     module.metadata.key;
@@ -135,7 +135,7 @@ loadFeatures() {
   ];
 
   const runtimeFeatures =
-    coreERPModules.map(
+    allERPModules.map(
       toRuntimeFeature
     );
 

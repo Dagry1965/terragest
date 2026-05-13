@@ -1,5 +1,5 @@
 import {
-  coreERPModules,
+  allERPModules,
 } from "@/runtime/modules";
 
 export type ERPModuleGroup =
@@ -70,7 +70,7 @@ function normalizeGroup(
 }
 
 function toCoreNavigationModule(
-  module: (typeof coreERPModules)[number]
+  module: (typeof allERPModules)[number]
 ): ERPModule {
   const key =
     module.metadata.key;
@@ -154,7 +154,7 @@ function toCoreNavigationModule(
 
 export const moduleRegistry:
   ERPModule[] =
-    coreERPModules.map(
+    allERPModules.map(
       toCoreNavigationModule
     );
 
