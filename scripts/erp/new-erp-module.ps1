@@ -4,6 +4,16 @@ param(
 
   [string]$Label = "",
 
+  [string]$Description = "",
+
+  [string]$Category = "MÃ©tier",
+
+  [string]$Collection = "",
+
+  [string]$Icon = "database",
+
+  [switch]$GenerateDefinition,
+
   [switch]$Force
 )
 
@@ -19,13 +29,32 @@ $ScriptDir = Split-Path $MyInvocation.MyCommand.Path -Parent
 Assert-ModuleKey $ModuleKey
 
 $PascalName = Convert-ToPascalCase $ModuleKey
+$CamelName = $PascalName.Substring(0, 1).ToLower() + $PascalName.Substring(1)
+
+if ([string]::IsNullOrWhiteSpace($Label)) {
+  $Label = $PascalName
+}
+
+if ([string]::IsNullOrWhiteSpace($Description)) {
+  $Description = "Module ERP gÃ©nÃ©rÃ© pour $Label."
+}
+
+if ([string]::IsNullOrWhiteSpace($Collection)) {
+  $Collection = $ModuleKey
+}
+
 $Base = Join-Path $Root "src\app\(private)\$ModuleKey"
 $TemplatesDir = Join-Path $ScriptDir "templates"
 
 $tokens = @{
   ModuleKey = $ModuleKey
   PascalName = $PascalName
+  CamelName = $CamelName
   Label = $Label
+  Description = $Description
+  Category = $Category
+  Collection = $Collection
+  Icon = $Icon
 }
 
 $routes = @(
@@ -85,6 +114,20 @@ foreach ($action in $actions) {
     -Force:$Force
 }
 
+if ($GenerateDefinition) {
+  $definitionOutputDir = Join-Path $Root "src\runtime\modules\definitions\generated"
+  $definitionOutput = Join-Path $definitionOutputDir "$ModuleKey.module.ts"
+
+  $definitionContent = Expand-Template `
+    -TemplatePath (Join-Path $TemplatesDir "module-definition.ts.tpl") `
+    -Tokens $tokens
+
+  Write-GeneratedFile `
+    -Path $definitionOutput `
+    -Content $definitionContent `
+    -Force:$Force
+}
+
 Write-Host ""
-Write-Host "OK ERP MODULE ROUTES GENERATED: $ModuleKey"
-Write-Host "NEXT: verify module definition exists in coreModules.ts"
+Write-Host "OK ERP MODULE GENERATED: $ModuleKey"
+Write-Host "NEXT: manually review generated definition before registering it in coreModules.ts"
