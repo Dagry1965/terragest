@@ -5,10 +5,19 @@ $OutDir = Join-Path $Root "docs\audit"
 $OutFile = Join-Path $OutDir "ERP_MODULES_HEALTH.md"
 $Utf8NoBom = New-Object System.Text.UTF8Encoding($false)
 
+$coreModulesPath = Join-Path $Root "src\runtime\modules\definitions\coreModules.ts"
+$appPrivatePath = Join-Path $Root "src\app\(private)"
+$businessModulesFile = Join-Path $Root "scripts\erp\erp-business-modules.json"
+
 if (-not (Test-Path $OutDir)) {
   New-Item -ItemType Directory -Path $OutDir -Force | Out-Null
 }
 
+if (-not (Test-Path $businessModulesFile)) {
+  throw "erp-business-modules.json introuvable"
+}
+
+$modules = Get-Content $businessModulesFile | ConvertFrom-Json | Sort-Object
 $lines = @()
 
 function Add-Line {
@@ -22,26 +31,17 @@ function Test-FileContains {
     [string]$Pattern
   )
 
-  if (-not (Test-Path $Path)) {
+  if ([string]::IsNullOrWhiteSpace($Path)) {
+    return $false
+  }
+
+  if (-not (Test-Path -LiteralPath $Path)) {
     return $false
   }
 
   $content = [System.IO.File]::ReadAllText($Path)
   return $content.Contains($Pattern)
 }
-
-$coreModulesPath = Join-Path $Root "src\runtime\modules\definitions\coreModules.ts"
-$appPrivatePath = Join-Path $Root "src\app\(private)"
-
-$businessModulesFile = Join-Path $Root "scripts\erp\erp-business-modules.json"
-
-if (-not (Test-Path $businessModulesFile)) {
-  throw "erp-business-modules.json introuvable"
-}
-
-$modules = Get-Content $businessModulesFile |
-  ConvertFrom-Json |
-  Sort-Object
 
 Add-Line "# TERRAGEST_V2 - CONTROLE SANTE MODULES ERP"
 Add-Line ""
@@ -57,55 +57,24 @@ foreach ($module in $modules) {
   $base = Join-Path $appPrivatePath $module
 
   $checks = @(
-    @{
-      Name = "Route liste"
-      Path = Join-Path $base "page.tsx"
-      Token = "moduleKey=`"$module`""
-    },
-    @{
-      Name = "Route creation"
-      Path = Join-Path $base "nouveau\page.tsx"
-      Token = "moduleKey=`"$module`""
-    },
-    @{
-      Name = "Route detail"
-      Path = Join-Path $base "[id]\page.tsx"
-      Token = "moduleKey=`"$module`""
-    },
-    @{
-      Name = "Route edition"
-      Path = Join-Path $base "[id]\edit\page.tsx"
-      Token = "moduleKey=`"$module`""
-    },
-    @{
-      Name = "Route audit"
-      Path = Join-Path $base "audit\page.tsx"
-      Token = "ERPModuleActionPageTemplate"
-    },
-    @{
-      Name = "Route export"
-      Path = Join-Path $base "export\page.tsx"
-      Token = "ERPModuleActionPageTemplate"
-    },
-    @{
-      Name = "Route import"
-      Path = Join-Path $base "import\page.tsx"
-      Token = "ERPModuleActionPageTemplate"
-    },
-    @{
-      Name = "Route relations"
-      Path = Join-Path $base "relations\page.tsx"
-      Token = "ERPModuleActionPageTemplate"
-    },
-    @{
-      Name = "Route workflows"
-      Path = Join-Path $base "workflows\page.tsx"
-      Token = "ERPModuleActionPageTemplate"
-    }
+    @{ Name = "Route liste"; Path = Join-Path $base "page.tsx"; Token = "moduleKey=`"$module`"" },
+    @{ Name = "Route creation"; Path = Join-Path $base "nouveau\page.tsx"; Token = "moduleKey=`"$module`"" },
+    @{ Name = "Route detail"; Path = Join-Path $base "[id]\page.tsx"; Token = "moduleKey=`"$module`"" },
+    @{ Name = "Route edition"; Path = Join-Path $base "[id]\edit\page.tsx"; Token = "moduleKey=`"$module`"" },
+    @{ Name = "Route audit"; Path = Join-Path $base "audit\page.tsx"; Token = "ERPModuleActionPageTemplate" },
+    @{ Name = "Route export"; Path = Join-Path $base "export\page.tsx"; Token = "ERPModuleActionPageTemplate" },
+    @{ Name = "Route import"; Path = Join-Path $base "import\page.tsx"; Token = "ERPModuleActionPageTemplate" },
+    @{ Name = "Route relations"; Path = Join-Path $base "relations\page.tsx"; Token = "ERPModuleActionPageTemplate" },
+    @{ Name = "Route workflows"; Path = Join-Path $base "workflows\page.tsx"; Token = "ERPModuleActionPageTemplate" }
   )
 
   foreach ($check in $checks) {
-    $exists = Test-Path $check.Path
+    $exists = $false
+
+    if (-not [string]::IsNullOrWhiteSpace($check.Path)) {
+      $exists = Test-Path -LiteralPath $check.Path
+    }
+
     $contains = Test-FileContains -Path $check.Path -Pattern $check.Token
 
     if ($exists -and $contains) {
@@ -117,12 +86,22 @@ foreach ($module in $modules) {
     }
   }
 
-  $declared = Test-FileContains -Path $coreModulesPath -Pattern "key: `"$module`""
+  $declaredInCore = Test-FileContains `
+    -Path $coreModulesPath `
+    -Pattern "key: `"$module`""
+
+  $generatedModuleFile = Join-Path `
+    $Root `
+    "src\runtime\modules\definitions\generated\$module.module.ts"
+
+  $declaredInGenerated = Test-Path -LiteralPath $generatedModuleFile
+
+  $declared = $declaredInCore -or $declaredInGenerated
 
   if ($declared) {
-    Add-Line "- OK - module declare dans coreModules.ts"
+    Add-Line "- OK - module declare dans registre ERP"
   } else {
-    Add-Line "- WARN - module absent de coreModules.ts"
+    Add-Line "- WARN - module absent du registre ERP"
   }
 
   Add-Line ""
