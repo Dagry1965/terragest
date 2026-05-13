@@ -1,7 +1,7 @@
-"use client";
+﻿"use client";
 
 import { ERPStatusBadge }
-from "@/components/erp/page/ERPStatusBadge";
+from "@/components/erp/ui/ERPStatusBadge";
 
 export function ERPNotificationCard({
   title,

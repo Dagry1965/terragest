@@ -1,10 +1,10 @@
-"use client";
+﻿"use client";
 
 import { ERPPage }
-from "@/components/erp/page/ERPPage";
+from "@/components/erp/ui/ERPPage";
 
 import { ERPWidgetCard }
-from "@/components/erp/page/ERPWidgetCard";
+from "@/components/erp/ui/ERPWidgetCard";
 
 import { ERPWorkflowStep }
 from "@/components/erp/workflow/ERPWorkflowStep";

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 
@@ -8,13 +8,13 @@ import {
 } from "react";
 
 import { DataTable }
-from "@/components/crud/DataTable";
+from "@/components/erp/ui";
 
 import { SearchBar }
-from "@/components/crud/SearchBar";
+from "@/components/erp/ui";
 
 import { EmptyState }
-from "@/components/crud/EmptyState";
+from "@/components/erp/ui";
 
 import { ConfirmDialog }
 from "@/components/crud/ConfirmDialog";
