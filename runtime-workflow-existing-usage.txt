@@ -1,0 +1,746 @@
+﻿
+src\runtime\actions\ERPAction.ts:9:  | "audit"
+src\runtime\actions\ERPActionExecutor.ts:21:      case "audit":
+src\runtime\actions\ERPActionExecutor.ts:22:        toast.success("Consultation audit");
+src\runtime\actions\ERPActionRegistry.ts:49:        key: "audit",
+src\runtime\actions\ERPActionRegistry.ts:50:        label: "Audit",
+src\runtime\actions\ERPActionRegistry.ts:51:        href: `${basePath}/${safeId}/audit`,
+src\runtime\actions\ERPActionResolver.ts:39:      key: "audit",
+src\runtime\actions\ERPActionResolver.ts:40:      label: "Audit",
+src\runtime\actions\ERPActionResolver.ts:41:      href: `${basePath}/audit`,
+src\runtime\actions\RuntimeActionEngine.ts:3:export class RuntimeActionEngine {
+src\runtime\automation\ERPAutomationTimelineStore.ts:5:  status: string;
+src\runtime\automation\ERPRuntimeAutomationSeed.ts:2:  ERPEventBus,
+src\runtime\automation\ERPRuntimeAutomationSeed.ts:3:} from "@/runtime/events/bus/ERPEventBus";
+src\runtime\automation\ERPRuntimeAutomationSeed.ts:21:  ERPEventBus.emit({
+src\runtime\automation\ERPRuntimeAutomationSeed.ts:29:  ERPEventBus.emit({
+src\runtime\automation\ERPRuntimeAutomationSeed.ts:37:  ERPEventBus.emit({
+src\runtime\automation\seedERPRuntimeAutomation.ts:14:    status: "success",
+src\runtime\automation-runtime\AutomationRuntimeExecutor.ts:21:    job.status = "running";
+src\runtime\automation-runtime\AutomationRuntimeExecutor.ts:31:      job.status = "completed";
+src\runtime\automation-runtime\AutomationRuntimeExecutor.ts:43:      job.status = "failed";
+src\runtime\automation-runtime\AutomationRuntimeQueue.ts:17:      status: "pending",
+src\runtime\automation-runtime\AutomationRuntimeQueue.ts:35:    return queue.filter((job) => 
+job.status === "pending");
+src\runtime\automation-runtime\AutomationRuntimeQueue.ts:51:    job.status = "dead_letter";
+src\runtime\automation-runtime\AutomationRuntimeRules.ts:39:      { type: "audit", label: "Tracer 
+relance automatique" },
+src\runtime\automation-runtime\AutomationRuntimeRules.ts:48:    trigger: { type: "event" },
+src\runtime\automation-runtime\AutomationRuntimeRules.ts:60:    trigger: { type: "event" },
+src\runtime\automation-runtime\AutomationRuntimeRules.ts:62:      { type: "audit", label: "Tracer 
+modification produit" },
+src\runtime\automation-runtime\AutomationRuntimeRules.ts:96:    trigger: { type: "event" },
+src\runtime\automation-runtime\AutomationRuntimeRules.ts:111:      { type: "audit", label: "Tracer 
+relance paiement" },
+src\runtime\automation-runtime\AutomationRuntimeTriggerEngine.ts:43:    if (rule.trigger.type === 
+"event") {
+src\runtime\automation-runtime\AutomationRuntimeTypes.ts:6:  | "event";
+src\runtime\automation-runtime\AutomationRuntimeTypes.ts:8:export type AutomationRuntimeJobStatus =
+src\runtime\automation-runtime\AutomationRuntimeTypes.ts:26:    | "audit"
+src\runtime\automation-runtime\AutomationRuntimeTypes.ts:48:  status: AutomationRuntimeJobStatus;
+src\runtime\automation-runtime\index.ts:4:  AutomationRuntimeJobStatus,
+src\runtime\bootstrap\bootstrapEnterpriseRuntime.ts:1:import { EventBus }
+src\runtime\bootstrap\bootstrapEnterpriseRuntime.ts:2:from "../events/EventBus";
+src\runtime\bootstrap\bootstrapEnterpriseRuntime.ts:28:import { registerDomainEvents }
+src\runtime\bootstrap\bootstrapEnterpriseRuntime.ts:29:from "./registerDomainEvents";
+src\runtime\bootstrap\bootstrapEnterpriseRuntime.ts:38:  const eventBus =
+src\runtime\bootstrap\bootstrapEnterpriseRuntime.ts:39:    new EventBus();
+src\runtime\bootstrap\bootstrapEnterpriseRuntime.ts:66:  registerDomainEvents(
+src\runtime\bootstrap\bootstrapEnterpriseRuntime.ts:67:    eventBus
+src\runtime\bootstrap\bootstrapEnterpriseRuntime.ts:76:    eventBus,
+src\runtime\bootstrap\bootstrapRuntime.ts:4:import { EventBus }
+src\runtime\bootstrap\bootstrapRuntime.ts:5:from "../events/EventBus";
+src\runtime\bootstrap\bootstrapRuntime.ts:13:  const eventBus =
+src\runtime\bootstrap\bootstrapRuntime.ts:14:    new EventBus();
+src\runtime\bootstrap\bootstrapRuntime.ts:22:    eventBus,
+src\runtime\bootstrap\initializeRuntime.ts:4:import { EventBus }
+src\runtime\bootstrap\initializeRuntime.ts:5:from "../events/EventBus";
+src\runtime\bootstrap\initializeRuntime.ts:13:  registerDomainEvents
+src\runtime\bootstrap\initializeRuntime.ts:15:from "./registerDomainEvents";
+src\runtime\bootstrap\initializeRuntime.ts:23:  const eventBus =
+src\runtime\bootstrap\initializeRuntime.ts:24:    new EventBus();
+src\runtime\bootstrap\initializeRuntime.ts:30:  registerDomainEvents(
+src\runtime\bootstrap\initializeRuntime.ts:31:    eventBus
+src\runtime\bootstrap\initializeRuntime.ts:40:    eventBus,
+src\runtime\bootstrap\registerBreakdownFlow.ts:1:import { EventBus }
+src\runtime\bootstrap\registerBreakdownFlow.ts:2:from "../events/EventBus";
+src\runtime\bootstrap\registerBreakdownFlow.ts:7:from 
+"../../features/materiels/events/MaterielEvents";
+src\runtime\bootstrap\registerBreakdownFlow.ts:16:  eventBus: EventBus
+src\runtime\bootstrap\registerBreakdownFlow.ts:22:  eventBus.on(
+src\runtime\bootstrap\registerDomainEvents.ts:1:import { EventBus }
+src\runtime\bootstrap\registerDomainEvents.ts:2:from "../events/EventBus";
+src\runtime\bootstrap\registerDomainEvents.ts:7:from 
+"../../features/materiels/events/MaterielEvents";
+src\runtime\bootstrap\registerDomainEvents.ts:10:registerDomainEvents(
+src\runtime\bootstrap\registerDomainEvents.ts:11:  eventBus: EventBus
+src\runtime\bootstrap\registerDomainEvents.ts:14:  eventBus.on(
+src\runtime\bootstrap\registerDomainEvents.ts:26:    "[Runtime] domain events registered"
+src\runtime\bootstrap\runtimeHealthCheck.ts:14:      eventBus:
+src\runtime\bootstrap\runtimeHealthCheck.ts:15:        !!runtime.eventBus,
+src\runtime\bootstrap\simulateBreakdown.ts:7:from "../../features/materiels/events/MaterielEvents";
+src\runtime\bootstrap\simulateBreakdown.ts:14:  runtime.eventBus.emit(
+src\runtime\bootstrap\simulateBreakdownFlow.ts:14:from 
+"../../features/materiels/events/MaterielEvents";
+src\runtime\bootstrap\simulateBreakdownFlow.ts:22:    runtime.eventBus
+src\runtime\bootstrap\simulateBreakdownFlow.ts:25:  runtime.eventBus.emit(
+src\runtime\bus\RuntimeEventBus.ts:1:type EventHandler = (payload: any) => Promise<void>;
+src\runtime\bus\RuntimeEventBus.ts:3:class RuntimeEventBus {
+src\runtime\bus\RuntimeEventBus.ts:4:  private handlers: Record<string, EventHandler[]> = {};
+src\runtime\bus\RuntimeEventBus.ts:6:  on(event: string, handler: EventHandler) {
+src\runtime\bus\RuntimeEventBus.ts:7:    if (!this.handlers[event]) {
+src\runtime\bus\RuntimeEventBus.ts:8:      this.handlers[event] = [];
+src\runtime\bus\RuntimeEventBus.ts:11:    this.handlers[event].push(handler);
+src\runtime\bus\RuntimeEventBus.ts:14:  async emit(event: string, payload: any) {
+src\runtime\bus\RuntimeEventBus.ts:15:    const handlers = this.handlers[event] || [];
+src\runtime\bus\RuntimeEventBus.ts:23:export const runtimeEventBus =
+src\runtime\bus\RuntimeEventBus.ts:24:  new RuntimeEventBus();
+src\runtime\business-rules\RuntimeBusinessRule.ts:7:  event: string;
+src\runtime\business-rules\runtimeBusinessRules.ts:25:    event:
+src\runtime\business-rules\runtimeBusinessRules.ts:69:    event:
+src\runtime\business-rules\RuntimeBusinessRulesEngine.ts:10:    event: string,
+src\runtime\business-rules\RuntimeBusinessRulesEngine.ts:21:          rule.event ===
+src\runtime\business-rules\RuntimeBusinessRulesEngine.ts:22:            event
+src\runtime\cockpit\ERPCockpitSnapshot.ts:11:    eventsCount: modules.reduce((total, module) => 
+total + module.events.length, 0),
+src\runtime\compliance\ERPComplianceChecker.ts:69:    if (!module.auditEnabled) {
+src\runtime\compliance\ERPComplianceChecker.ts:73:        code: "AUDIT_DISABLED",
+src\runtime\compliance\ERPComplianceChecker.ts:74:        message: "Audit ERP dÃ©sactivÃ©.",
+src\runtime\compliance\ERPComplianceChecker.ts:75:        recommendation: "Activer auditEnabled.",
+src\runtime\core\CentralRuntimeRegistry.ts:49:  runtimeAuditRegistry,
+src\runtime\core\CentralRuntimeRegistry.ts:50:} from "./RuntimeAuditRegistry";
+src\runtime\core\CentralRuntimeRegistry.ts:100:      status: runtimeLifecycle.getStatus(),
+src\runtime\core\CentralRuntimeRegistry.ts:126:    return runtimeDeadLetterQueue.getEvents();
+src\runtime\core\CentralRuntimeRegistry.ts:137:  getRuntimeAudit() {
+src\runtime\core\CentralRuntimeRegistry.ts:138:    return runtimeAuditRegistry.getEntries();
+src\runtime\core\RuntimeAuditRegistry.ts:1:export interface RuntimeAuditEntry {
+src\runtime\core\RuntimeAuditRegistry.ts:16:export class RuntimeAuditRegistry {
+src\runtime\core\RuntimeAuditRegistry.ts:19:    RuntimeAuditEntry[] = [];
+src\runtime\core\RuntimeAuditRegistry.ts:22:    entry: RuntimeAuditEntry
+src\runtime\core\RuntimeAuditRegistry.ts:49:export const runtimeAuditRegistry =
+src\runtime\core\RuntimeAuditRegistry.ts:50:  new RuntimeAuditRegistry();
+src\runtime\core\RuntimeContracts.ts:3:export type RuntimeStatus =
+src\runtime\core\RuntimeContracts.ts:18:  | "audit"
+src\runtime\core\RuntimeContracts.ts:33:  status: RuntimeStatus;
+src\runtime\core\RuntimeContracts.ts:35:  events: string[];
+src\runtime\core\RuntimeDeadLetterQueue.ts:1:export interface DeadLetterEvent {
+src\runtime\core\RuntimeDeadLetterQueue.ts:5:  event: string;
+src\runtime\core\RuntimeDeadLetterQueue.ts:16:  private events:
+src\runtime\core\RuntimeDeadLetterQueue.ts:17:    DeadLetterEvent[] = [];
+src\runtime\core\RuntimeDeadLetterQueue.ts:20:    event: DeadLetterEvent
+src\runtime\core\RuntimeDeadLetterQueue.ts:23:    this.events.push(event);
+src\runtime\core\RuntimeDeadLetterQueue.ts:26:  getEvents() {
+src\runtime\core\RuntimeDeadLetterQueue.ts:28:    return this.events;
+src\runtime\core\RuntimeDeadLetterQueue.ts:31:  getCriticalEvents() {
+src\runtime\core\RuntimeDeadLetterQueue.ts:33:    return this.events.filter(
+src\runtime\core\RuntimeDeadLetterQueue.ts:34:      event =>
+src\runtime\core\RuntimeDeadLetterQueue.ts:35:        event.reason.includes(
+src\runtime\core\RuntimeDeadLetterQueue.ts:43:    this.events = [];
+src\runtime\core\RuntimeEventBus.ts:2:  runtimeEventStore,
+src\runtime\core\RuntimeEventBus.ts:3:} from "./RuntimeEventStore";
+src\runtime\core\RuntimeEventBus.ts:5:export interface RuntimeEvent {
+src\runtime\core\RuntimeEventBus.ts:16:type RuntimeEventHandler =
+src\runtime\core\RuntimeEventBus.ts:17:  (event: RuntimeEvent) => void;
+src\runtime\core\RuntimeEventBus.ts:19:export class RuntimeEventBus {
+src\runtime\core\RuntimeEventBus.ts:24:      RuntimeEventHandler[]
+src\runtime\core\RuntimeEventBus.ts:28:    event: RuntimeEvent
+src\runtime\core\RuntimeEventBus.ts:31:    runtimeEventStore.append(
+src\runtime\core\RuntimeEventBus.ts:32:      event
+src\runtime\core\RuntimeEventBus.ts:37:        event.name
+src\runtime\core\RuntimeEventBus.ts:42:      handler(event);
+src\runtime\core\RuntimeEventBus.ts:47:    eventName: string,
+src\runtime\core\RuntimeEventBus.ts:48:    handler: RuntimeEventHandler
+src\runtime\core\RuntimeEventBus.ts:53:        eventName
+src\runtime\core\RuntimeEventBus.ts:59:      eventName,
+src\runtime\core\RuntimeEventBus.ts:64:  getRegisteredEvents() {
+src\runtime\core\RuntimeEventBus.ts:72:export const runtimeEventBus =
+src\runtime\core\RuntimeEventBus.ts:73:  new RuntimeEventBus();
+src\runtime\core\RuntimeEventStore.ts:2:  RuntimeEvent,
+src\runtime\core\RuntimeEventStore.ts:3:} from "./RuntimeEventBus";
+src\runtime\core\RuntimeEventStore.ts:5:export class RuntimeEventStore {
+src\runtime\core\RuntimeEventStore.ts:7:  private events:
+src\runtime\core\RuntimeEventStore.ts:8:    RuntimeEvent[] = [];
+src\runtime\core\RuntimeEventStore.ts:11:    event: RuntimeEvent
+src\runtime\core\RuntimeEventStore.ts:14:    this.events.push(event);
+src\runtime\core\RuntimeEventStore.ts:17:  getEvents() {
+src\runtime\core\RuntimeEventStore.ts:19:    return this.events;
+src\runtime\core\RuntimeEventStore.ts:22:  getEventsByName(
+src\runtime\core\RuntimeEventStore.ts:26:    return this.events.filter(
+src\runtime\core\RuntimeEventStore.ts:27:      event =>
+src\runtime\core\RuntimeEventStore.ts:28:        event.name === name
+src\runtime\core\RuntimeEventStore.ts:34:    this.events = [];
+src\runtime\core\RuntimeEventStore.ts:38:export const runtimeEventStore =
+src\runtime\core\RuntimeEventStore.ts:39:  new RuntimeEventStore();
+src\runtime\core\RuntimeEventTopology.ts:10:export class RuntimeEventTopology {
+src\runtime\core\RuntimeEventTopology.ts:51:export const runtimeEventTopology =
+src\runtime\core\RuntimeEventTopology.ts:52:  new RuntimeEventTopology();
+src\runtime\core\RuntimeEventTopology.ts:54:runtimeEventTopology.initialize();
+src\runtime\core\RuntimeExecutionRegistry.ts:9:  status:
+src\runtime\core\RuntimeExecutionRegistry.ts:53:        execution.status === "failed"
+src\runtime\core\RuntimeHealthRegistry.ts:5:  status:
+src\runtime\core\RuntimeHealthRegistry.ts:53:        entry.status === "critical"
+src\runtime\core\RuntimeHealthRegistry.ts:61:        entry.status === "warning"
+src\runtime\core\RuntimeLifecycle.ts:1:export type RuntimeLifecycleStatus =
+src\runtime\core\RuntimeLifecycle.ts:10:  private status:
+src\runtime\core\RuntimeLifecycle.ts:11:    RuntimeLifecycleStatus =
+src\runtime\core\RuntimeLifecycle.ts:19:    this.status = "running";
+src\runtime\core\RuntimeLifecycle.ts:27:    this.status = "paused";
+src\runtime\core\RuntimeLifecycle.ts:32:    this.status = "stopped";
+src\runtime\core\RuntimeLifecycle.ts:37:    this.status = "error";
+src\runtime\core\RuntimeLifecycle.ts:40:  getStatus() {
+src\runtime\core\RuntimeLifecycle.ts:42:    return this.status;
+src\runtime\core\RuntimeOrchestrator.ts:2:  runtimeEventBus,
+src\runtime\core\RuntimeOrchestrator.ts:3:} from "./RuntimeEventBus";
+src\runtime\core\RuntimeOrchestrator.ts:36:      status: "running",
+src\runtime\core\RuntimeOrchestrator.ts:41:    runtimeEventBus.emit({
+src\runtime\core\RuntimeOrchestrator.ts:65:      status: "pending",
+src\runtime\core\RuntimeOrchestrator.ts:78:      status: "retrying",
+src\runtime\core\RuntimeOrchestrator.ts:85:    event: string,
+src\runtime\core\RuntimeOrchestrator.ts:92:      event,
+src\runtime\core\RuntimePipeline.ts:2:  "event",
+src\runtime\core\RuntimeQueueRegistry.ts:9:  status:
+src\runtime\core\RuntimeQueueRegistry.ts:49:        job.status === "pending"
+src\runtime\core\RuntimeQueueRegistry.ts:57:        job.status === "failed"
+src\runtime\core\RuntimeRetryRegistry.ts:9:  status:
+src\runtime\core\RuntimeRetryRegistry.ts:37:        job.status === "failed"
+src\runtime\core\RuntimeRetryRegistry.ts:45:        job.status === "retrying"
+src\runtime\core\RuntimeSecurityRegistry.ts:12:    | "audit";
+src\runtime\core\RuntimeStreamRegistry.ts:1:export interface RuntimeStreamEvent {
+src\runtime\core\RuntimeStreamRegistry.ts:5:  event: string;
+src\runtime\core\RuntimeStreamRegistry.ts:17:      RuntimeStreamEvent[]
+src\runtime\core\RuntimeStreamRegistry.ts:22:    event: RuntimeStreamEvent
+src\runtime\core\RuntimeStreamRegistry.ts:25:    const events =
+src\runtime\core\RuntimeStreamRegistry.ts:29:    events.push(event);
+src\runtime\core\RuntimeStreamRegistry.ts:33:      events
+src\runtime\core\RuntimeWorkerRegistry.ts:9:  status:
+src\runtime\core\RuntimeWorkerRegistry.ts:48:        worker.status === "running"
+src\runtime\dashboard\DashboardConfigReader.ts:7:  | "status-distribution"
+src\runtime\dashboard\ERPBusinessAlertEngine.ts:6:import { RuntimeDataBinding }
+src\runtime\dashboard\ERPBusinessAlertEngine.ts:42:  return RuntimeDataBinding.list(module);
+src\runtime\dashboard\ERPBusinessAlertEngine.ts:97:        contrat.statutContrat === "Actif"
+src\runtime\dashboard\ERPBusinessAlertEngine.ts:133:        stock.statutStock === "Bas"
+src\runtime\dashboard\ERPBusinessAlertEngine.ts:163:        actif.statutActif ===
+src\runtime\dashboard\ERPBusinessAlertEngine.ts:194:        campagne.statutCampagne ===
+src\runtime\dashboard\ERPBusinessMetricsEngine.ts:6:import { RuntimeDataBinding }
+src\runtime\dashboard\ERPBusinessMetricsEngine.ts:43:  return RuntimeDataBinding.list(module);
+src\runtime\dashboard\ERPBusinessMetricsEngine.ts:72:          c.statutContrat === "Actif"
+src\runtime\dashboard\ERPBusinessMetricsEngine.ts:78:          c.statutCampagne === "En cours"
+src\runtime\dashboard\ERPBusinessMetricsEngine.ts:84:          s.statutStock === "Bas"
+src\runtime\dashboard\ERPBusinessMetricsEngine.ts:90:          a.statutActif === "Maintenance"
+src\runtime\data\ERPDataEngine.ts:2:import { RuntimeMutationEngine } from 
+"@/runtime/mutations/RuntimeMutationEngine";
+src\runtime\data\ERPDataEngine.ts:3:import { erpEventBus } from "@/runtime/events";
+src\runtime\data\ERPDataEngine.ts:8:    const data = await RuntimeMutationEngine.create(module, 
+payload);
+src\runtime\data\ERPDataEngine.ts:10:    erpEventBus.publish({
+src\runtime\data\ERPDataEngine.ts:24:    const data = await RuntimeMutationEngine.update(module, id, 
+payload);
+src\runtime\data\ERPDataEngine.ts:26:    erpEventBus.publish({
+src\runtime\data\ERPDataEngine.ts:36:    await RuntimeMutationEngine.delete(module, id);
+src\runtime\data\ERPDataEngine.ts:38:    erpEventBus.publish({
+src\runtime\data-binding\index.ts:2:export { RuntimeDataBinding } from "./RuntimeDataBinding";
+src\runtime\data-binding\RuntimeDataBinding.ts:10:export class RuntimeDataBinding {
+src\runtime\domain\TerragestDomainRuntimeBridge.ts:6:  ERPEventBus,
+src\runtime\domain\TerragestDomainRuntimeBridge.ts:7:} from "@/runtime/events/bus/ERPEventBus";
+src\runtime\domain\TerragestDomainRuntimeBridge.ts:29:  emit?: (event: any) => void;
+src\runtime\domain\TerragestDomainRuntimeBridge.ts:30:  publish?: (event: any) => void;
+src\runtime\domain\TerragestDomainRuntimeBridge.ts:40:  eventBus?: RuntimeBridgeTarget;
+src\runtime\domain\TerragestDomainRuntimeBridge.ts:144:function emitBridgeEvent(
+src\runtime\domain\TerragestDomainRuntimeBridge.ts:146:  eventName: string,
+src\runtime\domain\TerragestDomainRuntimeBridge.ts:153:  const event = {
+src\runtime\domain\TerragestDomainRuntimeBridge.ts:154:    id: 
+`terragest_${eventName}_${Date.now()}`,
+src\runtime\domain\TerragestDomainRuntimeBridge.ts:156:    type: eventName,
+src\runtime\domain\TerragestDomainRuntimeBridge.ts:162:    target.emit(event);
+src\runtime\domain\TerragestDomainRuntimeBridge.ts:167:    target.publish(event);
+src\runtime\domain\TerragestDomainRuntimeBridge.ts:186:    eventBus:
+src\runtime\domain\TerragestDomainRuntimeBridge.ts:187:      dependencies.eventBus ??
+src\runtime\domain\TerragestDomainRuntimeBridge.ts:188:      ERPEventBus,
+src\runtime\domain\TerragestDomainRuntimeBridge.ts:280:    emitBridgeEvent(
+src\runtime\domain\TerragestDomainRuntimeBridge.ts:281:      resolvedDependencies.eventBus,
+src\runtime\domain\TerragestDomainRuntimeBridge.ts:303:      status: "booted",
+src\runtime\enterprise-runtime\EnterpriseRuntimeDiagnostics.ts:5:    const services = 
+EnterpriseRuntimeKernel.status();
+src\runtime\enterprise-runtime\EnterpriseRuntimeDiagnostics.ts:7:    const healthy = 
+services.filter((service) => service.status === "healthy").length;
+src\runtime\enterprise-runtime\EnterpriseRuntimeDiagnostics.ts:8:    const warning = 
+services.filter((service) => service.status === "warning").length;
+src\runtime\enterprise-runtime\EnterpriseRuntimeDiagnostics.ts:9:    const critical = 
+services.filter((service) => service.status === "critical").length;
+src\runtime\enterprise-runtime\EnterpriseRuntimeGovernance.ts:4:  status: "ok" | "warning" | "todo";
+src\runtime\enterprise-runtime\EnterpriseRuntimeGovernance.ts:13:        status: "ok",
+src\runtime\enterprise-runtime\EnterpriseRuntimeGovernance.ts:18:        status: "ok",
+src\runtime\enterprise-runtime\EnterpriseRuntimeGovernance.ts:23:        status: "ok",
+src\runtime\enterprise-runtime\EnterpriseRuntimeGovernance.ts:28:        status: "ok",
+src\runtime\enterprise-runtime\EnterpriseRuntimeGovernance.ts:33:        status: "warning",
+src\runtime\enterprise-runtime\EnterpriseRuntimeGovernance.ts:38:        status: "todo",
+src\runtime\enterprise-runtime\EnterpriseRuntimeKernel.ts:1:export interface 
+EnterpriseRuntimeKernelStatus {
+src\runtime\enterprise-runtime\EnterpriseRuntimeKernel.ts:3:  status: "healthy" | "warning" | 
+"critical";
+src\runtime\enterprise-runtime\EnterpriseRuntimeKernel.ts:8:  static status(): 
+EnterpriseRuntimeKernelStatus[] {
+src\runtime\enterprise-runtime\EnterpriseRuntimeKernel.ts:12:        status: "healthy",
+src\runtime\enterprise-runtime\EnterpriseRuntimeKernel.ts:17:        status: "healthy",
+src\runtime\enterprise-runtime\EnterpriseRuntimeKernel.ts:22:        status: "healthy",
+src\runtime\enterprise-runtime\EnterpriseRuntimeKernel.ts:23:        description: "Transitions, 
+validations et historique sont disponibles.",
+src\runtime\enterprise-runtime\EnterpriseRuntimeKernel.ts:27:        status: "warning",
+src\runtime\enterprise-runtime\EnterpriseRuntimeKernel.ts:32:        status: "warning",
+src\runtime\enterprise-runtime\EnterpriseRuntimeKernel.ts:36:        name: "Event Runtime",
+src\runtime\enterprise-runtime\EnterpriseRuntimeKernel.ts:37:        status: "healthy",
+src\runtime\enterprise-runtime\EnterpriseRuntimeKernel.ts:42:        status: "warning",
+src\runtime\enterprise-runtime\EnterpriseRuntimeLifecycle.ts:8:  | "events"
+src\runtime\enterprise-runtime\EnterpriseRuntimeLifecycle.ts:25:      { key: "events", label: "Event 
+runtime", completed: true },
+src\runtime\enterprise-runtime\index.ts:2:export type { EnterpriseRuntimeKernelStatus } from 
+"./EnterpriseRuntimeKernel";
+src\runtime\event-runtime\ERPEventRuntimeBus.ts:2:  ERPEventRuntimeEvent,
+src\runtime\event-runtime\ERPEventRuntimeBus.ts:3:  ERPEventRuntimeLevel,
+src\runtime\event-runtime\ERPEventRuntimeBus.ts:4:} from "./ERPEventRuntimeTypes";
+src\runtime\event-runtime\ERPEventRuntimeBus.ts:5:import { ERPEventRuntimeStore } from 
+"./ERPEventRuntimeStore";
+src\runtime\event-runtime\ERPEventRuntimeBus.ts:6:import { ERPEventRuntimeSubscriptionRegistry } 
+from "./ERPEventRuntimeSubscriptionRegistry";
+src\runtime\event-runtime\ERPEventRuntimeBus.ts:12:  level?: ERPEventRuntimeLevel;
+src\runtime\event-runtime\ERPEventRuntimeBus.ts:15:export class ERPEventRuntimeBus {
+src\runtime\event-runtime\ERPEventRuntimeBus.ts:21:  }: EmitOptions): ERPEventRuntimeEvent {
+src\runtime\event-runtime\ERPEventRuntimeBus.ts:23:      
+ERPEventRuntimeSubscriptionRegistry.forEvent(name);
+src\runtime\event-runtime\ERPEventRuntimeBus.ts:25:    const event: ERPEventRuntimeEvent = {
+src\runtime\event-runtime\ERPEventRuntimeBus.ts:37:    ERPEventRuntimeStore.push(event);
+src\runtime\event-runtime\ERPEventRuntimeBus.ts:39:    console.log("ERP EVENT EMITTED", event);
+src\runtime\event-runtime\ERPEventRuntimeBus.ts:41:    return event;
+src\runtime\event-runtime\ERPEventRuntimeBus.ts:46:      return 
+ERPEventRuntimeStore.forModule(moduleKey);
+src\runtime\event-runtime\ERPEventRuntimeBus.ts:49:    return ERPEventRuntimeStore.all();
+src\runtime\event-runtime\ERPEventRuntimeOrchestrator.ts:1:import { ERPEventRuntimeBus } from 
+"./ERPEventRuntimeBus";
+src\runtime\event-runtime\ERPEventRuntimeOrchestrator.ts:3:export class ERPEventRuntimeOrchestrator {
+src\runtime\event-runtime\ERPEventRuntimeOrchestrator.ts:5:    return ERPEventRuntimeBus.emit({
+src\runtime\event-runtime\ERPEventRuntimeOrchestrator.ts:17:    return ERPEventRuntimeBus.emit({
+src\runtime\event-runtime\ERPEventRuntimeOrchestrator.ts:29:    return ERPEventRuntimeBus.emit({
+src\runtime\event-runtime\ERPEventRuntimeStore.ts:2:  ERPEventRuntimeEvent,
+src\runtime\event-runtime\ERPEventRuntimeStore.ts:3:} from "./ERPEventRuntimeTypes";
+src\runtime\event-runtime\ERPEventRuntimeStore.ts:5:const events: ERPEventRuntimeEvent[] = [];
+src\runtime\event-runtime\ERPEventRuntimeStore.ts:7:export class ERPEventRuntimeStore {
+src\runtime\event-runtime\ERPEventRuntimeStore.ts:8:  static push(event: ERPEventRuntimeEvent) {
+src\runtime\event-runtime\ERPEventRuntimeStore.ts:9:    events.unshift(event);
+src\runtime\event-runtime\ERPEventRuntimeStore.ts:10:    return event;
+src\runtime\event-runtime\ERPEventRuntimeStore.ts:14:    return events;
+src\runtime\event-runtime\ERPEventRuntimeStore.ts:18:    return events.filter(
+src\runtime\event-runtime\ERPEventRuntimeStore.ts:19:      (event) =>
+src\runtime\event-runtime\ERPEventRuntimeStore.ts:20:        event.sourceModule === moduleKey ||
+src\runtime\event-runtime\ERPEventRuntimeStore.ts:21:        event.targetModules.includes(moduleKey)
+src\runtime\event-runtime\ERPEventRuntimeStore.ts:26:    events.length = 0;
+src\runtime\event-runtime\ERPEventRuntimeSubscriptionRegistry.ts:1:import { 
+erpEventRuntimeSubscriptions } from "./ERPEventRuntimeSubscriptions";
+src\runtime\event-runtime\ERPEventRuntimeSubscriptionRegistry.ts:3:export class 
+ERPEventRuntimeSubscriptionRegistry {
+src\runtime\event-runtime\ERPEventRuntimeSubscriptionRegistry.ts:5:    return 
+erpEventRuntimeSubscriptions;
+src\runtime\event-runtime\ERPEventRuntimeSubscriptionRegistry.ts:8:  static forEvent(eventName: 
+string) {
+src\runtime\event-runtime\ERPEventRuntimeSubscriptionRegistry.ts:9:    return 
+erpEventRuntimeSubscriptions.filter(
+src\runtime\event-runtime\ERPEventRuntimeSubscriptionRegistry.ts:10:      (subscription) => 
+subscription.eventName === eventName
+src\runtime\event-runtime\ERPEventRuntimeSubscriptionRegistry.ts:15:    return 
+erpEventRuntimeSubscriptions.filter(
+src\runtime\event-runtime\ERPEventRuntimeSubscriptions.ts:2:  ERPEventRuntimeSubscription,
+src\runtime\event-runtime\ERPEventRuntimeSubscriptions.ts:3:} from "./ERPEventRuntimeTypes";
+src\runtime\event-runtime\ERPEventRuntimeSubscriptions.ts:5:export const 
+erpEventRuntimeSubscriptions: ERPEventRuntimeSubscription[] = [
+src\runtime\event-runtime\ERPEventRuntimeSubscriptions.ts:9:    eventName: 
+"materiel.breakdown.detected",
+src\runtime\event-runtime\ERPEventRuntimeSubscriptions.ts:15:    eventName: 
+"materiel.breakdown.detected",
+src\runtime\event-runtime\ERPEventRuntimeSubscriptions.ts:21:    eventName: 
+"stock.critical.detected",
+src\runtime\event-runtime\ERPEventRuntimeSubscriptions.ts:25:    id: "workflow-completed-to-audit",
+src\runtime\event-runtime\ERPEventRuntimeSubscriptions.ts:27:    eventName: "workflow.completed",
+src\runtime\event-runtime\ERPEventRuntimeSubscriptions.ts:28:    handlerLabel: "Tracer audit 
+exploitation",
+src\runtime\event-runtime\ERPEventRuntimeTypes.ts:1:export type ERPEventRuntimeLevel =
+src\runtime\event-runtime\ERPEventRuntimeTypes.ts:7:export interface ERPEventRuntimeEvent {
+src\runtime\event-runtime\ERPEventRuntimeTypes.ts:12:  level: ERPEventRuntimeLevel;
+src\runtime\event-runtime\ERPEventRuntimeTypes.ts:17:export interface ERPEventRuntimeSubscription {
+src\runtime\event-runtime\ERPEventRuntimeTypes.ts:20:  eventName: string;
+src\runtime\event-runtime\index.ts:2:  ERPEventRuntimeEvent,
+src\runtime\event-runtime\index.ts:3:  ERPEventRuntimeLevel,
+src\runtime\event-runtime\index.ts:4:  ERPEventRuntimeSubscription,
+src\runtime\event-runtime\index.ts:5:} from "./ERPEventRuntimeTypes";
+src\runtime\event-runtime\index.ts:7:export { ERPEventRuntimeStore } from "./ERPEventRuntimeStore";
+src\runtime\event-runtime\index.ts:8:export { erpEventRuntimeSubscriptions } from 
+"./ERPEventRuntimeSubscriptions";
+src\runtime\event-runtime\index.ts:9:export { ERPEventRuntimeSubscriptionRegistry } from 
+"./ERPEventRuntimeSubscriptionRegistry";
+src\runtime\event-runtime\index.ts:10:export { ERPEventRuntimeBus } from "./ERPEventRuntimeBus";
+src\runtime\event-runtime\index.ts:11:export { ERPEventRuntimeOrchestrator } from 
+"./ERPEventRuntimeOrchestrator";
+src\runtime\events\ERPDomainEvent.ts:1:export type ERPDomainEventType =
+src\runtime\events\ERPDomainEvent.ts:11:export type ERPDomainEvent = {
+src\runtime\events\ERPDomainEvent.ts:14:  type: ERPDomainEventType;
+src\runtime\events\ERPEventAutomationBridge.ts:2:  erpEventBus,
+src\runtime\events\ERPEventAutomationBridge.ts:3:  type ERPEvent,
+src\runtime\events\ERPEventAutomationBridge.ts:4:} from "./ERPEventBus";
+src\runtime\events\ERPEventAutomationBridge.ts:10:export class ERPEventAutomationBridge {
+src\runtime\events\ERPEventAutomationBridge.ts:14:    erpEventBus.subscribe(
+src\runtime\events\ERPEventAutomationBridge.ts:16:        event: ERPEvent
+src\runtime\events\ERPEventAutomationBridge.ts:21:            event.module,
+src\runtime\events\ERPEventAutomationBridge.ts:22:            event.type,
+src\runtime\events\ERPEventAutomationBridge.ts:23:            event.payload
+src\runtime\events\ERPEventAutomationBridge.ts:30:export const erpEventAutomationBridge =
+src\runtime\events\ERPEventAutomationBridge.ts:31:  new ERPEventAutomationBridge();
+src\runtime\events\ERPEventBus.ts:1:export interface ERPEvent {
+src\runtime\events\ERPEventBus.ts:11:type ERPEventHandler = (
+src\runtime\events\ERPEventBus.ts:12:  event: ERPEvent
+src\runtime\events\ERPEventBus.ts:15:export class ERPEventBus {
+src\runtime\events\ERPEventBus.ts:18:    ERPEventHandler[] = [];
+src\runtime\events\ERPEventBus.ts:21:    handler: ERPEventHandler
+src\runtime\events\ERPEventBus.ts:30:    event: ERPEvent
+src\runtime\events\ERPEventBus.ts:35:        handler(event)
+src\runtime\events\ERPEventBus.ts:40:export const erpEventBus =
+src\runtime\events\ERPEventBus.ts:41:  new ERPEventBus();
+src\runtime\events\ERPRuntimeEventOrchestrator.ts:2:  erpEventBus,
+src\runtime\events\ERPRuntimeEventOrchestrator.ts:3:  type ERPEvent,
+src\runtime\events\ERPRuntimeEventOrchestrator.ts:4:} from "./ERPEventBus";
+src\runtime\events\ERPRuntimeEventOrchestrator.ts:11:export class ERPRuntimeEventOrchestrator {
+src\runtime\events\ERPRuntimeEventOrchestrator.ts:15:    erpEventBus.subscribe(
+src\runtime\events\ERPRuntimeEventOrchestrator.ts:17:        event: ERPEvent
+src\runtime\events\ERPRuntimeEventOrchestrator.ts:27:              event.type,
+src\runtime\events\ERPRuntimeEventOrchestrator.ts:30:              `Runtime event ${event.type}`,
+src\runtime\events\ERPRuntimeEventOrchestrator.ts:32:            status:
+src\runtime\events\ERPRuntimeEventOrchestrator.ts:40:              event.module,
+src\runtime\events\ERPRuntimeEventOrchestrator.ts:43:              event.type,
+src\runtime\events\ERPRuntimeEventOrchestrator.ts:53:              "ERP Runtime Event",
+src\runtime\events\ERPRuntimeEventOrchestrator.ts:56:              `${event.type} executed for 
+${event.module}`,
+src\runtime\events\ERPRuntimeEventOrchestrator.ts:72:export const erpRuntimeEventOrchestrator =
+src\runtime\events\ERPRuntimeEventOrchestrator.ts:73:  new ERPRuntimeEventOrchestrator();
+src\runtime\events\EventBus.ts:1:type EventHandler = (
+src\runtime\events\EventBus.ts:5:export class EventBus {
+src\runtime\events\EventBus.ts:7:    new Map<string, EventHandler[]>();
+src\runtime\events\EventBus.ts:10:    event: string,
+src\runtime\events\EventBus.ts:11:    handler: EventHandler
+src\runtime\events\EventBus.ts:14:      this.listeners.get(event) || [];
+src\runtime\events\EventBus.ts:19:      event,
+src\runtime\events\EventBus.ts:25:    event: string,
+src\runtime\events\EventBus.ts:29:      this.listeners.get(event) || [];
+src\runtime\events\EventPipeline.ts:1:export class EventPipeline {
+src\runtime\events\EventPipeline.ts:4:    event: string,
+src\runtime\events\EventPipeline.ts:9:      "[EventPipeline]",
+src\runtime\events\EventPipeline.ts:10:      event,
+src\runtime\events\index.ts:1:export * from "./ERPEventBus";
+src\runtime\events\index.ts:2:export * from "./ERPEventAutomationBridge";
+src\runtime\events\index.ts:3:export * from "./ERPRuntimeEventOrchestrator";
+src\runtime\events\RuntimeEvent.ts:1:export interface RuntimeEvent {
+src\runtime\events\RuntimeEventBus.ts:6:export class RuntimeEventBus {
+src\runtime\events\RuntimeEventBus.ts:15:    event: string,
+src\runtime\events\RuntimeEventBus.ts:20:      !this.listeners[event]
+src\runtime\events\RuntimeEventBus.ts:23:      this.listeners[event] = [];
+src\runtime\events\RuntimeEventBus.ts:26:    this.listeners[event]
+src\runtime\events\RuntimeEventBus.ts:32:    event: string,
+src\runtime\events\RuntimeEventBus.ts:39:      "Runtime Event",
+src\runtime\events\RuntimeEventBus.ts:40:      event,
+src\runtime\events\RuntimeEventBus.ts:50:        event,
+src\runtime\events\RuntimeEventBus.ts:55:    // EVENT LISTENERS
+src\runtime\events\RuntimeEventBus.ts:59:      this.listeners[event] || [];
+src\runtime\events\RuntimeEventBus.ts:72:export const runtimeEventBus =
+src\runtime\events\RuntimeEventBus.ts:73:  new RuntimeEventBus();
+src\runtime\events\RuntimeEventRegistry.ts:1:export const RuntimeEventRegistry = {
+src\runtime\events\RuntimeEventRegistry.ts:68:  DLQ_EVENT_STORED:
+src\runtime\events\RuntimeEventRegistry.ts:69:    "DLQ_EVENT_STORED",
+src\runtime\events\RuntimeEventRegistry.ts:85:export type RuntimeEventType =
+src\runtime\events\RuntimeEventRegistry.ts:86:  typeof RuntimeEventRegistry[
+src\runtime\events\RuntimeEventRegistry.ts:87:    keyof typeof RuntimeEventRegistry
+src\runtime\forms\DynamicFormRegistry.ts:20:      field.type === "status" ||
+src\runtime\governance\EnterpriseGovernanceEngine.ts:71:      "RuntimeEventContract"
+src\runtime\listeners\MaintenanceAuditListener.ts:9:import { runtimeEventBus }
+src\runtime\listeners\MaintenanceAuditListener.ts:10:from "@/runtime/bus/RuntimeEventBus";
+src\runtime\listeners\MaintenanceAuditListener.ts:15:from "@/runtime/events/MaintenanceEvents";
+src\runtime\listeners\MaintenanceAuditListener.ts:17:runtimeEventBus.on(
+src\runtime\listeners\MaintenanceAuditListener.ts:23:      collection(db, "audit_logs"),
+src\runtime\listeners\MaintenanceAuditListener.ts:26:        event:
+src\runtime\listeners\MaintenanceNotificationListener.ts:9:import { runtimeEventBus }
+src\runtime\listeners\MaintenanceNotificationListener.ts:10:from "@/runtime/bus/RuntimeEventBus";
+src\runtime\listeners\MaintenanceNotificationListener.ts:15:from 
+"@/runtime/events/MaintenanceEvents";
+src\runtime\listeners\MaintenanceNotificationListener.ts:17:runtimeEventBus.on(
+src\runtime\modules\ERPModule.ts:9:  event?: string;
+src\runtime\modules\ERPModule.ts:21:export interface ERPWorkflowTransition {
+src\runtime\modules\ERPModule.ts:30:export interface ERPWorkflowState {
+src\runtime\modules\ERPModule.ts:45:states?: Array<string | ERPWorkflowState>;
+src\runtime\modules\ERPModule.ts:47:  transitions?: ERPWorkflowTransition[];
+src\runtime\modules\ERPModuleDefinition.ts:10:  | "status";
+src\runtime\modules\ERPModuleDefinition.ts:29:    | "transition"
+src\runtime\modules\ERPModuleDefinition.ts:32:  event?: string;
+src\runtime\modules\ERPModuleDefinition.ts:55:  events?: string[];
+src\runtime\modules\ERPModuleDefinition.ts:57:  auditEnabled?: boolean;
+src\runtime\monitoring\ConnectedRuntimeEventPublisher.ts:7:  liveEventStore
+src\runtime\monitoring\ConnectedRuntimeEventPublisher.ts:9:from 
+"../../features/observability/stores/live/liveEventStore";
+src\runtime\monitoring\ConnectedRuntimeEventPublisher.ts:12:ConnectedRuntimeEventPublisher {
+src\runtime\monitoring\ConnectedRuntimeEventPublisher.ts:19:    const event = {
+src\runtime\monitoring\ConnectedRuntimeEventPublisher.ts:27:      event
+src\runtime\monitoring\ConnectedRuntimeEventPublisher.ts:30:    liveEventStore.push(
+src\runtime\monitoring\ConnectedRuntimeEventPublisher.ts:31:      event
+src\runtime\monitoring\ConnectedRuntimeEventPublisher.ts:35:      "[ConnectedRuntimeEvent]",
+src\runtime\monitoring\ERPMonitoringSnapshot.ts:7:import { ERPSecurityAuditStore } from 
+"@/runtime/security";
+src\runtime\monitoring\ERPMonitoringSnapshot.ts:25:      securityAudits: 
+ERPSecurityAuditStore.all().length,
+src\runtime\monitoring\ERPMonitoringSnapshot.ts:27:      healthWarnings: health.filter((check) => 
+check.status === "warning").length,
+src\runtime\monitoring\ERPMonitoringSnapshot.ts:28:      healthCritical: health.filter((check) => 
+check.status === "critical").length,
+src\runtime\monitoring\PersistentRuntimePublisher.ts:2:  RuntimeEventRepository
+src\runtime\monitoring\PersistentRuntimePublisher.ts:4:from 
+"../persistence/events/RuntimeEventRepository";
+src\runtime\monitoring\PersistentRuntimePublisher.ts:7:  ConnectedRuntimeEventPublisher
+src\runtime\monitoring\PersistentRuntimePublisher.ts:9:from "./ConnectedRuntimeEventPublisher";
+src\runtime\monitoring\PersistentRuntimePublisher.ts:15:    new RuntimeEventRepository();
+src\runtime\monitoring\PersistentRuntimePublisher.ts:18:    new ConnectedRuntimeEventPublisher();
+src\runtime\monitoring\RuntimeEventPublisher.ts:15:export class RuntimeEventPublisher {
+src\runtime\monitoring\RuntimeEventPublisher.ts:25:    const event = {
+src\runtime\monitoring\RuntimeEventPublisher.ts:35:        "runtime_events"
+src\runtime\monitoring\RuntimeEventPublisher.ts:37:      event
+src\runtime\monitoring\simulateRuntimeActivity.ts:2:  ConnectedRuntimeEventPublisher
+src\runtime\monitoring\simulateRuntimeActivity.ts:4:from "./ConnectedRuntimeEventPublisher";
+src\runtime\monitoring\simulateRuntimeActivity.ts:7:  new ConnectedRuntimeEventPublisher();
+src\runtime\mutations\index.ts:1:export { RuntimeMutationEngine } from "./RuntimeMutationEngine";
+src\runtime\mutations\RuntimeMutationEngine.ts:4:export class RuntimeMutationEngine {
+src\runtime\observability\ERPObservabilityTimeline.ts:28:  static events() {
+src\runtime\observability\ERPRuntimeAuditBridge.ts:2:  erpEventBus,
+src\runtime\observability\ERPRuntimeAuditBridge.ts:3:  type ERPEvent,
+src\runtime\observability\ERPRuntimeAuditBridge.ts:4:} from "../events";
+src\runtime\observability\ERPRuntimeAuditBridge.ts:7:  erpRuntimeAuditTrail,
+src\runtime\observability\ERPRuntimeAuditBridge.ts:8:} from "./ERPRuntimeAuditTrail";
+src\runtime\observability\ERPRuntimeAuditBridge.ts:10:export class ERPRuntimeAuditBridge {
+src\runtime\observability\ERPRuntimeAuditBridge.ts:14:    erpEventBus.subscribe(
+src\runtime\observability\ERPRuntimeAuditBridge.ts:16:        event: ERPEvent
+src\runtime\observability\ERPRuntimeAuditBridge.ts:19:        erpRuntimeAuditTrail
+src\runtime\observability\ERPRuntimeAuditBridge.ts:26:              event.module,
+src\runtime\observability\ERPRuntimeAuditBridge.ts:29:              event.type,
+src\runtime\observability\ERPRuntimeAuditBridge.ts:36:              event.payload,
+src\runtime\observability\ERPRuntimeAuditBridge.ts:43:export const erpRuntimeAuditBridge =
+src\runtime\observability\ERPRuntimeAuditBridge.ts:44:  new ERPRuntimeAuditBridge();
+src\runtime\observability\ERPRuntimeAuditTrail.ts:1:export interface ERPAuditEntry {
+src\runtime\observability\ERPRuntimeAuditTrail.ts:17:export class ERPRuntimeAuditTrail {
+src\runtime\observability\ERPRuntimeAuditTrail.ts:20:    ERPAuditEntry[] = [];
+src\runtime\observability\ERPRuntimeAuditTrail.ts:23:    entry: ERPAuditEntry
+src\runtime\observability\ERPRuntimeAuditTrail.ts:47:export const erpRuntimeAuditTrail =
+src\runtime\observability\ERPRuntimeAuditTrail.ts:48:  new ERPRuntimeAuditTrail();
+src\runtime\observability\ERPRuntimeSeed.ts:2:  ERPEventBus,
+src\runtime\observability\ERPRuntimeSeed.ts:3:} from "@/runtime/events/bus/ERPEventBus";
+src\runtime\observability\ERPRuntimeSeed.ts:23:  ERPEventBus.emit({
+src\runtime\observability\ERPRuntimeSeed.ts:32:  ERPEventBus.emit({
+src\runtime\observability\ERPRuntimeSeed.ts:44:    status: "success",
+src\runtime\observability\ERPRuntimeSeed.ts:53:    status: "warning",
+src\runtime\observability\index.ts:1:export * from "./ERPRuntimeAuditTrail";
+src\runtime\observability\index.ts:2:export * from "./ERPRuntimeAuditBridge";
+src\runtime\orchestration\MaterielBreakdownFlow.ts:4:from 
+"../../features/materiels/events/MaterielEvents";
+src\runtime\orchestration\MaterielBreakdownFlow.ts:14:import { AuditStream }
+src\runtime\orchestration\MaterielBreakdownFlow.ts:15:from "../os/audit/AuditStream";
+src\runtime\orchestration\MaterielBreakdownFlow.ts:32:  private audit =
+src\runtime\orchestration\MaterielBreakdownFlow.ts:33:    new AuditStream();
+src\runtime\orchestration\MaterielBreakdownFlow.ts:59:    this.audit.log(
+src\runtime\orchestration\PersistentMaterielBreakdownFlow.ts:22:  PersistentAuditStream
+src\runtime\orchestration\PersistentMaterielBreakdownFlow.ts:24:from 
+"../os/audit/PersistentAuditStream";
+src\runtime\orchestration\PersistentMaterielBreakdownFlow.ts:41:  private audit =
+src\runtime\orchestration\PersistentMaterielBreakdownFlow.ts:42:    new PersistentAuditStream();
+src\runtime\orchestration\PersistentMaterielBreakdownFlow.ts:68:    await this.audit.log(
+src\runtime\os-enterprise\ERPCommandCenter.ts:35:        id: "audit",
+src\runtime\os-enterprise\ERPCommandCenter.ts:36:        label: "Consulter les audits",
+src\runtime\os-enterprise\ERPCommandCenter.ts:38:        href: "/exploitations/audit",
+src\runtime\os-enterprise\ERPUserContext.ts:4:  workspaceMode: "operations" | "direction" | "audit";
+src\runtime\persistence\ERPPersistenceSeed.ts:14:  await ERPRuntimePersistenceService.events.save({
+src\runtime\persistence\ERPPersistenceSeed.ts:23:    status: "success",
+src\runtime\persistence\ERPPersistenceSeed.ts:40:    status: "completed",
+src\runtime\persistence\ERPPersistenceSeed.ts:43:  await ERPRuntimePersistenceService.audit.save({
+src\runtime\persistence\ERPPersistenceSeed.ts:49:  await 
+ERPRuntimePersistenceService.securityAudit.save({
+src\runtime\persistence\ERPPersistenceSeed.ts:51:    action: "audit",
+src\runtime\persistence\FirestoreHealthCheck.ts:2:  RuntimeEventRepository
+src\runtime\persistence\FirestoreHealthCheck.ts:4:from "./events/RuntimeEventRepository";
+src\runtime\persistence\FirestoreHealthCheck.ts:10:    new RuntimeEventRepository();
+src\runtime\persistence\FirestoreHealthCheck.ts:12:  const events =
+src\runtime\persistence\FirestoreHealthCheck.ts:17:    events.length
+src\runtime\production\ProductionReadiness.ts:14:        status: policy.status,
+src\runtime\production\ProductionReadiness.ts:21:        status: check.status,
+src\runtime\production\readiness.ts:1:export type ProductionReadinessStatus =
+src\runtime\production\readiness.ts:10:  status: ProductionReadinessStatus;
+src\runtime\production\readiness.ts:21:        status: "ok",
+src\runtime\production\readiness.ts:28:        status: "ok",
+src\runtime\production\readiness.ts:35:        status: "warning",
+src\runtime\production\RuntimeHealthMonitor.ts:12:      status: errors.length > 0 ? "warning" : 
+"healthy",
+src\runtime\realtime\ERPRealtimeSeed.ts:28:    status: "online",
+src\runtime\realtime\ERPRealtimeSeed.ts:37:    status: "idle",
+src\runtime\realtime\ERPRealtimeSeed.ts:44:    channel: "events",
+src\runtime\realtime\ERPRealtimeSeed.ts:46:    title: "Event runtime recu",
+src\runtime\registry\ERPRegistry.ts:75:  events(
+src\runtime\registry\ERPRegistry.ts:81:        ?.events ?? []
+src\runtime\registry\types.ts:30:export type ERPRegistryEvent = {
+src\runtime\registry\types.ts:60:  events: ERPRegistryEvent[];
+src\runtime\repositories\RuntimeRepository.ts:88:        } else if (field.type === "status") {
+src\runtime\schemas\ERPBusinessSchemaRegistry.ts:19:    case "status":
+src\runtime\security\ERPSecuritySeed.ts:14:  ERPAccessGuard.can("paiements", "audit");
+src\runtime\security\ERPSecuritySnapshot.ts:4:import { ERPSecurityAuditStore } from 
+"./audit/ERPSecurityAuditStore";
+src\runtime\security\ERPSecuritySnapshot.ts:8:  const audit = ERPSecurityAuditStore.all();
+src\runtime\security\ERPSecuritySnapshot.ts:15:    audit,
+src\runtime\security\ERPSecuritySnapshot.ts:16:    denied: ERPSecurityAuditStore.denied(),
+src\runtime\security\ERPSecuritySnapshot.ts:20:    auditCount: audit.length,
+src\runtime\security\ERPSecuritySnapshot.ts:21:    deniedCount: 
+ERPSecurityAuditStore.denied().length,
+src\runtime\security\index.ts:9:export * from "./audit/ERPSecurityAuditLog";
+src\runtime\security\index.ts:10:export * from "./audit/ERPSecurityAuditStore";
+src\runtime\security-runtime\RuntimeActionPermissionMapper.ts:25:      case "audit":
+src\runtime\security-runtime\RuntimeActionPermissionMapper.ts:26:        return "audit.read";
+src\runtime\security-runtime\RuntimePermission.ts:9:  | "workflow.transition"
+src\runtime\security-runtime\RuntimePermission.ts:11:  | "audit.read"
+src\runtime\security-runtime\RuntimePolicyRegistry.ts:13:    "workflow.transition",
+src\runtime\security-runtime\RuntimePolicyRegistry.ts:15:    "audit.read",
+src\runtime\security-runtime\RuntimePolicyRegistry.ts:26:    "workflow.transition",
+src\runtime\security-runtime\RuntimePolicyRegistry.ts:28:    "audit.read",
+src\runtime\security-runtime\RuntimePolicyRegistry.ts:37:    "workflow.transition",
+src\runtime\security-runtime\RuntimePolicyRegistry.ts:43:    "audit.read",
+src\runtime\security-runtime\RuntimeWorkflowGuard.ts:11:  static canTransition(): boolean {
+src\runtime\security-runtime\RuntimeWorkflowGuard.ts:14:    return RuntimePolicyEngine.can(user, 
+"workflow.transition");
+src\runtime\shared\ERPRuntimeEntity.ts:4:  ERPStatus,
+src\runtime\shared\ERPRuntimeEntity.ts:23:  status?: ERPStatus;
+src\runtime\shared\ERPRuntimeTypes.ts:1:export type ERPStatus =
+src\runtime\shared\ERPRuntimeTypes.ts:34:  status?: ERPStatus;
+src\runtime\smart-intelligence\SmartRecommendationEngine.ts:8:        id: 
+`${module.metadata.key}-audit-review`,
+src\runtime\smart-intelligence\SmartRecommendationEngine.ts:10:        title: "Verifier l'audit 
+recent",
+src\runtime\smart-intelligence\SmartRecommendationEngine.ts:13:        actionLabel: "Ouvrir audit",
+src\runtime\smart-intelligence\SmartRecommendationEngine.ts:25:            "Une commande preventive 
+peut eviter une rupture.",
+src\runtime\smart-intelligence\SmartRecommendationEngine.ts:38:          title: "Planifier une 
+maintenance preventive",
+src\runtime\smart-intelligence\SmartScoringEngine.ts:29:        "Score calcule a partir des signaux 
+runtime, workflows, events et donnees metier.",
+src\runtime\streams\ERPStreamsSnapshot.ts:20:    events:
+src\runtime\streams\index.ts:1:export * from "./events/ERPStreamEvent";
+src\runtime\tenant\ERPTenantSnapshot.ts:39:          tenant.status === "active"
+src\runtime\ui\ERPUIComposition.ts:24:      tabs: ["Vue generale", "Liste", "Activite", "Workflows", 
+"Audit"],
+src\runtime\ui-generation\ERPFieldDefinition.ts:9:  | "status";
+src\runtime\ui-generation\ERPGeneratedSchemaResolver.ts:31:          key: "statut",
+src\runtime\ui-generation\ERPGeneratedSchemaResolver.ts:32:          label: "Statut",
+src\runtime\ui-generation\ERPGeneratedSchemaResolver.ts:33:          type: "status",
+src\runtime\workflow-persistence\WorkflowPersistenceEngine.ts:18:  static async persistTransition(
+src\runtime\workflow-persistence\WorkflowRuntimeService.ts:8:  static async executeTransition({
+src\runtime\workflow-persistence\WorkflowRuntimeService.ts:27:      "Workflow Transition",
+src\runtime\workflow-persistence\WorkflowRuntimeService.ts:38:      .persistTransition({
+src\runtime\workflow-runtime\index.ts:5:  WorkflowRuntimeStatus,
+src\runtime\workflow-runtime\index.ts:7:  WorkflowRuntimeTransition,
+src\runtime\workflow-runtime\index.ts:14:export { WorkflowRuntimeAudit } from 
+"./WorkflowRuntimeAudit";
+src\runtime\workflow-runtime\WorkflowRuntimeAudit.ts:3:export class WorkflowRuntimeAudit {
+src\runtime\workflow-runtime\WorkflowRuntimeAudit.ts:5:    console.log("WORKFLOW AUDIT", {
+src\runtime\workflow-runtime\WorkflowRuntimeDefinitions.ts:16:    transitions: [
+src\runtime\workflow-runtime\WorkflowRuntimeDefinitions.ts:34:    transitions: [
+src\runtime\workflow-runtime\WorkflowRuntimeDefinitions.ts:50:    transitions: [
+src\runtime\workflow-runtime\WorkflowRuntimeDefinitions.ts:66:    transitions: [
+src\runtime\workflow-runtime\WorkflowRuntimeDefinitions.ts:82:    transitions: [
+src\runtime\workflow-runtime\WorkflowRuntimeDefinitions.ts:99:    transitions: [
+src\runtime\workflow-runtime\WorkflowRuntimeDefinitions.ts:117:    transitions: [
+src\runtime\workflow-runtime\WorkflowRuntimeDefinitions.ts:134:    transitions: [
+src\runtime\workflow-runtime\WorkflowRuntimeDefinitions.ts:151:    transitions: [
+src\runtime\workflow-runtime\WorkflowRuntimeEngine.ts:4:import { WorkflowRuntimeAudit } from 
+"./WorkflowRuntimeAudit";
+src\runtime\workflow-runtime\WorkflowRuntimeEngine.ts:16:    WorkflowRuntimeAudit.log(instance, 
+"Workflow demarre");
+src\runtime\workflow-runtime\WorkflowRuntimeEngine.ts:21:  static transition(
+src\runtime\workflow-runtime\WorkflowRuntimeEngine.ts:34:    const transition =
+src\runtime\workflow-runtime\WorkflowRuntimeEngine.ts:35:      
+WorkflowRuntimeValidator.findTransition(
+src\runtime\workflow-runtime\WorkflowRuntimeEngine.ts:41:    if (!transition) {
+src\runtime\workflow-runtime\WorkflowRuntimeEngine.ts:43:        `Transition invalide: 
+${instance.currentStep} -> ${to}`
+src\runtime\workflow-runtime\WorkflowRuntimeEngine.ts:55:      label: transition.label,
+src\runtime\workflow-runtime\WorkflowRuntimeEngine.ts:60:      definition.transitions.filter((item) 
+=> item.from === to).length === 0;
+src\runtime\workflow-runtime\WorkflowRuntimeEngine.ts:63:      instance.status = "completed";
+src\runtime\workflow-runtime\WorkflowRuntimeEngine.ts:67:    WorkflowRuntimeAudit.log(instance, 
+transition.label);
+src\runtime\workflow-runtime\WorkflowRuntimeStore.ts:27:      status: "active",
+src\runtime\workflow-runtime\WorkflowRuntimeTypes.ts:1:export type WorkflowRuntimeStatus =
+src\runtime\workflow-runtime\WorkflowRuntimeTypes.ts:13:  status?: WorkflowRuntimeStatus;
+src\runtime\workflow-runtime\WorkflowRuntimeTypes.ts:16:export interface WorkflowRuntimeTransition {
+src\runtime\workflow-runtime\WorkflowRuntimeTypes.ts:29:  transitions: WorkflowRuntimeTransition[];
+src\runtime\workflow-runtime\WorkflowRuntimeTypes.ts:38:  status: WorkflowRuntimeStatus;
+src\runtime\workflow-runtime\WorkflowRuntimeValidator.ts:4:  WorkflowRuntimeTransition,
+src\runtime\workflow-runtime\WorkflowRuntimeValidator.ts:8:  static findTransition(
+src\runtime\workflow-runtime\WorkflowRuntimeValidator.ts:12:  ): WorkflowRuntimeTransition | 
+undefined {
+src\runtime\workflow-runtime\WorkflowRuntimeValidator.ts:13:    return definition.transitions.find(
+src\runtime\workflow-runtime\WorkflowRuntimeValidator.ts:14:      (transition) =>
+src\runtime\workflow-runtime\WorkflowRuntimeValidator.ts:15:        transition.from === 
+instance.currentStep &&
+src\runtime\workflow-runtime\WorkflowRuntimeValidator.ts:16:        transition.to === to
+src\runtime\workflow-runtime\WorkflowRuntimeValidator.ts:20:  static canTransition(
+src\runtime\workflow-runtime\WorkflowRuntimeValidator.ts:26:      
+WorkflowRuntimeValidator.findTransition(
+src\runtime\workflow-ui\maintenance.workflow.ts:2:  WorkflowState,
+src\runtime\workflow-ui\maintenance.workflow.ts:3:  WorkflowTransition,
+src\runtime\workflow-ui\maintenance.workflow.ts:12:  states: <WorkflowState[]> [
+src\runtime\workflow-ui\maintenance.workflow.ts:62:  transitions:
+src\runtime\workflow-ui\maintenance.workflow.ts:63:    <WorkflowTransition[]> [
+src\runtime\workflow-ui\Workflow.types.ts:1:export interface WorkflowState {
+src\runtime\workflow-ui\Workflow.types.ts:12:export interface WorkflowTransition {
+src\runtime\workflow-ui\WorkflowRuntimeEngine.ts:52:    return workflow.transitions.filter(
+src\runtime\workflow-ui\WorkflowRuntimeEngine.ts:54:      (transition) => {
+src\runtime\workflow-ui\WorkflowRuntimeEngine.ts:67:            transition.action
+src\runtime\workflow-ui\WorkflowRuntimeEngine.ts:71:          transition.from === currentState &&
+src\runtime\workflows\ERPWorkflowRuntimeEngine.ts:1:export interface ERPWorkflowState {
+src\runtime\workflows\ERPWorkflowRuntimeEngine.ts:11:    ERPWorkflowState[] = [];
+src\runtime\workflows\ERPWorkflowRuntimeEngine.ts:14:    workflow: ERPWorkflowState
+src\runtime\workflows\ERPWorkflowRuntimeEngine.ts:32:  canTransition(
+src\runtime\workflows\RuntimeWorkflowEngine.ts:3:  ERPWorkflowTransition,
+src\runtime\workflows\RuntimeWorkflowEngine.ts:6:export class RuntimeWorkflowEngine {
+src\runtime\workflows\RuntimeWorkflowEngine.ts:8:  static getAvailableTransitions(
+src\runtime\workflows\RuntimeWorkflowEngine.ts:11:  ): ERPWorkflowTransition[] {
+src\runtime\workflows\RuntimeWorkflowEngine.ts:14:      workflow.transitions?.filter(
+src\runtime\workflows\RuntimeWorkflowEngine.ts:15:        (transition) =>
+src\runtime\workflows\RuntimeWorkflowEngine.ts:16:          transition.from === currentState
+src\runtime\workflows\RuntimeWorkflowEngine.ts:21:  static canExecuteTransition(
+src\runtime\workflows\RuntimeWorkflowEngine.ts:28:      workflow.transitions?.some(
+src\runtime\workflows\RuntimeWorkflowEngine.ts:29:        (transition) =>
+src\runtime\workflows\RuntimeWorkflowEngine.ts:30:          transition.from === currentState &&
+src\runtime\workflows\RuntimeWorkflowEngine.ts:31:          transition.action === action
+src\runtime\workflows\RuntimeWorkflowEngine.ts:36:  static executeTransition(
+src\runtime\workflows\RuntimeWorkflowEngine.ts:42:    const transition =
+src\runtime\workflows\RuntimeWorkflowEngine.ts:43:      workflow.transitions?.find(
+src\runtime\workflows\RuntimeWorkflowEngine.ts:44:        (transition) =>
+src\runtime\workflows\RuntimeWorkflowEngine.ts:45:          transition.from === currentState &&
+src\runtime\workflows\RuntimeWorkflowEngine.ts:46:          transition.action === action
+src\runtime\workflows\RuntimeWorkflowEngine.ts:49:    if (!transition) {
+src\runtime\workflows\RuntimeWorkflowEngine.ts:52:        error: "Transition impossible",
+src\runtime\workflows\RuntimeWorkflowEngine.ts:58:      from: transition.from,
+src\runtime\workflows\RuntimeWorkflowEngine.ts:59:      to: transition.to,
+src\runtime\workflows\RuntimeWorkflowEngine.ts:60:      action: transition.action,
+src\runtime\dashboard\DashboardWidgetFactory.tsx:41:function StatusDistributionWidget({
+src\runtime\dashboard\DashboardWidgetFactory.tsx:46:      Status Distribution — {moduleKey}
+src\runtime\dashboard\DashboardWidgetFactory.tsx:79:    case "status-distribution":
+src\runtime\dashboard\DashboardWidgetFactory.tsx:81:        <StatusDistributionWidget
+src\runtime\forms\ERPFormEngine.tsx:99:  async function handleSubmit(event: 
+React.FormEvent<HTMLFormElement>) {
+src\runtime\forms\ERPFormEngine.tsx:100:    event.preventDefault();
+src\runtime\forms\ERPFormEngine.tsx:136:              onChange={(event) =>
+src\runtime\forms\ERPFormEngine.tsx:139:                  [field.key]: event.target.value,
+src\runtime\forms\ERPFormEngine.tsx:152:          ) : field.type === "select" || field.type === 
+"status" ? (
+src\runtime\forms\ERPFormEngine.tsx:157:              onChange={(event) =>
+src\runtime\forms\ERPFormEngine.tsx:160:                  [field.key]: event.target.value,
+src\runtime\forms\ERPFormEngine.tsx:185:              onChange={(event) =>
+src\runtime\forms\ERPFormEngine.tsx:188:                  [field.key]: event.target.value,
+
+

@@ -13,6 +13,9 @@ import { ERPFormField } from "./ERPFormField";
 import { ERPFormSection } from "./ERPFormSection";
 import { ERPFormSummaryPanel } from "./ERPFormSummaryPanel";
 import { ERPFormTabs } from "./ERPFormTabs";
+import {
+  RuntimePermissionEngine,
+} from "@/runtime/permissions/RuntimePermissionEngine";
 
 import {
   RuntimeValidationEngine,
@@ -84,13 +87,20 @@ export function ERPEnterpriseForm({
     }
   }, [form.fields, formValues]);
 
-  const visibleFields =
-    form.fields.filter((field) =>
+const currentUserRole = "admin";
+
+const visibleFields =
+  form.fields.filter(
+    (field) =>
       RuntimeVisibilityEngine.isVisible(
         field,
         formValues
+      ) &&
+      RuntimePermissionEngine.canAccessField(
+        field,
+        currentUserRole
       )
-    );
+  );
 
   const mainFields =
     visibleFields.filter(

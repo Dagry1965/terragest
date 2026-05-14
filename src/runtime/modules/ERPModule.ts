@@ -18,11 +18,35 @@ export interface ERPModuleRelation {
   type: "one-to-one" | "one-to-many" | "many-to-one" | "many-to-many";
 }
 
+export interface ERPWorkflowTransition {
+  from: string;
+  to: string;
+
+  action: string;
+
+  permissions?: string[];
+}
+
+export interface ERPWorkflowState {
+  key: string;
+  label: string;
+
+  color?: string;
+
+  terminal?: boolean;
+}
+
 export interface ERPModuleWorkflow {
   key: string;
   label: string;
+
   initialState?: string;
-  states?: string[];
+
+  stateField?: string;
+
+  states?: Array<string | ERPWorkflowState>;
+
+  transitions?: ERPWorkflowTransition[];
 }
 
 export interface ERPModuleVisibility {
@@ -51,6 +75,12 @@ export interface ERPModuleFormSection {
   title: string;
   description?: string;
   fields: string[];
+
+ visibility?: {
+    field: string;
+    equals?: string | number | boolean;
+    notEquals?: string | number | boolean;
+  };
 
 }
 export interface ERPModuleFormTab {

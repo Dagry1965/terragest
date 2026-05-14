@@ -19,6 +19,7 @@ export function ERPFormField({
   initialValue,
 }: ERPFormFieldProps) {
   const [relationOptions, setRelationOptions] = useState<RelationOption[]>([]);
+  const [relationSearch, setRelationSearch] = useState(""); // --- AJOUT ---
 
   useEffect(() => {
     async function loadRelation() {
@@ -97,10 +98,29 @@ export function ERPFormField({
    * RELATION
    */
   if (field.type === "relation") {
+    // --- AJOUT : FILTRAGE DES OPTIONS ---
+    const filteredOptions =
+      relationOptions.filter((option) =>
+        option.label
+          .toLowerCase()
+          .includes(relationSearch.toLowerCase())
+      );
+
     return (
       <Wrapper>
         <label className="block space-y-2">
           {label}
+
+          {/* --- AJOUT : INPUT DE RECHERCHE --- */}
+          <input
+            type="text"
+            placeholder="Rechercher..."
+            value={relationSearch}
+            onChange={(event) =>
+              setRelationSearch(event.target.value)
+            }
+            className={className}
+          />
 
           <select
             key={`${field.key}-${String(initialValue ?? "")}-${relationOptions.length}`}
@@ -113,7 +133,8 @@ export function ERPFormField({
               {field.placeholder ?? "Sélectionner"}
             </option>
 
-            {relationOptions.map((option) => (
+            {/* --- AJOUT : UTILISATION DES OPTIONS FILTRÉES --- */}
+            {filteredOptions.map((option) => (
               <option key={option.id} value={option.id}>
                 {option.label}
               </option>

@@ -95,8 +95,13 @@ ui?: {
   help?: string;
 };
 
+/*
+   * PERMISSION
+   */
 
-
+   permissions?: {
+     roles?: string[];
+   };
 
   /*
    * RELATION

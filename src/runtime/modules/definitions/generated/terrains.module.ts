@@ -120,6 +120,48 @@ export const terrainsModule: ERPModule = {
         ],
       },
 
+      // --- AGRICOLE ---
+      {
+        key: "typeCulture",
+        label: "Type de culture",
+        type: "text",
+        grid: { cols: 6 },
+        visibility: {
+          field: "vocationTerrain",
+          equals: "agricole",
+        },
+        ui: {
+          placeholder: "Ex: manioc, maïs, riz",
+        },
+      },
+      {
+        key: "rendementPrevisionnel",
+        label: "Rendement prévisionnel",
+        type: "number",
+        grid: { cols: 6 },
+        visibility: {
+          field: "vocationTerrain",
+          equals: "agricole",
+        },
+      },
+
+      // --- IMMOBILIER ---
+      {
+        key: "typeBienImmobilier",
+        label: "Type de bien immobilier",
+        type: "select",
+        options: [
+          { label: "Maison", value: "maison" },
+          { label: "Appartement", value: "appartement" },
+          { label: "Terrain à bâtir", value: "terrain_a_batir" },
+        ],
+        grid: { cols: 6 },
+        visibility: {
+          field: "vocationTerrain",
+          equals: "immobilier",
+        },
+      },
+
       // --- Contrat foncier ---
       {
         key: "typeContratFoncier",
@@ -176,23 +218,49 @@ export const terrainsModule: ERPModule = {
 
   form: {
     layout: "tabs",
+
     tabs: [
       {
-        key: "identite",
-        label: "Identité",
-        fields: ["nom", "proprietaireId", "localisation", "statut"],
-      },
-      {
-        key: "surfaces",
-        label: "Surfaces",
-        fields: [
-          "surfaceTotale",
-          "surfaceDisponible",
-          "surfaceAgricole",
-          "surfaceHabitation",
-          "vocationTerrain",
+        key: "general",
+        label: "Général",
+
+        fields: ["nom", "statut"],
+
+        sections: [
+          {
+            key: "identite",
+            title: "Identité du terrain",
+            description: "Informations principales du terrain.",
+            fields: ["nom"],
+          },
+          {
+            key: "etat",
+            title: "État du terrain",
+            description: "Statut opérationnel du terrain.",
+            fields: ["statut"],
+          },
+
+          // --- SECTION SURFACES & VOCATION ---
+          {
+            key: "surfaces_vocation",
+            title: "Surfaces & Vocation",
+            description: "Définition des surfaces et de la vocation du terrain.",
+            fields: [
+	    "nom",
+             "statut",
+              "surfaceTotale",
+              "surfaceDisponible",
+              "surfaceAgricole",
+              "surfaceHabitation",
+              "vocationTerrain",
+              "typeCulture",
+              "rendementPrevisionnel",
+              "typeBienImmobilier",
+            ],
+          },
         ],
       },
+
       {
         key: "contrat",
         label: "Contrat foncier",

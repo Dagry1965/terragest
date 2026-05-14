@@ -41,12 +41,17 @@ export function ERPFormTabs({
         tab.key === activeTab
     );
 
+  const activeTabFieldKeys =
+    activeTabConfig?.sections?.length
+      ? activeTabConfig.sections.flatMap(
+          (section) => section.fields
+        )
+      : activeTabConfig?.fields ?? [];
+
   const visibleFields =
     fields.filter(
       (field: ERPModuleField) =>
-        activeTabConfig?.fields.includes(
-          field.key
-        ) &&
+        activeTabFieldKeys.includes(field.key) &&
         RuntimeVisibilityEngine.isVisible(
           field,
           formValues
@@ -88,17 +93,96 @@ export function ERPFormTabs({
       </div>
 
       <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-      <div className="grid grid-cols-12 gap-6">
-  {visibleFields.map((field) => (
-    <ERPFormField
-      key={field.key}
-      field={field}
-      initialValue={
-        initialData[field.key]
-      }
-    />
-  ))}
-</div>
+
+        {activeTabConfig?.sections?.length ? (
+          <div className="space-y-8">
+            {activeTabConfig.sections.map((section) => {
+
+              // -----------------------------------------------------
+              // AJOUT : VISIBILITÉ DES SECTIONS
+              // -----------------------------------------------------
+              const sectionVisible =
+                !section.visibility ||
+                (
+                  section.visibility.equals !== undefined
+                    ? formValues[
+                        section.visibility.field
+                      ] === section.visibility.equals
+                    : true
+                ) &&
+                (
+                  section.visibility.notEquals !== undefined
+                    ? formValues[
+                        section.visibility.field
+                      ] !== section.visibility.notEquals
+                    : true
+                );
+
+              if (!sectionVisible) {
+                return null;
+              }
+              // -----------------------------------------------------
+
+              const sectionFields =
+                visibleFields.filter((field) =>
+                  section.fields.includes(field.key)
+                );
+
+              if (sectionFields.length === 0) {
+                return null;
+              }
+
+              return (
+                <section
+                  key={section.key}
+                  className="
+                    rounded-3xl
+                    border
+                    border-slate-200
+                    bg-slate-50
+                    p-6
+                  "
+                >
+                  <div className="mb-6">
+                    <h3 className="text-lg font-black text-slate-900">
+                      {section.title}
+                    </h3>
+
+                    {section.description && (
+                      <p className="mt-1 text-sm text-slate-500">
+                        {section.description}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="grid grid-cols-12 gap-6">
+                    {sectionFields.map((field) => (
+                      <ERPFormField
+                        key={field.key}
+                        field={field}
+                        initialValue={
+                          initialData[field.key]
+                        }
+                      />
+                    ))}
+                  </div>
+                </section>
+              );
+            })}
+          </div>
+        ) : (
+          <div className="grid grid-cols-12 gap-6">
+            {visibleFields.map((field) => (
+              <ERPFormField
+                key={field.key}
+                field={field}
+                initialValue={
+                  initialData[field.key]
+                }
+              />
+            ))}
+          </div>
+        )}
 
         {visibleFields.length === 0 ? (
           <p className="text-sm text-slate-500">

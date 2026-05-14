@@ -15,6 +15,10 @@ import type { ERPModule } from "@/runtime/modules/ERPModule";
 import { ERPModuleIcon }
 from "@/components/erp/ui/ERPModuleIcon";
 
+import {
+  RuntimeActionEngine,
+} from "@/runtime/actions/RuntimeActionEngine";
+
 interface ERPRuntimePageProps {
   title?: string;
   description?: string;
@@ -41,6 +45,13 @@ export function ERPRuntimePage({
   const resolvedTitle =
     title ?? `${moduleLabel} — ${type}`;
 
+const runtimeActions =
+  RuntimeActionEngine.getAvailableActions({
+    actions: module?.actions ?? [],
+    userPermissions: ["*"],
+    workflow: module?.workflows?.[0],
+    record,
+  });
   return (
     <ERPPage
       title={resolvedTitle}
@@ -51,6 +62,40 @@ export function ERPRuntimePage({
       }
     >
       <div className="space-y-6">
+{runtimeActions.length > 0 && (
+  <div className="flex flex-wrap gap-3">
+    {runtimeActions.map((action) => (
+      <button
+        key={action.key}
+        type="button"
+        onClick={() =>
+          RuntimeActionEngine.execute({
+            module,
+            action,
+            record,
+          })
+        }
+        className={`
+          rounded-2xl
+          px-4
+          py-2
+          text-sm
+          font-bold
+          transition
+          ${
+            action.type === "danger"
+              ? "bg-red-600 text-white hover:bg-red-700"
+              : action.type === "secondary"
+                ? "bg-slate-200 text-slate-900 hover:bg-slate-300"
+                : "bg-slate-950 text-white hover:bg-slate-800"
+          }
+        `}
+      >
+        {action.label}
+      </button>
+    ))}
+  </div>
+)}
  <div className="rounded-xl bg-yellow-50 p-4 text-sm text-slate-900">
   </div>
 

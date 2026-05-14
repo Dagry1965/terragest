@@ -76,16 +76,22 @@ export class CoreModuleRuntimeAdapter {
               .map(([key]) => key)
           : [],
 
-      states:
-        module.workflows?.flatMap(
-          (workflow) => workflow.states ?? []
-        ) ?? [],
+ states:
+  module.workflows?.flatMap((workflow) =>
+    (workflow.states ?? []).map((state) =>
+      typeof state === "string"
+        ? state
+        : state.key
+    )
+  ) ?? [],
 
-      relations:
-        module.relations?.map(
-          (relation) => relation.key
-        ) ?? [],
-    }));
+relations:
+  module.relations?.map((relation) =>
+    relation.targetModule ??
+    relation.targetmodule ??
+    relation.key
+  ) ?? [],
+    })); 
   }
 
   static toGeneratedSchemas():
@@ -141,10 +147,14 @@ export class CoreModuleRuntimeAdapter {
                   "delete",
                 ],
 
-          states:
-            module.workflows?.flatMap(
-              (workflow) => workflow.states ?? []
-            ) ?? [],
+         states:
+  module.workflows?.flatMap((workflow) =>
+    (workflow.states ?? []).map((state) =>
+      typeof state === "string"
+        ? state
+        : state.key
+    )
+  ) ?? [],
         },
       ])
     );
