@@ -264,12 +264,7 @@ if (!businessRulesValid) {
 
       <section className="grid gap-8 xl:grid-cols-[1fr_360px]">
         <div className="space-y-6">
-          <div className="rounded-xl bg-yellow-50 p-4 text-sm text-slate-900">
-            layout: {module.form?.layout ?? "aucun"}
-            <br />
-            tabs: {module.form?.tabs?.length ?? 0}
-          </div>
-
+          
           {module.form?.layout === "tabs" ? (
             <ERPFormTabs
               module={module}
