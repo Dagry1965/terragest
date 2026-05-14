@@ -8,7 +8,7 @@ interface PageProps {
   }>;
 }
 
-export default async function CampagnesDetailPage({
+export default async function BudgetsDetailPage({
   params,
 }: PageProps) {
 
@@ -16,7 +16,7 @@ export default async function CampagnesDetailPage({
 
   return (
     <GenericDetailPage
-      moduleKey="campagnes"
+      moduleKey="budgets"
       id={id}
     />
   );

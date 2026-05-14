@@ -1,11 +1,11 @@
 import { ERPModuleActionPageTemplate } from "@/components/erp/templates";
 
-export default function CampagnesAuditPage() {
+export default function CampagnesDashboardPage() {
   return (
     <ERPModuleActionPageTemplate
       module="campagnes"
-      type="audit"
-      actionLabel="Audit"
+      type="dashboard"
+      actionLabel="Dashboard"
     />
   );
 }

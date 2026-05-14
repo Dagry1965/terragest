@@ -1,4 +1,4 @@
-import { GenericDetailPage } from "@/components/erp/generic/GenericDetailPage";
+import { GenericEditPage } from "@/components/erp/generic/GenericEditPage";
 
 export const dynamic = "force-dynamic";
 
@@ -8,15 +8,15 @@ interface PageProps {
   }>;
 }
 
-export default async function CampagnesDetailPage({
+export default async function Edit__PascalModule__Page({
   params,
 }: PageProps) {
 
   const { id } = await params;
 
   return (
-    <GenericDetailPage
-      moduleKey="campagnes"
+    <GenericEditPage
+      moduleKey="__module__"
       id={id}
     />
   );

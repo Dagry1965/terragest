@@ -8,7 +8,7 @@ interface PageProps {
   }>;
 }
 
-export default async function CampagnesDetailPage({
+export default async function __PascalModule__DetailPage({
   params,
 }: PageProps) {
 
@@ -16,7 +16,7 @@ export default async function CampagnesDetailPage({
 
   return (
     <GenericDetailPage
-      moduleKey="campagnes"
+      moduleKey="__module__"
       id={id}
     />
   );

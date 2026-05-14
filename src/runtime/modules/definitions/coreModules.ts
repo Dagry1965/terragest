@@ -1,3 +1,5 @@
+import { campagnesModule } from "@/runtime/modules/generated/campagnes/campagnes.module";
+import { budgetsModule } from "@/runtime/modules/generated/budgets/budgets.module";
 import type { ERPModule } from "../ERPModule";
 import { generatedERPModules } from "./generated/generatedModules";
 import {
@@ -7,6 +9,8 @@ import {
 from "../factory";
 
 export const coreERPModules: ERPModule[] = [
+  campagnesModule,
+  budgetsModule,
   createBusinessModule({
     key: "utilisateurs",
     label: "Utilisateurs",

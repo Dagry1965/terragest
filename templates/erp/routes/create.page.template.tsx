@@ -2,10 +2,10 @@ import { GenericCreatePage } from "@/components/erp/generic/GenericCreatePage";
 
 export const dynamic = "force-dynamic";
 
-export default function CreateCampagnesPage() {
+export default function Create__PascalModule__Page() {
   return (
     <GenericCreatePage
-      moduleKey="campagnes"
+      moduleKey="__module__"
     />
   );
 }

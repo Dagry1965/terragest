@@ -1,133 +1,268 @@
 param(
   [Parameter(Mandatory = $true)]
-  [string]$ModuleKey,
-
-  [string]$Label = "",
-
-  [string]$Description = "",
-
-  [string]$Category = "MÃ©tier",
-
-  [string]$Collection = "",
-
-  [string]$Icon = "database",
-
-  [switch]$GenerateDefinition,
-
-  [switch]$Force
+  [string]$Module
 )
 
 $ErrorActionPreference = "Stop"
 
-$Root = (Get-Location).Path
-$ScriptDir = Split-Path $MyInvocation.MyCommand.Path -Parent
+$RootPath =
+  Split-Path -Parent $PSScriptRoot |
+  Split-Path -Parent
 
-. (Join-Path $ScriptDir "shared\filesystem.ps1")
-. (Join-Path $ScriptDir "shared\naming.ps1")
-. (Join-Path $ScriptDir "shared\template-engine.ps1")
+function Ensure-DirectoryExists {
+  param(
+    [string]$Path
+  )
 
-Assert-ModuleKey $ModuleKey
+  if (-not (Test-Path $Path)) {
+    New-Item `
+      -ItemType Directory `
+      -Path $Path `
+      -Force | Out-Null
 
-$PascalName = Convert-ToPascalCase $ModuleKey
-$CamelName = $PascalName.Substring(0, 1).ToLower() + $PascalName.Substring(1)
-
-if ([string]::IsNullOrWhiteSpace($Label)) {
-  $Label = $PascalName
-}
-
-if ([string]::IsNullOrWhiteSpace($Description)) {
-  $Description = "Module ERP gÃ©nÃ©rÃ© pour $Label."
-}
-
-if ([string]::IsNullOrWhiteSpace($Collection)) {
-  $Collection = $ModuleKey
-}
-
-$Base = Join-Path $Root "src\app\(private)\$ModuleKey"
-$TemplatesDir = Join-Path $ScriptDir "templates"
-
-$tokens = @{
-  ModuleKey = $ModuleKey
-  PascalName = $PascalName
-  CamelName = $CamelName
-  Label = $Label
-  Description = $Description
-  Category = $Category
-  Collection = $Collection
-  Icon = $Icon
-}
-
-$routes = @(
-  @{
-    Template = "route-list.tsx.tpl"
-    Output = "page.tsx"
-  },
-  @{
-    Template = "route-create.tsx.tpl"
-    Output = "nouveau\page.tsx"
-  },
-  @{
-    Template = "route-detail.tsx.tpl"
-    Output = "[id]\page.tsx"
-  },
-  @{
-    Template = "route-edit.tsx.tpl"
-    Output = "[id]\edit\page.tsx"
+    Write-Host "CREATED DIR $Path"
   }
-)
-
-foreach ($route in $routes) {
-  $content = Expand-Template `
-    -TemplatePath (Join-Path $TemplatesDir $route.Template) `
-    -Tokens $tokens
-
-  Write-GeneratedFile `
-    -Path (Join-Path $Base $route.Output) `
-    -Content $content `
-    -Force:$Force
 }
 
-$actions = @(
+function Write-Utf8File {
+  param(
+    [string]$Path,
+    [string]$Content
+  )
+
+  $Dir = Split-Path $Path -Parent
+
+  Ensure-DirectoryExists $Dir
+
+  $Utf8NoBom =
+    New-Object System.Text.UTF8Encoding($false)
+
+  [System.IO.File]::WriteAllText(
+    $Path,
+    $Content,
+    $Utf8NoBom
+  )
+
+  Write-Host "GENERATED $Path"
+}
+
+function To-PascalCase {
+  param([string]$Text)
+
+  return (
+    $Text.Substring(0,1).ToUpper() +
+    $Text.Substring(1).ToLower()
+  )
+}
+
+$ModuleLower =
+  $Module.ToLower()
+
+$ModulePascal =
+  To-PascalCase $Module
+
+Write-Host ""
+Write-Host "================================="
+Write-Host " TERRAGEST ERP GENERATOR"
+Write-Host "================================="
+Write-Host ""
+Write-Host "MODULE : $ModuleLower"
+Write-Host ""
+
+$TemplatesPath =
+  Join-Path $RootPath "templates\erp"
+
+$AppPath =
+  Join-Path `
+    $RootPath `
+    "src\app\(private)\$ModuleLower"
+
+$RuntimeModulePath =
+  Join-Path `
+    $RootPath `
+    "src\runtime\modules\generated\$ModuleLower"
+
+Ensure-DirectoryExists $AppPath
+
+Ensure-DirectoryExists `
+  "$AppPath\nouveau"
+
+Ensure-DirectoryExists `
+  "$AppPath\[id]"
+
+Ensure-DirectoryExists `
+  "$AppPath\[id]\edit"
+
+Ensure-DirectoryExists `
+  $RuntimeModulePath
+
+Write-Host ""
+Write-Host "DIRECTORIES GENERATED"
+Write-Host ""
+
+function Load-Template {
+  param(
+    [string]$Path
+  )
+
+  return [System.IO.File]::ReadAllText($Path)
+}
+
+function Apply-Template {
+  param(
+    [string]$Template
+  )
+
+  $Result = $Template
+
+  $Result =
+    $Result.Replace(
+      "__module__",
+      $ModuleLower
+    )
+
+  $Result =
+    $Result.Replace(
+      "__PascalModule__",
+      $ModulePascal
+    )
+
+  $Result =
+    $Result.Replace(
+      "__camelModule__",
+$ModuleLower
+    )
+
+  $Result =
+    $Result.Replace(
+      "__LabelModule__",
+      $ModulePascal
+    )
+
+  return $Result
+}
+
+Write-Host ""
+Write-Host "GENERATING FILES"
+Write-Host ""
+
+$ListTemplate =
+  Load-Template `
+    "$TemplatesPath\routes\list.page.template.tsx"
+
+$CreateTemplate =
+  Load-Template `
+    "$TemplatesPath\routes\create.page.template.tsx"
+
+$DetailTemplate =
+  Load-Template `
+    "$TemplatesPath\routes\detail.page.template.tsx"
+
+$EditTemplate =
+  Load-Template `
+    "$TemplatesPath\routes\edit.page.template.tsx"
+
+$ModuleTemplate =
+  Load-Template `
+    "$TemplatesPath\module\module.definition.template.ts"
+
+Write-Utf8File `
+  "$AppPath\page.tsx" `
+  (Apply-Template $ListTemplate)
+
+Write-Utf8File `
+  "$AppPath\nouveau\page.tsx" `
+  (Apply-Template $CreateTemplate)
+
+Write-Utf8File `
+  "$AppPath\[id]\page.tsx" `
+  (Apply-Template $DetailTemplate)
+
+Write-Utf8File `
+  "$AppPath\[id]\edit\page.tsx" `
+  (Apply-Template $EditTemplate)
+
+Write-Utf8File `
+  "$RuntimeModulePath\$ModuleLower.module.ts" `
+  (Apply-Template $ModuleTemplate)
+
+$SecondaryRoutes = @(
   "audit",
   "export",
   "import",
   "relations",
-  "workflows"
+  "workflows",
+  "dashboard",
+  "analytics"
 )
 
-foreach ($action in $actions) {
-  $actionTokens = @{
-    ModuleKey = $ModuleKey
-    PascalName = $PascalName
-    Label = $Label
-    ActionKey = $action
-    ActionPascal = Convert-ToPascalCase $action
-  }
+foreach ($Route in $SecondaryRoutes) {
+  $RoutePascal =
+    To-PascalCase $Route
 
-  $content = Expand-Template `
-    -TemplatePath (Join-Path $TemplatesDir "route-action.tsx.tpl") `
-    -Tokens $actionTokens
+  $RoutePath =
+    Join-Path $AppPath $Route
 
-  Write-GeneratedFile `
-    -Path (Join-Path $Base "$action\page.tsx") `
-    -Content $content `
-    -Force:$Force
+  Ensure-DirectoryExists $RoutePath
+
+  $PageContent = @"
+import { ERPModuleActionPageTemplate } from "@/components/erp/templates";
+
+export default function ${ModulePascal}${RoutePascal}Page() {
+  return (
+    <ERPModuleActionPageTemplate
+      module="$ModuleLower"
+      type="$Route"
+      actionLabel="$RoutePascal"
+    />
+  );
+}
+"@
+
+  Write-Utf8File `
+    (Join-Path $RoutePath "page.tsx") `
+    $PageContent
 }
 
-if ($GenerateDefinition) {
-  $definitionOutputDir = Join-Path $Root "src\runtime\modules\definitions\generated"
-  $definitionOutput = Join-Path $definitionOutputDir "$ModuleKey.module.ts"
-
-  $definitionContent = Expand-Template `
-    -TemplatePath (Join-Path $TemplatesDir "module-definition.ts.tpl") `
-    -Tokens $tokens
-
-  Write-GeneratedFile `
-    -Path $definitionOutput `
-    -Content $definitionContent `
-    -Force:$Force
-}
 
 Write-Host ""
-Write-Host "OK ERP MODULE GENERATED: $ModuleKey"
-Write-Host "NEXT: manually review generated definition before registering it in coreModules.ts"
+Write-Host "================================="
+Write-Host " ERP MODULE GENERATED"
+Write-Host "================================="
+Write-Host ""
+Write-Host "MODULE : $ModuleLower"
+Write-Host ""
+$coreModulesPath =
+  Join-Path $RootPath `
+  "src\runtime\modules\definitions\coreModules.ts"
+
+$coreModulesContent =
+  [System.IO.File]::ReadAllText(
+    $coreModulesPath
+  )
+
+$importLine =
+  "import { ${ModuleLower}Module } from `"@/runtime/modules/generated/$ModuleLower/$ModuleLower.module`";"
+
+if ($coreModulesContent -notmatch [regex]::Escape($importLine)) {
+  $coreModulesContent =
+    $importLine +
+    "`r`n" +
+    $coreModulesContent
+}
+
+$coreModulesContent =
+  $coreModulesContent.Replace(
+    "export const coreERPModules: ERPModule[] = [",
+    "export const coreERPModules: ERPModule[] = [`r`n  ${ModuleLower}Module,"
+  )
+
+[System.IO.File]::WriteAllText(
+  $coreModulesPath,
+  $coreModulesContent,
+  [System.Text.UTF8Encoding]::new($false)
+)
+
+Write-Host ""
+Write-Host "MODULE REGISTERED IN CORE MODULES"
+Write-Host ""
