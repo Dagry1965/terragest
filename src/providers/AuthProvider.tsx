@@ -26,6 +26,18 @@ import {
 
 } from "@/lib/firebase/config";
 
+import {
+
+  ERPUserProfileService,
+
+} from "@/runtime/security/users/ERPUserProfileService";
+
+import {
+
+  ERPSessionRuntime,
+
+} from "@/runtime/security/sessions/ERPSessionRuntime";
+
 interface AuthContextType {
 
   user: User | null;
@@ -77,9 +89,67 @@ export function AuthProvider({
 
         auth,
 
-        (user) => {
+        async (user) => {
 
           setUser(user);
+
+          if (user) {
+
+            const profile =
+
+              await ERPUserProfileService.getProfile(
+                user.uid
+              );
+
+            if (profile) {
+
+              ERPSessionRuntime.setSession({
+
+                user: {
+                  id: profile.id,
+                  email: profile.email,
+                  displayName:
+                    profile.displayName,
+                },
+
+                role:
+                  profile.role,
+
+                tenant:
+                  profile.tenant,
+
+                permissions:
+                  profile.permissions.map(
+                    (permission) => ({
+                      key: permission,
+                    })
+                  ),
+
+                workspaces:
+                  profile.workspaces,
+
+                modules:
+                  profile.modules,
+              });
+            }
+
+          } else {
+
+            ERPSessionRuntime.setSession({
+
+              user: null,
+
+              role: "guest",
+
+              tenant: "default",
+
+              permissions: [],
+
+              workspaces: [],
+
+              modules: [],
+            });
+          }
 
           setLoading(false);
         }

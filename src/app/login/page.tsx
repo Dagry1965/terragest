@@ -1,5 +1,3 @@
-// src/app/login/page.tsx
-
 "use client";
 
 import { useState }
@@ -8,8 +6,15 @@ from "react";
 import { useRouter }
 from "next/navigation";
 
-import { AuthService }
-from "@/platform/auth/AuthService";
+import {
+  signInWithEmailAndPassword,
+}
+from "firebase/auth";
+
+import {
+  auth,
+}
+from "@/lib/firebase/config";
 
 export default function LoginPage() {
 
@@ -22,17 +27,28 @@ export default function LoginPage() {
   const [password, setPassword] =
     useState("");
 
-  function handleLogin() {
+  const [loading, setLoading] =
+    useState(false);
 
-    const success =
-      AuthService.login(
+  const [error, setError] =
+    useState("");
+
+  async function handleLogin() {
+
+    try {
+
+      setLoading(true);
+
+      setError("");
+
+      await signInWithEmailAndPassword(
+
+        auth,
 
         email,
 
         password
       );
-
-    if (success) {
 
       document.cookie =
         "token=authenticated; path=/; max-age=86400; SameSite=Lax";
@@ -40,6 +56,18 @@ export default function LoginPage() {
       router.push(
         "/dashboard"
       );
+
+    } catch (err: any) {
+
+      console.error(err);
+
+      setError(
+        "Email ou mot de passe invalide."
+      );
+
+    } finally {
+
+      setLoading(false);
     }
   }
 
@@ -128,11 +156,32 @@ export default function LoginPage() {
             "
           />
 
+          {error ? (
+
+            <div
+              className="
+                rounded-xl
+                border
+                border-red-200
+                bg-red-50
+                px-4
+                py-3
+                text-sm
+                text-red-700
+              "
+            >
+              {error}
+            </div>
+
+          ) : null}
+
           <button
 
             onClick={
               handleLogin
             }
+
+            disabled={loading}
 
             className="
               bg-black
@@ -140,13 +189,18 @@ export default function LoginPage() {
               rounded-xl
               py-3
               font-medium
+              disabled:opacity-50
             "
           >
-            Se connecter
+            {loading
+              ? "Connexion..."
+              : "Se connecter"}
           </button>
 
         </div>
+
       </div>
+
     </div>
   );
 }

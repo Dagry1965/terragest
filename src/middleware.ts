@@ -5,7 +5,11 @@ import type { NextRequest }
 from "next/server";
 
 import {
+
+  isProtectedERPRoute,
+
   isPublicRoute,
+
 }
 from "./lib/auth/session";
 
@@ -14,17 +18,30 @@ export function middleware(
 ) {
 
   const token =
-    request.cookies.get("token");
+    request.cookies.get(
+      "token"
+    );
 
   const pathname =
     request.nextUrl.pathname;
 
   const isPublic =
-    isPublicRoute(pathname);
+    isPublicRoute(
+      pathname
+    );
 
-  if (!token && !isPublic) {
+  const isProtected =
+    isProtectedERPRoute(
+      pathname
+    );
+
+  if (
+    isProtected &&
+    !token
+  ) {
 
     return NextResponse.redirect(
+
       new URL(
         "/login",
         request.url
@@ -38,6 +55,7 @@ export function middleware(
   ) {
 
     return NextResponse.redirect(
+
       new URL(
         "/dashboard",
         request.url
@@ -49,11 +67,9 @@ export function middleware(
 }
 
 export const config = {
+
   matcher: [
-    "/dashboard/:path*",
-    "/exploitations/:path*",
-    "/produits/:path*",
-    "/stocks/:path*",
-    "/materiels/:path*",
+
+    "/((?!_next).*)",
   ],
 };

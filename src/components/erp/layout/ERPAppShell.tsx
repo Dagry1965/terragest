@@ -3,17 +3,7 @@
 import type { PropsWithChildren } from "react";
 import Link from "next/link";
 import { ERPTheme } from "../ui";
-
-const navigation = [
-  { label: "Dashboard", href: "/dashboard" },
-  { label: "Terrains", href: "/terrains" },
-  { label: "Exploitations", href: "/exploitations" },
-  { label: "Stocks", href: "/stocks" },
-  { label: "Matériels", href: "/materiels" },
-  { label: "Maintenance", href: "/maintenance" },
-  { label: "Paiements", href: "/paiements" },
-  { label: "Supervision", href: "/supervision" },
-];
+import { getERPWorkspacesNavigation } from "@/runtime/navigation/ERPNavigationEngine";
 
 interface ERPAppShellProps extends PropsWithChildren {
   activeModule?: string;
@@ -23,6 +13,10 @@ export function ERPAppShell({
   children,
   activeModule,
 }: ERPAppShellProps) {
+
+  // 🔥 Navigation dynamique basée sur les workspaces + modules
+  const navigation = getERPWorkspacesNavigation();
+
   return (
     <div
       style={{
@@ -55,6 +49,7 @@ export function ERPAppShell({
           </h1>
         </div>
 
+        {/* 🔥 Nouveau menu dynamique */}
         <nav
           style={{
             display: "flex",
@@ -62,29 +57,63 @@ export function ERPAppShell({
             gap: ERPTheme.spacing.sm,
           }}
         >
-          {navigation.map((item) => {
-            const isActive =
-              activeModule &&
-              item.href.includes(activeModule);
-
-            return (
+          {navigation.map((workspace) => (
+            <div key={workspace.key}>
+              {/* Workspace */}
               <Link
-                key={item.href}
-                href={item.href}
+                href={workspace.href}
                 style={{
+                  display: "block",
                   color: ERPTheme.colors.text,
                   textDecoration: "none",
                   padding: ERPTheme.spacing.sm,
                   borderRadius: ERPTheme.radius.md,
-                  background: isActive
-                    ? ERPTheme.colors.card
-                    : "transparent",
+                  fontWeight: 800,
+                  background:
+                    activeModule === workspace.key
+                      ? ERPTheme.colors.card
+                      : "transparent",
                 }}
               >
-                {item.label}
+                {workspace.label}
               </Link>
-            );
-          })}
+
+              {/* Modules du workspace */}
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: ERPTheme.spacing.sm,
+                  marginLeft: ERPTheme.spacing.md,
+                  marginTop: ERPTheme.spacing.sm,
+                  marginBottom: ERPTheme.spacing.md,
+                }}
+              >
+                {workspace.modules.map((module) => {
+                  const isActive = activeModule === module.key;
+
+                  return (
+                    <Link
+                      key={module.key}
+                      href={module.href}
+                      style={{
+                        color: ERPTheme.colors.text,
+                        textDecoration: "none",
+                        padding: ERPTheme.spacing.sm,
+                        borderRadius: ERPTheme.radius.md,
+                        background: isActive
+                          ? ERPTheme.colors.card
+                          : "transparent",
+                        opacity: 0.85,
+                      }}
+                    >
+                      {module.label}
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
         </nav>
       </aside>
 

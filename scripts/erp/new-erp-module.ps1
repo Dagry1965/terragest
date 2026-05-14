@@ -186,6 +186,60 @@ Write-Utf8File `
   "$RuntimeModulePath\$ModuleLower.module.ts" `
   (Apply-Template $ModuleTemplate)
 
+$ActionsContent = @"
+export const ${ModuleLower}Actions = [];
+"@
+
+$WorkflowsContent = @"
+export const ${ModuleLower}Workflows = [];
+"@
+
+$PermissionsContent = @"
+export const ${ModuleLower}Permissions = [];
+"@
+
+$AutomationContent = @"
+export const ${ModuleLower}Automation = [];
+"@
+
+$DashboardContent = @"
+export const ${ModuleLower}Dashboard = {};
+"@
+
+$IndexContent = @"
+export * from "./$ModuleLower.module";
+export * from "./$ModuleLower.actions";
+export * from "./$ModuleLower.workflows";
+export * from "./$ModuleLower.permissions";
+export * from "./$ModuleLower.automation";
+export * from "./$ModuleLower.dashboard";
+"@
+
+Write-Utf8File `
+  "$RuntimeModulePath\$ModuleLower.actions.ts" `
+  $ActionsContent
+
+Write-Utf8File `
+  "$RuntimeModulePath\$ModuleLower.workflows.ts" `
+  $WorkflowsContent
+
+Write-Utf8File `
+  "$RuntimeModulePath\$ModuleLower.permissions.ts" `
+  $PermissionsContent
+
+Write-Utf8File `
+  "$RuntimeModulePath\$ModuleLower.automation.ts" `
+  $AutomationContent
+
+Write-Utf8File `
+  "$RuntimeModulePath\$ModuleLower.dashboard.ts" `
+  $DashboardContent
+
+Write-Utf8File `
+  "$RuntimeModulePath\index.ts" `
+  $IndexContent
+
+
 $SecondaryRoutes = @(
   "audit",
   "export",
@@ -242,7 +296,7 @@ $coreModulesContent =
   )
 
 $importLine =
-  "import { ${ModuleLower}Module } from `"@/runtime/modules/generated/$ModuleLower/$ModuleLower.module`";"
+  "import { ${ModuleLower}Module } from `"@/runtime/modules/generated/$ModuleLower`";"
 
 if ($coreModulesContent -notmatch [regex]::Escape($importLine)) {
   $coreModulesContent =

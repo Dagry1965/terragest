@@ -1,12 +1,11 @@
-import { ERPModuleActionPageTemplate } from "@/components/erp/generic/ERPModuleActionPageTemplate";
-
-export const dynamic = "force-dynamic";
+import { ERPModuleActionPageTemplate } from "@/components/erp/templates";
 
 export default function ContratsAuditPage() {
   return (
     <ERPModuleActionPageTemplate
-      moduleKey="contrats"
-      action="audit"
+      module="contrats"
+      type="audit"
+      actionLabel="Audit"
     />
   );
 }

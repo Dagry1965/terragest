@@ -1,3 +1,5 @@
+import { facturationsModule } from "@/runtime/modules/generated/facturations";
+import { contratsModule } from "@/runtime/modules/generated/contrats/contrats.module";
 import { campagnesModule } from "@/runtime/modules/generated/campagnes/campagnes.module";
 import { budgetsModule } from "@/runtime/modules/generated/budgets/budgets.module";
 import type { ERPModule } from "../ERPModule";
@@ -9,6 +11,8 @@ import {
 from "../factory";
 
 export const coreERPModules: ERPModule[] = [
+  facturationsModule,
+  contratsModule,
   campagnesModule,
   budgetsModule,
   createBusinessModule({
