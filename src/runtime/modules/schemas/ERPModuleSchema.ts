@@ -112,6 +112,12 @@ ui?: {
   relationType?: ERPRelationType;
   references?: ERPModuleFieldReference;
 
+relationDisplay?: {
+  title?: string;
+  subtitle?: string;
+  badge?: string;
+};
+
   /*
    * OPTIONS
    */
