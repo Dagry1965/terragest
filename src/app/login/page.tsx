@@ -53,9 +53,9 @@ export default function LoginPage() {
       document.cookie =
         "token=authenticated; path=/; max-age=86400; SameSite=Lax";
 
-      router.push(
-        "/dashboard"
-      );
+     router.push(
+  "/workspaces/general"
+);
 
     } catch (err: any) {
 

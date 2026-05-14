@@ -1,3 +1,8 @@
+$ErrorActionPreference = "Stop"
+
+$path = "C:\Users\Admin\terragest\src\core\layout\Sidebar.tsx"
+
+$content = @'
 "use client";
 
 import Link from "next/link";
@@ -9,10 +14,6 @@ import {
 import {
   getERPWorkspacesNavigation,
 } from "@/runtime/navigation/ERPNavigationEngine";
-
-import {
-  ERPSessionRuntime,
-} from "@/runtime/security/sessions/ERPSessionRuntime";
 
 export function Sidebar() {
   const { loading } = useAuth();
@@ -29,14 +30,7 @@ export function Sidebar() {
 
   const navigation =
     getERPWorkspacesNavigation();
-console.log(
-  "ERP NAVIGATION",
-  navigation
-);
-console.log(
-  "ERP SESSION",
-  ERPSessionRuntime.getSession()
-);
+
   return (
     <aside className="fixed left-0 top-0 h-screen w-64 overflow-y-auto border-r border-white/60 bg-white/75 p-5 shadow-xl shadow-slate-200/40 backdrop-blur-xl">
       <div className="mb-8 rounded-3xl bg-slate-950 p-5 text-white shadow-xl">
@@ -80,3 +74,13 @@ console.log(
     </aside>
   );
 }
+'@
+
+[System.IO.File]::WriteAllText(
+  $path,
+  $content,
+  [System.Text.UTF8Encoding]::new($false)
+)
+
+Write-Host "OK - Real Sidebar now uses runtime workspace navigation."
+Write-Host "Run: pnpm build"

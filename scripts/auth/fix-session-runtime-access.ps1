@@ -1,3 +1,8 @@
+$ErrorActionPreference = "Stop"
+
+$path = "C:\Users\Admin\terragest\src\runtime\security\sessions\ERPSessionRuntime.ts"
+
+$content = @'
 import type {
   ERPSessionContext,
 } from "./ERPSessionTypes";
@@ -103,3 +108,13 @@ export class ERPSessionRuntime {
     );
   }
 }
+'@
+
+[System.IO.File]::WriteAllText(
+  $path,
+  $content,
+  [System.Text.UTF8Encoding]::new($false)
+)
+
+Write-Host "OK - ERPSessionRuntime access fixed."
+Write-Host "Run: pnpm build"

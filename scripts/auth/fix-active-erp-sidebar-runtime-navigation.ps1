@@ -1,3 +1,8 @@
+$ErrorActionPreference = "Stop"
+
+$path = "C:\Users\Admin\terragest\src\components\erp\shell\ErpSidebar.tsx"
+
+$content = @'
 "use client";
 
 import Link from "next/link";
@@ -11,14 +16,10 @@ import {
   getERPWorkspacesNavigation,
 } from "@/runtime/navigation/ERPNavigationEngine";
 
-import {
-  ERPSessionRuntime,
-} from "@/runtime/security/sessions/ERPSessionRuntime";
-
 export function ErpSidebar() {
   const pathname = usePathname();
 
-  const { loading, user } = useAuth();
+  const { loading } = useAuth();
 
   if (loading) {
     return (
@@ -31,40 +32,6 @@ export function ErpSidebar() {
   }
 
   const navigation = getERPWorkspacesNavigation();
-  const session = ERPSessionRuntime.getSession();
-
-  if (navigation.length === 0) {
-    return (
-      <aside className="hidden w-72 shrink-0 overflow-y-auto border-r border-slate-200 bg-slate-950 p-4 text-white lg:block">
-        <div className="mb-6 rounded-2xl bg-red-950/60 p-4">
-          <p className="text-sm font-bold text-red-200">
-            Navigation vide
-          </p>
-
-          <p className="mt-2 text-xs text-red-100">
-            La session runtime ne donne accÃ¨s Ã  aucun workspace/module.
-          </p>
-        </div>
-
-        <pre className="whitespace-pre-wrap break-words rounded-2xl bg-slate-900 p-3 text-[11px] text-slate-300">
-          {JSON.stringify(
-            {
-              firebaseUser: user
-                ? {
-                    uid: user.uid,
-                    email: user.email,
-                  }
-                : null,
-              session,
-              navigation,
-            },
-            null,
-            2
-          )}
-        </pre>
-      </aside>
-    );
-  }
 
   return (
     <aside className="hidden w-72 shrink-0 overflow-y-auto border-r border-slate-200 bg-slate-950 text-white lg:block">
@@ -128,3 +95,13 @@ export function ErpSidebar() {
     </aside>
   );
 }
+'@
+
+[System.IO.File]::WriteAllText(
+  $path,
+  $content,
+  [System.Text.UTF8Encoding]::new($false)
+)
+
+Write-Host "OK - Active ErpSidebar now uses runtime workspace navigation."
+Write-Host "Run: pnpm build"

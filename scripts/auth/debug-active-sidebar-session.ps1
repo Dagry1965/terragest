@@ -1,3 +1,8 @@
+$ErrorActionPreference = "Stop"
+
+$path = "C:\Users\Admin\terragest\src\components\erp\shell\ErpSidebar.tsx"
+
+$content = @'
 "use client";
 
 import Link from "next/link";
@@ -42,7 +47,7 @@ export function ErpSidebar() {
           </p>
 
           <p className="mt-2 text-xs text-red-100">
-            La session runtime ne donne accÃ¨s Ã  aucun workspace/module.
+            La session runtime ne donne accès à aucun workspace/module.
           </p>
         </div>
 
@@ -128,3 +133,13 @@ export function ErpSidebar() {
     </aside>
   );
 }
+'@
+
+[System.IO.File]::WriteAllText(
+  $path,
+  $content,
+  [System.Text.UTF8Encoding]::new($false)
+)
+
+Write-Host "OK - Sidebar debug installed."
+Write-Host "Run: pnpm build"

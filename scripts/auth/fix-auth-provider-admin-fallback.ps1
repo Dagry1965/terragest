@@ -1,3 +1,8 @@
+$ErrorActionPreference = "Stop"
+
+$path = "C:\Users\Admin\terragest\src\providers\AuthProvider.tsx"
+
+$content = @'
 "use client";
 
 import {
@@ -253,3 +258,13 @@ export function useAuth() {
     AuthContext
   );
 }
+'@
+
+[System.IO.File]::WriteAllText(
+  $path,
+  $content,
+  [System.Text.UTF8Encoding]::new($false)
+)
+
+Write-Host "OK - AuthProvider admin fallback installed."
+Write-Host "Run: pnpm build"
