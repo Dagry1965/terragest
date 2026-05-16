@@ -1,60 +1,224 @@
 import type {
-  ERPTenantMetrics,
-} from "./ERPTenantMetrics";
+ ERPTenantMetrics,
+}
+from "./ERPTenantMetrics";
 
 import {
-  ERPTenantRegistry,
-} from "../registry/ERPTenantRegistry";
+ ERPTenantRegistry,
+}
+from "../registry/ERPTenantRegistry";
 
 import {
-  ERPTenantQuotaEvaluator,
-} from "./ERPTenantQuotaEvaluator";
+ ERPTenantQuotaEvaluator,
+}
+from "./ERPTenantQuotaEvaluator";
 
 class ERPTenantMetricsStoreClass {
-  private metrics: ERPTenantMetrics[] = [];
 
-  set(metrics: ERPTenantMetrics) {
-    const exists =
-      this.metrics.some(
-        (item) =>
-          item.tenantId === metrics.tenantId
-      );
+ private current:
+   ERPTenantMetrics[]=[];
 
-    if (exists) {
-      this.metrics =
-        this.metrics.map(
-          (item) =>
-            item.tenantId === metrics.tenantId
-              ? metrics
-              : item
-        );
-    } else {
-      this.metrics.push(metrics);
-    }
+ private history:
+   ERPTenantMetrics[]=[];
 
-    const tenant =
-      ERPTenantRegistry.find(
-        (item) =>
-          item.id === metrics.tenantId
-      );
 
-    ERPTenantQuotaEvaluator.evaluate(
-      metrics,
-      tenant?.plan ?? "starter"
-    );
-  }
+ set(
+   metrics:
+     ERPTenantMetrics
+ ){
 
-  all() {
-    return this.metrics;
-  }
+   const snapshot={
 
-  byTenant(tenantId: string) {
-    return this.metrics.find(
-      (item) =>
-        item.tenantId === tenantId
-    );
-  }
+     ...metrics,
+
+     timestamp:
+       new Date()
+         .toISOString()
+
+   };
+
+
+   this.history.push(
+     snapshot
+   );
+
+   this.history=
+     this.history.slice(
+       -5000
+     );
+
+
+   const exists=
+     this.current.some(
+
+       item=>
+
+         item.tenantId===
+
+           metrics.tenantId
+
+     );
+
+
+   if(exists){
+
+     this.current=
+       this.current.map(
+
+         item=>
+
+           item.tenantId===
+
+             metrics.tenantId
+
+           ?
+
+           snapshot
+
+           :
+
+           item
+
+       );
+
+   }
+
+   else{
+
+     this.current.push(
+       snapshot
+     );
+
+   }
+
+
+   const tenant=
+
+     ERPTenantRegistry.find(
+
+       item=>
+
+         item.id===
+
+           metrics.tenantId
+
+     );
+
+
+   ERPTenantQuotaEvaluator
+     .evaluate(
+
+       snapshot,
+
+       tenant?.plan ??
+
+         "starter"
+
+     );
+
+ }
+
+
+ all(){
+
+   return this.current;
+
+ }
+
+
+ historyByTenant(
+
+   tenantId:
+     string
+
+ ){
+
+   return this.history.filter(
+
+     item=>
+
+       item.tenantId===
+
+         tenantId
+
+   );
+
+ }
+
+
+ growthRate(
+
+   tenantId:
+     string,
+
+   metric:
+     keyof ERPTenantMetrics
+
+ ){
+
+   const history=
+
+     this.historyByTenant(
+       tenantId
+     );
+
+
+   if(
+     history.length<2
+   ){
+
+     return 0;
+
+   }
+
+
+   const first=
+     history[0];
+
+   const last=
+     history[
+       history.length-1
+     ];
+
+
+   return (
+
+     Number(
+       last[metric]
+     )
+
+     -
+
+     Number(
+       first[metric]
+     )
+
+   );
+
+ }
+
+
+ byTenant(
+   tenantId:
+     string
+ ){
+
+   return this.current.find(
+
+     item=>
+
+       item.tenantId===
+
+         tenantId
+
+   );
+
+ }
+
 }
 
-export const ERPTenantMetricsStore =
-  new ERPTenantMetricsStoreClass();
+export const
+ERPTenantMetricsStore=
+
+ new
+ ERPTenantMetricsStoreClass();

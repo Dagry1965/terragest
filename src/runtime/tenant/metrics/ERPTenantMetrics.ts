@@ -12,4 +12,6 @@ export type ERPTenantMetrics = {
   alerts: number;
 
   storage: number;
+
+  timestamp?: string;
 };
