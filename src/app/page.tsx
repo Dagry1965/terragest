@@ -1,12 +1,27 @@
 import {
-  PublicHero,
-  PublicLayout,
-} from "@/components/public";
 
-export default function HomePage() {
-  return (
-    <PublicLayout>
-      <PublicHero />
-    </PublicLayout>
-  );
+  PublicHero,
+
+  PublicLayout,
+
+  PublicServices,
+
+}
+from "@/components/public";
+
+export default
+function HomePage(){
+
+ return(
+
+  <PublicLayout>
+
+   <PublicHero/>
+
+   <PublicServices/>
+
+  </PublicLayout>
+
+ );
+
 }
