@@ -1,92 +1,213 @@
-import {
-  PublicLayout,
-} from "@/components/public";
+"use client";
+
+import { useState } from "react";
 
 import {
-  ERPPageHero,
-} from "@/components/erp/layout/ERPPageHero";
+ PublicLayout,
+}
+from "@/components/public";
 
 import {
-  ERPButton,
-  ERPCard,
-} from "@/components/erp/ui";
+ ERPPageHero,
+}
+from "@/components/erp/layout/ERPPageHero";
 
-export default function RDVPage() {
+import {
+ ERPButton,
+ ERPCard,
+}
+from "@/components/erp/ui";
 
-  return (
+import {
+ createPublicAppointment,
+}
+from "@/components/public/PublicAppointmentService";
 
-    <PublicLayout>
+export default function RDVPage(){
 
-      <ERPPageHero
-        category="Rendez-vous"
+ const [
 
-        title="
-        Réserver une intervention
-        "
+  form,
 
-        description="
-        Prenez rendez-vous
-        rapidement avec
-        AMARKHYS.
-        "
-      />
+  setForm
 
-      <ERPCard
-        title="
-        Demande rendez-vous
-        "
-      >
+ ]=
 
-        <div
-          className="
-          flex
-          flex-col
-          gap-4
-          "
-        >
+ useState({
 
-          <input
-            placeholder="Nom"
-            className="
-            border
-            p-3
-            rounded
-            "
-          />
+  nom:"",
+
+  telephone:"",
+
+  vehicule:"",
+
+  immatriculation:""
+
+ });
 
 
-          <input
-            placeholder="Téléphone"
-            className="
-            border
-            p-3
-            rounded
-            "
-          />
+ async function submit(){
 
-
-          <input
-            placeholder="Véhicule"
-            className="
-            border
-            p-3
-            rounded
-            "
-          />
-
-
-          <ERPButton>
-
-            Envoyer demande
-
-          </ERPButton>
-
-        </div>
-
-      </ERPCard>
-
-    </PublicLayout>
-
+  await createPublicAppointment(
+   form
   );
+
+  alert(
+   "Demande envoyée"
+  );
+
+ }
+
+
+ return(
+
+  <PublicLayout>
+
+   <ERPPageHero
+
+    category="RDV"
+
+    title="
+    Réserver
+    "
+
+    description="
+    Prenez rendez-vous
+    avec AMARKHYS
+    "
+
+   />
+
+
+   <ERPCard
+    title="
+    Rendez-vous
+    "
+   >
+
+    <div
+     className="
+     flex
+     flex-col
+     gap-4
+     "
+    >
+
+<input
+
+value={form.nom}
+
+onChange={e=>
+
+ setForm({
+
+  ...form,
+
+  nom:
+   e.target.value
+
+ })
+
+}
+
+placeholder="
+Nom
+"
+
+/>
+
+
+<input
+
+value={form.telephone}
+
+onChange={e=>
+
+ setForm({
+
+  ...form,
+
+  telephone:
+   e.target.value
+
+ })
+
+}
+
+placeholder="
+Téléphone
+"
+
+/>
+
+
+<input
+
+value={form.vehicule}
+
+onChange={e=>
+
+ setForm({
+
+  ...form,
+
+  vehicule:
+   e.target.value
+
+ })
+
+}
+
+placeholder="
+Marque véhicule
+"
+
+/>
+
+
+<input
+
+value={form.immatriculation}
+
+onChange={e=>
+
+ setForm({
+
+  ...form,
+
+  immatriculation:
+   e.target.value
+
+ })
+
+}
+
+placeholder="
+Immatriculation
+"
+
+/>
+
+
+<ERPButton
+
+onClick={
+ submit
+}
+
+>
+
+Envoyer
+
+</ERPButton>
+
+
+    </div>
+
+   </ERPCard>
+
+  </PublicLayout>
+
+ );
 
 }
