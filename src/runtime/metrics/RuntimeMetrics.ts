@@ -1,3 +1,8 @@
+import {
+  LiveMetricsStream,
+}
+from "@/runtime/realtime/metrics/LiveMetricsStream";
+
 export type RuntimeMetricType =
   | "counter"
   | "sum"
@@ -31,6 +36,21 @@ export class RuntimeMetrics {
     };
 
     RuntimeMetrics.entries.push(metric);
+
+    LiveMetricsStream.publish({
+      metric: metric.key,
+      value: metric.value,
+      workspace: metric.context.workspace,
+      tenantId: metric.context.tenantId,
+      moduleKey: metric.context.moduleKey,
+      userId: metric.context.userId,
+      timestamp: metric.timestamp,
+      metadata: {
+        type: metric.type,
+        source: metric.context.source,
+        ...metric.metadata,
+      },
+    });
 
     return metric;
   }

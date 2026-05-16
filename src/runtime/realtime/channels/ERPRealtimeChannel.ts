@@ -4,6 +4,7 @@ export type ERPRealtimeChannelType =
   | "automation"
   | "queue"
   | "alerts"
+  | "metrics"
   | "system"
   | "tenant";
 
