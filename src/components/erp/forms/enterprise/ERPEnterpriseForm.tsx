@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   useRouter,
   useSearchParams,
@@ -155,6 +155,14 @@ export function ERPEnterpriseForm({
       (field) => field.type === "relation"
     );
 
+  const errorByField =
+    Object.fromEntries(
+      errors.map((error) => [
+        error.field,
+        error.message,
+      ])
+    ) as Record<string, string>;
+
   const returnTo =
     searchParams.get("returnTo");
 
@@ -167,6 +175,29 @@ export function ERPEnterpriseForm({
       [key]: value,
     }));
   }
+
+  useEffect(() => {
+    if (errors.length === 0) {
+      return;
+    }
+
+    const firstError =
+      errors[0];
+
+    if (!firstError?.field) {
+      return;
+    }
+
+    const target =
+      document.querySelector(
+        `[data-field-key="${firstError.field}"]`
+      );
+
+    target?.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+    });
+  }, [errors]);
 
   async function prepareTerrainPayloadBeforeCreate(
     payload: Record<string, unknown>
@@ -624,6 +655,7 @@ preparedPayload.terrainId
               initialData={formValues}
               formValues={formValues}
               onFieldChange={handleFieldChange}
+              fieldErrors={errorByField}
             />
           ) : (
             <>
@@ -637,6 +669,7 @@ preparedPayload.terrainId
                     field={field}
                     value={formValues[field.key]}
                     onChange={handleFieldChange}
+                    error={errorByField[field.key]}
                   />
                 ))}
               </ERPFormSection>
@@ -652,6 +685,7 @@ preparedPayload.terrainId
                       field={field}
                       value={formValues[field.key]}
                       onChange={handleFieldChange}
+                      error={errorByField[field.key]}
                     />
                   ))}
                 </ERPFormSection>

@@ -18,6 +18,7 @@ interface ERPFormTabsProps {
   initialData?: Record<string, unknown>;
   formValues?: Record<string, unknown>;
   onFieldChange?: (key: string, value: unknown) => void;
+  fieldErrors?: Record<string, string>;
 }
 
 export function ERPFormTabs({
@@ -25,6 +26,7 @@ export function ERPFormTabs({
   initialData = {},
   formValues = {},
   onFieldChange,
+  fieldErrors = {},
 }: ERPFormTabsProps) {
   const [activeTab, setActiveTab] =
     useState(
@@ -166,11 +168,12 @@ export function ERPFormTabs({
                   <div className="grid grid-cols-12 gap-6">
                     {sectionFields.map((field) => (
                    <ERPFormField
-  key={field.key}
-  field={field}
-  value={formValues[field.key]}
-  onChange={onFieldChange}
-/>
+                        key={field.key}
+                        field={field}
+                        value={formValues[field.key]}
+                        onChange={onFieldChange}
+                        error={fieldErrors[field.key]}
+                      />
                     ))}
                   </div>
                 </section>
@@ -181,11 +184,12 @@ export function ERPFormTabs({
           <div className="grid grid-cols-12 gap-6">
             {visibleFields.map((field) => (
               <ERPFormField
-  key={field.key}
-  field={field}
-  value={formValues[field.key]}
-  onChange={onFieldChange}
-/>
+                        key={field.key}
+                        field={field}
+                        value={formValues[field.key]}
+                        onChange={onFieldChange}
+                        error={fieldErrors[field.key]}
+                      />
             ))}
           </div>
         )}

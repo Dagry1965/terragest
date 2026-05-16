@@ -15,6 +15,7 @@ interface ERPFormFieldProps {
   field: ERPModuleField;
   value?: unknown;
   onChange?: (key: string, value: unknown) => void;
+  error?: string;
 }
 
 const gridClassMap: Record<number, string> = {
@@ -103,12 +104,15 @@ function normalizeFormFieldValue(
 function FieldWrapper({
   field,
   children,
+  error,
 }: {
   field: ERPModuleField;
   children: ReactNode;
+  error?: string;
 }) {
   return (
     <div
+      data-field-key={field.key}
       className={`
         space-y-2
         col-span-12
@@ -122,6 +126,12 @@ function FieldWrapper({
           {field.helperText}
         </p>
       ) : null}
+
+      {error ? (
+        <p className="rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-xs font-semibold text-red-700">
+          {error}
+        </p>
+      ) : null}
     </div>
   );
 }
@@ -130,6 +140,7 @@ export function ERPFormField({
   field,
   value,
   onChange,
+  error,
 }: ERPFormFieldProps) {
   const router = useRouter();
 
@@ -202,7 +213,7 @@ export function ERPFormField({
     );
 
     return (
-      <FieldWrapper field={field}>
+      <FieldWrapper field={field} error={error}>
         <label className="block space-y-2">
           {label}
 
@@ -342,7 +353,7 @@ router.push(
 
   if (field.type === "select" || field.type === "status") {
     return (
-      <FieldWrapper field={field}>
+      <FieldWrapper field={field} error={error}>
         <label className="block space-y-2">
           {label}
 
@@ -477,7 +488,7 @@ router.push(
 
   if (field.type === "boolean") {
     return (
-      <FieldWrapper field={field}>
+      <FieldWrapper field={field} error={error}>
         <label className="block space-y-2">
           {label}
 
@@ -605,7 +616,7 @@ router.push(
 
   if (field.type === "textarea") {
     return (
-      <FieldWrapper field={field}>
+      <FieldWrapper field={field} error={error}>
         <label className="block space-y-2">
           {label}
 
@@ -653,7 +664,7 @@ router.push(
                 : "text";
 
   return (
-    <FieldWrapper field={field}>
+    <FieldWrapper field={field} error={error}>
       <label className="block space-y-2">
         {label}
 
