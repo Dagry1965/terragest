@@ -198,6 +198,58 @@ class ERPTenantMetricsStoreClass {
  }
 
 
+ forecast(
+
+   tenantId:
+     string,
+
+   metric:
+     keyof ERPTenantMetrics,
+
+   periods =
+     1
+
+ ){
+
+   const current =
+     this.byTenant(
+       tenantId
+     );
+
+
+   if(
+     !current
+   ){
+
+     return 0;
+
+   }
+
+
+   const growth =
+     this.growthRate(
+       tenantId,
+       metric
+     );
+
+
+   return (
+
+     Number(
+       current[metric]
+     )
+
+     +
+
+     growth
+     *
+     periods
+
+   );
+
+ }
+
+
  byTenant(
    tenantId:
      string

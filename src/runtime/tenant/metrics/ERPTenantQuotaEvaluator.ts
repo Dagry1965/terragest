@@ -1,12 +1,19 @@
 import {
   ERPAlertStore,
-} from "@/runtime/observability/alerts/ERPAlertStore";
+}
+from "@/runtime/observability/alerts/ERPAlertStore";
 
 import type {
   ERPTenantMetrics,
-} from "./ERPTenantMetrics";
+}
+from "./ERPTenantMetrics";
+
+import {
+  ERPTenantMetricsStore,
+} from "./ERPTenantMetricsStore";
 
 const quotaByPlan = {
+
   starter: {
     activeUsers: 5,
     workflows: 20,
@@ -30,65 +37,135 @@ const quotaByPlan = {
     queueJobs: 99999,
     storage: 999999,
   },
+
 };
 
 export type ERPTenantQuotaPlan =
   keyof typeof quotaByPlan;
 
 export class ERPTenantQuotaEvaluator {
+
   static evaluate(
     metrics: ERPTenantMetrics,
     plan: ERPTenantQuotaPlan = "starter"
   ) {
+
     const quotas =
       quotaByPlan[plan];
 
-    const checks = [
-      {
-        key: "activeUsers",
-        label: "utilisateurs actifs",
-        value: metrics.activeUsers,
-        limit: quotas.activeUsers,
-      },
-      {
-        key: "workflows",
-        label: "workflows",
-        value: metrics.workflows,
-        limit: quotas.workflows,
-      },
-      {
-        key: "automations",
-        label: "automatisations",
-        value: metrics.automations,
-        limit: quotas.automations,
-      },
-      {
-        key: "queueJobs",
-        label: "jobs de queue",
-        value: metrics.queueJobs,
-        limit: quotas.queueJobs,
-      },
-      {
-        key: "storage",
-        label: "stockage",
-        value: metrics.storage,
-        limit: quotas.storage,
-      },
-    ];
 
-    for (const check of checks) {
-      if (check.value < check.limit) {
-        continue;
+    const checks = [
+
+      "activeUsers",
+      "workflows",
+      "automations",
+      "queueJobs",
+      "storage",
+
+    ] as const;
+
+
+    for (
+      const metric
+      of checks
+    ) {
+
+      const current =
+        Number(
+          metrics[
+            metric
+          ]
+        );
+
+      const forecast =
+        ERPTenantMetricsStore
+          .forecast(
+
+            metrics.tenantId,
+
+            metric,
+
+            3
+
+          );
+
+      const quota =
+        quotas[
+          metric
+        ];
+
+
+      if (
+        current >= quota
+      ) {
+
+        ERPAlertStore.add({
+
+          id:
+            `tenant-quota-${Date.now()}`,
+
+          module:
+            "tenant",
+
+          title:
+            "Quota dépassé",
+
+          description:
+
+            `${metric}: ${current}/${quota}`,
+
+          level:
+            "warning",
+
+          timestamp:
+            new Date()
+              .toISOString(),
+
+        });
+
       }
 
-      ERPAlertStore.add({
-        id: `tenant-quota-${metrics.tenantId}-${check.key}-${Date.now()}`,
-        module: "tenant",
-        title: "Quota tenant dépassé",
-        description: `Le tenant ${metrics.tenantId} dépasse le quota ${check.label}: ${check.value}/${check.limit}.`,
-        level: "warning",
-        timestamp: new Date().toISOString(),
-      });
+
+      if (
+
+        forecast >=
+          quota
+
+        &&
+
+        current <
+          quota
+
+      ) {
+
+        ERPAlertStore.add({
+
+          id:
+            `tenant-forecast-${Date.now()}`,
+
+          module:
+            "tenant",
+
+          title:
+            "Quota bientôt dépassé",
+
+          description:
+
+            `${metric}: projection ${forecast}/${quota}`,
+
+          level:
+            "info",
+
+          timestamp:
+            new Date()
+              .toISOString(),
+
+        });
+
+      }
+
     }
+
   }
+
 }
