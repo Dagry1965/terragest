@@ -15,6 +15,109 @@ import {
   ERPSessionRuntime,
 } from "@/runtime/security/sessions/ERPSessionRuntime";
 
+type SidebarModule = {
+  key: string;
+  label: string;
+  href: string;
+};
+
+type SidebarWorkspace = {
+  key: string;
+  label: string;
+  href: string;
+  modules: SidebarModule[];
+};
+
+const amarkhysModules: SidebarModule[] = [
+  {
+    key: "dashboard-amarkhys",
+    label: "Cockpit AMARKHYS",
+    href: "/dashboard/amarkhys",
+  },
+  {
+    key: "clientsauto",
+    label: "Clients",
+    href: "/clientsauto",
+  },
+  {
+    key: "vehicules",
+    label: "Véhicules",
+    href: "/vehicules",
+  },
+  {
+    key: "rendezvous",
+    label: "Rendez-vous",
+    href: "/rendezvous",
+  },
+  {
+    key: "interventionsauto",
+    label: "Interventions",
+    href: "/interventionsauto",
+  },
+  {
+    key: "facturesauto",
+    label: "Factures",
+    href: "/facturesauto",
+  },
+  {
+    key: "rappelsauto",
+    label: "Rappels",
+    href: "/rappelsauto",
+  },
+  {
+    key: "produitsauto",
+    label: "Produits",
+    href: "/produitsauto",
+  },
+  {
+    key: "stocksauto",
+    label: "Stocks",
+    href: "/stocksauto",
+  },
+];
+
+const amarkhysWorkspace: SidebarWorkspace = {
+  key: "amarkhys",
+  label: "AMARKHYS Garage",
+  href: "/dashboard/amarkhys",
+  modules: amarkhysModules,
+};
+
+function isAmarkhysPath(
+  pathname: string
+): boolean {
+  return (
+    pathname === "/dashboard/amarkhys" ||
+    pathname.startsWith("/dashboard/amarkhys/") ||
+    pathname === "/clientsauto" ||
+    pathname.startsWith("/clientsauto/") ||
+    pathname === "/vehicules" ||
+    pathname.startsWith("/vehicules/") ||
+    pathname === "/rendezvous" ||
+    pathname.startsWith("/rendezvous/") ||
+    pathname === "/interventionsauto" ||
+    pathname.startsWith("/interventionsauto/") ||
+    pathname === "/facturesauto" ||
+    pathname.startsWith("/facturesauto/") ||
+    pathname === "/rappelsauto" ||
+    pathname.startsWith("/rappelsauto/") ||
+    pathname === "/produitsauto" ||
+    pathname.startsWith("/produitsauto/") ||
+    pathname === "/stocksauto" ||
+    pathname.startsWith("/stocksauto/")
+  );
+}
+
+function getSidebarNavigation(
+  pathname: string
+): SidebarWorkspace[] {
+  if (isAmarkhysPath(pathname)) {
+    return [amarkhysWorkspace];
+  }
+
+  return getERPWorkspacesNavigation();
+}
+
 export function ErpSidebar() {
   const pathname = usePathname();
 
@@ -30,7 +133,7 @@ export function ErpSidebar() {
     );
   }
 
-  const navigation = getERPWorkspacesNavigation();
+  const navigation = getSidebarNavigation(pathname);
   const session = ERPSessionRuntime.getSession();
 
   if (navigation.length === 0) {
@@ -66,15 +169,18 @@ export function ErpSidebar() {
     );
   }
 
+  const isAmarkhys =
+    isAmarkhysPath(pathname);
+
   return (
     <aside className="hidden w-72 shrink-0 overflow-y-auto border-r border-slate-200 bg-slate-950 text-white lg:block">
       <div className="flex h-20 items-center border-b border-slate-800 px-6">
         <div>
           <div className="text-2xl font-black tracking-tight">
-            Terragest
+            {isAmarkhys ? "AMARKHYS" : "Terragest"}
           </div>
           <div className="text-xs font-bold uppercase tracking-wide text-blue-300">
-            ERP Enterprise
+            {isAmarkhys ? "Garage ERP" : "ERP Enterprise"}
           </div>
         </div>
       </div>
@@ -83,7 +189,12 @@ export function ErpSidebar() {
         {navigation.map((workspace) => {
           const workspaceActive =
             pathname === workspace.href ||
-            pathname.startsWith(`${workspace.href}/`);
+            pathname.startsWith(`${workspace.href}/`) ||
+            workspace.modules.some(
+              (module) =>
+                pathname === module.href ||
+                pathname.startsWith(`${module.href}/`)
+            );
 
           return (
             <div key={workspace.key}>
