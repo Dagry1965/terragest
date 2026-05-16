@@ -330,4 +330,108 @@ export const runtimeBusinessRules:
     }
 
 },
+
+// =====================================================
+// INTERVENTION TERMINEE
+// -> FACTURE AUTO
+// =====================================================
+
+{
+
+  id:
+    "amarkhys-intervention-create-facture",
+
+  module:
+    "interventionsauto",
+
+  event:
+    "interventionsauto.updated",
+
+  condition:
+    (payload) =>
+
+      payload.statut ===
+        "terminee",
+
+  action:
+    async (payload) => {
+
+      const facturesModule =
+
+        coreERPModules.find(
+
+          module =>
+
+            module.metadata.key ===
+              "facturesauto"
+
+        );
+
+      if (
+        !facturesModule
+      ) {
+
+        return;
+      }
+
+      await RuntimeDataBinding
+        .create(
+
+          facturesModule,
+
+          {
+
+            numeroFacture:
+              `FAC-${Date.now()}`,
+
+            dateFacture:
+              new Date()
+                .toISOString()
+                .split("T")[0],
+
+            clientId:
+              payload.clientId,
+
+            vehiculeId:
+              payload.vehiculeId,
+
+            interventionId:
+              payload.id,
+
+            montantHT:
+              payload.coutTotal ?? 0,
+
+            tva:
+              18,
+
+            statutPaiement:
+              "en_attente"
+
+          }
+
+        );
+
+      await RuntimeNotificationEngine
+        .notify({
+
+          type:
+            "amarkhys.facture",
+
+          module:
+            "facturesauto",
+
+          title:
+            "Facture créée",
+
+          message:
+            "Facture générée depuis intervention terminée",
+
+          severity:
+            "info"
+
+        });
+
+    }
+
+},
 ];
