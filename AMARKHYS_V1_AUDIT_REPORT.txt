@@ -1,0 +1,203 @@
+﻿============================================================
+AMARKHYS V1 - AUDIT PRODUIT
+Generated: 2026-05-16 15:55:38
+Root: C:\Users\Admin\terragest
+============================================================
+
+============================================================
+1. MODULES AMARKHYS
+============================================================
+
+MODULE: clientsauto
+  Module definition : OK
+  Private route      : OK
+  Route /nouveau        : OK
+  Route /analytics        : OK
+  Route /dashboard        : OK
+  Route /audit        : OK
+  Route /export        : OK
+  Route /import        : OK
+  Route /relations        : OK
+  Route /workflows        : OK
+  Detail route       : MISSING
+  Edit route         : MISSING
+
+MODULE: vehicules
+  Module definition : OK
+  Private route      : OK
+  Route /nouveau        : OK
+  Route /analytics        : OK
+  Route /dashboard        : OK
+  Route /audit        : OK
+  Route /export        : OK
+  Route /import        : OK
+  Route /relations        : OK
+  Route /workflows        : OK
+  Detail route       : MISSING
+  Edit route         : MISSING
+
+MODULE: rendezvous
+  Module definition : OK
+  Private route      : OK
+  Route /nouveau        : OK
+  Route /analytics        : OK
+  Route /dashboard        : OK
+  Route /audit        : OK
+  Route /export        : OK
+  Route /import        : OK
+  Route /relations        : OK
+  Route /workflows        : OK
+  Detail route       : MISSING
+  Edit route         : MISSING
+
+MODULE: interventionsauto
+  Module definition : OK
+  Private route      : OK
+  Route /nouveau        : OK
+  Route /analytics        : OK
+  Route /dashboard        : OK
+  Route /audit        : OK
+  Route /export        : OK
+  Route /import        : OK
+  Route /relations        : OK
+  Route /workflows        : OK
+  Detail route       : MISSING
+  Edit route         : MISSING
+
+MODULE: facturesauto
+  Module definition : OK
+  Private route      : OK
+  Route /nouveau        : OK
+  Route /analytics        : OK
+  Route /dashboard        : OK
+  Route /audit        : OK
+  Route /export        : OK
+  Route /import        : OK
+  Route /relations        : OK
+  Route /workflows        : OK
+  Detail route       : MISSING
+  Edit route         : MISSING
+
+MODULE: rappelsauto
+  Module definition : OK
+  Private route      : OK
+  Route /nouveau        : OK
+  Route /analytics        : OK
+  Route /dashboard        : OK
+  Route /audit        : OK
+  Route /export        : OK
+  Route /import        : OK
+  Route /relations        : OK
+  Route /workflows        : OK
+  Detail route       : MISSING
+  Edit route         : MISSING
+
+MODULE: stocksauto
+  Module definition : OK
+  Private route      : OK
+  Route /nouveau        : OK
+  Route /analytics        : OK
+  Route /dashboard        : OK
+  Route /audit        : OK
+  Route /export        : OK
+  Route /import        : OK
+  Route /relations        : OK
+  Route /workflows        : OK
+  Detail route       : MISSING
+  Edit route         : MISSING
+
+MODULE: produitsauto
+  Module definition : OK
+  Private route      : OK
+  Route /nouveau        : OK
+  Route /analytics        : OK
+  Route /dashboard        : OK
+  Route /audit        : OK
+  Route /export        : OK
+  Route /import        : OK
+  Route /relations        : OK
+  Route /workflows        : OK
+  Detail route       : MISSING
+  Edit route         : MISSING
+
+============================================================
+2. ROUTES PUBLIQUES
+============================================================
+  /                  : OK
+  /services            : MISSING
+  /a-propos            : MISSING
+  /contact            : MISSING
+  /rdv            : MISSING
+  /devis            : MISSING
+  /blog            : MISSING
+  /espace-client            : MISSING
+
+============================================================
+3. AUTH / SECURITY
+============================================================
+  src\app\(auth) : MISSING
+  src\runtime\security : OK
+  src\runtime\security\sessions : OK
+  src\runtime\security\permissions : OK
+
+============================================================
+4. DASHBOARD / KPI / REALTIME
+============================================================
+  src\runtime\dashboard\ERPBusinessMetricsEngine.ts : OK
+  src\components\erp\realtime\ERPRuntimeRealtimeDashboard.tsx : OK
+  src\components\erp\realtime\ERPRealtimeMetrics.tsx : OK
+  src\runtime\metrics\RuntimeMetrics.ts : OK
+  src\runtime\realtime\metrics\LiveMetricsStream.ts : OK
+
+============================================================
+5. ENCODAGE UTF8 - SIGNES MOJIBAKE
+============================================================
+  WARNING - Fichiers avec signes mojibake dÃƒÂ©tectÃƒÂ©s:
+  - C:\Users\Admin\terragest\src\core\navigation\navigation-builder.ts
+
+============================================================
+6. BOUTONS / ACTIONS - INDICES
+============================================================
+
+Pattern: ERPButton
+  Aucun rÃƒÂ©sultat
+
+Pattern: actions
+  Aucun rÃƒÂ©sultat
+
+Pattern: workflow
+  C:\Users\Admin\terragest\src\runtime\production.ts:117 maxWorkflowExecutionsPerDay: 5000,
+
+Pattern: transition
+  C:\Users\Admin\terragest\src\theme\ERPTheme.ts:50 fast: "transition-all duration-150",
+  C:\Users\Admin\terragest\src\theme\ERPTheme.ts:51 normal: "transition-all duration-300",
+  C:\Users\Admin\terragest\src\theme\ERPTheme.ts:52 slow: "transition-all duration-500",
+
+Pattern: Facturer
+  Aucun rÃƒÂ©sultat
+
+Pattern: Confirmer
+  Aucun rÃƒÂ©sultat
+
+Pattern: Terminer
+  Aucun rÃƒÂ©sultat
+
+============================================================
+7. SYNTHESE AMARKHYS V1
+============================================================
+Back-office garage:
+  clientsauto / vehicules / rendezvous / interventionsauto / facturesauto / rappelsauto : vÃƒÂ©rifier OK ci-dessus.
+
+Bloqueurs identifiÃƒÂ©s:
+  1. Site public absent ou incomplet
+  2. Encodage UTF8 / mojibake
+  3. Dashboard ÃƒÂ  enrichir
+  4. Auth / rÃƒÂ´les ÃƒÂ  verrouiller
+  5. Boutons actions manquants ou peu visibles
+
+PrioritÃƒÂ© recommandÃƒÂ©e:
+  Livrer AMARKHYS v1 exploitable avant nouveaux moteurs runtime.
+
+============================================================
+END OF REPORT
+============================================================

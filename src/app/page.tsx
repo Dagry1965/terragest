@@ -1,5 +1,12 @@
-import { redirect } from "next/navigation";
+import {
+  PublicHero,
+  PublicLayout,
+} from "@/components/public";
 
 export default function HomePage() {
-  redirect("/dashboard");
+  return (
+    <PublicLayout>
+      <PublicHero />
+    </PublicLayout>
+  );
 }
