@@ -1,70 +1,52 @@
-import {
+﻿import {
   RuntimeBusinessRulesEngine,
 }
 from "@/runtime/business-rules/RuntimeBusinessRulesEngine";
 
+import {
+  RuntimeMetrics,
+}
+from "@/runtime/metrics/RuntimeMetrics";
+
 export class RuntimeEventBus {
+  private listeners: Record<string, Function[]> = {};
 
-  private listeners:
-    Record<
-      string,
-      Function[]
-    > = {};
-
-  on(
-    event: string,
-    callback: Function
-  ) {
-
-    if (
-      !this.listeners[event]
-    ) {
-
+  on(event: string, callback: Function) {
+    if (!this.listeners[event]) {
       this.listeners[event] = [];
     }
 
-    this.listeners[event]
-      .push(callback);
+    this.listeners[event].push(callback);
   }
 
-  async emit(
-
-    event: string,
-
-    payload?: any,
-
-  ) {
+  async emit(event: string, payload?: any) {
+    RuntimeMetrics.increment(
+      event,
+      {
+        tenantId: payload?.tenantId,
+        workspace: payload?.workspace,
+        moduleKey: payload?.moduleKey,
+        userId: payload?.userId,
+        source: "runtimeEventBus",
+      }
+    );
 
     console.log(
-      "Runtime Event",
+      "[Runtime Event]",
       event,
       payload
     );
 
-    // =====================================================
-    // BUSINESS RULES
-    // =====================================================
-
-    await RuntimeBusinessRulesEngine
-      .execute(
-        event,
-        payload
-      );
-
-    // =====================================================
-    // EVENT LISTENERS
-    // =====================================================
+    await RuntimeBusinessRulesEngine.execute(
+      event,
+      payload
+    );
 
     const listeners =
       this.listeners[event] || [];
 
-    for (
-      const callback of listeners
-    ) {
-
-      await callback(
-        payload
-      );
+    for (const callback of listeners) {
+      await callback(payload);
     }
   }
 }

@@ -1,4 +1,4 @@
-import {
+﻿import {
   RuntimeBusinessRule,
 }
 from "@/runtime/business-rules/RuntimeBusinessRule";
@@ -8,6 +8,11 @@ import {
 }
 from "@/runtime/notifications/RuntimeNotificationEngine";
 
+import {
+  RuntimeMetrics,
+}
+from "@/runtime/metrics/RuntimeMetrics";
+
 import { RuntimeDataBinding }
 from "@/runtime/data-binding";
 
@@ -15,6 +20,9 @@ import {
   coreERPModules
 }
 from "@/runtime/modules/definitions/coreModules";
+
+
+
 
 export const runtimeBusinessRules:
   RuntimeBusinessRule[] = [
@@ -204,12 +212,29 @@ export const runtimeBusinessRules:
 
             message:
 
-              `Vidange prévue vers ${prochainKm} km`
+              `Vidange prÃ©vue vers ${prochainKm} km`
 
           }
 
         );
+	RuntimeMetrics.sum(
+  "amarkhys.revenue.predicted",
 
+  Number(
+    payload.coutTotal ?? 0
+  ),
+
+  {
+    workspace:
+      "amarkhys",
+
+    moduleKey:
+      "facturesauto",
+
+    tenantId:
+      payload.tenantId,
+  }
+);
       await RuntimeNotificationEngine
         .notify({
 
@@ -220,11 +245,11 @@ export const runtimeBusinessRules:
             "interventionsauto",
 
           title:
-            "Rappel vidange créé",
+            "Rappel vidange crÃ©Ã©",
 
           message:
 
-            `Rappel automatique créé pour ${prochainKm} km`,
+            `Rappel automatique crÃ©Ã© pour ${prochainKm} km`,
 
           severity:
             "info"
@@ -317,10 +342,10 @@ export const runtimeBusinessRules:
             "interventionsauto",
 
           title:
-            "Intervention créée",
+            "Intervention crÃ©Ã©e",
 
           message:
-            "Intervention créée depuis RDV confirmé",
+            "Intervention crÃ©Ã©e depuis RDV confirmÃ©",
 
           severity:
             "info"
@@ -411,6 +436,20 @@ export const runtimeBusinessRules:
 
         );
 
+RuntimeMetrics.increment(
+  "amarkhys.interventions.completed",
+  {
+    workspace:
+      "amarkhys",
+
+    moduleKey:
+      "interventionsauto",
+
+    tenantId:
+      payload.tenantId,
+  }
+);
+
       await RuntimeNotificationEngine
         .notify({
 
@@ -421,13 +460,110 @@ export const runtimeBusinessRules:
             "facturesauto",
 
           title:
-            "Facture créée",
+            "Facture crÃ©Ã©e",
 
           message:
-            "Facture générée depuis intervention terminée",
+            "Facture gÃ©nÃ©rÃ©e depuis intervention terminÃ©e",
 
           severity:
             "info"
+
+        });
+
+    }
+
+},
+
+// =====================================================
+// FACTURE PAYEE
+// -> KPI CA REEL
+// =====================================================
+
+{
+
+  id:
+    "amarkhys-facture-paid-revenue",
+
+  module:
+    "facturesauto",
+
+  event:
+    "facturesauto.updated",
+
+  condition:
+    (payload) =>
+
+      payload.statutPaiement ===
+        "paye",
+
+  action:
+    async (payload) => {
+
+      RuntimeMetrics.sum(
+
+        "amarkhys.revenue.real",
+
+        Number(
+          payload.montantTTC ?? 0
+        ),
+
+        {
+
+          workspace:
+            "amarkhys",
+
+          moduleKey:
+            "facturesauto",
+
+          tenantId:
+            payload.tenantId,
+
+          userId:
+            payload.userId,
+
+        }
+
+      );
+
+
+      RuntimeMetrics.increment(
+
+        "amarkhys.factures.paid",
+
+        {
+
+          workspace:
+            "amarkhys",
+
+          moduleKey:
+            "facturesauto",
+
+          tenantId:
+            payload.tenantId,
+
+        }
+
+      );
+
+
+      await RuntimeNotificationEngine
+        .notify({
+
+          type:
+            "amarkhys.revenue",
+
+          module:
+            "facturesauto",
+
+          title:
+            "CA mis Ã  jour",
+
+          message:
+
+            `Paiement reÃ§u : ${payload.montantTTC}`,
+
+          severity:
+            "info",
 
         });
 
