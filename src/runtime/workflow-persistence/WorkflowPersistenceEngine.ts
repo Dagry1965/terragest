@@ -1,77 +1,96 @@
-import { db }
-from "@/infrastructure/firebase/firebase";
-
 import {
   addDoc,
   collection,
   serverTimestamp,
-}
-from "firebase/firestore";
-
-import type {
-  WorkflowHistoryEntry,
-}
-from "@/runtime/workflow-persistence/WorkflowHistoryEntry";
+} from "firebase/firestore";
 
 import {
-  ERPWorkflowTimelineStore,
-}
-from "@/runtime/workflows/enterprise/timeline/ERPWorkflowTimelineStore";
+  db,
+} from "@/infrastructure/firebase/firebase";
 
-import {
-  erpRuntimeAuditTrail,
+export interface WorkflowHistoryEntry {
+  module: string;
+  entityId: string;
+  fromState: string;
+  toState: string;
+  action: string;
+  user?: unknown;
+  comment?: unknown;
+  createdAt?: unknown;
 }
-from "@/runtime/observability/ERPRuntimeAuditTrail";
+
+function sanitizeFirestoreObject(
+  data: Record<string, unknown>
+): Record<string, unknown> {
+  const safe: Record<string, unknown> = {};
+
+  for (const [key, value] of Object.entries(data)) {
+    if (value === undefined) {
+      continue;
+    }
+
+    if (
+      value &&
+      typeof value === "object" &&
+      !Array.isArray(value) &&
+      !(value instanceof Date)
+    ) {
+      safe[key] = sanitizeFirestoreObject(
+        value as Record<string, unknown>
+      );
+
+      continue;
+    }
+
+    if (Array.isArray(value)) {
+      safe[key] = value.filter(
+        (item) => item !== undefined
+      );
+
+      continue;
+    }
+
+    safe[key] = value;
+  }
+
+  return safe;
+}
+
+function sanitizeWorkflowHistoryEntry(
+  entry: WorkflowHistoryEntry
+): Record<string, unknown> {
+  return sanitizeFirestoreObject({
+    module: entry.module,
+    entityId: entry.entityId,
+    fromState: entry.fromState,
+    toState: entry.toState,
+    action: entry.action,
+    user: entry.user ?? "system",
+    comment: entry.comment ?? null,
+  });
+}
 
 export class WorkflowPersistenceEngine {
-
   static async persistTransition(
-
-    entry:
-      WorkflowHistoryEntry
-
+    entry: WorkflowHistoryEntry
   ) {
+    const safeEntry =
+      sanitizeWorkflowHistoryEntry(entry);
 
     await addDoc(
-
       collection(
         db,
         "workflow_history"
       ),
-
       {
-
-        ...entry,
-
-        createdAt:
-          serverTimestamp(),
+        ...safeEntry,
+        createdAt: serverTimestamp(),
       }
     );
 
-    const createdAt =
-      new Date().toISOString();
-
-    ERPWorkflowTimelineStore.add({
-      id: `${entry.module}-${entry.entityId}-${Date.now()}`,
-      workflowKey: `${entry.module}-workflow`,
-      module: entry.module,
-      label: `${entry.fromState} → ${entry.toState}`,
-      state: entry.toState,
-      timestamp: createdAt,
-    });
-
-    erpRuntimeAuditTrail.log({
-      id: `${entry.module}-${entry.entityId}-${entry.action}-${Date.now()}`,
-      module: entry.module,
-      action: entry.action,
-      user: entry.user,
-      createdAt,
-      payload: {
-        entityId: entry.entityId,
-        fromState: entry.fromState,
-        toState: entry.toState,
-        comment: entry.comment,
-      },
-    });
+    return {
+      success: true,
+      entry: safeEntry,
+    };
   }
 }
