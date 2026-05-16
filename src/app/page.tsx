@@ -1,10 +1,12 @@
 import {
 
-  PublicHero,
+ PublicHero,
 
-  PublicLayout,
+ PublicLayout,
 
-  PublicServices,
+ PublicServices,
+
+ PublicWhy,
 
 }
 from "@/components/public";
@@ -19,6 +21,8 @@ function HomePage(){
    <PublicHero/>
 
    <PublicServices/>
+
+   <PublicWhy/>
 
   </PublicLayout>
 

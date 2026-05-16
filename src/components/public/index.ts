@@ -4,3 +4,4 @@ export * from "./PublicFooter";
 export * from "./PublicLayout";
 export * from "./PublicSection";
 export * from "./PublicServices";
+export * from "./PublicWhy";
