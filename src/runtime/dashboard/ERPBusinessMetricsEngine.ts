@@ -3,7 +3,9 @@ import type {
 }
 from "./ERPDashboardMetrics";
 
-import { RuntimeDataBinding }
+import {
+  RuntimeDataBinding,
+}
 from "@/runtime/data-binding";
 
 import {
@@ -16,87 +18,227 @@ import type {
 }
 from "@/runtime/modules";
 
-function getModule(moduleKey: string): ERPModule | null {
+
+function getModule(
+  moduleKey: string
+): ERPModule | null {
 
   return (
+
     allERPModules.find(
-      (module) =>
-        module.metadata.key === moduleKey
-    ) ?? null
+
+      module =>
+
+        module.metadata.key ===
+          moduleKey
+
+    ) ??
+
+    null
+
   );
+
 }
 
-async function listModule(moduleKey: string): Promise<any[]> {
+
+async function listModule(
+  moduleKey: string
+): Promise<any[]> {
 
   const module =
-    getModule(moduleKey);
-
-  if (!module) {
-    console.warn(
-      "[ERPBusinessMetricsEngine] Module introuvable:",
+    getModule(
       moduleKey
     );
 
+  if (!module) {
+
     return [];
+
   }
 
-  return RuntimeDataBinding.list(module);
+  return RuntimeDataBinding
+    .list(
+      module
+    );
+
 }
+
 
 export class ERPBusinessMetricsEngine {
 
-  static async load():
-    Promise<ERPBusinessDashboardMetrics> {
+  static async load(
+
+    workspace =
+      "agri"
+
+  ):
+
+  Promise<
+    ERPBusinessDashboardMetrics
+  > {
+
+    if (
+      workspace ===
+      "amarkhys"
+    ) {
+
+      const clients =
+        await listModule(
+          "clientsauto"
+        );
+
+      const vehicules =
+        await listModule(
+          "vehicules"
+        );
+
+      const rdv =
+        await listModule(
+          "rendezvous"
+        );
+
+      const interventions =
+        await listModule(
+          "interventionsauto"
+        );
+
+      const factures =
+        await listModule(
+          "facturesauto"
+        );
+
+
+      return {
+
+        workspace:
+
+          "amarkhys",
+
+
+        metrics: [
+
+          {
+
+            key:
+              "clients",
+
+            label:
+              "Clients",
+
+            value:
+              clients.length
+
+          },
+
+          {
+
+            key:
+              "vehicules",
+
+            label:
+              "Véhicules",
+
+            value:
+              vehicules.length
+
+          },
+
+          {
+
+            key:
+              "rdv",
+
+            label:
+              "RDV",
+
+            value:
+              rdv.length
+
+          },
+
+          {
+
+            key:
+              "interventions",
+
+            label:
+              "Interventions",
+
+            value:
+              interventions.length
+
+          },
+
+          {
+
+            key:
+              "factures",
+
+            label:
+              "Factures",
+
+            value:
+              factures.length
+
+          }
+
+        ]
+
+      };
+
+    }
+
 
     const terrains =
-      await listModule("terrains");
+      await listModule(
+        "terrains"
+      );
+
 
     const exploitations =
-      await listModule("exploitations");
-
-    const contrats =
-      await listModule("contrats");
-
-    const campagnes =
-      await listModule("campagnes");
-
-    const stocks =
-      await listModule("stocks");
-
-    const actifs =
-      await listModule("actifs");
-
-    const contratsActifs =
-      contrats.filter(
-        (c: any) =>
-          c.statutContrat === "Actif"
+      await listModule(
+        "exploitations"
       );
 
-    const campagnesActives =
-      campagnes.filter(
-        (c: any) =>
-          c.statutCampagne === "En cours"
-      );
-
-    const stocksBas =
-      stocks.filter(
-        (s: any) =>
-          s.statutStock === "Bas"
-      );
-
-    const actifsMaintenance =
-      actifs.filter(
-        (a: any) =>
-          a.statutActif === "Maintenance"
-      );
 
     return {
-      terrains: terrains.length,
-      exploitations: exploitations.length,
-      contratsActifs: contratsActifs.length,
-      campagnesActives: campagnesActives.length,
-      stocksBas: stocksBas.length,
-      actifsMaintenance: actifsMaintenance.length,
+
+      workspace:
+        "agri",
+
+
+      metrics: [
+
+        {
+
+          key:
+            "terrains",
+
+          label:
+            "Terrains",
+
+          value:
+            terrains.length
+
+        },
+
+        {
+
+          key:
+            "exploitations",
+
+          label:
+            "Exploitations",
+
+          value:
+            exploitations.length
+
+        }
+
+      ]
+
     };
+
   }
+
 }
