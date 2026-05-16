@@ -1,5 +1,9 @@
 import type { ERPModule } from "@/runtime/modules/ERPModule";
 
+import {
+  interventionsautoActions,
+} from "./interventionsauto.actions";
+
 export const interventionsautoModule: ERPModule = {
   metadata: {
     key: "interventionsauto",
@@ -209,6 +213,8 @@ export const interventionsautoModule: ERPModule = {
       },
     ],
   },
+
+  actions: interventionsautoActions,
 
   workflows: [
     {

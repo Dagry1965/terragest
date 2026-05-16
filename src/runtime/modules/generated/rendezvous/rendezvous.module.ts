@@ -1,5 +1,9 @@
 import type { ERPModule } from "@/runtime/modules/ERPModule";
 
+import {
+  rendezvousActions,
+} from "./rendezvous.actions";
+
 export const rendezvousModule: ERPModule = {
   metadata: {
     key: "rendezvous",
@@ -158,6 +162,8 @@ export const rendezvousModule: ERPModule = {
       },
     ],
   },
+
+  actions: rendezvousActions,
 
   workflows: [
     {

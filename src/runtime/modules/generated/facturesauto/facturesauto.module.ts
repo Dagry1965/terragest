@@ -1,5 +1,9 @@
 import type { ERPModule } from "@/runtime/modules/ERPModule";
 
+import {
+  facturesautoActions,
+} from "./facturesauto.actions";
+
 export const facturesautoModule: ERPModule = {
   metadata: {
     key: "facturesauto",
@@ -211,6 +215,8 @@ export const facturesautoModule: ERPModule = {
       }
     ]
   },
+
+  actions: facturesautoActions,
 
   workflows: [
     {
