@@ -63,7 +63,7 @@ export const ProductEditForm = ({
       values
     );
 
-    alert("Produit modifiÃ©");
+    alert("Produit modifié");
   }
 
   if (loading || !values) {
@@ -84,15 +84,15 @@ export const ProductEditForm = ({
         },
         {
           name: "categorie",
-          label: "CatÃ©gorie",
+          label: "Catégorie",
         },
         {
           name: "unite",
-          label: "UnitÃ©",
+          label: "Unité",
         },
         {
           name: "quantite",
-          label: "QuantitÃ©",
+          label: "Quantité",
           type: "number",
         },
         {

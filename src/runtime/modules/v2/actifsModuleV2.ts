@@ -4,7 +4,7 @@ export const actifsModuleV2: ERPModule = {
   metadata: {
     key: "actifs",
     label: "Actifs",
-    description: "Module mÃ©tier Actifs gÃ©nÃ©rÃ© par le standard ERP Business Module V2.",
+    description: "Module métier Actifs généré par le standard ERP Business Module V2.",
     icon: "building",
     category: "Patrimoine",
     features: {

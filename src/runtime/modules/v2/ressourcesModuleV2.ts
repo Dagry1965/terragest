@@ -4,7 +4,7 @@ export const ressourcesModuleV2: ERPModule = {
   metadata: {
     key: "ressources",
     label: "Ressources",
-    description: "Module mÃ©tier Ressources gÃ©nÃ©rÃ© par le standard ERP Business Module V2.",
+    description: "Module métier Ressources généré par le standard ERP Business Module V2.",
     icon: "package",
     category: "Production",
     features: {

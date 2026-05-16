@@ -76,6 +76,10 @@ export interface ERPModuleFormSection {
   description?: string;
   fields: string[];
 
+  grid?: {
+    cols?: number;
+  };
+
  visibility?: {
     field: string;
     equals?: string | number | boolean;

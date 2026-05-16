@@ -1,7 +1,7 @@
 ﻿export const ressourcesSeedV2 = [
   {
     nom: "Ressources exemple",
-    description: "DonnÃ©e de test gÃ©nÃ©rÃ©e.",
+    description: "Donnée de test générée.",
     statut: "actif",
   },
 ];

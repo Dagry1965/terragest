@@ -4,9 +4,9 @@ export const stocksModule: ERPModule = {
   metadata: {
     key: "stocks",
     label: "Stocks",
-    description: "Module ERP gÃ©nÃ©rÃ© pour Stocks.",
+    description: "Module ERP généré pour Stocks.",
     icon: "database",
-    category: "MÃ©tier",
+    category: "Métier",
     routes: {
       list: "/stocks",
       create: "/stocks/nouveau",

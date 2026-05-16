@@ -16,10 +16,10 @@ function normalizeGroup(group?: string) {
   }
 
   return group
-    .replace("SystÃƒÆ’Ã‚Â¨me", "Systeme")
-    .replace("SystÃ¨me", "Systeme")
-    .replace("MÃ©tier", "Metier")
-    .replace("MÃƒÆ’Ã‚Â©tier", "Metier");
+    .replace("SystÃƒÆ’Ã‚¨me", "Systeme")
+    .replace("Système", "Systeme")
+    .replace("Métier", "Metier")
+    .replace("MÃƒÆ’Ã‚©tier", "Metier");
 }
 
 function moduleKeyFromHref(href: string) {

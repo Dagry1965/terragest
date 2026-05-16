@@ -10,10 +10,10 @@ export function ERPTracesPanel() {
   return (
     <div className="space-y-4">
 
-      {traces.map((trace) => (
+      {traces.map((trace, index) => (
 
         <div
-          key={trace.traceId}
+          key={trace.traceId ?? index}
           className="rounded-2xl border border-slate-200 bg-white p-5"
         >
 

@@ -42,7 +42,7 @@ export function ErpSidebar() {
           </p>
 
           <p className="mt-2 text-xs text-red-100">
-            La session runtime ne donne accÃ¨s Ã  aucun workspace/module.
+            La session runtime ne donne accès à aucun workspace/module.
           </p>
         </div>
 

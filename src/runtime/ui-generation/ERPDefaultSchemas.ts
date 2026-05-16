@@ -6,14 +6,14 @@ import type {
   LEGACY FALLBACK FILE
 
   Les schemas sont maintenant
-  gÃ©nÃ©rÃ©s depuis :
+  générés depuis :
 
   CoreModuleRuntimeAdapter
     .toGeneratedSchemas()
 
-  Ce fichier reste prÃ©sent
-  temporairement pour Ã©viter
-  les imports cassÃ©s.
+  Ce fichier reste présent
+  temporairement pour éviter
+  les imports cassés.
 */
 
 export const ERPDefaultSchemas:

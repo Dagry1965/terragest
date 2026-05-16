@@ -67,7 +67,7 @@ export function ERPWorkspaceKpiPanel({
                   text-slate-500
                 "
               >
-                {kpi.value ?? "Valeur runtime Ã  connecter"}
+                {kpi.value ?? "Valeur runtime à connecter"}
               </p>
 
             </div>
@@ -77,7 +77,7 @@ export function ERPWorkspaceKpiPanel({
         ) : (
 
           <p className="text-sm text-slate-500">
-            Aucun KPI configurÃ©.
+            Aucun KPI configuré.
           </p>
 
         )}

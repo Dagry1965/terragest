@@ -13,13 +13,13 @@ export default function CompliancePage() {
       <div>
         <h1 className="text-3xl font-bold">ERP Compliance</h1>
         <p className="text-muted-foreground">
-          VÃ©rification de conformitÃ© des modules ERP.
+          Vérification de conformité des modules ERP.
         </p>
       </div>
 
       <div className="rounded-2xl border p-6 bg-white shadow-sm">
         <div className="text-sm text-muted-foreground">
-          Score conformitÃ©
+          Score conformité
         </div>
         <div className="text-5xl font-bold">{report.score}%</div>
       </div>
@@ -27,7 +27,7 @@ export default function CompliancePage() {
       <div className="space-y-4">
         {report.issues.length === 0 && (
           <div className="rounded-2xl border p-6 bg-white">
-            Aucun problÃ¨me dÃ©tectÃ©.
+            Aucun problème détecté.
           </div>
         )}
 
@@ -37,7 +37,7 @@ export default function CompliancePage() {
             className="rounded-2xl border p-6 bg-white shadow-sm"
           >
             <div className="font-semibold">
-              {issue.moduleKey} â€” {issue.code}
+              {issue.moduleKey} - {issue.code}
             </div>
             <div className="text-sm mt-2">{issue.message}</div>
             <div className="text-sm text-muted-foreground mt-2">

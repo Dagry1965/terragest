@@ -123,11 +123,11 @@ export const ProductsTable =
                 </th>
 
                 <th className="p-4">
-                  CatÃ©gorie
+                  Catégorie
                 </th>
 
                 <th className="p-4">
-                  QuantitÃ©
+                  Quantité
                 </th>
 
                 <th className="p-4">

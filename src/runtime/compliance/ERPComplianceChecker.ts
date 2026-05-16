@@ -41,7 +41,7 @@ export class ERPComplianceChecker {
         moduleKey: module.key,
         severity: "critical",
         code: "MISSING_COLLECTION",
-        message: "Le module ne dÃ©clare pas de collection.",
+        message: "Le module ne déclare pas de collection.",
         recommendation: "Ajouter collection dans ERPModuleDefinition.",
       });
     }
@@ -51,7 +51,7 @@ export class ERPComplianceChecker {
         moduleKey: module.key,
         severity: "critical",
         code: "MISSING_FIELDS",
-        message: "Le module ne dÃ©clare aucun champ.",
+        message: "Le module ne déclare aucun champ.",
         recommendation: "Ajouter fields dans ERPModuleDefinition.",
       });
     }
@@ -61,7 +61,7 @@ export class ERPComplianceChecker {
         moduleKey: module.key,
         severity: "warning",
         code: "MISSING_ACTIONS",
-        message: "Le module ne dÃ©clare aucune action.",
+        message: "Le module ne déclare aucune action.",
         recommendation: "Ajouter actions dans ERPModuleDefinition.",
       });
     }
@@ -71,7 +71,7 @@ export class ERPComplianceChecker {
         moduleKey: module.key,
         severity: "warning",
         code: "AUDIT_DISABLED",
-        message: "Audit ERP dÃ©sactivÃ©.",
+        message: "Audit ERP désactivé.",
         recommendation: "Activer auditEnabled.",
       });
     }
@@ -81,7 +81,7 @@ export class ERPComplianceChecker {
         moduleKey: module.key,
         severity: "warning",
         code: "SUPERVISION_DISABLED",
-        message: "Supervision ERP dÃ©sactivÃ©e.",
+        message: "Supervision ERP désactivée.",
         recommendation: "Activer supervisionEnabled.",
       });
     }
@@ -91,7 +91,7 @@ export class ERPComplianceChecker {
         moduleKey: module.key,
         severity: "warning",
         code: "OBSERVABILITY_DISABLED",
-        message: "ObservabilitÃ© ERP dÃ©sactivÃ©e.",
+        message: "Observabilité ERP désactivée.",
         recommendation: "Activer observabilityEnabled.",
       });
     }

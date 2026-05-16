@@ -20,7 +20,7 @@ export const TerragestInterModuleRules = [
   {
     from: "exploitation",
     to: "campagne",
-    rule: "Une exploitation inactive ne peut pas dÃ©marrer de campagne.",
+    rule: "Une exploitation inactive ne peut pas démarrer de campagne.",
     severity: "blocking",
   },
   {
@@ -32,31 +32,31 @@ export const TerragestInterModuleRules = [
   {
     from: "campagne",
     to: "stock",
-    rule: "Production, consommation, perte et vente doivent crÃ©er des mouvements de stock.",
+    rule: "Production, consommation, perte et vente doivent créer des mouvements de stock.",
     severity: "audit",
   },
   {
     from: "vente",
     to: "paiement",
-    rule: "Une vente crÃ©e un paiement attendu.",
+    rule: "Une vente crée un paiement attendu.",
     severity: "audit",
   },
   {
     from: "paiement",
     to: "campagne",
-    rule: "Les paiements revenus/dÃ©penses doivent recalculer le rÃ©sultat de campagne.",
+    rule: "Les paiements revenus/dépenses doivent recalculer le résultat de campagne.",
     severity: "audit",
   },
   {
     from: "materiel",
     to: "operation",
-    rule: "Un matÃ©riel indisponible ne peut pas Ãªtre affectÃ© Ã  une opÃ©ration.",
+    rule: "Un matériel indisponible ne peut pas être affecté à une opération.",
     severity: "blocking",
   },
   {
     from: "maintenance",
     to: "paiement",
-    rule: "Une maintenance terminÃ©e avec coÃ»t crÃ©e une dÃ©pense.",
+    rule: "Une maintenance terminée avec coût crée une dépense.",
     severity: "audit",
   },
 ] as const;

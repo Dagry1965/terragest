@@ -31,7 +31,7 @@ OrganizationAnalyticsPage() {
             mt-2
           "
         >
-          MÃ©triques SaaS organisationnelles
+          Métriques SaaS organisationnelles
         </p>
       </div>
 

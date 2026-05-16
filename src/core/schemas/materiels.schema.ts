@@ -6,7 +6,7 @@ export const materielsSchema: ERPModuleSchema = {
   title: "Matériels",
 
   description:
-    "Gestion des matÃ©riels, Ã©tats et maintenance.",
+    "Gestion des matériels, états et maintenance.",
 
   fields: [
     {
@@ -21,7 +21,7 @@ export const materielsSchema: ERPModuleSchema = {
 
     {
       key: "categorie",
-      label: "CatÃ©gorie",
+      label: "Catégorie",
       type: "text",
       searchable: true,
       list: true,
@@ -37,7 +37,7 @@ export const materielsSchema: ERPModuleSchema = {
 
     {
       key: "cout",
-      label: "CoÃ»t",
+      label: "Coût",
       type: "currency",
       sortable: true,
       list: true,
@@ -47,7 +47,7 @@ export const materielsSchema: ERPModuleSchema = {
   statuses: [
     {
       value: "operationnel",
-      label: "OpÃ©rationnel",
+      label: "Opérationnel",
       color: "green",
     },
 

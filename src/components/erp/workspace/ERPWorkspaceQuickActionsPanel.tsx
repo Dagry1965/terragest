@@ -73,7 +73,7 @@ export function ERPWorkspaceQuickActionsPanel({
         ) : (
 
           <p className="text-sm text-slate-500">
-            Aucune action rapide configurÃ©e.
+            Aucune action rapide configurée.
           </p>
 
         )}

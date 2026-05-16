@@ -40,7 +40,7 @@ export const InvitationForm =
     setEmail("");
 
     alert(
-      "Invitation envoyÃ©e"
+      "Invitation envoyée"
     );
   }
 

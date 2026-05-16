@@ -3,7 +3,7 @@ const filters = [
   "Actifs",
   "En attente",
   "Critiques",
-  "ArchivÃ©s",
+  "Archivés",
 ];
 
 export function ERPQuickFilters() {

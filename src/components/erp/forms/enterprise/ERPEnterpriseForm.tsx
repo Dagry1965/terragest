@@ -1,7 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState } from "react";
+import {
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 
 import type { ERPModule } from "@/runtime/modules";
 import { ERPModuleBuilder } from "@/runtime/modules";
@@ -13,6 +16,7 @@ import { ERPFormField } from "./ERPFormField";
 import { ERPFormSection } from "./ERPFormSection";
 import { ERPFormSummaryPanel } from "./ERPFormSummaryPanel";
 import { ERPFormTabs } from "./ERPFormTabs";
+
 import {
   RuntimePermissionEngine,
 } from "@/runtime/permissions/RuntimePermissionEngine";
@@ -25,10 +29,6 @@ import {
   RuntimeVisibilityEngine,
 } from "@/runtime/visibility/RuntimeVisibilityEngine";
 
-import {
-  RuntimeComputedEngine,
-} from "@/runtime/computed/RuntimeComputedEngine";
-
 import type {
   RuntimeValidationError,
 } from "@/runtime/validation/RuntimeValidationTypes";
@@ -36,6 +36,22 @@ import type {
 import {
   erpRuntimeValidationBridge,
 } from "@/runtime/rules/ERPRuntimeValidationBridge";
+
+import {
+  generateTerrainCode,
+} from "@/runtime/business/terrains/generateTerrainCode";
+
+import {
+  generateContratCode,
+} from "@/runtime/business/contrats/generateContratCode";
+
+import {
+  attachContratToTerrain,
+} from "@/runtime/business/contrats/attachContratToTerrain";
+import {
+recomputeTerrainSurfaceDisponible,
+}
+from "@/runtime/business/exploitations/recomputeTerrainSurfaceDisponible";
 
 interface ERPEnterpriseFormProps {
   module: ERPModule;
@@ -48,59 +64,46 @@ export function ERPEnterpriseForm({
   mode = "create",
   initialData = {},
 }: ERPEnterpriseFormProps) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const queryValues =
+    Object.fromEntries(
+      Array.from(searchParams.entries()).filter(
+        ([key]) =>
+          key !== "returnTo" &&
+          key !== "lockFields"
+      )
+    );
+
   const [saving, setSaving] = useState(false);
 
   const [errors, setErrors] =
     useState<RuntimeValidationError[]>([]);
 
   const [formValues, setFormValues] =
-    useState<Record<string, unknown>>(initialData);
-
-  const router = useRouter();
+    useState<Record<string, unknown>>({
+      ...initialData,
+      ...queryValues,
+    });
 
   const form =
     ERPModuleBuilder.buildForm(module);
 
-  useEffect(() => {
-    const computedValues: Record<string, unknown> = {
-      ...formValues,
-    };
+  const currentUserRole = "admin";
 
-    form.fields.forEach((field) => {
-      if (!field.computed) {
-        return;
-      }
-
-      computedValues[field.key] =
-        RuntimeComputedEngine.compute(
-          field.computed.formula,
-          computedValues
-        );
-    });
-
-    const hasChanged =
-      JSON.stringify(computedValues) !==
-      JSON.stringify(formValues);
-
-    if (hasChanged) {
-      setFormValues(computedValues);
-    }
-  }, [form.fields, formValues]);
-
-const currentUserRole = "admin";
-
-const visibleFields =
-  form.fields.filter(
-    (field) =>
-      RuntimeVisibilityEngine.isVisible(
-        field,
-        formValues
-      ) &&
-      RuntimePermissionEngine.canAccessField(
-        field,
-        currentUserRole
-      )
-  );
+  const visibleFields =
+    form.fields.filter(
+      (field) =>
+        RuntimeVisibilityEngine.isVisible(
+          field,
+          formValues
+        ) &&
+        RuntimePermissionEngine.canAccessField(
+          field,
+          currentUserRole
+        )
+    );
 
   const mainFields =
     visibleFields.filter(
@@ -112,19 +115,145 @@ const visibleFields =
       (field) => field.type === "relation"
     );
 
-  function handleFormChange(
-    event: React.FormEvent<HTMLFormElement>
+  const returnTo =
+    searchParams.get("returnTo");
+
+  function handleFieldChange(
+    key: string,
+    value: unknown
   ) {
-    const formData =
-      new FormData(event.currentTarget);
-
-    const values =
-      Object.fromEntries(formData.entries());
-
     setFormValues((currentValues) => ({
       ...currentValues,
-      ...values,
+      [key]: value,
     }));
+  }
+
+  async function prepareTerrainPayloadBeforeCreate(
+    payload: Record<string, unknown>
+  ) {
+    if (module.metadata.key !== "terrains") {
+      return payload;
+    }
+
+    const existingTerrains =
+      await RuntimeDataBinding.list(module);
+
+    const code =
+      await generateTerrainCode(
+        payload,
+        existingTerrains
+      );
+
+    return {
+      ...payload,
+      code,
+      pays: "Congo-Brazzaville",
+      statut: payload.statut || "inactif",
+      surfaceDisponible:
+        payload.surfaceDisponible ||
+        payload.surfaceTotale ||
+        0,
+    };
+  }
+
+  async function prepareTerrainPayloadBeforeUpdate(
+    payload: Record<string, unknown>
+  ) {
+    if (module.metadata.key !== "terrains") {
+      return payload;
+    }
+
+    const existingTerrains =
+      await RuntimeDataBinding.list(module);
+
+    const nomChanged =
+      String(initialData.nom ?? "").trim() !==
+      String(payload.nom ?? "").trim();
+
+    const villeChanged =
+      String(initialData.ville ?? "").trim() !==
+      String(payload.ville ?? "").trim();
+
+    const shouldRegenerateCode =
+      !payload.code ||
+      nomChanged ||
+      villeChanged;
+
+    const code =
+      shouldRegenerateCode
+        ? await generateTerrainCode(
+            payload,
+            existingTerrains
+          )
+        : String(payload.code);
+
+    return {
+      ...payload,
+      code,
+      pays: "Congo-Brazzaville",
+      surfaceDisponible:
+        payload.surfaceDisponible ||
+        payload.surfaceTotale ||
+        0,
+    };
+  }
+
+  async function prepareContratPayloadBeforeCreate(
+    payload: Record<string, unknown>
+  ) {
+    if (module.metadata.key !== "contrats") {
+      return payload;
+    }
+
+    const existingContrats =
+      await RuntimeDataBinding.list(module);
+
+    const code =
+      await generateContratCode(
+        payload,
+        existingContrats
+      );
+
+    return {
+      ...payload,
+      code,
+      statut: payload.statut || "brouillon",
+    };
+  }
+
+  async function prepareContratPayloadBeforeUpdate(
+    payload: Record<string, unknown>
+  ) {
+    if (module.metadata.key !== "contrats") {
+      return payload;
+    }
+
+    const existingContrats =
+      await RuntimeDataBinding.list(module);
+
+    const typeChanged =
+      String(initialData.typeContrat ?? "").trim() !==
+      String(payload.typeContrat ?? "").trim();
+
+    const objetChanged =
+      String(initialData.objetContrat ?? "").trim() !==
+      String(payload.objetContrat ?? "").trim();
+
+    const shouldRegenerateCode =
+      !payload.code || typeChanged || objetChanged;
+
+    const code =
+      shouldRegenerateCode
+        ? await generateContratCode(
+            payload,
+            existingContrats
+          )
+        : String(payload.code);
+
+    return {
+      ...payload,
+      code,
+    };
   }
 
   async function handleSubmit(
@@ -140,7 +269,15 @@ const visibleFields =
       ...formValues,
     };
 
-    visibleFields.forEach((field) => {
+    form.fields
+      .filter(
+        (field) =>
+          RuntimeVisibilityEngine.isVisible(
+            field,
+            payload
+          )
+      )
+      .forEach((field) => {
       let value: unknown =
         formData.get(field.key) ??
         formValues[field.key];
@@ -149,95 +286,152 @@ const visibleFields =
         field.type === "number" &&
         value !== null
       ) {
-        value =
-          value === ""
-            ? null
-            : Number(value);
+        if (value === "") {
+          value = null;
+        } else {
+          const numericValue =
+            Number(value);
+
+          value =
+            Number.isNaN(numericValue)
+              ? null
+              : numericValue;
+        }
       }
 
       payload[field.key] =
         value ?? "";
     });
 
+    let preparedPayload =
+      payload;
+
+    if (module.metadata.key === "terrains") {
+      preparedPayload =
+        mode === "create"
+          ? await prepareTerrainPayloadBeforeCreate(payload)
+          : await prepareTerrainPayloadBeforeUpdate(payload);
+    }
+
+    if (module.metadata.key === "contrats") {
+      preparedPayload =
+        mode === "create"
+          ? await prepareContratPayloadBeforeCreate(payload)
+          : await prepareContratPayloadBeforeUpdate(payload);
+    }
+
     const validationErrors =
       RuntimeValidationEngine.validate(
         module,
-        payload
+        preparedPayload
       );
 
     setErrors(validationErrors);
 
     if (validationErrors.length > 0) {
-      console.log(
-        "ERP VALIDATION ERRORS",
-        validationErrors
+      setSaving(false);
+      return;
+    }
+
+    const businessRulesValid =
+      erpRuntimeValidationBridge.validate(
+        module.metadata.key,
+        preparedPayload
       );
 
-
+    if (!businessRulesValid) {
+      setErrors([
+        {
+          field: "businessRules",
+          message:
+            "Les règles métier ERP bloquent cet enregistrement.",
+        },
+      ]);
 
       setSaving(false);
       return;
     }
 
-const businessRulesValid =
-  erpRuntimeValidationBridge.validate(
-    module.metadata.key,
-    payload
-  );
-
-if (!businessRulesValid) {
-  console.error(
-    "ERP BUSINESS RULE VALIDATION FAILED",
-    {
-      module: module.metadata.key,
-      payload,
-    }
-  );
-
-  setErrors([
-    {
-      field: "businessRules",
-      message:
-        "Les règles métier ERP bloquent cet enregistrement.",
-    },
-  ]);
-
-  setSaving(false);
-  return;
-}
-
     try {
       if (mode === "create") {
-        await RuntimeDataBinding.create(
-          module,
-          payload
-        );
-      } else if (
-        mode === "edit" &&
-        initialData.id
-      ) {
+        const created =
+          await RuntimeDataBinding.create(
+            module,
+            preparedPayload
+          );
+
+if (
+module.metadata.key ===
+"exploitations"
+) {
+
+await
+recomputeTerrainSurfaceDisponible(
+
+String(
+preparedPayload.terrainId
+)
+
+);
+
+}
+
+        if (module.metadata.key === "contrats") {
+          await attachContratToTerrain({
+            ...preparedPayload,
+            id: created.id,
+          });
+        }
+      } else if (mode === "edit") {
+        const recordId =
+          initialData.id ??
+          initialData._id ??
+          preparedPayload.id ??
+          preparedPayload._id;
+
+        if (!recordId) {
+          throw new Error(
+            "ERP UPDATE ERROR: missing record id"
+          );
+        }
+
         await RuntimeDataBinding.update(
           module,
-          String(initialData.id),
-          payload
+          String(recordId),
+          preparedPayload
         );
+
+if (
+module.metadata.key ===
+"exploitations"
+) {
+
+await
+recomputeTerrainSurfaceDisponible(
+
+String(
+preparedPayload.terrainId
+)
+
+);
+
+}
+
+        if (module.metadata.key === "contrats") {
+          await attachContratToTerrain({
+            ...preparedPayload,
+            id: recordId,
+          });
+        }
       }
 
       router.push(
-        module.metadata.routes?.list ??
+        returnTo ??
+          module.metadata.routes?.list ??
           `/${module.metadata.key}`
       );
 
       router.refresh();
-
-      console.log(
-        "ERP ENTERPRISE FORM SAVED",
-        {
-          module: module.metadata.key,
-          mode,
-          payload,
-        }
-      );
     } catch (error) {
       console.error(
         "ERP ENTERPRISE FORM ERROR",
@@ -250,9 +444,8 @@ if (!businessRulesValid) {
 
   return (
     <form
-      onSubmit={handleSubmit}
-      onChange={handleFormChange}
       className="space-y-8"
+      onSubmit={handleSubmit}
     >
       <section className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
         <div className="bg-gradient-to-r from-slate-950 via-slate-900 to-blue-950 px-8 py-8 text-white">
@@ -274,12 +467,12 @@ if (!businessRulesValid) {
 
       <section className="grid gap-8 xl:grid-cols-[1fr_360px]">
         <div className="space-y-6">
-          
           {module.form?.layout === "tabs" ? (
             <ERPFormTabs
               module={module}
               initialData={formValues}
               formValues={formValues}
+              onFieldChange={handleFieldChange}
             />
           ) : (
             <>
@@ -291,9 +484,8 @@ if (!businessRulesValid) {
                   <ERPFormField
                     key={field.key}
                     field={field}
-                    initialValue={
-                      formValues[field.key]
-                    }
+                    value={formValues[field.key]}
+                    onChange={handleFieldChange}
                   />
                 ))}
               </ERPFormSection>
@@ -307,9 +499,8 @@ if (!businessRulesValid) {
                     <ERPFormField
                       key={field.key}
                       field={field}
-                      initialValue={
-                        formValues[field.key]
-                      }
+                      value={formValues[field.key]}
+                      onChange={handleFieldChange}
                     />
                   ))}
                 </ERPFormSection>
@@ -350,28 +541,44 @@ if (!businessRulesValid) {
               variant="secondary"
               type="button"
               disabled={saving}
-              onClick={() => {
-                console.log(
-                  "Enregistrer et continuer cliqué"
-                );
-              }}
-            >
-              Enregistrer et continuer
-            </ERPButton>
-
-            <ERPButton
-              variant="secondary"
-              type="button"
-              disabled={saving}
               onClick={() =>
                 router.push(
-                  module.metadata.routes?.list ??
+                  returnTo ??
+                    module.metadata.routes?.list ??
                     `/${module.metadata.key}`
                 )
               }
             >
               Annuler
             </ERPButton>
+
+            {mode === "edit" && Boolean(initialData?.id) ? (
+              <ERPButton
+                type="button"
+                variant="danger"
+                onClick={async () => {
+                  const confirmed = window.confirm(
+                    "Supprimer cet élément ?"
+                  );
+
+                  if (!confirmed) {
+                    return;
+                  }
+
+                  await RuntimeDataBinding.delete(
+                    module,
+                    String(initialData.id)
+                  );
+
+                  router.push(
+                    module.metadata.routes?.list ??
+                      `/${module.metadata.key}`
+                  );
+                }}
+              >
+                Supprimer
+              </ERPButton>
+            ) : null}
           </div>
         </div>
 

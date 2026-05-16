@@ -7,11 +7,11 @@ export class ERPActionExecutor {
   static execute(action: ERPAction) {
     switch (action.key) {
       case "export":
-        toast.success("Export ERP lancÃ©");
+        toast.success("Export ERP lancé");
         break;
 
       case "import":
-        toast.success("Import ERP initialisÃ©");
+        toast.success("Import ERP initialisé");
         break;
 
       case "workflow":

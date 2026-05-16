@@ -13,7 +13,7 @@ export const ERPBusinessDashboardConfig:
     "Cockpit TerraGest",
 
   subtitle:
-    "Pilotage opÃ©rationnel ERP.",
+    "Pilotage opérationnel ERP.",
 
   widgets: [
 

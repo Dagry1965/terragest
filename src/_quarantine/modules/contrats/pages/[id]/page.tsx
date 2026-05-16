@@ -2,7 +2,7 @@ export default function ContratsDetailsPage() {
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold">
-        DÃ©tails Contrats
+        Détails Contrats
       </h1>
     </div>
   );

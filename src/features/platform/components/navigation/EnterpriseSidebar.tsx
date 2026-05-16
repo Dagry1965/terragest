@@ -6,7 +6,7 @@ EnterpriseSidebar() {
     "Dashboard",
     "Exploitations",
     "Terrains",
-    "MatÃ©riels",
+    "Matériels",
     "Interventions",
     "Stocks",
     "Workflows",

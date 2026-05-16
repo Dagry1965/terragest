@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import type { ReactNode } from "react";
 import type { ERPModuleField } from "@/runtime/modules";
 import { ERPRelationDataLoader } from "@/runtime/modules/lifecycle/ERPRelationDataLoader";
 
@@ -11,15 +13,74 @@ type RelationOption = {
 
 interface ERPFormFieldProps {
   field: ERPModuleField;
-  initialValue?: unknown;
+  value?: unknown;
+  onChange?: (key: string, value: unknown) => void;
+}
+
+const gridClassMap: Record<number, string> = {
+  1: "xl:col-span-1",
+  2: "xl:col-span-2",
+  3: "xl:col-span-3",
+  4: "xl:col-span-4",
+  5: "xl:col-span-5",
+  6: "xl:col-span-6",
+  7: "xl:col-span-7",
+  8: "xl:col-span-8",
+  9: "xl:col-span-9",
+  10: "xl:col-span-10",
+  11: "xl:col-span-11",
+  12: "xl:col-span-12",
+};
+
+function FieldWrapper({
+  field,
+  children,
+}: {
+  field: ERPModuleField;
+  children: ReactNode;
+}) {
+  return (
+    <div
+      className={`
+        space-y-2
+        col-span-12
+        ${field.grid?.cols ? gridClassMap[field.grid.cols] : ""}
+      `}
+    >
+      {children}
+
+      {field.helperText ? (
+        <p className="text-xs text-slate-500">
+          {field.helperText}
+        </p>
+      ) : null}
+    </div>
+  );
 }
 
 export function ERPFormField({
   field,
-  initialValue,
+  value,
+  onChange,
 }: ERPFormFieldProps) {
+  const router = useRouter();
+
   const [relationOptions, setRelationOptions] = useState<RelationOption[]>([]);
-  const [relationSearch, setRelationSearch] = useState(""); // --- AJOUT ---
+  const [relationSearch, setRelationSearch] = useState("");
+
+  const currentValue = String(value ?? "");
+
+  const lockedFields =
+    typeof window === "undefined"
+      ? []
+      : new URLSearchParams(window.location.search)
+          .get("lockFields")
+          ?.split(",")
+          .map((item) => item.trim())
+          .filter(Boolean) ?? [];
+
+  const isLocked =
+    lockedFields.includes(field.key);
 
   useEffect(() => {
     async function loadRelation() {
@@ -29,7 +90,9 @@ export function ERPFormField({
         field.references?.module ??
         (typeof field.relation === "string"
           ? field.relation
-          : field.relation?.module);
+          : typeof field.relation === "string"
+  ? field.relation
+  : field.relation?.module);
 
       if (!targetModule) return;
 
@@ -55,110 +118,177 @@ export function ERPFormField({
   const className =
     "w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-blue-500";
 
-  /*
-   * GRID MAP
-   */
-  const gridClassMap: Record<number, string> = {
-    1: "xl:col-span-1",
-    2: "xl:col-span-2",
-    3: "xl:col-span-3",
-    4: "xl:col-span-4",
-    5: "xl:col-span-5",
-    6: "xl:col-span-6",
-    7: "xl:col-span-7",
-    8: "xl:col-span-8",
-    9: "xl:col-span-9",
-    10: "xl:col-span-10",
-    11: "xl:col-span-11",
-    12: "xl:col-span-12",
-  };
+  const lockedClassName =
+    `${className} cursor-not-allowed bg-slate-100 text-slate-500`;
 
-  /*
-   * WRAPPER GRID
-   */
-  const Wrapper = ({ children }: { children: React.ReactNode }) => (
-    <div
-      className={`
-        space-y-2
-        col-span-12
-        ${field.grid?.cols ? gridClassMap[field.grid.cols] : ""}
-      `}
-    >
-      {children}
-
-      {field.helperText && (
-        <p className="text-xs text-slate-500">
-          {field.helperText}
-        </p>
-      )}
-    </div>
-  );
-
-  /*
-   * RELATION
-   */
   if (field.type === "relation") {
-    // --- AJOUT : FILTRAGE DES OPTIONS ---
-    const filteredOptions =
-      relationOptions.filter((option) =>
-        option.label
-          .toLowerCase()
-          .includes(relationSearch.toLowerCase())
-      );
+	  const relationConfig =
+    typeof field.relation === "string"
+      ? null
+      : field.relation;
+
+  const canCreateRelation =
+    Boolean(relationConfig?.create?.enabled);
+    const filteredOptions = relationOptions.filter((option) =>
+      option.label.toLowerCase().includes(relationSearch.toLowerCase())
+    );
 
     return (
-      <Wrapper>
+      <FieldWrapper field={field}>
         <label className="block space-y-2">
           {label}
 
-          {/* --- AJOUT : INPUT DE RECHERCHE --- */}
           <input
             type="text"
             placeholder="Rechercher..."
             value={relationSearch}
-            onChange={(event) =>
-              setRelationSearch(event.target.value)
-            }
-            className={className}
+            disabled={isLocked}
+            onChange={(event) => setRelationSearch(event.target.value)}
+            className={`${className} ${
+              isLocked
+                ? "cursor-not-allowed bg-slate-100 text-slate-500"
+                : ""
+            }`}
           />
 
           <select
-            key={`${field.key}-${String(initialValue ?? "")}-${relationOptions.length}`}
             name={field.key}
             required={field.required}
-            defaultValue={String(initialValue ?? "")}
-            className={className}
+            value={currentValue}
+            disabled={isLocked}
+            onChange={(event) => onChange?.(field.key, event.target.value)}
+            className={`${className} ${
+              isLocked
+                ? "cursor-not-allowed bg-slate-100 text-slate-500"
+                : ""
+            }`}
           >
             <option value="">
               {field.placeholder ?? "Sélectionner"}
             </option>
 
-            {/* --- AJOUT : UTILISATION DES OPTIONS FILTRÉES --- */}
             {filteredOptions.map((option) => (
               <option key={option.id} value={option.id}>
                 {option.label}
               </option>
             ))}
           </select>
+
+          {canCreateRelation? (
+            <button
+              type="button"
+              onClick={() => {
+                const targetModule =
+  		relationConfig?.module;
+
+                if (!targetModule) {
+                  return;
+                }
+
+                const params =
+                  new URLSearchParams();
+
+                const prefill =
+                  relationConfig?.create?.prefill ?? {};
+
+                Object.entries(prefill).forEach(([key, value]) => {
+                  params.set(key, String(value));
+                });
+
+                const today =
+  new Date()
+    .toISOString()
+    .split("T")[0];
+
+params.set(
+  "dateDebut",
+  today
+);
+
+params.set(
+  "returnTo",
+  window.location.pathname
+);
+
+if (
+  field.key ===
+  "contratId"
+) {
+  const pathParts =
+    window.location.pathname
+      .split("/")
+      .filter(Boolean);
+
+  const parentModule =
+    pathParts[0];
+
+  const parentId =
+    pathParts[1] ?? "";
+
+  if (parentModule === "terrains") {
+    params.set("typeContrat", "terrain");
+    params.set("terrainId", parentId);
+    params.set("exploitationId", "");
+    params.set("lockFields", "typeContrat,terrainId,exploitationId");
+  }
+
+  if (parentModule === "exploitations") {
+    params.set("typeContrat", "exploitation");
+    params.set("exploitationId", parentId);
+    params.set("terrainId", "");
+    params.set("lockFields", "typeContrat,terrainId,exploitationId");
+  }
+}
+
+const query =
+  params.toString();
+
+router.push(
+`/${targetModule}/nouveau?${query}`
+);
+              }}
+              className="
+                mt-2
+                inline-flex
+                items-center
+                rounded-xl
+                border
+                border-blue-200
+                bg-blue-50
+                px-4
+                py-2
+                text-sm
+                font-bold
+                text-blue-700
+                transition
+                hover:bg-blue-100
+              "
+            >
+              + Créer {field.label}
+            </button>
+          ) : null}
         </label>
-      </Wrapper>
+      </FieldWrapper>
     );
   }
 
-  /*
-   * SELECT / STATUS
-   */
   if (field.type === "select" || field.type === "status") {
     return (
-      <Wrapper>
+      <FieldWrapper field={field}>
         <label className="block space-y-2">
           {label}
 
           <select
             name={field.key}
             required={field.required}
-            defaultValue={String(initialValue ?? "")}
-            className={className}
+            value={currentValue}
+            disabled={isLocked}
+            onChange={(event) => onChange?.(field.key, event.target.value)}
+            className={`${className} ${
+              isLocked
+                ? "cursor-not-allowed bg-slate-100 text-slate-500"
+                : ""
+            }`}
           >
             <option value="">
               {field.placeholder ?? "Sélectionner"}
@@ -173,51 +303,249 @@ export function ERPFormField({
               </option>
             ))}
           </select>
+
+          {typeof field.relation !== "string" &&
+          field.relation?.create?.enabled ? (
+            <button
+              type="button"
+              onClick={() => {
+                const targetModule =
+                  typeof field.relation === "string"
+  ? field.relation
+  : field.relation?.module;
+
+                if (!targetModule) {
+                  return;
+                }
+
+                const params =
+                  new URLSearchParams();
+
+                const prefill =
+                  typeof field.relation === "string"
+  ? {}
+  : field.relation?.create?.prefill ?? {};
+
+                Object.entries(prefill).forEach(([key, value]) => {
+                  params.set(key, String(value));
+                });
+
+const today =
+  new Date()
+    .toISOString()
+    .split("T")[0];
+
+params.set(
+  "dateDebut",
+  today
+);
+
+params.set(
+  "returnTo",
+  window.location.pathname
+);
+
+if (
+  field.key ===
+  "contratId"
+) {
+  const pathParts =
+    window.location.pathname
+      .split("/")
+      .filter(Boolean);
+
+  const parentModule =
+    pathParts[0];
+
+  const parentId =
+    pathParts[1] ?? "";
+
+  if (parentModule === "terrains") {
+    params.set("typeContrat", "terrain");
+    params.set("terrainId", parentId);
+    params.set("exploitationId", "");
+    params.set("lockFields", "typeContrat,terrainId,exploitationId");
+  }
+
+  if (parentModule === "exploitations") {
+    params.set("typeContrat", "exploitation");
+    params.set("exploitationId", parentId);
+    params.set("terrainId", "");
+    params.set("lockFields", "typeContrat,terrainId,exploitationId");
+  }
+}
+
+const query =
+  params.toString();
+
+router.push(
+`/${targetModule}/nouveau?${query}`
+);
+              }}
+              className="
+                mt-2
+                inline-flex
+                items-center
+                rounded-xl
+                border
+                border-blue-200
+                bg-blue-50
+                px-4
+                py-2
+                text-sm
+                font-bold
+                text-blue-700
+                transition
+                hover:bg-blue-100
+              "
+            >
+              + Créer {field.label}
+            </button>
+          ) : null}
         </label>
-      </Wrapper>
+      </FieldWrapper>
     );
   }
 
-  /*
-   * BOOLEAN
-   */
   if (field.type === "boolean") {
     return (
-      <Wrapper>
+      <FieldWrapper field={field}>
         <label className="block space-y-2">
           {label}
 
           <select
             name={field.key}
             required={field.required}
-            defaultValue={String(initialValue ?? "")}
-            className={className}
+            value={currentValue}
+            disabled={isLocked}
+            onChange={(event) => onChange?.(field.key, event.target.value)}
+            className={`${className} ${
+              isLocked
+                ? "cursor-not-allowed bg-slate-100 text-slate-500"
+                : ""
+            }`}
           >
             <option value="">
               {field.placeholder ?? "Sélectionner"}
             </option>
-
             <option value="true">Oui</option>
             <option value="false">Non</option>
           </select>
+
+          {typeof field.relation !== "string" &&
+          field.relation?.create?.enabled ? (
+            <button
+              type="button"
+              onClick={() => {
+                const targetModule =
+                  typeof field.relation === "string"
+  ? field.relation
+  : field.relation?.module;
+
+                if (!targetModule) {
+                  return;
+                }
+
+                const params =
+                  new URLSearchParams();
+
+                const prefill =
+                  typeof field.relation === "string"
+  ? {}
+  : field.relation?.create?.prefill ?? {};
+
+                Object.entries(prefill).forEach(([key, value]) => {
+                  params.set(key, String(value));
+                });
+
+             const today =
+  new Date()
+    .toISOString()
+    .split("T")[0];
+
+params.set(
+  "dateDebut",
+  today
+);
+
+params.set(
+  "returnTo",
+  window.location.pathname
+);
+
+if (
+  field.key ===
+  "contratId"
+) {
+  const pathParts =
+    window.location.pathname
+      .split("/")
+      .filter(Boolean);
+
+  const parentModule =
+    pathParts[0];
+
+  const parentId =
+    pathParts[1] ?? "";
+
+  if (parentModule === "terrains") {
+    params.set("typeContrat", "terrain");
+    params.set("terrainId", parentId);
+    params.set("exploitationId", "");
+    params.set("lockFields", "typeContrat,terrainId,exploitationId");
+  }
+
+  if (parentModule === "exploitations") {
+    params.set("typeContrat", "exploitation");
+    params.set("exploitationId", parentId);
+    params.set("terrainId", "");
+    params.set("lockFields", "typeContrat,terrainId,exploitationId");
+  }
+}
+
+const query =
+  params.toString();
+
+router.push(
+`/${targetModule}/nouveau?${query}`
+);
+              }}
+              className="
+                mt-2
+                inline-flex
+                items-center
+                rounded-xl
+                border
+                border-blue-200
+                bg-blue-50
+                px-4
+                py-2
+                text-sm
+                font-bold
+                text-blue-700
+                transition
+                hover:bg-blue-100
+              "
+            >
+              + Créer {field.label}
+            </button>
+          ) : null}
         </label>
-      </Wrapper>
+      </FieldWrapper>
     );
   }
 
-  /*
-   * TEXTAREA
-   */
   if (field.type === "textarea") {
     return (
-      <Wrapper>
+      <FieldWrapper field={field}>
         <label className="block space-y-2">
           {label}
 
           <textarea
             name={field.key}
             required={field.required}
-            defaultValue={String(initialValue ?? "")}
+            value={currentValue}
+            onChange={(event) => onChange?.(field.key, event.target.value)}
             placeholder={field.placeholder ?? field.label}
             className="
               min-h-32
@@ -237,22 +565,20 @@ export function ERPFormField({
             "
           />
         </label>
-      </Wrapper>
+      </FieldWrapper>
     );
   }
 
-  /*
-   * INPUTS
-   */
   return (
-    <Wrapper>
+    <FieldWrapper field={field}>
       <label className="block space-y-2">
         {label}
 
         <input
           name={field.key}
           required={field.required}
-          defaultValue={String(initialValue ?? "")}
+          value={currentValue}
+          onChange={(event) => onChange?.(field.key, event.target.value)}
           type={
             field.type === "number"
               ? "number"
@@ -268,6 +594,6 @@ export function ERPFormField({
           className={className}
         />
       </label>
-    </Wrapper>
+    </FieldWrapper>
   );
 }

@@ -4,7 +4,7 @@ export const mouvementsModuleV2: ERPModule = {
   metadata: {
     key: "mouvements",
     label: "Mouvements",
-    description: "Module mÃ©tier Mouvements gÃ©nÃ©rÃ© par le standard ERP Business Module V2.",
+    description: "Module métier Mouvements généré par le standard ERP Business Module V2.",
     icon: "arrow-left-right",
     category: "Stocks",
 features: {

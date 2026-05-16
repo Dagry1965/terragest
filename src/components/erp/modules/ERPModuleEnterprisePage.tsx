@@ -35,7 +35,7 @@ export function ERPModuleEnterprisePage({
         {
           label: "Audit",
           value: "Disponible",
-          helper: "TraÃ§abilite active",
+          helper: "Traçabilite active",
         },
       ]}
     >

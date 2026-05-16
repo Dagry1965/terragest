@@ -101,7 +101,7 @@ export const contratsModuleV2:
           "proprietaireId",
 
         label:
-          "PropriÃ©taire",
+          "Propriétaire",
 
         type:
           "relation",
@@ -169,7 +169,7 @@ export const contratsModuleV2:
           "dateDebut",
 
         label:
-          "Date dÃ©but",
+          "Date début",
 
         type:
           "date",
@@ -236,18 +236,18 @@ export const contratsModuleV2:
 
           {
             label:
-              "ExpirÃ©",
+              "Expiré",
 
             value:
-              "ExpirÃ©",
+              "Expiré",
           },
 
           {
             label:
-              "RÃ©siliÃ©",
+              "Résilié",
 
             value:
-              "RÃ©siliÃ©",
+              "Résilié",
           },
         ],
       },

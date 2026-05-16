@@ -53,7 +53,7 @@ export const terrainsSchema: ERPModuleSchema = {
 
     {
       value: "occupe",
-      label: "OccupÃ©",
+      label: "Occupé",
       color: "blue",
     },
 

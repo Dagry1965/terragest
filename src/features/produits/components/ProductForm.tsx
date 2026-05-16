@@ -38,7 +38,7 @@ export const ProductForm = () => {
       actif: true,
     });
 
-    alert("Produit crÃ©Ã©");
+    alert("Produit créé");
   }
 
   return (
@@ -50,15 +50,15 @@ export const ProductForm = () => {
         },
         {
           name: "categorie",
-          label: "CatÃ©gorie",
+          label: "Catégorie",
         },
         {
           name: "unite",
-          label: "UnitÃ©",
+          label: "Unité",
         },
         {
           name: "quantite",
-          label: "QuantitÃ©",
+          label: "Quantité",
           type: "number",
         },
         {

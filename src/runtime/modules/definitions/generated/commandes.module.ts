@@ -4,9 +4,9 @@ export const commandesModule: ERPModule = {
   metadata: {
     key: "commandes",
     label: "Commandes",
-    description: "Module ERP gÃ©nÃ©rÃ© pour Commandes.",
+    description: "Module ERP généré pour Commandes.",
     icon: "database",
-    category: "MÃ©tier",
+    category: "Métier",
     routes: {
       list: "/commandes",
       create: "/commandes/nouveau",

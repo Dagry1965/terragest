@@ -26,8 +26,8 @@ export function ERPTechnicalDashboard() {
         </h1>
 
         <p className="mt-3 max-w-3xl text-slate-300">
-          Suivi du moteur ERP : Ã©vÃ©nements, workflows, files dâ€™attente,
-          rÃ¨gles mÃ©tier, audit, logs, mutations et santÃ© systÃ¨me.
+          Suivi du moteur ERP : événements, workflows, files d'attente,
+          règles métier, audit, logs, mutations et santé système.
         </p>
       </section>
 
@@ -42,7 +42,7 @@ export function ERPTechnicalDashboard() {
               {block}
             </h2>
             <p className="mt-3 text-sm text-slate-600">
-              Zone rÃ©servÃ©e Ã  la supervision technique du moteur ERP.
+              Zone réservée à la supervision technique du moteur ERP.
             </p>
           </div>
         ))}
@@ -50,12 +50,12 @@ export function ERPTechnicalDashboard() {
 
       <section className="rounded-2xl border bg-white p-6 shadow-sm">
         <h2 className="text-lg font-semibold text-slate-950">
-          SÃ©paration validÃ©e
+          Séparation validée
         </h2>
 
         <p className="mt-3 text-sm text-slate-600">
-          Ce dashboard ne doit pas contenir de KPI mÃ©tier comme les terrains,
-          campagnes, stocks ou revenus. Il est rÃ©servÃ© au fonctionnement interne
+          Ce dashboard ne doit pas contenir de KPI métier comme les terrains,
+          campagnes, stocks ou revenus. Il est réservé au fonctionnement interne
           de la plateforme.
         </p>
       </section>

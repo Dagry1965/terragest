@@ -108,7 +108,7 @@ export const ERPBusinessDashboardConfig: ERPDashboardConfig = {
         {
           field: "statutCampagne",
           operator: "notEquals",
-          value: "ArchivÃ©e",
+          value: "Archivée",
         },
       ],
     },

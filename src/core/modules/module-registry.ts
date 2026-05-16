@@ -49,19 +49,19 @@ function normalizeGroup(
       return value;
 
     case "Referentiel":
-    case "RÃ©fÃ©rentiel":
+    case "Référentiel":
       return "Referentiel";
 
     case "Operations":
-    case "OpÃ©rations":
+    case "Opérations":
       return "Operations";
 
     case "Metier":
-    case "MÃ©tier":
+    case "Métier":
       return "Metier";
 
     case "Systeme":
-    case "SystÃ¨me":
+    case "Système":
       return "Systeme";
 
     default:

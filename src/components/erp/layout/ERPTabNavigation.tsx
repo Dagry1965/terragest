@@ -1,6 +1,6 @@
 const tabs = [
-  "Vue gÃ©nÃ©rale",
-  "DonnÃ©es",
+  "Vue générale",
+  "Données",
   "Workflows",
   "Audit",
   "Relations",

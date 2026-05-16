@@ -4,9 +4,9 @@ export const mouvementsModule: ERPModule = {
   metadata: {
     key: "mouvements",
     label: "Mouvements",
-    description: "Module ERP gÃ©nÃ©rÃ© pour Mouvements.",
+    description: "Module ERP généré pour Mouvements.",
     icon: "database",
-    category: "MÃ©tier",
+    category: "Métier",
     routes: {
       list: "/mouvements",
       create: "/mouvements/nouveau",

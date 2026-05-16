@@ -2,13 +2,13 @@
 
 const ACTIVITIES = [
 
-  "Nouvelle exploitation crÃ©Ã©e",
+  "Nouvelle exploitation créée",
 
-  "Intervention terminÃ©e",
+  "Intervention terminée",
 
-  "Stock faible dÃ©tectÃ©",
+  "Stock faible détecté",
 
-  "Rapport IA gÃ©nÃ©rÃ©",
+  "Rapport IA généré",
 
   "Nouvelle inspection mobile",
 ];
@@ -33,7 +33,7 @@ export const DashboardActivityFeed =
           font-bold
         ">
 
-          ActivitÃ© rÃ©cente
+          Activité récente
 
         </h2>
 

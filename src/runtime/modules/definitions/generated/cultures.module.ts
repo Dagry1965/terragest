@@ -4,7 +4,7 @@ export const culturesModule: ERPModule = {
   metadata: {
     key: "cultures",
     label: "Cultures",
-    description: "Module ERP gÃƒÂ©nÃƒÂ©rÃƒÂ© pour Cultures.",
+    description: "Module ERP généré pour Cultures.",
     icon: "sprout",
     category: "Production",
     routes: {

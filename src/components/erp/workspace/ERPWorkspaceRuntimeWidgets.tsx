@@ -64,7 +64,7 @@ export async function ERPWorkspaceRuntimeWidgets({
             text-slate-500
           "
         >
-          Widgets ERP rÃ©solus dynamiquement depuis le runtime.
+          Widgets ERP résolus dynamiquement depuis le runtime.
         </p>
 
       </div>

@@ -20,7 +20,7 @@ const plans = [
     features: [
       "25 utilisateurs",
       "Analytics",
-      "Temps rÃ©el",
+      "Temps réel",
     ],
   },
   {
@@ -28,7 +28,7 @@ const plans = [
     name: "Enterprise",
     price: "Sur devis",
     features: [
-      "IllimitÃ©",
+      "Illimité",
       "Multi-tenant",
       "Support premium",
     ],

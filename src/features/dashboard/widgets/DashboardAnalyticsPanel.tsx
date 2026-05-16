@@ -31,7 +31,7 @@ export const DashboardAnalyticsPanel =
         mt-4
       ">
 
-        Tendances & analyses mÃ©tier
+        Tendances & analyses métier
 
       </div>
 

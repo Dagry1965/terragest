@@ -26,7 +26,7 @@ MaterielsDashboard() {
             mb-4
           "
         >
-          MatÃ©riels
+          Matériels
         </h2>
 
         <p>

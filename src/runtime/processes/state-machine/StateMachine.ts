@@ -10,7 +10,7 @@ export class StateMachine {
     console.log(
       "[StateMachine]",
       this.currentState,
-      "â†’",
+      "→",
       nextState
     );
 

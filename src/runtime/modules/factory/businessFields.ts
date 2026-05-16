@@ -79,7 +79,7 @@ export const recetteFields = [
 ];
 
 export const livraisonFields = [
-  { key: "reference", label: "RÃ©fÃ©rence", type: "text", required: true },
+  { key: "reference", label: "Référence", type: "text", required: true },
   {
     key: "commandeId",
     label: "Commande",
@@ -106,12 +106,12 @@ export const livraisonFields = [
     key: "statut",
     label: "Statut",
     type: "select",
-    options: ["PrÃ©vue", "En cours", "LivrÃ©e", "AnnulÃ©e"],
+    options: ["Prévue", "En cours", "Livrée", "Annulée"],
   },
 ];
 
 export const achatFields = [
-  { key: "reference", label: "RÃ©fÃ©rence", type: "text", required: true },
+  { key: "reference", label: "Référence", type: "text", required: true },
   {
     key: "fournisseurId",
     label: "Fournisseur",
@@ -129,15 +129,15 @@ export const achatFields = [
     key: "statut",
     label: "Statut",
     type: "select",
-    options: ["Brouillon", "ValidÃ©", "RÃ©ceptionnÃ©", "AnnulÃ©"],
+    options: ["Brouillon", "Validé", "Réceptionné", "Annulé"],
   },
 ];
 
 export const employeFields = [
   { key: "nom", label: "Nom", type: "text", required: true },
-  { key: "prenom", label: "PrÃ©nom", type: "text" },
+  { key: "prenom", label: "Prénom", type: "text" },
   { key: "email", label: "Email", type: "email" },
-  { key: "telephone", label: "TÃ©lÃ©phone", type: "text" },
+  { key: "telephone", label: "Téléphone", type: "text" },
   { key: "poste", label: "Poste", type: "text" },
   { key: "dateEmbauche", label: "Date embauche", type: "date" },
   {
@@ -151,9 +151,9 @@ export const employeFields = [
 export const vehiculeFields = [
   { key: "immatriculation", label: "Immatriculation", type: "text", required: true },
   { key: "marque", label: "Marque", type: "text" },
-  { key: "modele", label: "ModÃ¨le", type: "text" },
-  { key: "typeVehicule", label: "Type vÃ©hicule", type: "select", options: ["Voiture", "Camion", "Tracteur", "Moto", "Autre"] },
-  { key: "kilometrage", label: "KilomÃ©trage", type: "number" },
+  { key: "modele", label: "Modèle", type: "text" },
+  { key: "typeVehicule", label: "Type véhicule", type: "select", options: ["Voiture", "Camion", "Tracteur", "Moto", "Autre"] },
+  { key: "kilometrage", label: "Kilométrage", type: "number" },
   { key: "dateMiseEnService", label: "Date mise en service", type: "date" },
   { key: "couleur", label: "Couleur", type: "text" },
   {
@@ -174,7 +174,7 @@ export const produitFields = [
   },
   {
     key: "categorie",
-    label: "CatÃ©gorie",
+    label: "Catégorie",
     type: "select",
     required: true,
     options: [
@@ -219,13 +219,13 @@ export const stockFields = [
   },
   {
     key: "quantite",
-    label: "QuantitÃ©",
+    label: "Quantité",
     type: "number",
     required: true,
   },
   {
     key: "unite",
-    label: "UnitÃ©",
+    label: "Unité",
     type: "text",
   },
   {
@@ -262,16 +262,16 @@ export const mouvementFields = [
     label: "Type",
     type: "select",
     required: true,
-    options: ["EntrÃ©e", "Sortie", "Correction", "Transfert"],
+    options: ["Entrée", "Sortie", "Correction", "Transfert"],
   },
-  { key: "quantite", label: "QuantitÃ©", type: "number", required: true },
+  { key: "quantite", label: "Quantité", type: "number", required: true },
   { key: "dateMouvement", label: "Date mouvement", type: "date" },
   { key: "motif", label: "Motif", type: "textarea" },
   {
     key: "statut",
     label: "Statut",
     type: "select",
-    options: ["Brouillon", "ValidÃ©", "AnnulÃ©"],
+    options: ["Brouillon", "Validé", "Annulé"],
   },
 ];
 
@@ -284,7 +284,7 @@ export const terrainFields = [
   },
   {
     key: "proprietaireId",
-    label: "PropriÃ©taire",
+    label: "Propriétaire",
     type: "relation",
     relation: {
       module: "utilisateurs",
@@ -346,7 +346,7 @@ export const recolteFields = [
   },
   {
     key: "produitId",
-    label: "Produit rÃ©coltÃ©",
+    label: "Produit récolté",
     type: "relation",
     relation: {
       module: "produits",
@@ -354,15 +354,15 @@ export const recolteFields = [
       labelField: "nom",
     },
   },
-  { key: "dateRecolte", label: "Date rÃ©colte", type: "date" },
-  { key: "quantite", label: "QuantitÃ©", type: "number" },
-  { key: "unite", label: "UnitÃ©", type: "text" },
-  { key: "qualite", label: "QualitÃ©", type: "select", options: ["A", "B", "C"] },
+  { key: "dateRecolte", label: "Date récolte", type: "date" },
+  { key: "quantite", label: "Quantité", type: "number" },
+  { key: "unite", label: "Unité", type: "text" },
+  { key: "qualite", label: "Qualité", type: "select", options: ["A", "B", "C"] },
   {
     key: "statut",
     label: "Statut",
     type: "select",
-    options: ["PrÃ©vue", "RÃ©coltÃ©e", "StockÃ©e", "Vendue"],
+    options: ["Prévue", "Récoltée", "Stockée", "Vendue"],
   },
 ];
 
@@ -370,11 +370,11 @@ export const intrantFields = [
   { key: "nom", label: "Nom", type: "text", required: true },
   {
     key: "categorie",
-    label: "CatÃ©gorie",
+    label: "Catégorie",
     type: "select",
     options: ["Semence", "Engrais", "Traitement", "Alimentation", "Carburant", "Autre"],
   },
-  { key: "unite", label: "UnitÃ©", type: "text" },
+  { key: "unite", label: "Unité", type: "text" },
   { key: "stockActuel", label: "Stock actuel", type: "number" },
   { key: "seuilAlerte", label: "Seuil alerte", type: "number" },
   { key: "prixUnitaire", label: "Prix unitaire", type: "number" },
@@ -393,9 +393,9 @@ export const fournisseurFields = [
   { key: "nom", label: "Nom", type: "text", required: true },
   { key: "contact", label: "Contact", type: "text" },
   { key: "email", label: "Email", type: "email" },
-  { key: "telephone", label: "TÃ©lÃ©phone", type: "text" },
+  { key: "telephone", label: "Téléphone", type: "text" },
   { key: "adresse", label: "Adresse", type: "textarea" },
-  { key: "categorie", label: "CatÃ©gorie", type: "select", options: ["Intrants", "MatÃ©riel", "Services", "Transport", "Autre"] },
+  { key: "categorie", label: "Catégorie", type: "select", options: ["Intrants", "Matériel", "Services", "Transport", "Autre"] },
   {
     key: "statut",
     label: "Statut",
@@ -408,7 +408,7 @@ export const interventionFields = [
   { key: "titre", label: "Titre", type: "text", required: true },
   {
     key: "materielId",
-    label: "MatÃ©riel",
+    label: "Matériel",
     type: "relation",
     relation: {
       module: "materiels",
@@ -427,13 +427,13 @@ export const interventionFields = [
     },
   },
   { key: "dateIntervention", label: "Date intervention", type: "date" },
-  { key: "cout", label: "CoÃ»t", type: "number" },
+  { key: "cout", label: "Coût", type: "number" },
   { key: "description", label: "Description", type: "textarea" },
   {
     key: "statut",
     label: "Statut",
     type: "select",
-    options: ["PlanifiÃ©e", "En cours", "TerminÃ©e", "AnnulÃ©e"],
+    options: ["Planifiée", "En cours", "Terminée", "Annulée"],
   },
 ];
 
@@ -441,7 +441,7 @@ export const maintenanceFields = [
   { key: "titre", label: "Titre", type: "text", required: true },
   {
     key: "materielId",
-    label: "MatÃ©riel",
+    label: "Matériel",
     type: "relation",
     relation: {
       module: "materiels",
@@ -451,18 +451,18 @@ export const maintenanceFields = [
   },
   {
     key: "priorite",
-    label: "PrioritÃ©",
+    label: "Priorité",
     type: "select",
     options: ["Basse", "Normale", "Haute", "Critique"],
   },
-  { key: "datePrevue", label: "Date prÃ©vue", type: "date" },
-  { key: "coutEstime", label: "CoÃ»t estimÃ©", type: "number" },
+  { key: "datePrevue", label: "Date prévue", type: "date" },
+  { key: "coutEstime", label: "Coût estimé", type: "number" },
   { key: "description", label: "Description", type: "textarea" },
   {
     key: "statut",
     label: "Statut",
     type: "select",
-    options: ["Ouverte", "PlanifiÃ©e", "En cours", "ClÃ´turÃ©e"],
+    options: ["Ouverte", "Planifiée", "En cours", "Clôturée"],
   },
 ];
 
@@ -471,12 +471,12 @@ export const incidentFields = [
   { key: "description", label: "Description", type: "textarea" },
   {
     key: "moduleConcerne",
-    label: "Module concernÃ©",
+    label: "Module concerné",
     type: "text",
   },
   {
     key: "gravite",
-    label: "GravitÃ©",
+    label: "Gravité",
     type: "select",
     options: ["Faible", "Moyenne", "Haute", "Critique"],
   },
@@ -495,7 +495,7 @@ export const incidentFields = [
     key: "statut",
     label: "Statut",
     type: "select",
-    options: ["Ouvert", "En cours", "RÃ©solu", "Clos"],
+    options: ["Ouvert", "En cours", "Résolu", "Clos"],
   },
 ];
 
@@ -504,7 +504,7 @@ export const tacheFields = [
   { key: "description", label: "Description", type: "textarea" },
   {
     key: "assigneA",
-    label: "AssignÃ© Ã ",
+    label: "Assigné à",
     type: "relation",
     relation: {
       module: "utilisateurs",
@@ -512,10 +512,10 @@ export const tacheFields = [
       labelField: "nom",
     },
   },
-  { key: "dateEcheance", label: "Date Ã©chÃ©ance", type: "date" },
+  { key: "dateEcheance", label: "Date échéance", type: "date" },
   {
     key: "priorite",
-    label: "PrioritÃ©",
+    label: "Priorité",
     type: "select",
     options: ["Basse", "Normale", "Haute", "Critique"],
   },
@@ -523,20 +523,20 @@ export const tacheFields = [
     key: "statut",
     label: "Statut",
     type: "select",
-    options: ["Ã€ faire", "En cours", "TerminÃ©e", "AnnulÃ©e"],
+    options: ["Ã€ faire", "En cours", "Terminée", "Annulée"],
   },
 ];
 
 export const utilisateurFields = [
   { key: "nom", label: "Nom", type: "text", required: true },
-  { key: "prenom", label: "PrÃ©nom", type: "text" },
+  { key: "prenom", label: "Prénom", type: "text" },
   { key: "email", label: "Email", type: "email", required: true },
-  { key: "telephone", label: "TÃ©lÃ©phone", type: "text" },
+  { key: "telephone", label: "Téléphone", type: "text" },
   {
     key: "role",
-    label: "RÃ´le",
+    label: "Rôle",
     type: "select",
-    options: ["Admin", "Manager", "EmployÃ©", "Lecteur"],
+    options: ["Admin", "Manager", "Employé", "Lecteur"],
   },
   {
     key: "statut",

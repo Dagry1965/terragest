@@ -4,7 +4,7 @@ export const campagnesModuleV2: ERPModule = {
   metadata: {
     key: "campagnes",
     label: "Campagnes",
-    description: "Module mÃ©tier Campagnes gÃ©nÃ©rÃ© par le standard ERP Business Module V2.",
+    description: "Module métier Campagnes généré par le standard ERP Business Module V2.",
     icon: "calendar",
     category: "Production",
 

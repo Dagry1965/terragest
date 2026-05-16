@@ -4,9 +4,9 @@ export const interventionsModule: ERPModule = {
   metadata: {
     key: "interventions",
     label: "Interventions",
-    description: "Module ERP gÃ©nÃ©rÃ© pour Interventions.",
+    description: "Module ERP généré pour Interventions.",
     icon: "database",
-    category: "MÃ©tier",
+    category: "Métier",
     routes: {
       list: "/interventions",
       create: "/interventions/nouveau",

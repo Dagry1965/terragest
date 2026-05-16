@@ -15,7 +15,7 @@ export const terrainsModuleV2:
       "Terrains",
 
     description:
-      "Gestion fonciÃ¨re centrale ERP.",
+      "Gestion foncière centrale ERP.",
 
     icon:
       "map",
@@ -92,7 +92,7 @@ export const terrainsModuleV2:
           "proprietaireId",
 
         label:
-          "PropriÃ©taire",
+          "Propriétaire",
 
         type:
           "relation",
@@ -166,7 +166,7 @@ export const terrainsModuleV2:
           "surfaceExploitee",
 
         label:
-          "Surface exploitÃ©e",
+          "Surface exploitée",
 
         type:
           "number",
@@ -210,7 +210,7 @@ export const terrainsModuleV2:
           "region",
 
         label:
-          "RÃ©gion",
+          "Région",
 
         type:
           "text",
@@ -265,7 +265,7 @@ export const terrainsModuleV2:
           "referenceFoncier",
 
         label:
-          "RÃ©fÃ©rence fonciÃ¨re",
+          "Référence foncière",
 
         type:
           "text",

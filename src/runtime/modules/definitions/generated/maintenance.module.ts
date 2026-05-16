@@ -4,9 +4,9 @@ export const maintenanceModule: ERPModule = {
   metadata: {
     key: "maintenance",
     label: "Maintenance",
-    description: "Module ERP gÃ©nÃ©rÃ© pour Maintenance.",
+    description: "Module ERP généré pour Maintenance.",
     icon: "database",
-    category: "MÃ©tier",
+    category: "Métier",
     routes: {
       list: "/maintenance",
       create: "/maintenance/nouveau",

@@ -102,7 +102,7 @@ export const OfflineSyncCard =
             result
           }
           {" "}
-          actions synchronisÃ©es
+          actions synchronisées
         </div>
       )}
     </div>

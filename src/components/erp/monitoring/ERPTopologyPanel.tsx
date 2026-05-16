@@ -43,7 +43,7 @@ export function ERPTopologyPanel({
             key={`${edge.from}-${edge.to}`}
             className="rounded-xl bg-slate-50 px-4 py-3 text-sm text-slate-600"
           >
-            {edge.from} â†’ {edge.to}
+            {edge.from} → {edge.to}
             {edge.label ? ` / ${edge.label}` : ""}
           </div>
         ))}

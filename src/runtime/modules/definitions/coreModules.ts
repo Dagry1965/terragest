@@ -1,5 +1,5 @@
 import { facturationsModule } from "@/runtime/modules/generated/facturations";
-import { contratsModule } from "@/runtime/modules/generated/contrats/contrats.module";
+import { contratsModule } from "@/runtime/modules/definitions/generated/contrats.module";
 import { campagnesModule } from "@/runtime/modules/generated/campagnes/campagnes.module";
 import { budgetsModule } from "@/runtime/modules/generated/budgets/budgets.module";
 import type { ERPModule } from "../ERPModule";
@@ -30,7 +30,7 @@ export const coreERPModules: ERPModule[] = [
   createBusinessModule({
     key: "clients",
     label: "Clients",
-    description: "Gestion centralisÃ©e des clients.",
+    description: "Gestion centralisée des clients.",
     fields: clientFields,
   }),
   createBusinessModule({
@@ -47,7 +47,7 @@ export const coreERPModules: ERPModule[] = [
   }),
   createBusinessModule({
     key: "taches",
-    label: "TÃ¢ches",
+    label: "Tâches",
     fields: tacheFields,
   }),
 
@@ -93,8 +93,8 @@ export const coreERPModules: ERPModule[] = [
   },
   createBusinessModule({
     key: "vehicules",
-    label: "VÃ©hicules",
-    description: "Gestion des vÃ©hicules.",
+    label: "Véhicules",
+    description: "Gestion des véhicules.",
     fields: vehiculeFields,
   }),
   createBusinessModule({
@@ -104,7 +104,7 @@ export const coreERPModules: ERPModule[] = [
   }),
   createBusinessModule({
     key: "recoltes",
-    label: "RÃ©coltes",
+    label: "Récoltes",
     fields: recolteFields,
   }),
 
@@ -150,8 +150,8 @@ export const coreERPModules: ERPModule[] = [
   },
   createBusinessModule({
     key: "depenses",
-    label: "DÃ©penses",
-    description: "Gestion des dÃ©penses.",
+    label: "Dépenses",
+    description: "Gestion des dépenses.",
     fields: depenseFields,
   }),
   createBusinessModule({

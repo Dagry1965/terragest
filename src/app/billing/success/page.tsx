@@ -30,7 +30,7 @@ BillingSuccessPage() {
             font-bold
           "
         >
-          Paiement rÃ©ussi
+          Paiement réussi
         </h1>
 
         <p
@@ -38,7 +38,7 @@ BillingSuccessPage() {
             text-gray-500
           "
         >
-          Votre abonnement a Ã©tÃ© activÃ©.
+          Votre abonnement a été activé.
         </p>
       </div>
     </div>

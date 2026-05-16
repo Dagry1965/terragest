@@ -36,11 +36,11 @@ export const AnalyticsCards =
       <KPICard
         title="Produits"
        value={analytics.totalProducts}
-        subtitle="Produits enregistrÃ©s"
+        subtitle="Produits enregistrés"
       />
 
       <KPICard
-        title="QuantitÃ© Totale"
+        title="Quantité Totale"
         value={analytics.totalQuantity}
         subtitle="Stock global"
       />

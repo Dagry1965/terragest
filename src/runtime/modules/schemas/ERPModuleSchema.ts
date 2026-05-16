@@ -88,6 +88,17 @@ visibility?: {
   notIn?: unknown[];
 };
 
+
+list?: {
+  visible?: boolean;
+  order?: number;
+  condition?: {
+    field: string;
+    equals?: unknown;
+    notEquals?: unknown;
+  };
+};
+
 ui?: {
   placeholder?: string;
   icon?: string;
@@ -106,14 +117,27 @@ ui?: {
   /*
    * RELATION
    */
-  relation?:
-    | string
-    | {
-        module: string;
-        collection?: string;
-        labelField?: string;
+relation?:
+  | string
+  | {
+      module: string;
+      collection?: string;
+      labelField?: string;
+
+      create?: {
+
+        enabled:
+          boolean;
+
+        prefill?:
+          Record<
+            string,
+            unknown
+          >;
+
       };
 
+    };
   relationType?: ERPRelationType;
   references?: ERPModuleFieldReference;
 

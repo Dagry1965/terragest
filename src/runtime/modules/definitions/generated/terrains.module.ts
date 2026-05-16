@@ -4,7 +4,7 @@ export const terrainsModule: ERPModule = {
   metadata: {
     key: "terrains",
     label: "Terrains",
-    description: "Référentiel des terrains, propriétaires, contrats fonciers et vocations.",
+    description: "Gestion foncière des terrains.",
     icon: "map",
     category: "Métier",
     routes: {
@@ -17,39 +17,69 @@ export const terrainsModule: ERPModule = {
 
   schema: {
     collection: "terrains",
+
     fields: [
       {
+        key: "code",
+        label: "Code",
+        type: "text",
+        grid: { cols: 4 },
+        list: {
+          visible: true,
+          order: 1,
+        },
+      },
+
+      {
         key: "nom",
-        label: "Nom du terrain",
+        label: "Nom",
         type: "text",
         required: true,
-        grid: { cols: 6 },
-        ui: {
-          placeholder: "Nom officiel du terrain",
-          help: "Nom utilisé dans les documents fonciers.",
+        grid: { cols: 4 },
+        list: {
+          visible: true,
+          order: 2,
         },
       },
 
       {
-        key: "proprietaireId",
-        label: "Propriétaire",
-        type: "relation",
-        relation: { module: "utilisateurs" },
+        key: "vocationTerrain",
+        label: "Vocation du terrain",
+        type: "select",
         required: true,
-        grid: { cols: 6 },
-        ui: {
-          placeholder: "Sélectionner un propriétaire",
-          help: "Le terrain doit toujours avoir un propriétaire.",
+        grid: { cols: 4 },
+        options: [
+          { label: "Habitation", value: "habitation" },
+          { label: "Agricole", value: "agricole" },
+          { label: "Mixte", value: "mixte" },
+          { label: "Commercial", value: "commercial" },
+        ],
+        list: {
+          visible: true,
+          order: 3,
         },
       },
 
       {
-        key: "localisation",
-        label: "Localisation",
-        type: "text",
-        grid: { cols: 6 },
-        ui: {
-          placeholder: "Adresse ou zone géographique",
+        key: "surfaceTotale",
+        label: "Surface totale (ha)",
+        type: "number",
+        required: true,
+        grid: { cols: 4 },
+        list: {
+          visible: true,
+          order: 4,
+        },
+      },
+
+      {
+        key: "surfaceDisponible",
+        label: "Surface disponible (ha)",
+        type: "number",
+        grid: { cols: 4 },
+        list: {
+          visible: true,
+          order: 5,
         },
       },
 
@@ -58,160 +88,144 @@ export const terrainsModule: ERPModule = {
         label: "Statut",
         type: "select",
         required: true,
-        grid: { cols: 6 },
-        ui: {
-          placeholder: "Sélectionner un statut",
-        },
+        grid: { cols: 4 },
         options: [
           { label: "Actif", value: "actif" },
           { label: "Inactif", value: "inactif" },
-          { label: "En attente", value: "en_attente" },
+          { label: "Suspendu", value: "suspendu" },
         ],
-      },
-
-      // --- Surfaces ---
-      {
-        key: "surfaceTotale",
-        label: "Surface totale",
-        type: "number",
-        grid: { cols: 6 },
-        ui: {
-          placeholder: "Surface totale en m²",
-        },
-      },
-      {
-        key: "surfaceDisponible",
-        label: "Surface disponible",
-        type: "number",
-        grid: { cols: 6 },
-        ui: {
-          placeholder: "Surface disponible en m²",
-          help: "Calculée automatiquement si un workflow est activé.",
+        list: {
+          visible: true,
+          order: 6,
         },
       },
 
       {
-        key: "surfaceAgricole",
-        label: "Surface agricole",
-        type: "number",
-        grid: { cols: 6 },
-      },
-      {
-        key: "surfaceHabitation",
-        label: "Surface habitation",
-        type: "number",
-        grid: { cols: 6 },
-      },
-
-      {
-        key: "vocationTerrain",
-        label: "Vocation du terrain",
-        type: "select",
-        grid: { cols: 6 },
-        ui: {
-          placeholder: "Sélectionner une vocation",
-        },
-        options: [
-          { label: "Agricole", value: "agricole" },
-          { label: "Élevage", value: "elevage" },
-          { label: "Piscicole", value: "piscicole" },
-          { label: "Immobilier", value: "immobilier" },
-          { label: "Mixte", value: "mixte" },
-        ],
-      },
-
-      // --- AGRICOLE ---
-      {
-        key: "typeCulture",
-        label: "Type de culture",
+        key: "adresse",
+        label: "Adresse",
         type: "text",
-        grid: { cols: 6 },
-        visibility: {
-          field: "vocationTerrain",
-          equals: "agricole",
-        },
-        ui: {
-          placeholder: "Ex: manioc, maïs, riz",
-        },
-      },
-      {
-        key: "rendementPrevisionnel",
-        label: "Rendement prévisionnel",
-        type: "number",
-        grid: { cols: 6 },
-        visibility: {
-          field: "vocationTerrain",
-          equals: "agricole",
+        required: true,
+        grid: { cols: 4 },
+        list: {
+          visible: false,
+          order: 7,
         },
       },
 
-      // --- IMMOBILIER ---
       {
-        key: "typeBienImmobilier",
-        label: "Type de bien immobilier",
-        type: "select",
-        options: [
-          { label: "Maison", value: "maison" },
-          { label: "Appartement", value: "appartement" },
-          { label: "Terrain à bâtir", value: "terrain_a_batir" },
-        ],
-        grid: { cols: 6 },
-        visibility: {
-          field: "vocationTerrain",
-          equals: "immobilier",
-        },
-      },
-
-      // --- Contrat foncier ---
-      {
-        key: "typeContratFoncier",
-        label: "Type de contrat foncier",
-        type: "select",
-        grid: { cols: 6 },
-        ui: {
-          placeholder: "Sélectionner un type de contrat",
-        },
-        options: [
-          { label: "Achat", value: "achat" },
-          { label: "Location", value: "location" },
-          { label: "Bail emphytéotique", value: "bail_emphyteotique" },
-          { label: "Mise à disposition", value: "mise_a_disposition" },
-        ],
-      },
-
-      {
-        key: "dateDebutContrat",
-        label: "Date de début du contrat",
-        type: "date",
-        grid: { cols: 6 },
-      },
-
-      {
-        key: "dateAcquisition",
-        label: "Date d'acquisition",
-        type: "date",
-        grid: { cols: 6 },
-      },
-
-      {
-        key: "prixAcquisition",
-        label: "Prix d'acquisition",
-        type: "number",
-        grid: { cols: 6 },
-      },
-
-      {
-        key: "referenceContrat",
-        label: "Référence du contrat",
+        key: "commune",
+        label: "Commune",
         type: "text",
-        grid: { cols: 6 },
+        grid: { cols: 4 },
+        list: {
+          visible: false,
+          order: 8,
+        },
       },
 
       {
-        key: "documentContrat",
-        label: "Document du contrat",
-        type: "file",
+        key: "ville",
+        label: "Ville",
+        type: "text",
+        required: true,
+        grid: { cols: 4 },
+        list: {
+          visible: false,
+          order: 9,
+        },
+      },
+
+      {
+        key: "latitude",
+        label: "Latitude",
+        type: "number",
+        grid: { cols: 4 },
+        list: {
+          visible: false,
+          order: 10,
+        },
+      },
+
+      {
+        key: "longitude",
+        label: "Longitude",
+        type: "number",
+        grid: { cols: 4 },
+        list: {
+          visible: false,
+          order: 11,
+        },
+      },
+
+      {
+        key: "pays",
+        label: "Pays",
+        type: "text",
+        defaultValue: "Congo-Brazzaville",
+        grid: { cols: 4 },
+        list: {
+          visible: false,
+          order: 12,
+        },
+      },
+
+      {
+        key: "proprietaireId",
+        label: "Propriétaire",
+        type: "relation",
+        required: true,
+        relation: {
+          module: "utilisateurs",
+        },
+        searchable: true,
+        grid: { cols: 4 },
+        list: {
+          visible: false,
+          order: 13,
+        },
+      },
+
+      {
+        key: "contratId",
+        label: "Contrat",
+        type: "relation",
+        relation: {
+
+  module:
+    "contrats",
+
+  create: {
+
+    enabled:
+      true,
+
+    prefill: {
+
+      typeContrat:
+        "terrain",
+
+    },
+
+  },
+
+},
+        searchable: true,
+        grid: { cols: 4 },
+        list: {
+          visible: false,
+          order: 14,
+        },
+      },
+
+      {
+        key: "description",
+        label: "Description",
+        type: "textarea",
         grid: { cols: 12 },
+        list: {
+          visible: false,
+          order: 15,
+        },
       },
     ],
   },
@@ -223,54 +237,88 @@ export const terrainsModule: ERPModule = {
       {
         key: "general",
         label: "Général",
-
-        fields: ["nom", "statut"],
-
+        fields: [
+          "nom",
+          "vocationTerrain",
+          "surfaceTotale",
+          "surfaceDisponible",
+          "statut",
+        ],
         sections: [
           {
             key: "identite",
-            title: "Identité du terrain",
-            description: "Informations principales du terrain.",
-            fields: ["nom"],
-          },
-          {
-            key: "etat",
-            title: "État du terrain",
-            description: "Statut opérationnel du terrain.",
-            fields: ["statut"],
-          },
-
-          // --- SECTION SURFACES & VOCATION ---
-          {
-            key: "surfaces_vocation",
-            title: "Surfaces & Vocation",
-            description: "Définition des surfaces et de la vocation du terrain.",
+            title: "Identité",
             fields: [
-	    "nom",
-             "statut",
+              "nom",
+              "vocationTerrain",
               "surfaceTotale",
               "surfaceDisponible",
-              "surfaceAgricole",
-              "surfaceHabitation",
-              "vocationTerrain",
-              "typeCulture",
-              "rendementPrevisionnel",
-              "typeBienImmobilier",
+              "statut",
             ],
           },
         ],
       },
 
       {
-        key: "contrat",
-        label: "Contrat foncier",
+        key: "localisation",
+        label: "Localisation",
         fields: [
-          "typeContratFoncier",
-          "dateDebutContrat",
-          "dateAcquisition",
-          "prixAcquisition",
-          "referenceContrat",
-          "documentContrat",
+          "adresse",
+          "commune",
+          "ville",
+          "latitude",
+          "longitude",
+          "pays",
+        ],
+        sections: [
+          {
+            key: "adresse_section",
+            title: "Adresse",
+            fields: [
+              "adresse",
+              "commune",
+              "ville",
+              "latitude",
+              "longitude",
+              "pays",
+            ],
+          },
+        ],
+      },
+
+      {
+        key: "relations",
+        label: "Relations",
+        fields: [
+          "proprietaireId",
+          "contratId",
+        ],
+        sections: [
+          {
+            key: "relations_section",
+            title: "Relations",
+            fields: [
+              "proprietaireId",
+              "contratId",
+            ],
+          },
+        ],
+      },
+
+      {
+        key: "description",
+        label: "Description",
+        fields: [
+          "description",
+        ],
+        sections: [
+          {
+            key: "description_section",
+            title: "Description",
+            fields: [
+              "description",
+            ],
+          },
         ],
       },
     ],

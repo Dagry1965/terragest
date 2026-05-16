@@ -48,11 +48,11 @@ export const AuditTable =
             </th>
 
             <th className="p-4 text-left">
-              EntitÃ©
+              Entité
             </th>
 
             <th className="p-4 text-left">
-              SÃ©vÃ©ritÃ©
+              Sévérité
             </th>
 
             <th className="p-4 text-left">

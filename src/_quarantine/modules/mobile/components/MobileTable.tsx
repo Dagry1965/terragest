@@ -19,7 +19,7 @@ export function MobileTable() {
   if (!data || data.length === 0) {
     return (
       <div className="p-4">
-        Aucune donnÃ©e.
+        Aucune donnée.
       </div>
     );
   }

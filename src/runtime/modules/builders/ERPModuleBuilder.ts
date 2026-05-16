@@ -1,7 +1,6 @@
 import type { ERPModule } from "../ERPModule";
 import type { ERPModuleField } from "../schemas/ERPModuleSchema";
 
-
 export interface ERPTableDefinition {
   module?: string;
   collection: string;
@@ -39,8 +38,15 @@ export class ERPModuleBuilder {
       module: module.metadata.key,
       collection: module.schema.collection,
       columns: module.schema.fields
-      .filter((field: ERPModuleField) => field.visibleInList !== false)
-.map((field: ERPModuleField) => ({
+        // === NOUVELLE CONDITION DEMANDÉE ===
+        .filter((field: ERPModuleField) => field.list?.visible !== false)
+        // === TRI PAR POSITION (field.list?.order) ===
+        .sort((a, b) => {
+          const orderA = a.list?.order ?? 9999;
+          const orderB = b.list?.order ?? 9999;
+          return orderA - orderB;
+        })
+        .map((field: ERPModuleField) => ({
           key: field.key,
           label: field.label,
           sortable: field.sortable,

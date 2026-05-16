@@ -29,12 +29,12 @@ export const terrainsSeedV2 = [
       "Bonoua",
 
     region:
-      "Sud-ComoÃ©",
+      "Sud-Comoé",
 
     pays:
-      "CÃ´te d'Ivoire",
+      "Côte d'Ivoire",
 
     statutTerrain:
-      "ExploitÃ©",
+      "Exploité",
   },
 ];

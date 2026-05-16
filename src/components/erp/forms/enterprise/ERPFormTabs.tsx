@@ -17,12 +17,14 @@ interface ERPFormTabsProps {
   module: ERPModule;
   initialData?: Record<string, unknown>;
   formValues?: Record<string, unknown>;
+  onFieldChange?: (key: string, value: unknown) => void;
 }
 
 export function ERPFormTabs({
   module,
   initialData = {},
   formValues = {},
+  onFieldChange,
 }: ERPFormTabsProps) {
   const [activeTab, setActiveTab] =
     useState(
@@ -59,7 +61,7 @@ export function ERPFormTabs({
     );
 
   return (
-    <div className="space-y-6">
+  <div className="space-y-6">
       <div className="flex flex-wrap gap-3 border-b border-slate-200 pb-4">
         {tabs.map((tab) => {
           const active =
@@ -95,7 +97,7 @@ export function ERPFormTabs({
       <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
 
         {activeTabConfig?.sections?.length ? (
-          <div className="space-y-8">
+  <div className="grid grid-cols-12 gap-6">
             {activeTabConfig.sections.map((section) => {
 
               // -----------------------------------------------------
@@ -133,16 +135,22 @@ export function ERPFormTabs({
               }
 
               return (
-                <section
-                  key={section.key}
-                  className="
-                    rounded-3xl
-                    border
-                    border-slate-200
-                    bg-slate-50
-                    p-6
-                  "
-                >
+         <section
+  key={section.key}
+  className={`
+    col-span-12
+    ${
+      (section as { grid?: { cols?: number } }).grid?.cols
+        ? `xl:col-span-${(section as { grid?: { cols?: number } }).grid?.cols}`
+        : ""
+    }
+    rounded-3xl
+    border
+    border-slate-200
+    bg-slate-50
+    p-6
+  `}
+>
                   <div className="mb-6">
                     <h3 className="text-lg font-black text-slate-900">
                       {section.title}
@@ -157,13 +165,12 @@ export function ERPFormTabs({
 
                   <div className="grid grid-cols-12 gap-6">
                     {sectionFields.map((field) => (
-                      <ERPFormField
-                        key={field.key}
-                        field={field}
-                        initialValue={
-                          initialData[field.key]
-                        }
-                      />
+                   <ERPFormField
+  key={field.key}
+  field={field}
+  value={formValues[field.key]}
+  onChange={onFieldChange}
+/>
                     ))}
                   </div>
                 </section>
@@ -174,12 +181,11 @@ export function ERPFormTabs({
           <div className="grid grid-cols-12 gap-6">
             {visibleFields.map((field) => (
               <ERPFormField
-                key={field.key}
-                field={field}
-                initialValue={
-                  initialData[field.key]
-                }
-              />
+  key={field.key}
+  field={field}
+  value={formValues[field.key]}
+  onChange={onFieldChange}
+/>
             ))}
           </div>
         )}

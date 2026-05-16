@@ -1,8 +1,8 @@
 const activities = [
-  "Ajout dâ€™un nouveau produit",
-  "Mise Ã  jour du stock",
-  "CrÃ©ation dâ€™une exploitation",
-  "Maintenance matÃ©riel",
+  "Ajout d'un nouveau produit",
+  "Mise à jour du stock",
+  "Création d'une exploitation",
+  "Maintenance matériel",
 ];
 
 export const RecentActivities =
@@ -25,7 +25,7 @@ export const RecentActivities =
           mb-4
         "
       >
-        ActivitÃ©s RÃ©centes
+        Activités Récentes
       </h3>
 
       <div className="space-y-3">

@@ -129,7 +129,7 @@ function AcceptInvitationClient({
               p-4
             "
           >
-            Invitation acceptÃ©e
+            Invitation acceptée
           </div>
 
         ) : (

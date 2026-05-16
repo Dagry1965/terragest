@@ -5,13 +5,13 @@ const ALERTS = [
   {
     level: "critical",
     message:
-      "Stock critique dÃ©tectÃ©",
+      "Stock critique détecté",
   },
 
   {
     level: "warning",
     message:
-      "MÃ©tÃ©o dÃ©favorable",
+      "Météo défavorable",
   },
 
   {

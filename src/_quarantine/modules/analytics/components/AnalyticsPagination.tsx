@@ -24,7 +24,7 @@ export function AnalyticsPagination({
           onPageChange(page - 1)
         }
       >
-        PrÃ©cÃ©dent
+        Précédent
       </button>
 
       <span>

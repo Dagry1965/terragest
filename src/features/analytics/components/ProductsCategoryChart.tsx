@@ -73,7 +73,7 @@ export const ProductsCategoryChart =
           mb-6
         "
       >
-        CatÃ©gories Produits
+        Catégories Produits
       </h3>
 <ResponsiveContainer width="100%" height={280}>
         <PieChart>

@@ -65,7 +65,7 @@ export const AlertService = {
               `${product.id}-value`,
             level: "critical",
             title:
-              "Valeur Ã©levÃ©e",
+              "Valeur élevée",
             description:
               `${product.nom} forte valeur`,
           });

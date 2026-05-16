@@ -17,7 +17,7 @@ export function FacturesBulkActions({
   return (
     <div className="flex items-center gap-2 p-4 border-b bg-gray-50">
       <span>
-        {selectedIds.length} sÃ©lectionnÃ©(s)
+        {selectedIds.length} sélectionné(s)
       </span>
 
       <button

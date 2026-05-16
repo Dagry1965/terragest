@@ -73,7 +73,7 @@ export const OfflineStatusCard =
               font-semibold
             "
           >
-            Statut rÃ©seau
+            Statut réseau
           </h2>
 
           <p

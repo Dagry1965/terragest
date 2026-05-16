@@ -17,7 +17,7 @@ const items = [
 
   "Produits",
 
-  "MatÃ©riels",
+  "Matériels",
 
   "Interventions",
 

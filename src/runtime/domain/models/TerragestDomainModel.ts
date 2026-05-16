@@ -1,7 +1,7 @@
 export const TerragestDomainModel = {
   utilisateurs: {
     label: "Utilisateurs",
-    description: "Personnes qui possÃ¨dent, gÃ¨rent ou interviennent dans le systÃ¨me.",
+    description: "Personnes qui possèdent, gèrent ou interviennent dans le système.",
     relations: [
       "proprietaireTerrains",
       "responsableExploitations",
@@ -19,7 +19,7 @@ export const TerragestDomainModel = {
 
   terrains: {
     label: "Terrains",
-    description: "Base fonciÃ¨re sur laquelle les exploitations sont rattachÃ©es.",
+    description: "Base foncière sur laquelle les exploitations sont rattachées.",
     relations: [
       "proprietaireId",
       "contratsFonciers",
@@ -41,7 +41,7 @@ export const TerragestDomainModel = {
 
   contratsFonciers: {
     label: "Contrats fonciers",
-    description: "Contrats liÃ©s aux terrains.",
+    description: "Contrats liés aux terrains.",
     relations: [
       "terrainId",
       "documents",
@@ -61,7 +61,7 @@ export const TerragestDomainModel = {
 
   exploitations: {
     label: "Exploitations",
-    description: "UnitÃ© opÃ©rationnelle vivante portant une activitÃ© agricole, animale, piscicole ou immobiliÃ¨re.",
+    description: "Unité opérationnelle vivante portant une activité agricole, animale, piscicole ou immobilière.",
     relations: [
       "terrainId",
       "responsableId",
@@ -114,7 +114,7 @@ export const TerragestDomainModel = {
 
   campagnes: {
     label: "Campagnes",
-    description: "Cycle d'activitÃ© d'une exploitation sur une pÃ©riode donnÃ©e.",
+    description: "Cycle d'activité d'une exploitation sur une période donnée.",
     relations: [
       "exploitationId",
       "terrainId",
@@ -147,7 +147,7 @@ export const TerragestDomainModel = {
 
   produits: {
     label: "Produits et ressources",
-    description: "Ce qui est utilisÃ©, produit, consommÃ© ou vendu.",
+    description: "Ce qui est utilisé, produit, consommé ou vendu.",
     relations: [
       "stocks",
       "campagnes",
@@ -166,7 +166,7 @@ export const TerragestDomainModel = {
 
   stocks: {
     label: "Stocks",
-    description: "QuantitÃ©s disponibles par produit, exploitation et campagne.",
+    description: "Quantités disponibles par produit, exploitation et campagne.",
     relations: [
       "produitId",
       "exploitationId",
@@ -186,7 +186,7 @@ export const TerragestDomainModel = {
 
   mouvementsStock: {
     label: "Mouvements de stock",
-    description: "EntrÃ©es, sorties, consommations, ventes, pertes et ajustements.",
+    description: "Entrées, sorties, consommations, ventes, pertes et ajustements.",
     relations: [
       "stockId",
       "produitId",
@@ -205,8 +205,8 @@ export const TerragestDomainModel = {
   },
 
   operations: {
-    label: "OpÃ©rations et interventions",
-    description: "Actions rÃ©alisÃ©es sur une exploitation, une campagne, un matÃ©riel ou un bien.",
+    label: "Opérations et interventions",
+    description: "Actions réalisées sur une exploitation, une campagne, un matériel ou un bien.",
     relations: [
       "exploitationId",
       "campagneId",
@@ -225,8 +225,8 @@ export const TerragestDomainModel = {
   },
 
   materiels: {
-    label: "MatÃ©riels",
-    description: "Ã‰quipements utilisÃ©s dans les opÃ©rations.",
+    label: "Matériels",
+    description: "Ã‰quipements utilisés dans les opérations.",
     relations: [
       "exploitationId",
       "operations",
@@ -245,7 +245,7 @@ export const TerragestDomainModel = {
 
   maintenance: {
     label: "Maintenance",
-    description: "Suivi des maintenances matÃ©riels, biens et infrastructures.",
+    description: "Suivi des maintenances matériels, biens et infrastructures.",
     relations: [
       "materielId",
       "bienId",
@@ -286,7 +286,7 @@ export const TerragestDomainModel = {
 
   paiements: {
     label: "Paiements",
-    description: "Flux financiers liÃ©s aux ventes, dÃ©penses, contrats, campagnes et opÃ©rations.",
+    description: "Flux financiers liés aux ventes, dépenses, contrats, campagnes et opérations.",
     relations: [
       "venteId",
       "campagneId",
@@ -308,7 +308,7 @@ export const TerragestDomainModel = {
 
   biensImmobiliers: {
     label: "Biens immobiliers",
-    description: "Maisons, appartements, magasins ou immeubles exploitÃ©s.",
+    description: "Maisons, appartements, magasins ou immeubles exploités.",
     relations: [
       "exploitationId",
       "contratsLocatifs",

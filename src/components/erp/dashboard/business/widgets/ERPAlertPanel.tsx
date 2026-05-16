@@ -33,7 +33,7 @@ export function ERPAlertPanel({
             text-slate-950
           "
         >
-          Alertes mÃ©tier
+          Alertes métier
         </h2>
 
         <p
@@ -43,7 +43,7 @@ export function ERPAlertPanel({
             text-slate-500
           "
         >
-          Aucune alerte dÃ©tectÃ©e.
+          Aucune alerte détectée.
         </p>
       </div>
     );
@@ -68,7 +68,7 @@ export function ERPAlertPanel({
           text-slate-950
         "
       >
-        Alertes mÃ©tier
+        Alertes métier
       </h2>
 
       <div

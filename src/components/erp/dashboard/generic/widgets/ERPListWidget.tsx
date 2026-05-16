@@ -45,7 +45,7 @@ export function ERPListWidget({
               text-slate-500
             "
           >
-            Aucune donnÃ©e.
+            Aucune donnée.
           </p>
 
         ) : (
