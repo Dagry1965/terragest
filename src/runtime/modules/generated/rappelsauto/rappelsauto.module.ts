@@ -57,7 +57,7 @@ export const rappelsautoModule: ERPModule = {
           { label: "Marketing", value: "marketing" },
           { label: "Autre", value: "autre" },
         ],
-        list: { order: 3 },
+        list: { order: 6 },
         grid: { cols: 6 },
       },
       {
@@ -65,7 +65,7 @@ export const rappelsautoModule: ERPModule = {
         label: "Date rappel",
         type: "date",
         required: true,
-        list: { order: 4 },
+        list: { order: 6 },
         grid: { cols: 6 },
       },
       {
@@ -99,7 +99,7 @@ export const rappelsautoModule: ERPModule = {
           { label: "Échoué", value: "echoue" },
           { label: "Annulé", value: "annule" },
         ],
-        list: { order: 5 },
+        list: { order: 6 },
         grid: { cols: 6 },
       },
     ],
