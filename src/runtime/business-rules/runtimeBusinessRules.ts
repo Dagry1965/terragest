@@ -234,4 +234,100 @@ export const runtimeBusinessRules:
     }
 
 },
+
+// =====================================================
+// AMARKHYS
+// RDV CONFIRME -> INTERVENTION
+// =====================================================
+
+{
+
+  id:
+    "amarkhys-rdv-create-intervention",
+
+  module:
+    "rendezvous",
+
+  event:
+    "rendezvous.updated",
+
+  condition:
+    (payload) =>
+
+      payload.statut ===
+        "confirme",
+
+  action:
+    async (payload) => {
+
+      const interventionsModule =
+
+        coreERPModules.find(
+
+          module =>
+
+            module.metadata.key ===
+              "interventionsauto"
+
+        );
+
+      if (
+        !interventionsModule
+      ) {
+
+        return;
+      }
+
+      await RuntimeDataBinding
+        .create(
+
+          interventionsModule,
+
+          {
+
+            clientId:
+              payload.clientId,
+
+            vehiculeId:
+              payload.vehiculeId,
+
+            rendezVousId:
+              payload.id,
+
+            typeIntervention:
+              payload.typeService,
+
+            dateIntervention:
+              payload.dateRendezVous,
+
+            statut:
+              "ouverte"
+
+          }
+
+        );
+
+      await RuntimeNotificationEngine
+        .notify({
+
+          type:
+            "amarkhys.intervention",
+
+          module:
+            "interventionsauto",
+
+          title:
+            "Intervention créée",
+
+          message:
+            "Intervention créée depuis RDV confirmé",
+
+          severity:
+            "info"
+
+        });
+
+    }
+
+},
 ];
