@@ -1,4 +1,4 @@
-import type { ERPModule } from "@/runtime/modules";
+import type { ERPModule } from "@/runtime/modules/ERPModule";
 
 import {
   RuntimeComputedEngine,
@@ -11,6 +11,39 @@ import {
 import {
   FirestoreRuntimeRepository,
 } from "./FirestoreRuntimeRepository";
+
+import {
+  ERPSessionContext,
+} from "@/runtime/security/sessions/ERPSessionContext";
+
+function applyRuntimeIsolation(
+  module: ERPModule,
+  data: Record<string, unknown>
+) {
+  const session =
+    ERPSessionContext.current();
+
+  return {
+    ...data,
+
+    tenantId:
+      data.tenantId ??
+      session.tenantId ??
+      "default",
+
+    workspace:
+      data.workspace ??
+      module.metadata.category ??
+      "general",
+
+    moduleKey:
+      module.metadata.key,
+
+    userId:
+      data.userId ??
+      session.userId,
+  };
+}
 
 function applyComputedFields(
   module: ERPModule,
@@ -43,10 +76,16 @@ export class FirestoreRuntimeMutation {
     module: ERPModule,
     data: Record<string, unknown>
   ) {
+    const isolatedData =
+      applyRuntimeIsolation(
+        module,
+        data
+      );
+
     const computedData =
       applyComputedFields(
         module,
-        data
+        isolatedData
       );
 
     const result =
@@ -71,10 +110,16 @@ export class FirestoreRuntimeMutation {
     id: string,
     data: Record<string, unknown>
   ) {
+    const isolatedData =
+      applyRuntimeIsolation(
+        module,
+        data
+      );
+
     const computedData =
       applyComputedFields(
         module,
-        data
+        isolatedData
       );
 
     const result =
