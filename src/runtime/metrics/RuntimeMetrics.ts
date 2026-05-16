@@ -1,7 +1,10 @@
 import {
   LiveMetricsStream,
-}
-from "@/runtime/realtime/metrics/LiveMetricsStream";
+} from "@/runtime/realtime/metrics/LiveMetricsStream";
+
+import {
+  RuntimeMetricAlertEvaluator,
+} from "@/runtime/observability/RuntimeMetricAlertEvaluator";
 
 export type RuntimeMetricType =
   | "counter"
@@ -51,6 +54,12 @@ export class RuntimeMetrics {
         ...metric.metadata,
       },
     });
+
+    // Évaluation des alertes en temps réel juste après la publication
+    RuntimeMetricAlertEvaluator
+      .evaluate(
+        metric
+      );
 
     return metric;
   }
