@@ -8,6 +8,14 @@ import {
 }
 from "@/runtime/notifications/RuntimeNotificationEngine";
 
+import { RuntimeDataBinding }
+from "@/runtime/data-binding";
+
+import {
+  coreERPModules
+}
+from "@/runtime/modules/definitions/coreModules";
+
 export const runtimeBusinessRules:
   RuntimeBusinessRule[] = [
 
@@ -98,4 +106,132 @@ export const runtimeBusinessRules:
           });
       },
   },
+// =====================================================
+// AMARKHYS - VIDANGE -> RAPPEL
+// =====================================================
+
+{
+
+  id:
+    "amarkhys-vidange-reminder",
+
+  module:
+    "interventionsauto",
+
+  event:
+    "interventionsauto.created",
+
+  condition:
+    (payload) =>
+
+      payload.typeIntervention ===
+        "vidange"
+
+      &&
+
+      payload.kilometrage,
+
+  action:
+    async (payload) => {
+
+      const rappelsModule =
+        coreERPModules.find(
+
+          module =>
+
+            module.metadata.key ===
+              "rappelsauto"
+
+        );
+
+      if (
+        !rappelsModule
+      ) {
+
+        return;
+      }
+
+      const prochainKm =
+
+        Number(
+          payload.kilometrage
+        )
+
+        +
+
+        5000;
+
+      await RuntimeDataBinding
+        .create(
+
+          rappelsModule,
+
+          {
+
+            clientId:
+              payload.clientId,
+
+            vehiculeId:
+              payload.vehiculeId,
+
+            typeRappel:
+              "vidange",
+
+            canal:
+              "notification",
+
+            statut:
+              "planifie",
+
+            dateRappel:
+              new Date(
+
+                Date.now()
+
+                +
+
+                1000
+                *
+                60
+                *
+                60
+                *
+                24
+                *
+                180
+
+              ),
+
+            message:
+
+              `Vidange prévue vers ${prochainKm} km`
+
+          }
+
+        );
+
+      await RuntimeNotificationEngine
+        .notify({
+
+          type:
+            "amarkhys.vidange",
+
+          module:
+            "interventionsauto",
+
+          title:
+            "Rappel vidange créé",
+
+          message:
+
+            `Rappel automatique créé pour ${prochainKm} km`,
+
+          severity:
+            "info"
+
+        });
+
+    }
+
+},
 ];

@@ -4,15 +4,30 @@ import {
   FirestoreRuntimeRepository,
 } from "./FirestoreRuntimeRepository";
 
+import {
+  runtimeEventBus,
+} from "@/runtime/events/RuntimeEventBus";
+
 export class FirestoreRuntimeMutation {
   static async create(
     module: ERPModule,
     data: Record<string, unknown>
   ) {
-    return FirestoreRuntimeRepository.create(
-      module,
-      data
+    const result =
+      await FirestoreRuntimeRepository.create(
+        module,
+        data
+      );
+
+    await runtimeEventBus.emit(
+      `${module.metadata.key}.created`,
+      {
+        ...data,
+        result,
+      }
     );
+
+    return result;
   }
 
   static async update(
@@ -20,20 +35,43 @@ export class FirestoreRuntimeMutation {
     id: string,
     data: Record<string, unknown>
   ) {
-    return FirestoreRuntimeRepository.update(
-      module,
-      id,
-      data
+    const result =
+      await FirestoreRuntimeRepository.update(
+        module,
+        id,
+        data
+      );
+
+    await runtimeEventBus.emit(
+      `${module.metadata.key}.updated`,
+      {
+        id,
+        ...data,
+        result,
+      }
     );
+
+    return result;
   }
 
   static async delete(
     module: ERPModule,
     id: string
   ) {
-    return FirestoreRuntimeRepository.delete(
-      module,
-      id
+    const result =
+      await FirestoreRuntimeRepository.delete(
+        module,
+        id
+      );
+
+    await runtimeEventBus.emit(
+      `${module.metadata.key}.deleted`,
+      {
+        id,
+        result,
+      }
     );
+
+    return result;
   }
 }
