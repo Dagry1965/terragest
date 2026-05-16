@@ -94,14 +94,41 @@ export function ERPEnterpriseForm({
   const [errors, setErrors] =
     useState<RuntimeValidationError[]>([]);
 
-  const [formValues, setFormValues] =
-    useState<Record<string, unknown>>({
-      ...initialData,
-      ...queryValues,
-    });
-
   const form =
     ERPModuleBuilder.buildForm(module);
+
+  function resolveInitialFormValues() {
+    const defaultValues =
+      Object.fromEntries(
+        form.fields
+          .filter(
+            (field) =>
+              field.defaultValue !== undefined
+          )
+          .map((field) => [
+            field.key,
+            field.defaultValue,
+          ])
+      );
+
+    if (mode === "create") {
+      return {
+        ...defaultValues,
+        ...initialData,
+        ...queryValues,
+      };
+    }
+
+    return {
+      ...initialData,
+      ...queryValues,
+    };
+  }
+
+  const [formValues, setFormValues] =
+    useState<Record<string, unknown>>(
+      () => resolveInitialFormValues()
+    );
 
   const currentUserRole = "admin";
 
