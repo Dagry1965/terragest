@@ -32,12 +32,6 @@ export const coreERPModules: ERPModule[] = [
   campagnesModule,
   budgetsModule,
   createBusinessModule({
-    key: "utilisateurs",
-    label: "Utilisateurs",
-    fields: utilisateurFields,
-  }),
-
-  createBusinessModule({
     key: "fournisseurs",
     label: "Fournisseurs",
     fields: fournisseurFields,
@@ -196,7 +190,41 @@ function mergeERPModules(
   return Array.from(map.values());
 }
 
-export const allERPModules: ERPModule[] = mergeERPModules(
+const mergedERPModules: ERPModule[] = mergeERPModules(
   coreERPModules,
   generatedERPModules
 );
+
+const preferredERPModules =
+  new Map<string, ERPModule>();
+
+for (const module of mergedERPModules) {
+  preferredERPModules.set(
+    module.metadata.key,
+    module
+  );
+}
+
+/**
+ * AMARKHYS modules must win over older generic modules.
+ */
+[
+  clientsautoModule,
+  vehiculesModule,
+  rendezvousModule,
+  interventionsautoModule,
+  facturesautoModule,
+  produitsautoModule,
+  stocksautoModule,
+  rappelsautoModule,
+].forEach((module) => {
+  preferredERPModules.set(
+    module.metadata.key,
+    module
+  );
+});
+
+export const allERPModules: ERPModule[] =
+  Array.from(
+    preferredERPModules.values()
+  );
