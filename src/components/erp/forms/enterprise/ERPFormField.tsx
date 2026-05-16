@@ -32,6 +32,74 @@ const gridClassMap: Record<number, string> = {
   12: "xl:col-span-12",
 };
 
+function normalizeFormFieldValue(
+  field: ERPModuleField,
+  value: unknown
+): string {
+  if (
+    value === null ||
+    value === undefined
+  ) {
+    return "";
+  }
+
+  if (
+    field.type === "date" ||
+    field.type === "datetime"
+  ) {
+    if (
+      typeof value === "object" &&
+      value &&
+      "seconds" in value
+    ) {
+      const seconds =
+        Number(
+          (value as { seconds: number }).seconds
+        );
+
+      const date =
+        new Date(seconds * 1000);
+
+      if (Number.isNaN(date.getTime())) {
+        return "";
+      }
+
+      if (field.type === "datetime") {
+        return date.toISOString().slice(0, 16);
+      }
+
+      return date.toISOString().slice(0, 10);
+    }
+
+    if (value instanceof Date) {
+      if (field.type === "datetime") {
+        return value.toISOString().slice(0, 16);
+      }
+
+      return value.toISOString().slice(0, 10);
+    }
+
+    const date =
+      new Date(String(value));
+
+    if (!Number.isNaN(date.getTime())) {
+      if (field.type === "datetime") {
+        return date.toISOString().slice(0, 16);
+      }
+
+      return date.toISOString().slice(0, 10);
+    }
+
+    return String(value);
+  }
+
+  if (typeof value === "object") {
+    return "";
+  }
+
+  return String(value);
+}
+
 function FieldWrapper({
   field,
   children,
@@ -68,7 +136,7 @@ export function ERPFormField({
   const [relationOptions, setRelationOptions] = useState<RelationOption[]>([]);
   const [relationSearch, setRelationSearch] = useState("");
 
-  const currentValue = String(value ?? "");
+  const currentValue = normalizeFormFieldValue(field, value);
 
   const lockedFields =
     typeof window === "undefined"
