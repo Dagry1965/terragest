@@ -1,28 +1,64 @@
 import type { ERPModule } from "@/runtime/modules";
 
 import {
-  FirestoreRuntimeRepository,
-} from "./FirestoreRuntimeRepository";
+  RuntimeComputedEngine,
+} from "@/runtime/computed/RuntimeComputedEngine";
 
 import {
   runtimeEventBus,
 } from "@/runtime/events/RuntimeEventBus";
+
+import {
+  FirestoreRuntimeRepository,
+} from "./FirestoreRuntimeRepository";
+
+function applyComputedFields(
+  module: ERPModule,
+  data: Record<string, unknown>
+) {
+  const nextData = {
+    ...data,
+  };
+
+  for (const field of module.schema.fields) {
+    if (!field.computed) {
+      continue;
+    }
+
+    const computedValue =
+      RuntimeComputedEngine.compute(
+        field.computed.formula,
+        nextData
+      );
+
+    nextData[field.key] =
+      computedValue;
+  }
+
+  return nextData;
+}
 
 export class FirestoreRuntimeMutation {
   static async create(
     module: ERPModule,
     data: Record<string, unknown>
   ) {
+    const computedData =
+      applyComputedFields(
+        module,
+        data
+      );
+
     const result =
       await FirestoreRuntimeRepository.create(
         module,
-        data
+        computedData
       );
 
     await runtimeEventBus.emit(
       `${module.metadata.key}.created`,
       {
-        ...data,
+        ...computedData,
         result,
       }
     );
@@ -35,18 +71,24 @@ export class FirestoreRuntimeMutation {
     id: string,
     data: Record<string, unknown>
   ) {
+    const computedData =
+      applyComputedFields(
+        module,
+        data
+      );
+
     const result =
       await FirestoreRuntimeRepository.update(
         module,
         id,
-        data
+        computedData
       );
 
     await runtimeEventBus.emit(
       `${module.metadata.key}.updated`,
       {
         id,
-        ...data,
+        ...computedData,
         result,
       }
     );
