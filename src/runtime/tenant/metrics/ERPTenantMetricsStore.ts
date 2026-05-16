@@ -2,15 +2,18 @@ import type {
   ERPTenantMetrics,
 } from "./ERPTenantMetrics";
 
+import {
+  ERPTenantRegistry,
+} from "../registry/ERPTenantRegistry";
+
+import {
+  ERPTenantQuotaEvaluator,
+} from "./ERPTenantQuotaEvaluator";
+
 class ERPTenantMetricsStoreClass {
+  private metrics: ERPTenantMetrics[] = [];
 
-  private metrics:
-    ERPTenantMetrics[] = [];
-
-  set(
-    metrics: ERPTenantMetrics
-  ) {
-
+  set(metrics: ERPTenantMetrics) {
     const exists =
       this.metrics.some(
         (item) =>
@@ -18,7 +21,6 @@ class ERPTenantMetricsStoreClass {
       );
 
     if (exists) {
-
       this.metrics =
         this.metrics.map(
           (item) =>
@@ -26,22 +28,27 @@ class ERPTenantMetricsStoreClass {
               ? metrics
               : item
         );
-
-      return;
+    } else {
+      this.metrics.push(metrics);
     }
 
-    this.metrics.push(metrics);
+    const tenant =
+      ERPTenantRegistry.find(
+        (item) =>
+          item.id === metrics.tenantId
+      );
+
+    ERPTenantQuotaEvaluator.evaluate(
+      metrics,
+      tenant?.plan ?? "starter"
+    );
   }
 
   all() {
-
     return this.metrics;
   }
 
-  byTenant(
-    tenantId: string
-  ) {
-
+  byTenant(tenantId: string) {
     return this.metrics.find(
       (item) =>
         item.tenantId === tenantId
