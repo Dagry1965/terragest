@@ -637,6 +637,21 @@ router.push(
     );
   }
 
+  const primitiveInputType =
+    field.type === "text"
+      ? "text"
+      : field.type === "number"
+        ? "number"
+        : field.type === "date"
+          ? "date"
+          : field.type === "datetime"
+            ? "datetime-local"
+            : field.type === "email"
+              ? "email"
+              : field.type === "phone"
+                ? "tel"
+                : "text";
+
   return (
     <FieldWrapper field={field}>
       <label className="block space-y-2">
@@ -646,20 +661,11 @@ router.push(
           name={field.key}
           required={field.required}
           value={currentValue}
+          disabled={isLocked}
           onChange={(event) => onChange?.(field.key, event.target.value)}
-          type={
-            field.type === "number"
-              ? "number"
-              : field.type === "date"
-              ? "date"
-              : field.type === "email"
-              ? "email"
-              : field.type === "phone"
-              ? "tel"
-              : "text"
-          }
+          type={primitiveInputType}
           placeholder={field.placeholder ?? field.label}
-          className={className}
+          className={isLocked ? lockedClassName : className}
         />
       </label>
     </FieldWrapper>
