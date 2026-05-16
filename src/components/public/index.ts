@@ -5,3 +5,5 @@ export * from "./PublicLayout";
 export * from "./PublicSection";
 export * from "./PublicServices";
 export * from "./PublicWhy";
+export * from "./PublicCTA";
+export * from "./PublicContact";

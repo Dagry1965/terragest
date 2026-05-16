@@ -1,15 +1,11 @@
 import {
-
- PublicHero,
-
- PublicLayout,
-
- PublicServices,
-
- PublicWhy,
-
-}
-from "@/components/public";
+  PublicHero,
+  PublicLayout,
+  PublicServices,
+  PublicWhy,
+  PublicCTA,
+  PublicContact,
+} from "@/components/public";
 
 export default
 function HomePage(){
@@ -23,8 +19,9 @@ function HomePage(){
    <PublicServices/>
 
    <PublicWhy/>
-
+<PublicContact/>
   </PublicLayout>
+
 
  );
 
