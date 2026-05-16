@@ -22,6 +22,21 @@ import {
   RuntimeDataBinding,
 } from "@/runtime/data-binding/RuntimeDataBinding";
 
+function getRuntimePageTypeLabel(type: string): string {
+  switch (type) {
+    case "list":
+      return "liste";
+    case "create":
+      return "création";
+    case "edit":
+      return "modification";
+    case "detail":
+      return "fiche";
+    default:
+      return type;
+  }
+}
+
 interface ERPRuntimePageProps {
   title?: string;
   description?: string;
@@ -85,15 +100,17 @@ export function ERPRuntimePage({
     module?.metadata?.description;
 
   const resolvedTitle =
-    title ?? `${moduleLabel} â€” ${type}`;
+    title ?? `${moduleLabel} — ${getRuntimePageTypeLabel(type)}`;
 
   const runtimeActions =
-    RuntimeActionEngine.getAvailableActions({
-      actions: module?.actions ?? [],
-      userPermissions: ["*"],
-      workflow: module?.workflows?.[0],
-      record,
-    });
+    type === "detail" && record
+      ? RuntimeActionEngine.getAvailableActions({
+          actions: module?.actions ?? [],
+          userPermissions: ["*"],
+          workflow: module?.workflows?.[0],
+          record,
+        })
+      : [];
 
   return (
     <ERPPage
@@ -101,11 +118,11 @@ export function ERPRuntimePage({
       description={
         description ??
         moduleDescription ??
-        "Page gÃ©nÃ©rÃ©e automatiquement par le Runtime ERP."
+        "Page générée automatiquement par le Runtime ERP."
       }
     >
       <div className="space-y-6">
-        {runtimeActions.length > 0 && (
+        {type !== "list" && runtimeActions.length > 0 && (
           <div className="flex flex-wrap gap-3">
             {runtimeActions.map((action) => (
               <button
@@ -142,7 +159,7 @@ export function ERPRuntimePage({
 
         {loading && type === "list" ? (
           <div className="rounded-2xl border border-slate-200 bg-white p-4 text-sm text-slate-500">
-            Chargement des donnÃ©es...
+            Chargement des données...
           </div>
         ) : null}
 
@@ -190,7 +207,7 @@ export function ERPRuntimePage({
         {!module && (
           <ERPEmptyState
             title="Module introuvable"
-            description="Aucun module runtime n'a Ã©tÃ© trouvÃ©."
+            description="Aucun module runtime n'a été trouvé."
           />
         )}
       </div>

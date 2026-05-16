@@ -1,6 +1,7 @@
 "use client";
 
-import Link from "next/link";
+import { useRouter } from "next/navigation";
+
 import { ERPBadge } from "@/components/erp/ui";
 import type { ERPModule } from "@/runtime/modules";
 import { ERPModuleBuilder } from "@/runtime/modules";
@@ -13,10 +14,30 @@ interface ERPRuntimeTableProps {
   data?: Record<string, unknown>[];
 }
 
+function getModuleItemLabel(
+  module: ERPModule,
+  total: number
+) {
+  const label =
+    module.metadata.label
+      .toLowerCase()
+      .trim();
+
+  if (total <= 1) {
+    return label.endsWith("s")
+      ? label.slice(0, -1)
+      : label;
+  }
+
+  return label;
+}
+
 export function ERPRuntimeTable({
   module,
   data,
 }: ERPRuntimeTableProps) {
+  const router = useRouter();
+
   const table =
     ERPModuleBuilder.buildTable(module);
 
@@ -29,6 +50,12 @@ export function ERPRuntimeTable({
     state,
     setState,
   } = useRuntimeTable(runtimeRows);
+
+  const itemLabel =
+    getModuleItemLabel(
+      module,
+      total
+    );
 
   const columns =
     table.columns
@@ -80,6 +107,21 @@ export function ERPRuntimeTable({
         };
       });
 
+  function openRow(
+    row: Record<string, unknown>
+  ) {
+    const id =
+      String(row.id ?? "");
+
+    if (!id) {
+      return;
+    }
+
+    router.push(
+      `/${module.metadata.key}/${id}/edit`
+    );
+  }
+
   return (
     <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
       <div className="flex flex-col gap-4 border-b border-slate-200 px-6 py-5 md:flex-row md:items-center md:justify-between">
@@ -95,11 +137,11 @@ export function ERPRuntimeTable({
 
         <div className="flex gap-2">
           <ERPBadge tone="success">
-            {total} lignes
+            {total} {itemLabel}
           </ERPBadge>
 
           <ERPBadge tone="info">
-            Synchronisé
+            Données à jour
           </ERPBadge>
         </div>
       </div>
@@ -131,10 +173,6 @@ export function ERPRuntimeTable({
                   {column.label}
                 </th>
               ))}
-
-              <th className="px-6 py-4 text-right text-xs font-black uppercase tracking-wide text-slate-500">
-                Actions
-              </th>
             </tr>
           </thead>
 
@@ -142,7 +180,7 @@ export function ERPRuntimeTable({
             {rows.length === 0 ? (
               <tr>
                 <td
-                  colSpan={columns.length + 1}
+                  colSpan={columns.length}
                   className="px-6 py-10 text-center text-sm text-slate-500"
                 >
                   Aucune donnée enregistrée pour ce module.
@@ -156,7 +194,9 @@ export function ERPRuntimeTable({
             ) => (
               <tr
                 key={String(row.id ?? index)}
-                className="transition hover:bg-blue-50/70"
+                onClick={() => openRow(row)}
+                className="cursor-pointer transition hover:bg-blue-50/70"
+                title="Cliquer pour modifier"
               >
                 {columns.map((column) => (
                   <td
@@ -166,24 +206,6 @@ export function ERPRuntimeTable({
                     {column.render(row)}
                   </td>
                 ))}
-
-                <td className="whitespace-nowrap px-6 py-4">
-                  <div className="flex justify-end gap-2">
-                    <Link
-                      href={`/${module.metadata.key}/${row.id}`}
-                      className="rounded-xl border border-slate-200 px-3 py-2 text-xs font-bold text-slate-700 hover:border-blue-400 hover:text-blue-700"
-                    >
-                      Voir
-                    </Link>
-
-                    <Link
-                      href={`/${module.metadata.key}/${row.id}/edit`}
-                      className="rounded-xl bg-slate-950 px-3 py-2 text-xs font-bold text-white hover:bg-blue-700"
-                    >
-                      Modifier
-                    </Link>
-                  </div>
-                </td>
               </tr>
             ))}
           </tbody>
@@ -192,11 +214,12 @@ export function ERPRuntimeTable({
 
       <div className="flex items-center justify-between border-t border-slate-200 px-6 py-4 text-sm text-slate-500">
         <div>
-          {total} éléments
+          {total} élément{total > 1 ? "s" : ""}
         </div>
 
         <div className="flex gap-2">
           <button
+            type="button"
             onClick={() =>
               setState((current) => ({
                 ...current,
@@ -209,6 +232,7 @@ export function ERPRuntimeTable({
           </button>
 
           <button
+            type="button"
             onClick={() =>
               setState((current) => ({
                 ...current,
