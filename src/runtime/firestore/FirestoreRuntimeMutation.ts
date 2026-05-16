@@ -16,6 +16,43 @@ import {
   ERPSessionContext,
 } from "@/runtime/security/sessions/ERPSessionContext";
 
+function sanitizeFirestoreData(
+  data: Record<string, unknown>
+): Record<string, unknown> {
+  const sanitized: Record<string, unknown> = {};
+
+  for (const [key, value] of Object.entries(data)) {
+    if (value === undefined) {
+      continue;
+    }
+
+    if (
+      value &&
+      typeof value === "object" &&
+      !Array.isArray(value) &&
+      !(value instanceof Date)
+    ) {
+      sanitized[key] = sanitizeFirestoreData(
+        value as Record<string, unknown>
+      );
+
+      continue;
+    }
+
+    if (Array.isArray(value)) {
+      sanitized[key] = value.filter(
+        (item) => item !== undefined
+      );
+
+      continue;
+    }
+
+    sanitized[key] = value;
+  }
+
+  return sanitized;
+}
+
 function applyRuntimeIsolation(
   module: ERPModule,
   data: Record<string, unknown>
@@ -23,7 +60,7 @@ function applyRuntimeIsolation(
   const session =
     ERPSessionContext.current();
 
-  return {
+  return sanitizeFirestoreData({
     ...data,
 
     tenantId:
@@ -41,8 +78,9 @@ function applyRuntimeIsolation(
 
     userId:
       data.userId ??
-      session.userId,
-  };
+      session.userId ??
+      "system",
+  });
 }
 
 function applyComputedFields(
@@ -68,7 +106,7 @@ function applyComputedFields(
       computedValue;
   }
 
-  return nextData;
+  return sanitizeFirestoreData(nextData);
 }
 
 export class FirestoreRuntimeMutation {
@@ -88,16 +126,21 @@ export class FirestoreRuntimeMutation {
         isolatedData
       );
 
+    const safeData =
+      sanitizeFirestoreData(
+        computedData
+      );
+
     const result =
       await FirestoreRuntimeRepository.create(
         module,
-        computedData
+        safeData
       );
 
     await runtimeEventBus.emit(
       `${module.metadata.key}.created`,
       {
-        ...computedData,
+        ...safeData,
         result,
       }
     );
@@ -122,18 +165,23 @@ export class FirestoreRuntimeMutation {
         isolatedData
       );
 
+    const safeData =
+      sanitizeFirestoreData(
+        computedData
+      );
+
     const result =
       await FirestoreRuntimeRepository.update(
         module,
         id,
-        computedData
+        safeData
       );
 
     await runtimeEventBus.emit(
       `${module.metadata.key}.updated`,
       {
         id,
-        ...computedData,
+        ...safeData,
         result,
       }
     );

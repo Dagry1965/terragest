@@ -1,4 +1,4 @@
-﻿import {
+import {
   RuntimeBusinessRule,
 }
 from "@/runtime/business-rules/RuntimeBusinessRule";
@@ -266,7 +266,6 @@ export const runtimeBusinessRules:
 // =====================================================
 
 {
-
   id:
     "amarkhys-rdv-create-intervention",
 
@@ -278,63 +277,103 @@ export const runtimeBusinessRules:
 
   condition:
     (payload) =>
-
       payload.statut ===
         "confirme",
 
   action:
     async (payload) => {
-
       const interventionsModule =
-
         coreERPModules.find(
-
           module =>
-
             module.metadata.key ===
               "interventionsauto"
+        );
 
+      const rendezvousModule =
+        coreERPModules.find(
+          module =>
+            module.metadata.key ===
+              "rendezvous"
         );
 
       if (
-        !interventionsModule
+        !interventionsModule ||
+        !rendezvousModule
       ) {
+        return;
+      }
+
+      const rendezvousRecord =
+        payload.id
+          ? await RuntimeDataBinding.detail(
+              rendezvousModule,
+              String(payload.id)
+            )
+          : payload;
+
+      const clientId =
+        rendezvousRecord?.clientId ??
+        payload.clientId ??
+        null;
+
+      const vehiculeId =
+        rendezvousRecord?.vehiculeId ??
+        payload.vehiculeId ??
+        null;
+
+      if (
+        !clientId ||
+        !vehiculeId
+      ) {
+        await RuntimeNotificationEngine
+          .notify({
+            type:
+              "amarkhys.intervention.skipped",
+
+            module:
+              "interventionsauto",
+
+            title:
+              "Intervention non créée",
+
+            message:
+              "Impossible de créer l'intervention : client ou véhicule manquant sur le rendez-vous.",
+
+            severity:
+              "warning",
+          });
 
         return;
       }
 
       await RuntimeDataBinding
         .create(
-
           interventionsModule,
-
           {
+            clientId,
 
-            clientId:
-              payload.clientId,
-
-            vehiculeId:
-              payload.vehiculeId,
+            vehiculeId,
 
             rendezVousId:
               payload.id,
 
             typeIntervention:
-              payload.typeService,
+              rendezvousRecord?.typeService ??
+              payload.typeService ??
+              "autre",
 
             dateIntervention:
-              payload.dateRendezVous,
+              rendezvousRecord?.dateRendezVous ??
+              payload.dateRendezVous ??
+              new Date(),
 
             statut:
               "ouverte"
-
           }
-
         );
 
       await RuntimeNotificationEngine
         .notify({
-
           type:
             "amarkhys.intervention",
 
@@ -342,20 +381,16 @@ export const runtimeBusinessRules:
             "interventionsauto",
 
           title:
-            "Intervention crÃ©Ã©e",
+            "Intervention créée",
 
           message:
-            "Intervention crÃ©Ã©e depuis RDV confirmÃ©",
+            "Intervention créée depuis RDV confirmé",
 
           severity:
             "info"
-
         });
-
     }
-
 },
-
 // =====================================================
 // INTERVENTION TERMINEE
 // -> FACTURE AUTO

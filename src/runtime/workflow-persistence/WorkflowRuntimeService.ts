@@ -1,25 +1,34 @@
 import {
   WorkflowPersistenceEngine,
-}
-from "@/runtime/workflow-persistence/WorkflowPersistenceEngine";
+} from "@/runtime/workflow-persistence/WorkflowPersistenceEngine";
 
 import {
   RuntimeWorkflowEngine,
-}
-from "@/runtime/workflows/RuntimeWorkflowEngine";
+} from "@/runtime/workflows/RuntimeWorkflowEngine";
 
 import {
   RuntimeDataBinding,
+} from "@/runtime/data-binding";
+
+function sanitizeWorkflowPayload<T extends Record<string, unknown>>(
+  payload: T
+): T {
+  const next: Record<string, unknown> = {};
+
+  for (const [key, value] of Object.entries(payload)) {
+    if (value !== undefined) {
+      next[key] = value;
+    }
+  }
+
+  return next as T;
 }
-from "@/runtime/data-binding";
 
 export class WorkflowRuntimeService {
-
   static resolveStateField(
     workflow: any,
     record: Record<string, any>
   ): string {
-
     if (workflow?.stateField) {
       return workflow.stateField;
     }
@@ -36,23 +45,14 @@ export class WorkflowRuntimeService {
   }
 
   static async executeTransition({
-
     module,
-
     workflow,
-
     entityId,
-
     record,
-
     action,
-
     user,
-
     comment,
-
   }: any) {
-
     const stateField =
       WorkflowRuntimeService.resolveStateField(
         workflow,
@@ -88,25 +88,17 @@ export class WorkflowRuntimeService {
       }
     );
 
-    await WorkflowPersistenceEngine
-      .persistTransition({
-
-        module:
-          module.metadata.key,
-
+    await WorkflowPersistenceEngine.persistTransition(
+      sanitizeWorkflowPayload({
+        module: module.metadata.key,
         entityId,
-
         fromState,
-
         toState,
-
-        action:
-          executedAction,
-
-        user,
-
-        comment,
-      });
+        action: executedAction,
+        user: user ?? "system",
+        comment: comment ?? null,
+      })
+    );
 
     return {
       success: true,
