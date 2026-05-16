@@ -1,3 +1,11 @@
+import { rappelsautoModule } from "@/runtime/modules/generated/rappelsauto";
+import { stocksautoModule } from "@/runtime/modules/generated/stocksauto";
+import { produitsautoModule } from "@/runtime/modules/generated/produitsauto";
+import { facturesautoModule } from "@/runtime/modules/generated/facturesauto";
+import { interventionsautoModule } from "@/runtime/modules/generated/interventionsauto";
+import { rendezvousModule } from "@/runtime/modules/generated/rendezvous";
+import { vehiculesModule } from "@/runtime/modules/generated/vehicules";
+import { clientsautoModule } from "@/runtime/modules/generated/clientsauto";
 import { facturationsModule } from "@/runtime/modules/generated/facturations";
 import { contratsModule } from "@/runtime/modules/definitions/generated/contrats.module";
 import { campagnesModule } from "@/runtime/modules/generated/campagnes/campagnes.module";
@@ -11,6 +19,14 @@ import {
 from "../factory";
 
 export const coreERPModules: ERPModule[] = [
+  rappelsautoModule,
+  stocksautoModule,
+  produitsautoModule,
+  facturesautoModule,
+  interventionsautoModule,
+  rendezvousModule,
+  vehiculesModule,
+  clientsautoModule,
   facturationsModule,
   contratsModule,
   campagnesModule,

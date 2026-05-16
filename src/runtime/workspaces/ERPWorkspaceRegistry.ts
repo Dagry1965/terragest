@@ -288,4 +288,118 @@ export const ERPWorkspaceRegistry:
 
     quickActions: [],
   },
+{
+  key:"amarkhys",
+
+  label:"AMARKHYS",
+
+  description:
+    "ERP automobile, atelier, CRM, stock, interventions et facturation",
+
+  defaultHref:
+    "/clientsauto",
+
+  modules:[
+
+    {
+      key:"clientsauto",
+      label:"Clients"
+    },
+
+    {
+      key:"vehicules",
+      label:"Véhicules"
+    },
+
+    {
+      key:"rendezvous",
+      label:"Rendez-vous"
+    },
+
+    {
+      key:"interventionsauto",
+      label:"Interventions"
+    },
+
+    {
+      key:"facturesauto",
+      label:"Factures"
+    },
+
+    {
+      key:"produitsauto",
+      label:"Produits"
+    },
+
+    {
+      key:"stocksauto",
+      label:"Stocks"
+    },
+
+    {
+      key:"rappelsauto",
+      label:"Rappels"
+    }
+
+  ],
+
+  kpis:[
+
+    {
+      key:"clients",
+      label:"Clients"
+    },
+
+    {
+      key:"vehicules",
+      label:"Véhicules"
+    },
+
+    {
+      key:"interventions",
+      label:"Interventions"
+    },
+
+    {
+      key:"factures",
+      label:"Factures"
+    }
+
+  ],
+
+  quickActions:[
+
+    {
+
+      key:"new-client",
+
+      label:"Nouveau client",
+
+      href:"/clientsauto/nouveau"
+
+    },
+
+    {
+
+      key:"new-rdv",
+
+      label:"Nouveau RDV",
+
+      href:"/rendezvous/nouveau"
+
+    },
+
+    {
+
+      key:"new-intervention",
+
+      label:"Nouvelle intervention",
+
+      href:"/interventionsauto/nouveau"
+
+    }
+
+  ]
+
+},
 ];

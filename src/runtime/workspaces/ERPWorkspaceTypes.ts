@@ -1,11 +1,11 @@
 export type ERPWorkspaceKey =
-  | "general"
-  | "production"
-  | "maintenance"
-  | "finance"
-  | "administration"
-  | "supervision";
-
+ | "general"
+ | "production"
+ | "maintenance"
+ | "finance"
+ | "administration"
+ | "supervision"
+ | "amarkhys";
 export type ERPWorkspaceModule = {
   key: string;
   label: string;
