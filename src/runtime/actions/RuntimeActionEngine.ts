@@ -12,8 +12,11 @@ from "@/runtime/workflow-persistence/WorkflowRuntimeService";
 
 import {
   RuntimeWorkflowEngine,
-}
-from "@/runtime/workflows/RuntimeWorkflowEngine";
+} from "@/runtime/workflows/RuntimeWorkflowEngine";
+
+import {
+  RuntimeValidationEngine,
+} from "@/runtime/validation/RuntimeValidationEngine";
 
 export class RuntimeActionEngine {
 
@@ -145,6 +148,20 @@ export class RuntimeActionEngine {
         );
 
       if (entityId) {
+
+        const validation =
+          RuntimeValidationEngine.validate(module, record);
+
+        if (validation.length > 0) {
+          return {
+            success: false,
+            message:
+              "Veuillez renseigner les champs obligatoires avant de continuer.",
+            errors: validation,
+            action,
+            record,
+          };
+        }
 
         return WorkflowRuntimeService
           .executeTransition({

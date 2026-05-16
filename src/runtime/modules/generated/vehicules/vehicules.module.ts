@@ -112,8 +112,7 @@ export const vehiculesModule: ERPModule = {
 
         type:"relation",
 
-        relation:{
-          module:"clientsauto"
+        relation: { module: "clientsauto"
         },
 
         searchable:true,

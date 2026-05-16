@@ -1,19 +1,14 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 import {
   useRouter,
   useSearchParams,
 } from "next/navigation";
 
 import type { ERPModule } from "@/runtime/modules";
-import type { ERPModuleAction } from "@/runtime/modules/ERPModule";
 import { ERPModuleBuilder } from "@/runtime/modules";
 import { RuntimeDataBinding } from "@/runtime/data-binding";
-import { RuntimeActionEngine } from "@/runtime/actions/RuntimeActionEngine";
-import {
-  RuntimeNotificationCenter,
-} from "@/runtime/notifications/RuntimeNotificationCenter";
 
 import { ERPButton } from "@/components/erp/ui";
 
@@ -62,22 +57,14 @@ interface ERPEnterpriseFormProps {
   module: ERPModule;
   mode?: "create" | "edit";
   initialData?: Record<string, unknown>;
-  workflowActions?: ERPModuleAction[];
 }
 
 export function ERPEnterpriseForm({
   module,
   mode = "create",
   initialData = {},
-  workflowActions = [],
 }: ERPEnterpriseFormProps) {
   const router = useRouter();
-
-  const formRef =
-    useRef<HTMLFormElement | null>(null);
-
-  const pendingWorkflowActionRef =
-    useRef<ERPModuleAction | null>(null);
   const searchParams = useSearchParams();
 
   const queryValues =
@@ -275,11 +262,7 @@ export function ERPEnterpriseForm({
     event.preventDefault();
     setSaving(true);
 
-    
-
-    const workflowAction =
-      pendingWorkflowActionRef.current;
-const formData =
+    const formData =
       new FormData(event.currentTarget);
 
     const payload: Record<string, unknown> = {
@@ -346,7 +329,6 @@ const formData =
     setErrors(validationErrors);
 
     if (validationErrors.length > 0) {
-      pendingWorkflowActionRef.current = null;
       setSaving(false);
       return;
     }
@@ -371,21 +353,12 @@ const formData =
     }
 
     try {
-      let savedRecord: Record<string, unknown> | null = null;
-
       if (mode === "create") {
         const created =
           await RuntimeDataBinding.create(
             module,
             preparedPayload
           );
-
-        savedRecord = {
-          ...preparedPayload,
-          ...(created && typeof created === "object"
-            ? created
-            : {}),
-        };
 
 if (
 module.metadata.key ===
@@ -422,21 +395,11 @@ preparedPayload.terrainId
           );
         }
 
-        const updated =
-          await RuntimeDataBinding.update(
-            module,
-            String(recordId),
-            preparedPayload
-          );
-
-        savedRecord = {
-          ...initialData,
-          ...preparedPayload,
-          id: String(recordId),
-          ...(updated && typeof updated === "object"
-            ? updated
-            : {}),
-        };
+        await RuntimeDataBinding.update(
+          module,
+          String(recordId),
+          preparedPayload
+        );
 
 if (
 module.metadata.key ===
@@ -462,48 +425,6 @@ preparedPayload.terrainId
         }
       }
 
-      if (workflowAction && savedRecord) {
-        const workflowResult =
-          await RuntimeActionEngine.execute({
-            module,
-            action: workflowAction,
-            record: savedRecord,
-          });
-
-        pendingWorkflowActionRef.current = null;
-
-        if (!workflowResult?.success) {
-          RuntimeNotificationCenter.workflowError({
-            module,
-            action: workflowAction,
-            record: savedRecord,
-            result: workflowResult,
-          });
-
-          setErrors([
-            {
-              field: "workflow",
-              message:
-                workflowResult && "message" in workflowResult
-                  ? String(workflowResult.message)
-                  : workflowResult && "error" in workflowResult
-                    ? String(workflowResult.error)
-                    : "Action workflow impossible.",
-            },
-          ]);
-
-          setSaving(false);
-          return;
-        }
-
-        RuntimeNotificationCenter.workflowSuccess({
-          module,
-          action: workflowAction,
-          record: savedRecord,
-          result: workflowResult,
-        });
-      }
-
       router.push(
         returnTo ??
           module.metadata.routes?.list ??
@@ -512,8 +433,6 @@ preparedPayload.terrainId
 
       router.refresh();
     } catch (error) {
-      pendingWorkflowActionRef.current = null;
-
       console.error(
         "ERP ENTERPRISE FORM ERROR",
         error
@@ -525,52 +444,9 @@ preparedPayload.terrainId
 
   return (
     <form
-      ref={formRef}
       className="space-y-8"
       onSubmit={handleSubmit}
     >
-      {mode === "edit" && workflowActions.length > 0 && (
-        <section className="rounded-3xl border border-blue-100 bg-blue-50 p-4">
-          <div className="mb-3">
-            <p className="text-xs font-black uppercase tracking-wide text-blue-700">
-              Workflow
-            </p>
-            <p className="text-sm text-blue-900">
-              Ces actions enregistrent d'abord le formulaire, puis exécutent le workflow.
-            </p>
-          </div>
-
-          <div className="flex flex-wrap gap-3">
-            {workflowActions.map((action) => (
-              <button
-                key={action.key}
-                type="button"
-                onClick={() => {
-                  pendingWorkflowActionRef.current = action;
-                  formRef.current?.requestSubmit();
-                }}
-                className={`
-                  rounded-2xl
-                  px-4
-                  py-2
-                  text-sm
-                  font-bold
-                  transition
-                  ${
-                    action.type === "danger"
-                      ? "bg-red-600 text-white hover:bg-red-700"
-                      : action.type === "secondary"
-                        ? "bg-slate-200 text-slate-900 hover:bg-slate-300"
-                        : "bg-slate-950 text-white hover:bg-slate-800"
-                  }
-                `}
-              >
-                {action.label}
-              </button>
-            ))}
-          </div>
-        </section>
-      )}
       <section className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
         <div className="bg-gradient-to-r from-slate-950 via-slate-900 to-blue-950 px-8 py-8 text-white">
           <p className="text-sm font-bold uppercase tracking-wide text-blue-200">

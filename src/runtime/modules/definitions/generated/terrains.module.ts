@@ -189,10 +189,7 @@ export const terrainsModule: ERPModule = {
         key: "contratId",
         label: "Contrat",
         type: "relation",
-        relation: {
-
-  module:
-    "contrats",
+        relation: { module: "contrats",
 
   create: {
 

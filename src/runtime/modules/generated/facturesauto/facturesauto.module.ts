@@ -69,8 +69,7 @@ export const facturesautoModule: ERPModule = {
         key: "vehiculeId",
         label: "Véhicule",
         type: "relation",
-        relation: {
-          module: "vehicules"
+        relation: { module: "vehicules"
         },
         searchable: true,
         grid: { cols: 6 }
@@ -79,8 +78,7 @@ export const facturesautoModule: ERPModule = {
         key: "interventionId",
         label: "Intervention",
         type: "relation",
-        relation: {
-          module: "interventionsauto"
+        relation: { module: "interventionsauto"
         },
         searchable: true,
         grid: { cols: 12 }

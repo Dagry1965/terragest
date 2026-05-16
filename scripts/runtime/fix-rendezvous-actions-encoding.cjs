@@ -1,4 +1,18 @@
-import type {
+const fs = require("fs");
+const path = require("path");
+
+const ROOT = process.cwd();
+
+const target = path.join(
+  ROOT,
+  "src/runtime/modules/generated/rendezvous/rendezvous.actions.ts"
+);
+
+if (!fs.existsSync(target)) {
+  throw new Error(`File not found: ${target}`);
+}
+
+const content = `import type {
   ERPModuleAction,
 } from "@/runtime/modules/ERPModule";
 
@@ -10,8 +24,8 @@ export const rendezvousActions: ERPModuleAction[] = [
     permission: "rendezvous.workflow",
   },
   {
-    key: "Démarrer",
-    label: "Démarrer le RDV",
+    key: "D\\u00e9marrer",
+    label: "D\\u00e9marrer le RDV",
     type: "secondary",
     permission: "rendezvous.workflow",
   },
@@ -34,3 +48,8 @@ export const rendezvousActions: ERPModuleAction[] = [
     permission: "rendezvous.workflow",
   },
 ];
+`;
+
+fs.writeFileSync(target, content, { encoding: "utf8" });
+
+console.log("OK rendezvous.actions.ts réécrit en UTF-8 avec unicode escapes.");
