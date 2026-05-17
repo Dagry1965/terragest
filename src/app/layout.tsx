@@ -1,5 +1,20 @@
 import "./globals.css";
 
+export const metadata = {
+  title: "AMARKHYS — Garage premium digitalisé",
+  description:
+    "AMARKHYS est un garage automobile premium pour diagnostic, vidange, entretien, suivi atelier et rendez-vous digital.",
+  keywords: [
+    "AMARKHYS",
+    "garage premium",
+    "garage automobile",
+    "vidange",
+    "diagnostic automobile",
+    "entretien véhicule",
+    "PETRONAS",
+  ],
+};
+
 import {
   RuntimeBootstrapProvider,
 } from "@/components/bootstrap/RuntimeBootstrapProvider";
