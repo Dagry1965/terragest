@@ -1,39 +1,30 @@
-"use client";
+const fs = require("fs");
+const path = require("path");
+
+const ROOT = process.cwd();
+
+const target = path.join(
+  ROOT,
+  "src/components/erp/billing/InvoiceDocumentActions.tsx"
+);
+
+const content = `"use client";
 
 import { useEffect, useState } from "react";
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 import QRCode from "qrcode";
 
-import {
-  RuntimeDataBinding,
-} from "@/runtime/data-binding";
-
-import {
-  clientsautoModule,
-} from "@/runtime/modules/generated/clientsauto";
-
-import {
-  vehiculesModule,
-} from "@/runtime/modules/generated/vehicules";
-
-import {
-  interventionsautoModule,
-} from "@/runtime/modules/generated/interventionsauto";
-
 interface InvoiceDocumentActionsProps {
   invoice: Record<string, unknown>;
 }
 
-type RecordData = Record<string, unknown>;
-
 function value(
-  record: RecordData | null | undefined,
+  invoice: Record<string, unknown>,
   key: string,
   fallback = ""
 ): string {
-  const raw =
-    record?.[key];
+  const raw = invoice[key];
 
   if (
     raw === null ||
@@ -47,10 +38,10 @@ function value(
 }
 
 function amount(
-  record: RecordData | null | undefined,
+  invoice: Record<string, unknown>,
   key: string
 ): number {
-  return Number(record?.[key] ?? 0);
+  return Number(invoice[key] ?? 0);
 }
 
 function formatMoney(
@@ -59,45 +50,8 @@ function formatMoney(
   return value.toLocaleString("fr-FR") + " FCFA";
 }
 
-function formatPaymentStatus(
-  value?: string
-): string {
-  const labels: Record<string, string> = {
-    en_attente: "En attente",
-    partiel: "Paiement partiel",
-    paye: "Payé",
-    payee: "Payée",
-    annule: "Annulé",
-    annulee: "Annulée",
-  };
-
-  return labels[value ?? ""] ?? value ?? "En attente";
-}
-
-function computeResteAPayer(
-  invoice: RecordData
-): number {
-  const montantTTC =
-    amount(invoice, "montantTTC");
-
-  const montantPaye =
-    amount(invoice, "montantPaye");
-
-  const resteStocke =
-    amount(invoice, "resteAPayer");
-
-  if (resteStocke > 0) {
-    return resteStocke;
-  }
-
-  return Math.max(
-    montantTTC - montantPaye,
-    0
-  );
-}
-
 function buildInvoiceNumber(
-  invoice: RecordData
+  invoice: Record<string, unknown>
 ): string {
   return value(
     invoice,
@@ -107,7 +61,7 @@ function buildInvoiceNumber(
 }
 
 function buildInvoicePublicUrl(
-  invoice: RecordData
+  invoice: Record<string, unknown>
 ): string {
   const token =
     value(
@@ -134,135 +88,8 @@ function buildInvoicePublicUrl(
   return window.location.origin + "/facture/" + token;
 }
 
-function buildClientLabel(
-  client: RecordData | null
-): string {
-  if (!client) {
-    return "Client non renseigné";
-  }
-
-  const nom =
-    value(client, "nom");
-
-  const prenom =
-    value(client, "prenom");
-
-  const raisonSociale =
-    value(client, "raisonSociale");
-
-  const telephone =
-    value(client, "telephone");
-
-  const email =
-    value(client, "email");
-
-  const fullName =
-    [prenom, nom]
-      .filter(Boolean)
-      .join(" ")
-      .trim();
-
-  return [
-    fullName || raisonSociale || "Client",
-    telephone,
-    email,
-  ]
-    .filter(Boolean)
-    .join(" • ");
-}
-
-function buildVehicleLabel(
-  vehicule: RecordData | null
-): string {
-  if (!vehicule) {
-    return "Véhicule non renseigné";
-  }
-
-  const marque =
-    value(vehicule, "marque");
-
-  const modele =
-    value(vehicule, "modele");
-
-  const immatriculation =
-    value(vehicule, "immatriculation");
-
-  return [
-    [marque, modele]
-      .filter(Boolean)
-      .join(" ")
-      .trim(),
-    immatriculation,
-  ]
-    .filter(Boolean)
-    .join(" • ") || "Véhicule";
-}
-
-function buildInterventionLabel(
-  intervention: RecordData | null
-): string {
-  if (!intervention) {
-    return "Intervention non renseignée";
-  }
-
-  return [
-    value(intervention, "typeIntervention"),
-    value(intervention, "dateIntervention"),
-    value(intervention, "statut"),
-  ]
-    .filter(Boolean)
-    .join(" • ") || "Intervention";
-}
-
-async function loadInvoiceRelations(
-  invoice: RecordData
-) {
-  const clientId =
-    value(invoice, "clientId");
-
-  const vehiculeId =
-    value(invoice, "vehiculeId");
-
-  const interventionId =
-    value(invoice, "interventionId");
-
-  const [
-    client,
-    vehicule,
-    intervention,
-  ] =
-    await Promise.all([
-      clientId
-        ? RuntimeDataBinding.detail(
-            clientsautoModule,
-            clientId
-          )
-        : Promise.resolve(null),
-
-      vehiculeId
-        ? RuntimeDataBinding.detail(
-            vehiculesModule,
-            vehiculeId
-          )
-        : Promise.resolve(null),
-
-      interventionId
-        ? RuntimeDataBinding.detail(
-            interventionsautoModule,
-            interventionId
-          )
-        : Promise.resolve(null),
-    ]);
-
-  return {
-    client,
-    vehicule,
-    intervention,
-  };
-}
-
 function buildShareText(
-  invoice: RecordData
+  invoice: Record<string, unknown>
 ): string {
   const numero =
     buildInvoiceNumber(invoice);
@@ -270,8 +97,13 @@ function buildShareText(
   const total =
     amount(invoice, "montantTTC");
 
+  const paye =
+    amount(invoice, "montantPaye");
+
   const reste =
-    computeResteAPayer(invoice);
+    amount(invoice, "resteAPayer") > 0
+      ? amount(invoice, "resteAPayer")
+      : Math.max(total - paye, 0);
 
   const url =
     buildInvoicePublicUrl(invoice);
@@ -284,21 +116,14 @@ function buildShareText(
     url ? "Lien : " + url : "",
   ]
     .filter(Boolean)
-    .join("\n");
+    .join("\\n");
 }
 
 async function createInvoicePdf(
-  invoice: RecordData
+  invoice: Record<string, unknown>
 ): Promise<jsPDF> {
   const doc =
     new jsPDF();
-
-  const {
-    client,
-    vehicule,
-    intervention,
-  } =
-    await loadInvoiceRelations(invoice);
 
   const numero =
     buildInvoiceNumber(invoice);
@@ -322,8 +147,13 @@ async function createInvoicePdf(
   const montantPaye =
     amount(invoice, "montantPaye");
 
+  const storedResteAPayer =
+    amount(invoice, "resteAPayer");
+
   const resteAPayer =
-    computeResteAPayer(invoice);
+    storedResteAPayer > 0
+      ? storedResteAPayer
+      : Math.max(montantTTC - montantPaye, 0);
 
   const publicUrl =
     buildInvoicePublicUrl(invoice);
@@ -354,12 +184,12 @@ async function createInvoicePdf(
   doc.line(14, 40, 196, 40);
 
   doc.setFontSize(11);
-  doc.text("Client / véhicule", 14, 50);
+  doc.text("Client", 14, 50);
 
   doc.setFontSize(10);
-  doc.text("Client : " + buildClientLabel(client), 14, 58);
-  doc.text("Véhicule : " + buildVehicleLabel(vehicule), 14, 64);
-  doc.text("Intervention : " + buildInterventionLabel(intervention), 14, 70);
+  doc.text("Client ID : " + value(invoice, "clientId", "-"), 14, 58);
+  doc.text("Véhicule ID : " + value(invoice, "vehiculeId", "-"), 14, 64);
+  doc.text("Intervention ID : " + value(invoice, "interventionId", "-"), 14, 70);
 
   doc.setFontSize(11);
   doc.text("Détails facture", 14, 84);
@@ -397,12 +227,7 @@ async function createInvoicePdf(
       ["Montant TTC", formatMoney(montantTTC)],
       ["Montant payé", formatMoney(montantPaye)],
       ["Reste à payer", formatMoney(resteAPayer)],
-      [
-        "Statut paiement",
-        formatPaymentStatus(
-          value(invoice, "statutPaiement", "en_attente")
-        ),
-      ],
+      ["Statut paiement", value(invoice, "statutPaiement", "en_attente")],
     ],
     theme: "plain",
     styles: {
@@ -466,7 +291,7 @@ async function createInvoicePdf(
 }
 
 async function downloadInvoice(
-  invoice: RecordData
+  invoice: Record<string, unknown>
 ) {
   const doc =
     await createInvoicePdf(invoice);
@@ -477,7 +302,7 @@ async function downloadInvoice(
 }
 
 async function previewInvoice(
-  invoice: RecordData
+  invoice: Record<string, unknown>
 ) {
   const doc =
     await createInvoicePdf(invoice);
@@ -612,3 +437,8 @@ export function InvoiceDocumentActions({
     </section>
   );
 }
+`;
+
+fs.writeFileSync(target, content, "utf8");
+
+console.log("OK InvoiceDocumentActions.tsx réécrit proprement.");
