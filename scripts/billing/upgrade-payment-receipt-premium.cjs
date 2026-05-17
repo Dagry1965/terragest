@@ -1,4 +1,55 @@
-"use client";
+const fs = require("fs");
+const path = require("path");
+
+const root = process.cwd();
+
+function ensureDir(dir) {
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, { recursive: true });
+  }
+}
+
+function write(file, content) {
+  ensureDir(path.dirname(file));
+  fs.writeFileSync(file, content, { encoding: "utf8" });
+  console.log(`UPDATED ${path.relative(root, file)}`);
+}
+
+function read(file) {
+  return fs.readFileSync(file, "utf8");
+}
+
+const receiptFile = path.join(
+  root,
+  "src",
+  "components",
+  "erp",
+  "billing",
+  "PaymentReceiptActions.tsx"
+);
+
+const historyFile = path.join(
+  root,
+  "src",
+  "components",
+  "erp",
+  "billing",
+  "InvoicePaymentsHistory.tsx"
+);
+
+if (!fs.existsSync(receiptFile)) {
+  console.error(`MISSING ${receiptFile}`);
+  process.exit(1);
+}
+
+if (!fs.existsSync(historyFile)) {
+  console.error(`MISSING ${historyFile}`);
+  process.exit(1);
+}
+
+write(
+  receiptFile,
+  `"use client";
 
 import { useEffect, useMemo, useState } from "react";
 import { jsPDF } from "jspdf";
@@ -289,7 +340,7 @@ function buildReceiptText(
     "Merci pour votre confiance.",
   ]
     .filter(Boolean)
-    .join("\n");
+    .join("\\n");
 }
 
 function createReceiptPdf(
@@ -485,3 +536,42 @@ export function PaymentReceiptActions({
     </div>
   );
 }
+`
+);
+
+let history = read(historyFile);
+
+history = history
+  .replaceAll("EspÃ¨ces", "Espèces")
+  .replaceAll("ChÃ¨que", "Chèque")
+  .replaceAll("ValidÃ©", "Validé")
+  .replaceAll("RejetÃ©", "Rejeté")
+  .replaceAll("AnnulÃ©", "Annulé")
+  .replaceAll("Paiements enregistrÃ©s", "Paiements enregistrés")
+  .replaceAll("Liste des paiements liÃ©s Ã  cette facture.", "Liste des paiements liés à cette facture.")
+  .replaceAll("Total encaissÃ©", "Total encaissé")
+  .replaceAll("Reste Ã  payer", "Reste à payer")
+  .replaceAll("Aucun paiement enregistrÃ© pour cette facture.", "Aucun paiement enregistré pour cette facture.")
+  .replaceAll("RÃ©fÃ©rence", "Référence");
+
+history = history.replace(
+  `          <div className="grid grid-cols-5 gap-4 bg-slate-950 px-4 py-3 text-xs font-black uppercase tracking-wide text-white">
+            <div>Date</div>
+            <div>Montant</div>
+            <div>Mode</div>
+            <div>Référence</div>
+            <div>Statut</div>
+          </div>`,
+  `          <div className="grid grid-cols-6 gap-4 bg-slate-950 px-4 py-3 text-xs font-black uppercase tracking-wide text-white">
+            <div>Date</div>
+            <div>Montant</div>
+            <div>Mode</div>
+            <div>Référence</div>
+            <div>Statut</div>
+            <div>Reçu</div>
+          </div>`
+);
+
+write(historyFile, history);
+
+console.log("DONE upgrade payment receipt premium");

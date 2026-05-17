@@ -220,12 +220,13 @@ export function InvoicePaymentsHistory({
         </p>
       ) : (
         <div className="overflow-hidden rounded-2xl border border-slate-200">
-          <div className="grid grid-cols-5 gap-4 bg-slate-950 px-4 py-3 text-xs font-black uppercase tracking-wide text-white">
+          <div className="grid grid-cols-6 gap-4 bg-slate-950 px-4 py-3 text-xs font-black uppercase tracking-wide text-white">
             <div>Date</div>
             <div>Montant</div>
             <div>Mode</div>
             <div>Référence</div>
             <div>Statut</div>
+            <div>Reçu</div>
           </div>
 
           <div className="divide-y divide-slate-200">

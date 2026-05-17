@@ -83,6 +83,26 @@ function applyRuntimeIsolation(
   });
 }
 
+function canComputeRuntimeField(
+  dependsOn: string[] | undefined,
+  data: Record<string, unknown>
+): boolean {
+  if (!dependsOn || dependsOn.length === 0) {
+    return true;
+  }
+
+  return dependsOn.every((key) => {
+    const value =
+      data[key];
+
+    return (
+      value !== undefined &&
+      value !== null &&
+      value !== ""
+    );
+  });
+}
+
 function applyComputedFields(
   module: ERPModule,
   data: Record<string, unknown>
