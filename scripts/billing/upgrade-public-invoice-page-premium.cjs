@@ -1,4 +1,28 @@
-"use client";
+const fs = require("fs");
+const path = require("path");
+
+const root = process.cwd();
+
+const file = path.join(
+  root,
+  "src",
+  "app",
+  "facture",
+  "[token]",
+  "page.tsx"
+);
+
+function write(filePath, content) {
+  fs.writeFileSync(filePath, content, { encoding: "utf8" });
+  console.log(`UPDATED ${path.relative(root, filePath)}`);
+}
+
+if (!fs.existsSync(file)) {
+  console.error(`MISSING ${file}`);
+  process.exit(1);
+}
+
+const content = `"use client";
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
@@ -366,7 +390,7 @@ export default function PublicInvoicePage({
           "Je consulte ma facture AMARKHYS : " + summary.numero,
           "Reste à payer : " + formatMoney(summary.resteAPayer),
           "Statut : " + summary.statutPaiement,
-        ].join("\n")
+        ].join("\\n")
       : "";
 
   if (loading) {
@@ -419,10 +443,10 @@ export default function PublicInvoicePage({
                   AMARKHYS GARAGE
                 </p>
                 <h1 className="mt-4 text-3xl font-black md:text-5xl">
-                  Votre facture AMARKHYS
+                  Facture publique
                 </h1>
                 <p className="mt-3 max-w-2xl text-sm text-slate-300 md:text-base">
-                  Consultez le détail de votre facture, les montants réglés et le solde restant.
+                  Consultez le détail de votre facture, le montant payé et le reste à régler.
                 </p>
               </div>
 
@@ -568,3 +592,8 @@ function MoneyCard({
     </div>
   );
 }
+`;
+
+write(file, content);
+
+console.log("DONE upgrade public invoice page premium");
