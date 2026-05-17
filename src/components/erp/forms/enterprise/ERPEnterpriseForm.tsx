@@ -62,6 +62,10 @@ import {
   InvoicePaymentsHistory,
 } from "@/components/erp/billing/InvoicePaymentsHistory";
 
+import {
+  InvoicePaymentSchedule,
+} from "@/components/erp/billing/InvoicePaymentSchedule";
+
 interface ERPEnterpriseFormProps {
   module: ERPModule;
   mode?: "create" | "edit";
@@ -804,6 +808,19 @@ preparedPayload.terrainId
           <InvoicePaymentsHistory
             factureId={String(initialData.id ?? initialData._id ?? "")}
             montantTTC={Number(initialData.montantTTC ?? 0)}
+          />
+        </div>
+      ) : null}
+
+      {isInvoiceEditForm ? (
+        <div data-invoice-payment-schedule>
+          <InvoicePaymentSchedule
+            factureId={String(initialData.id ?? initialData._id ?? "")}
+            clientId={initialData.clientId ? String(initialData.clientId) : undefined}
+            vehiculeId={initialData.vehiculeId ? String(initialData.vehiculeId) : undefined}
+            montantTTC={Number(initialData.montantTTC ?? 0)}
+            montantPaye={Number(initialData.montantPaye ?? 0)}
+            resteAPayer={Number(initialData.resteAPayer ?? 0)}
           />
         </div>
       ) : null}
