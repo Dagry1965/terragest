@@ -19,6 +19,7 @@ interface ERPFormTabsProps {
   formValues?: Record<string, unknown>;
   onFieldChange?: (key: string, value: unknown) => void;
   fieldErrors?: Record<string, string>;
+  lockedFields?: string[];
 }
 
 export function ERPFormTabs({
@@ -27,6 +28,7 @@ export function ERPFormTabs({
   formValues = {},
   onFieldChange,
   fieldErrors = {},
+  lockedFields = [],
 }: ERPFormTabsProps) {
   const [activeTab, setActiveTab] =
     useState(
@@ -173,6 +175,7 @@ export function ERPFormTabs({
                         value={formValues[field.key]}
                         onChange={onFieldChange}
                         error={fieldErrors[field.key]}
+                        lockedFields={lockedFields}
                       />
                     ))}
                   </div>
@@ -189,6 +192,7 @@ export function ERPFormTabs({
                         value={formValues[field.key]}
                         onChange={onFieldChange}
                         error={fieldErrors[field.key]}
+                        lockedFields={lockedFields}
                       />
             ))}
           </div>

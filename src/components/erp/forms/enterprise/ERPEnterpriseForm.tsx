@@ -89,6 +89,13 @@ export function ERPEnterpriseForm({
       )
     );
 
+  const lockedFields =
+    searchParams
+      .get("lockFields")
+      ?.split(",")
+      .map((item) => item.trim())
+      .filter(Boolean) ?? [];
+
   const [saving, setSaving] = useState(false);
 
   const [errors, setErrors] =
@@ -656,6 +663,7 @@ preparedPayload.terrainId
               formValues={formValues}
               onFieldChange={handleFieldChange}
               fieldErrors={errorByField}
+              lockedFields={lockedFields}
             />
           ) : (
             <>
@@ -670,6 +678,7 @@ preparedPayload.terrainId
                     value={formValues[field.key]}
                     onChange={handleFieldChange}
                     error={errorByField[field.key]}
+                    lockedFields={lockedFields}
                   />
                 ))}
               </ERPFormSection>
@@ -686,6 +695,7 @@ preparedPayload.terrainId
                       value={formValues[field.key]}
                       onChange={handleFieldChange}
                       error={errorByField[field.key]}
+                      lockedFields={lockedFields}
                     />
                   ))}
                 </ERPFormSection>

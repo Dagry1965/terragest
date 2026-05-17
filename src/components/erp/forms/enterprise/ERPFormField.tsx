@@ -16,6 +16,7 @@ interface ERPFormFieldProps {
   value?: unknown;
   onChange?: (key: string, value: unknown) => void;
   error?: string;
+  lockedFields?: string[];
 }
 
 const gridClassMap: Record<number, string> = {
@@ -141,6 +142,7 @@ export function ERPFormField({
   value,
   onChange,
   error,
+  lockedFields = [],
 }: ERPFormFieldProps) {
   const router = useRouter();
 
@@ -148,15 +150,6 @@ export function ERPFormField({
   const [relationSearch, setRelationSearch] = useState("");
 
   const currentValue = normalizeFormFieldValue(field, value);
-
-  const lockedFields =
-    typeof window === "undefined"
-      ? []
-      : new URLSearchParams(window.location.search)
-          .get("lockFields")
-          ?.split(",")
-          .map((item) => item.trim())
-          .filter(Boolean) ?? [];
 
   const isLocked =
     lockedFields.includes(field.key);
