@@ -34,6 +34,95 @@ const gridClassMap: Record<number, string> = {
   12: "xl:col-span-12",
 };
 
+function buildRelationCreateUrl({
+  targetModule,
+  fieldKey,
+  prefill,
+}: {
+  targetModule: string;
+  fieldKey: string;
+  prefill?: Record<string, unknown>;
+}) {
+  const params =
+    new URLSearchParams();
+
+  Object.entries(prefill ?? {}).forEach(
+    ([key, value]) => {
+      if (
+        value !== undefined &&
+        value !== null
+      ) {
+        params.set(key, String(value));
+      }
+    }
+  );
+
+  if (typeof window !== "undefined") {
+    params.set(
+      "returnTo",
+      window.location.pathname
+    );
+
+    const pathParts =
+      window.location.pathname
+        .split("/")
+        .filter(Boolean);
+
+    const parentModule =
+      pathParts[0];
+
+    const parentId =
+      pathParts[1] ?? "";
+
+    if (
+      targetModule === "contrats" &&
+      !params.has("dateDebut")
+    ) {
+      params.set(
+        "dateDebut",
+        new Date()
+          .toISOString()
+          .split("T")[0]
+      );
+    }
+
+    if (
+      fieldKey === "contratId" &&
+      parentModule === "terrains" &&
+      parentId
+    ) {
+      params.set("typeContrat", "terrain");
+      params.set("terrainId", parentId);
+      params.set("exploitationId", "");
+      params.set(
+        "lockFields",
+        "typeContrat,terrainId,exploitationId"
+      );
+    }
+
+    if (
+      fieldKey === "contratId" &&
+      parentModule === "exploitations" &&
+      parentId
+    ) {
+      params.set("typeContrat", "exploitation");
+      params.set("exploitationId", parentId);
+      params.set("terrainId", "");
+      params.set(
+        "lockFields",
+        "typeContrat,terrainId,exploitationId"
+      );
+    }
+  }
+
+  const query =
+    params.toString();
+
+  return query
+    ? `/${targetModule}/nouveau?${query}`
+    : `/${targetModule}/nouveau`;
+}
+
 function normalizeFormFieldValue(
   field: ERPModuleField,
   value: unknown
@@ -251,73 +340,20 @@ export function ERPFormField({
               type="button"
               onClick={() => {
                 const targetModule =
-  		relationConfig?.module;
+                  relationConfig?.module;
 
                 if (!targetModule) {
                   return;
                 }
 
-                const params =
-                  new URLSearchParams();
-
-                const prefill =
-                  relationConfig?.create?.prefill ?? {};
-
-                Object.entries(prefill).forEach(([key, value]) => {
-                  params.set(key, String(value));
-                });
-
-                const today =
-  new Date()
-    .toISOString()
-    .split("T")[0];
-
-params.set(
-  "dateDebut",
-  today
-);
-
-params.set(
-  "returnTo",
-  window.location.pathname
-);
-
-if (
-  field.key ===
-  "contratId"
-) {
-  const pathParts =
-    window.location.pathname
-      .split("/")
-      .filter(Boolean);
-
-  const parentModule =
-    pathParts[0];
-
-  const parentId =
-    pathParts[1] ?? "";
-
-  if (parentModule === "terrains") {
-    params.set("typeContrat", "terrain");
-    params.set("terrainId", parentId);
-    params.set("exploitationId", "");
-    params.set("lockFields", "typeContrat,terrainId,exploitationId");
-  }
-
-  if (parentModule === "exploitations") {
-    params.set("typeContrat", "exploitation");
-    params.set("exploitationId", parentId);
-    params.set("terrainId", "");
-    params.set("lockFields", "typeContrat,terrainId,exploitationId");
-  }
-}
-
-const query =
-  params.toString();
-
-router.push(
-`/${targetModule}/nouveau?${query}`
-);
+                router.push(
+                  buildRelationCreateUrl({
+                    targetModule,
+                    fieldKey: field.key,
+                    prefill:
+                      relationConfig?.create?.prefill ?? {},
+                  })
+                );
               }}
               className="
                 mt-2
@@ -383,76 +419,23 @@ router.push(
               onClick={() => {
                 const targetModule =
                   typeof field.relation === "string"
-  ? field.relation
-  : field.relation?.module;
+                    ? field.relation
+                    : field.relation?.module;
 
                 if (!targetModule) {
                   return;
                 }
 
-                const params =
-                  new URLSearchParams();
-
-                const prefill =
-                  typeof field.relation === "string"
-  ? {}
-  : field.relation?.create?.prefill ?? {};
-
-                Object.entries(prefill).forEach(([key, value]) => {
-                  params.set(key, String(value));
-                });
-
-const today =
-  new Date()
-    .toISOString()
-    .split("T")[0];
-
-params.set(
-  "dateDebut",
-  today
-);
-
-params.set(
-  "returnTo",
-  window.location.pathname
-);
-
-if (
-  field.key ===
-  "contratId"
-) {
-  const pathParts =
-    window.location.pathname
-      .split("/")
-      .filter(Boolean);
-
-  const parentModule =
-    pathParts[0];
-
-  const parentId =
-    pathParts[1] ?? "";
-
-  if (parentModule === "terrains") {
-    params.set("typeContrat", "terrain");
-    params.set("terrainId", parentId);
-    params.set("exploitationId", "");
-    params.set("lockFields", "typeContrat,terrainId,exploitationId");
-  }
-
-  if (parentModule === "exploitations") {
-    params.set("typeContrat", "exploitation");
-    params.set("exploitationId", parentId);
-    params.set("terrainId", "");
-    params.set("lockFields", "typeContrat,terrainId,exploitationId");
-  }
-}
-
-const query =
-  params.toString();
-
-router.push(
-`/${targetModule}/nouveau?${query}`
-);
+                router.push(
+                  buildRelationCreateUrl({
+                    targetModule,
+                    fieldKey: field.key,
+                    prefill:
+                      typeof field.relation === "string"
+                        ? {}
+                        : field.relation?.create?.prefill ?? {},
+                  })
+                );
               }}
               className="
                 mt-2
@@ -511,76 +494,23 @@ router.push(
               onClick={() => {
                 const targetModule =
                   typeof field.relation === "string"
-  ? field.relation
-  : field.relation?.module;
+                    ? field.relation
+                    : field.relation?.module;
 
                 if (!targetModule) {
                   return;
                 }
 
-                const params =
-                  new URLSearchParams();
-
-                const prefill =
-                  typeof field.relation === "string"
-  ? {}
-  : field.relation?.create?.prefill ?? {};
-
-                Object.entries(prefill).forEach(([key, value]) => {
-                  params.set(key, String(value));
-                });
-
-             const today =
-  new Date()
-    .toISOString()
-    .split("T")[0];
-
-params.set(
-  "dateDebut",
-  today
-);
-
-params.set(
-  "returnTo",
-  window.location.pathname
-);
-
-if (
-  field.key ===
-  "contratId"
-) {
-  const pathParts =
-    window.location.pathname
-      .split("/")
-      .filter(Boolean);
-
-  const parentModule =
-    pathParts[0];
-
-  const parentId =
-    pathParts[1] ?? "";
-
-  if (parentModule === "terrains") {
-    params.set("typeContrat", "terrain");
-    params.set("terrainId", parentId);
-    params.set("exploitationId", "");
-    params.set("lockFields", "typeContrat,terrainId,exploitationId");
-  }
-
-  if (parentModule === "exploitations") {
-    params.set("typeContrat", "exploitation");
-    params.set("exploitationId", parentId);
-    params.set("terrainId", "");
-    params.set("lockFields", "typeContrat,terrainId,exploitationId");
-  }
-}
-
-const query =
-  params.toString();
-
-router.push(
-`/${targetModule}/nouveau?${query}`
-);
+                router.push(
+                  buildRelationCreateUrl({
+                    targetModule,
+                    fieldKey: field.key,
+                    prefill:
+                      typeof field.relation === "string"
+                        ? {}
+                        : field.relation?.create?.prefill ?? {},
+                  })
+                );
               }}
               className="
                 mt-2
