@@ -74,6 +74,14 @@ import {
   RuntimeUniqueConstraintEngine,
 } from "@/runtime/validation/RuntimeUniqueConstraintEngine";
 
+import {
+  ClientVehiclesReadonlyCard,
+} from "@/components/erp/relations/ClientVehiclesReadonlyCard";
+
+import {
+  ERPReturnBreadcrumb,
+} from "@/components/erp/navigation/ERPReturnBreadcrumb";
+
 interface ERPEnterpriseFormProps {
   module: ERPModule;
   mode?: "create" | "edit";
@@ -793,6 +801,8 @@ preparedPayload.terrainId
       className="space-y-8"
       onSubmit={handleSubmit}
     >
+      <ERPReturnBreadcrumb />
+
       {isInvoiceEditForm ? (
         <div data-invoice-document-actions>
           <InvoiceDocumentActions invoice={initialData} />
@@ -1009,6 +1019,16 @@ preparedPayload.terrainId
               )}
             </>
           )}
+
+          {mode === "edit" &&
+          module.metadata.key === "clientsauto" &&
+          Boolean(initialData?.id) ? (
+            <div data-client-vehicles-readonly-card>
+              <ClientVehiclesReadonlyCard
+                clientId={String(initialData.id)}
+              />
+            </div>
+          ) : null}
 
           <div className="flex flex-wrap gap-3 rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
             {errors.length > 0 && (
