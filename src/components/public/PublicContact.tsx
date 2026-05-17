@@ -2,11 +2,35 @@
 
 import { Clock, MapPin, MessageCircle, Phone } from "lucide-react";
 
+import {
+  publicContactConfig,
+} from "./publicContactConfig";
+
 const contacts = [
-  { icon: Phone, title: "Téléphone", value: "+000000000" },
-  { icon: MessageCircle, title: "WhatsApp", value: "Disponible" },
-  { icon: MapPin, title: "Adresse", value: "Adresse garage" },
-  { icon: Clock, title: "Horaires", value: "Lundi - Samedi" },
+  {
+    icon: Phone,
+    title: "Téléphone",
+    value: publicContactConfig.phoneDisplay,
+    href: publicContactConfig.phoneHref,
+  },
+  {
+    icon: MessageCircle,
+    title: "WhatsApp",
+    value: "Disponible",
+    href: publicContactConfig.whatsappHref,
+  },
+  {
+    icon: MapPin,
+    title: "Adresse",
+    value: publicContactConfig.address,
+    href: "#contact",
+  },
+  {
+    icon: Clock,
+    title: "Horaires",
+    value: publicContactConfig.hours,
+    href: "#contact",
+  },
 ];
 
 export function PublicContact() {
@@ -27,9 +51,10 @@ export function PublicContact() {
           const Icon = contact.icon;
 
           return (
-            <div
+            <a
               key={contact.title}
-              className="rounded-3xl border border-white/10 bg-white/[0.045] p-6 backdrop-blur-xl"
+              href={contact.href}
+              className="rounded-3xl border border-white/10 bg-white/[0.045] p-6 backdrop-blur-xl transition hover:-translate-y-1 hover:border-[#00A19C]/40 hover:bg-[#00A19C]/10"
             >
               <Icon className="h-6 w-6 text-[#7FFFE8]" />
 
@@ -40,7 +65,7 @@ export function PublicContact() {
               <p className="mt-2 text-sm text-slate-400">
                 {contact.value}
               </p>
-            </div>
+            </a>
           );
         })}
       </div>

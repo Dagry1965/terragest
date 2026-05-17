@@ -3,6 +3,10 @@
 import Link from "next/link";
 import { ArrowRight, MessageCircle, Phone } from "lucide-react";
 
+import {
+  publicContactConfig,
+} from "./publicContactConfig";
+
 export function PublicCTA() {
   return (
     <section id="performance" className="mx-auto max-w-7xl px-6 py-24">
@@ -34,7 +38,7 @@ export function PublicCTA() {
             </Link>
 
             <a
-              href="https://wa.me/"
+              href={publicContactConfig.whatsappHref}
               target="_blank"
               className="inline-flex items-center justify-center gap-3 rounded-2xl border border-white/15 bg-white/5 px-6 py-4 text-sm font-black text-white transition hover:bg-white/10"
             >
@@ -43,7 +47,7 @@ export function PublicCTA() {
             </a>
 
             <a
-              href="tel:+000000000"
+              href={publicContactConfig.phoneHref}
               className="inline-flex items-center justify-center gap-3 rounded-2xl border border-white/15 bg-white/5 px-6 py-4 text-sm font-black text-white transition hover:bg-white/10"
             >
               <Phone className="h-4 w-4 text-[#7FFFE8]" />
