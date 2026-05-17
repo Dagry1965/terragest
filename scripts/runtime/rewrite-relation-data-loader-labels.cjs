@@ -1,4 +1,23 @@
-import { RuntimeDataBinding } from "@/runtime/data-binding";
+const fs = require("fs");
+const path = require("path");
+
+const root = process.cwd();
+
+const file = path.join(
+  root,
+  "src",
+  "runtime",
+  "modules",
+  "lifecycle",
+  "ERPRelationDataLoader.ts"
+);
+
+if (!fs.existsSync(file)) {
+  console.error(`MISSING ${file}`);
+  process.exit(1);
+}
+
+const ts = `import { RuntimeDataBinding } from "@/runtime/data-binding";
 
 import { allERPModules } from "../definitions/coreModules";
 
@@ -323,3 +342,9 @@ export class ERPRelationDataLoader {
     return id;
   }
 }
+`;
+
+fs.writeFileSync(file, ts, { encoding: "utf8" });
+
+console.log("UPDATED src/runtime/modules/lifecycle/ERPRelationDataLoader.ts");
+console.log("DONE rewrite relation data loader labels");

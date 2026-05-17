@@ -191,6 +191,21 @@ function normalizeFormFieldValue(
   return String(value);
 }
 
+function compactLockedRelationLabel(
+  label: string
+): string {
+  const value =
+    String(label || "").trim();
+
+  if (!value) {
+    return "";
+  }
+
+  return value
+    .split("•")[0]
+    .trim();
+}
+
 function FieldWrapper({
   field,
   children,
@@ -237,11 +252,44 @@ export function ERPFormField({
 
   const [relationOptions, setRelationOptions] = useState<RelationOption[]>([]);
   const [relationSearch, setRelationSearch] = useState("");
+  const [lockedRelationLabel, setLockedRelationLabel] = useState("");
 
   const currentValue = normalizeFormFieldValue(field, value);
 
   const isLocked =
     lockedFields.includes(field.key);
+
+  useEffect(() => {
+    async function loadLockedRelationLabel() {
+      if (field.type !== "relation" || !isLocked || !currentValue) {
+        setLockedRelationLabel("");
+        return;
+      }
+
+      const targetModule =
+        field.references?.module ??
+        (typeof field.relation === "string"
+          ? field.relation
+          : field.relation?.module);
+
+      if (!targetModule) {
+        setLockedRelationLabel("");
+        return;
+      }
+
+      const label =
+        await ERPRelationDataLoader.resolveLabel(
+          targetModule,
+          currentValue
+        );
+
+      setLockedRelationLabel(label);
+    }
+
+    loadLockedRelationLabel().catch(() => {
+      setLockedRelationLabel("");
+    });
+  }, [field, isLocked, currentValue]);
 
   useEffect(() => {
     async function loadRelation() {
@@ -283,16 +331,67 @@ export function ERPFormField({
     `${className} cursor-not-allowed bg-slate-100 text-slate-500`;
 
   if (field.type === "relation") {
-	  const relationConfig =
-    typeof field.relation === "string"
-      ? null
-      : field.relation;
+    const relationConfig =
+      typeof field.relation === "string"
+        ? null
+        : field.relation;
 
-  const canCreateRelation =
-    Boolean(relationConfig?.create?.enabled);
-    const filteredOptions = relationOptions.filter((option) =>
-      option.label.toLowerCase().includes(relationSearch.toLowerCase())
-    );
+    const canCreateRelation =
+      Boolean(relationConfig?.create?.enabled) &&
+      !isLocked;
+
+    const selectedOption =
+      relationOptions.find((option) =>
+        String(option.id) === String(currentValue)
+      );
+
+    const selectedLabel =
+      lockedRelationLabel ||
+      selectedOption?.label ||
+      (currentValue
+        ? "Relation métier sélectionnée"
+        : "Aucune relation renseignée");
+
+    const filteredOptions =
+      relationOptions.filter((option) =>
+        option.label
+          .toLowerCase()
+          .includes(relationSearch.toLowerCase())
+      );
+
+    const lockedDisplayLabel =
+      compactLockedRelationLabel(selectedLabel) ||
+      selectedLabel;
+
+    if (isLocked) {
+      return (
+        <FieldWrapper field={field} error={error}>
+          <div className="block space-y-2">
+            {label}
+
+            <input
+              type="hidden"
+              name={field.key}
+              value={currentValue}
+            />
+
+            <div className="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3">
+              <p className="text-xs font-black uppercase tracking-wide text-emerald-700">
+                Relation métier verrouillée
+              </p>
+
+              <p className="mt-1 text-sm font-black text-slate-950">
+                {lockedDisplayLabel}
+              </p>
+
+              <p className="mt-1 text-xs text-slate-500">
+                Cette relation vient du contexte d’origine et ne peut pas être modifiée ici.
+              </p>
+            </div>
+          </div>
+        </FieldWrapper>
+      );
+    }
 
     return (
       <FieldWrapper field={field} error={error}>
@@ -303,26 +402,16 @@ export function ERPFormField({
             type="text"
             placeholder="Rechercher..."
             value={relationSearch}
-            disabled={isLocked}
             onChange={(event) => setRelationSearch(event.target.value)}
-            className={`${className} ${
-              isLocked
-                ? "cursor-not-allowed bg-slate-100 text-slate-500"
-                : ""
-            }`}
+            className={className}
           />
 
           <select
             name={field.key}
             required={field.required}
             value={currentValue}
-            disabled={isLocked}
             onChange={(event) => onChange?.(field.key, event.target.value)}
-            className={`${className} ${
-              isLocked
-                ? "cursor-not-allowed bg-slate-100 text-slate-500"
-                : ""
-            }`}
+            className={className}
           >
             <option value="">
               {field.placeholder ?? "Sélectionner"}
@@ -335,7 +424,7 @@ export function ERPFormField({
             ))}
           </select>
 
-          {canCreateRelation? (
+          {canCreateRelation ? (
             <button
               type="button"
               onClick={() => {
