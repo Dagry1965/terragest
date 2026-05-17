@@ -9,6 +9,7 @@ import { ERPRelationDataLoader } from "@/runtime/modules/lifecycle/ERPRelationDa
 type RelationOption = {
   id: string;
   label: string;
+  record?: Record<string, unknown>;
 };
 
 interface ERPFormFieldProps {
@@ -191,6 +192,69 @@ function normalizeFormFieldValue(
   return String(value);
 }
 
+function getRelationTargetModule(
+  field: ERPModuleField
+): string {
+  return (
+    field.references?.module ??
+    (typeof field.relation === "string"
+      ? field.relation
+      : field.relation?.module) ??
+    ""
+  );
+}
+
+function getRelationFilterConfig(
+  field: ERPModuleField
+): {
+  sourceField?: string;
+  targetField?: string;
+  includeEmptyTarget?: boolean;
+} | null {
+  if (
+    !field.relation ||
+    typeof field.relation === "string"
+  ) {
+    return null;
+  }
+
+  const relationWithFilter =
+    field.relation as {
+      filterBy?: {
+        sourceField?: string;
+        targetField?: string;
+        includeEmptyTarget?: boolean;
+      };
+    };
+
+  return relationWithFilter.filterBy ?? null;
+}
+
+function getCurrentFormValue(
+  fieldKey: string
+): string {
+  if (typeof document === "undefined") {
+    return "";
+  }
+
+  const element =
+    document.querySelector(
+      `[name="${fieldKey}"]`
+    ) as HTMLInputElement | HTMLSelectElement | null;
+
+  return String(element?.value ?? "");
+}
+
+function relationTargetIsEmpty(
+  value: unknown
+): boolean {
+  return (
+    value === undefined ||
+    value === null ||
+    String(value).trim() === ""
+  );
+}
+
 function compactLockedRelationLabel(
   label: string
 ): string {
@@ -253,6 +317,7 @@ export function ERPFormField({
   const [relationOptions, setRelationOptions] = useState<RelationOption[]>([]);
   const [relationSearch, setRelationSearch] = useState("");
   const [lockedRelationLabel, setLockedRelationLabel] = useState("");
+  const [relationFilterSourceValue, setRelationFilterSourceValue] = useState("");
 
   const currentValue = normalizeFormFieldValue(field, value);
 
@@ -267,10 +332,7 @@ export function ERPFormField({
       }
 
       const targetModule =
-        field.references?.module ??
-        (typeof field.relation === "string"
-          ? field.relation
-          : field.relation?.module);
+        getRelationTargetModule(field);
 
       if (!targetModule) {
         setLockedRelationLabel("");
@@ -296,18 +358,13 @@ export function ERPFormField({
       if (field.type !== "relation") return;
 
       const targetModule =
-        field.references?.module ??
-        (typeof field.relation === "string"
-          ? field.relation
-          : typeof field.relation === "string"
-  ? field.relation
-  : field.relation?.module);
+        getRelationTargetModule(field);
 
       if (!targetModule) return;
 
       try {
         const options = await ERPRelationDataLoader.load(targetModule);
-        setRelationOptions(options);
+        setRelationOptions(options as RelationOption[]);
       } catch (error) {
         console.error("ERP RELATION LOAD ERROR", error);
         setRelationOptions([]);
@@ -315,6 +372,59 @@ export function ERPFormField({
     }
 
     loadRelation();
+  }, [field]);
+
+  useEffect(() => {
+    const filterConfig =
+      getRelationFilterConfig(field);
+
+    if (
+      field.type !== "relation" ||
+      !filterConfig?.sourceField
+    ) {
+      setRelationFilterSourceValue("");
+      return;
+    }
+
+    const sourceField =
+      filterConfig.sourceField;
+
+    function refreshRelationFilterSourceValue() {
+      setRelationFilterSourceValue(
+        getCurrentFormValue(sourceField)
+      );
+    }
+
+    refreshRelationFilterSourceValue();
+
+    const sourceElement =
+      typeof document === "undefined"
+        ? null
+        : document.querySelector(
+            `[name="${sourceField}"]`
+          );
+
+    sourceElement?.addEventListener(
+      "change",
+      refreshRelationFilterSourceValue
+    );
+
+    sourceElement?.addEventListener(
+      "input",
+      refreshRelationFilterSourceValue
+    );
+
+    return () => {
+      sourceElement?.removeEventListener(
+        "change",
+        refreshRelationFilterSourceValue
+      );
+
+      sourceElement?.removeEventListener(
+        "input",
+        refreshRelationFilterSourceValue
+      );
+    };
   }, [field]);
 
   const label = (
@@ -352,8 +462,38 @@ export function ERPFormField({
         ? "Relation métier sélectionnée"
         : "Aucune relation renseignée");
 
+    const filterConfig =
+      getRelationFilterConfig(field);
+
+    const filteredByContext =
+      relationOptions.filter((option) => {
+        if (
+          !filterConfig?.sourceField ||
+          !filterConfig?.targetField
+        ) {
+          return true;
+        }
+
+        const targetValue =
+          option.record?.[filterConfig.targetField];
+
+        if (!relationFilterSourceValue) {
+          return filterConfig.includeEmptyTarget
+            ? relationTargetIsEmpty(targetValue)
+            : true;
+        }
+
+        return (
+          String(targetValue ?? "") === String(relationFilterSourceValue) ||
+          (
+            Boolean(filterConfig.includeEmptyTarget) &&
+            relationTargetIsEmpty(targetValue)
+          )
+        );
+      });
+
     const filteredOptions =
-      relationOptions.filter((option) =>
+      filteredByContext.filter((option) =>
         option.label
           .toLowerCase()
           .includes(relationSearch.toLowerCase())

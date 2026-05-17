@@ -123,8 +123,12 @@ relation?:
       module: string;
       collection?: string;
       labelField?: string;
-
-      create?: {
+        filterBy?: {
+          sourceField: string;
+          targetField: string;
+          includeEmptyTarget?: boolean;
+        };
+        create?: {
 
         enabled:
           boolean;

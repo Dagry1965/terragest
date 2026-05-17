@@ -42,7 +42,14 @@ export const rendezvousModule: ERPModule = {
         key: "vehiculeId",
         label: "Véhicule",
         type: "relation",
-        relation: { module: "vehicules" },
+        relation: {
+          module: "vehicules",
+          filterBy: {
+            sourceField: "clientId",
+            targetField: "clientId",
+            includeEmptyTarget: true,
+          },
+        },
         required: true,
         searchable: true,
         list: { order: 2 },

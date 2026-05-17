@@ -20,6 +20,7 @@ export class ERPRelationDataLoader {
       label: ERPRelationDataLoader.getLabel(
         record as Record<string, unknown>
       ),
+      record: record as Record<string, unknown>,
     }));
   }
 
@@ -126,14 +127,7 @@ export class ERPRelationDataLoader {
       numeroFacture || reference || numero;
 
     if (factureNumber) {
-      return compact(
-        factureNumber,
-        montantTTC,
-        montantPaye ? "Payé " + montantPaye : "",
-        resteAPayer ? "Reste " + resteAPayer : "",
-        statutPaiement,
-        dateFacture
-      );
+      return factureNumber;
     }
 
     const marque =
@@ -146,14 +140,17 @@ export class ERPRelationDataLoader {
       value("immatriculation");
 
     const vehiculeLabel =
-      compact(
-        marque,
-        modele,
-        immatriculation
-      );
+      [marque, modele]
+        .filter(Boolean)
+        .join(" ")
+        .trim();
 
     if (vehiculeLabel) {
       return vehiculeLabel;
+    }
+
+    if (immatriculation) {
+      return immatriculation;
     }
 
     const nom =
@@ -184,35 +181,19 @@ export class ERPRelationDataLoader {
       );
 
     if (personneLabel) {
-      return compact(
-        personneLabel,
-        telephone || phone,
-        email
-      );
+      return personneLabel;
     }
 
     if (raisonSociale) {
-      return compact(
-        raisonSociale,
-        telephone || phone,
-        email
-      );
+      return raisonSociale;
     }
 
     if (nom) {
-      return compact(
-        nom,
-        telephone || phone,
-        email
-      );
+      return nom;
     }
 
     if (codeClient) {
-      return compact(
-        codeClient,
-        telephone || phone,
-        email
-      );
+      return codeClient;
     }
 
     const name =
