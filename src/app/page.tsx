@@ -7,22 +7,14 @@ import {
   PublicContact,
 } from "@/components/public";
 
-export default
-function HomePage(){
-
- return(
-
-  <PublicLayout>
-
-   <PublicHero/>
-
-   <PublicServices/>
-
-   <PublicWhy/>
-<PublicContact/>
-  </PublicLayout>
-
-
- );
-
+export default function HomePage() {
+  return (
+    <PublicLayout>
+      <PublicHero />
+      <PublicServices />
+      <PublicWhy />
+      <PublicCTA />
+      <PublicContact />
+    </PublicLayout>
+  );
 }
