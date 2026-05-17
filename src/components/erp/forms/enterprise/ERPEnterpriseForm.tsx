@@ -893,6 +893,19 @@ preparedPayload.terrainId
 
   const businessStatusAction = getBusinessStatusAction();
 
+  function isSensitiveBusinessModule() {
+    return [
+      "clientsauto",
+      "vehicules",
+      "facturesauto",
+      "encaissementsauto",
+      "echeancespaiementauto",
+    ].includes(module.metadata.key);
+  }
+
+  const sensitiveBusinessModule =
+    isSensitiveBusinessModule();
+
   return (
     <form
       ref={formRef}
@@ -1266,7 +1279,17 @@ preparedPayload.terrainId
               Annuler
             </ERPButton>
 
-            {mode === "edit" && Boolean(initialData?.id) ? (
+                        {mode === "edit" && Boolean(initialData?.id) && sensitiveBusinessModule ? (
+              <div
+                data-sensitive-delete-hidden-notice
+                className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600"
+              >
+                Suppression masquée pour ce module sensible. Utilisez l’action métier
+                d’archivage ou d’annulation afin de conserver l’historique.
+              </div>
+            ) : null}
+
+{mode === "edit" && Boolean(initialData?.id) && !sensitiveBusinessModule ? (
               <ERPButton
                 type="button"
                 variant="danger"
