@@ -99,16 +99,6 @@ export const clientsautoModule: ERPModule = {
         grid:{ cols:6 }
       },
       {
-        key:"vehicules",
-        label:"Véhicules",
-        type:"relation",
-        relation:{
-          module:"vehicules"
-        },
-        searchable:true,
-        grid:{ cols:12 }
-      },
-      {
         key:"observations",
         label:"Observations",
         type:"textarea",
