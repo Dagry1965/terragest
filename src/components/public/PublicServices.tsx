@@ -1,38 +1,51 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { BatteryCharging, CarFront, Fan, Gauge, ShieldCheck, Wrench } from "lucide-react";
+import {
+  BatteryCharging,
+  CarFront,
+  Fan,
+  Gauge,
+  ShieldCheck,
+  Wrench,
+} from "lucide-react";
 
 const services = [
   {
     icon: Wrench,
     title: "Vidange & lubrification",
-    description: "Entretien moteur avec produits premium et suivi clair de l’intervention.",
+    description:
+      "Entretien moteur avec produits premium et suivi clair de l’intervention.",
   },
   {
     icon: Gauge,
     title: "Diagnostic électronique",
-    description: "Lecture, analyse et orientation technique pour identifier la bonne action.",
+    description:
+      "Lecture, analyse et orientation technique pour identifier la bonne action.",
   },
   {
     icon: ShieldCheck,
     title: "Freinage & sécurité",
-    description: "Contrôle des organes sensibles pour rouler avec confiance.",
+    description:
+      "Contrôle des organes sensibles pour rouler avec confiance.",
   },
   {
     icon: Fan,
     title: "Climatisation",
-    description: "Contrôle, entretien et remise en performance du confort intérieur.",
+    description:
+      "Contrôle, entretien et remise en performance du confort intérieur.",
   },
   {
     icon: CarFront,
     title: "Révision complète",
-    description: "Une prise en charge globale pour garder le véhicule fiable et performant.",
+    description:
+      "Une prise en charge globale pour garder le véhicule fiable et performant.",
   },
   {
     icon: BatteryCharging,
     title: "Flottes & entreprises",
-    description: "Suivi digital des véhicules professionnels, rappels et interventions.",
+    description:
+      "Suivi digital des véhicules professionnels, rappels et interventions.",
   },
 ];
 

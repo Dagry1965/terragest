@@ -1,28 +1,37 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { BellRing, ClipboardCheck, ScanLine, Smartphone } from "lucide-react";
+import {
+  BellRing,
+  ClipboardCheck,
+  ScanLine,
+  Smartphone,
+} from "lucide-react";
 
 const reasons = [
   {
     icon: ScanLine,
     title: "Diagnostic clair",
-    description: "Vous comprenez les priorités avant d’engager une intervention.",
+    description:
+      "Vous comprenez les priorités avant d’engager une intervention.",
   },
   {
     icon: ClipboardCheck,
     title: "Devis transparent",
-    description: "Les travaux sont structurés, suivis et validés étape par étape.",
+    description:
+      "Les travaux sont structurés, suivis et validés étape par étape.",
   },
   {
     icon: Smartphone,
     title: "Suivi digital",
-    description: "Le rendez-vous, l’intervention et la facturation restent traçables.",
+    description:
+      "Le rendez-vous, l’intervention et la facturation restent traçables.",
   },
   {
     icon: BellRing,
     title: "Rappels intelligents",
-    description: "Vidanges, entretiens et échéances ne sont plus oubliés.",
+    description:
+      "Vidanges, entretiens et échéances ne sont plus oubliés.",
   },
 ];
 

@@ -4,6 +4,7 @@ import {
   PublicServices,
   PublicWhy,
   PublicCTA,
+  PublicTrust,
   PublicContact,
 } from "@/components/public";
 
@@ -13,6 +14,7 @@ export default function HomePage() {
       <PublicHero />
       <PublicServices />
       <PublicWhy />
+      <PublicTrust />
       <PublicCTA />
       <PublicContact />
     </PublicLayout>

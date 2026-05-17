@@ -7,3 +7,4 @@ export * from "./PublicServices";
 export * from "./PublicWhy";
 export * from "./PublicCTA";
 export * from "./PublicContact";
+export * from "./PublicTrust";
