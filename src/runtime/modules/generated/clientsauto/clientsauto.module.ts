@@ -1,4 +1,4 @@
-import type { ERPModule } from "@/runtime/modules/ERPModule";
+﻿import type { ERPModule } from "@/runtime/modules/ERPModule";
 
 export const clientsautoModule: ERPModule = {
   metadata: {
@@ -79,7 +79,7 @@ export const clientsautoModule: ERPModule = {
         key: "pays",
         label: "Pays",
         type: "text",
-        defaultValue: "Côte d'Ivoire",
+        defaultValue: "CÃ´te d'Ivoire",
         grid: { cols: 6 }
       },
       {
@@ -122,7 +122,11 @@ export const clientsautoModule: ERPModule = {
           {
             label:"Inactif",
             value:"inactif"
-          }
+          },
+            {
+              label:"Archivé",
+              value:"archive"
+            }
         ],
         list:{ order:4 },
         grid:{ cols:6 }
@@ -187,7 +191,7 @@ export const clientsautoModule: ERPModule = {
 
       {
         key:"vehicules",
-        label:"Véhicules",
+        label:"VÃ©hicules",
         fields:[
           "vehicules"
         ],
