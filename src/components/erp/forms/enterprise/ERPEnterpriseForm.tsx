@@ -58,6 +58,10 @@ recomputeTerrainSurfaceDisponible,
 }
 from "@/runtime/business/exploitations/recomputeTerrainSurfaceDisponible";
 
+import {
+  InvoicePaymentsHistory,
+} from "@/components/erp/billing/InvoicePaymentsHistory";
+
 interface ERPEnterpriseFormProps {
   module: ERPModule;
   mode?: "create" | "edit";
@@ -793,6 +797,15 @@ preparedPayload.terrainId
             </a>
           </div>
         </section>
+      ) : null}
+
+      {isInvoiceEditForm ? (
+        <div data-invoice-payments-history>
+          <InvoicePaymentsHistory
+            factureId={String(initialData.id ?? initialData._id ?? "")}
+            montantTTC={Number(initialData.montantTTC ?? 0)}
+          />
+        </div>
       ) : null}
 
       {mode === "edit" && workflowActions.length > 0 && (
