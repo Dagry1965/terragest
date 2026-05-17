@@ -1,4 +1,29 @@
-"use client";
+const fs = require("fs");
+const path = require("path");
+
+const ROOT = process.cwd();
+
+const rdvPagePath = path.join(ROOT, "src/app/rdv/page.tsx");
+const servicePath = path.join(
+  ROOT,
+  "src/components/public/PublicAppointmentService.ts"
+);
+
+if (fs.existsSync(servicePath)) {
+  let service = fs.readFileSync(servicePath, "utf8");
+
+  service = service
+    .split("TÃ©lÃ©phone").join("Téléphone")
+    .split("VÃ©hicule").join("Véhicule")
+    .split("demandÃ©").join("demandé")
+    .split("PrÃ©parer").join("Préparer")
+    .split("aprÃ¨s").join("après");
+
+  fs.writeFileSync(servicePath, service, "utf8");
+  console.log("FIXED src/components/public/PublicAppointmentService.ts");
+}
+
+const rdvPage = `"use client";
 
 import Link from "next/link";
 import { useState } from "react";
@@ -292,3 +317,9 @@ export default function RDVPage() {
     </PublicLayout>
   );
 }
+`;
+
+fs.writeFileSync(rdvPagePath, rdvPage, "utf8");
+
+console.log("WRITTEN src/app/rdv/page.tsx");
+console.log("Premium RDV page installed.");
