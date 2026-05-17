@@ -1,4 +1,35 @@
-"use client";
+const fs = require("fs");
+const path = require("path");
+
+const root = process.cwd();
+
+function ensureDir(dir) {
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, { recursive: true });
+  }
+}
+
+function write(file, content) {
+  ensureDir(path.dirname(file));
+  fs.writeFileSync(file, content, { encoding: "utf8" });
+  console.log(`UPDATED ${path.relative(root, file)}`);
+}
+
+const file = path.join(
+  root,
+  "src",
+  "components",
+  "erp",
+  "billing",
+  "InvoicePaymentsHistory.tsx"
+);
+
+if (!fs.existsSync(file)) {
+  console.error(`MISSING ${file}`);
+  process.exit(1);
+}
+
+const content = `"use client";
 
 import { useEffect, useMemo, useState } from "react";
 
@@ -114,7 +145,7 @@ function PaymentStatusBadge({
 }) {
   return (
     <span
-      className={`
+      className={\`
         inline-flex
         rounded-full
         border
@@ -122,8 +153,8 @@ function PaymentStatusBadge({
         py-1
         text-xs
         font-black
-        ${statusClassName(statut)}
-      `}
+        \${statusClassName(statut)}
+      \`}
     >
       {formatStatus(statut)}
     </span>
@@ -368,3 +399,8 @@ export function InvoicePaymentsHistory({
     </section>
   );
 }
+`;
+
+write(file, content);
+
+console.log("DONE upgrade invoice payments history mobile");
