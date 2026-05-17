@@ -605,4 +605,269 @@ RuntimeMetrics.increment(
     }
 
 },
+
+// =====================================================
+// AMARKHYS
+// ENCAISSEMENT -> RECALCUL FACTURE
+// =====================================================
+
+{
+  id:
+    "amarkhys-encaissement-recompute-facture",
+
+  module:
+    "encaissementsauto",
+
+  event:
+    "encaissementsauto.created",
+
+  condition:
+    (payload) =>
+      Boolean(
+        payload.factureId
+      ),
+
+  action:
+    async (payload) => {
+      const facturesModule =
+        coreERPModules.find(
+          module =>
+            module.metadata.key ===
+              "facturesauto"
+        );
+
+      const encaissementsModule =
+        coreERPModules.find(
+          module =>
+            module.metadata.key ===
+              "encaissementsauto"
+        );
+
+      if (
+        !facturesModule ||
+        !encaissementsModule
+      ) {
+        return;
+      }
+
+      const facture =
+        await RuntimeDataBinding.detail(
+          facturesModule,
+          String(payload.factureId)
+        );
+
+      if (!facture) {
+        return;
+      }
+
+      const encaissements =
+        await RuntimeDataBinding.list(
+          encaissementsModule
+        );
+
+      const encaissementsValides =
+        encaissements.filter(
+          (encaissement: any) =>
+            String(encaissement.factureId) ===
+              String(payload.factureId) &&
+            encaissement.statut ===
+              "valide"
+        );
+
+      const montantPaye =
+        encaissementsValides.reduce(
+          (total: number, encaissement: any) =>
+            total +
+            Number(
+              encaissement.montant ?? 0
+            ),
+          0
+        );
+
+      const montantTTC =
+        Number(
+          facture.montantTTC ??
+          facture.totalTTC ??
+          facture.montantTotal ??
+          facture.total ??
+          0
+        );
+
+      const resteAPayer =
+        Math.max(
+          montantTTC - montantPaye,
+          0
+        );
+
+      const statutPaiement =
+        montantPaye <= 0
+          ? "en_attente"
+          : montantPaye < montantTTC
+            ? "partiel"
+            : "paye";
+
+      await RuntimeDataBinding.update(
+        facturesModule,
+        String(payload.factureId),
+        {
+          montantPaye,
+          resteAPayer,
+          statutPaiement,
+          dernierEncaissementAt:
+            new Date().toISOString(),
+        }
+      );
+
+      await RuntimeNotificationEngine
+        .notify({
+          type:
+            "amarkhys.facture.recomputed",
+
+          module:
+            "facturesauto",
+
+          title:
+            "Facture recalculée",
+
+          message:
+            `Paiement reçu : ${montantPaye}. Reste à payer : ${resteAPayer}.`,
+
+          severity:
+            "info",
+        });
+    }
+},
+
+// =====================================================
+// AMARKHYS
+// ENCAISSEMENT MIS A JOUR -> RECALCUL FACTURE
+// =====================================================
+
+{
+  id:
+    "amarkhys-encaissement-updated-recompute-facture",
+
+  module:
+    "encaissementsauto",
+
+  event:
+    "encaissementsauto.updated",
+
+  condition:
+    (payload) =>
+      Boolean(
+        payload.factureId
+      ),
+
+  action:
+    async (payload) => {
+      const facturesModule =
+        coreERPModules.find(
+          module =>
+            module.metadata.key ===
+              "facturesauto"
+        );
+
+      const encaissementsModule =
+        coreERPModules.find(
+          module =>
+            module.metadata.key ===
+              "encaissementsauto"
+        );
+
+      if (
+        !facturesModule ||
+        !encaissementsModule
+      ) {
+        return;
+      }
+
+      const facture =
+        await RuntimeDataBinding.detail(
+          facturesModule,
+          String(payload.factureId)
+        );
+
+      if (!facture) {
+        return;
+      }
+
+      const encaissements =
+        await RuntimeDataBinding.list(
+          encaissementsModule
+        );
+
+      const encaissementsValides =
+        encaissements.filter(
+          (encaissement: any) =>
+            String(encaissement.factureId) ===
+              String(payload.factureId) &&
+            encaissement.statut ===
+              "valide"
+        );
+
+      const montantPaye =
+        encaissementsValides.reduce(
+          (total: number, encaissement: any) =>
+            total +
+            Number(
+              encaissement.montant ?? 0
+            ),
+          0
+        );
+
+      const montantTTC =
+        Number(
+          facture.montantTTC ??
+          facture.totalTTC ??
+          facture.montantTotal ??
+          facture.total ??
+          0
+        );
+
+      const resteAPayer =
+        Math.max(
+          montantTTC - montantPaye,
+          0
+        );
+
+      const statutPaiement =
+        montantPaye <= 0
+          ? "en_attente"
+          : montantPaye < montantTTC
+            ? "partiel"
+            : "paye";
+
+      await RuntimeDataBinding.update(
+        facturesModule,
+        String(payload.factureId),
+        {
+          montantPaye,
+          resteAPayer,
+          statutPaiement,
+          dernierEncaissementAt:
+            new Date().toISOString(),
+        }
+      );
+
+      await RuntimeNotificationEngine
+        .notify({
+          type:
+            "amarkhys.facture.recomputed",
+
+          module:
+            "facturesauto",
+
+          title:
+            "Facture recalculée",
+
+          message:
+            `Encaissement mis à jour. Payé : ${montantPaye}. Reste : ${resteAPayer}.`,
+
+          severity:
+            "info",
+        });
+    }
+},
+
 ];

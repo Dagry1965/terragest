@@ -1,4 +1,14 @@
-import type { ERPModule } from "@/runtime/modules/ERPModule";
+const fs = require("fs");
+const path = require("path");
+
+const ROOT = process.cwd();
+
+const target = path.join(
+  ROOT,
+  "src/runtime/modules/generated/facturesauto/facturesauto.module.ts"
+);
+
+const content = `import type { ERPModule } from "@/runtime/modules/ERPModule";
 
 import {
   facturesautoActions,
@@ -275,3 +285,8 @@ export const facturesautoModule: ERPModule = {
     },
   ],
 };
+`;
+
+fs.writeFileSync(target, content, "utf8");
+
+console.log("OK facturesauto.module.ts réparé.");
