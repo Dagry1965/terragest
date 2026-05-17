@@ -1,4 +1,18 @@
-"use client";
+const fs = require("fs");
+const path = require("path");
+
+const ROOT = process.cwd();
+
+function write(relativePath, content) {
+  const file = path.join(ROOT, relativePath);
+  fs.mkdirSync(path.dirname(file), { recursive: true });
+  fs.writeFileSync(file, content, "utf8");
+  console.log("WRITTEN", relativePath);
+}
+
+write(
+  "src/components/public/PublicHero.tsx",
+`"use client";
 
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -241,3 +255,9 @@ export function PublicHero() {
     </section>
   );
 }
+`
+);
+
+console.log("");
+console.log("Public hero visual polish installed.");
+console.log("Done.");
