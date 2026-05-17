@@ -10,6 +10,10 @@ import {
   encaissementsautoModule,
 } from "@/runtime/modules/generated/encaissementsauto";
 
+import {
+  PaymentReceiptActions,
+} from "./PaymentReceiptActions";
+
 interface InvoicePaymentsHistoryProps {
   factureId: string;
   montantTTC?: number;
@@ -228,7 +232,7 @@ export function InvoicePaymentsHistory({
             {items.map((item, index) => (
               <div
                 key={item.id ?? index}
-                className="grid grid-cols-5 gap-4 px-4 py-4 text-sm text-slate-700"
+                className="grid grid-cols-6 gap-4 px-4 py-4 text-sm text-slate-700"
               >
                 <div className="font-semibold">
                   {formatDate(item.datePaiement)}
@@ -260,6 +264,13 @@ export function InvoicePaymentsHistory({
                   >
                     {formatStatus(item.statut)}
                   </span>
+                </div>
+
+                <div>
+                  <PaymentReceiptActions
+                    payment={item as Record<string, unknown>}
+                    factureId={factureId}
+                  />
                 </div>
               </div>
             ))}
