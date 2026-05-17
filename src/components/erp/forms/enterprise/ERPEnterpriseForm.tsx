@@ -748,6 +748,45 @@ preparedPayload.terrainId
     }
   }
 
+  async function handleDeleteRecord() {
+    const confirmed = window.confirm(
+      "Supprimer cet élément ?"
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
+    try {
+      await RuntimeDataBinding.delete(
+        module,
+        String(initialData.id)
+      );
+
+      router.push(
+        module.metadata.routes?.list ??
+          `/${module.metadata.key}`
+      );
+    } catch (error) {
+      const message =
+        error instanceof Error
+          ? error.message
+          : "Suppression impossible.";
+
+      setErrors([
+        {
+          field: "delete",
+          message,
+        },
+      ]);
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }
+  }
+
   return (
     <form
       ref={formRef}
@@ -1019,25 +1058,8 @@ preparedPayload.terrainId
               <ERPButton
                 type="button"
                 variant="danger"
-                onClick={async () => {
-                  const confirmed = window.confirm(
-                    "Supprimer cet élément ?"
-                  );
-
-                  if (!confirmed) {
-                    return;
-                  }
-
-                  await RuntimeDataBinding.delete(
-                    module,
-                    String(initialData.id)
-                  );
-
-                  router.push(
-                    module.metadata.routes?.list ??
-                      `/${module.metadata.key}`
-                  );
-                }}
+                disabled={saving}
+                onClick={handleDeleteRecord}
               >
                 Supprimer
               </ERPButton>

@@ -13,6 +13,10 @@ import {
 } from "./FirestoreRuntimeRepository";
 
 import {
+  RuntimeReferentialIntegrityEngine,
+} from "@/runtime/integrity/RuntimeReferentialIntegrityEngine";
+
+import {
   ERPSessionContext,
 } from "@/runtime/security/sessions/ERPSessionContext";
 
@@ -213,6 +217,11 @@ export class FirestoreRuntimeMutation {
     module: ERPModule,
     id: string
   ) {
+    await RuntimeReferentialIntegrityEngine.assertCanDelete(
+      module,
+      id
+    );
+
     const result =
       await FirestoreRuntimeRepository.delete(
         module,
