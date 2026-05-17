@@ -1,6 +1,7 @@
 import { rappelsautoModule } from "@/runtime/modules/generated/rappelsauto";
 import { stocksautoModule } from "@/runtime/modules/generated/stocksauto";
 import { produitsautoModule } from "@/runtime/modules/generated/produitsauto";
+import { echeancespaiementautoModule } from "@/runtime/modules/generated/echeancespaiementauto";
 import { encaissementsautoModule } from "@/runtime/modules/generated/encaissementsauto";
 import { facturesautoModule } from "@/runtime/modules/generated/facturesauto";
 import { interventionsautoModule } from "@/runtime/modules/generated/interventionsauto";
@@ -23,6 +24,7 @@ export const coreERPModules: ERPModule[] = [
   rappelsautoModule,
   stocksautoModule,
   produitsautoModule,
+  echeancespaiementautoModule,
   encaissementsautoModule,
   facturesautoModule,
   interventionsautoModule,
@@ -215,6 +217,7 @@ for (const module of mergedERPModules) {
   vehiculesModule,
   rendezvousModule,
   interventionsautoModule,
+  echeancespaiementautoModule,
   encaissementsautoModule,
   facturesautoModule,
   produitsautoModule,
