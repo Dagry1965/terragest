@@ -123,6 +123,115 @@ export const ERPBusinessAmarkhysDashboardConfig: ERPDashboardConfig = {
     },
 
     {
+      key: "recouvrement-echeances-retard",
+      type: "kpi",
+      moduleKey: "echeancespaiementauto",
+      title: "Échéances en retard",
+      description: "Nombre d’échéances de paiement dépassées ou à relancer.",
+      href: "/echeancespaiementauto",
+      filters: [
+        {
+          field: "statut",
+          operator: "equals",
+          value: "en_retard",
+        },
+      ],
+    },
+    {
+      key: "recouvrement-montant-retard",
+      type: "kpi",
+      moduleKey: "echeancespaiementauto",
+      title: "Montant en retard",
+      description: "Somme des montants prévus sur les échéances en retard.",
+      href: "/echeancespaiementauto",
+      aggregation: "sum",
+      sumFields: ["montantPrevu"],
+      valueSuffix: "FCFA",
+      filters: [
+        {
+          field: "statut",
+          operator: "equals",
+          value: "en_retard",
+        },
+      ],
+    },
+    {
+      key: "recouvrement-reste-a-encaisser",
+      type: "kpi",
+      moduleKey: "facturesauto",
+      title: "Reste à encaisser",
+      description: "Somme des restes à payer sur les factures non soldées.",
+      href: "/facturesauto",
+      aggregation: "sum",
+      sumFields: ["resteAPayer"],
+      valueSuffix: "FCFA",
+      filters: [
+        {
+          field: "statutPaiement",
+          operator: "notEquals",
+          value: "paye",
+        },
+      ],
+    },
+    {
+      key: "recouvrement-relances-factures",
+      type: "kpi",
+      moduleKey: "rappelsauto",
+      title: "Relances factures",
+      description: "Relances de factures impayées à traiter.",
+      href: "/rappelsauto",
+      filters: [
+        {
+          field: "typeRappel",
+          operator: "equals",
+          value: "facture_impayee",
+        },
+        {
+          field: "statut",
+          operator: "notEquals",
+          value: "envoye",
+        },
+      ],
+    },
+    {
+      key: "alertes-echeances-retard",
+      type: "alert",
+      moduleKey: "echeancespaiementauto",
+      title: "Échéances à recouvrer",
+      description: "Échéances en retard nécessitant une action de recouvrement.",
+      labelField: "factureId",
+      dateField: "dateEcheance",
+      href: "/echeancespaiementauto",
+      level: "critical",
+      limit: 6,
+      filters: [
+        {
+          field: "statut",
+          operator: "equals",
+          value: "en_retard",
+        },
+      ],
+    },
+    {
+      key: "prochaines-echeances",
+      type: "timeline",
+      moduleKey: "echeancespaiementauto",
+      title: "Prochaines échéances",
+      description: "Échéances à venir pour les paiements fractionnés.",
+      labelField: "factureId",
+      dateField: "dateEcheance",
+      href: "/echeancespaiementauto",
+      limit: 8,
+      filters: [
+        {
+          field: "statut",
+          operator: "equals",
+          value: "a_venir",
+        },
+      ],
+    },
+
+    {
       key: "conversion-funnel",
       type: "funnel",
       title: "Funnel garage",
