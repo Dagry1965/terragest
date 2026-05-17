@@ -14,6 +14,10 @@ import {
   ERPQuickActionsWidget,
 } from "./widgets/ERPQuickActionsWidget";
 
+import {
+  ERPFunnelWidget,
+} from "./widgets/ERPFunnelWidget";
+
 export function registerDashboardWidgets() {
   ERPDashboardWidgetRegistry.register(
     "kpi",
@@ -38,5 +42,10 @@ export function registerDashboardWidgets() {
   ERPDashboardWidgetRegistry.register(
     "quickActions",
     ERPQuickActionsWidget
+  );
+
+  ERPDashboardWidgetRegistry.register(
+    "funnel",
+    ERPFunnelWidget
   );
 }

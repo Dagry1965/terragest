@@ -3,6 +3,8 @@ import { resolveDashboardModule } from "./ERPDashboardModuleResolver";
 import type {
   ERPDashboardConfig,
   ERPDashboardFilter,
+  ERPDashboardFunnelStepConfig,
+  ERPDashboardFunnelStepResult,
   ERPDashboardWidgetConfig,
   ERPDashboardWidgetResult,
 } from "./ERPDashboardTypes";
@@ -173,6 +175,85 @@ function getRecordHref(
   return widget.href + "/" + record.id;
 }
 
+async function resolveFunnelStep(
+  step: ERPDashboardFunnelStepConfig,
+  previousValue?: number
+): Promise<ERPDashboardFunnelStepResult> {
+  const module =
+    resolveDashboardModule(step.moduleKey);
+
+  if (!module) {
+    return {
+      key: step.key,
+      label: step.label,
+      value: 0,
+      href: step.href,
+      conversionRate: 0,
+    };
+  }
+
+  const records =
+    await RuntimeDataBinding.list(module);
+
+  const filtered =
+    applyFilters(records, step.filters);
+
+  const value =
+    filtered.length;
+
+  const conversionRate =
+    previousValue && previousValue > 0
+      ? Math.round((value / previousValue) * 100)
+      : undefined;
+
+  return {
+    key: step.key,
+    label: step.label,
+    value,
+    href: step.href,
+    conversionRate,
+  };
+}
+
+async function resolveFunnelWidget(
+  widget: ERPDashboardWidgetConfig
+): Promise<ERPDashboardWidgetResult> {
+  const results: ERPDashboardFunnelStepResult[] = [];
+  let previousValue: number | undefined = undefined;
+
+  for (const step of widget.steps ?? []) {
+    const result =
+      await resolveFunnelStep(
+        step,
+        previousValue
+      );
+
+    results.push(result);
+    previousValue = result.value;
+  }
+
+  const first =
+    results[0]?.value ?? 0;
+
+  const last =
+    results[results.length - 1]?.value ?? 0;
+
+  const globalConversion =
+    first > 0
+      ? Math.round((last / first) * 100)
+      : 0;
+
+  return {
+    key: widget.key,
+    type: widget.type,
+    title: widget.title,
+    description: widget.description,
+    value: globalConversion,
+    valueSuffix: "%",
+    steps: results,
+  };
+}
+
 export class ERPDashboardWidgetEngine {
   static async resolveWidget(
     widget: ERPDashboardWidgetConfig
@@ -185,6 +266,10 @@ export class ERPDashboardWidgetEngine {
         description: widget.description,
         actions: widget.actions ?? [],
       };
+    }
+
+    if (widget.type === "funnel") {
+      return resolveFunnelWidget(widget);
     }
 
     if (!widget.moduleKey) {

@@ -3,7 +3,8 @@ export type ERPDashboardWidgetType =
   | "alert"
   | "timeline"
   | "activity"
-  | "quickActions";
+  | "quickActions"
+  | "funnel";
 
 export type ERPDashboardFilterOperator =
   | "equals"
@@ -29,6 +30,22 @@ export interface ERPDashboardQuickAction {
   tone?: "primary" | "secondary" | "danger";
 }
 
+export interface ERPDashboardFunnelStepConfig {
+  key: string;
+  label: string;
+  moduleKey: string;
+  href?: string;
+  filters?: ERPDashboardFilter[];
+}
+
+export interface ERPDashboardFunnelStepResult {
+  key: string;
+  label: string;
+  value: number;
+  href?: string;
+  conversionRate?: number;
+}
+
 export interface ERPDashboardWidgetConfig {
   key: string;
   type: ERPDashboardWidgetType;
@@ -45,6 +62,7 @@ export interface ERPDashboardWidgetConfig {
   aggregation?: ERPDashboardAggregation;
   sumFields?: string[];
   valueSuffix?: string;
+  steps?: ERPDashboardFunnelStepConfig[];
 }
 
 export interface ERPDashboardConfig {
@@ -63,6 +81,7 @@ export interface ERPDashboardWidgetResult {
   value?: number;
   valueSuffix?: string;
   actions?: ERPDashboardQuickAction[];
+  steps?: ERPDashboardFunnelStepResult[];
   items?: Array<{
     id: string;
     title: string;

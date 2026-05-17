@@ -36,6 +36,59 @@ export const ERPBusinessAmarkhysDashboardConfig: ERPDashboardConfig = {
       ],
     },
     {
+      key: "conversion-funnel",
+      type: "funnel",
+      title: "Funnel garage",
+      description:
+        "Lecture du parcours commercial et opérationnel : lead, rendez-vous, intervention, facture, paiement.",
+      steps: [
+        {
+          key: "leads",
+          label: "Leads",
+          moduleKey: "clientsauto",
+          href: "/clientsauto",
+          filters: [
+            {
+              field: "source",
+              operator: "equals",
+              value: "site_public",
+            },
+          ],
+        },
+        {
+          key: "rdv",
+          label: "RDV",
+          moduleKey: "rendezvous",
+          href: "/rendezvous",
+        },
+        {
+          key: "interventions",
+          label: "Interventions",
+          moduleKey: "interventionsauto",
+          href: "/interventionsauto",
+        },
+        {
+          key: "factures",
+          label: "Factures",
+          moduleKey: "facturesauto",
+          href: "/facturesauto",
+        },
+        {
+          key: "paiements",
+          label: "Payées",
+          moduleKey: "facturesauto",
+          href: "/facturesauto",
+          filters: [
+            {
+              field: "statutPaiement",
+              operator: "equals",
+              value: "paye",
+            },
+          ],
+        },
+      ],
+    },
+    {
       key: "ca-total-ttc",
       type: "kpi",
       moduleKey: "facturesauto",
