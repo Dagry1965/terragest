@@ -16,6 +16,12 @@ export const facturesautoActions: ERPModuleAction[] = [
     permission: "facturesauto.workflow",
   },
   {
+    key: "Enregistrer paiement",
+    label: "Enregistrer un paiement",
+    type: "primary",
+    permission: "facturesauto.workflow",
+  },
+  {
     key: "Relancer",
     label: "Relancer le client",
     type: "secondary",

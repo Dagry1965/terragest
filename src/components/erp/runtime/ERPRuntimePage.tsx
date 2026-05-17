@@ -22,6 +22,78 @@ import {
   RuntimeDataBinding,
 } from "@/runtime/data-binding/RuntimeDataBinding";
 
+function buildInvoicePaymentHref(
+  record: Record<string, unknown>
+): string {
+  const factureId =
+    String(record.id ?? record._id ?? "");
+
+  const montantTTC =
+    Number(record.montantTTC ?? 0);
+
+  const montantPaye =
+    Number(record.montantPaye ?? 0);
+
+  const resteAPayer =
+    Number(record.resteAPayer ?? 0);
+
+  const montant =
+    resteAPayer > 0
+      ? resteAPayer
+      : Math.max(montantTTC - montantPaye, 0);
+
+  const params =
+    new URLSearchParams();
+
+  params.set(
+    "factureId",
+    factureId
+  );
+
+  if (record.clientId) {
+    params.set(
+      "clientId",
+      String(record.clientId)
+    );
+  }
+
+  if (record.vehiculeId) {
+    params.set(
+      "vehiculeId",
+      String(record.vehiculeId)
+    );
+  }
+
+  if (montant > 0) {
+    params.set(
+      "montant",
+      String(montant)
+    );
+  }
+
+  params.set(
+    "datePaiement",
+    new Date().toISOString().split("T")[0]
+  );
+
+  params.set(
+    "statut",
+    "valide"
+  );
+
+  params.set(
+    "returnTo",
+    "/facturesauto/" + factureId
+  );
+
+  params.set(
+    "lockFields",
+    "factureId,clientId,vehiculeId"
+  );
+
+  return "/encaissementsauto/nouveau?" + params.toString();
+}
+
 function getRuntimePageTypeLabel(type: string): string {
   switch (type) {
     case "list":
@@ -122,6 +194,16 @@ export function ERPRuntimePage({
           record,
         })
       : [];
+
+  const isInvoiceDetailPage =
+    type === "detail" &&
+    module?.metadata?.key === "facturesauto" &&
+    Boolean(record?.id ?? record?._id);
+
+  const invoicePaymentHref =
+    isInvoiceDetailPage && record
+      ? buildInvoicePaymentHref(record)
+      : "#";
 
   return (
     <ERPPage

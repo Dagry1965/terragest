@@ -1,4 +1,14 @@
-"use client";
+const fs = require("fs");
+const path = require("path");
+
+const ROOT = process.cwd();
+
+const target = path.join(
+  ROOT,
+  "src/components/erp/runtime/ERPRuntimeDetails.tsx"
+);
+
+const content = `"use client";
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -260,7 +270,7 @@ export function ERPRuntimeDetails({
       ) : null}
 
       <ERPCard
-        title={`Détails ${module.metadata.label}`}
+        title={\`Détails \${module.metadata.label}\`}
         description="Vue détail générée automatiquement par le Runtime ERP."
       >
         <div className="grid gap-4 md:grid-cols-2">
@@ -300,7 +310,7 @@ export function ERPRuntimeDetails({
           <div className="space-y-3">
             {timeline.map((item, index) => (
               <div
-                key={`${item.entityId}-${item.action}-${index}`}
+                key={\`\${item.entityId}-\${item.action}-\${index}\`}
                 className="rounded-xl border border-slate-800 bg-slate-950 p-4"
               >
                 <div className="flex items-center justify-between gap-4">
@@ -326,3 +336,8 @@ export function ERPRuntimeDetails({
     </div>
   );
 }
+`;
+
+fs.writeFileSync(target, content, "utf8");
+
+console.log("OK bouton paiement installé dans ERPRuntimeDetails.");
