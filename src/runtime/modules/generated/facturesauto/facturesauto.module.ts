@@ -156,6 +156,7 @@ export const facturesautoModule: ERPModule = {
         fields: [
           "numeroFacture",
           "dateFacture",
+          "statutFacture",
           "statutPaiement",
           "modePaiement",
         ],
@@ -166,6 +167,7 @@ export const facturesautoModule: ERPModule = {
             fields: [
               "numeroFacture",
               "dateFacture",
+              "statutFacture",
               "statutPaiement",
               "modePaiement",
             ],

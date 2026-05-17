@@ -226,7 +226,7 @@ export const TerragestDomainModel = {
 
   materiels: {
     label: "Matériels",
-    description: "Ã‰quipements utilisés dans les opérations.",
+    description: "Équipements utilisés dans les opérations.",
     relations: [
       "exploitationId",
       "operations",

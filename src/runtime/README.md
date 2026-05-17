@@ -1,8 +1,8 @@
 ﻿# Runtime
 
-Le runtime est le cerveau opÃ©rationnel de Terragest.
+Le runtime est le cerveau opérationnel de Terragest.
 
-ResponsabilitÃ©s :
+Responsabilités :
 - workflows
 - orchestration
 - automation

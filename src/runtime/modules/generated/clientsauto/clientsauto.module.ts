@@ -79,7 +79,7 @@ export const clientsautoModule: ERPModule = {
         key: "pays",
         label: "Pays",
         type: "text",
-        defaultValue: "CÃ´te d'Ivoire",
+        defaultValue: "Côte d'Ivoire",
         grid: { cols: 6 }
       },
       {
@@ -191,7 +191,7 @@ export const clientsautoModule: ERPModule = {
 
       {
         key:"vehicules",
-        label:"VÃ©hicules",
+        label:"Véhicules",
         fields:[
           "vehicules"
         ],

@@ -523,7 +523,7 @@ export const tacheFields = [
     key: "statut",
     label: "Statut",
     type: "select",
-    options: ["Ã€ faire", "En cours", "Terminée", "Annulée"],
+    options: ["À faire", "En cours", "Terminée", "Annulée"],
   },
 ];
 
