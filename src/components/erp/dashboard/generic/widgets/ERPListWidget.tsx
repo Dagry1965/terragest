@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import type {
   ERPDashboardWidgetProps,
 } from "../registry/ERPDashboardWidgetRegistry";
@@ -58,6 +60,34 @@ function formatDashboardDate(
   return text;
 }
 
+function levelClassName(
+  level?: "info" | "warning" | "critical"
+): string {
+  if (level === "critical") {
+    return "border-red-400/30 bg-red-500/10 text-red-100";
+  }
+
+  if (level === "warning") {
+    return "border-amber-400/30 bg-amber-500/10 text-amber-100";
+  }
+
+  return "border-white/10 bg-black/20 text-slate-100";
+}
+
+function levelLabel(
+  level?: "info" | "warning" | "critical"
+): string {
+  if (level === "critical") {
+    return "Critique";
+  }
+
+  if (level === "warning") {
+    return "Attention";
+  }
+
+  return "Info";
+}
+
 export function ERPListWidget({
   widget,
 }: ERPDashboardWidgetProps) {
@@ -85,20 +115,59 @@ export function ERPListWidget({
             const formattedDate =
               formatDashboardDate(item.date);
 
-            return (
+            const content = (
               <div
-                key={item.id}
-                className="rounded-2xl border border-white/10 bg-black/20 p-4 text-sm transition hover:border-emerald-300/40 hover:bg-emerald-400/10"
+                className={`
+                  rounded-2xl
+                  border
+                  p-4
+                  text-sm
+                  transition
+                  hover:border-emerald-300/40
+                  hover:bg-emerald-400/10
+                  ${levelClassName(item.level)}
+                `}
               >
-                <div className="font-bold text-white">
-                  {item.title}
-                </div>
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <div className="font-bold text-white">
+                      {item.title}
+                    </div>
 
-                {formattedDate ? (
-                  <div className="mt-1 text-xs font-semibold text-slate-500">
-                    {formattedDate}
+                    {item.description ? (
+                      <div className="mt-1 text-xs font-semibold text-slate-500">
+                        {item.description}
+                      </div>
+                    ) : null}
+
+                    {formattedDate ? (
+                      <div className="mt-1 text-xs font-semibold text-slate-500">
+                        {formattedDate}
+                      </div>
+                    ) : null}
                   </div>
-                ) : null}
+
+                  <span className="rounded-full border border-white/10 bg-white/10 px-2.5 py-1 text-[10px] font-black uppercase tracking-wide text-slate-300">
+                    {levelLabel(item.level)}
+                  </span>
+                </div>
+              </div>
+            );
+
+            if (item.href) {
+              return (
+                <Link
+                  key={item.id}
+                  href={item.href}
+                >
+                  {content}
+                </Link>
+              );
+            }
+
+            return (
+              <div key={item.id}>
+                {content}
               </div>
             );
           })
