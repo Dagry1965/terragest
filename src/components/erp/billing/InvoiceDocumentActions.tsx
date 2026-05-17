@@ -262,7 +262,12 @@ async function loadInvoiceRelations(
 }
 
 function buildShareText(
-  invoice: RecordData
+  invoice: RecordData,
+  relations?: {
+    client: RecordData | null;
+    vehicule: RecordData | null;
+    intervention: RecordData | null;
+  } | null
 ): string {
   const numero =
     buildInvoiceNumber(invoice);
@@ -270,21 +275,49 @@ function buildShareText(
   const total =
     amount(invoice, "montantTTC");
 
+  const montantPaye =
+    amount(invoice, "montantPaye");
+
   const reste =
     computeResteAPayer(invoice);
+
+  const statut =
+    formatPaymentStatus(
+      value(invoice, "statutPaiement", "en_attente")
+    );
 
   const url =
     buildInvoicePublicUrl(invoice);
 
+  const clientLabel =
+    buildClientLabel(relations?.client ?? null);
+
+  const vehicleLabel =
+    buildVehicleLabel(relations?.vehicule ?? null);
+
+  const interventionLabel =
+    buildInterventionLabel(relations?.intervention ?? null);
+
   return [
     "Bonjour,",
-    "Votre facture AMARKHYS " + numero + " est disponible.",
+    "",
+    "Votre facture AMARKHYS est disponible.",
+    "",
+    "Facture : " + numero,
+    "Client : " + clientLabel,
+    "Véhicule : " + vehicleLabel,
+    "Intervention : " + interventionLabel,
     "Montant TTC : " + formatMoney(total),
+    "Montant payé : " + formatMoney(montantPaye),
     "Reste à payer : " + formatMoney(reste),
-    url ? "Lien : " + url : "",
+    "Statut paiement : " + statut,
+    "",
+    url ? "Lien facture : " + url : "",
+    "",
+    "Merci pour votre confiance.",
   ]
     .filter(Boolean)
-    .join("\n");
+    .join("\\n");
 }
 
 async function createInvoicePdf(
@@ -501,6 +534,13 @@ export function InvoiceDocumentActions({
   const [qrDataUrl, setQrDataUrl] =
     useState("");
 
+  const [relations, setRelations] =
+    useState<{
+      client: RecordData | null;
+      vehicule: RecordData | null;
+      intervention: RecordData | null;
+    } | null>(null);
+
   const publicUrl =
     buildInvoicePublicUrl(invoice);
 
@@ -531,8 +571,31 @@ export function InvoiceDocumentActions({
     };
   }, [publicUrl]);
 
+  useEffect(() => {
+    let mounted = true;
+
+    async function loadRelations() {
+      const loadedRelations =
+        await loadInvoiceRelations(invoice);
+
+      if (mounted) {
+        setRelations(loadedRelations);
+      }
+    }
+
+    loadRelations().catch(() => {
+      if (mounted) {
+        setRelations(null);
+      }
+    });
+
+    return () => {
+      mounted = false;
+    };
+  }, [invoice]);
+
   const shareText =
-    buildShareText(invoice);
+    buildShareText(invoice, relations);
 
   const whatsappHref =
     "https://wa.me/?text=" +
