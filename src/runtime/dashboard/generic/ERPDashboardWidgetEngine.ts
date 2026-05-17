@@ -12,9 +12,13 @@ function readValue(record: any, field: string): any {
 }
 
 function toDate(value: unknown): Date | null {
-  if (!value) return null;
+  if (!value) {
+    return null;
+  }
 
-  if (value instanceof Date) return value;
+  if (value instanceof Date) {
+    return value;
+  }
 
   if (
     typeof value === "object" &&
@@ -24,22 +28,39 @@ function toDate(value: unknown): Date | null {
     return new Date((value as any).seconds * 1000);
   }
 
-  const date = new Date(String(value));
+  const date =
+    new Date(String(value));
+
   return Number.isNaN(date.getTime()) ? null : date;
 }
 
-function daysFromNow(value: unknown): number | null {
-  const date = toDate(value);
-  if (!date) return null;
+function dateTimeValue(value: unknown): number {
+  const date =
+    toDate(value);
 
-  const now = new Date();
-  const diff = date.getTime() - now.getTime();
+  return date ? date.getTime() : 0;
+}
+
+function daysFromNow(value: unknown): number | null {
+  const date =
+    toDate(value);
+
+  if (!date) {
+    return null;
+  }
+
+  const now =
+    new Date();
+
+  const diff =
+    date.getTime() - now.getTime();
 
   return Math.ceil(diff / (1000 * 60 * 60 * 24));
 }
 
 function matchFilter(record: any, filter: ERPDashboardFilter): boolean {
-  const value = readValue(record, filter.field);
+  const value =
+    readValue(record, filter.field);
 
   if (filter.operator === "equals") {
     return value === filter.value;
@@ -54,12 +75,16 @@ function matchFilter(record: any, filter: ERPDashboardFilter): boolean {
   }
 
   if (filter.operator === "lteDaysFromNow") {
-    const days = daysFromNow(value);
+    const days =
+      daysFromNow(value);
+
     return days !== null && days <= Number(filter.value);
   }
 
   if (filter.operator === "gteDaysFromNow") {
-    const days = daysFromNow(value);
+    const days =
+      daysFromNow(value);
+
     return days !== null && days >= Number(filter.value);
   }
 
@@ -83,23 +108,79 @@ function getRecordLabel(
   record: any,
   widget: ERPDashboardWidgetConfig
 ): string {
-  const labelField = widget.labelField ?? "nom";
+  const labelField =
+    widget.labelField ?? "nom";
 
-  return (
+  return String(
     record[labelField] ??
     record.nom ??
     record.code ??
     record.title ??
+    record.motif ??
+    record.message ??
+    record.immatriculation ??
     record.id ??
-    "Element"
+    "Élément"
   );
+}
+
+function getRecordDescription(
+  record: any,
+  widget: ERPDashboardWidgetConfig
+): string | undefined {
+  const value =
+    record.telephone ??
+    record.immatriculation ??
+    record.typeService ??
+    record.statut ??
+    record.source ??
+    widget.description;
+
+  return value ? String(value) : undefined;
+}
+
+function getRecordHref(
+  record: any,
+  widget: ERPDashboardWidgetConfig
+): string | undefined {
+  if (!widget.href) {
+    return undefined;
+  }
+
+  if (!record.id) {
+    return widget.href;
+  }
+
+  return widget.href + "/" + record.id;
 }
 
 export class ERPDashboardWidgetEngine {
   static async resolveWidget(
     widget: ERPDashboardWidgetConfig
   ): Promise<ERPDashboardWidgetResult> {
-    const module = resolveDashboardModule(widget.moduleKey);
+    if (widget.type === "quickActions") {
+      return {
+        key: widget.key,
+        type: widget.type,
+        title: widget.title,
+        description: widget.description,
+        actions: widget.actions ?? [],
+      };
+    }
+
+    if (!widget.moduleKey) {
+      return {
+        key: widget.key,
+        type: widget.type,
+        title: widget.title,
+        description: "Module non défini pour le widget.",
+        value: 0,
+        items: [],
+      };
+    }
+
+    const module =
+      resolveDashboardModule(widget.moduleKey);
 
     if (!module) {
       return {
@@ -112,8 +193,11 @@ export class ERPDashboardWidgetEngine {
       };
     }
 
-    const records = await RuntimeDataBinding.list(module);
-    const filtered = applyFilters(records, widget.filters);
+    const records =
+      await RuntimeDataBinding.list(module);
+
+    const filtered =
+      applyFilters(records, widget.filters);
 
     if (widget.type === "kpi") {
       return {
@@ -126,13 +210,26 @@ export class ERPDashboardWidgetEngine {
       };
     }
 
-    const items = filtered.map((record: any) => ({
-      id: String(record.id),
-      title: getRecordLabel(record, widget),
-      description: widget.description,
-      date: widget.dateField ? String(record[widget.dateField] ?? "") : undefined,
-      level: widget.level ?? "info",
-    }));
+    const sorted =
+      widget.dateField
+        ? [...filtered].sort(
+            (left, right) =>
+              dateTimeValue(right[widget.dateField ?? ""]) -
+              dateTimeValue(left[widget.dateField ?? ""])
+          )
+        : filtered;
+
+    const items =
+      sorted.slice(0, widget.limit ?? 8).map((record: any) => ({
+        id: String(record.id),
+        title: getRecordLabel(record, widget),
+        description: getRecordDescription(record, widget),
+        date: widget.dateField
+          ? String(record[widget.dateField] ?? "")
+          : undefined,
+        level: widget.level ?? "info",
+        href: getRecordHref(record, widget),
+      }));
 
     return {
       key: widget.key,

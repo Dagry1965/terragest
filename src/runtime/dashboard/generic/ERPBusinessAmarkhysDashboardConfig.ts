@@ -4,8 +4,37 @@ export const ERPBusinessAmarkhysDashboardConfig: ERPDashboardConfig = {
   key: "amarkhys-dashboard",
   title: "Cockpit AMARKHYS",
   subtitle:
-    "Pilotage garage : leads entrants, clients, véhicules, rendez-vous, interventions, factures, rappels et acquisition.",
+    "Pilotage garage : leads entrants, clients, véhicules, rendez-vous, interventions, factures, rappels et activité atelier.",
   widgets: [
+    {
+      key: "quick-actions",
+      type: "quickActions",
+      title: "Actions rapides",
+      description: "Accès direct aux opérations quotidiennes du garage.",
+      actions: [
+        {
+          label: "Nouveau rendez-vous",
+          href: "/rendezvous/nouveau",
+          description: "Créer un rendez-vous manuel.",
+          tone: "primary",
+        },
+        {
+          label: "Clients",
+          href: "/clientsauto",
+          description: "Voir les prospects et clients.",
+        },
+        {
+          label: "Interventions",
+          href: "/interventionsauto",
+          description: "Suivre l’activité atelier.",
+        },
+        {
+          label: "Factures",
+          href: "/facturesauto",
+          description: "Consulter la facturation.",
+        },
+      ],
+    },
     {
       key: "leads-site-public",
       type: "kpi",
@@ -83,29 +112,6 @@ export const ERPBusinessAmarkhysDashboardConfig: ERPDashboardConfig = {
       ],
     },
     {
-      key: "interventions-terminees",
-      type: "kpi",
-      moduleKey: "interventionsauto",
-      title: "Interventions terminées",
-      description: "Travaux finalisés.",
-      href: "/interventionsauto",
-      filters: [
-        {
-          field: "statut",
-          operator: "equals",
-          value: "termine",
-        },
-      ],
-    },
-    {
-      key: "factures-total",
-      type: "kpi",
-      moduleKey: "facturesauto",
-      title: "Factures",
-      description: "Factures atelier générées.",
-      href: "/facturesauto",
-    },
-    {
       key: "factures-en-attente",
       type: "kpi",
       moduleKey: "facturesauto",
@@ -117,21 +123,6 @@ export const ERPBusinessAmarkhysDashboardConfig: ERPDashboardConfig = {
           field: "statut",
           operator: "equals",
           value: "en_attente",
-        },
-      ],
-    },
-    {
-      key: "factures-payees",
-      type: "kpi",
-      moduleKey: "facturesauto",
-      title: "Factures payées",
-      description: "Encaissements validés.",
-      href: "/facturesauto",
-      filters: [
-        {
-          field: "statut",
-          operator: "equals",
-          value: "payee",
         },
       ],
     },
@@ -151,29 +142,51 @@ export const ERPBusinessAmarkhysDashboardConfig: ERPDashboardConfig = {
       ],
     },
     {
-      key: "prochains-rdv",
-      type: "timeline",
-      moduleKey: "rendezvous",
-      title: "Prochains rendez-vous",
-      description: "Rendez-vous actifs à suivre.",
-      labelField: "motif",
-      dateField: "dateRendezVous",
+      key: "derniers-leads",
+      type: "activity",
+      moduleKey: "clientsauto",
+      title: "Derniers leads entrants",
+      description: "Prospects créés depuis le site public.",
+      labelField: "nom",
+      dateField: "createdAt",
+      href: "/clientsauto",
+      limit: 6,
       filters: [
         {
-          field: "statut",
-          operator: "notEquals",
-          value: "annule",
+          field: "source",
+          operator: "equals",
+          value: "site_public",
         },
       ],
     },
     {
-      key: "rappels-prochains",
+      key: "derniers-rdv-publics",
+      type: "activity",
+      moduleKey: "rendezvous",
+      title: "Derniers RDV publics",
+      description: "Demandes issues du formulaire public.",
+      labelField: "motif",
+      dateField: "dateRendezVous",
+      href: "/rendezvous",
+      limit: 6,
+      filters: [
+        {
+          field: "source",
+          operator: "equals",
+          value: "site_public",
+        },
+      ],
+    },
+    {
+      key: "prochains-rappels",
       type: "timeline",
       moduleKey: "rappelsauto",
       title: "Prochains rappels",
       description: "Actions de relance à venir.",
       labelField: "message",
       dateField: "dateRappel",
+      href: "/rappelsauto",
+      limit: 8,
       filters: [
         {
           field: "statut",

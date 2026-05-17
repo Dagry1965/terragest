@@ -23,6 +23,7 @@ export class ERPWorkspaceDashboardResolver {
 
     return ERPBusinessDashboardConfig.widgets.filter(
       (widget) =>
+        !widget.moduleKey ||
         workspaceModuleKeys.includes(
           widget.moduleKey
         )

@@ -63,6 +63,7 @@ export class ERPWorkspaceContextResolver {
 
     ].filter(
       (widget) =>
+        !widget.moduleKey ||
         ERPSessionRuntime.canAccessModule(
           widget.moduleKey
         )

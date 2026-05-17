@@ -18,10 +18,6 @@ interface Props {
   widgets: ERPDashboardWidgetResult[];
 }
 
-/**
- * Register widgets synchronously before rendering.
- * Do not use useEffect here, otherwise the first render sees an empty registry.
- */
 registerDashboardWidgets();
 
 export function ERPDashboardRenderer({

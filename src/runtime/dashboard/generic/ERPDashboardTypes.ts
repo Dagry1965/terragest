@@ -1,7 +1,9 @@
 export type ERPDashboardWidgetType =
   | "kpi"
   | "alert"
-  | "timeline";
+  | "timeline"
+  | "activity"
+  | "quickActions";
 
 export type ERPDashboardFilterOperator =
   | "equals"
@@ -16,10 +18,17 @@ export interface ERPDashboardFilter {
   value?: unknown;
 }
 
+export interface ERPDashboardQuickAction {
+  label: string;
+  href: string;
+  description?: string;
+  tone?: "primary" | "secondary" | "danger";
+}
+
 export interface ERPDashboardWidgetConfig {
   key: string;
   type: ERPDashboardWidgetType;
-  moduleKey: string;
+  moduleKey?: string;
   title: string;
   description?: string;
   href?: string;
@@ -27,6 +36,8 @@ export interface ERPDashboardWidgetConfig {
   labelField?: string;
   filters?: ERPDashboardFilter[];
   level?: "info" | "warning" | "critical";
+  limit?: number;
+  actions?: ERPDashboardQuickAction[];
 }
 
 export interface ERPDashboardConfig {
@@ -43,11 +54,13 @@ export interface ERPDashboardWidgetResult {
   description?: string;
   href?: string;
   value?: number;
+  actions?: ERPDashboardQuickAction[];
   items?: Array<{
     id: string;
     title: string;
     description?: string;
     date?: string;
     level?: "info" | "warning" | "critical";
+    href?: string;
   }>;
 }
