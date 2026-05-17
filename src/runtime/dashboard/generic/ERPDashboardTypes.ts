@@ -12,6 +12,10 @@ export type ERPDashboardFilterOperator =
   | "lteDaysFromNow"
   | "gteDaysFromNow";
 
+export type ERPDashboardAggregation =
+  | "count"
+  | "sum";
+
 export interface ERPDashboardFilter {
   field: string;
   operator: ERPDashboardFilterOperator;
@@ -38,6 +42,9 @@ export interface ERPDashboardWidgetConfig {
   level?: "info" | "warning" | "critical";
   limit?: number;
   actions?: ERPDashboardQuickAction[];
+  aggregation?: ERPDashboardAggregation;
+  sumFields?: string[];
+  valueSuffix?: string;
 }
 
 export interface ERPDashboardConfig {
@@ -54,6 +61,7 @@ export interface ERPDashboardWidgetResult {
   description?: string;
   href?: string;
   value?: number;
+  valueSuffix?: string;
   actions?: ERPDashboardQuickAction[];
   items?: Array<{
     id: string;

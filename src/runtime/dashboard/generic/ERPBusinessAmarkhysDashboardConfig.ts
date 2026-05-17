@@ -4,7 +4,7 @@ export const ERPBusinessAmarkhysDashboardConfig: ERPDashboardConfig = {
   key: "amarkhys-dashboard",
   title: "Cockpit AMARKHYS",
   subtitle:
-    "Pilotage garage : leads entrants, clients, véhicules, rendez-vous, interventions, factures, rappels et activité atelier.",
+    "Pilotage garage : leads entrants, clients, véhicules, rendez-vous, interventions, factures, rappels, activité atelier et performance financière.",
   widgets: [
     {
       key: "quick-actions",
@@ -36,6 +36,53 @@ export const ERPBusinessAmarkhysDashboardConfig: ERPDashboardConfig = {
       ],
     },
     {
+      key: "ca-total-ttc",
+      type: "kpi",
+      moduleKey: "facturesauto",
+      title: "CA total TTC",
+      description: "Montant TTC total des factures atelier.",
+      href: "/facturesauto",
+      aggregation: "sum",
+      sumFields: ["montantTTC", "totalTTC", "montantTotal", "total"],
+      valueSuffix: "FCFA",
+    },
+    {
+      key: "ca-encaisse",
+      type: "kpi",
+      moduleKey: "facturesauto",
+      title: "CA encaissé",
+      description: "Montant TTC des factures payées.",
+      href: "/facturesauto",
+      aggregation: "sum",
+      sumFields: ["montantTTC", "totalTTC", "montantTotal", "total"],
+      valueSuffix: "FCFA",
+      filters: [
+        {
+          field: "statutPaiement",
+          operator: "equals",
+          value: "paye",
+        },
+      ],
+    },
+    {
+      key: "ca-en-attente",
+      type: "kpi",
+      moduleKey: "facturesauto",
+      title: "CA en attente",
+      description: "Montant TTC des factures non encore payées.",
+      href: "/facturesauto",
+      aggregation: "sum",
+      sumFields: ["montantTTC", "totalTTC", "montantTotal", "total"],
+      valueSuffix: "FCFA",
+      filters: [
+        {
+          field: "statutPaiement",
+          operator: "notEquals",
+          value: "paye",
+        },
+      ],
+    },
+    {
       key: "leads-site-public",
       type: "kpi",
       moduleKey: "clientsauto",
@@ -49,14 +96,6 @@ export const ERPBusinessAmarkhysDashboardConfig: ERPDashboardConfig = {
           value: "site_public",
         },
       ],
-    },
-    {
-      key: "clientsauto-total",
-      type: "kpi",
-      moduleKey: "clientsauto",
-      title: "Clients",
-      description: "Base clients et prospects AMARKHYS.",
-      href: "/clientsauto",
     },
     {
       key: "vehicules-total",
@@ -112,6 +151,21 @@ export const ERPBusinessAmarkhysDashboardConfig: ERPDashboardConfig = {
       ],
     },
     {
+      key: "interventions-terminees",
+      type: "kpi",
+      moduleKey: "interventionsauto",
+      title: "Interventions terminées",
+      description: "Travaux finalisés.",
+      href: "/interventionsauto",
+      filters: [
+        {
+          field: "statut",
+          operator: "equals",
+          value: "terminee",
+        },
+      ],
+    },
+    {
       key: "factures-en-attente",
       type: "kpi",
       moduleKey: "facturesauto",
@@ -120,9 +174,39 @@ export const ERPBusinessAmarkhysDashboardConfig: ERPDashboardConfig = {
       href: "/facturesauto",
       filters: [
         {
-          field: "statut",
+          field: "statutPaiement",
           operator: "equals",
           value: "en_attente",
+        },
+      ],
+    },
+    {
+      key: "factures-partielles",
+      type: "kpi",
+      moduleKey: "facturesauto",
+      title: "Paiements partiels",
+      description: "Factures partiellement réglées.",
+      href: "/facturesauto",
+      filters: [
+        {
+          field: "statutPaiement",
+          operator: "equals",
+          value: "partiel",
+        },
+      ],
+    },
+    {
+      key: "factures-payees",
+      type: "kpi",
+      moduleKey: "facturesauto",
+      title: "Factures payées",
+      description: "Factures encaissées.",
+      href: "/facturesauto",
+      filters: [
+        {
+          field: "statutPaiement",
+          operator: "equals",
+          value: "paye",
         },
       ],
     },
@@ -176,6 +260,17 @@ export const ERPBusinessAmarkhysDashboardConfig: ERPDashboardConfig = {
           value: "site_public",
         },
       ],
+    },
+    {
+      key: "dernieres-factures",
+      type: "activity",
+      moduleKey: "facturesauto",
+      title: "Dernières factures",
+      description: "Factures atelier récentes.",
+      labelField: "numeroFacture",
+      dateField: "dateFacture",
+      href: "/facturesauto",
+      limit: 6,
     },
     {
       key: "prochains-rappels",

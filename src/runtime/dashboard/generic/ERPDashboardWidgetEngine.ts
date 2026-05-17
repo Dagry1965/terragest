@@ -104,6 +104,24 @@ function applyFilters(
   );
 }
 
+function sumRecordFields(
+  records: any[],
+  fields: string[] = []
+): number {
+  return records.reduce((total, record) => {
+    for (const field of fields) {
+      const value =
+        Number(record[field] ?? 0);
+
+      if (!Number.isNaN(value) && value > 0) {
+        return total + value;
+      }
+    }
+
+    return total;
+  }, 0);
+}
+
 function getRecordLabel(
   record: any,
   widget: ERPDashboardWidgetConfig
@@ -132,6 +150,7 @@ function getRecordDescription(
     record.telephone ??
     record.immatriculation ??
     record.typeService ??
+    record.statutPaiement ??
     record.statut ??
     record.source ??
     widget.description;
@@ -200,13 +219,19 @@ export class ERPDashboardWidgetEngine {
       applyFilters(records, widget.filters);
 
     if (widget.type === "kpi") {
+      const value =
+        widget.aggregation === "sum"
+          ? sumRecordFields(filtered, widget.sumFields)
+          : filtered.length;
+
       return {
         key: widget.key,
         type: widget.type,
         title: widget.title,
         description: widget.description,
         href: widget.href,
-        value: filtered.length,
+        value,
+        valueSuffix: widget.valueSuffix,
       };
     }
 

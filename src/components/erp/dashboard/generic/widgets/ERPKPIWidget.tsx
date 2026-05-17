@@ -4,6 +4,17 @@ import type {
   ERPDashboardWidgetProps,
 } from "../registry/ERPDashboardWidgetRegistry";
 
+function formatValue(
+  value: number,
+  suffix?: string
+): string {
+  if (suffix) {
+    return value.toLocaleString("fr-FR") + " " + suffix;
+  }
+
+  return value.toLocaleString("fr-FR");
+}
+
 export function ERPKPIWidget({
   widget,
 }: ERPDashboardWidgetProps) {
@@ -13,8 +24,8 @@ export function ERPKPIWidget({
         {widget.title}
       </p>
 
-      <h2 className="mt-4 text-5xl font-black tracking-tight text-white">
-        {widget.value ?? 0}
+      <h2 className="mt-4 text-4xl font-black tracking-tight text-white">
+        {formatValue(widget.value ?? 0, widget.valueSuffix)}
       </h2>
 
       {widget.description ? (
