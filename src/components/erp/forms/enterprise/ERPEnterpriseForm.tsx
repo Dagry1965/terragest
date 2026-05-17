@@ -70,6 +70,10 @@ import {
   InvoiceDocumentActions,
 } from "@/components/erp/billing/InvoiceDocumentActions";
 
+import {
+  RuntimeUniqueConstraintEngine,
+} from "@/runtime/validation/RuntimeUniqueConstraintEngine";
+
 interface ERPEnterpriseFormProps {
   module: ERPModule;
   mode?: "create" | "edit";
@@ -541,9 +545,32 @@ const formData =
         preparedPayload
       );
 
-    setErrors(validationErrors);
+    const currentRecordId =
+      mode === "edit"
+        ? String(
+            initialData.id ??
+              initialData._id ??
+              preparedPayload.id ??
+              preparedPayload._id ??
+              ""
+          )
+        : "";
 
-    if (validationErrors.length > 0) {
+    const uniqueConstraintErrors =
+      await RuntimeUniqueConstraintEngine.validate(
+        module,
+        preparedPayload,
+        currentRecordId
+      );
+
+    const allValidationErrors = [
+      ...validationErrors,
+      ...uniqueConstraintErrors,
+    ];
+
+    setErrors(allValidationErrors);
+
+    if (allValidationErrors.length > 0) {
       pendingWorkflowActionRef.current = null;
       setSaving(false);
       return;

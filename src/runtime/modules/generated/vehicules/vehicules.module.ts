@@ -39,6 +39,7 @@ export const vehiculesModule: ERPModule = {
         label:"Immatriculation",
         type:"text",
         required:true,
+        unique: true,
         searchable:true,
         list:{ order:1 },
         grid:{ cols:4 }

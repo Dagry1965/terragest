@@ -27,6 +27,7 @@ export const clientsautoModule: ERPModule = {
         label: "Code client",
         type: "text",
         required: true,
+        unique: true,
         searchable: true,
         list: { order: 1 },
         grid: { cols: 4 }
