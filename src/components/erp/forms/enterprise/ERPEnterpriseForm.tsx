@@ -66,6 +66,10 @@ import {
   InvoicePaymentSchedule,
 } from "@/components/erp/billing/InvoicePaymentSchedule";
 
+import {
+  InvoiceDocumentActions,
+} from "@/components/erp/billing/InvoiceDocumentActions";
+
 interface ERPEnterpriseFormProps {
   module: ERPModule;
   mode?: "create" | "edit";
@@ -723,6 +727,12 @@ preparedPayload.terrainId
       className="space-y-8"
       onSubmit={handleSubmit}
     >
+      {isInvoiceEditForm ? (
+        <div data-invoice-document-actions>
+          <InvoiceDocumentActions invoice={initialData} />
+        </div>
+      ) : null}
+
       {isInvoiceEditForm ? (
         <section
           data-invoice-edit-payment-action
