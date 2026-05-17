@@ -23,6 +23,12 @@ import {
   interventionsautoModule,
 } from "@/runtime/modules/generated/interventionsauto";
 
+import {
+  AMARKHYS_BUSINESS_IDENTITY,
+  buildAmarkhysTelHref,
+  buildAmarkhysWhatsAppHref,
+} from "@/runtime/workspaces/amarkhys/amarkhysBusinessIdentity";
+
 type RecordData = Record<string, unknown>;
 
 interface PublicInvoicePageProps {
@@ -374,7 +380,7 @@ export default function PublicInvoicePage({
       <main className="min-h-screen bg-slate-950 px-4 py-8 text-white">
         <div className="mx-auto max-w-5xl rounded-[2rem] border border-emerald-400/20 bg-white/10 p-8 shadow-2xl backdrop-blur">
           <p className="text-sm font-black uppercase tracking-[0.3em] text-emerald-300">
-            AMARKHYS GARAGE
+            {AMARKHYS_BUSINESS_IDENTITY.displayName.toUpperCase()}
           </p>
           <h1 className="mt-4 text-3xl font-black">
             Chargement de la facture...
@@ -416,7 +422,7 @@ export default function PublicInvoicePage({
             <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
               <div>
                 <p className="text-xs font-black uppercase tracking-[0.35em] text-emerald-300">
-                  AMARKHYS GARAGE
+                  {AMARKHYS_BUSINESS_IDENTITY.displayName.toUpperCase()}
                 </p>
                 <h1 className="mt-4 text-3xl font-black md:text-5xl">
                   Votre facture AMARKHYS
@@ -466,7 +472,7 @@ export default function PublicInvoicePage({
 
               <div className="rounded-3xl border border-emerald-200 bg-emerald-50 p-6">
                 <p className="text-sm font-bold text-emerald-900">
-                  Pour toute question sur cette facture, contactez AMARKHYS Garage avec le numéro de facture.
+                  Pour toute question sur cette facture, contactez {AMARKHYS_BUSINESS_IDENTITY.displayName} avec le numéro de facture.
                 </p>
               </div>
             </div>
@@ -478,7 +484,7 @@ export default function PublicInvoicePage({
                 </p>
 
                 <a
-                  href={"https://wa.me/?text=" + encodeURIComponent(whatsappText)}
+                  href={buildAmarkhysWhatsAppHref(whatsappText)}
                   target="_blank"
                   rel="noreferrer"
                   className="flex w-full items-center justify-center rounded-2xl bg-emerald-500 px-5 py-4 text-sm font-black text-slate-950 transition hover:bg-emerald-400"
@@ -487,7 +493,7 @@ export default function PublicInvoicePage({
                 </a>
 
                 <a
-                  href="tel:+000000000"
+                  href={buildAmarkhysTelHref()}
                   className="flex w-full items-center justify-center rounded-2xl border border-white/15 px-5 py-4 text-sm font-black text-white transition hover:bg-white/10"
                 >
                   Appeler le garage

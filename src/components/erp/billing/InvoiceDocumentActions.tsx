@@ -21,6 +21,11 @@ import {
   interventionsautoModule,
 } from "@/runtime/modules/generated/interventionsauto";
 
+import {
+  AMARKHYS_BUSINESS_IDENTITY,
+  buildAmarkhysContactLabel,
+} from "@/runtime/workspaces/amarkhys/amarkhysBusinessIdentity";
+
 interface InvoiceDocumentActionsProps {
   invoice: Record<string, unknown>;
 }
@@ -301,7 +306,7 @@ function buildShareText(
   return [
     "Bonjour,",
     "",
-    "Votre facture AMARKHYS est disponible.",
+    "Votre facture " + AMARKHYS_BUSINESS_IDENTITY.displayName + " est disponible.",
     "",
     "Facture : " + numero,
     "Client : " + clientLabel,
@@ -314,7 +319,7 @@ function buildShareText(
     "",
     url ? "Lien facture : " + url : "",
     "",
-    "Merci pour votre confiance.",
+    "Merci pour votre confiance. " + buildAmarkhysContactLabel(),
   ]
     .filter(Boolean)
     .join("\\n");
@@ -370,7 +375,7 @@ async function createInvoicePdf(
       : "";
 
   doc.setFontSize(20);
-  doc.text("AMARKHYS GARAGE", 14, 18);
+  doc.text(AMARKHYS_BUSINESS_IDENTITY.displayName.toUpperCase(), 14, 18);
 
   doc.setFontSize(10);
   doc.text("Garage automobile • Entretien • Diagnostic • PETRONAS", 14, 26);
@@ -457,7 +462,7 @@ async function createInvoicePdf(
   doc.setFontSize(9);
   doc.text("Notes", 14, summaryY + 15);
   doc.text(
-    value(invoice, "observations", "Merci pour votre confiance."),
+    value(invoice, "observations", "Merci pour votre confiance. " + buildAmarkhysContactLabel()),
     14,
     summaryY + 22
   );
@@ -490,7 +495,7 @@ async function createInvoicePdf(
 
   doc.setFontSize(8);
   doc.text(
-    "AMARKHYS • Facture générée automatiquement",
+    AMARKHYS_BUSINESS_IDENTITY.displayName + " • Facture générée automatiquement",
     14,
     285
   );
