@@ -53,11 +53,11 @@ export function GenericDetailPage({
   }, [id, runtimeModule, record]);
 
   if (!runtimeModule) {
-    return <div className="p-6">Module introuvable.</div>;
+    return <div className="p-4 sm:p-5 lg:p-6">Module introuvable.</div>;
   }
 
   if (loading) {
-    return <div className="p-6">Chargement...</div>;
+    return <div className="p-4 sm:p-5 lg:p-6">Chargement...</div>;
   }
 
   return (

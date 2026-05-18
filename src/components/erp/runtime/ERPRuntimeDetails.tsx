@@ -204,14 +204,14 @@ export function ERPRuntimeDetails({
   return (
     <div className="space-y-6">
       {isInvoice ? (
-        <section className="rounded-3xl border border-emerald-300/30 bg-emerald-500/10 p-6 shadow-sm">
-          <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
+        <section className="rounded-3xl border border-emerald-300/30 bg-[var(--erp-primary-soft)]0/10 p-4 sm:p-5 lg:p-6 shadow-[0_14px_40px_rgba(15,23,42,0.07)]">
+          <div className="grid gap-4 sm:p-5 lg:p-6 lg:grid-cols-[1fr_auto] lg:items-center">
             <div>
               <p className="text-xs font-black uppercase tracking-wide text-emerald-300">
                 Encaissement facture
               </p>
 
-              <h2 className="mt-2 text-2xl font-black text-white">
+              <h2 className="mt-2 text-2xl font-black text-[var(--erp-table-head-text)]">
                 Enregistrer un paiement
               </h2>
 
@@ -221,25 +221,25 @@ export function ERPRuntimeDetails({
 
               <div className="mt-5 grid gap-3 md:grid-cols-3">
                 <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
-                  <p className="text-xs font-bold uppercase tracking-wide text-slate-500">
+                  <p className="text-xs font-bold uppercase tracking-wide text-[var(--erp-text-muted)]">
                     Total TTC
                   </p>
-                  <p className="mt-1 text-xl font-black text-white">
+                  <p className="mt-1 text-xl font-black text-[var(--erp-table-head-text)]">
                     {amountSummary.montantTTC.toLocaleString("fr-FR")} FCFA
                   </p>
                 </div>
 
                 <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
-                  <p className="text-xs font-bold uppercase tracking-wide text-slate-500">
+                  <p className="text-xs font-bold uppercase tracking-wide text-[var(--erp-text-muted)]">
                     Déjà payé
                   </p>
-                  <p className="mt-1 text-xl font-black text-white">
+                  <p className="mt-1 text-xl font-black text-[var(--erp-table-head-text)]">
                     {amountSummary.montantPaye.toLocaleString("fr-FR")} FCFA
                   </p>
                 </div>
 
                 <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
-                  <p className="text-xs font-bold uppercase tracking-wide text-slate-500">
+                  <p className="text-xs font-bold uppercase tracking-wide text-[var(--erp-text-muted)]">
                     Reste à payer
                   </p>
                   <p className="mt-1 text-xl font-black text-emerald-200">
@@ -251,7 +251,7 @@ export function ERPRuntimeDetails({
 
             <Link
               href={paymentHref}
-              className="inline-flex items-center justify-center rounded-2xl bg-emerald-500 px-6 py-4 text-sm font-black text-slate-950 shadow-sm transition hover:bg-emerald-300"
+              className="inline-flex items-center justify-center rounded-2xl bg-[var(--erp-primary-soft)]0 px-6 py-4 text-sm font-black text-[var(--erp-text)] shadow-[0_14px_40px_rgba(15,23,42,0.07)] transition hover:bg-emerald-300"
             >
               Enregistrer un paiement
             </Link>
@@ -267,9 +267,9 @@ export function ERPRuntimeDetails({
           {details.fields.map((field) => (
             <div
               key={field.key}
-              className="rounded-xl border border-slate-800 bg-slate-950 p-4"
+              className="rounded-xl border border-slate-800 bg-[var(--erp-table-head)] p-4"
             >
-              <p className="text-xs uppercase tracking-wide text-slate-500">
+              <p className="text-xs uppercase tracking-wide text-[var(--erp-text-muted)]">
                 {field.label}
               </p>
 
@@ -289,11 +289,11 @@ export function ERPRuntimeDetails({
         description="Historique persistant des transitions workflow."
       >
         {loadingTimeline ? (
-          <p className="text-sm text-slate-500">
+          <p className="text-sm text-[var(--erp-text-muted)]">
             Chargement de la timeline...
           </p>
         ) : timeline.length === 0 ? (
-          <p className="text-sm text-slate-500">
+          <p className="text-sm text-[var(--erp-text-muted)]">
             Aucune transition workflow enregistrée pour cet élément.
           </p>
         ) : (
@@ -301,9 +301,9 @@ export function ERPRuntimeDetails({
             {timeline.map((item, index) => (
               <div
                 key={`${item.entityId}-${item.action}-${index}`}
-                className="rounded-xl border border-slate-800 bg-slate-950 p-4"
+                className="rounded-xl border border-slate-800 bg-[var(--erp-table-head)] p-4"
               >
-                <div className="flex items-center justify-between gap-4">
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between gap-4">
                   <p className="text-sm font-semibold text-slate-100">
                     {item.fromState} → {item.toState}
                   </p>

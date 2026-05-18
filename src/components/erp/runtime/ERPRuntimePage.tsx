@@ -227,7 +227,7 @@ export function ERPRuntimePage({
                 text-sm
                 font-bold
                 text-[var(--erp-table-head-text)]
-                shadow-sm
+                shadow-[0_14px_40px_rgba(15,23,42,0.07)]
                 transition
                 hover:bg-[#007F6D]
               "
@@ -273,7 +273,7 @@ export function ERPRuntimePage({
         )}
 
         {loading && type === "list" ? (
-          <div className="rounded-2xl border border-[var(--erp-border)] bg-[var(--erp-surface)] p-4 text-sm text-slate-500">
+          <div className="rounded-2xl border border-[var(--erp-border)] bg-[var(--erp-surface)] p-4 text-sm text-[var(--erp-text-muted)]">
             Chargement des données...
           </div>
         ) : null}
@@ -306,7 +306,7 @@ export function ERPRuntimePage({
             <div className="flex justify-end">
               <Link
                 href={module.metadata.routes.create}
-                className="w-full justify-center sm:w-auto rounded-2xl bg-[var(--erp-primary)] px-5 py-3 text-sm font-black text-white shadow-[0_8px_18px_rgba(0,155,125,0.16)] transition hover:-translate-y-0.5 hover:bg-[#007F6D] hover:shadow-[0_14px_30px_rgba(0,127,109,0.24)] active:translate-y-0"
+                className="w-full justify-center sm:w-auto rounded-2xl bg-[var(--erp-primary)] px-5 py-3 text-sm font-black text-[var(--erp-table-head-text)] shadow-[0_8px_18px_rgba(0,155,125,0.16)] transition hover:-translate-y-0.5 hover:bg-[#007F6D] hover:shadow-[0_14px_30px_rgba(0,127,109,0.24)] active:translate-y-0"
               >
                 Nouveau
               </Link>
