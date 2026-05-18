@@ -46,6 +46,19 @@ export const facturesautoModule: ERPModule = {
         grid: { cols: 4 },
       },
       {
+        key: "statutFacture",
+        label: "Statut facture",
+        type: "select",
+        defaultValue: "emise",
+        options: [
+          { label: "Brouillon", value: "brouillon" },
+          { label: "Émise", value: "emise" },
+          { label: "Annulée", value: "annulee" },
+        ],
+        list: { order: 3 },
+        grid: { cols: 4 },
+      },
+      {
         key: "statutPaiement",
         label: "Statut paiement",
         type: "select",
