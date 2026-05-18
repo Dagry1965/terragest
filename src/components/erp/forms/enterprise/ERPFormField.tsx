@@ -499,6 +499,28 @@ export function ERPFormField({
           .includes(relationSearch.toLowerCase())
       );
 
+      const currentOptionInFilteredList =
+        filteredOptions.some((option) =>
+          String(option.id) === String(currentValue)
+        );
+
+      const safeFilteredOptions =
+        currentValue && !currentOptionInFilteredList
+          ? [
+              {
+                id: String(currentValue),
+                label:
+                  selectedOption?.label &&
+                  !isLikelyTechnicalId(selectedOption.label)
+                    ? selectedOption.label
+                    : "Relation actuelle conservée",
+                record: selectedOption?.record,
+              },
+              ...filteredOptions,
+            ]
+          : filteredOptions;
+
+
     const lockedDisplayLabel =
       compactLockedRelationLabel(selectedLabel) ||
       selectedLabel;
@@ -557,7 +579,7 @@ export function ERPFormField({
               {field.placeholder ?? "Sélectionner"}
             </option>
 
-            {filteredOptions.map((option) => (
+            {safeFilteredOptions.map((option) => (
               <option key={option.id} value={option.id}>
                 {option.label}
               </option>
