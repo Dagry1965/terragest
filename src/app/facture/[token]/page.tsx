@@ -354,6 +354,12 @@ export default function PublicInvoicePage({
           value(invoice, "statutPaiement", "en_attente")
         );
 
+      const statutFacture =
+        value(invoice, "statutFacture", "emise");
+
+      const isCancelledInvoice =
+        statutFacture === "annulee";
+
       return {
         numero: buildInvoiceNumber(invoice),
         date: value(invoice, "dateFacture"),
@@ -361,6 +367,8 @@ export default function PublicInvoicePage({
         montantPaye,
         resteAPayer,
         statutPaiement,
+        statutFacture,
+        isCancelledInvoice,
       };
     }, [invoice]);
 
@@ -370,8 +378,10 @@ export default function PublicInvoicePage({
           "Bonjour,",
           "",
           "Je consulte ma facture AMARKHYS : " + summary.numero,
-          "Reste à payer : " + formatMoney(summary.resteAPayer),
-          "Statut : " + summary.statutPaiement,
+          summary.isCancelledInvoice
+            ? "Statut facture : Annulée"
+            : "Reste à payer : " + formatMoney(summary.resteAPayer),
+          "Statut paiement : " + summary.statutPaiement,
         ].join("\n")
       : "";
 
@@ -425,19 +435,45 @@ export default function PublicInvoicePage({
                   {AMARKHYS_BUSINESS_IDENTITY.displayName.toUpperCase()}
                 </p>
                 <h1 className="mt-4 text-3xl font-black md:text-5xl">
-                  Votre facture AMARKHYS
+                  {summary.isCancelledInvoice
+                    ? "Facture AMARKHYS annulée"
+                    : "Votre facture AMARKHYS"}
                 </h1>
                 <p className="mt-3 max-w-2xl text-sm text-slate-300 md:text-base">
-                  Consultez le détail de votre facture, les montants réglés et le solde restant.
+                  {summary.isCancelledInvoice
+                    ? "Cette facture a été annulée. Elle reste consultable pour historique, mais aucune nouvelle opération de paiement n’est autorisée."
+                    : "Consultez le détail de votre facture, les montants réglés et le solde restant."}
                 </p>
               </div>
 
-              <div className="rounded-3xl border border-amber-300/30 bg-amber-300/10 px-5 py-4 text-left md:text-right">
-                <p className="text-xs font-bold uppercase tracking-[0.2em] text-amber-200">
-                  Statut paiement
+              <div
+                className={
+                  summary.isCancelledInvoice
+                    ? "rounded-3xl border border-red-300/30 bg-red-300/10 px-5 py-4 text-left md:text-right"
+                    : "rounded-3xl border border-amber-300/30 bg-amber-300/10 px-5 py-4 text-left md:text-right"
+                }
+              >
+                <p
+                  className={
+                    summary.isCancelledInvoice
+                      ? "text-xs font-bold uppercase tracking-[0.2em] text-red-200"
+                      : "text-xs font-bold uppercase tracking-[0.2em] text-amber-200"
+                  }
+                >
+                  {summary.isCancelledInvoice
+                    ? "Statut facture"
+                    : "Statut paiement"}
                 </p>
-                <p className="mt-2 text-2xl font-black text-amber-100">
-                  {summary.statutPaiement}
+                <p
+                  className={
+                    summary.isCancelledInvoice
+                      ? "mt-2 text-2xl font-black text-red-100"
+                      : "mt-2 text-2xl font-black text-amber-100"
+                  }
+                >
+                  {summary.isCancelledInvoice
+                    ? "Annulée"
+                    : summary.statutPaiement}
                 </p>
               </div>
             </div>
@@ -445,6 +481,25 @@ export default function PublicInvoicePage({
 
           <div className="grid gap-0 bg-slate-50 text-slate-950 lg:grid-cols-[1.2fr_0.8fr]">
             <div className="space-y-6 p-6 md:p-10">
+              {summary.isCancelledInvoice ? (
+                <div
+                  data-public-cancelled-invoice-warning
+                  className="rounded-3xl border border-red-200 bg-red-50 p-6 shadow-sm"
+                >
+                  <p className="text-xs font-black uppercase tracking-[0.25em] text-red-700">
+                    Facture annulée
+                  </p>
+                  <h2 className="mt-3 text-2xl font-black text-slate-950">
+                    Aucune nouvelle opération de paiement
+                  </h2>
+                  <p className="mt-2 text-sm leading-6 text-slate-600">
+                    Cette facture est conservée pour historique. Les paiements et échéanciers
+                    associés restent consultables par le garage, mais aucun nouveau règlement
+                    ne doit être initié depuis ce lien.
+                  </p>
+                </div>
+              ) : null}
+
               <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
                 <p className="text-xs font-black uppercase tracking-[0.25em] text-emerald-700">
                   Facture
@@ -466,13 +521,31 @@ export default function PublicInvoicePage({
                 <div className="mt-4 grid gap-4 md:grid-cols-3">
                   <MoneyCard label="Montant TTC" value={summary.montantTTC} />
                   <MoneyCard label="Montant payé" value={summary.montantPaye} />
-                  <MoneyCard label="Reste à payer" value={summary.resteAPayer} highlight />
+
+                  {summary.isCancelledInvoice ? (
+                    <div className="rounded-2xl border border-red-200 bg-red-50 p-4">
+                      <p className="text-xs font-bold uppercase tracking-wide text-red-700">
+                        Facture annulée
+                      </p>
+                      <p className="mt-2 text-lg font-black text-red-700">
+                        Paiement désactivé
+                      </p>
+                    </div>
+                  ) : (
+                    <MoneyCard
+                      label="Reste à payer"
+                      value={summary.resteAPayer}
+                      highlight
+                    />
+                  )}
                 </div>
               </div>
 
               <div className="rounded-3xl border border-emerald-200 bg-emerald-50 p-6">
                 <p className="text-sm font-bold text-emerald-900">
-                  Pour toute question sur cette facture, contactez {AMARKHYS_BUSINESS_IDENTITY.displayName} avec le numéro de facture.
+                  {summary.isCancelledInvoice
+                    ? "Cette facture est annulée. Pour toute question, contactez " + AMARKHYS_BUSINESS_IDENTITY.displayName + " avec le numéro de facture."
+                    : "Pour toute question sur cette facture, contactez " + AMARKHYS_BUSINESS_IDENTITY.displayName + " avec le numéro de facture."}
                 </p>
               </div>
             </div>
