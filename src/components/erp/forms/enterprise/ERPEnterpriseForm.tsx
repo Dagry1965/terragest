@@ -81,6 +81,9 @@ import {
 import {
   ERPReturnBreadcrumb,
 } from "@/components/erp/navigation/ERPReturnBreadcrumb";
+import {
+  getWorkspaceThemeStyle,
+} from "@/runtime/theme";
 
 interface ERPEnterpriseFormProps {
   module: ERPModule;
@@ -924,10 +927,38 @@ preparedPayload.terrainId
 
   return (
     <form
-      ref={formRef}
-      className="space-y-8"
-      onSubmit={handleSubmit}
-    >
+        ref={formRef}
+        style={getWorkspaceThemeStyle(
+          module.metadata.category === "amarkhys" ||
+          module.metadata.key.endsWith("auto")
+            ? "amarkhys-petronas"
+            : module.metadata.category === "production" ||
+                module.metadata.category === "agri"
+              ? "agri-enterprise"
+              : "default-enterprise"
+        )}
+        className="
+          space-y-8
+          rounded-2xl
+          border
+          border-[var(--erp-border)]
+          bg-[var(--erp-bg)]
+          bg-[var(--erp-bg)]
+          p-4
+          shadow-[0_14px_40px_rgba(15,23,42,0.07)]
+          md:p-6
+        "
+        data-erp-form-theme={
+          module.metadata.category === "amarkhys" ||
+          module.metadata.key.endsWith("auto")
+            ? "amarkhys-petronas"
+            : module.metadata.category === "production" ||
+                module.metadata.category === "agri"
+              ? "agri-enterprise"
+              : "default-enterprise"
+        }
+        onSubmit={handleSubmit}
+      >
       <ERPReturnBreadcrumb />
 
       {isInvoiceEditForm ? (
@@ -942,50 +973,50 @@ preparedPayload.terrainId
           className="
             rounded-3xl
             border
-            border-emerald-300/30
-            bg-emerald-500/10
+            border-[var(--erp-border-strong)]
+            bg-[var(--erp-primary-soft)]
             p-6
             shadow-sm
           "
         >
           <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
             <div>
-              <p className="text-xs font-black uppercase tracking-wide text-emerald-300">
+              <p className="text-xs font-black uppercase tracking-wide text-[var(--erp-secondary)]">
                 Encaissement facture
               </p>
 
-              <h2 className="mt-2 text-2xl font-black text-slate-950">
+              <h2 className="mt-2 text-2xl font-black text-[var(--erp-text)]">
                 Enregistrer un paiement
               </h2>
 
-              <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-600">
+              <p className="mt-2 max-w-3xl text-sm leading-6 text-[var(--erp-text-muted)]">
                 Crée un encaissement lié à cette facture. Le montant payé, le reste à payer et le statut de paiement seront recalculés automatiquement.
               </p>
 
               <div className="mt-5 grid gap-3 md:grid-cols-3">
-                <div className="rounded-2xl border border-emerald-200 bg-white p-4">
-                  <p className="text-xs font-bold uppercase tracking-wide text-slate-500">
+                <div className="rounded-2xl border border-[var(--erp-border-strong)] bg-white p-4">
+                  <p className="text-xs font-bold uppercase tracking-wide text-[var(--erp-text-muted)]">
                     Total TTC
                   </p>
-                  <p className="mt-1 text-xl font-black text-slate-950">
+                  <p className="mt-1 text-xl font-black text-[var(--erp-text)]">
                     {invoiceAmountSummary.montantTTC.toLocaleString("fr-FR")} FCFA
                   </p>
                 </div>
 
-                <div className="rounded-2xl border border-emerald-200 bg-white p-4">
-                  <p className="text-xs font-bold uppercase tracking-wide text-slate-500">
+                <div className="rounded-2xl border border-[var(--erp-border-strong)] bg-white p-4">
+                  <p className="text-xs font-bold uppercase tracking-wide text-[var(--erp-text-muted)]">
                     Déjà payé
                   </p>
-                  <p className="mt-1 text-xl font-black text-slate-950">
+                  <p className="mt-1 text-xl font-black text-[var(--erp-text)]">
                     {invoiceAmountSummary.montantPaye.toLocaleString("fr-FR")} FCFA
                   </p>
                 </div>
 
-                <div className="rounded-2xl border border-emerald-200 bg-white p-4">
-                  <p className="text-xs font-bold uppercase tracking-wide text-slate-500">
+                <div className="rounded-2xl border border-[var(--erp-border-strong)] bg-white p-4">
+                  <p className="text-xs font-bold uppercase tracking-wide text-[var(--erp-text-muted)]">
                     Reste à payer
                   </p>
-                  <p className="mt-1 text-xl font-black text-emerald-700">
+                  <p className="mt-1 text-xl font-black text-[var(--erp-primary)]">
                     {invoiceAmountSummary.resteAPayer.toLocaleString("fr-FR")} FCFA
                   </p>
                 </div>
@@ -999,15 +1030,15 @@ preparedPayload.terrainId
                 items-center
                 justify-center
                 rounded-2xl
-                bg-emerald-600
+                bg-[var(--erp-primary)]
                 px-6
                 py-4
                 text-sm
                 font-black
-                text-white
+                text-[var(--erp-text)]
                 shadow-sm
                 transition
-                hover:bg-emerald-500
+                hover:brightness-110
               "
             >
               Enregistrer un paiement
@@ -1067,10 +1098,10 @@ preparedPayload.terrainId
                   transition
                   ${
                     action.type === "danger"
-                      ? "bg-red-600 text-white hover:bg-red-700"
+                      ? "bg-red-600 text-[var(--erp-text)] hover:bg-red-700"
                       : action.type === "secondary"
-                        ? "bg-slate-200 text-slate-900 hover:bg-slate-300"
-                        : "bg-slate-950 text-white hover:bg-slate-800"
+                        ? "bg-slate-200 text-[var(--erp-text)] hover:bg-slate-300"
+                        : "bg-[var(--erp-surface)] text-[var(--erp-text)] hover:bg-slate-800"
                   }
                 `}
               >
@@ -1080,8 +1111,8 @@ preparedPayload.terrainId
           </div>
         </section>
       )}
-      <section className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
-        <div className="bg-gradient-to-r from-slate-950 via-slate-900 to-blue-950 px-8 py-8 text-white">
+      <section className="overflow-hidden rounded-3xl border border-[var(--erp-border)] bg-[var(--erp-surface)] shadow-sm">
+        <div className="bg-gradient-to-r from-white via-white to-[var(--erp-primary-soft)] px-8 py-8 text-[var(--erp-text)]">
           <p className="text-sm font-bold uppercase tracking-wide text-blue-200">
             {mode === "create"
               ? "Création"
@@ -1157,7 +1188,7 @@ preparedPayload.terrainId
             </div>
           ) : null}
 
-          <div className="flex flex-wrap gap-3 rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
+          <div className="flex flex-wrap gap-3 rounded-3xl border border-[var(--erp-border)] bg-[var(--erp-surface)] p-5 shadow-sm">
             {errors.length > 0 && (
               <div className="w-full rounded-3xl border border-red-200 bg-red-50 p-5">
                 <h3 className="text-sm font-black text-red-700">
@@ -1210,7 +1241,7 @@ preparedPayload.terrainId
             
 
 
-                    <h3 className="mt-1 text-xl font-black text-slate-950">
+                    <h3 className="mt-1 text-xl font-black text-[var(--erp-text)]">
 
 
                       {businessStatusAction.label}
@@ -1222,7 +1253,7 @@ preparedPayload.terrainId
             
 
 
-                    <p className="mt-2 text-sm leading-6 text-slate-600">
+                    <p className="mt-2 text-sm leading-6 text-[var(--erp-text-muted)]">
 
 
                       Cette action conserve l’historique et évite une suppression brute.
@@ -1249,7 +1280,7 @@ preparedPayload.terrainId
                     onClick={handleBusinessStatusAction}
 
 
-                    className="inline-flex items-center justify-center rounded-2xl bg-amber-600 px-5 py-3 text-sm font-black text-white shadow-sm transition hover:bg-amber-500 disabled:cursor-not-allowed disabled:opacity-60"
+                    className="inline-flex items-center justify-center rounded-2xl bg-amber-600 px-5 py-3 text-sm font-black text-[var(--erp-text)] shadow-sm transition hover:bg-amber-500 disabled:cursor-not-allowed disabled:opacity-60"
 
 
                   >
@@ -1298,7 +1329,7 @@ preparedPayload.terrainId
                         {mode === "edit" && Boolean(initialData?.id) && sensitiveBusinessModule ? (
               <div
                 data-sensitive-delete-hidden-notice
-                className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600"
+                className="w-full rounded-2xl border border-[var(--erp-border-strong)] bg-[var(--erp-primary-soft)] px-4 py-3 text-sm text-[var(--erp-text-muted)]"
               >
                 Suppression masquée pour ce module sensible. Utilisez l’action métier
                 d’archivage ou d’annulation afin de conserver l’historique.

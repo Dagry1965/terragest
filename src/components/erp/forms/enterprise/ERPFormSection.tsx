@@ -12,14 +12,14 @@ export function ERPFormSection({
   children,
 }: ERPFormSectionProps) {
   return (
-    <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+    <section className="rounded-2xl border border-[var(--erp-border)] bg-[var(--erp-surface)] p-6 shadow-[0_20px_55px_rgba(15,23,42,0.08)]">
       <div className="mb-6">
-        <h2 className="text-lg font-black text-slate-950">
+        <h2 className="text-lg font-black text-[var(--erp-text)]">
           {title}
         </h2>
 
         {description && (
-          <p className="mt-1 text-sm text-slate-500">
+          <p className="mt-1 text-sm text-[var(--erp-text-muted)]">
             {description}
           </p>
         )}

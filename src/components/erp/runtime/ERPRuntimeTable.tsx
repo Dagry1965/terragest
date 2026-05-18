@@ -123,14 +123,14 @@ export function ERPRuntimeTable({
   }
 
   return (
-    <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
+    <div className="overflow-hidden rounded-3xl border border-[var(--erp-border)] bg-[var(--erp-surface)] shadow-sm">
       <div className="flex flex-col gap-4 border-b border-slate-200 px-6 py-5 md:flex-row md:items-center md:justify-between">
         <div>
-          <h3 className="text-xl font-black text-slate-950">
+          <h3 className="text-xl font-black text-[var(--erp-text)]">
             Liste opérationnelle
           </h3>
 
-          <p className="mt-1 text-sm text-slate-500">
+          <p className="mt-1 text-sm text-[var(--erp-text-muted)]">
             Données métier du module {module.metadata.label}
           </p>
         </div>
@@ -157,7 +157,7 @@ export function ERPRuntimeTable({
             }))
           }
           placeholder="Recherche..."
-          className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none"
+          className="w-full rounded-2xl border border-[var(--erp-border)] bg-[var(--erp-surface)] px-4 py-3 text-sm outline-none"
         />
       </div>
 
@@ -168,7 +168,7 @@ export function ERPRuntimeTable({
               {columns.map((column) => (
                 <th
                   key={String(column.key)}
-                  className="whitespace-nowrap px-6 py-4 text-xs font-black uppercase tracking-wide text-slate-500"
+                  className="whitespace-nowrap px-6 py-4 text-xs font-black uppercase tracking-wide text-[var(--erp-text-muted)]"
                 >
                   {column.label}
                 </th>
@@ -181,7 +181,7 @@ export function ERPRuntimeTable({
               <tr>
                 <td
                   colSpan={columns.length}
-                  className="px-6 py-10 text-center text-sm text-slate-500"
+                  className="px-6 py-10 text-center text-sm text-[var(--erp-text-muted)]"
                 >
                   Aucune donnée enregistrée pour ce module.
                 </td>
@@ -201,7 +201,7 @@ export function ERPRuntimeTable({
                 {columns.map((column) => (
                   <td
                     key={String(column.key)}
-                    className="whitespace-nowrap px-6 py-4 font-medium text-slate-700"
+                    className="whitespace-nowrap px-6 py-4 font-medium text-[var(--erp-text)]"
                   >
                     {column.render(row)}
                   </td>
@@ -212,7 +212,7 @@ export function ERPRuntimeTable({
         </table>
       </div>
 
-      <div className="flex items-center justify-between border-t border-slate-200 px-6 py-4 text-sm text-slate-500">
+      <div className="flex items-center justify-between border-t border-slate-200 px-6 py-4 text-sm text-[var(--erp-text-muted)]">
         <div>
           {total} élément{total > 1 ? "s" : ""}
         </div>

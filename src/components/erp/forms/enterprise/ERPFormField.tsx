@@ -291,7 +291,7 @@ function FieldWrapper({
       {children}
 
       {field.helperText ? (
-        <p className="text-xs text-slate-500">
+        <p className="text-xs text-[var(--erp-text-muted)]">
           {field.helperText}
         </p>
       ) : null}
@@ -428,17 +428,17 @@ export function ERPFormField({
   }, [field]);
 
   const label = (
-    <span className="text-sm font-bold text-slate-700">
+    <span className="text-sm font-bold text-[var(--erp-text)]">
       {field.label}
       {field.required ? " *" : ""}
     </span>
   );
 
   const className =
-    "w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-blue-500";
+    "w-full rounded-xl border border-[var(--erp-border)] bg-[var(--erp-input-bg)] px-4 py-2.5 text-sm text-[var(--erp-text)] placeholder:text-slate-400 outline-none transition focus:shadow-[0_0_0_4px_rgba(0,169,157,0.12)] focus:border-blue-500";
 
   const lockedClassName =
-    `${className} cursor-not-allowed bg-slate-100 text-slate-500`;
+    `${className} cursor-not-allowed bg-slate-100 text-[var(--erp-text-muted)]`;
 
   if (field.type === "relation") {
     const relationConfig =
@@ -537,16 +537,16 @@ export function ERPFormField({
               value={currentValue}
             />
 
-            <div className="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3">
-              <p className="text-xs font-black uppercase tracking-wide text-emerald-700">
+            <div className="rounded-xl border border-[var(--erp-border-strong)] bg-[var(--erp-primary-soft)] px-4 py-2.5">
+              <p className="text-xs font-black uppercase tracking-wide text-[var(--erp-primary)]">
                 Relation métier verrouillée
               </p>
 
-              <p className="mt-1 text-sm font-black text-slate-950">
+              <p className="mt-1 text-sm font-black text-[var(--erp-text)]">
                 {lockedDisplayLabel}
               </p>
 
-              <p className="mt-1 text-xs text-slate-500">
+              <p className="mt-1 text-xs text-[var(--erp-text-muted)]">
                 Cette relation vient du contexte d’origine et ne peut pas être modifiée ici.
               </p>
             </div>
@@ -619,7 +619,7 @@ export function ERPFormField({
                 text-sm
                 font-bold
                 text-blue-700
-                transition
+                transition focus:shadow-[0_0_0_4px_rgba(0,169,157,0.12)]
                 hover:bg-blue-100
               "
             >
@@ -645,7 +645,7 @@ export function ERPFormField({
             onChange={(event) => onChange?.(field.key, event.target.value)}
             className={`${className} ${
               isLocked
-                ? "cursor-not-allowed bg-slate-100 text-slate-500"
+                ? "cursor-not-allowed bg-slate-100 text-[var(--erp-text-muted)]"
                 : ""
             }`}
           >
@@ -701,7 +701,7 @@ export function ERPFormField({
                 text-sm
                 font-bold
                 text-blue-700
-                transition
+                transition focus:shadow-[0_0_0_4px_rgba(0,169,157,0.12)]
                 hover:bg-blue-100
               "
             >
@@ -727,7 +727,7 @@ export function ERPFormField({
             onChange={(event) => onChange?.(field.key, event.target.value)}
             className={`${className} ${
               isLocked
-                ? "cursor-not-allowed bg-slate-100 text-slate-500"
+                ? "cursor-not-allowed bg-slate-100 text-[var(--erp-text-muted)]"
                 : ""
             }`}
           >
@@ -776,7 +776,7 @@ export function ERPFormField({
                 text-sm
                 font-bold
                 text-blue-700
-                transition
+                transition focus:shadow-[0_0_0_4px_rgba(0,169,157,0.12)]
                 hover:bg-blue-100
               "
             >
@@ -803,17 +803,17 @@ export function ERPFormField({
             className="
               min-h-32
               w-full
-              rounded-2xl
+              rounded-xl
               border
-              border-slate-300
-              bg-white
+              border-[var(--erp-border)]
+              bg-[var(--erp-input-bg)]
               px-4
-              py-3
+              py-2.5
               text-sm
-              text-slate-900
+              text-[var(--erp-text)]
               placeholder:text-slate-400
               outline-none
-              transition
+              transition focus:shadow-[0_0_0_4px_rgba(0,169,157,0.12)]
               focus:border-blue-500
             "
           />

@@ -79,7 +79,7 @@ export function ERPFormTabs({
                 setActiveTab(tab.key)
               }
               className={`
-                rounded-2xl
+                rounded-lg
                 px-5
                 py-3
                 text-sm
@@ -88,7 +88,7 @@ export function ERPFormTabs({
                 ${
                   active
                     ? "bg-slate-950 text-white"
-                    : "bg-slate-100 text-slate-700 hover:bg-slate-200"
+                    : "bg-slate-100 text-[var(--erp-text)] hover:bg-slate-200"
                 }
               `}
             >
@@ -98,7 +98,7 @@ export function ERPFormTabs({
         })}
       </div>
 
-      <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+      <div className="rounded-2xl border border-[var(--erp-border)] bg-[var(--erp-surface)] p-6 shadow-sm">
 
         {activeTabConfig?.sections?.length ? (
   <div className="grid grid-cols-12 gap-6">
@@ -148,7 +148,7 @@ export function ERPFormTabs({
         ? `xl:col-span-${(section as { grid?: { cols?: number } }).grid?.cols}`
         : ""
     }
-    rounded-3xl
+    rounded-2xl
     border
     border-slate-200
     bg-slate-50
@@ -156,12 +156,12 @@ export function ERPFormTabs({
   `}
 >
                   <div className="mb-6">
-                    <h3 className="text-lg font-black text-slate-900">
+                    <h3 className="text-lg font-black text-[var(--erp-text)]">
                       {section.title}
                     </h3>
 
                     {section.description && (
-                      <p className="mt-1 text-sm text-slate-500">
+                      <p className="mt-1 text-sm text-[var(--erp-text-muted)]">
                         {section.description}
                       </p>
                     )}
@@ -199,7 +199,7 @@ export function ERPFormTabs({
         )}
 
         {visibleFields.length === 0 ? (
-          <p className="text-sm text-slate-500">
+          <p className="text-sm text-[var(--erp-text-muted)]">
             Aucun champ à afficher pour cet onglet.
           </p>
         ) : null}
