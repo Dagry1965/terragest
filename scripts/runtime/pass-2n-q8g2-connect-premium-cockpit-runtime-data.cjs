@@ -1,35 +1,38 @@
-"use client";
+const fs = require("fs");
+const path = require("path");
 
-import { useEffect, useState } from "react";
-import Link from "next/link";
+const root = process.cwd();
 
+function file(filePath) {
+  return path.join(root, filePath);
+}
 
-type DashboardWidgetItem = {
-  id?: string;
-  title: string;
-  description?: string;
-  date?: string;
-  level?: string;
-  href?: string;
-};
+function writeFile(filePath, content) {
+  const absolutePath = file(filePath);
+  fs.mkdirSync(path.dirname(absolutePath), { recursive: true });
+  fs.writeFileSync(absolutePath, content, "utf8");
+  console.log("WRITTEN", filePath);
+}
 
-type DashboardWidgetResult = {
-  key: string;
-  type?: string;
-  title?: string;
-  description?: string;
-  value?: number;
-  valueSuffix?: string;
-  href?: string;
-  items?: DashboardWidgetItem[];
-};
+/**
+ * PASS 2N-Q8G2
+ * Connecter le cockpit premium AMARKHYS aux données runtime existantes.
+ *
+ * Principe :
+ * - utiliser ERPBusinessAmarkhysDashboardConfig
+ * - utiliser ERPDashboardWidgetEngine.resolveDashboard()
+ * - garder le rendu dark premium dédié
+ */
 
-type CockpitData = {
-  widgets: DashboardWidgetResult[];
-  kpis: KpiView[];
-  appointments: AppointmentView[];
-  notifications: NotificationView[];
-};
+writeFile(
+  "src/components/amarkhys/dashboard/AmarkhysPremiumCockpit.tsx",
+`import Link from "next/link";
+
+import { ERPBusinessAmarkhysDashboardConfig } from "@/runtime/dashboard/generic/ERPBusinessAmarkhysDashboardConfig";
+import { ERPDashboardWidgetEngine } from "@/runtime/dashboard/generic/ERPDashboardWidgetEngine";
+import type {
+  ERPDashboardWidgetResult,
+} from "@/runtime/dashboard/generic/ERPDashboardTypes";
 
 type KpiView = {
   label: string;
@@ -81,13 +84,13 @@ function formatValue(value?: number, suffix?: string): string {
 }
 
 function findWidget(
-  widgets: DashboardWidgetResult[],
+  widgets: ERPDashboardWidgetResult[],
   keys: string[]
-): DashboardWidgetResult | undefined {
+): ERPDashboardWidgetResult | undefined {
   return widgets.find((widget) => keys.includes(widget.key));
 }
 
-function buildKpis(widgets: DashboardWidgetResult[]): KpiView[] {
+function buildKpis(widgets: ERPDashboardWidgetResult[]): KpiView[] {
   const ca =
     findWidget(widgets, ["ca-encaisse", "ca-total-ttc", "recouvrement-reste-a-encaisser"]);
 
@@ -160,7 +163,7 @@ function normalizeTime(date?: string): string {
   });
 }
 
-function buildAppointments(widgets: DashboardWidgetResult[]): AppointmentView[] {
+function buildAppointments(widgets: ERPDashboardWidgetResult[]): AppointmentView[] {
   const planning =
     findWidget(widgets, ["liste-rdv-du-jour", "derniers-rdv-publics"]);
 
@@ -184,7 +187,7 @@ function buildAppointments(widgets: DashboardWidgetResult[]): AppointmentView[] 
   }));
 }
 
-function buildNotifications(widgets: DashboardWidgetResult[]): NotificationView[] {
+function buildNotifications(widgets: ERPDashboardWidgetResult[]): NotificationView[] {
   const rdv =
     findWidget(widgets, ["alertes-rdv-non-confirmes"]);
 
@@ -309,11 +312,11 @@ function ServicesBars() {
           <div className="flex items-end gap-2">
             <div
               className="w-full rounded-t-xl bg-[#0EAFAA]/85 shadow-[0_0_24px_rgba(14,175,170,0.24)]"
-              style={{ height: `${bar.primary}%` }}
+              style={{ height: \`\${bar.primary}%\` }}
             />
             <div
               className="w-full rounded-t-xl bg-[#9CFCEF]/90 shadow-[0_0_24px_rgba(156,252,239,0.18)]"
-              style={{ height: `${bar.secondary}%` }}
+              style={{ height: \`\${bar.secondary}%\` }}
             />
           </div>
 
@@ -392,8 +395,11 @@ function WidgetShell({
   );
 }
 
-function createFallbackCockpitData(): CockpitData {
-  const widgets: DashboardWidgetResult[] = [];
+async function loadCockpitData() {
+  const widgets =
+    await ERPDashboardWidgetEngine.resolveDashboard(
+      ERPBusinessAmarkhysDashboardConfig
+    );
 
   return {
     widgets,
@@ -403,59 +409,8 @@ function createFallbackCockpitData(): CockpitData {
   };
 }
 
-async function loadCockpitData(): Promise<CockpitData> {
-  try {
-    const [
-      dashboardConfigModule,
-      dashboardEngineModule,
-    ] = await Promise.all([
-      import("@/runtime/dashboard/generic/ERPBusinessAmarkhysDashboardConfig"),
-      import("@/runtime/dashboard/generic/ERPDashboardWidgetEngine"),
-    ]);
-
-    const widgets =
-      await dashboardEngineModule.ERPDashboardWidgetEngine.resolveDashboard(
-        dashboardConfigModule.ERPBusinessAmarkhysDashboardConfig
-      );
-
-    return {
-      widgets,
-      kpis: buildKpis(widgets),
-      appointments: buildAppointments(widgets),
-      notifications: buildNotifications(widgets),
-    };
-  } catch (error) {
-    console.error("[AMARKHYS_COCKPIT_DATA_ERROR]", error);
-
-    return createFallbackCockpitData();
-  }
-}
-
-export function AmarkhysPremiumCockpit() {
-  const [data, setData] = useState<CockpitData>(() =>
-    createFallbackCockpitData()
-  );
-
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    let mounted = true;
-
-    async function run() {
-      const nextData = await loadCockpitData();
-
-      if (mounted) {
-        setData(nextData);
-        setLoading(false);
-      }
-    }
-
-    run();
-
-    return () => {
-      mounted = false;
-    };
-  }, []);
+export async function AmarkhysPremiumCockpit() {
+  const data = await loadCockpitData();
 
   return (
     <main className="min-h-screen overflow-hidden bg-[#020403] text-white">
@@ -483,12 +438,6 @@ export function AmarkhysPremiumCockpit() {
             <span className="mr-2 text-2xl font-black text-white">
               KPI
             </span>
-
-            {loading ? (
-              <span className="rounded-full border border-[#7FFFE8]/20 bg-[#0EAFAA]/15 px-3 py-1 text-xs font-black uppercase tracking-[0.18em] text-[#7FFFE8]">
-                Sync
-              </span>
-            ) : null}
 
             {["Atelier", "Stock", "Alertes"].map((item, index) => (
               <button
@@ -636,3 +585,7 @@ export function AmarkhysPremiumCockpit() {
     </main>
   );
 }
+`
+);
+
+console.log("PASS 2N-Q8G2 OK: premium cockpit connected to runtime dashboard data.");
