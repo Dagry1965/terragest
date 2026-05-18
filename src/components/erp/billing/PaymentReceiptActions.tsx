@@ -128,6 +128,12 @@ function buildReceiptNumber(
   );
 }
 
+function isInvoiceCancelled(
+  invoice: RecordData | null
+): boolean {
+  return String(invoice?.statutFacture ?? "") === "annulee";
+}
+
 function buildInvoiceNumber(
   invoice: RecordData | null,
   fallback: string
@@ -269,6 +275,9 @@ function buildReceiptText(
       value(payment, "factureId", factureId)
     );
 
+  const cancelledInvoice =
+    isInvoiceCancelled(context?.invoice ?? null);
+
   return [
     "Bonjour,",
     "",
@@ -276,6 +285,7 @@ function buildReceiptText(
     "",
     "Reçu : " + buildReceiptNumber(payment),
     "Facture : " + invoiceNumber,
+    cancelledInvoice ? "Facture liée annulée : oui" : "",
     "Client : " + buildClientLabel(context?.client ?? null),
     "Véhicule : " + buildVehicleLabel(context?.vehicule ?? null),
     "Montant encaissé : " + formatMoney(amount(payment, "montant")),
