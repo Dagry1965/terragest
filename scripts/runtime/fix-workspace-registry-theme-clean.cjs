@@ -1,4 +1,61 @@
-import type {
+const fs = require("fs");
+const path = require("path");
+
+const root = process.cwd();
+
+function write(filePath, content) {
+  const absolutePath = path.join(root, filePath);
+  fs.mkdirSync(path.dirname(absolutePath), { recursive: true });
+  fs.writeFileSync(absolutePath, content, "utf8");
+  console.log("WRITTEN", filePath);
+}
+
+write(
+  "src/runtime/workspaces/ERPWorkspaceTypes.ts",
+`export type ERPWorkspaceKey =
+ | "general"
+ | "production"
+ | "maintenance"
+ | "finance"
+ | "administration"
+ | "supervision"
+ | "amarkhys";
+
+export type ERPWorkspaceModule = {
+  key: string;
+  label: string;
+  description?: string;
+};
+
+export type ERPWorkspaceKpi = {
+  key: string;
+  label: string;
+  value?: string;
+  module?: string;
+};
+
+export type ERPWorkspaceQuickAction = {
+  key: string;
+  label: string;
+  href: string;
+};
+
+export type ERPWorkspace = {
+  key: ERPWorkspaceKey;
+  themeKey?: string;
+  label: string;
+  description: string;
+  defaultHref: string;
+  modules: ERPWorkspaceModule[];
+  kpis: ERPWorkspaceKpi[];
+  quickActions: ERPWorkspaceQuickAction[];
+};
+`
+);
+
+write(
+  "src/runtime/workspaces/ERPWorkspaceRegistry.ts",
+`import type {
   ERPWorkspace,
 } from "./ERPWorkspaceTypes";
 
@@ -315,3 +372,7 @@ export const ERPWorkspaceRegistry: ERPWorkspace[] = [
     ],
   },
 ];
+`
+);
+
+console.log("OK: workspace registry and types cleaned.");

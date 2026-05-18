@@ -511,7 +511,7 @@ export function ERPFormField({
                 id: String(currentValue),
                 label:
                   selectedOption?.label &&
-                  !isLikelyTechnicalId(selectedOption.label)
+                  true
                     ? selectedOption.label
                     : "Relation actuelle conservée",
                 record: selectedOption?.record,

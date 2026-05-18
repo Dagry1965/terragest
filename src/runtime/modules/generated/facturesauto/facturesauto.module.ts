@@ -152,6 +152,51 @@ export const facturesautoModule: ERPModule = {
         grid: { cols: 6 },
       },
       {
+        key: "statutEnvoiFacture",
+        label: "Statut envoi facture",
+        type: "select",
+        defaultValue: "non_envoyee",
+        options: [
+          { label: "Non envoyée", value: "non_envoyee" },
+          { label: "Envoyée", value: "envoyee" },
+          { label: "Échec envoi", value: "echec" },
+        ],
+        list: { order: 9 },
+        grid: { cols: 4 },
+      },
+      {
+        key: "dernierEnvoiFactureAt",
+        label: "Dernier envoi facture",
+        type: "datetime",
+        grid: { cols: 4 },
+      },
+      {
+        key: "canalDernierEnvoiFacture",
+        label: "Canal dernier envoi",
+        type: "select",
+        options: [
+          { label: "WhatsApp", value: "whatsapp" },
+          { label: "SMS", value: "sms" },
+          { label: "Email", value: "email" },
+          { label: "Lien", value: "lien" },
+          { label: "Manuel", value: "manuel" },
+        ],
+        grid: { cols: 4 },
+      },
+      {
+        key: "destinataireDernierEnvoiFacture",
+        label: "Destinataire dernier envoi",
+        type: "text",
+        grid: { cols: 6 },
+      },
+      {
+        key: "nombreEnvoisFacture",
+        label: "Nombre d'envois",
+        type: "number",
+        defaultValue: 0,
+        grid: { cols: 6 },
+      },
+      {
         key: "observations",
         label: "Observations",
         type: "textarea",
@@ -229,6 +274,31 @@ export const facturesautoModule: ERPModule = {
               "montantTTC",
               "montantPaye",
               "resteAPayer",
+            ],
+          },
+        ],
+      },
+
+      {
+        key: "envoi",
+        label: "Envoi",
+        fields: [
+          "statutEnvoiFacture",
+          "dernierEnvoiFactureAt",
+          "canalDernierEnvoiFacture",
+          "destinataireDernierEnvoiFacture",
+          "nombreEnvoisFacture",
+        ],
+        sections: [
+          {
+            key: "suivi-envoi",
+            title: "Suivi d'envoi facture",
+            fields: [
+              "statutEnvoiFacture",
+              "dernierEnvoiFactureAt",
+              "canalDernierEnvoiFacture",
+              "destinataireDernierEnvoiFacture",
+              "nombreEnvoisFacture",
             ],
           },
         ],

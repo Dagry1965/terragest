@@ -22,6 +22,12 @@ export const facturesautoActions: ERPModuleAction[] = [
     permission: "facturesauto.workflow",
   },
   {
+    key: "Marquer envoyee",
+    label: "Marquer comme envoyée",
+    type: "secondary",
+    permission: "facturesauto.workflow",
+  },
+  {
     key: "Relancer",
     label: "Relancer le client",
     type: "secondary",

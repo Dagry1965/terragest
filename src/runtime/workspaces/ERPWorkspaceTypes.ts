@@ -6,6 +6,7 @@ export type ERPWorkspaceKey =
  | "administration"
  | "supervision"
  | "amarkhys";
+
 export type ERPWorkspaceModule = {
   key: string;
   label: string;
@@ -27,6 +28,7 @@ export type ERPWorkspaceQuickAction = {
 
 export type ERPWorkspace = {
   key: ERPWorkspaceKey;
+  themeKey?: string;
   label: string;
   description: string;
   defaultHref: string;

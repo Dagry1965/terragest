@@ -107,6 +107,52 @@ function computeResteAPayer(
   );
 }
 
+function getInvoiceRecordId(
+  invoice: RecordData
+): string {
+  return value(
+    invoice,
+    "id",
+    value(invoice, "_id", "")
+  );
+}
+
+function getInvoiceSendStatusLabel(
+  invoice: RecordData
+): string {
+  const status =
+    value(invoice, "statutEnvoiFacture", "non_envoyee");
+
+  const labels: Record<string, string> = {
+    non_envoyee: "Non envoyée",
+    envoyee: "Envoyée",
+    echec: "Échec envoi",
+  };
+
+  return labels[status] ?? status;
+}
+
+function getInvoiceLastSendLabel(
+  invoice: RecordData
+): string {
+  const date =
+    value(invoice, "dernierEnvoiFactureAt");
+
+  const canal =
+    value(invoice, "canalDernierEnvoiFacture");
+
+  if (!date && !canal) {
+    return "Aucun envoi tracé.";
+  }
+
+  return [
+    canal ? "Canal : " + canal : "",
+    date ? "Dernier envoi : " + date : "",
+  ]
+    .filter(Boolean)
+    .join(" • ");
+}
+
 function buildInvoiceNumber(
   invoice: RecordData
 ): string {
@@ -568,6 +614,32 @@ async function previewInvoice(
   );
 }
 
+async function markInvoiceAsSent(
+  invoice: RecordData,
+  canal: "whatsapp" | "sms" | "lien" | "manuel" = "manuel"
+) {
+  const id =
+    getInvoiceRecordId(invoice);
+
+  if (!id) {
+    throw new Error("Facture introuvable : impossible de tracer l'envoi.");
+  }
+
+  await RuntimeDataBinding.update(
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    require("@/runtime/modules/generated/facturesauto/facturesauto.module").facturesautoModule,
+    id,
+    {
+      statutEnvoiFacture: "envoyee",
+      dernierEnvoiFactureAt: new Date().toISOString(),
+      canalDernierEnvoiFacture: canal,
+      destinataireDernierEnvoiFacture: "",
+      nombreEnvoisFacture:
+        Number(invoice.nombreEnvoisFacture ?? 0) + 1,
+    }
+  );
+}
+
 export function InvoiceDocumentActions({
   invoice,
 }: InvoiceDocumentActionsProps) {
@@ -580,6 +652,12 @@ export function InvoiceDocumentActions({
       vehicule: RecordData | null;
       intervention: RecordData | null;
     } | null>(null);
+
+  const [sendingStatus, setSendingStatus] =
+    useState("");
+
+  const [markingSent, setMarkingSent] =
+    useState(false);
 
   const publicUrl =
     buildInvoicePublicUrl(invoice);
@@ -645,6 +723,26 @@ export function InvoiceDocumentActions({
     "sms:?body=" +
     encodeURIComponent(shareText);
 
+  async function handleMarkAsSent(
+    canal: "whatsapp" | "sms" | "lien" | "manuel"
+  ) {
+    setMarkingSent(true);
+    setSendingStatus("");
+
+    try {
+      await markInvoiceAsSent(invoice, canal);
+      setSendingStatus("Facture marquée comme envoyée.");
+    } catch (error) {
+      setSendingStatus(
+        error instanceof Error
+          ? error.message
+          : "Impossible de tracer l'envoi."
+      );
+    } finally {
+      setMarkingSent(false);
+    }
+  }
+
   return (
     <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
       <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
@@ -660,6 +758,23 @@ export function InvoiceDocumentActions({
           <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-600">
             Visualise la facture, télécharge le PDF ou prépare un message WhatsApp / SMS pour le client.
           </p>
+
+          <div className="mt-4 rounded-2xl border border-slate-200 bg-slate-50 p-4">
+            <p className="text-xs font-black uppercase tracking-wide text-slate-500">
+              Suivi envoi
+            </p>
+            <p className="mt-1 text-sm font-black text-slate-900">
+              {getInvoiceSendStatusLabel(invoice)}
+            </p>
+            <p className="mt-1 text-xs text-slate-500">
+              {getInvoiceLastSendLabel(invoice)}
+            </p>
+            {sendingStatus ? (
+              <p className="mt-2 text-xs font-bold text-emerald-700">
+                {sendingStatus}
+              </p>
+            ) : null}
+          </div>
         </div>
 
         <div className="flex flex-wrap items-center gap-3">
@@ -699,6 +814,7 @@ export function InvoiceDocumentActions({
             href={whatsappHref}
             target="_blank"
             rel="noreferrer"
+            onClick={() => void handleMarkAsSent("whatsapp")}
             className="rounded-2xl border border-slate-200 bg-white px-5 py-3 text-sm font-black text-slate-900 transition hover:bg-slate-50"
           >
             WhatsApp
@@ -706,10 +822,20 @@ export function InvoiceDocumentActions({
 
           <a
             href={smsHref}
+            onClick={() => void handleMarkAsSent("sms")}
             className="rounded-2xl border border-slate-200 bg-white px-5 py-3 text-sm font-black text-slate-900 transition hover:bg-slate-50"
           >
             SMS
           </a>
+
+          <button
+            type="button"
+            disabled={markingSent}
+            onClick={() => void handleMarkAsSent("manuel")}
+            className="rounded-2xl border border-blue-200 bg-blue-50 px-5 py-3 text-sm font-black text-blue-800 transition hover:bg-blue-100 disabled:opacity-50"
+          >
+            {markingSent ? "Traçage..." : "Marquer envoyée"}
+          </button>
         </div>
       </div>
     </section>
