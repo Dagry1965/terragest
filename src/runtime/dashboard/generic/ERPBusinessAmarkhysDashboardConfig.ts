@@ -6,6 +6,97 @@ export const ERPBusinessAmarkhysDashboardConfig: ERPDashboardConfig = {
   subtitle:
     "Pilotage garage : leads entrants, clients, véhicules, rendez-vous, interventions, factures, rappels, activité atelier et performance financière.",
   widgets: [
+
+    {
+      key: "rdv-du-jour",
+      type: "kpi",
+      moduleKey: "rendezvous",
+      title: "RDV du jour",
+      description: "Rendez-vous prévus aujourd’hui.",
+      href: "/rendezvous",
+      filters: [
+        {
+          field: "dateRendezVous",
+          operator: "today",
+        },
+        {
+          field: "statut",
+          operator: "notIn",
+          value: ["annule", "annulee"],
+        },
+      ],
+    },
+    {
+      key: "liste-rdv-du-jour",
+      type: "timeline",
+      moduleKey: "rendezvous",
+      title: "Planning du jour",
+      description: "Rendez-vous à traiter aujourd’hui.",
+      labelField: "motif",
+      dateField: "dateRendezVous",
+      href: "/rendezvous",
+      limit: 8,
+      filters: [
+        {
+          field: "dateRendezVous",
+          operator: "today",
+        },
+        {
+          field: "statut",
+          operator: "notIn",
+          value: ["annule", "annulee"],
+        },
+      ],
+    },
+    {
+      key: "clients-actifs",
+      type: "kpi",
+      moduleKey: "clientsauto",
+      title: "Clients actifs",
+      description: "Clients non archivés dans le portefeuille AMARKHYS.",
+      href: "/clientsauto",
+      filters: [
+        {
+          field: "statut",
+          operator: "notEquals",
+          value: "archive",
+        },
+      ],
+    },
+    {
+      key: "vehicules-actifs",
+      type: "kpi",
+      moduleKey: "vehicules",
+      title: "Véhicules actifs",
+      description: "Véhicules non archivés suivis par le garage.",
+      href: "/vehicules",
+      filters: [
+        {
+          field: "statut",
+          operator: "notEquals",
+          value: "archive",
+        },
+      ],
+    },
+    {
+      key: "encaissements-recents",
+      type: "activity",
+      moduleKey: "encaissementsauto",
+      title: "Encaissements récents",
+      description: "Derniers règlements enregistrés.",
+      labelField: "referencePaiement",
+      dateField: "datePaiement",
+      href: "/encaissementsauto",
+      limit: 8,
+      filters: [
+        {
+          field: "statut",
+          operator: "notEquals",
+          value: "annule",
+        },
+      ],
+    },
+
     {
       key: "quick-actions",
       type: "quickActions",
@@ -95,6 +186,11 @@ export const ERPBusinessAmarkhysDashboardConfig: ERPDashboardConfig = {
           operator: "notEquals",
           value: "paye",
         },
+        {
+          field: "statutFacture",
+          operator: "notEquals",
+          value: "annulee",
+        },
       ],
     },
     {
@@ -170,6 +266,11 @@ export const ERPBusinessAmarkhysDashboardConfig: ERPDashboardConfig = {
           field: "statutPaiement",
           operator: "notEquals",
           value: "paye",
+        },
+        {
+          field: "statutFacture",
+          operator: "notEquals",
+          value: "annulee",
         },
       ],
     },
@@ -311,6 +412,11 @@ export const ERPBusinessAmarkhysDashboardConfig: ERPDashboardConfig = {
           operator: "equals",
           value: "paye",
         },
+        {
+          field: "statutFacture",
+          operator: "notEquals",
+          value: "annulee",
+        },
       ],
     },
     {
@@ -328,6 +434,11 @@ export const ERPBusinessAmarkhysDashboardConfig: ERPDashboardConfig = {
           field: "statutPaiement",
           operator: "notEquals",
           value: "paye",
+        },
+        {
+          field: "statutFacture",
+          operator: "notEquals",
+          value: "annulee",
         },
       ],
     },
@@ -427,6 +538,11 @@ export const ERPBusinessAmarkhysDashboardConfig: ERPDashboardConfig = {
           operator: "equals",
           value: "en_attente",
         },
+        {
+          field: "statutFacture",
+          operator: "notEquals",
+          value: "annulee",
+        },
       ],
     },
     {
@@ -442,6 +558,11 @@ export const ERPBusinessAmarkhysDashboardConfig: ERPDashboardConfig = {
           operator: "equals",
           value: "partiel",
         },
+        {
+          field: "statutFacture",
+          operator: "notEquals",
+          value: "annulee",
+        },
       ],
     },
     {
@@ -456,6 +577,11 @@ export const ERPBusinessAmarkhysDashboardConfig: ERPDashboardConfig = {
           field: "statutPaiement",
           operator: "equals",
           value: "paye",
+        },
+        {
+          field: "statutFacture",
+          operator: "notEquals",
+          value: "annulee",
         },
       ],
     },

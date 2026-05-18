@@ -10,6 +10,13 @@ export type ERPDashboardFilterOperator =
   | "equals"
   | "notEquals"
   | "exists"
+  | "notEmpty"
+  | "in"
+  | "notIn"
+  | "today"
+  | "notToday"
+  | "beforeToday"
+  | "afterToday"
   | "lteDaysFromNow"
   | "gteDaysFromNow";
 

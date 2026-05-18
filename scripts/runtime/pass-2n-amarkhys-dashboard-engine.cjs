@@ -1,4 +1,122 @@
+const fs = require("fs");
+const path = require("path");
 
+const root = process.cwd();
+
+function writeFile(filePath, content) {
+  const absolutePath = path.join(root, filePath);
+  fs.mkdirSync(path.dirname(absolutePath), { recursive: true });
+  fs.writeFileSync(absolutePath, content, "utf8");
+  console.log("WRITTEN", filePath);
+}
+
+const typesPath = "src/runtime/dashboard/generic/ERPDashboardTypes.ts";
+const enginePath = "src/runtime/dashboard/generic/ERPDashboardWidgetEngine.ts";
+const configPath = "src/runtime/dashboard/generic/ERPBusinessAmarkhysDashboardConfig.ts";
+
+const typesContent = `export type ERPDashboardWidgetType =
+  | "kpi"
+  | "alert"
+  | "timeline"
+  | "activity"
+  | "quickActions"
+  | "funnel";
+
+export type ERPDashboardFilterOperator =
+  | "equals"
+  | "notEquals"
+  | "exists"
+  | "notEmpty"
+  | "in"
+  | "notIn"
+  | "today"
+  | "notToday"
+  | "beforeToday"
+  | "afterToday"
+  | "lteDaysFromNow"
+  | "gteDaysFromNow";
+
+export type ERPDashboardAggregation =
+  | "count"
+  | "sum";
+
+export interface ERPDashboardFilter {
+  field: string;
+  operator: ERPDashboardFilterOperator;
+  value?: unknown;
+}
+
+export interface ERPDashboardQuickAction {
+  label: string;
+  href: string;
+  description?: string;
+  tone?: "primary" | "secondary" | "danger";
+}
+
+export interface ERPDashboardFunnelStepConfig {
+  key: string;
+  label: string;
+  moduleKey: string;
+  href?: string;
+  filters?: ERPDashboardFilter[];
+}
+
+export interface ERPDashboardFunnelStepResult {
+  key: string;
+  label: string;
+  value: number;
+  href?: string;
+  conversionRate?: number;
+}
+
+export interface ERPDashboardWidgetConfig {
+  key: string;
+  type: ERPDashboardWidgetType;
+  moduleKey?: string;
+  title: string;
+  description?: string;
+  href?: string;
+  dateField?: string;
+  labelField?: string;
+  filters?: ERPDashboardFilter[];
+  level?: "info" | "warning" | "critical";
+  limit?: number;
+  actions?: ERPDashboardQuickAction[];
+  aggregation?: ERPDashboardAggregation;
+  sumFields?: string[];
+  valueSuffix?: string;
+  steps?: ERPDashboardFunnelStepConfig[];
+}
+
+export interface ERPDashboardConfig {
+  key: string;
+  title: string;
+  subtitle?: string;
+  widgets: ERPDashboardWidgetConfig[];
+}
+
+export interface ERPDashboardWidgetResult {
+  key: string;
+  type: ERPDashboardWidgetType;
+  title: string;
+  description?: string;
+  href?: string;
+  value?: number;
+  valueSuffix?: string;
+  actions?: ERPDashboardQuickAction[];
+  steps?: ERPDashboardFunnelStepResult[];
+  items?: Array<{
+    id: string;
+    title: string;
+    description?: string;
+    date?: string;
+    level?: "info" | "warning" | "critical";
+    href?: string;
+  }>;
+}
+`;
+
+const engineContent = `
 import { RuntimeDataBinding } from "@/runtime/data-binding";
 import { resolveDashboardModule } from "./ERPDashboardModuleResolver";
 import type {
@@ -411,3 +529,218 @@ export class ERPDashboardWidgetEngine {
     );
   }
 }
+`;
+
+let config = fs.readFileSync(path.join(root, configPath), "utf8");
+
+config = config
+  .replaceAll("vÃ©hicules", "véhicules")
+  .replaceAll("activitÃ©", "activité")
+  .replaceAll("financiÃ¨re", "financière")
+  .replaceAll("AccÃ¨s", "Accès")
+  .replaceAll("opÃ©rations", "opérations")
+  .replaceAll("CrÃ©er", "Créer")
+  .replaceAll("lâ€™activitÃ©", "l’activité")
+  .replaceAll("confirmÃ©s", "confirmés")
+  .replaceAll("planifiÃ©s", "planifiés")
+  .replaceAll("Ãªtre", "être")
+  .replaceAll("Ã ", "à")
+  .replaceAll("dÃ©jÃ ", "déjà")
+  .replaceAll("impayÃ©es", "impayées")
+  .replaceAll("rÃ©glÃ©es", "réglées")
+  .replaceAll("Ã‰chÃ©ances", "Échéances")
+  .replaceAll("Ã©chÃ©ances", "échéances")
+  .replaceAll("dâ€™Ã©chÃ©ances", "d’échéances")
+  .replaceAll("dÃ©passÃ©es", "dépassées")
+  .replaceAll("prÃ©vus", "prévus")
+  .replaceAll("nÃ©cessitant", "nécessitant")
+  .replaceAll("Ã© venir", "à venir")
+  .replaceAll("PayÃ©es", "Payées")
+  .replaceAll("encaissÃ©", "encaissé")
+  .replaceAll("payÃ©es", "payées")
+  .replaceAll("rÃ©centes", "récentes")
+  .replaceAll("DerniÃ¨res", "Dernières")
+  .replaceAll("crÃ©Ã©s", "créés")
+  .replaceAll("VÃ©hicules", "Véhicules")
+  .replaceAll("Rappels Ã  traiter", "Rappels à traiter")
+  .replaceAll("exÃ©cuter", "exécuter")
+  .replaceAll("aujourdâ€™hui", "aujourd’hui")
+  .replaceAll("lâ€™atelier", "l’atelier")
+  .replaceAll("rÃ©gl", "régl");
+
+const insertion = `
+    {
+      key: "rdv-du-jour",
+      type: "kpi",
+      moduleKey: "rendezvous",
+      title: "RDV du jour",
+      description: "Rendez-vous prévus aujourd’hui.",
+      href: "/rendezvous",
+      filters: [
+        {
+          field: "dateRendezVous",
+          operator: "today",
+        },
+        {
+          field: "statut",
+          operator: "notIn",
+          value: ["annule", "annulee"],
+        },
+      ],
+    },
+    {
+      key: "liste-rdv-du-jour",
+      type: "timeline",
+      moduleKey: "rendezvous",
+      title: "Planning du jour",
+      description: "Rendez-vous à traiter aujourd’hui.",
+      labelField: "motif",
+      dateField: "dateRendezVous",
+      href: "/rendezvous",
+      limit: 8,
+      filters: [
+        {
+          field: "dateRendezVous",
+          operator: "today",
+        },
+        {
+          field: "statut",
+          operator: "notIn",
+          value: ["annule", "annulee"],
+        },
+      ],
+    },
+    {
+      key: "clients-actifs",
+      type: "kpi",
+      moduleKey: "clientsauto",
+      title: "Clients actifs",
+      description: "Clients non archivés dans le portefeuille AMARKHYS.",
+      href: "/clientsauto",
+      filters: [
+        {
+          field: "statut",
+          operator: "notEquals",
+          value: "archive",
+        },
+      ],
+    },
+    {
+      key: "vehicules-actifs",
+      type: "kpi",
+      moduleKey: "vehicules",
+      title: "Véhicules actifs",
+      description: "Véhicules non archivés suivis par le garage.",
+      href: "/vehicules",
+      filters: [
+        {
+          field: "statut",
+          operator: "notEquals",
+          value: "archive",
+        },
+      ],
+    },
+    {
+      key: "encaissements-recents",
+      type: "activity",
+      moduleKey: "encaissementsauto",
+      title: "Encaissements récents",
+      description: "Derniers règlements enregistrés.",
+      labelField: "referencePaiement",
+      dateField: "datePaiement",
+      href: "/encaissementsauto",
+      limit: 8,
+      filters: [
+        {
+          field: "statut",
+          operator: "notEquals",
+          value: "annule",
+        },
+      ],
+    },
+`;
+
+if (!config.includes('key: "rdv-du-jour"')) {
+  config = config.replace(
+    '    {\n      key: "quick-actions",',
+    insertion + '\n    {\n      key: "quick-actions",'
+  );
+}
+
+config = config.replaceAll(
+  `{
+          field: "statutPaiement",
+          operator: "notEquals",
+          value: "paye",
+        },`,
+  `{
+          field: "statutPaiement",
+          operator: "notEquals",
+          value: "paye",
+        },
+        {
+          field: "statutFacture",
+          operator: "notEquals",
+          value: "annulee",
+        },`
+);
+
+config = config.replaceAll(
+  `{
+          field: "statutPaiement",
+          operator: "equals",
+          value: "en_attente",
+        },`,
+  `{
+          field: "statutPaiement",
+          operator: "equals",
+          value: "en_attente",
+        },
+        {
+          field: "statutFacture",
+          operator: "notEquals",
+          value: "annulee",
+        },`
+);
+
+config = config.replaceAll(
+  `{
+          field: "statutPaiement",
+          operator: "equals",
+          value: "partiel",
+        },`,
+  `{
+          field: "statutPaiement",
+          operator: "equals",
+          value: "partiel",
+        },
+        {
+          field: "statutFacture",
+          operator: "notEquals",
+          value: "annulee",
+        },`
+);
+
+config = config.replaceAll(
+  `{
+          field: "statutPaiement",
+          operator: "equals",
+          value: "paye",
+        },`,
+  `{
+          field: "statutPaiement",
+          operator: "equals",
+          value: "paye",
+        },
+        {
+          field: "statutFacture",
+          operator: "notEquals",
+          value: "annulee",
+        },`
+);
+
+writeFile(typesPath, typesContent);
+writeFile(enginePath, engineContent);
+writeFile(configPath, config);
+
+console.log("PASS 2N-A OK: AMARKHYS dashboard engine strengthened.");
