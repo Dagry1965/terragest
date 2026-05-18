@@ -159,8 +159,8 @@ export const ERPBusinessAmarkhysDashboardConfig: ERPDashboardConfig = {
       filters: [
         {
           field: "statut",
-          operator: "notEquals",
-          value: "traite",
+          operator: "in",
+          value: ["planifie", "echoue"],
         },
         {
           field: "dateRappel",
@@ -183,8 +183,8 @@ export const ERPBusinessAmarkhysDashboardConfig: ERPDashboardConfig = {
       filters: [
         {
           field: "statutPaiement",
-          operator: "notEquals",
-          value: "paye",
+          operator: "in",
+          value: ["en_attente", "partiel"],
         },
         {
           field: "statutFacture",
@@ -207,13 +207,8 @@ export const ERPBusinessAmarkhysDashboardConfig: ERPDashboardConfig = {
       filters: [
         {
           field: "statut",
-          operator: "notEquals",
-          value: "facturee",
-        },
-        {
-          field: "statut",
-          operator: "notEquals",
-          value: "annulee",
+          operator: "in",
+          value: ["ouverte", "diagnostic", "en_cours", "terminee"],
         },
       ],
     },
@@ -264,8 +259,8 @@ export const ERPBusinessAmarkhysDashboardConfig: ERPDashboardConfig = {
       filters: [
         {
           field: "statutPaiement",
-          operator: "notEquals",
-          value: "paye",
+          operator: "in",
+          value: ["en_attente", "partiel"],
         },
         {
           field: "statutFacture",
@@ -289,8 +284,23 @@ export const ERPBusinessAmarkhysDashboardConfig: ERPDashboardConfig = {
         },
         {
           field: "statut",
-          operator: "notEquals",
-          value: "envoye",
+          operator: "in",
+          value: ["planifie", "echoue"],
+        },
+      ],
+    },
+    {
+      key: "echeances-partielles",
+      type: "kpi",
+      moduleKey: "echeancespaiementauto",
+      title: "Échéances partielles",
+      description: "Échéances partiellement payées à suivre.",
+      href: "/echeancespaiementauto",
+      filters: [
+        {
+          field: "statut",
+          operator: "equals",
+          value: "partiellement_payee",
         },
       ],
     },
@@ -381,6 +391,11 @@ export const ERPBusinessAmarkhysDashboardConfig: ERPDashboardConfig = {
               operator: "equals",
               value: "paye",
             },
+            {
+              field: "statutFacture",
+              operator: "notEquals",
+              value: "annulee",
+            },
           ],
         },
       ],
@@ -390,11 +405,18 @@ export const ERPBusinessAmarkhysDashboardConfig: ERPDashboardConfig = {
       type: "kpi",
       moduleKey: "facturesauto",
       title: "CA total TTC",
-      description: "Montant TTC total des factures atelier.",
+      description: "Montant TTC total des factures atelier non annulées.",
       href: "/facturesauto",
       aggregation: "sum",
       sumFields: ["montantTTC", "totalTTC", "montantTotal", "total"],
       valueSuffix: "FCFA",
+      filters: [
+        {
+          field: "statutFacture",
+          operator: "notEquals",
+          value: "annulee",
+        },
+      ],
     },
     {
       key: "ca-encaisse",
@@ -432,8 +454,8 @@ export const ERPBusinessAmarkhysDashboardConfig: ERPDashboardConfig = {
       filters: [
         {
           field: "statutPaiement",
-          operator: "notEquals",
-          value: "paye",
+          operator: "in",
+          value: ["en_attente", "partiel"],
         },
         {
           field: "statutFacture",
@@ -595,8 +617,8 @@ export const ERPBusinessAmarkhysDashboardConfig: ERPDashboardConfig = {
       filters: [
         {
           field: "statut",
-          operator: "notEquals",
-          value: "traite",
+          operator: "in",
+          value: ["planifie", "echoue"],
         },
       ],
     },
@@ -660,8 +682,8 @@ export const ERPBusinessAmarkhysDashboardConfig: ERPDashboardConfig = {
       filters: [
         {
           field: "statut",
-          operator: "notEquals",
-          value: "traite",
+          operator: "in",
+          value: ["planifie", "echoue"],
         },
       ],
     },
