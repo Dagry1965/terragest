@@ -79,6 +79,12 @@ function formatPaymentStatus(
   return labels[value ?? ""] ?? value ?? "En attente";
 }
 
+function isInvoiceCancelled(
+  invoice: RecordData
+): boolean {
+  return String(invoice.statutFacture ?? "") === "annulee";
+}
+
 function computeResteAPayer(
   invoice: RecordData
 ): number {
@@ -291,6 +297,9 @@ function buildShareText(
       value(invoice, "statutPaiement", "en_attente")
     );
 
+  const cancelled =
+    isInvoiceCancelled(invoice);
+
   const url =
     buildInvoicePublicUrl(invoice);
 
@@ -306,7 +315,9 @@ function buildShareText(
   return [
     "Bonjour,",
     "",
-    "Votre facture " + AMARKHYS_BUSINESS_IDENTITY.displayName + " est disponible.",
+    cancelled
+      ? "Votre facture " + AMARKHYS_BUSINESS_IDENTITY.displayName + " est annulée et reste consultable pour historique."
+      : "Votre facture " + AMARKHYS_BUSINESS_IDENTITY.displayName + " est disponible.",
     "",
     "Facture : " + numero,
     "Client : " + clientLabel,
@@ -314,10 +325,16 @@ function buildShareText(
     "Intervention : " + interventionLabel,
     "Montant TTC : " + formatMoney(total),
     "Montant payé : " + formatMoney(montantPaye),
-    "Reste à payer : " + formatMoney(reste),
+    cancelled
+      ? "Statut facture : Annulée"
+      : "Reste à payer : " + formatMoney(reste),
     "Statut paiement : " + statut,
     "",
-    url ? "Lien facture : " + url : "",
+    url
+      ? cancelled
+        ? "Lien consultation facture : " + url
+        : "Lien facture / paiement : " + url
+      : "",
     "",
     "Merci pour votre confiance. " + buildAmarkhysContactLabel(),
   ]
@@ -366,6 +383,9 @@ async function createInvoicePdf(
   const publicUrl =
     buildInvoicePublicUrl(invoice);
 
+  const cancelled =
+    isInvoiceCancelled(invoice);
+
   const qrDataUrl =
     publicUrl
       ? await QRCode.toDataURL(publicUrl, {
@@ -382,7 +402,11 @@ async function createInvoicePdf(
   doc.text("Facture générée depuis Terragest ERP", 14, 32);
 
   doc.setFontSize(16);
-  doc.text("FACTURE", 150, 18);
+  doc.text(
+    cancelled ? "FACTURE ANNULÉE" : "FACTURE",
+    150,
+    18
+  );
 
   doc.setFontSize(10);
   doc.text("N° : " + numero, 150, 26);
@@ -391,19 +415,30 @@ async function createInvoicePdf(
   doc.setDrawColor(0);
   doc.line(14, 40, 196, 40);
 
+  if (cancelled) {
+    doc.setFontSize(11);
+    doc.text("FACTURE ANNULÉE", 14, 48);
+    doc.setFontSize(9);
+    doc.text(
+      "Document conservé pour historique. Aucune nouvelle opération de paiement n’est autorisée.",
+      14,
+      54
+    );
+  }
+
   doc.setFontSize(11);
-  doc.text("Client / véhicule", 14, 50);
+  doc.text("Client / véhicule", 14, cancelled ? 66 : 50);
 
   doc.setFontSize(10);
-  doc.text("Client : " + buildClientLabel(client), 14, 58);
-  doc.text("Véhicule : " + buildVehicleLabel(vehicule), 14, 64);
-  doc.text("Intervention : " + buildInterventionLabel(intervention), 14, 70);
+  doc.text("Client : " + buildClientLabel(client), 14, cancelled ? 74 : 58);
+  doc.text("Véhicule : " + buildVehicleLabel(vehicule), 14, cancelled ? 80 : 64);
+  doc.text("Intervention : " + buildInterventionLabel(intervention), 14, cancelled ? 86 : 70);
 
   doc.setFontSize(11);
-  doc.text("Détails facture", 14, 84);
+  doc.text("Détails facture", 14, cancelled ? 100 : 84);
 
   autoTable(doc, {
-    startY: 90,
+    startY: cancelled ? 106 : 90,
     head: [[
       "Désignation",
       "Montant HT",
