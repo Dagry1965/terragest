@@ -71,7 +71,7 @@ export class ERPRelationDataLoader {
     const compact = (...parts: string[]) =>
       parts
         .filter((part) => Boolean(part && part.trim()))
-        .join(" • ")
+        .join(" · ")
         .trim();
 
     const money = (key: string) => {
@@ -96,11 +96,16 @@ export class ERPRelationDataLoader {
       return amount.toLocaleString("fr-FR") + " FCFA";
     };
 
-    const id =
-      value("id");
+    const id = value("id");
 
     const numeroFacture =
       value("numeroFacture");
+
+    const referenceTransaction =
+      value("referenceTransaction");
+
+    const referencePaiement =
+      value("referencePaiement");
 
     const reference =
       value("reference");
@@ -108,26 +113,21 @@ export class ERPRelationDataLoader {
     const numero =
       value("numero");
 
-    const dateFacture =
-      value("dateFacture");
+    const montant =
+      money("montant");
 
     const montantTTC =
       money("montantTTC");
 
-    const montantPaye =
-      money("montantPaye");
-
     const resteAPayer =
       money("resteAPayer");
 
-    const statutPaiement =
-      value("statutPaiement");
-
     const factureNumber =
-      numeroFacture || reference || numero;
+      numeroFacture || referenceTransaction || referencePaiement || reference || numero;
 
     if (factureNumber) {
-      return factureNumber;
+      const amount = montant || montantTTC || resteAPayer;
+      return compact(factureNumber, amount);
     }
 
     const marque =
@@ -140,17 +140,13 @@ export class ERPRelationDataLoader {
       value("immatriculation");
 
     const vehiculeLabel =
-      [marque, modele]
-        .filter(Boolean)
-        .join(" ")
-        .trim();
+      compact(
+        compact(marque, modele),
+        immatriculation
+      );
 
     if (vehiculeLabel) {
       return vehiculeLabel;
-    }
-
-    if (immatriculation) {
-      return immatriculation;
     }
 
     const nom =
@@ -162,22 +158,13 @@ export class ERPRelationDataLoader {
     const raisonSociale =
       value("raisonSociale");
 
-    const email =
-      value("email");
-
-    const telephone =
-      value("telephone");
-
-    const phone =
-      value("phone");
-
     const codeClient =
       value("codeClient");
 
     const personneLabel =
       compact(
-        prenom,
-        nom
+        compact(prenom, nom),
+        codeClient
       );
 
     if (personneLabel) {
@@ -185,15 +172,27 @@ export class ERPRelationDataLoader {
     }
 
     if (raisonSociale) {
-      return raisonSociale;
+      return compact(raisonSociale, codeClient);
     }
 
-    if (nom) {
-      return nom;
+    const typeIntervention =
+      value("typeIntervention");
+
+    const dateIntervention =
+      value("dateIntervention");
+
+    if (typeIntervention) {
+      return compact(typeIntervention, dateIntervention);
     }
 
-    if (codeClient) {
-      return codeClient;
+    const motif =
+      value("motif");
+
+    const dateRendezVous =
+      value("dateRendezVous");
+
+    if (motif) {
+      return compact(motif, dateRendezVous);
     }
 
     const name =
@@ -240,14 +239,6 @@ export class ERPRelationDataLoader {
       return referenceLabel;
     }
 
-    if (reference) {
-      return reference;
-    }
-
-    if (numero) {
-      return numero;
-    }
-
     if (code) {
       return code;
     }
@@ -288,6 +279,15 @@ export class ERPRelationDataLoader {
     if (produit) {
       return produit;
     }
+
+    const telephone =
+      value("telephone");
+
+    const phone =
+      value("phone");
+
+    const email =
+      value("email");
 
     if (telephone) {
       return telephone;
