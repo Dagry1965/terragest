@@ -123,14 +123,14 @@ export function ERPRuntimeTable({
   }
 
   return (
-    <div className="overflow-hidden rounded-3xl border border-[var(--erp-border)] bg-[var(--erp-surface)] shadow-sm">
-      <div className="flex flex-col gap-4 border-b border-slate-200 px-6 py-5 md:flex-row md:items-center md:justify-between">
+    <div className="overflow-hidden rounded-2xl sm:overflow-hidden rounded-3xl border border-[var(--erp-border)] bg-[var(--erp-surface)] shadow-[0_14px_40px_rgba(15,23,42,0.06)]">
+      <div className="flex flex-col gap-4 border-b border-[var(--erp-border)] px-6 py-5 md:flex-row md:items-center md:justify-between">
         <div>
           <h3 className="text-xl font-black text-[var(--erp-text)]">
             Liste opérationnelle
           </h3>
 
-          <p className="mt-1 text-sm text-[var(--erp-text-muted)]">
+          <p className="mt-1 text-xs sm:text-sm text-[var(--erp-text-muted)]">
             Données métier du module {module.metadata.label}
           </p>
         </div>
@@ -157,18 +157,18 @@ export function ERPRuntimeTable({
             }))
           }
           placeholder="Recherche..."
-          className="w-full rounded-2xl border border-[var(--erp-border)] bg-[var(--erp-surface)] px-4 py-3 text-sm outline-none"
+          className="w-full rounded-2xl border border-[var(--erp-border)] bg-[var(--erp-surface)] px-4 py-3 text-xs sm:text-sm outline-none"
         />
       </div>
 
       <div className="overflow-x-auto">
-        <table className="w-full border-collapse text-left text-sm">
+        <table className="w-full border-collapse text-left text-xs sm:text-sm">
           <thead>
-            <tr className="border-b border-slate-200 bg-slate-50">
+            <tr className="border-b border-[var(--erp-border)] bg-[var(--erp-bg)]">
               {columns.map((column) => (
                 <th
                   key={String(column.key)}
-                  className="whitespace-nowrap px-6 py-4 text-xs font-black uppercase tracking-wide text-[var(--erp-text-muted)]"
+                  className="whitespace-nowrap px-4 py-3 sm:px-6 sm:py-4 text-[11px] sm:text-xs font-black uppercase tracking-wide text-[var(--erp-text-muted)]"
                 >
                   {column.label}
                 </th>
@@ -181,7 +181,7 @@ export function ERPRuntimeTable({
               <tr>
                 <td
                   colSpan={columns.length}
-                  className="px-6 py-10 text-center text-sm text-[var(--erp-text-muted)]"
+                  className="px-6 py-10 text-center text-xs sm:text-sm text-[var(--erp-text-muted)]"
                 >
                   Aucune donnée enregistrée pour ce module.
                 </td>
@@ -201,7 +201,7 @@ export function ERPRuntimeTable({
                 {columns.map((column) => (
                   <td
                     key={String(column.key)}
-                    className="whitespace-nowrap px-6 py-4 font-medium text-[var(--erp-text)]"
+                    className="whitespace-nowrap px-4 py-3 sm:px-6 sm:py-4 font-medium text-[var(--erp-text)]"
                   >
                     {column.render(row)}
                   </td>
@@ -212,7 +212,7 @@ export function ERPRuntimeTable({
         </table>
       </div>
 
-      <div className="flex items-center justify-between border-t border-slate-200 px-6 py-4 text-sm text-[var(--erp-text-muted)]">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between border-t border-[var(--erp-border)] px-4 py-3 sm:px-6 sm:py-4 text-xs sm:text-sm text-[var(--erp-text-muted)]">
         <div>
           {total} élément{total > 1 ? "s" : ""}
         </div>

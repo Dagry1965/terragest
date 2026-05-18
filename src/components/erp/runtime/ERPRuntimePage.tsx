@@ -221,15 +221,15 @@ export function ERPRuntimePage({
               href={createActionHref}
               className="
                 rounded-2xl
-                bg-slate-950
+                bg-[var(--erp-table-head)]
                 px-5
                 py-3
                 text-sm
                 font-bold
-                text-white
+                text-[var(--erp-table-head-text)]
                 shadow-sm
                 transition
-                hover:bg-slate-800
+                hover:bg-[#007F6D]
               "
             >
               {createActionLabel}
@@ -259,10 +259,10 @@ export function ERPRuntimePage({
                   transition
                   ${
                     action.type === "danger"
-                      ? "bg-red-600 text-white hover:bg-red-700"
+                      ? "bg-red-600 text-[var(--erp-table-head-text)] hover:bg-red-700"
                       : action.type === "secondary"
-                        ? "bg-slate-200 text-slate-900 hover:bg-slate-300"
-                        : "bg-slate-950 text-white hover:bg-slate-800"
+                        ? "bg-slate-200 text-[var(--erp-text)] hover:bg-slate-300"
+                        : "bg-[var(--erp-table-head)] text-[var(--erp-table-head-text)] hover:bg-[#007F6D]"
                   }
                 `}
               >
@@ -273,7 +273,7 @@ export function ERPRuntimePage({
         )}
 
         {loading && type === "list" ? (
-          <div className="rounded-2xl border border-slate-200 bg-white p-4 text-sm text-slate-500">
+          <div className="rounded-2xl border border-[var(--erp-border)] bg-[var(--erp-surface)] p-4 text-sm text-slate-500">
             Chargement des données...
           </div>
         ) : null}
@@ -306,7 +306,7 @@ export function ERPRuntimePage({
             <div className="flex justify-end">
               <Link
                 href={module.metadata.routes.create}
-                className="rounded-xl bg-black px-4 py-2 text-sm font-medium text-white"
+                className="w-full justify-center sm:w-auto rounded-2xl bg-[var(--erp-primary)] px-5 py-3 text-sm font-black text-white shadow-[0_8px_18px_rgba(0,155,125,0.16)] transition hover:-translate-y-0.5 hover:bg-[#007F6D] hover:shadow-[0_14px_30px_rgba(0,127,109,0.24)] active:translate-y-0"
               >
                 Nouveau
               </Link>

@@ -938,13 +938,13 @@ preparedPayload.terrainId
               : "default-enterprise"
         )}
         className="
-          space-y-8
+          space-y-5 sm:space-y-6 lg:space-y-8
           rounded-2xl
           border
           border-[var(--erp-border)]
           bg-[var(--erp-bg)]
           bg-[var(--erp-bg)]
-          p-4
+          p-3 sm:p-4 lg:p-6
           shadow-[0_14px_40px_rgba(15,23,42,0.07)]
           md:p-6
         "
@@ -971,7 +971,7 @@ preparedPayload.terrainId
         <section
           data-invoice-edit-payment-action
           className="
-            rounded-3xl
+            rounded-2xl sm:rounded-3xl
             border
             border-[var(--erp-border-strong)]
             bg-[var(--erp-primary-soft)]
@@ -979,7 +979,7 @@ preparedPayload.terrainId
             shadow-sm
           "
         >
-          <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
+          <div className="grid gap-4 sm:gap-5 lg:gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
             <div>
               <p className="text-xs font-black uppercase tracking-wide text-[var(--erp-secondary)]">
                 Encaissement facture
@@ -1070,7 +1070,7 @@ preparedPayload.terrainId
       ) : null}
 
       {mode === "edit" && workflowActions.length > 0 && (
-        <section className="rounded-3xl border border-blue-100 bg-blue-50 p-4">
+        <section className="rounded-2xl sm:rounded-3xl border border-blue-100 bg-blue-50 p-4">
           <div className="mb-3">
             <p className="text-xs font-black uppercase tracking-wide text-blue-700">
               Workflow
@@ -1111,7 +1111,7 @@ preparedPayload.terrainId
           </div>
         </section>
       )}
-      <section className="overflow-hidden rounded-3xl border border-[var(--erp-border)] bg-[var(--erp-surface)] shadow-sm">
+      <section className="overflow-hidden rounded-2xl sm:rounded-3xl border border-[var(--erp-border)] bg-[var(--erp-surface)] shadow-sm">
         <div className="bg-gradient-to-r from-white via-white to-[var(--erp-primary-soft)] px-8 py-8 text-[var(--erp-text)]">
           <p className="text-sm font-bold uppercase tracking-wide text-blue-200">
             {mode === "create"
@@ -1188,9 +1188,9 @@ preparedPayload.terrainId
             </div>
           ) : null}
 
-          <div className="flex flex-wrap gap-3 rounded-3xl border border-[var(--erp-border)] bg-[var(--erp-surface)] p-5 shadow-sm">
+          <div className="flex flex-wrap gap-3 rounded-2xl sm:rounded-3xl border border-[var(--erp-border)] bg-[var(--erp-surface)] p-5 shadow-sm">
             {errors.length > 0 && (
-              <div className="w-full rounded-3xl border border-red-200 bg-red-50 p-5">
+              <div className="w-full rounded-2xl sm:rounded-3xl border border-red-200 bg-red-50 p-5">
                 <h3 className="text-sm font-black text-red-700">
                   Validation métier
                 </h3>
@@ -1217,7 +1217,7 @@ preparedPayload.terrainId
                 data-business-status-actions
 
 
-                className="w-full rounded-3xl border border-amber-200 bg-amber-50 p-5"
+                className="w-full rounded-2xl sm:rounded-3xl border border-amber-200 bg-amber-50 p-5"
 
 
               >

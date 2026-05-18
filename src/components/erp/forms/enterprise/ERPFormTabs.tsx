@@ -82,7 +82,7 @@ export function ERPFormTabs({
                 rounded-lg
                 px-5
                 py-3
-                text-sm
+                text-xs sm:text-sm
                 font-bold
                 transition
                 ${
@@ -161,7 +161,7 @@ export function ERPFormTabs({
                     </h3>
 
                     {section.description && (
-                      <p className="mt-1 text-sm text-[var(--erp-text-muted)]">
+                      <p className="mt-1 text-xs sm:text-sm text-[var(--erp-text-muted)]">
                         {section.description}
                       </p>
                     )}
@@ -199,7 +199,7 @@ export function ERPFormTabs({
         )}
 
         {visibleFields.length === 0 ? (
-          <p className="text-sm text-[var(--erp-text-muted)]">
+          <p className="text-xs sm:text-sm text-[var(--erp-text-muted)]">
             Aucun champ à afficher pour cet onglet.
           </p>
         ) : null}

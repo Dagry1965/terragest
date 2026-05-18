@@ -435,7 +435,7 @@ export function ERPFormField({
   );
 
   const className =
-    "w-full rounded-xl border border-[var(--erp-border)] bg-[var(--erp-input-bg)] px-4 py-2.5 text-sm text-[var(--erp-text)] placeholder:text-slate-400 outline-none transition focus:shadow-[0_0_0_4px_rgba(0,169,157,0.12)] focus:border-blue-500";
+    "w-full rounded-xl border border-[var(--erp-border)] bg-[var(--erp-input-bg)] px-3 sm:px-4 py-2.5 sm:py-3 text-sm text-[var(--erp-text)] placeholder:text-slate-400 outline-none transition focus:shadow-[0_0_0_4px_rgba(0,169,157,0.12)] focus:border-blue-500";
 
   const lockedClassName =
     `${className} cursor-not-allowed bg-slate-100 text-[var(--erp-text-muted)]`;
@@ -537,7 +537,7 @@ export function ERPFormField({
               value={currentValue}
             />
 
-            <div className="rounded-xl border border-[var(--erp-border-strong)] bg-[var(--erp-primary-soft)] px-4 py-2.5">
+            <div className="rounded-xl border border-[var(--erp-border-strong)] bg-[var(--erp-primary-soft)] px-3 sm:px-4 py-2.5 sm:py-3">
               <p className="text-xs font-black uppercase tracking-wide text-[var(--erp-primary)]">
                 Relation métier verrouillée
               </p>
@@ -614,7 +614,7 @@ export function ERPFormField({
                 border
                 border-blue-200
                 bg-blue-50
-                px-4
+                px-3 sm:px-4
                 py-2
                 text-sm
                 font-bold
@@ -696,7 +696,7 @@ export function ERPFormField({
                 border
                 border-blue-200
                 bg-blue-50
-                px-4
+                px-3 sm:px-4
                 py-2
                 text-sm
                 font-bold
@@ -771,7 +771,7 @@ export function ERPFormField({
                 border
                 border-blue-200
                 bg-blue-50
-                px-4
+                px-3 sm:px-4
                 py-2
                 text-sm
                 font-bold
@@ -807,8 +807,8 @@ export function ERPFormField({
               border
               border-[var(--erp-border)]
               bg-[var(--erp-input-bg)]
-              px-4
-              py-2.5
+              px-3 sm:px-4
+              py-2.5 sm:py-3
               text-sm
               text-[var(--erp-text)]
               placeholder:text-slate-400
