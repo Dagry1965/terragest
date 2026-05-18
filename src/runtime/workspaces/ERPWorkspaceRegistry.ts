@@ -74,6 +74,12 @@ export const ERPWorkspaceRegistry:
 
     quickActions: [
 
+    {
+      key: "cockpit-amarkhys",
+      label: "Cockpit AMARKHYS",
+      href: "/dashboard/amarkhys",
+    },
+
       {
         key: "new-terrain",
         label: "Nouveau terrain",
@@ -289,61 +295,61 @@ export const ERPWorkspaceRegistry:
     quickActions: [],
   },
 {
-  key:"amarkhys",
+  key: "amarkhys",
 
-  label:"AMARKHYS",
+  label: "AMARKHYS",
 
   description:
     "ERP automobile, atelier, CRM, stock, interventions et facturation",
 
   defaultHref:
-    "/clientsauto",
+    "/dashboard/amarkhys",
 
-  modules:[
+  modules: [
 
     {
-      key:"clientsauto",
+      key: "clientsauto",
       label:"Clients"
     },
 
     {
-      key:"vehicules",
+      key: "vehicules",
       label:"Véhicules"
     },
 
     {
-      key:"rendezvous",
+      key: "rendezvous",
       label:"Rendez-vous"
     },
 
     {
-      key:"interventionsauto",
+      key: "interventionsauto",
       label:"Interventions"
     },
 
     {
-      key:"facturesauto",
+      key: "facturesauto",
       label:"Factures"
     },
 
     {
-      key:"produitsauto",
+      key: "produitsauto",
       label:"Produits"
     },
 
     {
-      key:"stocksauto",
+      key: "stocksauto",
       label:"Stocks"
     },
 
     {
-      key:"rappelsauto",
+      key: "rappelsauto",
       label:"Rappels"
     }
 
   ],
 
-  kpis:[
+  kpis: [
 
     {
       key:"clients",
@@ -351,7 +357,7 @@ export const ERPWorkspaceRegistry:
     },
 
     {
-      key:"vehicules",
+      key: "vehicules",
       label:"Véhicules"
     },
 
@@ -367,7 +373,7 @@ export const ERPWorkspaceRegistry:
 
   ],
 
-  quickActions:[
+  quickActions: [
 
     {
 
