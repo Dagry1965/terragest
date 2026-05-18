@@ -16,15 +16,19 @@ export function ERPFunnelWidget({
   widget,
 }: ERPDashboardWidgetProps) {
   return (
-    <div className="rounded-3xl border border-white/10 bg-white/[0.045] p-6 shadow-2xl xl:col-span-4">
-      <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.06] to-emerald-400/[0.05] p-6 shadow-2xl">
+      <div className="mb-6 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div>
-          <h2 className="text-xl font-black text-white">
+          <p className="text-xs font-black uppercase tracking-[0.22em] text-emerald-300">
+            Funnel
+          </p>
+
+          <h2 className="mt-2 text-xl font-black text-white">
             {widget.title}
           </h2>
 
           {widget.description ? (
-            <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-500">
+            <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-400">
               {widget.description}
             </p>
           ) : null}
@@ -38,7 +42,7 @@ export function ERPFunnelWidget({
       <div className="grid gap-4 md:grid-cols-5">
         {(widget.steps ?? []).map((step, index) => {
           const content = (
-            <div className="h-full rounded-3xl border border-white/10 bg-black/20 p-5 transition hover:-translate-y-1 hover:border-emerald-300/40 hover:bg-emerald-400/10">
+            <div className="h-full rounded-3xl border border-white/10 bg-black/20 p-5 transition duration-200 hover:-translate-y-1 hover:border-emerald-300/40 hover:bg-emerald-400/10">
               <p className="text-xs font-black uppercase tracking-[0.18em] text-emerald-300">
                 Étape {index + 1}
               </p>
@@ -48,10 +52,10 @@ export function ERPFunnelWidget({
               </h3>
 
               <p className="mt-4 text-4xl font-black text-white">
-                {step.value}
+                {step.value.toLocaleString("fr-FR")}
               </p>
 
-              <p className="mt-3 text-sm font-bold text-slate-500">
+              <p className="mt-3 text-sm font-bold text-slate-400">
                 {formatPercent(step.conversionRate)}
               </p>
             </div>
@@ -62,6 +66,7 @@ export function ERPFunnelWidget({
               <Link
                 key={step.key}
                 href={step.href}
+                className="block h-full"
               >
                 {content}
               </Link>
