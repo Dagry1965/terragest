@@ -21,16 +21,16 @@ export function ERPAlertPanel({
         className="
           rounded-2xl
           border
-          bg-white
-          p-6
-          shadow-sm
+          bg-[#0B201D]
+          p-4 sm:p-4 sm:p-5 lg:p-6
+          shadow-[0_8px_24px_rgba(15,23,42,0.08)]
         "
       >
         <h2
           className="
             text-lg
             font-semibold
-            text-slate-950
+            text-white
           "
         >
           Alertes métier
@@ -40,7 +40,7 @@ export function ERPAlertPanel({
           className="
             mt-4
             text-sm
-            text-slate-500
+            text-slate-300
           "
         >
           Aucune alerte détectée.
@@ -55,9 +55,9 @@ export function ERPAlertPanel({
       className="
         rounded-2xl
         border
-        bg-white
-        p-6
-        shadow-sm
+        bg-[#0B201D]
+        p-4 sm:p-4 sm:p-5 lg:p-6
+        shadow-[0_8px_24px_rgba(15,23,42,0.08)]
       "
     >
 
@@ -65,7 +65,7 @@ export function ERPAlertPanel({
         className="
           text-lg
           font-semibold
-          text-slate-950
+          text-white
         "
       >
         Alertes métier

@@ -22,7 +22,7 @@ export function ERPKPIWidget({
   widget,
 }: ERPDashboardWidgetProps) {
   const content = (
-    <div className="group flex h-full min-h-[190px] flex-col justify-between rounded-3xl border border-white/10 bg-white/[0.045] p-6 shadow-2xl transition duration-200 hover:-translate-y-1 hover:border-emerald-300/40 hover:bg-emerald-400/10">
+    <div className="group flex h-full min-h-[190px] flex-col justify-between rounded-2xl sm:rounded-2xl sm:relative overflow-hidden rounded-3xl border border-white/10 bg-[#0B201D] shadow-[0_30px_90px_rgba(0,0,0,0.38)]/[0.045] p-4 sm:p-4 sm:p-4 sm:p-5 lg:p-4 sm:p-4 sm:p-5 lg:p-6 shadow-[0_30px_90px_rgba(0,0,0,0.38)] transition duration-200 hover:-translate-y-1 hover:border-emerald-300/40 hover:bg-emerald-400/10">
       <div>
         <div className="flex items-start justify-between gap-4">
           <p className="text-sm font-bold leading-5 text-slate-300">
@@ -34,13 +34,13 @@ export function ERPKPIWidget({
           </span>
         </div>
 
-        <h2 className="mt-5 break-words text-3xl font-black tracking-tight text-white md:text-4xl">
+        <h2 className="mt-5 break-words text-xl sm:text-xl sm:text-2xl sm:text-xl sm:text-2xl sm:text-3xl font-black tracking-tight text-white md:text-xl sm:text-xl sm:text-2xl sm:text-xl sm:text-xl sm:text-2xl sm:text-xl sm:text-2xl sm:text-3xl lg:text-xl sm:text-2xl sm:text-xl sm:text-2xl sm:text-3xl lg:text-4xl">
           {formatValue(widget.value ?? 0, widget.valueSuffix)}
         </h2>
       </div>
 
       {widget.description ? (
-        <p className="mt-5 text-sm leading-6 text-slate-400">
+        <p className="mt-5 text-sm leading-6 text-slate-300">
           {widget.description}
         </p>
       ) : null}

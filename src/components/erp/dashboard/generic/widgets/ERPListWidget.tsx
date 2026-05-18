@@ -113,7 +113,7 @@ export function ERPListWidget({
     widget.items ?? [];
 
   return (
-    <div className="flex h-full flex-col rounded-3xl border border-white/10 bg-white/[0.045] p-6 shadow-2xl">
+    <div className="flex h-full flex-col rounded-2xl sm:rounded-2xl sm:relative overflow-hidden rounded-3xl border border-white/10 bg-[#0B201D] shadow-[0_30px_90px_rgba(0,0,0,0.38)]/[0.045] p-4 sm:p-4 sm:p-4 sm:p-5 lg:p-4 sm:p-4 sm:p-5 lg:p-6 shadow-[0_30px_90px_rgba(0,0,0,0.38)]">
       <div className="mb-5 flex items-start justify-between gap-4">
         <div>
           <h2 className="text-lg font-black text-white">
@@ -121,20 +121,20 @@ export function ERPListWidget({
           </h2>
 
           {widget.description ? (
-            <p className="mt-2 text-sm leading-6 text-slate-400">
+            <p className="mt-2 text-sm leading-6 text-slate-300">
               {widget.description}
             </p>
           ) : null}
         </div>
 
-        <span className="shrink-0 rounded-full border border-white/10 bg-white/10 px-2.5 py-1 text-[10px] font-black uppercase tracking-wide text-slate-300">
+        <span className="shrink-0 rounded-full border border-white/10 bg-[#0B201D] shadow-[0_30px_90px_rgba(0,0,0,0.38)]/10 px-2.5 py-1 text-[10px] font-black uppercase tracking-wide text-slate-300">
           {widgetBadgeLabel(widget.type)}
         </span>
       </div>
 
       <div className="flex-1 space-y-3">
         {items.length === 0 ? (
-          <p className="rounded-2xl border border-white/10 bg-black/20 p-5 text-sm font-semibold text-slate-400">
+          <p className="rounded-2xl border border-white/10 bg-black/20 p-4 sm:p-4 sm:p-5 text-sm font-semibold text-slate-300">
             Aucune donnée.
           </p>
         ) : (
@@ -163,19 +163,19 @@ export function ERPListWidget({
                     </div>
 
                     {item.description ? (
-                      <div className="mt-1 line-clamp-2 text-xs font-semibold leading-5 text-slate-400">
+                      <div className="mt-1 line-clamp-2 text-xs font-semibold leading-5 text-slate-300">
                         {item.description}
                       </div>
                     ) : null}
 
                     {formattedDate ? (
-                      <div className="mt-2 text-xs font-bold text-slate-500">
+                      <div className="mt-2 text-xs font-bold text-slate-300">
                         {formattedDate}
                       </div>
                     ) : null}
                   </div>
 
-                  <span className="shrink-0 rounded-full border border-white/10 bg-white/10 px-2.5 py-1 text-[10px] font-black uppercase tracking-wide text-slate-300">
+                  <span className="shrink-0 rounded-full border border-white/10 bg-[#0B201D] shadow-[0_30px_90px_rgba(0,0,0,0.38)]/10 px-2.5 py-1 text-[10px] font-black uppercase tracking-wide text-slate-300">
                     {levelLabel(item.level)}
                   </span>
                 </div>
@@ -206,7 +206,7 @@ export function ERPListWidget({
       {widget.href ? (
         <Link
           href={widget.href}
-          className="mt-5 inline-flex items-center justify-center rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-xs font-black uppercase tracking-[0.18em] text-slate-300 transition hover:border-emerald-300/40 hover:bg-emerald-400/10 hover:text-emerald-100"
+          className="mt-5 inline-flex w-full items-center justify-center sm:w-auto justify-center rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-xs font-black uppercase tracking-[0.18em] text-slate-300 transition hover:border-emerald-300/40 hover:bg-emerald-400/10 hover:text-emerald-100"
         >
           Voir le module
         </Link>

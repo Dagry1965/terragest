@@ -22,7 +22,7 @@ export function ERPQuickActionsWidget({
   widget,
 }: ERPDashboardWidgetProps) {
   return (
-    <div className="flex h-full flex-col rounded-3xl border border-white/10 bg-white/[0.045] p-6 shadow-2xl">
+    <div className="flex h-full flex-col rounded-2xl sm:rounded-2xl sm:relative overflow-hidden rounded-3xl border border-white/10 bg-[#0B201D] shadow-[0_30px_90px_rgba(0,0,0,0.38)]/[0.045] p-4 sm:p-4 sm:p-4 sm:p-5 lg:p-4 sm:p-4 sm:p-5 lg:p-6 shadow-[0_30px_90px_rgba(0,0,0,0.38)]">
       <div className="mb-5 flex items-start justify-between gap-4">
         <div>
           <h2 className="text-lg font-black text-white">
@@ -30,7 +30,7 @@ export function ERPQuickActionsWidget({
           </h2>
 
           {widget.description ? (
-            <p className="mt-2 text-sm leading-6 text-slate-400">
+            <p className="mt-2 text-sm leading-6 text-slate-300">
               {widget.description}
             </p>
           ) : null}
@@ -41,7 +41,7 @@ export function ERPQuickActionsWidget({
         </span>
       </div>
 
-      <div className="grid flex-1 gap-3 sm:grid-cols-2">
+      <div className="grid flex-1 gap-3 sm:grid-cols-1 lg:grid-cols-1 lg:grid-cols-2">
         {(widget.actions ?? []).map((action) => {
           return (
             <Link
@@ -54,7 +54,7 @@ export function ERPQuickActionsWidget({
               </p>
 
               {action.description ? (
-                <p className="mt-2 text-xs leading-5 text-slate-400">
+                <p className="mt-2 text-xs leading-5 text-slate-300">
                   {action.description}
                 </p>
               ) : null}

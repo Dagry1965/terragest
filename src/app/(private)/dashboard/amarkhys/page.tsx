@@ -1,7 +1,7 @@
-import { ERPBusinessAmarkhysDashboard } from "@/components/erp/dashboard/business/ERPBusinessAmarkhysDashboard";
+import { AmarkhysPremiumCockpit } from "@/components/amarkhys/dashboard/AmarkhysPremiumCockpit";
 
 export const dynamic = "force-dynamic";
 
 export default function AmarkhysDashboardPage() {
-  return <ERPBusinessAmarkhysDashboard />;
+  return <AmarkhysPremiumCockpit />;
 }

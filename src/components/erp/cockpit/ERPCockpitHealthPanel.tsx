@@ -40,10 +40,10 @@ export function ERPCockpitHealthPanel({
   return (
     <ERPSection>
       <div className="mb-5">
-        <h2 className="text-lg font-semibold text-slate-950">
+        <h2 className="text-lg font-semibold text-white">
           Health system ERP
         </h2>
-        <p className="mt-1 text-sm text-slate-500">
+        <p className="mt-1 text-sm text-slate-300">
           Controle minimal de coherence du runtime.
         </p>
       </div>
@@ -52,9 +52,9 @@ export function ERPCockpitHealthPanel({
         {checks.map((check) => (
           <div
             key={check.label}
-            className="flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3"
+            className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between rounded-xl border border-white/10 bg-[#0B201D] shadow-[0_30px_90px_rgba(0,0,0,0.38)] px-4 py-3"
           >
-            <span className="text-sm font-medium text-slate-700">
+            <span className="text-sm font-medium text-white">
               {check.label}
             </span>
 
@@ -62,7 +62,7 @@ export function ERPCockpitHealthPanel({
               className={[
                 "rounded-full px-3 py-1 text-xs font-semibold",
                 check.ok
-                  ? "bg-emerald-50 text-emerald-700"
+                  ? "bg-[rgba(14,175,170,0.12)] text-[#7FFFE8]"
                   : "bg-red-50 text-red-700",
               ].join(" ")}
             >

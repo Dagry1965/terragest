@@ -47,19 +47,19 @@ export function ERPDashboardRenderer({
   widgets,
 }: Props) {
   return (
-    <main className="min-h-screen bg-slate-950 px-4 py-6 text-slate-50 md:px-8 md:py-8">
-      <div className="mx-auto max-w-7xl space-y-8">
-        <section className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/[0.08] via-white/[0.04] to-emerald-400/[0.06] p-6 shadow-2xl md:p-8">
+    <main className="min-h-screen bg-[#020807] px-4 py-6 text-slate-50 md:px-8 md:py-8">
+      <div className="mx-auto max-w-screen-2xl space-y-5 sm:space-y-4 sm:space-y-5 lg:space-y-6 lg:space-y-8">
+        <section className="relative overflow-hidden rounded-2xl sm:rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/[0.08] via-white/[0.04] to-emerald-400/[0.06] p-4 sm:p-4 sm:p-5 lg:p-6 shadow-[0_30px_90px_rgba(0,0,0,0.38)] md:p-4 sm:p-4 sm:p-4 sm:p-5 lg:p-6 lg:p-8">
           <div className="absolute -right-16 -top-16 h-72 w-72 rounded-full bg-emerald-400/10 blur-3xl" />
           <div className="absolute -bottom-20 left-12 h-64 w-64 rounded-full bg-cyan-400/10 blur-3xl" />
 
-          <div className="relative flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+          <div className="relative flex flex-col gap-4 sm:p-4 sm:p-5 lg:p-6 lg:flex-row lg:items-end lg:justify-between">
             <div>
               <p className="text-xs font-black uppercase tracking-[0.28em] text-emerald-300">
                 Tableau de bord métier
               </p>
 
-              <h1 className="mt-4 text-3xl font-black tracking-tight text-white md:text-5xl">
+              <h1 className="mt-4 text-xl sm:text-2xl sm:text-3xl font-black tracking-tight text-white md:text-5xl">
                 {config.title}
               </h1>
 
@@ -76,7 +76,7 @@ export function ERPDashboardRenderer({
           </div>
         </section>
 
-        <section className="grid auto-rows-fr gap-5 md:grid-cols-2 xl:grid-cols-4">
+        <section className="grid auto-rows-fr gap-4 sm:p-5 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-4">
           {widgets.map((widget) => {
             const Component =
               ERPDashboardWidgetRegistry.get(widget.type);
@@ -85,7 +85,7 @@ export function ERPDashboardRenderer({
               return (
                 <div
                   key={widget.key}
-                  className="rounded-3xl border border-red-400/30 bg-red-500/10 p-5 text-sm font-semibold text-red-100"
+                  className="rounded-2xl sm:rounded-3xl border border-red-400/30 bg-red-500/10 p-4 sm:p-5 text-sm font-semibold text-red-100"
                 >
                   Widget inconnu : {widget.type}
                 </div>

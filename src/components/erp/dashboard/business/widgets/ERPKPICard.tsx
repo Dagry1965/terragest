@@ -14,15 +14,15 @@ export function ERPKPICard({
       className="
         rounded-2xl
         border
-        bg-white
-        p-6
-        shadow-sm
+        bg-[#0B201D]
+        p-4 sm:p-4 sm:p-5 lg:p-6
+        shadow-[0_8px_24px_rgba(15,23,42,0.08)]
       "
     >
       <p
         className="
           text-sm
-          text-slate-500
+          text-slate-300
         "
       >
         {label}
@@ -31,9 +31,9 @@ export function ERPKPICard({
       <h2
         className="
           mt-3
-          text-4xl
+          text-xl sm:text-2xl sm:text-xl sm:text-2xl sm:text-3xl lg:text-4xl
           font-bold
-          text-slate-950
+          text-white
         "
       >
         {value}
