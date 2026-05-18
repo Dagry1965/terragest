@@ -1,4 +1,18 @@
-import type {
+const fs = require("fs");
+const path = require("path");
+
+const root = process.cwd();
+
+function writeFile(filePath, content) {
+  const absolutePath = path.join(root, filePath);
+  fs.mkdirSync(path.dirname(absolutePath), { recursive: true });
+  fs.writeFileSync(absolutePath, content, "utf8");
+  console.log("WRITTEN", filePath);
+}
+
+writeFile(
+  "src/runtime/modules/lifecycle/ERPRelationDataLoader.ts",
+`import type {
   ERPModule,
 } from "@/runtime/modules/ERPModule";
 
@@ -470,3 +484,7 @@ export class ERPRelationDataLoader {
     return id;
   }
 }
+`
+);
+
+console.log("OK: relation loader now supports AMARKHYS collection aliases.");

@@ -13,6 +13,7 @@ import type {
 type RecordData = Record<string, unknown>;
 
 const relationLabelCache = new Map<string, string>();
+const relationOptionsCache = new Map<string, Array<{ id: string; label: string }>>();
 
 function readValue(record: RecordData, field: string): unknown {
   return record?.[field];
@@ -111,6 +112,43 @@ function compact(...parts: Array<string | undefined>): string {
     .join(" · ");
 }
 
+function isLikelyTechnicalId(value: unknown): boolean {
+  const text = String(value ?? "").trim();
+
+  if (!text) {
+    return false;
+  }
+
+  if (/^[A-Za-z0-9_-]{16,}$/.test(text)) {
+    return true;
+  }
+
+  if (/^[0-9a-f]{20,}$/i.test(text)) {
+    return true;
+  }
+
+  return false;
+}
+
+function relationFragment(
+  label: string,
+  relationLabel: string,
+  relationId: unknown
+): string | undefined {
+  const id = String(relationId ?? "").trim();
+  const value = String(relationLabel ?? "").trim();
+
+  if (!id) {
+    return undefined;
+  }
+
+  if (!value || value === id || isLikelyTechnicalId(value)) {
+    return label + " introuvable";
+  }
+
+  return label + " : " + value;
+}
+
 async function resolveRelationLabel(
   moduleKey: string,
   id: unknown
@@ -128,12 +166,46 @@ async function resolveRelationLabel(
     return cached;
   }
 
-  const label = await ERPRelationDataLoader.resolveLabel(
-    moduleKey,
-    relationId
-  );
+  let resolved = "";
 
-  const resolved = label || relationId;
+  try {
+    const directLabel = await ERPRelationDataLoader.resolveLabel(
+      moduleKey,
+      relationId
+    );
+
+    if (directLabel && directLabel !== relationId) {
+      resolved = directLabel;
+    }
+  } catch {
+    resolved = "";
+  }
+
+  if (!resolved) {
+    try {
+      let options = relationOptionsCache.get(moduleKey);
+
+      if (!options) {
+        options = await ERPRelationDataLoader.load(moduleKey);
+        relationOptionsCache.set(moduleKey, options);
+      }
+
+      const match = options.find(
+        (option) => String(option.id) === relationId
+      );
+
+      if (match?.label && match.label !== relationId) {
+        resolved = match.label;
+      }
+    } catch {
+      resolved = "";
+    }
+  }
+
+  if (!resolved) {
+    resolved = relationId;
+  }
+
   relationLabelCache.set(cacheKey, resolved);
 
   return resolved;
@@ -317,14 +389,14 @@ async function getRecordDescription(
     formatDate(record.dateRendezVous);
 
   const fragments = [
-    clientLabel ? "Client : " + clientLabel : undefined,
-    vehicleLabel ? "Véhicule : " + vehicleLabel : undefined,
-    invoiceLabel ? "Facture : " + invoiceLabel : undefined,
-    interventionLabel ? "Intervention : " + interventionLabel : undefined,
-    appointmentLabel ? "RDV : " + appointmentLabel : undefined,
+    relationFragment("Client", clientLabel, record.clientId),
+    relationFragment("Véhicule", vehicleLabel, record.vehiculeId),
+    relationFragment("Facture", invoiceLabel, record.factureId),
+    relationFragment("Intervention", interventionLabel, record.interventionId),
+    relationFragment("RDV", appointmentLabel, record.rendezVousId),
     amount ? "Montant : " + amount : undefined,
     date ? "Date : " + date : undefined,
-    record.statutFacture ? "Facture : " + String(record.statutFacture) : undefined,
+    record.statutFacture ? "Statut facture : " + String(record.statutFacture) : undefined,
     record.statutPaiement ? "Paiement : " + String(record.statutPaiement) : undefined,
     record.statut ? "Statut : " + String(record.statut) : undefined,
     record.source ? "Source : " + String(record.source) : undefined,
