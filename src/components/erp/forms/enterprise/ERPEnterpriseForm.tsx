@@ -822,6 +822,22 @@ preparedPayload.terrainId
       };
     }
 
+    const currentInvoiceStatus =
+      String(formValues.statutFacture ?? "");
+
+    if (
+      moduleKey === "facturesauto" &&
+      currentInvoiceStatus !== "annulee"
+    ) {
+      return {
+        label: "Annuler facture",
+        nextStatus: "annulee",
+        statusField: "statutFacture",
+        confirmMessage:
+          "Annuler cette facture ? Les paiements, échéances et historiques seront conservés.",
+      };
+    }
+
     if (moduleKey === "encaissementsauto" && currentStatus !== "annule") {
       return {
         label: "Annuler encaissement",
@@ -863,13 +879,13 @@ preparedPayload.terrainId
         module,
         String(initialData.id),
         {
-          statut: action.nextStatus,
+          [action.statusField ?? "statut"]: action.nextStatus,
         }
       );
 
       setFormValues((currentValues) => ({
         ...currentValues,
-        statut: action.nextStatus,
+        [action.statusField ?? "statut"]: action.nextStatus,
       }));
 
       setErrors([]);
