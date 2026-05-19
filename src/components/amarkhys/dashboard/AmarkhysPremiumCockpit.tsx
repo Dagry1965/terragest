@@ -268,89 +268,129 @@ function buildRevenueHistory(widgets: DashboardWidgetResult[]): RevenuePoint[] {
 }
 
 function buildNotifications(widgets: DashboardWidgetResult[]): NotificationView[] {
- const rdv =
-  findWidget(widgets, ["alertes-rdv-non-confirmes"]);
+  const notifications: NotificationView[] = [];
+  const seen = new Set<string>();
 
- const factures =
-  findWidget(widgets, ["alertes-factures-impayees"]);
+  function text(value: unknown): string {
+    return String(value ?? "").trim();
+  }
 
- const rappels =
-  findWidget(widgets, ["alertes-rappels-en-retard", "prochains-rappels"]);
+  function firstDescription(
+    widget: DashboardWidgetResult | undefined,
+    fallback: string
+  ): string {
+    const first = widget?.items?.[0];
 
- const interventions =
-  findWidget(widgets, ["alertes-interventions-ouvertes"]);
+    return (
+      text(first?.description) ||
+      text(widget?.description) ||
+      fallback
+    );
+  }
 
- const echeances =
-  findWidget(widgets, ["alertes-echeances-retard"]);
+  function firstHref(
+    widget: DashboardWidgetResult | undefined,
+    fallback: string
+  ): string {
+    const first = widget?.items?.[0];
 
- const stockBas =
-  findWidget(widgets, ["alertes-stock-bas"]);
+    return (
+      text(first?.href) ||
+      text(widget?.href) ||
+      fallback
+    );
+  }
 
- const notifications: NotificationView[] = [];
+  function pushNotification(params: {
+    keys: string[];
+    title: string;
+    trigger: string;
+    fallbackHref: string;
+    tone: NotificationView["tone"];
+  }) {
+    const widget = findWidget(widgets, params.keys);
+    const count = widget?.items?.length ?? 0;
 
- if ((rdv?.items?.length ?? 0) > 0) {
-  notifications.push({
-   title: "RDV à confirmer",
-   description: String(rdv?.items?.[0]?.description ?? rdv?.description ?? "Rendez-vous en attente de confirmation."),
-   tone: "warning",
-   href: rdv?.href,
+    if (!widget || count <= 0) {
+      return;
+    }
+
+    const href = firstHref(widget, params.fallbackHref);
+    const description = firstDescription(widget, params.trigger);
+
+    if (!description || !href) {
+      return;
+    }
+
+    const signature = [
+      params.title,
+      href,
+      description,
+    ].join("|");
+
+    if (seen.has(signature)) {
+      return;
+    }
+
+    seen.add(signature);
+
+    notifications.push({
+      title: count > 1 ? `${params.title} · ${count}` : params.title,
+      description,
+      tone: params.tone,
+      href,
+    });
+  }
+
+  pushNotification({
+    keys: ["alertes-rdv-non-confirmes"],
+    title: "RDV à confirmer",
+    trigger: "Déclenché par un rendez-vous créé ou planifié mais pas encore confirmé.",
+    fallbackHref: "/rendezvous",
+    tone: "warning",
   });
- }
 
- if ((factures?.items?.length ?? 0) > 0) {
-  notifications.push({
-   title: "Factures impayées",
-   description: String(factures?.items?.[0]?.description ?? factures?.description ?? "Factures en attente de règlement."),
-   tone: "alert",
-   href: factures?.href,
+  pushNotification({
+    keys: ["alertes-factures-impayees"],
+    title: "Factures impayées",
+    trigger: "Déclenché par une facture avec un reste à payer ou un paiement non soldé.",
+    fallbackHref: "/facturesauto",
+    tone: "alert",
   });
- }
 
- if ((rappels?.items?.length ?? 0) > 0) {
-  notifications.push({
-   title: "Rappels à traiter",
-   description: String(rappels?.items?.[0]?.description ?? rappels?.description ?? "Actions de relance à venir."),
-   tone: "info",
-   href: rappels?.href,
+  pushNotification({
+    keys: ["alertes-stock-bas"],
+    title: "Stock bas",
+    trigger: "Déclenché par un stock marqué faible ou en rupture.",
+    fallbackHref: "/stocksauto",
+    tone: "warning",
   });
- }
 
- if ((interventions?.items?.length ?? 0) > 0) {
-  notifications.push({
-   title: "Interventions ouvertes",
-   description: String(interventions?.items?.[0]?.description ?? interventions?.description ?? "Interventions à suivre à l’atelier."),
-   tone: "warning",
-   href: interventions?.href,
+  pushNotification({
+    keys: ["alertes-rappels-en-retard", "prochains-rappels"],
+    title: "Rappels à traiter",
+    trigger: "Déclenché par un rappel arrivé à échéance ou une relance client à effectuer.",
+    fallbackHref: "/rappelsauto",
+    tone: "info",
   });
- }
 
- if ((echeances?.items?.length ?? 0) > 0) {
-  notifications.push({
-   title: "Échéances à recouvrer",
-   description: String(echeances?.items?.[0]?.description ?? echeances?.description ?? "Échéances en retard à traiter."),
-   tone: "alert",
-   href: echeances?.href,
+  pushNotification({
+    keys: ["alertes-interventions-ouvertes"],
+    title: "Interventions ouvertes",
+    trigger: "Déclenché par une intervention atelier encore ouverte ou en cours.",
+    fallbackHref: "/interventionsauto",
+    tone: "warning",
   });
- }
 
- if ((stockBas?.items?.length ?? 0) > 0) {
-  notifications.push({
-   title: "Stock bas",
-   description: String(stockBas?.items?.[0]?.description ?? stockBas?.description ?? "Produits à réapprovisionner."),
-   tone: "warning",
-   href: stockBas?.href,
+  pushNotification({
+    keys: ["alertes-echeances-retard"],
+    title: "Échéances à recouvrer",
+    trigger: "Déclenché par une échéance dépassée qui n’est pas totalement payée.",
+    fallbackHref: "/echeancespaiementauto",
+    tone: "alert",
   });
- }
 
- if (notifications.length === 0) {
-  notifications.push({
-   title: "Aucune alerte critique",
-   description: "Le cockpit ne détecte pas d’urgence immédiate.",
-   tone: "info",
-  });
- }
-
- return notifications.slice(0, 4);
+  return notifications.slice(0, 5);
 }
 
 function TrendMark() {
