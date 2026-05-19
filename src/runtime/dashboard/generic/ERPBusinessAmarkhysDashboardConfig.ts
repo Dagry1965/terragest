@@ -97,6 +97,71 @@ export const ERPBusinessAmarkhysDashboardConfig: ERPDashboardConfig = {
       ],
     },
 
+
+    {
+      key: "stocks-suivis",
+      type: "kpi",
+      moduleKey: "stocksauto",
+      title: "Stocks suivis",
+      description: "Lignes de stock actives suivies par le garage.",
+      href: "/stocksauto",
+      filters: [
+        {
+          field: "statut",
+          operator: "notEquals",
+          value: "archive",
+        },
+      ],
+    },
+    {
+      key: "stocks-bas",
+      type: "kpi",
+      moduleKey: "stocksauto",
+      title: "Stock bas",
+      description: "Produits en stock faible ou en rupture.",
+      href: "/stocksauto",
+      filters: [
+        {
+          field: "statut",
+          operator: "in",
+          value: ["stock_faible", "rupture"],
+        },
+      ],
+    },
+    {
+      key: "stocks-rupture",
+      type: "kpi",
+      moduleKey: "stocksauto",
+      title: "Ruptures stock",
+      description: "Produits déclarés en rupture.",
+      href: "/stocksauto",
+      filters: [
+        {
+          field: "statut",
+          operator: "equals",
+          value: "rupture",
+        },
+      ],
+    },
+    {
+      key: "alertes-stock-bas",
+      type: "alert",
+      moduleKey: "stocksauto",
+      title: "Stock bas",
+      description: "Produits en stock faible ou en rupture à réapprovisionner.",
+      labelField: "produitId",
+      dateField: "updatedAt",
+      href: "/stocksauto",
+      level: "warning",
+      limit: 6,
+      filters: [
+        {
+          field: "statut",
+          operator: "in",
+          value: ["stock_faible", "rupture"],
+        },
+      ],
+    },
     {
       key: "quick-actions",
       type: "quickActions",

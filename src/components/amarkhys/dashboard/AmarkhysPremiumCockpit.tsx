@@ -98,7 +98,7 @@ function buildKpis(widgets: DashboardWidgetResult[]): KpiView[] {
     findWidget(widgets, ["ca-total-ttc", "ca-encaisse"]);
 
   const stock =
-    findWidget(widgets, ["stocks-total", "stock-petronas", "stocks-bas"]);
+    findWidget(widgets, ["stocks-bas", "stocks-suivis", "stocks-rupture"]);
 
   const factures =
     findWidget(widgets, ["factures-payees", "factures-en-attente"]);
@@ -134,11 +134,15 @@ function buildKpis(widgets: DashboardWidgetResult[]): KpiView[] {
       label: "Alertes atelier",
       value: formatValue(
         (findWidget(widgets, ["alertes-rdv-non-confirmes"])?.items?.length ?? 0) +
-          (findWidget(widgets, ["alertes-factures-impayees"])?.items?.length ?? 0)
+          (findWidget(widgets, ["alertes-factures-impayees"])?.items?.length ?? 0) +
+          (findWidget(widgets, ["alertes-rappels-en-retard"])?.items?.length ?? 0) +
+          (findWidget(widgets, ["alertes-interventions-ouvertes"])?.items?.length ?? 0) +
+          (findWidget(widgets, ["alertes-echeances-retard"])?.items?.length ?? 0) +
+          (findWidget(widgets, ["alertes-stock-bas"])?.items?.length ?? 0)
       ),
       href: "/rendezvous",
       icon: "◈",
-      subtitle: "RDV, factures et rappels à traiter",
+      subtitle: "RDV, factures, rappels, interventions, échéances et stock",
     },
   ];
 }
@@ -192,7 +196,16 @@ function buildNotifications(widgets: DashboardWidgetResult[]): NotificationView[
     findWidget(widgets, ["alertes-factures-impayees"]);
 
   const rappels =
-    findWidget(widgets, ["prochains-rappels"]);
+    findWidget(widgets, ["alertes-rappels-en-retard", "prochains-rappels"]);
+
+  const interventions =
+    findWidget(widgets, ["alertes-interventions-ouvertes"]);
+
+  const echeances =
+    findWidget(widgets, ["alertes-echeances-retard"]);
+
+  const stockBas =
+    findWidget(widgets, ["alertes-stock-bas"]);
 
   const notifications: NotificationView[] = [];
 
@@ -223,6 +236,33 @@ function buildNotifications(widgets: DashboardWidgetResult[]): NotificationView[
     });
   }
 
+  if ((interventions?.items?.length ?? 0) > 0) {
+    notifications.push({
+      title: "Interventions ouvertes",
+      description: String(interventions?.items?.[0]?.description ?? interventions?.description ?? "Interventions à suivre à l’atelier."),
+      tone: "warning",
+      href: interventions?.href,
+    });
+  }
+
+  if ((echeances?.items?.length ?? 0) > 0) {
+    notifications.push({
+      title: "Échéances à recouvrer",
+      description: String(echeances?.items?.[0]?.description ?? echeances?.description ?? "Échéances en retard à traiter."),
+      tone: "alert",
+      href: echeances?.href,
+    });
+  }
+
+  if ((stockBas?.items?.length ?? 0) > 0) {
+    notifications.push({
+      title: "Stock bas",
+      description: String(stockBas?.items?.[0]?.description ?? stockBas?.description ?? "Produits à réapprovisionner."),
+      tone: "warning",
+      href: stockBas?.href,
+    });
+  }
+
   if (notifications.length === 0) {
     notifications.push({
       title: "Aucune alerte critique",
@@ -231,7 +271,7 @@ function buildNotifications(widgets: DashboardWidgetResult[]): NotificationView[
     });
   }
 
-  return notifications.slice(0, 3);
+  return notifications.slice(0, 4);
 }
 
 function TrendMark() {
@@ -490,19 +530,34 @@ export function AmarkhysPremiumCockpit() {
               </span>
             ) : null}
 
-            {["Atelier", "Stock", "Alertes"].map((item, index) => (
-              <button
-                key={item}
-                className="relative rounded-2xl border border-white/15 bg-white/5 px-4 py-3 text-sm font-bold text-white transition hover:border-[#7FFFE8]/50 hover:bg-[#0EAFAA]/15"
-              >
-                {item}
-                {index === 2 && data.notifications.length > 0 ? (
-                  <span className="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full bg-red-500 text-xs font-black text-white">
-                    {data.notifications.length}
-                  </span>
-                ) : null}
-              </button>
-            ))}
+            {["Atelier", "Stock", "Alertes"].map((item, index) => {
+              const stockCount =
+                findWidget(data.widgets, ["alertes-stock-bas"])?.items?.length ?? 0;
+
+              const badge =
+                index === 1
+                  ? stockCount
+                  : index === 2
+                    ? data.notifications.length
+                    : 0;
+
+              return (
+                <button
+                  key={item}
+                  className="relative rounded-2xl border border-white/15 bg-white/5 px-4 py-3 text-sm font-bold text-white transition hover:border-[#7FFFE8]/50 hover:bg-[#0EAFAA]/15"
+                >
+                  {item}
+                  {badge > 0 ? (
+                    <span className={[
+                      "absolute -right-2 -top-2 flex h-6 min-w-6 items-center justify-center rounded-full px-1.5 text-xs font-black text-white",
+                      index === 1 ? "bg-amber-500" : "bg-red-500",
+                    ].join(" ")}>
+                      {badge}
+                    </span>
+                  ) : null}
+                </button>
+              );
+            })}
           </div>
         </header>
 
