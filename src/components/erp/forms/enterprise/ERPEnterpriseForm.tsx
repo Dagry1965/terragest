@@ -173,6 +173,99 @@ function buildInvoicePaymentHref(
   return "/encaissementsauto/nouveau?" + params.toString();
 }
 
+async function syncInterventionTotalsFromLines(
+  interventionId: string
+) {
+  if (!interventionId) {
+    return;
+  }
+
+  try {
+    const { allERPModules } =
+      await import("@/runtime/modules/definitions/coreModules");
+
+    const linesModule =
+      allERPModules.find(
+        (item) => item.metadata.key === "lignesinterventionauto"
+      );
+
+    const interventionModule =
+      allERPModules.find(
+        (item) => item.metadata.key === "interventionsauto"
+      );
+
+    if (!linesModule || !interventionModule) {
+      return;
+    }
+
+    const lines =
+      await RuntimeDataBinding.list(linesModule);
+
+    const relatedLines =
+      lines.filter(
+        (line) =>
+          String(line.interventionId ?? "") === interventionId &&
+          String(line.statut ?? "") !== "annulee"
+      );
+
+    const totals =
+      relatedLines.reduce(
+        (acc, line) => {
+          const quantity = Number(line.quantite ?? 0);
+          const unitPrice = Number(line.prixUnitaire ?? 0);
+
+          const amount =
+            Number(line.montantTotal ?? quantity * unitPrice) || 0;
+
+          const type =
+            String(line.typeLigne ?? "piece");
+
+          if (type === "piece") {
+            acc.pieces += amount;
+          } else if (
+            type === "main_oeuvre" ||
+            type === "service"
+          ) {
+            acc.mainOeuvre += amount;
+          } else if (type === "remise") {
+            acc.remises += amount;
+          } else {
+            acc.autres += amount;
+          }
+
+          return acc;
+        },
+        {
+          pieces: 0,
+          mainOeuvre: 0,
+          remises: 0,
+          autres: 0,
+        }
+      );
+
+    const coutTotal =
+      totals.pieces +
+      totals.mainOeuvre +
+      totals.autres -
+      totals.remises;
+
+    await RuntimeDataBinding.update(
+      interventionModule,
+      interventionId,
+      {
+        coutPieces: totals.pieces,
+        coutMainOeuvre: totals.mainOeuvre + totals.autres,
+        coutTotal,
+      }
+    );
+  } catch (error) {
+    console.error(
+      "[AMARKHYS_SYNC_INTERVENTION_TOTALS_ERROR]",
+      error
+    );
+  }
+}
+
 function getInvoiceAmountSummary(
   invoice: Record<string, unknown>
 ) {
@@ -695,6 +788,21 @@ preparedPayload.terrainId
             ...preparedPayload,
             id: recordId,
           });
+        }
+      }
+
+      // AMARKHYS_SYNC_INTERVENTION_TOTALS_AFTER_SAVE
+      if (module.metadata.key === "lignesinterventionauto") {
+        const interventionId =
+          String(
+            preparedPayload.interventionId ??
+            savedRecord?.interventionId ??
+            formValues.interventionId ??
+            ""
+          );
+
+        if (interventionId) {
+          await syncInterventionTotalsFromLines(interventionId);
         }
       }
 
