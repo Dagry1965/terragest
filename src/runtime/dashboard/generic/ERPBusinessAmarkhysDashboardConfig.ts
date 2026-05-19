@@ -78,6 +78,30 @@ export const ERPBusinessAmarkhysDashboardConfig: ERPDashboardConfig = {
         },
       ],
     },
+
+    {
+      key: "historique-revenus-j30",
+      type: "activity",
+      moduleKey: "encaissementsauto",
+      title: "Historique revenus J-30",
+      description: "Encaissements validés sur les 30 derniers jours.",
+      labelField: "referenceTransaction",
+      dateField: "datePaiement",
+      href: "/encaissementsauto",
+      limit: 500,
+      filters: [
+        {
+          field: "statut",
+          operator: "equals",
+          value: "valide",
+        },
+        {
+          field: "datePaiement",
+          operator: "gteDaysFromNow",
+          value: -29,
+        },
+      ],
+    },
     {
       key: "encaissements-recents",
       type: "activity",
