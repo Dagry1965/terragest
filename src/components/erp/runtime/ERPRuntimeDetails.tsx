@@ -23,6 +23,39 @@ interface ERPRuntimeDetailsProps {
   data?: Record<string, unknown>;
 }
 
+function buildInterventionLineHref(
+  data: Record<string, unknown>
+): string {
+  const interventionId =
+    String(
+      data.id ??
+      data._id ??
+      ""
+    );
+
+  const params =
+    new URLSearchParams();
+
+  if (interventionId) {
+    params.set(
+      "interventionId",
+      interventionId
+    );
+
+    params.set(
+      "returnTo",
+      "/interventionsauto/" + interventionId
+    );
+
+    params.set(
+      "lockFields",
+      "interventionId"
+    );
+  }
+
+  return "/lignesinterventionauto/nouveau?" + params.toString();
+}
+
 function buildInvoicePaymentHref(
   data: Record<string, unknown>
 ): string {
@@ -158,9 +191,21 @@ export function ERPRuntimeDetails({
       data._id
     );
 
+  const isIntervention =
+    module.metadata.key === "interventionsauto" &&
+    Boolean(
+      data.id ??
+      data._id
+    );
+
   const paymentHref =
     isInvoice
       ? buildInvoicePaymentHref(data)
+      : "#";
+
+  const interventionLineHref =
+    isIntervention
+      ? buildInterventionLineHref(data)
       : "#";
 
   const amountSummary =
@@ -203,6 +248,34 @@ export function ERPRuntimeDetails({
 
   return (
     <div className="space-y-6">
+      {isIntervention ? (
+        <ERPCard
+          title="Lignes de l’intervention"
+          description="Ajoutez les pièces, services ou main d’œuvre consommés sur cette intervention."
+        >
+          <div
+            data-intervention-line-action
+            className="flex flex-col gap-4 rounded-2xl border border-[var(--erp-border)] bg-[var(--erp-surface-soft)] p-4 sm:flex-row sm:items-center sm:justify-between"
+          >
+            <div>
+              <p className="text-sm font-black text-[var(--erp-text)]">
+                Détail des prestations et consommations
+              </p>
+              <p className="mt-1 text-sm text-[var(--erp-text-muted)]">
+                Prépare la facture détaillée et la future sortie de stock.
+              </p>
+            </div>
+
+            <a
+              href={interventionLineHref}
+              className="inline-flex items-center justify-center rounded-2xl bg-[var(--erp-primary)] px-5 py-3 text-sm font-black text-white transition hover:opacity-90"
+            >
+              Ajouter une ligne
+            </a>
+          </div>
+        </ERPCard>
+      ) : null}
+
       {isInvoice ? (
         <section className="rounded-3xl border border-emerald-300/30 bg-[var(--erp-primary-soft)]0/10 p-4 sm:p-5 lg:p-6 shadow-[0_14px_40px_rgba(15,23,42,0.07)]">
           <div className="grid gap-4 sm:p-5 lg:p-6 lg:grid-cols-[1fr_auto] lg:items-end">
