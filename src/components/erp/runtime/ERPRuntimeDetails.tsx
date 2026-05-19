@@ -205,14 +205,14 @@ export function ERPRuntimeDetails({
     <div className="space-y-6">
       {isInvoice ? (
         <section className="rounded-3xl border border-emerald-300/30 bg-[var(--erp-primary-soft)]0/10 p-4 sm:p-5 lg:p-6 shadow-[0_14px_40px_rgba(15,23,42,0.07)]">
-          <div className="grid gap-4 sm:p-5 lg:p-6 lg:grid-cols-[1fr_auto] lg:items-center">
+          <div className="grid gap-4 sm:p-5 lg:p-6 lg:grid-cols-[1fr_auto] lg:items-end">
             <div>
               <p className="text-xs font-black uppercase tracking-wide text-emerald-300">
                 Encaissement facture
               </p>
 
-              <h2 className="mt-2 text-2xl font-black text-[var(--erp-table-head-text)]">
-                Enregistrer un paiement
+              <h2 className="mt-2 text-2xl font-black text-[var(--erp-table-head-text)] min-w-[220px] justify-center self-end mt-auto mb-0 lg:self-end shadow-[0_12px_30px_rgba(0,166,138,0.22)]">
+              Enregistrer un paiement
               </h2>
 
               <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-300">
@@ -251,8 +251,7 @@ export function ERPRuntimeDetails({
 
             <Link
               href={paymentHref}
-              className="inline-flex items-center justify-center rounded-2xl bg-[var(--erp-primary-soft)]0 px-6 py-4 text-sm font-black text-[var(--erp-text)] shadow-[0_14px_40px_rgba(15,23,42,0.07)] transition hover:bg-emerald-300"
-            >
+              className="inline-flex items-center justify-center rounded-2xl bg-[var(--erp-primary-soft)]0 px-6 py-4 text-sm font-black text-[var(--erp-text)] shadow-[0_14px_40px_rgba(15,23,42,0.07)] transition hover:bg-emerald-300 min-w-[220px] self-end lg:self-end shadow-[0_12px_30px_rgba(0,166,138,0.22)] mt-auto mb-0">
               Enregistrer un paiement
             </Link>
           </div>

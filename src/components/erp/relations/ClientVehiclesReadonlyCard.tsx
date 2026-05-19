@@ -107,10 +107,10 @@ export function ClientVehiclesReadonlyCard({
     );
 
   return (
-    <section className="rounded-3xl border border-blue-100 bg-blue-50 p-5 shadow-sm">
+    <section className="rounded-3xl border border-[#D5E4E8] bg-[#F8FAFC] p-5 shadow-sm">
       <div className="flex flex-col gap-2 md:flex-row md:items-start md:justify-between">
         <div>
-          <p className="text-xs font-black uppercase tracking-wide text-blue-700">
+          <p className="text-xs font-black uppercase tracking-wide text-[#1F2937]">
             Relation en lecture seule
           </p>
 
@@ -124,18 +124,18 @@ export function ClientVehiclesReadonlyCard({
           </p>
         </div>
 
-        <span className="rounded-full border border-blue-200 bg-white px-4 py-2 text-xs font-black text-blue-700">
+        <span className="rounded-full border border-[#CBD5E1] bg-white px-4 py-2 text-xs font-black text-[#1F2937]">
           {title}
         </span>
       </div>
 
       <div className="mt-4">
         {loading ? (
-          <div className="rounded-2xl border border-blue-100 bg-white p-4 text-sm text-slate-500">
+          <div className="rounded-2xl border border-[#D5E4E8] bg-white p-4 text-sm text-slate-500">
             Chargement des véhicules...
           </div>
         ) : vehicles.length === 0 ? (
-          <div className="rounded-2xl border border-blue-100 bg-white p-4 text-sm text-slate-500">
+          <div className="rounded-2xl border border-[#D5E4E8] bg-white p-4 text-sm text-slate-500">
             Aucun véhicule n’est actuellement rattaché à ce client.
           </div>
         ) : (
@@ -147,7 +147,7 @@ export function ClientVehiclesReadonlyCard({
               return (
                 <article
                   key={id || index}
-                  className="rounded-2xl border border-blue-100 bg-white p-4"
+                  className="rounded-2xl border border-[#D5E4E8] bg-white p-4"
                 >
                   <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                     <div>

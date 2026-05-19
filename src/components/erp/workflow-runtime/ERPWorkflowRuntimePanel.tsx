@@ -95,7 +95,7 @@ export function ERPWorkflowRuntimePanel({
               className={[
                 "rounded-2xl border p-4 text-sm",
                 active
-                  ? "border-blue-300 bg-blue-50 text-blue-900"
+                  ? "border-[#CBD5E1] bg-[#F8FAFC] text-[#111827]"
                   : "border-slate-200 bg-slate-50 text-slate-500",
               ].join(" ")}
             >

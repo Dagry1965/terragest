@@ -87,7 +87,7 @@ function statusClassName(
     return "border-slate-300 bg-slate-100 text-slate-600";
   }
 
-  return "border-blue-300 bg-blue-50 text-blue-700";
+  return "border-[#CBD5E1] bg-[#F8FAFC] text-[#1F2937]";
 }
 
 function buildCreateScheduleHref({
@@ -301,8 +301,8 @@ export function InvoicePaymentSchedule({
           </p>
         </div>
 
-        <div className="rounded-2xl border border-blue-200 bg-blue-50 px-4 py-3">
-          <p className="text-xs font-bold uppercase text-blue-700">
+        <div className="rounded-2xl border border-[#CBD5E1] bg-[#F8FAFC] px-4 py-3">
+          <p className="text-xs font-bold uppercase text-[#1F2937]">
             Payé sur échéances
           </p>
           <p className="mt-1 text-lg font-black text-slate-950">

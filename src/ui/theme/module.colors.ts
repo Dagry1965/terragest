@@ -3,7 +3,7 @@ export const moduleColors = {
     "from-green-500 to-green-700",
 
   materiels:
-    "from-blue-500 to-blue-700",
+    "from-[#64748B] to-[#1F2937]",
 
   maintenance:
     "from-red-500 to-orange-600",
@@ -15,7 +15,7 @@ export const moduleColors = {
     "from-emerald-500 to-teal-600",
 
   interventions:
-    "from-purple-500 to-indigo-600",
+    "from-[#64748B] to-[#334155]",
 
   notifications:
     "from-pink-500 to-rose-600",

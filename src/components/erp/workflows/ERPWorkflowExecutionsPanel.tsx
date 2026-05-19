@@ -32,7 +32,7 @@ export function ERPWorkflowExecutionsPanel() {
                 </p>
               </div>
 
-              <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700">
+              <span className="rounded-full bg-[#F8FAFC] px-3 py-1 text-xs font-semibold text-[#1F2937]">
                 {execution.state}
               </span>
             </div>

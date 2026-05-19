@@ -113,7 +113,7 @@ export const NotificationCenter = ({
                     : notification.severity ===
                       "error"
                       ? "bg-red-100 text-red-700"
-                      : "bg-blue-100 text-blue-700"
+                      : "bg-[#F1F5F9] text-[#1F2937]"
                   }
                 `}
               >

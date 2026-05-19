@@ -14,7 +14,7 @@ export function ERPKpiGrid({ items }: ERPKpiGridProps) {
           item.tone === "success"
             ? "border-emerald-400/20 bg-emerald-950/20 text-emerald-300"
             : item.tone === "info"
-              ? "border-blue-400/20 bg-blue-950/20 text-blue-300"
+              ? "border-[#94A3B8]/20 bg-[#0F172A]/20 text-[#94A3B8]"
               : "border-white/10 bg-white/[0.06] text-white";
 
         return (

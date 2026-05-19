@@ -2,7 +2,7 @@ export const ERPTheme = {
   colors: {
     primary: "#0F172A",
     secondary: "#1E293B",
-    accent: "#2563EB",
+    accent: "#334155",
     success: "#10B981",
     warning: "#F59E0B",
     danger: "#EF4444",

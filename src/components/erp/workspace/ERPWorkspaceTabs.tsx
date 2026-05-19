@@ -17,7 +17,7 @@ export function ERPWorkspaceTabs() {
           className={[
             "rounded-2xl px-5 py-3 text-sm font-bold transition",
             index === 0
-              ? "bg-blue-600 text-white shadow-sm"
+              ? "bg-[#334155] text-white shadow-sm"
               : "text-slate-600 hover:bg-slate-100 hover:text-slate-950",
           ].join(" ")}
         >

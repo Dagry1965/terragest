@@ -22,7 +22,7 @@ export function ERPRuntimeHealthPanel() {
             </div>
 
             <div className="h-2 rounded-full bg-slate-100">
-              <div className="h-2 w-[88%] rounded-full bg-blue-600" />
+              <div className="h-2 w-[88%] rounded-full bg-[#334155]" />
             </div>
           </div>
         ))}

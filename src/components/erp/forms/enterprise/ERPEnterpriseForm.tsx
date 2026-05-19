@@ -979,14 +979,14 @@ preparedPayload.terrainId
             shadow-sm
           "
         >
-          <div className="grid gap-4 sm:gap-5 lg:gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
+          <div className="grid gap-4 sm:gap-5 lg:gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
             <div>
               <p className="text-xs font-black uppercase tracking-wide text-[var(--erp-secondary)]">
                 Encaissement facture
               </p>
 
-              <h2 className="mt-2 text-2xl font-black text-[var(--erp-text)]">
-                Enregistrer un paiement
+              <h2 className="mt-2 text-2xl font-black text-[var(--erp-text)] min-w-[220px] justify-center self-end mt-auto mb-0 lg:self-end shadow-[0_12px_30px_rgba(0,166,138,0.22)]">
+              Enregistrer un paiement
               </h2>
 
               <p className="mt-2 max-w-3xl text-sm leading-6 text-[var(--erp-text-muted)]">
@@ -1026,21 +1026,20 @@ preparedPayload.terrainId
             <a
               href={invoicePaymentHref}
               className="
-                inline-flex
-                items-center
-                justify-center
-                rounded-2xl
-                bg-[var(--erp-primary)]
-                px-6
-                py-4
-                text-sm
-                font-black
-                text-[var(--erp-text)]
-                shadow-sm
-                transition
-                hover:brightness-110
-              "
-            >
+    inline-flex
+    items-center
+    justify-center
+    rounded-2xl
+    bg-[var(--erp-primary)]
+    px-6
+    py-4
+    text-sm
+    font-black
+    text-[var(--erp-text)]
+    shadow-sm
+    transition
+    hover:brightness-110
+    min-w-[220px] self-end lg:self-end shadow-[0_12px_30px_rgba(0,166,138,0.22)] mt-auto mb-0">
               Enregistrer un paiement
             </a>
           </div>
@@ -1070,12 +1069,12 @@ preparedPayload.terrainId
       ) : null}
 
       {mode === "edit" && workflowActions.length > 0 && (
-        <section className="rounded-2xl sm:rounded-3xl border border-blue-100 bg-blue-50 p-4">
+        <section className="rounded-2xl sm:rounded-3xl border border-[#D5E4E8] bg-[#F8FAFC] p-4 shadow-[0_8px_24px_rgba(15,23,42,0.06)]">
           <div className="mb-3">
-            <p className="text-xs font-black uppercase tracking-wide text-blue-700">
+            <p className="text-xs font-black uppercase tracking-wide text-[#334155]">
               Workflow
             </p>
-            <p className="text-sm text-blue-900">
+            <p className="text-sm text-[#111827]">
               Ces actions enregistrent d'abord le formulaire, puis exécutent le workflow.
             </p>
           </div>
@@ -1101,7 +1100,7 @@ preparedPayload.terrainId
                       ? "bg-red-600 text-[var(--erp-text)] hover:bg-red-700"
                       : action.type === "secondary"
                         ? "bg-slate-200 text-[var(--erp-text)] hover:bg-slate-300"
-                        : "bg-[var(--erp-surface)] text-[var(--erp-text)] hover:bg-slate-800"
+                        : "bg-[var(--erp-surface)] text-[var(--erp-text)] hover:bg-[#1F2937] hover:border-[#00A68A]"
                   }
                 `}
               >
@@ -1113,7 +1112,7 @@ preparedPayload.terrainId
       )}
       <section className="overflow-hidden rounded-2xl sm:rounded-3xl border border-[var(--erp-border)] bg-[var(--erp-surface)] shadow-sm">
         <div className="bg-gradient-to-r from-white via-white to-[var(--erp-primary-soft)] px-8 py-8 text-[var(--erp-text)]">
-          <p className="text-sm font-bold uppercase tracking-wide text-blue-200">
+          <p className="text-sm font-bold uppercase tracking-wide text-[#475569]">
             {mode === "create"
               ? "Création"
               : "Modification"}

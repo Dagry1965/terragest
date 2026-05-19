@@ -22,7 +22,7 @@ const toneClasses: Record<ERPStatusBadgeVariant, string> = {
   warning: "bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300",
   danger: "bg-red-100 text-red-700 dark:bg-red-950 dark:text-red-300",
   error: "bg-red-100 text-red-700 dark:bg-red-950 dark:text-red-300",
-  info: "bg-blue-100 text-blue-700 dark:bg-blue-950 dark:text-blue-300",
+  info: "bg-[#F1F5F9] text-[#334155] dark:bg-[#111827] dark:text-[#94A3B8]",
 };
 
 export function ERPStatusBadge({

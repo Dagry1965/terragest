@@ -96,7 +96,7 @@ export const AuditTable =
                       : event.severity ===
                         "warning"
                         ? "bg-yellow-100 text-yellow-700"
-                        : "bg-blue-100 text-blue-700"
+                        : "bg-[#F1F5F9] text-[#1F2937]"
                     }
                   `}
                 >

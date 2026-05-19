@@ -15,7 +15,7 @@ export const SubscriptionBadge = ({
         return "bg-gray-200 text-gray-700";
 
       case "PRO":
-        return "bg-blue-100 text-blue-700";
+        return "bg-[#F1F5F9] text-[#1F2937]";
 
       case "ENTERPRISE":
         return "bg-black text-white";

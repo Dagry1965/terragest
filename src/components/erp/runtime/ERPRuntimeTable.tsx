@@ -195,7 +195,7 @@ export function ERPRuntimeTable({
               <tr
                 key={String(row.id ?? index)}
                 onClick={() => openRow(row)}
-                className="cursor-pointer transition hover:bg-blue-50/70"
+                className="cursor-pointer transition hover:bg-[#F8FAFC]/70"
                 title="Cliquer pour modifier"
               >
                 {columns.map((column) => (

@@ -87,7 +87,7 @@ export function ERPFormTabs({
                 transition
                 ${
                   active
-                    ? "bg-slate-950 text-white"
+                    ? "bg-white text-[#0F172A]"
                     : "bg-slate-100 text-[var(--erp-text)] hover:bg-slate-200"
                 }
               `}

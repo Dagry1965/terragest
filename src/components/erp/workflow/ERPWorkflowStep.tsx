@@ -19,9 +19,9 @@ export function ERPWorkflowStep({
     },
 
     active: {
-      dot: "bg-blue-500",
-      border: "border-blue-200 bg-blue-50",
-      text: "text-blue-900",
+      dot: "bg-[#F8FAFC]0",
+      border: "border-[#CBD5E1] bg-[#F8FAFC]",
+      text: "text-[#111827]",
     },
 
     pending: {

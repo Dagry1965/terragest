@@ -157,7 +157,7 @@ export function ERPCommandCenter() {
             Running Jobs
           </div>
 
-          <div className="mt-3 text-3xl font-bold text-blue-600">
+          <div className="mt-3 text-3xl font-bold text-[#334155]">
             {runningJobs}
           </div>
         </div>
@@ -454,11 +454,11 @@ export function ERPCommandCenter() {
                       {job.module}
                     </span>
 
-                    <span className="rounded-full bg-violet-100 px-2 py-1 text-xs font-medium text-violet-700">
+                    <span className="rounded-full bg-[#F1F5F9] px-2 py-1 text-xs font-medium text-[#1F2937]">
                       {job.priority}
                     </span>
 
-                    <span className="rounded-full bg-blue-100 px-2 py-1 text-xs font-medium text-blue-700">
+                    <span className="rounded-full bg-[#F1F5F9] px-2 py-1 text-xs font-medium text-[#1F2937]">
                       {job.status}
                     </span>
                   </div>
@@ -762,7 +762,7 @@ export function ERPCommandCenter() {
                       {entry.module}
                     </span>
 
-                    <span className="rounded-full bg-blue-100 px-2 py-1 text-xs font-medium text-blue-700">
+                    <span className="rounded-full bg-[#F1F5F9] px-2 py-1 text-xs font-medium text-[#1F2937]">
                       {entry.type}
                     </span>
 

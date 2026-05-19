@@ -119,7 +119,7 @@ export const AlertsPanel = () => {
               ${
                 alert.level ===
                 "info"
-                  ? "bg-blue-50 border-blue-200"
+                  ? "bg-[#F8FAFC] border-[#CBD5E1]"
                   : ""
               }
             `}

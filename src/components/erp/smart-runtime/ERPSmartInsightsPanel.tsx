@@ -48,7 +48,7 @@ export function ERPSmartInsightsPanel({
                 </p>
 
                 {insight.recommendation && (
-                  <p className="mt-3 text-sm font-medium text-blue-700">
+                  <p className="mt-3 text-sm font-medium text-[#1F2937]">
                     {insight.recommendation}
                   </p>
                 )}

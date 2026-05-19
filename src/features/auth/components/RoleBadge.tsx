@@ -18,7 +18,7 @@ export const RoleBadge = ({
         return "bg-red-100 text-red-700";
 
       case "manager":
-        return "bg-blue-100 text-blue-700";
+        return "bg-[#F1F5F9] text-[#1F2937]";
 
       case "agent":
         return "bg-green-100 text-green-700";

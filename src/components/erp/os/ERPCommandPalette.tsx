@@ -20,7 +20,7 @@ export function ERPCommandPalette() {
           <Link
             key={command.id}
             href={command.href ?? "#"}
-            className="block rounded-2xl border border-slate-100 bg-slate-50 p-4 transition hover:border-blue-300 hover:bg-blue-50"
+            className="block rounded-2xl border border-slate-100 bg-slate-50 p-4 transition hover:border-[#CBD5E1] hover:bg-[#F8FAFC]"
           >
             <p className="text-sm font-black text-slate-900">
               {command.label}

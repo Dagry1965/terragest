@@ -27,11 +27,11 @@ export const KpiPieChart = ({
 }: KpiPieChartProps) => {
 
   const colors = [
-    "#2563eb",
+    "#334155",
     "#16a34a",
     "#dc2626",
     "#ca8a04",
-    "#7c3aed",
+    "#334155",
   ];
 
   return (

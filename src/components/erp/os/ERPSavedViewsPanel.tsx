@@ -20,7 +20,7 @@ export function ERPSavedViewsPanel() {
           <Link
             key={view.id}
             href={view.href}
-            className="block rounded-2xl bg-slate-50 p-4 transition hover:bg-blue-50"
+            className="block rounded-2xl bg-slate-50 p-4 transition hover:bg-[#F8FAFC]"
           >
             <p className="text-sm font-black text-slate-900">
               {view.label}

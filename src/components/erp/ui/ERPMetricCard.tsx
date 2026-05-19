@@ -30,7 +30,7 @@ const variantClasses: Record<ERPMetricCardVariant, string> = {
   warning: "border-amber-200 bg-amber-50 dark:border-amber-900 dark:bg-amber-950/40",
   danger: "border-red-200 bg-red-50 dark:border-red-900 dark:bg-red-950/40",
   error: "border-red-200 bg-red-50 dark:border-red-900 dark:bg-red-950/40",
-  info: "border-blue-200 bg-blue-50 dark:border-blue-900 dark:bg-blue-950/40",
+  info: "border-[#D5E4E8] bg-[#F8FAFC] dark:border-[#17212F] dark:bg-[#111827]/40",
 };
 
 export function ERPMetricCard({

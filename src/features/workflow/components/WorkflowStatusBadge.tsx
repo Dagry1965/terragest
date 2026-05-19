@@ -17,7 +17,7 @@ export const WorkflowStatusBadge = ({
         return "bg-gray-200 text-gray-800";
 
       case WorkflowStatus.VALIDE:
-        return "bg-blue-100 text-blue-700";
+        return "bg-[#F1F5F9] text-[#1F2937]";
 
       case WorkflowStatus.EN_COURS:
         return "bg-yellow-100 text-yellow-700";

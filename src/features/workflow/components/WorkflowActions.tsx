@@ -31,7 +31,7 @@ export const WorkflowActions = ({
             px-4
             py-2
             rounded-xl
-            bg-blue-600
+            bg-[#334155]
             text-white
           "
         >

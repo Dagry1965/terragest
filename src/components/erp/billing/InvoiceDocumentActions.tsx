@@ -832,7 +832,7 @@ export function InvoiceDocumentActions({
             type="button"
             disabled={markingSent}
             onClick={() => void handleMarkAsSent("manuel")}
-            className="rounded-2xl border border-blue-200 bg-blue-50 px-5 py-3 text-sm font-black text-blue-800 transition hover:bg-blue-100 disabled:opacity-50"
+            className="rounded-2xl border border-[#CBD5E1] bg-[#F8FAFC] px-5 py-3 text-sm font-black text-[#17212F] transition hover:bg-[#F1F5F9] disabled:opacity-50"
           >
             {markingSent ? "Traçage..." : "Marquer envoyée"}
           </button>

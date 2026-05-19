@@ -12,10 +12,10 @@ export const ERPTheme = {
       "#1f2937",
 
     primary:
-      "#2563eb",
+      "#334155",
 
     secondary:
-      "#7c3aed",
+      "#334155",
 
     success:
       "#16a34a",

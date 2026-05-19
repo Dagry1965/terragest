@@ -30,7 +30,7 @@ export function SmartScorePanel({ module }: SmartScorePanelProps) {
 
       <div className="mt-4 h-3 rounded-full bg-slate-100">
         <div
-          className="h-3 rounded-full bg-blue-600"
+          className="h-3 rounded-full bg-[#334155]"
           style={{ width: `${score.score}%` }}
         />
       </div>

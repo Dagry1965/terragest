@@ -1,6 +1,6 @@
 export const severityColors = {
   low:
-    "bg-blue-100 text-blue-700",
+    "bg-[#F1F5F9] text-[#1F2937]",
 
   medium:
     "bg-yellow-100 text-yellow-700",

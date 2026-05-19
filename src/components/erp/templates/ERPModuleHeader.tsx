@@ -16,7 +16,7 @@ export function ERPModuleHeader({ module }: ERPModuleHeaderProps) {
       <ERPBreadcrumbs module={module} />
 
       <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
-        <div className="bg-gradient-to-r from-slate-950 via-slate-900 to-blue-950 px-8 py-8 text-white">
+        <div className="bg-gradient-to-r from-slate-950 via-slate-900 to-[#123A35] px-8 py-8 text-white">
           <div className="flex flex-col gap-6 xl:flex-row xl:items-center xl:justify-between">
             <div>
               <div className="flex flex-wrap gap-2">

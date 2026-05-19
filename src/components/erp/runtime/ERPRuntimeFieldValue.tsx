@@ -92,7 +92,7 @@ function ERPRuntimeRelationValue({
   }, [relationId, relationModuleKey]);
 
   return (
-    <span className="font-semibold text-blue-700">
+    <span className="font-semibold text-[#1F2937]">
       {label}
     </span>
   );

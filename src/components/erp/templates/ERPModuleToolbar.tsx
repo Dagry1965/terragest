@@ -5,18 +5,18 @@ export function ERPModuleToolbar() {
     <section className="grid gap-4 rounded-3xl border border-slate-200 bg-white p-5 shadow-sm xl:grid-cols-[1fr_auto] xl:items-center">
       <div className="grid gap-3 md:grid-cols-3">
         <input
-          className="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-blue-500"
+          className="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-[#F8FAFC]0"
           placeholder="Rechercher..."
         />
 
-        <select className="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-blue-500">
+        <select className="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-[#F8FAFC]0">
           <option>Tous les statuts</option>
           <option>Actif</option>
           <option>En suivi</option>
           <option>A controler</option>
         </select>
 
-        <select className="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-blue-500">
+        <select className="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-[#F8FAFC]0">
           <option>Vue operationnelle</option>
           <option>Vue workflow</option>
           <option>Vue audit</option>

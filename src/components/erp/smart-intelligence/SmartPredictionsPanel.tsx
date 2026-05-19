@@ -18,24 +18,24 @@ export function SmartPredictionsPanel({ module }: SmartPredictionsPanelProps) {
         {predictions.map((prediction) => (
           <div
             key={prediction.id}
-            className="rounded-2xl border border-slate-100 bg-blue-50 p-4"
+            className="rounded-2xl border border-slate-100 bg-[#F8FAFC] p-4"
           >
-            <p className="text-sm font-black text-blue-950">
+            <p className="text-sm font-black text-[#0F172A]">
               {prediction.title}
             </p>
-            <p className="mt-1 text-sm text-blue-800">
+            <p className="mt-1 text-sm text-[#17212F]">
               {prediction.description}
             </p>
 
             <div className="mt-4 flex items-center gap-3">
               <div className="h-2 flex-1 rounded-full bg-white">
                 <div
-                  className="h-2 rounded-full bg-blue-600"
+                  className="h-2 rounded-full bg-[#334155]"
                   style={{ width: `${prediction.probability}%` }}
                 />
               </div>
 
-              <span className="text-sm font-black text-blue-950">
+              <span className="text-sm font-black text-[#0F172A]">
                 {prediction.probability}%
               </span>
             </div>

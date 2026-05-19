@@ -31,9 +31,9 @@ export function ERPSmartRecommendationsPanel({
 
           <div
             key={recommendation}
-            className="rounded-2xl border border-slate-100 bg-blue-50 p-4"
+            className="rounded-2xl border border-slate-100 bg-[#F8FAFC] p-4"
           >
-            <p className="text-sm font-medium text-blue-950">
+            <p className="text-sm font-medium text-[#0F172A]">
               {recommendation}
             </p>
           </div>

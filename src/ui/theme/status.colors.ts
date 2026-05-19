@@ -12,7 +12,7 @@ export const statusColors = {
     "bg-red-100 text-red-700",
 
   approved:
-    "bg-blue-100 text-blue-700",
+    "bg-[#F1F5F9] text-[#1F2937]",
 
   maintenance:
     "bg-orange-100 text-orange-700",

@@ -16,7 +16,7 @@ export function ERPTabNavigation() {
             type="button"
             className={`rounded-2xl px-5 py-3 text-sm font-bold transition ${
               index === 0
-                ? "bg-blue-600 text-white shadow-lg shadow-blue-200"
+                ? "bg-[#334155] text-white shadow-lg shadow-slate-200"
                 : "text-slate-600 hover:bg-slate-100 hover:text-slate-950"
             }`}
           >

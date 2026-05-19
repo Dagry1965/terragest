@@ -76,7 +76,7 @@ export function ERPWorkflowActions({
 
           className="
             rounded-xl
-            bg-blue-600
+            bg-[#334155]
             px-4
             py-2
             text-white

@@ -435,7 +435,7 @@ export function ERPFormField({
   );
 
   const className =
-    "w-full rounded-xl border border-[var(--erp-border)] bg-[var(--erp-input-bg)] px-3 sm:px-4 py-2.5 sm:py-3 text-sm text-[var(--erp-text)] placeholder:text-slate-400 outline-none transition focus:shadow-[0_0_0_4px_rgba(0,169,157,0.12)] focus:border-blue-500";
+    "w-full rounded-xl border border-[var(--erp-border)] bg-[var(--erp-input-bg)] px-3 sm:px-4 py-2.5 sm:py-3 text-sm text-[var(--erp-text)] placeholder:text-slate-400 outline-none transition focus:shadow-[0_0_0_4px_rgba(0,169,157,0.12)] focus:border-[#64748B]";
 
   const lockedClassName =
     `${className} cursor-not-allowed bg-slate-100 text-[var(--erp-text-muted)]`;
@@ -612,15 +612,15 @@ export function ERPFormField({
                 items-center
                 rounded-xl
                 border
-                border-blue-200
-                bg-blue-50
+                border-[#D5E4E8]
+                bg-[#F8FAFC]
                 px-3 sm:px-4
                 py-2
                 text-sm
                 font-bold
-                text-blue-700
+                text-[#334155]
                 transition focus:shadow-[0_0_0_4px_rgba(0,169,157,0.12)]
-                hover:bg-blue-100
+                hover:bg-[#F1F5F9]
               "
             >
               + Créer {field.label}
@@ -694,15 +694,15 @@ export function ERPFormField({
                 items-center
                 rounded-xl
                 border
-                border-blue-200
-                bg-blue-50
+                border-[#D5E4E8]
+                bg-[#F8FAFC]
                 px-3 sm:px-4
                 py-2
                 text-sm
                 font-bold
-                text-blue-700
+                text-[#334155]
                 transition focus:shadow-[0_0_0_4px_rgba(0,169,157,0.12)]
-                hover:bg-blue-100
+                hover:bg-[#F1F5F9]
               "
             >
               + Créer {field.label}
@@ -769,15 +769,15 @@ export function ERPFormField({
                 items-center
                 rounded-xl
                 border
-                border-blue-200
-                bg-blue-50
+                border-[#D5E4E8]
+                bg-[#F8FAFC]
                 px-3 sm:px-4
                 py-2
                 text-sm
                 font-bold
-                text-blue-700
+                text-[#334155]
                 transition focus:shadow-[0_0_0_4px_rgba(0,169,157,0.12)]
-                hover:bg-blue-100
+                hover:bg-[#F1F5F9]
               "
             >
               + Créer {field.label}
@@ -814,7 +814,7 @@ export function ERPFormField({
               placeholder:text-slate-400
               outline-none
               transition focus:shadow-[0_0_0_4px_rgba(0,169,157,0.12)]
-              focus:border-blue-500
+              focus:border-[#64748B]
             "
           />
         </label>
