@@ -5,6 +5,7 @@ import { echeancespaiementautoModule } from "@/runtime/modules/generated/echeanc
 import { encaissementsautoModule } from "@/runtime/modules/generated/encaissementsauto";
 import { facturesautoModule } from "@/runtime/modules/generated/facturesauto";
 import { interventionsautoModule } from "@/runtime/modules/generated/interventionsauto";
+import { lignesinterventionautoModule } from "@/runtime/modules/generated/lignesinterventionauto";
 import { rendezvousModule } from "@/runtime/modules/generated/rendezvous";
 import { vehiculesModule } from "@/runtime/modules/generated/vehicules";
 import { clientsautoModule } from "@/runtime/modules/generated/clientsauto";
@@ -220,6 +221,7 @@ for (const module of mergedERPModules) {
   echeancespaiementautoModule,
   encaissementsautoModule,
   facturesautoModule,
+  lignesinterventionautoModule,
   produitsautoModule,
   stocksautoModule,
   rappelsautoModule,
