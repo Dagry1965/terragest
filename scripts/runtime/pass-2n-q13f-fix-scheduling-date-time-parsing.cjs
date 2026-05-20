@@ -1,4 +1,34 @@
-export type RuntimeRecord = Record<string, unknown>;
+const fs = require("fs");
+const path = require("path");
+
+const ROOT = process.cwd();
+
+function assertProjectRoot() {
+  if (
+    !fs.existsSync(path.join(ROOT, "package.json")) ||
+    !fs.existsSync(path.join(ROOT, "src"))
+  ) {
+    throw new Error("Ce script doit être lancé depuis la racine du projet Terragest.");
+  }
+}
+
+function writeFile(filePath, content) {
+  fs.mkdirSync(path.dirname(filePath), { recursive: true });
+  fs.writeFileSync(filePath, content, { encoding: "utf8" });
+  console.log("[WRITTEN] " + path.relative(ROOT, filePath));
+}
+
+assertProjectRoot();
+
+const targetPath = path.join(
+  ROOT,
+  "src",
+  "runtime",
+  "scheduling",
+  "RuntimeSchedulingEngine.ts"
+);
+
+const content = `export type RuntimeRecord = Record<string, unknown>;
 
 export interface RuntimeAppointmentSlot {
   startAt: string;
@@ -64,12 +94,12 @@ function normalizeDateOnly(value: string): string {
 
   const trimmed = value.trim();
 
-  const yyyyMmDd = trimmed.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  const yyyyMmDd = trimmed.match(/^(\\d{4})-(\\d{2})-(\\d{2})/);
   if (yyyyMmDd) {
     return yyyyMmDd[1] + "-" + yyyyMmDd[2] + "-" + yyyyMmDd[3];
   }
 
-  const ddMmYyyy = trimmed.match(/^(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{4})$/);
+  const ddMmYyyy = trimmed.match(/^(\\d{1,2})[\\/.-](\\d{1,2})[\\/.-](\\d{4})$/);
   if (ddMmYyyy) {
     return (
       ddMmYyyy[3] +
@@ -100,7 +130,7 @@ function normalizeTimeOnly(value: string): string {
 
   const trimmed = value.trim();
 
-  const isoTime = trimmed.match(/T(\d{1,2}):(\d{2})/);
+  const isoTime = trimmed.match(/T(\\d{1,2}):(\\d{2})/);
   if (isoTime) {
     return (
       String(Math.max(0, Math.min(23, Number(isoTime[1])))).padStart(2, "0") +
@@ -109,7 +139,7 @@ function normalizeTimeOnly(value: string): string {
     );
   }
 
-  const colonTime = trimmed.match(/^(\d{1,2}):(\d{2})/);
+  const colonTime = trimmed.match(/^(\\d{1,2}):(\\d{2})/);
   if (colonTime) {
     return (
       String(Math.max(0, Math.min(23, Number(colonTime[1])))).padStart(2, "0") +
@@ -118,7 +148,7 @@ function normalizeTimeOnly(value: string): string {
     );
   }
 
-  const frenchTime = trimmed.match(/^(\d{1,2})\s*h\s*(\d{0,2})$/i);
+  const frenchTime = trimmed.match(/^(\\d{1,2})\\s*h\\s*(\\d{0,2})$/i);
   if (frenchTime) {
     return (
       String(Math.max(0, Math.min(23, Number(frenchTime[1])))).padStart(2, "0") +
@@ -127,7 +157,7 @@ function normalizeTimeOnly(value: string): string {
     );
   }
 
-  const compactTime = trimmed.match(/^(\d{1,2})(\d{2})$/);
+  const compactTime = trimmed.match(/^(\\d{1,2})(\\d{2})$/);
   if (compactTime) {
     return (
       String(Math.max(0, Math.min(23, Number(compactTime[1])))).padStart(2, "0") +
@@ -399,3 +429,9 @@ export class RuntimeSchedulingEngine {
     };
   }
 }
+`;
+
+writeFile(targetPath, content);
+
+console.log("");
+console.log("[OK] Parsing date/heure scheduling renforcé.");
