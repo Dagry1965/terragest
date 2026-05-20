@@ -1,16 +1,27 @@
-import type { ERPModule } from "@/runtime/modules";
+import type {
+  ERPModule,
+} from "@/runtime/modules";
+
+import {
+  RuntimeContextEnforcer,
+} from "@/runtime/context";
 
 import {
   FirestoreRuntimeRepository,
 } from "./FirestoreRuntimeRepository";
 
 export class FirestoreRuntimeQuery {
-
   static async list(
     module: ERPModule
   ) {
-    return FirestoreRuntimeRepository.findMany(
-      module
+    const records =
+      await FirestoreRuntimeRepository.findMany(
+        module
+      );
+
+    return RuntimeContextEnforcer.filterReadContext(
+      module,
+      records
     );
   }
 
@@ -18,9 +29,21 @@ export class FirestoreRuntimeQuery {
     module: ERPModule,
     id: string
   ) {
-    return FirestoreRuntimeRepository.findById(
+    const record =
+      await FirestoreRuntimeRepository.findById(
+        module,
+        id
+      );
+
+    if (!record) {
+      return null;
+    }
+
+    RuntimeContextEnforcer.assertRecordInContext(
       module,
-      id
+      record
     );
+
+    return record;
   }
 }
