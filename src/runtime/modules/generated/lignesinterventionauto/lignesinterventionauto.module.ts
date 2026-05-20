@@ -118,6 +118,26 @@ export const lignesinterventionautoModule: ERPModule = {
         grid: { cols: 4 },
       },
       {
+        key: "stockMovementId",
+        label: "Mouvement stock",
+        type: "relation",
+        relation: { module: "mouvementsstockauto" },
+        searchable: true,
+        grid: { cols: 4 },
+      },
+      {
+        key: "stockProcessedAt",
+        label: "Stock traité le",
+        type: "date",
+        grid: { cols: 4 },
+      },
+      {
+        key: "stockProcessedQuantity",
+        label: "Quantité traitée en stock",
+        type: "number",
+        grid: { cols: 4 },
+      },
+      {
         key: "observations",
         label: "Observations",
         type: "textarea",

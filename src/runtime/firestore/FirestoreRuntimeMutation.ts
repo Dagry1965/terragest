@@ -133,6 +133,56 @@ function applyComputedFields(
   return sanitizeFirestoreData(nextData);
 }
 
+
+async function processRuntimePostMutationSideEffects(
+  module: ERPModule,
+  record: Record<string, unknown>
+): Promise<void> {
+  if (module.metadata.key !== "lignesinterventionauto") {
+    return;
+  }
+
+  try {
+    const { RuntimeStockMovementService } =
+      await import("@/runtime/stock");
+
+    const result =
+      await RuntimeStockMovementService.processInterventionLineStock({
+        line: record,
+      });
+
+    if (result.processed) {
+      console.info(
+        "[RUNTIME_STOCK_MOVEMENT_PROCESSED]",
+        {
+          moduleKey: module.metadata.key,
+          recordId: String(record.id ?? record._id ?? ""),
+          movementId: result.movementId,
+        }
+      );
+    } else if (
+      result.reason &&
+      result.reason !== "not-piece-line" &&
+      result.reason !== "line-not-validated" &&
+      result.reason !== "already-processed"
+    ) {
+      console.warn(
+        "[RUNTIME_STOCK_MOVEMENT_SKIPPED]",
+        {
+          moduleKey: module.metadata.key,
+          recordId: String(record.id ?? record._id ?? ""),
+          reason: result.reason,
+        }
+      );
+    }
+  } catch (error) {
+    console.error(
+      "[RUNTIME_STOCK_MOVEMENT_ERROR]",
+      error
+    );
+  }
+}
+
 export class FirestoreRuntimeMutation {
   static async create(
     module: ERPModule,
@@ -167,6 +217,21 @@ export class FirestoreRuntimeMutation {
         ...safeData,
         result,
       }
+    );
+
+    const persistedRecordForSideEffects = {
+      ...safeData,
+      ...(typeof result === "object" && result !== null ? result : {}),
+      id:
+        (typeof result === "object" && result !== null
+          ? (result as Record<string, unknown>).id
+          : undefined) ??
+        safeData.id,
+    };
+
+    await processRuntimePostMutationSideEffects(
+      module,
+      persistedRecordForSideEffects
     );
 
     return result;
@@ -208,6 +273,17 @@ export class FirestoreRuntimeMutation {
         ...safeData,
         result,
       }
+    );
+
+    const updatedRecordForSideEffects = {
+      ...safeData,
+      ...(typeof result === "object" && result !== null ? result : {}),
+      id,
+    };
+
+    await processRuntimePostMutationSideEffects(
+      module,
+      updatedRecordForSideEffects
     );
 
     return result;
