@@ -99,57 +99,6 @@ export interface ERPModuleFormConfig {
   tabs?: ERPModuleFormTab[];
 }
 
-
-export type ERPCompositionDisplayMode =
-  | "inline"
-  | "card"
-  | "badge";
-
-export type ERPCompositionRenderMode =
-  | "detail"
-  | "edit";
-
-export type ERPCompositionPosition =
-  | "before"
-  | "after";
-
-export interface ERPCompositionBreadcrumb {
-  field: string;
-  moduleKey: string;
-  labelFields: string[];
-  hrefPattern?: string;
-}
-
-export interface ERPCompositionRelation {
-  field: string;
-  moduleKey: string;
-  labelFields: string[];
-  snapshotFields?: string[];
-  displayAs?: ERPCompositionDisplayMode;
-  lockDerivedFields?: boolean;
-}
-
-export interface ERPCompositionChild {
-  key: string;
-  moduleKey: string;
-  foreignKey: string;
-  title: string;
-  createLabel?: string;
-  displayIn?: ERPCompositionRenderMode[];
-  position?: ERPCompositionPosition;
-  lazy?: boolean;
-  totalField?: string;
-  relations?: ERPCompositionRelation[];
-}
-
-export interface ERPModuleComposition {
-  labelFields?: string[];
-  breadcrumbs?: ERPCompositionBreadcrumb[];
-  relations?: ERPCompositionRelation[];
-  lockedFields?: string[];
-  children?: ERPCompositionChild[];
-}
-
 export interface ERPModule {
   metadata: ERPModuleMetadata;
   schema: ERPModuleSchema;
@@ -166,7 +115,5 @@ export interface ERPModule {
 
   relations?: ERPModuleRelation[];
 
-  
-  composition?: ERPModuleComposition;
-workflows?: ERPModuleWorkflow[];
+  workflows?: ERPModuleWorkflow[];
 }

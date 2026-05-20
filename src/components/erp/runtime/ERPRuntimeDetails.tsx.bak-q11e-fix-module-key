@@ -203,16 +203,8 @@ export function ERPRuntimeDetails({
 }: ERPRuntimeDetailsProps) {
 
   const recordId = String((data?.id ?? "") as string);
-  const moduleKey = String(
-    ((module as any).key ??
-      (module as any).id ??
-      module.metadata?.key ??
-      module.schema?.collection ??
-      "") as string
-  );
-
   const isInterventionAuto =
-    moduleKey === "interventionsauto" ||
+    module.key === "interventionsauto" ||
     module.schema?.collection === "interventionsauto";
 
   const interventionLineCreateHref = recordId
@@ -246,22 +238,14 @@ export function ERPRuntimeDetails({
       data._id
     );
 
-  const runtimeModuleKey = String(
-    ((module as any).key ??
-      (module as any).id ??
-      (module.metadata as any)?.key ??
-      (module.metadata as any)?.name ??
-      (module.metadata as any)?.label ??
-      module.schema?.collection ??
-      "") as string
-  ).toLowerCase();
-
   const isIntervention =
-    runtimeModuleKey === "interventionsauto" ||
-    runtimeModuleKey.includes("intervention") ||
-    module.schema?.collection === "interventionsauto";
+    module.metadata.key === "interventionsauto" &&
+    Boolean(
+      data.id ??
+      data._id
+    );
 
-const paymentHref =
+  const paymentHref =
     isInvoice
       ? buildInvoicePaymentHref(data)
       : "#";
@@ -426,6 +410,26 @@ const paymentHref =
             <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <p className="text-sm font-black text-[var(--erp-text)]">
+
+          {isInterventionAuto && recordId ? (
+            <div className="mb-6 flex flex-col gap-3 rounded-2xl border border-emerald-100 bg-emerald-50/70 p-4 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <p className="text-sm font-semibold text-emerald-950">
+                  Lignes d’intervention
+                </p>
+                <p className="text-xs text-emerald-700">
+                  Ajoutez les pièces, la main d’œuvre, les services ou les remises liés à cette intervention.
+                </p>
+              </div>
+
+              <Link
+                href={interventionLineCreateHref}
+                className="inline-flex items-center justify-center rounded-xl bg-emerald-700 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-800"
+              >
+                Ajouter une ligne
+              </Link>
+            </div>
+          ) : null}
 
                   Lignes existantes
                 </p>

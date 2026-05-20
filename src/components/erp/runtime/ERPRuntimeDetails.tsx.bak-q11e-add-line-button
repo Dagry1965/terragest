@@ -201,28 +201,6 @@ export function ERPRuntimeDetails({
   module,
   data = {},
 }: ERPRuntimeDetailsProps) {
-
-  const recordId = String((data?.id ?? "") as string);
-  const moduleKey = String(
-    ((module as any).key ??
-      (module as any).id ??
-      module.metadata?.key ??
-      module.schema?.collection ??
-      "") as string
-  );
-
-  const isInterventionAuto =
-    moduleKey === "interventionsauto" ||
-    module.schema?.collection === "interventionsauto";
-
-  const interventionLineCreateHref = recordId
-    ? `/lignesinterventionauto/nouveau?interventionId=${encodeURIComponent(
-        recordId
-      )}&returnTo=${encodeURIComponent(
-        `/interventionsauto/${recordId}`
-      )}&lockFields=interventionId`
-    : "/lignesinterventionauto/nouveau";
-
   const details = ERPModuleBuilder.buildDetails(module);
 
   const [timeline, setTimeline] =
@@ -246,22 +224,14 @@ export function ERPRuntimeDetails({
       data._id
     );
 
-  const runtimeModuleKey = String(
-    ((module as any).key ??
-      (module as any).id ??
-      (module.metadata as any)?.key ??
-      (module.metadata as any)?.name ??
-      (module.metadata as any)?.label ??
-      module.schema?.collection ??
-      "") as string
-  ).toLowerCase();
-
   const isIntervention =
-    runtimeModuleKey === "interventionsauto" ||
-    runtimeModuleKey.includes("intervention") ||
-    module.schema?.collection === "interventionsauto";
+    module.metadata.key === "interventionsauto" &&
+    Boolean(
+      data.id ??
+      data._id
+    );
 
-const paymentHref =
+  const paymentHref =
     isInvoice
       ? buildInvoicePaymentHref(data)
       : "#";
@@ -426,7 +396,6 @@ const paymentHref =
             <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <p className="text-sm font-black text-[var(--erp-text)]">
-
                   Lignes existantes
                 </p>
                 <p className="mt-1 text-sm text-[var(--erp-text-muted)]">

@@ -246,22 +246,14 @@ export function ERPRuntimeDetails({
       data._id
     );
 
-  const runtimeModuleKey = String(
-    ((module as any).key ??
-      (module as any).id ??
-      (module.metadata as any)?.key ??
-      (module.metadata as any)?.name ??
-      (module.metadata as any)?.label ??
-      module.schema?.collection ??
-      "") as string
-  ).toLowerCase();
-
   const isIntervention =
-    runtimeModuleKey === "interventionsauto" ||
-    runtimeModuleKey.includes("intervention") ||
-    module.schema?.collection === "interventionsauto";
+    module.metadata.key === "interventionsauto" &&
+    Boolean(
+      data.id ??
+      data._id
+    );
 
-const paymentHref =
+  const paymentHref =
     isInvoice
       ? buildInvoicePaymentHref(data)
       : "#";

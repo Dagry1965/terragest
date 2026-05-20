@@ -11,7 +11,6 @@ import {
 import { ERPEnterpriseForm } from "@/components/erp/forms/enterprise/ERPEnterpriseForm";
 import { ERPRuntimeDetails } from "./ERPRuntimeDetails";
 import { ERPRuntimeTable } from "./ERPRuntimeTable";
-import { ERPRelatedRecordsPanel } from "./ERPRelatedRecordsPanel";
 
 import type { ERPModule } from "@/runtime/modules/ERPModule";
 
@@ -206,28 +205,6 @@ export function ERPRuntimePage({
       ? buildInvoicePaymentHref(record)
       : "#";
 
-  const relatedChildren =
-    module?.composition?.children?.filter((child) => {
-      if (!record) {
-        return false;
-      }
-
-      if (type !== "detail" && type !== "edit") {
-        return false;
-      }
-
-      return (child.displayIn ?? ["detail"]).includes(
-        type as "detail" | "edit"
-      );
-    }) ?? [];
-
-  const relatedChildrenBefore =
-    relatedChildren.filter((child) => child.position === "before");
-
-  const relatedChildrenAfter =
-    relatedChildren.filter((child) => child.position !== "before");
-
-
   return (
     <ERPPage
       title={resolvedTitle}
@@ -301,19 +278,6 @@ export function ERPRuntimePage({
           </div>
         ) : null}
 
-        <div data-erp-related-children-before className="space-y-4">
-          {module && record && relatedChildrenBefore.map((child) => (
-            <ERPRelatedRecordsPanel
-              key={child.key}
-              parentModule={module}
-              parentRecord={record}
-              child={child}
-              mode={type as "detail" | "edit"}
-            />
-          ))}
-        </div>
-
-
         {type === "create" && module && (
           <ERPEnterpriseForm
             module={module}
@@ -336,19 +300,6 @@ export function ERPRuntimePage({
             data={record}
           />
         )}
-
-        <div data-erp-related-children-after className="space-y-4">
-          {module && record && relatedChildrenAfter.map((child) => (
-            <ERPRelatedRecordsPanel
-              key={child.key}
-              parentModule={module}
-              parentRecord={record}
-              child={child}
-              mode={type as "detail" | "edit"}
-            />
-          ))}
-        </div>
-
 
         {type === "list" &&
           module?.metadata?.routes?.create && (
