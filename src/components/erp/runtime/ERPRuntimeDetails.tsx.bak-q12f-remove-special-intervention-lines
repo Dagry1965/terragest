@@ -23,6 +23,72 @@ interface ERPRuntimeDetailsProps {
   data?: Record<string, unknown>;
 }
 
+function formatInterventionLineMoney(value: unknown): string {
+  const amount = Number(value ?? 0);
+
+  if (!Number.isFinite(amount)) {
+    return "0 FCFA";
+  }
+
+  return amount.toLocaleString("fr-FR") + " FCFA";
+}
+
+function getInterventionLineTitle(line: Record<string, unknown>): string {
+  return String(
+    line.designation ??
+    line.produitId ??
+    line.typeLigne ??
+    line.id ??
+    "Ligne intervention"
+  );
+}
+
+function getInterventionLineStatus(line: Record<string, unknown>): string {
+  const value = String(line.statut ?? "brouillon");
+
+  const labels: Record<string, string> = {
+    brouillon: "Brouillon",
+    validee: "Validée",
+    facturee: "Facturée",
+    annulee: "Annulée",
+  };
+
+  return labels[value] ?? value;
+}
+
+function buildInterventionLineHref(
+  data: Record<string, unknown>
+): string {
+  const interventionId =
+    String(
+      data.id ??
+      data._id ??
+      ""
+    );
+
+  const params =
+    new URLSearchParams();
+
+  if (interventionId) {
+    params.set(
+      "interventionId",
+      interventionId
+    );
+
+    params.set(
+      "returnTo",
+      "/interventionsauto/" + interventionId
+    );
+
+    params.set(
+      "lockFields",
+      "interventionId"
+    );
+  }
+
+  return "/lignesinterventionauto/nouveau?" + params.toString();
+}
+
 function buildInvoicePaymentHref(
   data: Record<string, unknown>
 ): string {
@@ -135,7 +201,29 @@ export function ERPRuntimeDetails({
   module,
   data = {},
 }: ERPRuntimeDetailsProps) {
-const details = ERPModuleBuilder.buildDetails(module);
+
+  const recordId = String((data?.id ?? "") as string);
+  const moduleKey = String(
+    ((module as any).key ??
+      (module as any).id ??
+      module.metadata?.key ??
+      module.schema?.collection ??
+      "") as string
+  );
+
+  const isInterventionAuto =
+    moduleKey === "interventionsauto" ||
+    module.schema?.collection === "interventionsauto";
+
+  const interventionLineCreateHref = recordId
+    ? `/lignesinterventionauto/nouveau?interventionId=${encodeURIComponent(
+        recordId
+      )}&returnTo=${encodeURIComponent(
+        `/interventionsauto/${recordId}`
+      )}&lockFields=interventionId`
+    : "/lignesinterventionauto/nouveau";
+
+  const details = ERPModuleBuilder.buildDetails(module);
 
   const [timeline, setTimeline] =
     useState<WorkflowHistoryEntry[]>([]);
@@ -167,13 +255,102 @@ const details = ERPModuleBuilder.buildDetails(module);
       module.schema?.collection ??
       "") as string
   ).toLowerCase();
+
+  const isIntervention =
+    runtimeModuleKey === "interventionsauto" ||
+    runtimeModuleKey.includes("intervention") ||
+    module.schema?.collection === "interventionsauto";
+
 const paymentHref =
     isInvoice
       ? buildInvoicePaymentHref(data)
       : "#";
-const amountSummary =
+
+  const interventionLineHref =
+    isIntervention
+      ? buildInterventionLineHref(data)
+      : "#";
+
+  const amountSummary =
     getInvoiceAmountSummary(data);
-useEffect(() => {
+
+  const [interventionLines, setInterventionLines] =
+    useState<Record<string, unknown>[]>([]);
+
+  const [interventionLinesLoading, setInterventionLinesLoading] =
+    useState(false);
+
+  useEffect(() => {
+    // AMARKHYS_INTERVENTION_LINES_LOADER
+    if (!isIntervention || !entityId) {
+      setInterventionLines([]);
+      return;
+    }
+
+    let mounted = true;
+
+    async function loadInterventionLines() {
+      setInterventionLinesLoading(true);
+
+      try {
+        const [
+          coreModules,
+          dataBinding,
+        ] = await Promise.all([
+          import("@/runtime/modules/definitions/coreModules"),
+          import("@/runtime/data-binding"),
+        ]);
+
+        const linesModule =
+          coreModules.allERPModules.find(
+            (item) => item.metadata.key === "lignesinterventionauto"
+          );
+
+        if (!linesModule) {
+          if (mounted) {
+            setInterventionLines([]);
+          }
+
+          return;
+        }
+
+        const records =
+          await dataBinding.RuntimeDataBinding.list(linesModule);
+
+        const relatedLines =
+          records
+            .filter((item) => String(item.interventionId ?? "") === entityId)
+            .sort((left, right) =>
+              String(left.designation ?? "").localeCompare(
+                String(right.designation ?? ""),
+                "fr"
+              )
+            );
+
+        if (mounted) {
+          setInterventionLines(relatedLines);
+        }
+      } catch (error) {
+        console.error("[AMARKHYS_INTERVENTION_LINES_ERROR]", error);
+
+        if (mounted) {
+          setInterventionLines([]);
+        }
+      } finally {
+        if (mounted) {
+          setInterventionLinesLoading(false);
+        }
+      }
+    }
+
+    loadInterventionLines();
+
+    return () => {
+      mounted = false;
+    };
+  }, [isIntervention, entityId]);
+
+  useEffect(() => {
     let mounted = true;
 
     async function loadTimeline() {
@@ -207,9 +384,105 @@ useEffect(() => {
       mounted = false;
     };
   }, [module.metadata.key, entityId]);
-return (
+
+  const interventionLinesTotal =
+    interventionLines.reduce(
+      (sum, line) => sum + Number(line.montantTotal ?? 0),
+      0
+    );
+
+  return (
     <div className="space-y-6">
-{isInvoice ? (
+      {isIntervention ? (
+        <ERPCard
+          title="Lignes de l’intervention"
+          description="Ajoutez les pièces, services ou main d’œuvre consommés sur cette intervention."
+        >
+          <div
+            data-intervention-line-action
+            className="flex flex-col gap-4 rounded-2xl border border-[var(--erp-border)] bg-[var(--erp-surface-soft)] p-4 sm:flex-row sm:items-center sm:justify-between"
+          >
+            <div>
+              <p className="text-sm font-black text-[var(--erp-text)]">
+                Détail des prestations et consommations
+              </p>
+              <p className="mt-1 text-sm text-[var(--erp-text-muted)]">
+                Prépare la facture détaillée et la future sortie de stock.
+              </p>
+            </div>
+
+            <a
+              href={interventionLineHref}
+              className="inline-flex items-center justify-center rounded-2xl bg-[var(--erp-primary)] px-5 py-3 text-sm font-black text-white transition hover:opacity-90"
+            >
+              Ajouter une ligne
+            </a>
+          </div>
+
+          <div
+            data-intervention-lines-list
+            className="mt-5 rounded-2xl border border-[var(--erp-border)] bg-[var(--erp-surface)] p-4"
+          >
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <p className="text-sm font-black text-[var(--erp-text)]">
+
+                  Lignes existantes
+                </p>
+                <p className="mt-1 text-sm text-[var(--erp-text-muted)]">
+                  {interventionLines.length} ligne(s) · total {formatInterventionLineMoney(interventionLinesTotal)}
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-4 space-y-3">
+              {interventionLinesLoading ? (
+                <div className="rounded-2xl border border-[var(--erp-border)] bg-[var(--erp-surface-soft)] p-4 text-sm text-[var(--erp-text-muted)]">
+                  Chargement des lignes...
+                </div>
+              ) : interventionLines.length > 0 ? (
+                interventionLines.map((line) => {
+                  const lineId =
+                    String(line.id ?? line._id ?? "");
+
+                  return (
+                    <a
+                      key={lineId || getInterventionLineTitle(line)}
+                      href={
+                        lineId
+                          ? "/lignesinterventionauto/" + lineId
+                          : "/lignesinterventionauto"
+                      }
+                      className="block rounded-2xl border border-[var(--erp-border)] bg-[var(--erp-surface-soft)] p-4 transition hover:border-[var(--erp-primary)]"
+                    >
+                      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                        <div>
+                          <p className="text-sm font-black text-[var(--erp-text)]">
+                            {getInterventionLineTitle(line)}
+                          </p>
+                          <p className="mt-1 text-xs text-[var(--erp-text-muted)]">
+                            Quantité {String(line.quantite ?? 1)} · PU {formatInterventionLineMoney(line.prixUnitaire)} · {getInterventionLineStatus(line)}
+                          </p>
+                        </div>
+
+                        <p className="text-sm font-black text-[var(--erp-text)]">
+                          {formatInterventionLineMoney(line.montantTotal)}
+                        </p>
+                      </div>
+                    </a>
+                  );
+                })
+              ) : (
+                <div className="rounded-2xl border border-dashed border-[var(--erp-border-strong)] bg-[var(--erp-surface-soft)] p-4 text-sm text-[var(--erp-text-muted)]">
+                  Aucune ligne n’est encore rattachée à cette intervention.
+                </div>
+              )}
+            </div>
+          </div>
+        </ERPCard>
+      ) : null}
+
+      {isInvoice ? (
         <section className="rounded-3xl border border-emerald-300/30 bg-[var(--erp-primary-soft)]0/10 p-4 sm:p-5 lg:p-6 shadow-[0_14px_40px_rgba(15,23,42,0.07)]">
           <div className="grid gap-4 sm:p-5 lg:p-6 lg:grid-cols-[1fr_auto] lg:items-end">
             <div>
