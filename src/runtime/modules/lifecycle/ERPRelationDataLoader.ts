@@ -17,6 +17,14 @@ const relationCollectionAliases: Record<string, string[]> = {
     "vehicules",
     "vehiculesauto",
   ],
+  produitsauto: [
+    "produitsauto",
+    "produits",
+  ],
+  stocksauto: [
+    "stocksauto",
+    "stocks",
+  ],
   facturesauto: [
     "facturesauto",
     "factures",
@@ -266,6 +274,39 @@ export class ERPRelationDataLoader {
 
     const resteAPayer =
       money("resteAPayer");
+
+    const productPrimaryLabel =
+      value("nom") ||
+      value("designation") ||
+      value("produit");
+
+    const productBrand =
+      value("marque");
+
+    if (productPrimaryLabel && (reference || productBrand)) {
+      return compact(
+        productPrimaryLabel,
+        productBrand,
+        reference ? "Réf. " + reference : ""
+      );
+    }
+
+    const stockLocation =
+      value("emplacement");
+
+    const stockType =
+      value("typeStock");
+
+    const stockQuantity =
+      value("quantite");
+
+    if (stockLocation || stockType) {
+      return compact(
+        stockLocation,
+        stockType,
+        stockQuantity ? stockQuantity + " unité(s)" : ""
+      );
+    }
 
     const factureNumber =
       numeroFacture ||
