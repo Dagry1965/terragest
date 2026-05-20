@@ -21,6 +21,11 @@ import {
 }
 from "@/runtime/modules/definitions/coreModules";
 
+import {
+  RuntimeSchedulingEngine,
+}
+from "@/runtime/scheduling/RuntimeSchedulingEngine";
+
 
 
 
@@ -264,6 +269,9 @@ export const runtimeBusinessRules:
 // AMARKHYS
 // RDV CONFIRME -> INTERVENTION
 // =====================================================
+// AMARKHYS
+// RDV CONFIRME -> INTERVENTION
+// =====================================================
 
 {
   id:
@@ -311,20 +319,25 @@ export const runtimeBusinessRules:
             )
           : payload;
 
-      const clientId =
-        rendezvousRecord?.clientId ??
-        payload.clientId ??
-        null;
+      const effectiveRendezvous = {
+        ...payload,
+        ...(rendezvousRecord ?? {}),
+        id:
+          rendezvousRecord?.id ??
+          payload.id,
+      };
 
-      const vehiculeId =
-        rendezvousRecord?.vehiculeId ??
-        payload.vehiculeId ??
-        null;
+      const validation =
+        RuntimeSchedulingEngine
+          .assertRendezvousCanCreateIntervention(
+            effectiveRendezvous
+          );
 
-      if (
-        !clientId ||
-        !vehiculeId
-      ) {
+      if (!validation.ok) {
+        if (effectiveRendezvous.consumedByInterventionId) {
+          return;
+        }
+
         await RuntimeNotificationEngine
           .notify({
             type:
@@ -337,7 +350,8 @@ export const runtimeBusinessRules:
               "Intervention non créée",
 
             message:
-              "Impossible de créer l'intervention : client ou véhicule manquant sur le rendez-vous.",
+              validation.reason ??
+              "Impossible de créer l'intervention depuis ce rendez-vous.",
 
             severity:
               "warning",
@@ -346,31 +360,59 @@ export const runtimeBusinessRules:
         return;
       }
 
-      await RuntimeDataBinding
-        .create(
-          interventionsModule,
-          {
-            clientId,
+      const interventionPayload =
+        RuntimeSchedulingEngine
+          .buildInterventionFromRendezvous(
+            effectiveRendezvous
+          );
 
-            vehiculeId,
+      const createdIntervention =
+        await RuntimeDataBinding
+          .create(
+            interventionsModule,
+            {
+              ...interventionPayload,
 
-            rendezVousId:
-              payload.id,
+              tenantId:
+                effectiveRendezvous.tenantId ??
+                payload.tenantId,
 
-            typeIntervention:
-              rendezvousRecord?.typeService ??
-              payload.typeService ??
-              "autre",
+              workspace:
+                effectiveRendezvous.workspace ??
+                payload.workspace ??
+                "amarkhys",
 
-            dateIntervention:
-              rendezvousRecord?.dateRendezVous ??
-              payload.dateRendezVous ??
-              new Date(),
+              userId:
+                effectiveRendezvous.userId ??
+                payload.userId,
+            }
+          );
 
-            statut:
-              "ouverte"
-          }
-        );
+      const createdInterventionId =
+        typeof createdIntervention === "object" &&
+        createdIntervention !== null
+          ? String(
+              createdIntervention.id ?? ""
+            )
+          : "";
+
+      if (
+        createdInterventionId &&
+        effectiveRendezvous.id
+      ) {
+        await RuntimeDataBinding
+          .update(
+            rendezvousModule,
+            String(effectiveRendezvous.id),
+            {
+              consumedByInterventionId:
+                createdInterventionId,
+
+              consumedAt:
+                new Date().toISOString(),
+            }
+          );
+      }
 
       await RuntimeNotificationEngine
         .notify({
@@ -391,6 +433,7 @@ export const runtimeBusinessRules:
         });
     }
 },
+
 // =====================================================
 // INTERVENTION TERMINEE
 // -> FACTURE AUTO
