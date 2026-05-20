@@ -20,6 +20,10 @@ import {
   ERPSessionContext,
 } from "@/runtime/security/sessions/ERPSessionContext";
 
+import {
+  processRuntimeBeforeMutationGuards,
+} from "@/runtime/guards/processRuntimeBeforeMutationGuards";
+
 function sanitizeFirestoreData(
   data: Record<string, unknown>
 ): Record<string, unknown> {
@@ -200,9 +204,18 @@ export class FirestoreRuntimeMutation {
         isolatedData
       );
 
+    const guardedData =
+      await processRuntimeBeforeMutationGuards(
+        module,
+        computedData,
+        {
+          operation: "create",
+        }
+      );
+
     const safeData =
       sanitizeFirestoreData(
-        computedData
+        guardedData
       );
 
     const result =
@@ -254,9 +267,19 @@ export class FirestoreRuntimeMutation {
         isolatedData
       );
 
+    const guardedData =
+      await processRuntimeBeforeMutationGuards(
+        module,
+        computedData,
+        {
+          operation: "update",
+          id,
+        }
+      );
+
     const safeData =
       sanitizeFirestoreData(
-        computedData
+        guardedData
       );
 
     const result =
