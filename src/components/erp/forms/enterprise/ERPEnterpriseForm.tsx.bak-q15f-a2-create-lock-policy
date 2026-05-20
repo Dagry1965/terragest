@@ -329,46 +329,20 @@ export function ERPEnterpriseForm({
         }
       | undefined;
 
-  const hasParentContext =
-    Boolean(
-      queryValues.parentModuleKey ||
-      queryValues.parentRecordId ||
-      queryValues.parentForeignKey
+  const lockedFields =
+    Array.from(
+      new Set([
+        ...(compositionLocking?.lockedFields ?? []),
+        ...queryLockedFields,
+      ])
     );
 
-  const compositionLockedFields =
-    compositionLocking?.lockedFields ?? [];
-
-  const compositionReadOnlyFields =
-    compositionLocking?.readOnlyFields ?? [];
-
-  const lockedFields =
-    mode === "create"
-      ? Array.from(
-          new Set([
-            ...queryLockedFields,
-          ])
-        )
-      : Array.from(
-          new Set([
-            ...compositionLockedFields,
-            ...queryLockedFields,
-          ])
-        );
-
   const readOnlyFields =
-    mode === "create"
-      ? []
-      : Array.from(
-          new Set([
-            ...compositionReadOnlyFields,
-          ])
-        );
-
-  // Q15F_A2_ACTIVE_CREATE_LOCK_POLICY
-  // Création directe : aucun champ composition.lockedFields n'est bloqué.
-  // Création enfant : seuls les champs transmis par lockFields dans l'URL sont bloqués.
-  // Edit/detail : les verrous de composition restent appliqués.
+    Array.from(
+      new Set(
+        compositionLocking?.readOnlyFields ?? []
+      )
+    );
 
   const [saving, setSaving] = useState(false);
 
