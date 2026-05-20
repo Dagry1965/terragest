@@ -18,6 +18,7 @@ interface ERPFormFieldProps {
   onChange?: (key: string, value: unknown) => void;
   error?: string;
   lockedFields?: string[];
+  readOnlyFields?: string[];
 }
 
 const gridClassMap: Record<number, string> = {
@@ -311,6 +312,7 @@ export function ERPFormField({
   onChange,
   error,
   lockedFields = [],
+  readOnlyFields = [],
 }: ERPFormFieldProps) {
   const router = useRouter();
 
@@ -324,9 +326,15 @@ export function ERPFormField({
   const isLocked =
     lockedFields.includes(field.key);
 
+  const isReadOnly =
+    readOnlyFields.includes(field.key);
+
+  const isProtected =
+    isLocked || isReadOnly;
+
   useEffect(() => {
     async function loadLockedRelationLabel() {
-      if (field.type !== "relation" || !isLocked || !currentValue) {
+      if (field.type !== "relation" || !isProtected || !currentValue) {
         setLockedRelationLabel("");
         return;
       }
@@ -351,7 +359,7 @@ export function ERPFormField({
     loadLockedRelationLabel().catch(() => {
       setLockedRelationLabel("");
     });
-  }, [field, isLocked, currentValue]);
+  }, [field, isProtected, currentValue]);
 
   useEffect(() => {
     async function loadRelation() {
@@ -448,7 +456,7 @@ export function ERPFormField({
 
     const canCreateRelation =
       Boolean(relationConfig?.create?.enabled) &&
-      !isLocked;
+      !isProtected;
 
     const selectedOption =
       relationOptions.find((option) =>
@@ -525,7 +533,7 @@ export function ERPFormField({
       compactLockedRelationLabel(selectedLabel) ||
       selectedLabel;
 
-    if (isLocked) {
+    if (isProtected) {
       return (
         <FieldWrapper field={field} error={error}>
           <div className="block space-y-2">
@@ -641,10 +649,10 @@ export function ERPFormField({
             name={field.key}
             required={field.required}
             value={currentValue}
-            disabled={isLocked}
+            disabled={isProtected}
             onChange={(event) => onChange?.(field.key, event.target.value)}
             className={`${className} ${
-              isLocked
+              isProtected
                 ? "cursor-not-allowed bg-slate-100 text-[var(--erp-text-muted)]"
                 : ""
             }`}
@@ -723,10 +731,10 @@ export function ERPFormField({
             name={field.key}
             required={field.required}
             value={currentValue}
-            disabled={isLocked}
+            disabled={isProtected}
             onChange={(event) => onChange?.(field.key, event.target.value)}
             className={`${className} ${
-              isLocked
+              isProtected
                 ? "cursor-not-allowed bg-slate-100 text-[var(--erp-text-muted)]"
                 : ""
             }`}
@@ -798,6 +806,8 @@ export function ERPFormField({
             name={field.key}
             required={field.required}
             value={currentValue}
+            readOnly={isReadOnly}
+            disabled={isLocked}
             onChange={(event) => onChange?.(field.key, event.target.value)}
             placeholder={field.placeholder ?? field.label}
             className="
@@ -847,10 +857,11 @@ export function ERPFormField({
           required={field.required}
           value={currentValue}
           disabled={isLocked}
+          readOnly={isReadOnly}
           onChange={(event) => onChange?.(field.key, event.target.value)}
           type={primitiveInputType}
           placeholder={field.placeholder ?? field.label}
-          className={isLocked ? lockedClassName : className}
+          className={isProtected ? lockedClassName : className}
         />
       </label>
     </FieldWrapper>

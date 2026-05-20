@@ -218,6 +218,83 @@ export const lignesinterventionautoModule: ERPModule = {
     ],
   },
 
+
+
+  composition: {
+    labelFields: [
+      "designation",
+      "typeLigne",
+      "statut",
+    ],
+
+    breadcrumbs: [
+      {
+        field: "interventionId",
+        moduleKey: "interventionsauto",
+        labelFields: [
+          "dateIntervention",
+          "typeIntervention",
+          "statut",
+        ],
+      },
+    ],
+
+    relations: [
+      {
+        field: "interventionId",
+        moduleKey: "interventionsauto",
+        labelFields: [
+          "dateIntervention",
+          "typeIntervention",
+          "statut",
+        ],
+        snapshotFields: [
+          "clientId",
+          "vehiculeId",
+          "rendezVousId",
+          "dateIntervention",
+          "typeIntervention",
+        ],
+        displayAs: "card",
+        lockDerivedFields: true,
+      },
+      {
+        field: "produitId",
+        moduleKey: "produitsauto",
+        labelFields: [
+          "nom",
+          "reference",
+          "code",
+        ],
+        displayAs: "inline",
+      },
+      {
+        field: "stockId",
+        moduleKey: "stocksauto",
+        labelFields: [
+          "nom",
+          "emplacement",
+          "reference",
+        ],
+        displayAs: "inline",
+      },
+    ],
+
+    lockedFields: [
+      "interventionId",
+      "montantTotal",
+      "stockMovementId",
+      "stockProcessedAt",
+      "stockProcessedQuantity",
+    ],
+
+    readOnlyFields: [
+      "stockMovementId",
+      "stockProcessedAt",
+      "stockProcessedQuantity",
+    ],
+  },
+
   workflows: [
     {
       key: "ligne-intervention",

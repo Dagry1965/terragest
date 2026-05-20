@@ -313,12 +313,36 @@ export function ERPEnterpriseForm({
       )
     );
 
-  const lockedFields =
+  const queryLockedFields =
     searchParams
       .get("lockFields")
       ?.split(",")
       .map((item) => item.trim())
       .filter(Boolean) ?? [];
+
+  const compositionLocking =
+    module.composition as
+      | {
+          lockedFields?: string[];
+          readOnlyFields?: string[];
+          allowOverride?: string[];
+        }
+      | undefined;
+
+  const lockedFields =
+    Array.from(
+      new Set([
+        ...(compositionLocking?.lockedFields ?? []),
+        ...queryLockedFields,
+      ])
+    );
+
+  const readOnlyFields =
+    Array.from(
+      new Set(
+        compositionLocking?.readOnlyFields ?? []
+      )
+    );
 
   const [saving, setSaving] = useState(false);
 
@@ -1315,6 +1339,7 @@ preparedPayload.terrainId
               onFieldChange={handleFieldChange}
               fieldErrors={errorByField}
               lockedFields={lockedFields}
+              readOnlyFields={readOnlyFields}
             />
           ) : (
             <>
@@ -1330,6 +1355,7 @@ preparedPayload.terrainId
                     onChange={handleFieldChange}
                     error={errorByField[field.key]}
                     lockedFields={lockedFields}
+                      readOnlyFields={readOnlyFields}
                   />
                 ))}
               </ERPFormSection>
@@ -1347,6 +1373,7 @@ preparedPayload.terrainId
                       onChange={handleFieldChange}
                       error={errorByField[field.key]}
                       lockedFields={lockedFields}
+                      readOnlyFields={readOnlyFields}
                     />
                   ))}
                 </ERPFormSection>

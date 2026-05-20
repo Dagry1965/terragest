@@ -316,6 +316,10 @@ export const interventionsautoModule: ERPModule = {
       "coutTotal",
     ],
 
+    readOnlyFields: [
+      "dateIntervention",
+    ],
+
     children: [
       {
         key: "lignes",

@@ -127,6 +127,7 @@ export interface ERPCompositionRelation {
   snapshotFields?: string[];
   displayAs?: ERPCompositionDisplayMode;
   lockDerivedFields?: boolean;
+  allowOverride?: boolean;
 }
 
 export interface ERPCompositionChild {
@@ -154,6 +155,8 @@ export interface ERPModuleComposition {
   breadcrumbs?: ERPCompositionBreadcrumb[];
   relations?: ERPCompositionRelation[];
   lockedFields?: string[];
+  readOnlyFields?: string[];
+  allowOverride?: string[];
   children?: ERPCompositionChild[];
 }
 
