@@ -410,7 +410,7 @@ export function ERPEnterpriseForm({
         "ce véhicule possède déjà un rendez-vous"
       )
     ) {
-      return "Ce véhicule a déjà un rendez-vous sur ce créneau. Choisissez une autre heure ou modifiez le rendez-vous existant.";
+      return "Ce véhicule a déjà un rendez-vous sur cette plage horaire. Choisissez un autre créneau ou modifiez le rendez-vous existant.";
     }
 
     if (

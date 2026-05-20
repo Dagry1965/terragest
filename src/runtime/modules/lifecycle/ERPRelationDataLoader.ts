@@ -315,6 +315,111 @@ export class ERPRelationDataLoader {
       return number.toLocaleString("fr-FR");
     };
 
+    const normalizeTimeLabel = (input: string) => {
+      const text = String(input ?? "").trim();
+
+      if (!text) {
+        return "";
+      }
+
+      const isoTime =
+        text.match(/T(\d{1,2}):(\d{2})/);
+
+      if (isoTime) {
+        return isoTime[1].padStart(2, "0") + "h" + isoTime[2];
+      }
+
+      const colonTime =
+        text.match(/^(\d{1,2}):(\d{2})/);
+
+      if (colonTime) {
+        return colonTime[1].padStart(2, "0") + "h" + colonTime[2];
+      }
+
+      const frenchTime =
+        text.match(/^(\d{1,2})\s*h\s*(\d{0,2})$/i);
+
+      if (frenchTime) {
+        return (
+          frenchTime[1].padStart(2, "0") +
+          "h" +
+          String(frenchTime[2] || "00").padStart(2, "0")
+        );
+      }
+
+      const compactTime =
+        text.match(/^(\d{1,2})(\d{2})$/);
+
+      if (compactTime) {
+        return compactTime[1].padStart(2, "0") + "h" + compactTime[2];
+      }
+
+      const date = new Date(text);
+
+      if (!Number.isNaN(date.getTime())) {
+        return (
+          String(date.getHours()).padStart(2, "0") +
+          "h" +
+          String(date.getMinutes()).padStart(2, "0")
+        );
+      }
+
+      return text;
+    };
+
+    const addMinutesToTimeLabel = (
+      input: string,
+      minutesToAdd: number
+    ) => {
+      const time =
+        normalizeTimeLabel(input);
+
+      const match =
+        time.match(/^(\d{1,2})h(\d{2})$/);
+
+      if (!match || !Number.isFinite(minutesToAdd)) {
+        return "";
+      }
+
+      const date =
+        new Date(2000, 0, 1, Number(match[1]), Number(match[2]), 0, 0);
+
+      date.setMinutes(date.getMinutes() + minutesToAdd);
+
+      return (
+        String(date.getHours()).padStart(2, "0") +
+        "h" +
+        String(date.getMinutes()).padStart(2, "0")
+      );
+    };
+
+    const rendezvousSlotLabel = () => {
+      const start =
+        normalizeTimeLabel(
+          value("heureRendezVous") ||
+          value("heureRdv") ||
+          value("heure") ||
+          value("startAt")
+        );
+
+      const duration =
+        Number(
+          value("durationMinutes") ||
+          60
+        );
+
+      const end =
+        value("endAt")
+          ? normalizeTimeLabel(value("endAt"))
+          : addMinutesToTimeLabel(start, duration);
+
+      if (start && end) {
+        return start + " → " + end;
+      }
+
+      return start;
+    };
+
     const money = (key: string) => {
       const raw =
         record[key];
@@ -376,15 +481,10 @@ export class ERPRelationDataLoader {
         value("date") ||
         value("dateIntervention");
 
-      const heureValue =
-        value("heureRendezVous") ||
-        value("heureRdv") ||
-        value("heure");
-
       const rdvLabel = compact(
-        value("motif") || value("objet") || "Rendez-vous",
+        "Rendez-vous",
         dateValue ? dateLabel(dateValue) : "",
-        heureValue
+        rendezvousSlotLabel()
       );
 
       if (rdvLabel) {
