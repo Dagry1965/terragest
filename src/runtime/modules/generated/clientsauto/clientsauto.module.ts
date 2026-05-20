@@ -225,6 +225,45 @@ export const clientsautoModule: ERPModule = {
     ]
   },
 
+  composition: {
+    labelFields: [
+      "codeClient",
+      "nom",
+      "prenom",
+      "telephone",
+    ],
+
+    children: [
+      {
+        key: "vehicules",
+        moduleKey: "vehicules",
+        foreignKey: "clientId",
+        title: "Véhicules du client",
+        createLabel: "Ajouter un véhicule",
+        displayIn: [
+          "detail",
+          "edit",
+        ],
+        position: "after",
+        lazy: true,
+        mode: "readonly",
+        allowCreate: false,
+        badgeLabel: "véhicules liés",
+        description: "Source de vérité : le champ Client dans chaque fiche véhicule. Cette section affiche les véhicules liés sans modifier la relation.",
+        openLabel: "Ouvrir véhicule",
+        labelFields: [
+          "marque",
+          "modele",
+        ],
+        subtitleFields: [
+          "immatriculation",
+          "statut",
+          "kilometrage",
+        ],
+      },
+    ],
+  },
+
   workflows:[
     {
       key:"client",

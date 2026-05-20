@@ -235,41 +235,13 @@ function buildCreateHref(
 
 function buildChildEditHref(
   child: ERPCompositionChild,
-  record: Record<string, unknown>,
-  parentModule: ERPModule,
-  parentRecord: Record<string, unknown>,
-  mode: "detail" | "edit"
+  record: Record<string, unknown>
 ): string {
   const id = getRecordId(record);
 
   if (!id) return "#";
 
-  const parentId = getRecordId(parentRecord);
-  const params = new URLSearchParams();
-
-  if (parentId) {
-    params.set(
-      "returnTo",
-      "/" +
-        parentModule.metadata.key +
-        "/" +
-        parentId +
-        (mode === "edit" ? "/edit" : "")
-    );
-
-    params.set("returnLabel", "Retour");
-  }
-
-  const query = params.toString();
-
-  return (
-    "/" +
-    child.moduleKey +
-    "/" +
-    encodeURIComponent(id) +
-    "/edit" +
-    (query ? "?" + query : "")
-  );
+  return "/" + child.moduleKey + "/" + id + "/edit";
 }
 
 async function resolveRelationLabels(
@@ -485,13 +457,7 @@ export function ERPRelatedRecordsPanel({
           return (
             <Link
               key={id || JSON.stringify(record)}
-              href={buildChildEditHref(
-                child,
-                record,
-                parentModule,
-                parentRecord,
-                mode
-              )}
+              href={buildChildEditHref(child, record)}
               className="group flex flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-[#009B7D]/40 hover:bg-emerald-50/30 hover:shadow-[0_14px_32px_rgba(15,23,42,0.08)] sm:flex-row sm:items-center sm:justify-between"
             >
               <div>

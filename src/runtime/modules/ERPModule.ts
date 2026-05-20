@@ -139,6 +139,13 @@ export interface ERPCompositionChild {
   position?: ERPCompositionPosition;
   lazy?: boolean;
   totalField?: string;
+  mode?: "default" | "readonly";
+  allowCreate?: boolean;
+  badgeLabel?: string;
+  description?: string;
+  openLabel?: string;
+  labelFields?: string[];
+  subtitleFields?: string[];
   relations?: ERPCompositionRelation[];
 }
 

@@ -314,6 +314,80 @@ export const vehiculesModule: ERPModule = {
 
   },
 
+  composition: {
+    labelFields: [
+      "immatriculation",
+      "marque",
+      "modele",
+    ],
+
+    breadcrumbs: [
+      {
+        field: "clientId",
+        moduleKey: "clientsauto",
+        labelFields: [
+          "nom",
+          "prenom",
+          "telephone",
+        ],
+      },
+    ],
+
+    relations: [
+      {
+        field: "clientId",
+        moduleKey: "clientsauto",
+        labelFields: [
+          "nom",
+          "prenom",
+          "telephone",
+        ],
+        snapshotFields: [
+          "codeClient",
+          "nom",
+          "prenom",
+          "telephone",
+          "email",
+        ],
+        displayAs: "card",
+        lockDerivedFields: true,
+      },
+    ],
+
+    lockedFields: [
+      "clientId",
+    ],
+
+    children: [
+      {
+        key: "interventions",
+        moduleKey: "interventionsauto",
+        foreignKey: "vehiculeId",
+        title: "Interventions du véhicule",
+        createLabel: "Ajouter une intervention",
+        displayIn: [
+          "detail",
+          "edit",
+        ],
+        position: "after",
+        lazy: true,
+        totalField: "coutTotal",
+        relations: [
+          {
+            field: "clientId",
+            moduleKey: "clientsauto",
+            labelFields: [
+              "nom",
+              "prenom",
+              "telephone",
+            ],
+            displayAs: "inline",
+          },
+        ],
+      },
+    ],
+  },
+
   workflows:[
 
     {

@@ -75,10 +75,6 @@ import {
 } from "@/runtime/validation/RuntimeUniqueConstraintEngine";
 
 import {
-  ClientVehiclesReadonlyCard,
-} from "@/components/erp/relations/ClientVehiclesReadonlyCard";
-
-import {
   ERPReturnBreadcrumb,
 } from "@/components/erp/navigation/ERPReturnBreadcrumb";
 import {
@@ -1284,18 +1280,7 @@ preparedPayload.terrainId
               )}
             </>
           )}
-
-          {mode === "edit" &&
-          module.metadata.key === "clientsauto" &&
-          Boolean(initialData?.id) ? (
-            <div data-client-vehicles-readonly-card>
-              <ClientVehiclesReadonlyCard
-                clientId={String(initialData.id)}
-              />
-            </div>
-          ) : null}
-
-          <div className="flex flex-wrap gap-3 rounded-2xl sm:rounded-3xl border border-[var(--erp-border)] bg-[var(--erp-surface)] p-5 shadow-sm">
+<div className="flex flex-wrap gap-3 rounded-2xl sm:rounded-3xl border border-[var(--erp-border)] bg-[var(--erp-surface)] p-5 shadow-sm">
             {errors.length > 0 && (
               <div className="w-full rounded-2xl sm:rounded-3xl border border-red-200 bg-red-50 p-5">
                 <h3 className="text-sm font-black text-red-700">
