@@ -66,93 +66,19 @@ function getFallbackRecordLabel(record: Record<string, unknown>): string {
   );
 }
 
-function looksLikeTechnicalId(value: unknown): boolean {
-  const text = String(value ?? "").trim();
-
-  if (!text) return false;
-
-  // Firestore-like ids / technical ids often contain mixed case letters + numbers
-  // and are not meaningful labels for end users.
-  if (/^[A-Za-z0-9_-]{16,}$/.test(text)) {
-    return true;
-  }
-
-  return false;
-}
-
-function isTechnicalField(field: string): boolean {
-  const key = field.toLowerCase();
-
-  return (
-    key === "id" ||
-    key === "_id" ||
-    key.endsWith("id") ||
-    key.includes("uuid") ||
-    key.includes("technical") ||
-    key.includes("foreignkey")
-  );
-}
-
-function formatBusinessValue(value: unknown): string {
-  const text = String(value ?? "").trim();
-
-  const labels: Record<string, string> = {
-    piece: "Pièce",
-    main_oeuvre: "Main d’œuvre",
-    service: "Service",
-    remise: "Remise",
-    brouillon: "Brouillon",
-    validee: "Validée",
-    facturee: "Facturée",
-    annulee: "Annulée",
-  };
-
-  return labels[text] ?? text;
-}
-
-function getBusinessLabelFromRecord(
-  record: Record<string, unknown>,
-  preferredFields: string[]
-): string {
-  const values = preferredFields
-    .map((field) => record[field])
-    .filter((value) => value !== undefined && value !== null)
-    .map(formatBusinessValue)
-    .filter((value) => value.trim() !== "")
-    .filter((value) => !looksLikeTechnicalId(value));
-
-  return values.join(" - ");
-}
-
 function getChildRecordLabel(
   record: Record<string, unknown>,
   childModule?: ERPModule
 ): string {
-  const priorityLabel = getBusinessLabelFromRecord(record, [
-    "designation",
-    "libelle",
-    "nom",
-    "titre",
-    "reference",
-    "code",
-    "typeLigne",
-    "type",
-  ]);
-
-  if (priorityLabel) {
-    return priorityLabel;
-  }
-
   const visibleFields =
     childModule?.schema?.fields
       ?.filter((field) => field.list?.order !== undefined)
       ?.sort((a, b) => Number(a.list?.order ?? 999) - Number(b.list?.order ?? 999))
-      ?.map((field) => field.key)
-      ?.filter((field) => !isTechnicalField(field)) ?? [];
+      ?.map((field) => field.key) ?? [];
 
-  const label = getBusinessLabelFromRecord(record, visibleFields.slice(0, 3));
+  const label = getLabelFromFields(record, visibleFields.slice(0, 3));
 
-  return label || "Enregistrement lié";
+  return label || getFallbackRecordLabel(record);
 }
 
 function buildCreateHref(
@@ -370,10 +296,6 @@ export function ERPRelatedRecordsPanel({
             .map((relation) => {
               const relationId = String(record[relation.field] ?? "");
               const relationLabel = relationLabels[relation.field]?.[relationId];
-
-              if (!relationLabel || looksLikeTechnicalId(relationLabel)) {
-                return null;
-              }
 
               return relationLabel;
             })
