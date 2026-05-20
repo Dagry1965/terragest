@@ -60,26 +60,8 @@ async function guardParentChildContextMutation(
 ): Promise<RuntimeRecord> {
   // Q15F_PARENT_CHILD_CONTEXT_GUARD
   // Sécurise les créations/modifications enfant quand un contexte parent est transmis.
-
-  // Q15F_B_REQUIRED_PARENT_CONTEXT_GUARD
-  // Si le module déclare requiresParentContext, le parent devient obligatoire.
-  const requiresParentContext =
-    Boolean(module.composition?.requiresParentContext);
-
-  const allowedParents =
-    module.composition?.allowedParents ?? [];
-
-  const hasParentContext =
-    hasAnyParentContextField(data);
-
-  if (!hasParentContext && !requiresParentContext) {
+  if (!hasAnyParentContextField(data)) {
     return data;
-  }
-
-  if (!hasParentContext && requiresParentContext) {
-    throw new Error(
-      "Contexte parent obligatoire : cet enregistrement doit être créé depuis son parent métier."
-    );
   }
 
   const parentModuleKey =
@@ -99,20 +81,6 @@ async function guardParentChildContextMutation(
     throw new Error(
       "Contexte parent incomplet : impossible d’enregistrer cet enfant sans parent valide."
     );
-  }
-
-  if (allowedParents.length > 0) {
-    const parentAllowed =
-      allowedParents.some((parent) =>
-        parent.moduleKey === parentModuleKey &&
-        parent.foreignKey === parentForeignKey
-      );
-
-    if (!parentAllowed) {
-      throw new Error(
-        "Contexte parent refusé : ce module enfant ne peut pas être rattaché à ce parent."
-      );
-    }
   }
 
   const childForeignValue =

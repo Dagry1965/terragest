@@ -221,16 +221,6 @@ export const lignesinterventionautoModule: ERPModule = {
 
 
   composition: {
-    // Q15F_B_REQUIRED_PARENT_CONTEXT
-    // Une ligne d'intervention doit toujours être créée dans le contexte d'une intervention parente.
-    requiresParentContext: true,
-    allowedParents: [
-      {
-        moduleKey: "interventionsauto",
-        foreignKey: "interventionId",
-      },
-    ],
-
     labelFields: [
       "designation",
       "typeLigne",

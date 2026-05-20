@@ -150,11 +150,6 @@ export interface ERPCompositionChild {
   relations?: ERPCompositionRelation[];
 }
 
-export interface ERPCompositionRequiredParent {
-  moduleKey: string;
-  foreignKey: string;
-}
-
 export interface ERPModuleComposition {
   labelFields?: string[];
   breadcrumbs?: ERPCompositionBreadcrumb[];
@@ -163,18 +158,6 @@ export interface ERPModuleComposition {
   readOnlyFields?: string[];
   allowOverride?: string[];
   children?: ERPCompositionChild[];
-
-  /**
-   * Q15F-B_REQUIRED_PARENT_CONTEXT
-   * Quand true, le module ne peut être créé/modifié que depuis un parent valide.
-   */
-  requiresParentContext?: boolean;
-
-  /**
-   * Parents autorisés pour ce module enfant.
-   * Exemple : lignesinterventionauto -> interventionsauto via interventionId.
-   */
-  allowedParents?: ERPCompositionRequiredParent[];
 }
 
 export interface ERPModule {
