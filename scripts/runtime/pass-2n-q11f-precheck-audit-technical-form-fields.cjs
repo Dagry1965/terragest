@@ -34,6 +34,9 @@ const alwaysTechnicalFields = new Set([
   "sourceId",
   "sourceModule",
   "ligneInterventionId",
+  "startAt",
+  "endAt",
+  "consumedByInterventionId",
 ]);
 
 const relationFieldsAllowedInForms = new Set([

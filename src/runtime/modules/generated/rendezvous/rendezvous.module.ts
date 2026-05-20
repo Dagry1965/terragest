@@ -71,6 +71,33 @@ export const rendezvousModule: ERPModule = {
         grid: { cols: 4 },
       },
       {
+        key: "durationMinutes",
+        label: "Durée prévue",
+        type: "number",
+        defaultValue: 60,
+        grid: { cols: 4 },
+      },
+      {
+        key: "startAt",
+        label: "Début créneau",
+        type: "text",
+        grid: { cols: 4 },
+      },
+      {
+        key: "endAt",
+        label: "Fin créneau",
+        type: "text",
+        grid: { cols: 4 },
+      },
+      {
+        key: "consumedByInterventionId",
+        label: "Intervention liée",
+        type: "relation",
+        relation: { module: "interventionsauto" },
+        searchable: true,
+        grid: { cols: 4 },
+      },
+      {
         key: "typeService",
         label: "Type service",
         type: "select",
