@@ -17,12 +17,12 @@ import {
 } from "@/runtime/integrity/RuntimeReferentialIntegrityEngine";
 
 import {
-  ERPSessionContext,
-} from "@/runtime/security/sessions/ERPSessionContext";
-
-import {
   processRuntimeBeforeMutationGuards,
 } from "@/runtime/guards/processRuntimeBeforeMutationGuards";
+
+import {
+  RuntimeContextEnforcer,
+} from "@/runtime/context";
 
 function sanitizeFirestoreData(
   data: Record<string, unknown>
@@ -61,34 +61,16 @@ function sanitizeFirestoreData(
   return sanitized;
 }
 
-function applyRuntimeIsolation(
+function enforceRuntimeWriteContext(
   module: ERPModule,
   data: Record<string, unknown>
 ) {
-  const session =
-    ERPSessionContext.current();
-
-  return sanitizeFirestoreData({
-    ...data,
-
-    tenantId:
-      data.tenantId ??
-      session.tenantId ??
-      "default",
-
-    workspace:
-      data.workspace ??
-      module.metadata.category ??
-      "general",
-
-    moduleKey:
-      module.metadata.key,
-
-    userId:
-      data.userId ??
-      session.userId ??
-      "system",
-  });
+  return sanitizeFirestoreData(
+    RuntimeContextEnforcer.enforceWriteContext(
+      module,
+      data
+    )
+  );
 }
 
 function canComputeRuntimeField(
@@ -193,7 +175,7 @@ export class FirestoreRuntimeMutation {
     data: Record<string, unknown>
   ) {
     const isolatedData =
-      applyRuntimeIsolation(
+      enforceRuntimeWriteContext(
         module,
         data
       );
@@ -256,7 +238,7 @@ export class FirestoreRuntimeMutation {
     data: Record<string, unknown>
   ) {
     const isolatedData =
-      applyRuntimeIsolation(
+      enforceRuntimeWriteContext(
         module,
         data
       );
