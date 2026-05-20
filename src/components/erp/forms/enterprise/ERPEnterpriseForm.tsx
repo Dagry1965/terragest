@@ -394,6 +394,67 @@ export function ERPEnterpriseForm({
       ])
     ) as Record<string, string>;
 
+  function toFriendlyRuntimeErrorMessage(
+    error: unknown
+  ): string {
+    const message =
+      error instanceof Error
+        ? error.message
+        : "Enregistrement impossible.";
+
+    if (
+      message.includes(
+        "Conflit de planning"
+      ) ||
+      message.includes(
+        "ce véhicule possède déjà un rendez-vous"
+      )
+    ) {
+      return "Ce véhicule a déjà un rendez-vous sur ce créneau. Choisissez une autre heure ou modifiez le rendez-vous existant.";
+    }
+
+    if (
+      message.includes(
+        "dateRendezVous"
+      ) ||
+      message.includes(
+        "heureRendezVous"
+      ) ||
+      message.includes(
+        "créneau"
+      )
+    ) {
+      return "Le rendez-vous doit avoir une date et une heure valides avant d'être enregistré.";
+    }
+
+    if (
+      message.includes(
+        "clientId manquant"
+      )
+    ) {
+      return "Veuillez sélectionner un client avant d'enregistrer.";
+    }
+
+    if (
+      message.includes(
+        "vehiculeId manquant"
+      )
+    ) {
+      return "Veuillez sélectionner un véhicule avant d'enregistrer.";
+    }
+
+    if (
+      message.includes(
+        "déjà été consommé"
+      )
+    ) {
+      return "Ce rendez-vous a déjà généré une intervention. Aucune nouvelle intervention ne sera créée.";
+    }
+
+    return message;
+  }
+
+
   const returnTo =
     searchParams.get("returnTo");
 
@@ -854,10 +915,22 @@ preparedPayload.terrainId
     } catch (error) {
       pendingWorkflowActionRef.current = null;
 
+      const message =
+        toFriendlyRuntimeErrorMessage(
+          error
+        );
+
       console.error(
         "ERP ENTERPRISE FORM ERROR",
         error
       );
+
+      setErrors([
+        {
+          field: "formulaire",
+          message,
+        },
+      ]);
     } finally {
       setSaving(false);
     }
