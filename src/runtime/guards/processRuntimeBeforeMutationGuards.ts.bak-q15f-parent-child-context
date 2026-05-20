@@ -5,14 +5,6 @@ import {
 } from "@/runtime/firestore/FirestoreRuntimeRepository";
 
 import {
-  RuntimeContextEnforcer,
-} from "@/runtime/context";
-
-import {
-  allERPModules,
-} from "@/runtime/modules/definitions/coreModules";
-
-import {
   RuntimeSchedulingEngine,
   type RuntimeRecord,
 } from "@/runtime/scheduling/RuntimeSchedulingEngine";
@@ -32,102 +24,6 @@ function asString(value: unknown): string {
   }
 
   return "";
-}
-
-function getModuleByKey(
-  moduleKey: string
-): ERPModule | null {
-  return (
-    allERPModules.find(
-      (item) => item.metadata.key === moduleKey
-    ) ?? null
-  );
-}
-
-function hasAnyParentContextField(
-  data: RuntimeRecord
-): boolean {
-  return Boolean(
-    asString(data.parentModuleKey) ||
-    asString(data.parentRecordId) ||
-    asString(data.parentForeignKey)
-  );
-}
-
-async function guardParentChildContextMutation(
-  module: ERPModule,
-  data: RuntimeRecord
-): Promise<RuntimeRecord> {
-  // Q15F_PARENT_CHILD_CONTEXT_GUARD
-  // Sécurise les créations/modifications enfant quand un contexte parent est transmis.
-  if (!hasAnyParentContextField(data)) {
-    return data;
-  }
-
-  const parentModuleKey =
-    asString(data.parentModuleKey);
-
-  const parentRecordId =
-    asString(data.parentRecordId);
-
-  const parentForeignKey =
-    asString(data.parentForeignKey);
-
-  if (
-    !parentModuleKey ||
-    !parentRecordId ||
-    !parentForeignKey
-  ) {
-    throw new Error(
-      "Contexte parent incomplet : impossible d’enregistrer cet enfant sans parent valide."
-    );
-  }
-
-  const childForeignValue =
-    asString(data[parentForeignKey]);
-
-  if (
-    childForeignValue &&
-    childForeignValue !== parentRecordId
-  ) {
-    throw new Error(
-      "Contexte parent incohérent : la référence enfant ne correspond pas au parent."
-    );
-  }
-
-  const parentModule =
-    getModuleByKey(parentModuleKey);
-
-  if (!parentModule) {
-    throw new Error(
-      "Contexte parent invalide : module parent introuvable."
-    );
-  }
-
-  const parentRecord =
-    await FirestoreRuntimeRepository.findById(
-      parentModule,
-      parentRecordId
-    );
-
-  if (!parentRecord) {
-    throw new Error(
-      "Contexte parent invalide : enregistrement parent introuvable."
-    );
-  }
-
-  RuntimeContextEnforcer.assertRecordInContext(
-    parentModule,
-    parentRecord
-  );
-
-  return {
-    ...data,
-    [parentForeignKey]: parentRecordId,
-    parentModuleKey,
-    parentRecordId,
-    parentForeignKey,
-  };
 }
 
 function isRendezvousModule(module: ERPModule): boolean {
