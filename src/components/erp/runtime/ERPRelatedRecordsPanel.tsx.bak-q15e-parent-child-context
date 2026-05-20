@@ -224,20 +224,10 @@ function buildCreateHref(
   const params = new URLSearchParams();
 
   params.set(child.foreignKey, parentRecordId);
-
-  // Q15E_PARENT_CHILD_CONTEXT
-  // Transport générique du contexte parent vers la création enfant.
-  params.set("parentModuleKey", parentModuleKey);
-  params.set("parentRecordId", parentRecordId);
-  params.set("parentForeignKey", child.foreignKey);
-
   params.set(
     "returnTo",
-    "/" + parentModuleKey + "/" +
-      parentRecordId +
-      (mode === "edit" ? "/edit" : "")
+    "/" + parentModuleKey + "/" + parentRecordId + (mode === "edit" ? "/edit" : "")
   );
-
   params.set("lockFields", child.foreignKey);
 
   return "/" + child.moduleKey + "/nouveau?" + params.toString();
