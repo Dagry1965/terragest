@@ -282,106 +282,6 @@ export const produitsautoModule: ERPModule = {
         type: "number",
         grid: { cols: 6 },
       },
-      
-
-      
-
-      {
-        key: "description",
-        label: "Description",
-        type: "textarea",
-        grid: { cols: 12 },
-      },
-      {
-        key: "statut",
-        label: "Statut",
-        type: "select",
-        defaultValue: "actif",
-        options: [
-          { label: "Actif", value: "actif" },
-          { label: "Rupture", value: "rupture" },
-          { label: "Inactif", value: "inactif" },
-          { label: "Archivé", value: "archive" },
-        ],
-        list: { order: 3 },
-        grid: { cols: 6 },
-      },
-    ],
-  },
-
-  form: {
-    layout: "tabs",
-
-    tabs: [
-      {
-        key: "identite",
-        label: "Identité",
-
-        fields: [
-          "reference",
-          "nom",
-          "marque",
-          "typeRecord",
-          "parentProductId",
-          "typeArticle",
-          "categorie",
-          "sousCategorie",
-          "typeProduit",
-          "stockable",
-          "unite",
-          "statut",
-        ],
-
-        sections: [
-          {
-            key: "infos",
-            title: "Informations produit",
-            fields: [
-              "reference",
-              "nom",
-              "marque",
-              "typeRecord",
-              "parentProductId",
-              "typeArticle",
-              "categorie",
-              "sousCategorie",
-              "typeProduit",
-              "stockable",
-              "unite",
-              "statut",
-            ],
-          },
-        ],
-      },
-
-      {
-        key: "prix",
-        label: "Prix",
-
-        fields: [
-          "prixAchat",
-          "prixVente",
-              "tauxTVA",
-              "prixPromo",
-          "seuilMinimum",
-        ],
-
-        sections: [
-          {
-            key: "tarifs",
-            title: "Prix et seuils",
-            fields: [
-              "prixAchat",
-              "prixVente",
-              "tauxTVA",
-              "prixPromo",
-              "seuilMinimum",
-            ],
-          },
-        ],
-      },
-
-      
       {
         key: "catalogue",
         label: "Catalogue",
@@ -458,7 +358,90 @@ export const produitsautoModule: ERPModule = {
         ],
       },
 
-{
+      {
+        key: "description",
+        label: "Description",
+        type: "textarea",
+        grid: { cols: 12 },
+      },
+      {
+        key: "statut",
+        label: "Statut",
+        type: "select",
+        defaultValue: "actif",
+        options: [
+          { label: "Actif", value: "actif" },
+          { label: "Rupture", value: "rupture" },
+          { label: "Inactif", value: "inactif" },
+          { label: "Archivé", value: "archive" },
+        ],
+        list: { order: 3 },
+        grid: { cols: 6 },
+      },
+    ],
+  },
+
+  form: {
+    layout: "tabs",
+
+    tabs: [
+      {
+        key: "identite",
+        label: "Identité",
+
+        fields: [
+          "reference",
+          "nom",
+          "marque",
+          "categorie",
+          "typeProduit",
+          "unite",
+          "statut",
+        ],
+
+        sections: [
+          {
+            key: "infos",
+            title: "Informations produit",
+            fields: [
+              "reference",
+              "nom",
+              "marque",
+              "categorie",
+              "typeProduit",
+              "unite",
+              "statut",
+            ],
+          },
+        ],
+      },
+
+      {
+        key: "prix",
+        label: "Prix",
+
+        fields: [
+          "prixAchat",
+          "prixVente",
+              "tauxTVA",
+              "prixPromo",
+          "seuilMinimum",
+        ],
+
+        sections: [
+          {
+            key: "tarifs",
+            title: "Prix et seuils",
+            fields: [
+              "prixAchat",
+              "prixVente",
+              "seuilMinimum",
+            ],
+          },
+        ],
+      },
+
+      {
         key: "description",
         label: "Description",
 

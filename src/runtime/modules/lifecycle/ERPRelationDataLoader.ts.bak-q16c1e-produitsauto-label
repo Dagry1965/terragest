@@ -516,24 +516,6 @@ export class ERPRelationDataLoader {
       }
     }
 
-    // Q16C1E_PRODUITSAUTO_LABEL
-    // Libellé métier pour produitsauto, utilisé notamment par parentProductId.
-    // Exemple attendu : HUI-5W40 · Huile moteur 5W40
-    if (normalizedModuleKey === "produitsauto") {
-      const productLabel = compact(
-        value("reference"),
-        value("nom") ||
-          value("designation") ||
-          value("libelle") ||
-          value("produit"),
-        value("marque")
-      );
-
-      if (productLabel) {
-        return productLabel;
-      }
-    }
-
     if (normalizedModuleKey === "stocksauto") {
       const stockLabel = compact(
         value("emplacement") || "Stock",

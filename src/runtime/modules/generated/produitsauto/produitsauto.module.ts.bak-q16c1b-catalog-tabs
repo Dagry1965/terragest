@@ -282,10 +282,6 @@ export const produitsautoModule: ERPModule = {
         type: "number",
         grid: { cols: 6 },
       },
-      
-
-      
-
       {
         key: "description",
         label: "Description",
@@ -321,13 +317,8 @@ export const produitsautoModule: ERPModule = {
           "reference",
           "nom",
           "marque",
-          "typeRecord",
-          "parentProductId",
-          "typeArticle",
           "categorie",
-          "sousCategorie",
           "typeProduit",
-          "stockable",
           "unite",
           "statut",
         ],
@@ -340,13 +331,8 @@ export const produitsautoModule: ERPModule = {
               "reference",
               "nom",
               "marque",
-              "typeRecord",
-              "parentProductId",
-              "typeArticle",
               "categorie",
-              "sousCategorie",
               "typeProduit",
-              "stockable",
               "unite",
               "statut",
             ],
@@ -373,92 +359,13 @@ export const produitsautoModule: ERPModule = {
             fields: [
               "prixAchat",
               "prixVente",
-              "tauxTVA",
-              "prixPromo",
               "seuilMinimum",
             ],
           },
         ],
       },
 
-      
       {
-        key: "catalogue",
-        label: "Catalogue",
-
-        fields: [
-          "contenance",
-          "uniteContenance",
-          "poids",
-          "unitePoids",
-          "taille",
-          "couleur",
-          "modele",
-          "compatibilites",
-        ],
-
-        sections: [
-          {
-            key: "caracteristiques",
-            title: "Caractéristiques",
-            fields: [
-              "contenance",
-              "uniteContenance",
-              "poids",
-              "unitePoids",
-              "taille",
-              "couleur",
-              "modele",
-              "compatibilites",
-            ],
-          },
-        ],
-      },
-
-      {
-        key: "boutique",
-        label: "Boutique",
-
-        fields: [
-          "visibleBoutique",
-          "slugBoutique",
-          "seoTitle",
-          "seoDescription",
-          "imageOriginalUrl",
-          "imageThumbnailUrl",
-          "imageMediumUrl",
-          "imageLargeUrl",
-          "imageAlt",
-          "imageStoragePath",
-        ],
-
-        sections: [
-          {
-            key: "publication",
-            title: "Publication web",
-            fields: [
-              "visibleBoutique",
-              "slugBoutique",
-              "seoTitle",
-              "seoDescription",
-            ],
-          },
-          {
-            key: "image",
-            title: "Image produit",
-            fields: [
-              "imageOriginalUrl",
-              "imageThumbnailUrl",
-              "imageMediumUrl",
-              "imageLargeUrl",
-              "imageAlt",
-              "imageStoragePath",
-            ],
-          },
-        ],
-      },
-
-{
         key: "description",
         label: "Description",
 
