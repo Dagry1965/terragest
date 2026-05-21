@@ -256,18 +256,7 @@ export class FirestoreRuntimeMutation {
     id: string,
     data: Record<string, unknown>
   ) {
-    // Q16B2_PREVIOUS_LINE_RECORD_BEFORE_UPDATE
-    // Une update partielle peut ne pas contenir interventionId.
-    // On récupère l'ancien record pour transmettre un record complet aux side-effects.
-    const previousRecordForSideEffects =
-      module.metadata.key === "lignesinterventionauto"
-        ? await FirestoreRuntimeRepository.findById(
-            module,
-            id
-          )
-        : null;
-
-const isolatedData =
+    const isolatedData =
       enforceRuntimeWriteContext(
         module,
         data
@@ -311,8 +300,6 @@ const isolatedData =
     );
 
     const updatedRecordForSideEffects = {
-      // Q16B2_MERGED_LINE_RECORD_FOR_SIDE_EFFECTS
-      ...(previousRecordForSideEffects ?? {}),
       ...safeData,
       ...(typeof result === "object" && result !== null ? result : {}),
       id,
@@ -330,17 +317,7 @@ const isolatedData =
     module: ERPModule,
     id: string
   ) {
-    // Q16B2_PREVIOUS_LINE_RECORD_BEFORE_DELETE
-    // Si une ligne est supprimée, on garde son interventionId pour recalculer le parent.
-    const previousRecordForSideEffects =
-      module.metadata.key === "lignesinterventionauto"
-        ? await FirestoreRuntimeRepository.findById(
-            module,
-            id
-          )
-        : null;
-
-await RuntimeReferentialIntegrityEngine.assertCanDelete(
+    await RuntimeReferentialIntegrityEngine.assertCanDelete(
       module,
       id
     );
@@ -358,28 +335,6 @@ await RuntimeReferentialIntegrityEngine.assertCanDelete(
         result,
       }
     );
-
-    // Q16B2_SYNC_TOTALS_AFTER_LINE_DELETE
-    if (previousRecordForSideEffects) {
-      try {
-        const { RuntimeInterventionTotalsService } =
-          await import("@/runtime/interventions");
-
-        const interventionId =
-          String(previousRecordForSideEffects.interventionId ?? "").trim();
-
-        if (interventionId) {
-          await RuntimeInterventionTotalsService.syncInterventionTotals({
-            interventionId,
-          });
-        }
-      } catch (error) {
-        console.error(
-          "[RUNTIME_INTERVENTION_TOTALS_SYNC_AFTER_DELETE_ERROR]",
-          error
-        );
-      }
-    }
 
     return result;
   }
