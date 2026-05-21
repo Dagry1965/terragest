@@ -91,13 +91,10 @@ function getProductUnitPrice(product?: RuntimeLineItemProductSnapshot | null): n
   }
 
   const candidates = [
-    // Prix atelier de référence.
-    product.prixVente,
-    product.prixUnitaireHT,
-    product.prixUnitaire,
-
-    // Prix promotionnel réservé aux usages promo/boutique futurs.
     product.prixPromo,
+    product.prixUnitaireHT,
+    product.prixVente,
+    product.prixUnitaire,
   ];
 
   for (const candidate of candidates) {
@@ -171,39 +168,18 @@ export class RuntimeLineItemEngine {
     const quantity = toNumber(next.quantite, 1);
     const productPrice = getProductUnitPrice(product);
 
-    const currentUnitPrice =
+    const unitPriceHT =
       toNumber(
         next.prixUnitaireHT ?? next.prixUnitaire,
-        Number.NaN
+        productPrice ?? 0
       );
 
-    // Le produit porte le prix de référence.
-    // Si le formulaire transmet 0/vide par défaut, on prend le prix produit.
-    // Si un prix manuel positif existe, on le conserve comme snapshot volontaire.
-    const unitPriceHT =
-      Number.isFinite(currentUnitPrice) && currentUnitPrice > 0
-        ? currentUnitPrice
-        : productPrice ?? 0;
-
-    const productTaxRate =
-      toNumber(product?.tauxTVA, 18);
-
-    const currentTaxRate =
-      toNumber(next.tauxTVA, Number.NaN);
-
     const taxRate =
-      Number.isFinite(currentTaxRate) && currentTaxRate >= 0
-        ? currentTaxRate
-        : productTaxRate;
+      toNumber(next.tauxTVA, toNumber(product?.tauxTVA, 18));
 
-    const montantHT =
-      Math.round(quantity * unitPriceHT * 100) / 100;
-
-    const montantTVA =
-      Math.round((montantHT * taxRate / 100) * 100) / 100;
-
-    const montantTTC =
-      Math.round((montantHT + montantTVA) * 100) / 100;
+    const montantHT = quantity * unitPriceHT;
+    const montantTVA = montantHT * taxRate / 100;
+    const montantTTC = montantHT + montantTVA;
 
     if (productCode && !toOptionalString(next.produitCode)) {
       next.produitCode = productCode;

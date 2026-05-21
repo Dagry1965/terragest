@@ -91,13 +91,10 @@ function getProductUnitPrice(product?: RuntimeLineItemProductSnapshot | null): n
   }
 
   const candidates = [
-    // Prix atelier de référence.
-    product.prixVente,
-    product.prixUnitaireHT,
-    product.prixUnitaire,
-
-    // Prix promotionnel réservé aux usages promo/boutique futurs.
     product.prixPromo,
+    product.prixUnitaireHT,
+    product.prixVente,
+    product.prixUnitaire,
   ];
 
   for (const candidate of candidates) {

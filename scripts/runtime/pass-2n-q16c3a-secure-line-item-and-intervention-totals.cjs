@@ -1,4 +1,124 @@
-import { RuntimeDataBinding } from "@/runtime/data-binding/RuntimeDataBinding";
+/* eslint-disable no-console */
+const fs = require("fs");
+const path = require("path");
+
+const root = process.cwd();
+
+function p(...parts) {
+  return path.join(root, ...parts);
+}
+
+function read(file) {
+  return fs.readFileSync(file, "utf8");
+}
+
+function write(file, content) {
+  fs.writeFileSync(file, content, "utf8");
+}
+
+function backup(file, suffix) {
+  const target = `${file}.bak-${suffix}`;
+
+  if (!fs.existsSync(target)) {
+    fs.copyFileSync(file, target);
+    console.log(`[BACKUP] ${path.relative(root, target)}`);
+  }
+}
+
+function replaceOnce(content, from, to, label) {
+  if (!content.includes(from)) {
+    throw new Error(`[${label}] pattern introuvable`);
+  }
+
+  return content.replace(from, to);
+}
+
+function patchRuntimeLineItemEngine() {
+  const file = p(
+    "src",
+    "runtime",
+    "line-items",
+    "RuntimeLineItemEngine.ts"
+  );
+
+  backup(file, "q16c3a-secure-price-snapshot");
+
+  let content = read(file);
+
+  const oldBlock = `    const quantity = toNumber(next.quantite, 1);
+    const productPrice = getProductUnitPrice(product);
+
+    const unitPriceHT =
+      toNumber(
+        next.prixUnitaireHT ?? next.prixUnitaire,
+        productPrice ?? 0
+      );
+
+    const taxRate =
+      toNumber(next.tauxTVA, toNumber(product?.tauxTVA, 18));
+
+    const montantHT = quantity * unitPriceHT;
+    const montantTVA = montantHT * taxRate / 100;
+    const montantTTC = montantHT + montantTVA;`;
+
+  const newBlock = `    const quantity = toNumber(next.quantite, 1);
+    const productPrice = getProductUnitPrice(product);
+
+    const currentUnitPrice =
+      toNumber(
+        next.prixUnitaireHT ?? next.prixUnitaire,
+        Number.NaN
+      );
+
+    // Le produit porte le prix de référence.
+    // Si le formulaire transmet 0/vide par défaut, on prend le prix produit.
+    // Si un prix manuel positif existe, on le conserve comme snapshot volontaire.
+    const unitPriceHT =
+      Number.isFinite(currentUnitPrice) && currentUnitPrice > 0
+        ? currentUnitPrice
+        : productPrice ?? 0;
+
+    const productTaxRate =
+      toNumber(product?.tauxTVA, 18);
+
+    const currentTaxRate =
+      toNumber(next.tauxTVA, Number.NaN);
+
+    const taxRate =
+      Number.isFinite(currentTaxRate) && currentTaxRate >= 0
+        ? currentTaxRate
+        : productTaxRate;
+
+    const montantHT =
+      Math.round(quantity * unitPriceHT * 100) / 100;
+
+    const montantTVA =
+      Math.round((montantHT * taxRate / 100) * 100) / 100;
+
+    const montantTTC =
+      Math.round((montantHT + montantTVA) * 100) / 100;`;
+
+  if (content.includes(oldBlock)) {
+    content = content.replace(oldBlock, newBlock);
+  } else if (!content.includes("Le produit porte le prix de référence")) {
+    throw new Error("[RuntimeLineItemEngine] bloc prix introuvable");
+  }
+
+  write(file, content);
+  console.log(`[WRITTEN] ${path.relative(root, file)}`);
+}
+
+function patchRuntimeInterventionTotalsService() {
+  const file = p(
+    "src",
+    "runtime",
+    "interventions",
+    "RuntimeInterventionTotalsService.ts"
+  );
+
+  backup(file, "q16c3a-ht-tva-ttc-totals");
+
+  const content = `import { RuntimeDataBinding } from "@/runtime/data-binding/RuntimeDataBinding";
 import { allERPModules } from "@/runtime/modules/definitions/coreModules";
 import type { ERPModule } from "@/runtime/modules/ERPModule";
 
@@ -259,3 +379,25 @@ export const RuntimeInterventionTotalsService = {
     return totals;
   },
 };
+`;
+
+  write(file, content);
+  console.log(`[WRITTEN] ${path.relative(root, file)}`);
+}
+
+function main() {
+  console.log("");
+  console.log("[PASS] 2N-Q16C3A - Secure line item snapshots and intervention totals");
+
+  patchRuntimeLineItemEngine();
+  patchRuntimeInterventionTotalsService();
+
+  console.log("");
+  console.log("[Q16C3A_DONE]");
+  console.log("");
+  console.log("Next:");
+  console.log("  pnpm build");
+  console.log("  tester ligne intervention -> produit -> quantite -> sauvegarde -> totaux intervention");
+}
+
+main();
