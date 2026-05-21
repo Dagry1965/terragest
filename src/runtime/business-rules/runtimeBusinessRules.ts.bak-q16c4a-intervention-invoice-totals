@@ -477,109 +477,6 @@ export const runtimeBusinessRules:
         return;
       }
 
-      const interventionsModule =
-        coreERPModules.find(
-          module =>
-            module.metadata.key ===
-              "interventionsauto"
-        );
-
-      const interventionId =
-        String(
-          payload.id ??
-          payload._id ??
-          ""
-        );
-
-      const persistedIntervention =
-        interventionsModule && interventionId
-          ? await RuntimeDataBinding.detail(
-              interventionsModule,
-              interventionId
-            )
-          : null;
-
-      const intervention = {
-        ...(persistedIntervention ?? {}),
-        ...payload,
-      };
-
-      const existingFactures =
-        await RuntimeDataBinding.list(
-          facturesModule
-        );
-
-      const alreadyCreated =
-        existingFactures.some(
-          facture =>
-            String(facture.interventionId ?? "") ===
-              interventionId &&
-            String(facture.statutFacture ?? "") !==
-              "annulee"
-        );
-
-      if (alreadyCreated) {
-        return;
-      }
-
-      const asNumber =
-        (value: unknown): number => {
-          if (
-            typeof value === "number" &&
-            Number.isFinite(value)
-          ) {
-            return value;
-          }
-
-          if (typeof value === "string") {
-            const parsed =
-              Number(
-                value
-                  .replace(",", ".")
-                  .trim()
-              );
-
-            return Number.isFinite(parsed)
-              ? parsed
-              : 0;
-          }
-
-          return 0;
-        };
-
-      const roundMoney =
-        (value: number): number =>
-          Math.round(value * 100) / 100;
-
-      const montantHT =
-        roundMoney(
-          asNumber(intervention.montantHT) ||
-          asNumber(intervention.coutTotal)
-        );
-
-      const montantTVA =
-        roundMoney(
-          asNumber(intervention.montantTVA)
-        );
-
-      const tauxTVA =
-        montantHT > 0 && montantTVA > 0
-          ? roundMoney((montantTVA / montantHT) * 100)
-          : 18;
-
-      const montantTTC =
-        roundMoney(
-          asNumber(intervention.montantTTC) ||
-          (
-            montantHT +
-            (
-              montantTVA > 0
-                ? montantTVA
-                : montantHT * tauxTVA / 100
-            )
-          )
-        );
-
       await RuntimeDataBinding
         .create(
 
@@ -595,29 +492,20 @@ export const runtimeBusinessRules:
                 .toISOString()
                 .split("T")[0],
 
-            statutFacture:
-              "emise",
-
             clientId:
-              intervention.clientId,
+              payload.clientId,
 
             vehiculeId:
-              intervention.vehiculeId,
+              payload.vehiculeId,
 
-            interventionId,
+            interventionId:
+              payload.id,
 
-            montantHT,
+            montantHT:
+              payload.coutTotal ?? 0,
 
             tva:
-              tauxTVA,
-
-            montantTTC,
-
-            montantPaye:
-              0,
-
-            resteAPayer:
-              montantTTC,
+              18,
 
             statutPaiement:
               "en_attente"
