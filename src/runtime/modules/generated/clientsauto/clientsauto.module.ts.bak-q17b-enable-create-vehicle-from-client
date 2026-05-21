@@ -239,7 +239,7 @@ export const clientsautoModule: ERPModule = {
         moduleKey: "vehicules",
         foreignKey: "clientId",
         title: "Véhicules du client",
-        createLabel: "Ajouter un véhicule à ce client",
+        createLabel: "Ajouter un véhicule",
         displayIn: [
           "detail",
           "edit",
@@ -247,7 +247,7 @@ export const clientsautoModule: ERPModule = {
         position: "after",
         lazy: true,
         mode: "readonly",
-        allowCreate: true,
+        allowCreate: false,
         badgeLabel: "véhicules liés",
         description: "Source de vérité : le champ Client dans chaque fiche véhicule. Cette section affiche les véhicules liés sans modifier la relation.",
         openLabel: "Ouvrir véhicule",
