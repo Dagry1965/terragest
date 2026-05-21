@@ -12,19 +12,10 @@ type RelationOption = {
   record?: Record<string, unknown>;
 };
 
-interface ERPFormRelationChangeContext {
-  field: ERPModuleField;
-  selectedOption?: RelationOption;
-}
-
 interface ERPFormFieldProps {
   field: ERPModuleField;
   value?: unknown;
-  onChange?: (
-    key: string,
-    value: unknown,
-    context?: ERPFormRelationChangeContext
-  ) => void;
+  onChange?: (key: string, value: unknown) => void;
   error?: string;
   lockedFields?: string[];
   readOnlyFields?: string[];
@@ -589,24 +580,7 @@ export function ERPFormField({
             name={field.key}
             required={field.required}
             value={currentValue}
-            onChange={(event) => {
-              const nextValue =
-                event.target.value;
-
-              const selectedRelationOption =
-                relationOptions.find((option) =>
-                  String(option.id) === String(nextValue)
-                );
-
-              onChange?.(
-                field.key,
-                nextValue,
-                {
-                  field,
-                  selectedOption: selectedRelationOption,
-                }
-              );
-            }}
+            onChange={(event) => onChange?.(field.key, event.target.value)}
             className={className}
           >
             <option value="">

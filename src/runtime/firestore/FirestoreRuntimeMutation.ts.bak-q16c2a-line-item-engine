@@ -24,14 +24,6 @@ import {
   RuntimeContextEnforcer,
 } from "@/runtime/context";
 
-import {
-  RuntimeLineItemEngine,
-} from "@/runtime/line-items";
-
-import {
-  produitsautoModule,
-} from "@/runtime/modules/generated/produitsauto/produitsauto.module";
-
 function sanitizeFirestoreData(
   data: Record<string, unknown>
 ): Record<string, unknown> {
@@ -128,43 +120,6 @@ function applyComputedFields(
 }
 
 
-async function applyRuntimeLineItemSnapshots(
-  module: ERPModule,
-  data: Record<string, unknown>
-): Promise<Record<string, unknown>> {
-  if (module.metadata.key !== "lignesinterventionauto") {
-    return data;
-  }
-
-  const produitId =
-    String(data.produitId ?? "").trim();
-
-  if (!produitId) {
-    return RuntimeLineItemEngine.enrichLineItem(data);
-  }
-
-  try {
-    const product =
-      await FirestoreRuntimeRepository.findById(
-        produitsautoModule,
-        produitId
-      );
-
-    return RuntimeLineItemEngine.enrichLineItem(
-      data,
-      product
-    );
-  } catch (error) {
-    console.error(
-      "[RUNTIME_LINE_ITEM_PRODUCT_SNAPSHOT_ERROR]",
-      error
-    );
-
-    return RuntimeLineItemEngine.enrichLineItem(data);
-  }
-}
-
-
 async function processRuntimePostMutationSideEffects(
   module: ERPModule,
   record: Record<string, unknown>
@@ -244,16 +199,10 @@ export class FirestoreRuntimeMutation {
         data
       );
 
-    const lineItemData =
-      await applyRuntimeLineItemSnapshots(
-        module,
-        isolatedData
-      );
-
     const computedData =
       applyComputedFields(
         module,
-        lineItemData
+        isolatedData
       );
 
     const guardedData =
@@ -324,16 +273,10 @@ const isolatedData =
         data
       );
 
-    const lineItemData =
-      await applyRuntimeLineItemSnapshots(
-        module,
-        isolatedData
-      );
-
     const computedData =
       applyComputedFields(
         module,
-        lineItemData
+        isolatedData
       );
 
     const guardedData =

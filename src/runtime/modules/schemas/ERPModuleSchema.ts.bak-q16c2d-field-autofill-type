@@ -1,8 +1,3 @@
-export interface RuntimeRelationAutoFillConfig {
-  map?: Record<string, string | string[]>;
-  recalculate?: boolean;
-}
-
 export interface ERPModuleFieldOption {
   label: string;
   value: string;
@@ -69,7 +64,6 @@ export interface ERPModuleFieldVisibility {
 }
 
 export interface ERPModuleField {
-  autoFill?: RuntimeRelationAutoFillConfig;
   key: string;
   label: string;
   type: ERPModuleFieldType | string;
