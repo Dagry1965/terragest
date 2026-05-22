@@ -385,7 +385,7 @@ function buildShareText(
     "Merci pour votre confiance. " + buildAmarkhysContactLabel(),
   ]
     .filter(Boolean)
-    .join("\n");
+    .join("\\n");
 }
 
 async function createInvoicePdf(
