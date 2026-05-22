@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 
 import {
@@ -18,8 +17,6 @@ import {
 interface InvoicePaymentsHistoryProps {
   factureId: string;
   montantTTC?: number;
-  clientId?: string;
-  vehiculeId?: string;
 }
 
 type Encaissement = {
@@ -86,73 +83,6 @@ function sortPaymentsByBusinessDate(
       ? comparison
       : -comparison;
   });
-}
-
-function buildInvoiceReturnTo(
-  factureId: string
-): string {
-  return "/facturesauto/" + encodeURIComponent(factureId) + "/edit";
-}
-
-function buildCreatePaymentHref({
-  factureId,
-  clientId,
-  vehiculeId,
-}: {
-  factureId: string;
-  clientId?: string;
-  vehiculeId?: string;
-}): string {
-  const params = new URLSearchParams();
-
-  params.set("factureId", factureId);
-
-  if (clientId) {
-    params.set("clientId", clientId);
-  }
-
-  if (vehiculeId) {
-    params.set("vehiculeId", vehiculeId);
-  }
-
-  params.set("parentModuleKey", "facturesauto");
-  params.set("parentRecordId", factureId);
-  params.set("parentForeignKey", "factureId");
-  params.set("returnTo", buildInvoiceReturnTo(factureId));
-  params.set("returnLabel", "Retour facture");
-  params.set(
-    "lockFields",
-    ["factureId", "clientId", "vehiculeId"]
-      .filter((field) =>
-        field === "factureId" ||
-        (field === "clientId" && clientId) ||
-        (field === "vehiculeId" && vehiculeId)
-      )
-      .join(",")
-  );
-
-  return "/encaissementsauto/nouveau?" + params.toString();
-}
-
-function buildEditPaymentHref(
-  paymentId: string | undefined,
-  factureId: string
-): string {
-  if (!paymentId) {
-    return "#";
-  }
-
-  const params = new URLSearchParams();
-
-  params.set("returnTo", buildInvoiceReturnTo(factureId));
-  params.set("returnLabel", "Retour facture");
-
-  return (
-    "/encaissementsauto/" +
-    encodeURIComponent(paymentId) +
-    "/edit?" +
-    params.toString()
-  );
 }
 
 function formatMode(
@@ -240,12 +170,6 @@ function MobilePaymentCard({
   item: Encaissement;
   factureId: string;
 }) {
-  const editHref =
-    buildEditPaymentHref(
-      item.id,
-      factureId
-    );
-
   return (
     <article className="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm">
       <div className="flex items-start justify-between gap-3">
@@ -291,14 +215,7 @@ function MobilePaymentCard({
         </div>
       </div>
 
-      <div className="mt-4 flex flex-col gap-3 border-t border-slate-100 pt-4">
-        <Link
-          href={editHref}
-          className="inline-flex items-center justify-center rounded-2xl bg-slate-950 px-4 py-3 text-sm font-black text-white transition hover:bg-slate-800"
-        >
-          Modifier ce paiement
-        </Link>
-
+      <div className="mt-4 border-t border-slate-100 pt-4">
         <PaymentReceiptActions
           payment={item as Record<string, unknown>}
           factureId={factureId}
@@ -311,8 +228,6 @@ function MobilePaymentCard({
 export function InvoicePaymentsHistory({
   factureId,
   montantTTC = 0,
-  clientId,
-  vehiculeId,
 }: InvoicePaymentsHistoryProps) {
   const [items, setItems] =
     useState<Encaissement[]>([]);
@@ -388,13 +303,6 @@ export function InvoicePaymentsHistory({
       0
     );
 
-  const createPaymentHref =
-    buildCreatePaymentHref({
-      factureId,
-      clientId,
-      vehiculeId,
-    });
-
   return (
     <section className="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm md:p-6">
       <div className="mb-5 flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
@@ -413,13 +321,6 @@ export function InvoicePaymentsHistory({
         </div>
 
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
-          <Link
-            href={createPaymentHref}
-            className="inline-flex items-center justify-center rounded-2xl bg-[#009B7D] px-5 py-3 text-sm font-black text-white shadow-[0_10px_22px_rgba(0,155,125,0.24)] transition hover:-translate-y-0.5 hover:bg-[#007F6D]"
-          >
-            Ajouter un paiement
-          </Link>
-
           <label className="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-xs font-black text-slate-600">
             Trier les paiements
             <select
@@ -515,14 +416,7 @@ export function InvoicePaymentsHistory({
                       <PaymentStatusBadge statut={item.statut} />
                     </div>
 
-                    <div className="flex flex-col gap-2">
-                      <Link
-                        href={buildEditPaymentHref(item.id, factureId)}
-                        className="inline-flex items-center justify-center rounded-xl bg-slate-950 px-3 py-2 text-xs font-black text-white transition hover:bg-slate-800"
-                      >
-                        Modifier
-                      </Link>
-
+                    <div>
                       <PaymentReceiptActions
                         payment={item as Record<string, unknown>}
                         factureId={factureId}
