@@ -134,8 +134,6 @@ export interface ERPCompositionChild {
   key: string;
   moduleKey: string;
   foreignKey: string;
-  prefillFromParent?: Record<string, string>;
-  lockFields?: string[];
   title: string;
   createLabel?: string;
   displayIn?: ERPCompositionRenderMode[];

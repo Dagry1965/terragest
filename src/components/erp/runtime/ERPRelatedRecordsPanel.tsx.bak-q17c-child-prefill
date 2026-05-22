@@ -215,25 +215,8 @@ function getChildRecordLabel(
   return label || "Enregistrement lié";
 }
 
-function getParentValueForPrefill(
-  parentRecord: Record<string, unknown>,
-  parentRecordId: string,
-  sourceField: string
-): unknown {
-  if (
-    sourceField === "id" ||
-    sourceField === "_id" ||
-    sourceField === "$id"
-  ) {
-    return parentRecordId;
-  }
-
-  return parentRecord[sourceField];
-}
-
 function buildCreateHref(
   child: ERPCompositionChild,
-  parentRecord: Record<string, unknown>,
   parentRecordId: string,
   parentModuleKey: string,
   mode: "detail" | "edit"
@@ -241,31 +224,6 @@ function buildCreateHref(
   const params = new URLSearchParams();
 
   params.set(child.foreignKey, parentRecordId);
-
-  const prefillFromParent =
-    child.prefillFromParent ?? {};
-
-  Object.entries(prefillFromParent).forEach(
-    ([targetField, sourceField]) => {
-      const value =
-        getParentValueForPrefill(
-          parentRecord,
-          parentRecordId,
-          sourceField
-        );
-
-      if (
-        value !== undefined &&
-        value !== null &&
-        String(value).trim() !== ""
-      ) {
-        params.set(
-          targetField,
-          String(value)
-        );
-      }
-    }
-  );
 
   // Q15E_PARENT_CHILD_CONTEXT
   // Transport générique du contexte parent vers la création enfant.
@@ -280,15 +238,7 @@ function buildCreateHref(
       (mode === "edit" ? "/edit" : "")
   );
 
-  const lockFields =
-    child.lockFields?.length
-      ? child.lockFields
-      : [child.foreignKey];
-
-  params.set(
-    "lockFields",
-    Array.from(new Set(lockFields)).join(",")
-  );
+  params.set("lockFields", child.foreignKey);
 
   return "/" + child.moduleKey + "/nouveau?" + params.toString();
 }
@@ -404,7 +354,6 @@ export function ERPRelatedRecordsPanel({
     () =>
       buildCreateHref(
         child,
-        parentRecord,
         parentRecordId,
         parentModuleKey,
         mode

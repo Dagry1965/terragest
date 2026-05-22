@@ -359,56 +359,11 @@ export const vehiculesModule: ERPModule = {
 
     children: [
       {
-        key: "rendezvous",
-        moduleKey: "rendezvous",
-        foreignKey: "vehiculeId",
-        title: "Rendez-vous du véhicule",
-        createLabel: "Ajouter un rendez-vous pour ce véhicule",
-        displayIn: [
-          "detail",
-          "edit",
-        ],
-        position: "after",
-        lazy: true,
-        mode: "readonly",
-        allowCreate: true,
-        badgeLabel: "rendez-vous liés",
-        description: "Crée un rendez-vous dans le contexte du véhicule avec client et véhicule préremplis.",
-        openLabel: "Ouvrir rendez-vous",
-        prefillFromParent: {
-          vehiculeId: "id",
-          clientId: "clientId",
-        },
-        lockFields: [
-          "clientId",
-          "vehiculeId",
-        ],
-        labelFields: [
-          "dateRendezVous",
-          "heureRendezVous",
-          "typeService",
-          "statut",
-        ],
-        subtitleFields: [
-          "motif",
-          "statut",
-        ],
-      },
-      {
         key: "interventions",
         moduleKey: "interventionsauto",
         foreignKey: "vehiculeId",
         title: "Interventions du véhicule",
-        createLabel: "Ajouter une intervention pour ce véhicule",
-        allowCreate: true,
-        prefillFromParent: {
-          vehiculeId: "id",
-          clientId: "clientId",
-        },
-        lockFields: [
-          "clientId",
-          "vehiculeId",
-        ],
+        createLabel: "Ajouter une intervention",
         displayIn: [
           "detail",
           "edit",
