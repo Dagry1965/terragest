@@ -39,10 +39,24 @@ export class FirestoreRuntimeQuery {
       return null;
     }
 
-    RuntimeContextEnforcer.assertRecordInContext(
-      module,
-      record
-    );
+    if (
+      !RuntimeContextEnforcer.isRecordInContext(
+        module,
+        record
+      )
+    ) {
+      console.warn(
+        "[RUNTIME_CONTEXT_DETAIL_DENIED]",
+        {
+          moduleKey:
+            module.metadata?.key,
+          recordId:
+            id,
+        }
+      );
+
+      return null;
+    }
 
     return record;
   }

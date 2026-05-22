@@ -191,6 +191,9 @@ export class RuntimeContextEnforcer {
     record: RuntimeRecord,
     options?: RuntimeContextOptions
   ): boolean {
+    const session =
+      ERPSessionContext.current();
+
     const context =
       RuntimeContextEnforcer.getCurrentContext(
         module,
@@ -209,22 +212,36 @@ export class RuntimeContextEnforcer {
     const recordModuleKey =
       valueOf(record, "moduleKey");
 
+    const role =
+      String(session.role ?? "").toLowerCase();
+
+    const isPrivileged =
+      role === "admin" ||
+      role === "super_admin" ||
+      role === "superadmin";
+
     if (
-      recordTenantId &&
+      isPrivileged
+    ) {
+      return true;
+    }
+
+    if (
+      !recordTenantId ||
       recordTenantId !== context.tenantId
     ) {
       return false;
     }
 
     if (
-      recordWorkspace &&
+      !recordWorkspace ||
       recordWorkspace !== context.workspace
     ) {
       return false;
     }
 
     if (
-      recordModuleKey &&
+      !recordModuleKey ||
       recordModuleKey !== moduleKey
     ) {
       return false;

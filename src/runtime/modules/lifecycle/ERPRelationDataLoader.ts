@@ -10,8 +10,6 @@ import { allERPModules } from "../definitions/coreModules";
 const relationCollectionAliases: Record<string, string[]> = {
   clientsauto: [
     "clientsauto",
-    "clients",
-    "utilisateurs",
   ],
   vehicules: [
     "vehicules",
