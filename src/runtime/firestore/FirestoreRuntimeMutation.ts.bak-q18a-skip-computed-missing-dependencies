@@ -114,15 +114,6 @@ function applyComputedFields(
       continue;
     }
 
-    if (
-      !canComputeRuntimeField(
-        field.computed.dependsOn,
-        nextData
-      )
-    ) {
-      continue;
-    }
-
     const computedValue =
       RuntimeComputedEngine.compute(
         field.computed.formula,
