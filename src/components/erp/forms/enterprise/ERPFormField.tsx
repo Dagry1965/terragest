@@ -5,6 +5,9 @@ import { useRouter } from "next/navigation";
 import type { ReactNode } from "react";
 import type { ERPModuleField } from "@/runtime/modules";
 import { ERPRelationDataLoader } from "@/runtime/modules/lifecycle/ERPRelationDataLoader";
+import {
+  useAuth,
+} from "@/providers/AuthProvider";
 
 type RelationOption = {
   id: string;
@@ -325,6 +328,11 @@ export function ERPFormField({
 }: ERPFormFieldProps) {
   const router = useRouter();
 
+  const {
+    loading: authLoading,
+    user: authUser,
+  } = useAuth();
+
   const [relationOptions, setRelationOptions] = useState<RelationOption[]>([]);
   const [relationSearch, setRelationSearch] = useState("");
   const [lockedRelationLabel, setLockedRelationLabel] = useState("");
@@ -374,13 +382,19 @@ export function ERPFormField({
     async function loadRelation() {
       if (field.type !== "relation") return;
 
+      if (authLoading) {
+        return;
+      }
+
       const targetModule =
         getRelationTargetModule(field);
 
       if (!targetModule) return;
 
       try {
-        const options = await ERPRelationDataLoader.load(targetModule);
+        const options =
+          await ERPRelationDataLoader.load(targetModule);
+
         setRelationOptions(options as RelationOption[]);
       } catch (error) {
         console.error("ERP RELATION LOAD ERROR", error);
@@ -389,7 +403,11 @@ export function ERPFormField({
     }
 
     loadRelation();
-  }, [field]);
+  }, [
+    field,
+    authLoading,
+    authUser?.uid,
+  ]);
 
   useEffect(() => {
     const filterConfig =
