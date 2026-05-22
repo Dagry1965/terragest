@@ -597,6 +597,7 @@ export function ERPFormField({
 
           <input
             type="text"
+            autoComplete="off"
             placeholder="Rechercher..."
             value={relationSearch}
             onChange={(event) => setRelationSearch(event.target.value)}
@@ -898,6 +899,7 @@ export function ERPFormField({
 
         <input
           name={field.key}
+          autoComplete="off"
           required={field.required}
           value={currentValue}
           disabled={isLocked}
