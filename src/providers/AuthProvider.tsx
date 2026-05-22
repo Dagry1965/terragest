@@ -1,100 +1,106 @@
 "use client";
 
 import {
-
   createContext,
-
   useContext,
-
   useEffect,
-
-  useState
-
+  useState,
 } from "react";
 
 import {
-
   onAuthStateChanged,
-
-  User
-
+  User,
 } from "firebase/auth";
 
 import {
-
-  auth
-
+  auth,
 } from "@/lib/firebase/config";
 
 import {
-
   ERPUserProfileService,
-
 } from "@/runtime/security/users/ERPUserProfileService";
 
 import {
-
   ERPSessionRuntime,
-
 } from "@/runtime/security/sessions/ERPSessionRuntime";
 
+import {
+  ERPSessionContext,
+} from "@/runtime/security/sessions/ERPSessionContext";
+
 interface AuthContextType {
-
   user: User | null;
-
   loading: boolean;
 }
 
 const AuthContext =
   createContext<AuthContextType>({
-
     user: null,
-
     loading: true,
   });
 
-export function AuthProvider({
-
-  children,
-
+function syncSecuritySessionContext({
+  userId,
+  displayName,
+  role,
+  tenant,
 }: {
-
-  children: React.ReactNode;
-
+  userId: string;
+  displayName: string;
+  role: string;
+  tenant: string;
 }) {
+  ERPSessionContext.set({
+    userId,
+    displayName,
+    role: role as any,
+    tenantId: tenant,
+  });
+}
 
+function syncGuestSessionContext() {
+  ERPSessionRuntime.setSession({
+    user: null,
+    role: "guest",
+    tenant: "default",
+    permissions: [],
+    workspaces: [],
+    modules: [],
+  });
+
+  syncSecuritySessionContext({
+    userId: "guest",
+    displayName: "Invité",
+    role: "guest",
+    tenant: "default",
+  });
+}
+
+export function AuthProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [
-
     user,
-
-    setUser
-
+    setUser,
   ] = useState<User | null>(
     null
   );
 
   const [
-
     loading,
-
-    setLoading
-
+    setLoading,
   ] = useState(true);
 
   useEffect(() => {
-
     const unsubscribe =
-
       onAuthStateChanged(
-
         auth,
-
         async (user) => {
-
           setUser(user);
 
           if (user) {
-
             console.log(
               "AUTH USER",
               user.uid,
@@ -102,7 +108,6 @@ export function AuthProvider({
             );
 
             const profile =
-
               await ERPUserProfileService.getProfile(
                 user.uid
               );
@@ -113,9 +118,7 @@ export function AuthProvider({
             );
 
             if (profile) {
-
               ERPSessionRuntime.setSession({
-
                 user: {
                   id: profile.id,
                   email: profile.email,
@@ -143,80 +146,74 @@ export function AuthProvider({
                   profile.modules,
               });
 
-            } else {
+              syncSecuritySessionContext({
+                userId:
+                  profile.id,
 
-              // TEMP ADMIN FALLBACK
+                displayName:
+                  profile.displayName ??
+                  profile.email,
 
-              if (
-                user.email ===
-                "admin@terragest.com"
-              ) {
+                role:
+                  profile.role,
 
-                ERPSessionRuntime.setSession({
+                tenant:
+                  profile.tenant,
+              });
 
-                  user: {
-                    id: user.uid,
-                    email:
-                      user.email ?? "",
-                    displayName:
-                      "Admin",
+            } else if (
+              user.email ===
+              "admin@terragest.com"
+            ) {
+              ERPSessionRuntime.setSession({
+                user: {
+                  id: user.uid,
+                  email:
+                    user.email ?? "",
+                  displayName:
+                    "Admin",
+                },
+
+                role: "admin",
+
+                tenant:
+                  "ORG_ABC_001",
+
+                permissions: [
+                  {
+                    key: "*",
                   },
+                ],
 
-                  role: "admin",
+                workspaces: ["*"],
 
-                  tenant:
-                    "ORG_ABC_001",
+                modules: ["*"],
+              });
 
-                  permissions: [
-                    {
-                      key: "*",
-                    },
-                  ],
+              syncSecuritySessionContext({
+                userId:
+                  user.uid,
 
-                  workspaces: ["*"],
+                displayName:
+                  "Admin",
 
-                  modules: ["*"],
-                });
+                role:
+                  "admin",
 
-                console.log(
-                  "ADMIN FALLBACK SESSION ENABLED"
-                );
+                tenant:
+                  "ORG_ABC_001",
+              });
 
-              } else {
+              console.log(
+                "ADMIN FALLBACK SESSION ENABLED"
+              );
 
-                ERPSessionRuntime.setSession({
-
-                  user: null,
-
-                  role: "guest",
-
-                  tenant: "default",
-
-                  permissions: [],
-
-                  workspaces: [],
-
-                  modules: [],
-                });
-              }
+            } else {
+              syncGuestSessionContext();
             }
 
           } else {
-
-            ERPSessionRuntime.setSession({
-
-              user: null,
-
-              role: "guest",
-
-              tenant: "default",
-
-              permissions: [],
-
-              workspaces: [],
-
-              modules: [],
-            });
+            syncGuestSessionContext();
           }
 
           setLoading(false);
@@ -229,26 +226,18 @@ export function AuthProvider({
   }, []);
 
   return (
-
     <AuthContext.Provider
-
       value={{
-
         user,
-
         loading,
       }}
-
     >
-
       {children}
-
     </AuthContext.Provider>
   );
 }
 
 export function useAuth() {
-
   return useContext(
     AuthContext
   );
