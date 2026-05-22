@@ -54,15 +54,15 @@ export default function LoginPage() {
         "token=authenticated; path=/; max-age=86400; SameSite=Lax";
 
      router.push(
-  "/workspaces/general"
-);
+        "/dashboard/amarkhys"
+      );
 
     } catch (err: any) {
 
       console.error(err);
 
       setError(
-        "Email ou mot de passe invalide."
+        "Email ou mot de passe invalide. Vérifiez les identifiants du compte démo AMARKHYS."
       );
 
     } finally {
@@ -101,7 +101,7 @@ export default function LoginPage() {
             mb-6
           "
         >
-          Connexion ERP
+          Connexion AMARKHYS Garage
         </h1>
 
         <div
@@ -116,7 +116,7 @@ export default function LoginPage() {
 
             type="email"
 
-            placeholder="Email"
+            placeholder="Email professionnel"
 
             value={email}
 

@@ -57,7 +57,7 @@ export function middleware(
     return NextResponse.redirect(
 
       new URL(
-        "/workspaces/general",
+        "/dashboard/amarkhys",
         request.url
       )
     );
