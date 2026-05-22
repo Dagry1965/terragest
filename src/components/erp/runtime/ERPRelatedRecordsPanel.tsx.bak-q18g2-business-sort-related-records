@@ -43,68 +43,8 @@ function getAmount(record: Record<string, unknown>, field?: string): number {
   return Number.isFinite(value) ? value : 0;
 }
 
-function getBusinessSortCandidates(
-  record: Record<string, unknown>,
-  childModuleKey?: string
-): unknown[] {
-  if (childModuleKey === "encaissementsauto") {
-    return [
-      record.datePaiement,
-      record.createdAt,
-      record.id,
-      record._id,
-    ];
-  }
-
-  if (
-    childModuleKey === "echeancespaiementauto" ||
-    childModuleKey === "echeancesauto"
-  ) {
-    return [
-      record.dateEcheance,
-      record.datePrevue,
-      record.datePaiement,
-      record.createdAt,
-      record.id,
-      record._id,
-    ];
-  }
-
-  if (childModuleKey === "rendezvous") {
-    return [
-      [
-        record.dateRendezVous,
-        record.heureRendezVous,
-      ]
-        .filter(Boolean)
-        .join(" "),
-      record.startAt,
-      record.createdAt,
-      record.id,
-      record._id,
-    ];
-  }
-
-  if (childModuleKey === "interventionsauto") {
-    return [
-      record.dateIntervention,
-      record.createdAt,
-      record.id,
-      record._id,
-    ];
-  }
-
-  if (childModuleKey === "lignesinterventionauto") {
-    return [
-      record.ordreLigne,
-      record.createdAt,
-      record.createdOn,
-      record.id,
-      record._id,
-    ];
-  }
-
-  return [
+function getRecordSortValue(record: Record<string, unknown>): string {
+  const candidates = [
     record.createdAt,
     record.createdOn,
     record.dateCreation,
@@ -117,17 +57,9 @@ function getBusinessSortCandidates(
     record.id,
     record._id,
   ];
-}
 
-function getRecordSortValue(
-  record: Record<string, unknown>,
-  childModuleKey?: string
-): string {
   const value =
-    getBusinessSortCandidates(
-      record,
-      childModuleKey
-    ).find(
+    candidates.find(
       (candidate) =>
         candidate !== undefined &&
         candidate !== null &&
@@ -139,18 +71,12 @@ function getRecordSortValue(
 
 function sortRelatedRecords(
   records: Record<string, unknown>[],
-  direction: RelatedRecordsSortDirection,
-  childModuleKey?: string
+  direction: RelatedRecordsSortDirection
 ): Record<string, unknown>[] {
   return [...records].sort((left, right) => {
     const comparison =
-      getRecordSortValue(left, childModuleKey).localeCompare(
-        getRecordSortValue(right, childModuleKey),
-        "fr",
-        {
-          numeric: true,
-          sensitivity: "base",
-        }
+      getRecordSortValue(left).localeCompare(
+        getRecordSortValue(right)
       );
 
     return direction === "asc"
@@ -585,13 +511,8 @@ export function ERPRelatedRecordsPanel({
   }, [parentRecordId, childModule, child]);
 
   const sortedRecords = useMemo(
-    () =>
-      sortRelatedRecords(
-        records,
-        sortDirection,
-        child.moduleKey
-      ),
-    [records, sortDirection, child.moduleKey]
+    () => sortRelatedRecords(records, sortDirection),
+    [records, sortDirection]
   );
 
   const total = records.reduce(
