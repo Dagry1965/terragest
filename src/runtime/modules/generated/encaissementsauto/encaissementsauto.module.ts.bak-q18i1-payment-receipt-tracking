@@ -116,56 +116,6 @@ export const encaissementsautoModule: ERPModule = {
         grid: { cols: 6 },
       },
       {
-        key: "numeroRecu",
-        label: "Numéro reçu",
-        type: "text",
-        searchable: true,
-        grid: { cols: 6 },
-      },
-      {
-        key: "statutEnvoiRecu",
-        label: "Statut envoi reçu",
-        type: "select",
-        defaultValue: "non_envoye",
-        options: [
-          { label: "Non envoyé", value: "non_envoye" },
-          { label: "Envoyé", value: "envoye" },
-          { label: "Échec envoi", value: "echec" },
-        ],
-        grid: { cols: 6 },
-      },
-      {
-        key: "dernierEnvoiRecuAt",
-        label: "Dernier envoi reçu",
-        type: "datetime",
-        grid: { cols: 6 },
-      },
-      {
-        key: "canalDernierEnvoiRecu",
-        label: "Canal dernier envoi reçu",
-        type: "select",
-        options: [
-          { label: "WhatsApp", value: "whatsapp" },
-          { label: "SMS", value: "sms" },
-          { label: "Email", value: "email" },
-          { label: "Manuel", value: "manuel" },
-        ],
-        grid: { cols: 6 },
-      },
-      {
-        key: "destinataireDernierEnvoiRecu",
-        label: "Destinataire dernier envoi reçu",
-        type: "text",
-        grid: { cols: 6 },
-      },
-      {
-        key: "nombreEnvoisRecu",
-        label: "Nombre d'envois reçu",
-        type: "number",
-        defaultValue: 0,
-        grid: { cols: 6 },
-      },
-      {
         key: "notes",
         label: "Notes",
         type: "textarea",
@@ -223,32 +173,6 @@ export const encaissementsautoModule: ERPModule = {
         ],
       },
       {
-        key: "recu",
-        label: "Reçu",
-        fields: [
-          "numeroRecu",
-          "statutEnvoiRecu",
-          "dernierEnvoiRecuAt",
-          "canalDernierEnvoiRecu",
-          "destinataireDernierEnvoiRecu",
-          "nombreEnvoisRecu",
-        ],
-        sections: [
-          {
-            key: "suivi-recu",
-            title: "Suivi d'envoi du reçu",
-            fields: [
-              "numeroRecu",
-              "statutEnvoiRecu",
-              "dernierEnvoiRecuAt",
-              "canalDernierEnvoiRecu",
-              "destinataireDernierEnvoiRecu",
-              "nombreEnvoisRecu",
-            ],
-          },
-        ],
-      },
-      {
         key: "notes",
         label: "Notes",
         fields: [
@@ -264,17 +188,6 @@ export const encaissementsautoModule: ERPModule = {
           },
         ],
       },
-    ],
-  },
-
-  composition: {
-    readOnlyFields: [
-      "numeroRecu",
-      "statutEnvoiRecu",
-      "dernierEnvoiRecuAt",
-      "canalDernierEnvoiRecu",
-      "destinataireDernierEnvoiRecu",
-      "nombreEnvoisRecu",
     ],
   },
 
