@@ -112,7 +112,26 @@ function getSidebarNavigation(
   pathname: string
 ): SidebarWorkspace[] {
   if (isAmarkhysPath(pathname)) {
-    return [amarkhysWorkspace];
+    if (
+      !ERPSessionRuntime.canAccessWorkspace(
+        "amarkhys"
+      )
+    ) {
+      return [];
+    }
+
+    return [
+      {
+        ...amarkhysWorkspace,
+        modules:
+          amarkhysWorkspace.modules.filter(
+            (module) =>
+              ERPSessionRuntime.canAccessModule(
+                module.key
+              )
+          ),
+      },
+    ];
   }
 
   return getERPWorkspacesNavigation();
