@@ -108,7 +108,7 @@ export const facturesautoModule: ERPModule = {
       },
       {
         key: "tva",
-        label: "Taux TVA (%)",
+        label: "TVA",
         type: "number",
         defaultValue: 18,
         grid: { cols: 4 },
@@ -320,26 +320,6 @@ export const facturesautoModule: ERPModule = {
           },
         ],
       },
-    ],
-  },
-
-  composition: {
-    lockedFields: [
-      "numeroFacture",
-      "clientId",
-      "vehiculeId",
-      "interventionId",
-    ],
-
-    readOnlyFields: [
-      "statutPaiement",
-      "montantTTC",
-      "montantPaye",
-      "resteAPayer",
-      "dernierEnvoiFactureAt",
-      "canalDernierEnvoiFacture",
-      "destinataireDernierEnvoiFacture",
-      "nombreEnvoisFacture",
     ],
   },
 
