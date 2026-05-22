@@ -798,13 +798,6 @@ RuntimeMetrics.increment(
               "encaissementsauto"
         );
 
-      const interventionsModule =
-        coreERPModules.find(
-          module =>
-            module.metadata.key ===
-              "interventionsauto"
-        );
-
       if (
         !facturesModule ||
         !encaissementsModule
@@ -821,106 +814,6 @@ RuntimeMetrics.increment(
       if (!facture) {
         return;
       }
-
-      const asRuntimeNumber =
-        (value: unknown): number => {
-          if (
-            typeof value === "number" &&
-            Number.isFinite(value)
-          ) {
-            return value;
-          }
-
-          if (typeof value === "string") {
-            const parsed =
-              Number(
-                value
-                  .replace(",", ".")
-                  .trim()
-              );
-
-            return Number.isFinite(parsed)
-              ? parsed
-              : 0;
-          }
-
-          return 0;
-        };
-
-      const roundMoney =
-        (value: number): number =>
-          Math.round(value * 100) / 100;
-
-      const linkedIntervention =
-        interventionsModule &&
-        facture.interventionId
-          ? await RuntimeDataBinding.detail(
-              interventionsModule,
-              String(facture.interventionId)
-            )
-          : null;
-
-      const invoiceMontantHT =
-        asRuntimeNumber(facture.montantHT);
-
-      const invoiceMontantTVA =
-        asRuntimeNumber(facture.montantTVA);
-
-      const invoiceMontantTTC =
-        asRuntimeNumber(
-          facture.montantTTC ??
-          facture.totalTTC ??
-          facture.montantTotal ??
-          facture.total
-        );
-
-      const interventionMontantHT =
-        asRuntimeNumber(
-          linkedIntervention?.montantHT ??
-          linkedIntervention?.coutTotal
-        );
-
-      const interventionMontantTVA =
-        asRuntimeNumber(
-          linkedIntervention?.montantTVA
-        );
-
-      const interventionMontantTTC =
-        asRuntimeNumber(
-          linkedIntervention?.montantTTC
-        );
-
-      const repairedMontantHT =
-        roundMoney(
-          invoiceMontantHT > 0
-            ? invoiceMontantHT
-            : interventionMontantHT
-        );
-
-      const repairedMontantTVA =
-        roundMoney(
-          invoiceMontantTVA > 0
-            ? invoiceMontantTVA
-            : interventionMontantTVA
-        );
-
-      const repairedMontantTTC =
-        roundMoney(
-          invoiceMontantTTC > 0
-            ? invoiceMontantTTC
-            : interventionMontantTTC > 0
-              ? interventionMontantTTC
-              : repairedMontantHT + repairedMontantTVA
-        );
-
-      const repairedTVARate =
-        repairedMontantHT > 0 && repairedMontantTVA > 0
-          ? roundMoney(
-              repairedMontantTVA /
-              repairedMontantHT *
-              100
-            )
-          : asRuntimeNumber(facture.tva) || 18;
 
       const encaissements =
         await RuntimeDataBinding.list(
@@ -947,7 +840,13 @@ RuntimeMetrics.increment(
         );
 
       const montantTTC =
-        repairedMontantTTC;
+        Number(
+          facture.montantTTC ??
+          facture.totalTTC ??
+          facture.montantTotal ??
+          facture.total ??
+          0
+        );
 
       const resteAPayer =
         Math.max(
@@ -966,18 +865,6 @@ RuntimeMetrics.increment(
         facturesModule,
         String(payload.factureId),
         {
-          montantHT:
-            repairedMontantHT,
-
-          montantTVA:
-            repairedMontantTVA,
-
-          tva:
-            repairedTVARate,
-
-          montantTTC:
-            repairedMontantTTC,
-
           montantPaye,
           resteAPayer,
           statutPaiement,
@@ -1043,13 +930,6 @@ RuntimeMetrics.increment(
               "encaissementsauto"
         );
 
-      const interventionsModule =
-        coreERPModules.find(
-          module =>
-            module.metadata.key ===
-              "interventionsauto"
-        );
-
       if (
         !facturesModule ||
         !encaissementsModule
@@ -1066,106 +946,6 @@ RuntimeMetrics.increment(
       if (!facture) {
         return;
       }
-
-      const asRuntimeNumber =
-        (value: unknown): number => {
-          if (
-            typeof value === "number" &&
-            Number.isFinite(value)
-          ) {
-            return value;
-          }
-
-          if (typeof value === "string") {
-            const parsed =
-              Number(
-                value
-                  .replace(",", ".")
-                  .trim()
-              );
-
-            return Number.isFinite(parsed)
-              ? parsed
-              : 0;
-          }
-
-          return 0;
-        };
-
-      const roundMoney =
-        (value: number): number =>
-          Math.round(value * 100) / 100;
-
-      const linkedIntervention =
-        interventionsModule &&
-        facture.interventionId
-          ? await RuntimeDataBinding.detail(
-              interventionsModule,
-              String(facture.interventionId)
-            )
-          : null;
-
-      const invoiceMontantHT =
-        asRuntimeNumber(facture.montantHT);
-
-      const invoiceMontantTVA =
-        asRuntimeNumber(facture.montantTVA);
-
-      const invoiceMontantTTC =
-        asRuntimeNumber(
-          facture.montantTTC ??
-          facture.totalTTC ??
-          facture.montantTotal ??
-          facture.total
-        );
-
-      const interventionMontantHT =
-        asRuntimeNumber(
-          linkedIntervention?.montantHT ??
-          linkedIntervention?.coutTotal
-        );
-
-      const interventionMontantTVA =
-        asRuntimeNumber(
-          linkedIntervention?.montantTVA
-        );
-
-      const interventionMontantTTC =
-        asRuntimeNumber(
-          linkedIntervention?.montantTTC
-        );
-
-      const repairedMontantHT =
-        roundMoney(
-          invoiceMontantHT > 0
-            ? invoiceMontantHT
-            : interventionMontantHT
-        );
-
-      const repairedMontantTVA =
-        roundMoney(
-          invoiceMontantTVA > 0
-            ? invoiceMontantTVA
-            : interventionMontantTVA
-        );
-
-      const repairedMontantTTC =
-        roundMoney(
-          invoiceMontantTTC > 0
-            ? invoiceMontantTTC
-            : interventionMontantTTC > 0
-              ? interventionMontantTTC
-              : repairedMontantHT + repairedMontantTVA
-        );
-
-      const repairedTVARate =
-        repairedMontantHT > 0 && repairedMontantTVA > 0
-          ? roundMoney(
-              repairedMontantTVA /
-              repairedMontantHT *
-              100
-            )
-          : asRuntimeNumber(facture.tva) || 18;
 
       const encaissements =
         await RuntimeDataBinding.list(
@@ -1192,7 +972,13 @@ RuntimeMetrics.increment(
         );
 
       const montantTTC =
-        repairedMontantTTC;
+        Number(
+          facture.montantTTC ??
+          facture.totalTTC ??
+          facture.montantTotal ??
+          facture.total ??
+          0
+        );
 
       const resteAPayer =
         Math.max(
@@ -1211,18 +997,6 @@ RuntimeMetrics.increment(
         facturesModule,
         String(payload.factureId),
         {
-          montantHT:
-            repairedMontantHT,
-
-          montantTVA:
-            repairedMontantTVA,
-
-          tva:
-            repairedTVARate,
-
-          montantTTC:
-            repairedMontantTTC,
-
           montantPaye,
           resteAPayer,
           statutPaiement,
