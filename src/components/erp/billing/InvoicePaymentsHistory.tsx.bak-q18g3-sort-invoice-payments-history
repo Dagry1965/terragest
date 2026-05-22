@@ -29,8 +29,6 @@ type Encaissement = {
   statut?: string;
 };
 
-type PaymentSortDirection = "asc" | "desc";
-
 function formatMoney(
   value: number
 ): string {
@@ -52,37 +50,6 @@ function formatDate(
   }
 
   return date.toLocaleDateString("fr-FR");
-}
-
-function getPaymentSortValue(
-  item: Encaissement
-): string {
-  return String(
-    item.datePaiement ??
-      item.id ??
-      ""
-  );
-}
-
-function sortPaymentsByBusinessDate(
-  items: Encaissement[],
-  direction: PaymentSortDirection
-): Encaissement[] {
-  return [...items].sort((left, right) => {
-    const comparison =
-      getPaymentSortValue(left).localeCompare(
-        getPaymentSortValue(right),
-        "fr",
-        {
-          numeric: true,
-          sensitivity: "base",
-        }
-      );
-
-    return direction === "asc"
-      ? comparison
-      : -comparison;
-  });
 }
 
 function formatMode(
@@ -235,9 +202,6 @@ export function InvoicePaymentsHistory({
   const [loading, setLoading] =
     useState(true);
 
-  const [sortDirection, setSortDirection] =
-    useState<PaymentSortDirection>("asc");
-
   useEffect(() => {
     let mounted = true;
 
@@ -273,16 +237,6 @@ export function InvoicePaymentsHistory({
       mounted = false;
     };
   }, [factureId]);
-
-  const sortedItems =
-    useMemo(
-      () =>
-        sortPaymentsByBusinessDate(
-          items,
-          sortDirection
-        ),
-      [items, sortDirection]
-    );
 
   const totalValide =
     useMemo(
@@ -320,24 +274,6 @@ export function InvoicePaymentsHistory({
           </p>
         </div>
 
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
-          <label className="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-xs font-black text-slate-600">
-            Trier les paiements
-            <select
-              value={sortDirection}
-              onChange={(event) =>
-                setSortDirection(
-                  event.target.value as PaymentSortDirection
-                )
-              }
-              className="mt-1 w-full bg-transparent text-sm font-black text-slate-950 outline-none"
-            >
-              <option value="asc">Ancien → récent</option>
-              <option value="desc">Récent → ancien</option>
-            </select>
-          </label>
-        </div>
-
         <div className="grid gap-3 sm:grid-cols-2">
           <div className="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3">
             <p className="text-xs font-bold uppercase text-emerald-700">
@@ -370,7 +306,7 @@ export function InvoicePaymentsHistory({
       ) : (
         <>
           <div className="grid gap-4 lg:hidden">
-            {sortedItems.map((item, index) => (
+            {items.map((item, index) => (
               <MobilePaymentCard
                 key={item.id ?? index}
                 item={item}
@@ -391,7 +327,7 @@ export function InvoicePaymentsHistory({
               </div>
 
               <div className="divide-y divide-slate-200">
-                {sortedItems.map((item, index) => (
+                {items.map((item, index) => (
                   <div
                     key={item.id ?? index}
                     className="grid grid-cols-[1fr_1fr_1fr_1.4fr_1fr_1.8fr] gap-4 px-4 py-4 text-sm text-slate-700"
