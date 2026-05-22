@@ -19,8 +19,6 @@ interface ERPRelatedRecordsPanelProps {
   mode: "detail" | "edit";
 }
 
-type RelatedRecordsSortDirection = "asc" | "desc";
-
 function getRecordId(record: Record<string, unknown>): string {
   return String(record.id ?? record._id ?? "");
 }
@@ -41,48 +39,6 @@ function getAmount(record: Record<string, unknown>, field?: string): number {
   const value = Number(record[field] ?? 0);
 
   return Number.isFinite(value) ? value : 0;
-}
-
-function getRecordSortValue(record: Record<string, unknown>): string {
-  const candidates = [
-    record.createdAt,
-    record.createdOn,
-    record.dateCreation,
-    record.datePaiement,
-    record.dateFacture,
-    record.dateIntervention,
-    record.dateRendezVous,
-    record.dateEcheance,
-    record.updatedAt,
-    record.id,
-    record._id,
-  ];
-
-  const value =
-    candidates.find(
-      (candidate) =>
-        candidate !== undefined &&
-        candidate !== null &&
-        String(candidate).trim() !== ""
-    ) ?? "";
-
-  return String(value);
-}
-
-function sortRelatedRecords(
-  records: Record<string, unknown>[],
-  direction: RelatedRecordsSortDirection
-): Record<string, unknown>[] {
-  return [...records].sort((left, right) => {
-    const comparison =
-      getRecordSortValue(left).localeCompare(
-        getRecordSortValue(right)
-      );
-
-    return direction === "asc"
-      ? comparison
-      : -comparison;
-  });
 }
 
 function getLabelFromFields(
@@ -435,8 +391,6 @@ export function ERPRelatedRecordsPanel({
     Record<string, Record<string, string>>
   >({});
   const [loading, setLoading] = useState(true);
-  const [sortDirection, setSortDirection] =
-    useState<RelatedRecordsSortDirection>("asc");
 
   const childModule = useMemo(
     () =>
@@ -510,11 +464,6 @@ export function ERPRelatedRecordsPanel({
     };
   }, [parentRecordId, childModule, child]);
 
-  const sortedRecords = useMemo(
-    () => sortRelatedRecords(records, sortDirection),
-    [records, sortDirection]
-  );
-
   const total = records.reduce(
     (sum, record) => sum + getAmount(record, child.totalField),
     0
@@ -552,32 +501,14 @@ export function ERPRelatedRecordsPanel({
           ) : null}
         </div>
 
-        <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-          <label className="flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-3 py-2 text-xs font-black text-slate-600">
-            Trier :
-            <select
-              value={sortDirection}
-              onChange={(event) =>
-                setSortDirection(
-                  event.target.value as RelatedRecordsSortDirection
-                )
-              }
-              className="bg-transparent text-xs font-black text-slate-900 outline-none"
-            >
-              <option value="asc">Ancien → récent</option>
-              <option value="desc">Récent → ancien</option>
-            </select>
-          </label>
-
-          {(child.allowCreate ?? child.mode !== "readonly") ? (
-            <Link
-              href={createHref}
-              className="inline-flex items-center justify-center rounded-2xl bg-[#009B7D] px-5 py-3 text-sm font-black text-white shadow-[0_10px_22px_rgba(0,155,125,0.24)] transition hover:-translate-y-0.5 hover:bg-[#007F6D] hover:shadow-[0_16px_30px_rgba(0,127,109,0.28)] active:translate-y-0"
-            >
-              {child.createLabel ?? "Ajouter"}
-            </Link>
-          ) : null}
-        </div>
+        {(child.allowCreate ?? child.mode !== "readonly") ? (
+        <Link
+          href={createHref}
+          className="inline-flex items-center justify-center rounded-2xl bg-[#009B7D] px-5 py-3 text-sm font-black text-white shadow-[0_10px_22px_rgba(0,155,125,0.24)] transition hover:-translate-y-0.5 hover:bg-[#007F6D] hover:shadow-[0_16px_30px_rgba(0,127,109,0.28)] active:translate-y-0"
+        >
+          {child.createLabel ?? "Ajouter"}
+        </Link>
+        ) : null}
       </div>
 
       <div className="space-y-3 bg-white p-4 sm:p-5">
@@ -587,7 +518,7 @@ export function ERPRelatedRecordsPanel({
           </div>
         ) : null}
 
-        {sortedRecords.map((record) => {
+        {records.map((record) => {
           const id = getRecordId(record);
           const configuredLabel = getConfiguredRecordLabel(record, child.labelFields);
             const label = configuredLabel || getChildRecordLabel(record, childModule);
