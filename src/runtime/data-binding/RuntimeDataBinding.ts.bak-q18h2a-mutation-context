@@ -7,10 +7,6 @@ import {
   FirestoreRuntimeMutation,
 } from "@/runtime/firestore";
 
-import type {
-  RuntimeMutationOptions,
-} from "@/runtime/firestore/FirestoreRuntimeMutation";
-
 export class RuntimeDataBinding {
   static async list(
     module: ERPModule
@@ -32,27 +28,23 @@ export class RuntimeDataBinding {
 
   static async create(
     module: ERPModule,
-    data: Record<string, unknown>,
-    options: RuntimeMutationOptions = {}
+    data: Record<string, unknown>
   ) {
     return FirestoreRuntimeMutation.create(
       module,
-      data,
-      options
+      data
     );
   }
 
   static async update(
     module: ERPModule,
     id: string,
-    data: Record<string, unknown>,
-    options: RuntimeMutationOptions = {}
+    data: Record<string, unknown>
   ) {
     return FirestoreRuntimeMutation.update(
       module,
       id,
-      data,
-      options
+      data
     );
   }
 

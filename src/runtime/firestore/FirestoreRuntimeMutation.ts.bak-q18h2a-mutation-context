@@ -242,16 +242,10 @@ async function processRuntimePostMutationSideEffects(
   }
 }
 
-export interface RuntimeMutationOptions {
-  systemMutation?: boolean;
-  mutationSource?: string;
-}
-
 export class FirestoreRuntimeMutation {
   static async create(
     module: ERPModule,
-    data: Record<string, unknown>,
-    options: RuntimeMutationOptions = {}
+    data: Record<string, unknown>
   ) {
     const isolatedData =
       enforceRuntimeWriteContext(
@@ -277,8 +271,6 @@ export class FirestoreRuntimeMutation {
         computedData,
         {
           operation: "create",
-          systemMutation: options.systemMutation,
-          mutationSource: options.mutationSource,
         }
       );
 
@@ -322,8 +314,7 @@ export class FirestoreRuntimeMutation {
   static async update(
     module: ERPModule,
     id: string,
-    data: Record<string, unknown>,
-    options: RuntimeMutationOptions = {}
+    data: Record<string, unknown>
   ) {
     // Q16B2_PREVIOUS_LINE_RECORD_BEFORE_UPDATE
     // Une update partielle peut ne pas contenir interventionId.
@@ -361,8 +352,6 @@ const isolatedData =
         {
           operation: "update",
           id,
-          systemMutation: options.systemMutation,
-          mutationSource: options.mutationSource,
         }
       );
 

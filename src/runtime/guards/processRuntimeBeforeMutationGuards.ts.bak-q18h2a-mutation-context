@@ -24,8 +24,6 @@ import {
 export interface RuntimeBeforeMutationGuardContext {
   operation: "create" | "update";
   id?: string;
-  systemMutation?: boolean;
-  mutationSource?: string;
 }
 
 function asString(value: unknown): string {

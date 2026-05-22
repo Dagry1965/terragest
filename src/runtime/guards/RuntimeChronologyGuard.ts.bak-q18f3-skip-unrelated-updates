@@ -53,30 +53,6 @@ function compareDateOnly(
   return leftDate.localeCompare(rightDate);
 }
 
-function hasAnyField(
-  data: RuntimeRecord,
-  fields: string[]
-): boolean {
-  return fields.some((field) =>
-    Object.prototype.hasOwnProperty.call(
-      data,
-      field
-    )
-  );
-}
-
-function shouldValidateChronology(
-  data: RuntimeRecord,
-  context: RuntimeChronologyGuardContext,
-  fields: string[]
-): boolean {
-  if (context.operation === "create") {
-    return true;
-  }
-
-  return hasAnyField(data, fields);
-}
-
 function getModuleByKey(
   moduleKey: string
 ): ERPModule | null {
@@ -267,36 +243,15 @@ export async function guardRuntimeChronologyMutation(
       currentRecord.id,
   };
 
-  if (
-    module.metadata.key === "interventionsauto" &&
-    shouldValidateChronology(
-      data,
-      context,
-      ["dateIntervention", "rendezVousId"]
-    )
-  ) {
+  if (module.metadata.key === "interventionsauto") {
     await guardInterventionChronology(mergedRecord);
   }
 
-  if (
-    module.metadata.key === "facturesauto" &&
-    shouldValidateChronology(
-      data,
-      context,
-      ["dateFacture", "interventionId"]
-    )
-  ) {
+  if (module.metadata.key === "facturesauto") {
     await guardFactureChronology(mergedRecord);
   }
 
-  if (
-    module.metadata.key === "encaissementsauto" &&
-    shouldValidateChronology(
-      data,
-      context,
-      ["datePaiement", "factureId"]
-    )
-  ) {
+  if (module.metadata.key === "encaissementsauto") {
     await guardEncaissementChronology(mergedRecord);
   }
 
