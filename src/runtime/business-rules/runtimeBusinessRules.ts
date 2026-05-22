@@ -273,6 +273,174 @@ export const runtimeBusinessRules:
 // RDV CONFIRME -> INTERVENTION
 // =====================================================
 
+// =====================================================
+// AMARKHYS
+// RDV CREE CONFIRME -> INTERVENTION
+// =====================================================
+
+{
+  id:
+    "amarkhys-rdv-create-intervention-on-create",
+
+  module:
+    "rendezvous",
+
+  event:
+    "rendezvous.created",
+
+  condition:
+    (payload) =>
+      payload.statut ===
+        "confirme",
+
+  action:
+    async (payload) => {
+      const interventionsModule =
+        coreERPModules.find(
+          module =>
+            module.metadata.key ===
+              "interventionsauto"
+        );
+
+      const rendezvousModule =
+        coreERPModules.find(
+          module =>
+            module.metadata.key ===
+              "rendezvous"
+        );
+
+      if (
+        !interventionsModule ||
+        !rendezvousModule
+      ) {
+        return;
+      }
+
+      const rendezvousRecord =
+        payload.id
+          ? await RuntimeDataBinding.detail(
+              rendezvousModule,
+              String(payload.id)
+            )
+          : payload;
+
+      const effectiveRendezvous = {
+        ...payload,
+        ...(rendezvousRecord ?? {}),
+        id:
+          rendezvousRecord?.id ??
+          payload.id,
+      };
+
+      const validation =
+        RuntimeSchedulingEngine
+          .assertRendezvousCanCreateIntervention(
+            effectiveRendezvous
+          );
+
+      if (!validation.ok) {
+        if (effectiveRendezvous.consumedByInterventionId) {
+          return;
+        }
+
+        await RuntimeNotificationEngine
+          .notify({
+            type:
+              "amarkhys.intervention.skipped",
+
+            module:
+              "interventionsauto",
+
+            title:
+              "Intervention non créée",
+
+            message:
+              validation.reason ??
+              "Impossible de créer l'intervention depuis ce rendez-vous.",
+
+            severity:
+              "warning",
+          });
+
+        return;
+      }
+
+      const interventionPayload =
+        RuntimeSchedulingEngine
+          .buildInterventionFromRendezvous(
+            effectiveRendezvous
+          );
+
+      const createdIntervention =
+        await RuntimeDataBinding
+          .create(
+            interventionsModule,
+            {
+              ...interventionPayload,
+
+              tenantId:
+                effectiveRendezvous.tenantId ??
+                payload.tenantId,
+
+              workspace:
+                effectiveRendezvous.workspace ??
+                payload.workspace ??
+                "amarkhys",
+
+              userId:
+                effectiveRendezvous.userId ??
+                payload.userId,
+            }
+          );
+
+      const createdInterventionId =
+        typeof createdIntervention === "object" &&
+        createdIntervention !== null
+          ? String(
+              createdIntervention.id ?? ""
+            )
+          : "";
+
+      if (
+        createdInterventionId &&
+        effectiveRendezvous.id
+      ) {
+        await RuntimeDataBinding
+          .update(
+            rendezvousModule,
+            String(effectiveRendezvous.id),
+            {
+              consumedByInterventionId:
+                createdInterventionId,
+
+              consumedAt:
+                new Date().toISOString(),
+            }
+          );
+      }
+
+      await RuntimeNotificationEngine
+        .notify({
+          type:
+            "amarkhys.intervention",
+
+          module:
+            "interventionsauto",
+
+          title:
+            "Intervention créée",
+
+          message:
+            "Intervention créée depuis RDV confirmé",
+
+          severity:
+            "info"
+        });
+    }
+},
+
+
+
 {
   id:
     "amarkhys-rdv-create-intervention",

@@ -392,12 +392,15 @@ export class ERPRelationDataLoader {
     };
 
     const rendezvousSlotLabel = () => {
+      // Generic business-time label.
+      // Never use startAt/endAt ISO for visible RDV labels because ISO is UTC-based.
+      // Visible labels must come from local business fields:
+      // heureRendezVous + durationMinutes.
       const start =
         normalizeTimeLabel(
           value("heureRendezVous") ||
           value("heureRdv") ||
-          value("heure") ||
-          value("startAt")
+          value("heure")
         );
 
       const duration =
@@ -407,18 +410,17 @@ export class ERPRelationDataLoader {
         );
 
       const end =
-        value("endAt")
-          ? normalizeTimeLabel(value("endAt"))
-          : addMinutesToTimeLabel(start, duration);
+        addMinutesToTimeLabel(
+          start,
+          duration
+        );
 
       if (start && end) {
         return start + " → " + end;
       }
 
       return start;
-    };
-
-    const money = (key: string) => {
+    };const money = (key: string) => {
       const raw =
         record[key];
 
