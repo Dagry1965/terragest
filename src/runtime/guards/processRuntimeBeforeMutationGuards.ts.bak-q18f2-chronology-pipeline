@@ -17,10 +17,6 @@ import {
   type RuntimeRecord,
 } from "@/runtime/scheduling/RuntimeSchedulingEngine";
 
-import {
-  guardRuntimeChronologyMutation,
-} from "./RuntimeChronologyGuard";
-
 export interface RuntimeBeforeMutationGuardContext {
   operation: "create" | "update";
   id?: string;
@@ -347,6 +343,10 @@ export async function processRuntimeBeforeMutationGuards(
   data: Record<string, unknown>,
   context: RuntimeBeforeMutationGuardContext
 ): Promise<Record<string, unknown>> {
+  if (!isRendezvousModule(module)) {
+    return data;
+  }
+
   if (
     context.operation !== "create" &&
     context.operation !== "update"
@@ -354,27 +354,9 @@ export async function processRuntimeBeforeMutationGuards(
     return data;
   }
 
-  let guardedData =
-    await guardParentChildContextMutation(
-      module,
-      data as RuntimeRecord
-    );
-
-  if (isRendezvousModule(module)) {
-    guardedData =
-      await guardRendezvousMutation(
-        module,
-        guardedData,
-        context
-      );
-  }
-
-  guardedData =
-    await guardRuntimeChronologyMutation(
-      module,
-      guardedData,
-      context
-    );
-
-  return guardedData;
+  return guardRendezvousMutation(
+    module,
+    data,
+    context
+  );
 }
