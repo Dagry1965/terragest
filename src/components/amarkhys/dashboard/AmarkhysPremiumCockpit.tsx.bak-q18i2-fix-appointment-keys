@@ -1034,14 +1034,7 @@ export function AmarkhysPremiumCockpit() {
        </p>
 
        <div className="mt-5 space-y-3">
-        {data.appointments.map((appointment, index) => {
-         const appointmentKey =
-          String(
-            appointment.href ??
-            appointment.title ??
-            "appointment"
-          ) + "-" + String(index);
-
+        {data.appointments.map((appointment) => {
          const content = (
           <div className="rounded-2xl border border-white/10 bg-[linear-gradient(135deg,rgba(14,175,170,0.18),rgba(255,255,255,0.05))] p-4">
            <div className="flex items-start gap-3">
@@ -1065,11 +1058,11 @@ export function AmarkhysPremiumCockpit() {
          );
 
          return appointment.href ? (
-          <Link key={appointmentKey} href={appointment.href}>
+          <Link key={appointment.title} href={appointment.href}>
            {content}
           </Link>
          ) : (
-          <div key={appointmentKey}>
+          <div key={appointment.title}>
            {content}
           </div>
          );

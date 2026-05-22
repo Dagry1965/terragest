@@ -20,10 +20,6 @@ import {
 } from "@/runtime/modules/generated/vehicules";
 
 import {
-  encaissementsautoModule,
-} from "@/runtime/modules/generated/encaissementsauto";
-
-import {
   AMARKHYS_BUSINESS_IDENTITY,
   buildAmarkhysContactLabel,
   buildAmarkhysWhatsAppHref,
@@ -116,62 +112,6 @@ function formatStatus(
   };
 
   return labels[value ?? ""] ?? value ?? "En attente";
-}
-
-function getPaymentId(
-  payment: RecordData
-): string {
-  return value(
-    payment,
-    "id",
-    value(payment, "_id")
-  );
-}
-
-function getClientRecipient(
-  context: ReceiptContext | null
-): string {
-  return (
-    value(context?.client ?? null, "telephone") ||
-    value(context?.client ?? null, "email") ||
-    ""
-  );
-}
-
-async function markReceiptSent(
-  payment: RecordData,
-  context: ReceiptContext | null,
-  channel: "whatsapp" | "sms"
-): Promise<void> {
-  const paymentId =
-    getPaymentId(payment);
-
-  if (!paymentId) {
-    return;
-  }
-
-  const currentCount =
-    Number(payment.nombreEnvoisRecu ?? 0);
-
-  await RuntimeDataBinding.update(
-    encaissementsautoModule,
-    paymentId,
-    {
-      statutEnvoiRecu: "envoye",
-      dernierEnvoiRecuAt: new Date().toISOString(),
-      canalDernierEnvoiRecu: channel,
-      destinataireDernierEnvoiRecu:
-        getClientRecipient(context),
-      nombreEnvoisRecu:
-        Number.isFinite(currentCount)
-          ? currentCount + 1
-          : 1,
-    },
-    {
-      systemMutation: true,
-      mutationSource: "runtime:receipt-send",
-    }
-  );
 }
 
 function buildReceiptNumber(
@@ -519,16 +459,6 @@ export function PaymentReceiptActions({
   const smsHref =
     "sms:?body=" + encodeURIComponent(text);
 
-  async function handleReceiptSend(
-    channel: "whatsapp" | "sms"
-  ) {
-    await markReceiptSent(
-      payment,
-      context,
-      channel
-    );
-  }
-
   return (
     <div className="flex flex-wrap gap-2">
       <button
@@ -551,9 +481,6 @@ export function PaymentReceiptActions({
         href={buildAmarkhysWhatsAppHref(text)}
         target="_blank"
         rel="noreferrer"
-        onClick={() => {
-          void handleReceiptSend("whatsapp");
-        }}
         className="rounded-full border border-emerald-200 bg-white px-3 py-1 text-xs font-black text-emerald-700 transition hover:bg-emerald-50"
       >
         WhatsApp
@@ -561,9 +488,6 @@ export function PaymentReceiptActions({
 
       <a
         href={smsHref}
-        onClick={() => {
-          void handleReceiptSend("sms");
-        }}
         className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-black text-slate-700 transition hover:bg-slate-50"
       >
         SMS

@@ -1037,9 +1037,10 @@ export function AmarkhysPremiumCockpit() {
         {data.appointments.map((appointment, index) => {
          const appointmentKey =
           String(
+            appointment.id ??
             appointment.href ??
             appointment.title ??
-            "appointment"
+            index
           ) + "-" + String(index);
 
          const content = (
