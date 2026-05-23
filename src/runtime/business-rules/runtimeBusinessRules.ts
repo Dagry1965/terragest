@@ -735,6 +735,59 @@ export const runtimeBusinessRules:
           ? roundMoney((montantTVA / montantHT) * 100)
           : 18;
 
+      const resolveDateOnly =
+        (value: unknown): string => {
+          const raw =
+            String(value ?? "").trim();
+
+          const match =
+            raw.match(/^(\d{4})-(\d{2})-(\d{2})/);
+
+          if (match) {
+            return match[1] + "-" + match[2] + "-" + match[3];
+          }
+
+          const parsed =
+            new Date(raw);
+
+          if (
+            Number.isNaN(
+              parsed.getTime()
+            )
+          ) {
+            return "";
+          }
+
+          return parsed
+            .toISOString()
+            .split("T")[0];
+        };
+
+      const todayDate =
+        new Date()
+          .toISOString()
+          .split("T")[0];
+
+      const interventionDate =
+        resolveDateOnly(
+          intervention.dateIntervention ??
+          intervention.dateRendezVous ??
+          payload.dateIntervention ??
+          payload.dateRendezVous
+        );
+
+      const resolveAutoInvoiceDate =
+        (): string => {
+          if (
+            interventionDate &&
+            interventionDate > todayDate
+          ) {
+            return interventionDate;
+          }
+
+          return todayDate;
+        };
+
       const montantTTC =
         roundMoney(
           asNumber(intervention.montantTTC) ||
@@ -759,9 +812,7 @@ export const runtimeBusinessRules:
               `FAC-${Date.now()}`,
 
             dateFacture:
-              new Date()
-                .toISOString()
-                .split("T")[0],
+              resolveAutoInvoiceDate(),
 
             statutFacture:
               "emise",
