@@ -1,0 +1,12 @@
+import { ERPModuleActionPageTemplate } from "@/components/erp/templates/ERPModuleActionPageTemplate";
+
+export default function MouvementsStockAutoExportPage() {
+  return (
+    <ERPModuleActionPageTemplate
+      moduleKey="mouvementsstockauto"
+      actionKey="export"
+      title="Export mouvements stock"
+      description="Exporter les mouvements de stock."
+    />
+  );
+}

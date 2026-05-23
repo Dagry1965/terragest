@@ -1,0 +1,12 @@
+import { ERPModuleActionPageTemplate } from "@/components/erp/templates/ERPModuleActionPageTemplate";
+
+export default function MouvementsStockAutoWorkflowsPage() {
+  return (
+    <ERPModuleActionPageTemplate
+      moduleKey="mouvementsstockauto"
+      actionKey="workflows"
+      title="Workflows mouvements stock"
+      description="Cycle de validation et annulation des mouvements de stock."
+    />
+  );
+}

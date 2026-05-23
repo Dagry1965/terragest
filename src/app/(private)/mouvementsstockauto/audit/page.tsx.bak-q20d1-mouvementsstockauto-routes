@@ -1,0 +1,12 @@
+import { ERPModuleActionPageTemplate } from "@/components/erp/templates/ERPModuleActionPageTemplate";
+
+export default function MouvementsStockAutoAuditPage() {
+  return (
+    <ERPModuleActionPageTemplate
+      moduleKey="mouvementsstockauto"
+      actionKey="audit"
+      title="Audit mouvements stock"
+      description="Historique et traçabilité des mouvements de stock."
+    />
+  );
+}

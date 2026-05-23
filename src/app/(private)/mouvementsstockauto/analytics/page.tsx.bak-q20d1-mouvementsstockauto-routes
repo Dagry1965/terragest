@@ -1,0 +1,12 @@
+import { ERPModuleActionPageTemplate } from "@/components/erp/templates/ERPModuleActionPageTemplate";
+
+export default function MouvementsStockAutoAnalyticsPage() {
+  return (
+    <ERPModuleActionPageTemplate
+      moduleKey="mouvementsstockauto"
+      actionKey="analytics"
+      title="Analytics mouvements stock"
+      description="Analyse des flux de stock AMARKHYS."
+    />
+  );
+}
