@@ -315,22 +315,6 @@ export const vehiculesModule: ERPModule = {
   },
 
   composition: {
-    contextBanner: {
-      title: "Contexte véhicule",
-      items: [
-        {
-          relationField: "clientId",
-          moduleKey: "clientsauto",
-          labelFields: [
-            "prenom",
-            "nom",
-            "telephone",
-          ],
-          tone: "client",
-        },
-      ],
-    },
-
     labelFields: [
       "immatriculation",
       "marque",

@@ -216,43 +216,6 @@ export const interventionsautoModule: ERPModule = {
 
 
   composition: {
-    contextBanner: {
-      title: "Contexte intervention",
-      items: [
-        {
-          relationField: "clientId",
-          moduleKey: "clientsauto",
-          labelFields: [
-            "prenom",
-            "nom",
-            "telephone",
-          ],
-          tone: "client",
-        },
-        {
-          relationField: "vehiculeId",
-          moduleKey: "vehicules",
-          labelFields: [
-            "marque",
-            "modele",
-            "immatriculation",
-          ],
-          tone: "vehicle",
-        },
-        {
-          relationField: "rendezVousId",
-          moduleKey: "rendezvous",
-          labelFields: [
-            "dateRendezVous",
-            "heureRendezVous",
-            "typeService",
-            "statut",
-          ],
-          tone: "workshop",
-        },
-      ],
-    },
-
     labelFields: [
       "dateIntervention",
       "typeIntervention",

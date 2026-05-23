@@ -310,42 +310,6 @@ export const lignesinterventionautoModule: ERPModule = {
 
 
   composition: {
-    contextBanner: {
-      title: "Contexte ligne intervention",
-      items: [
-        {
-          relationField: "interventionId",
-          moduleKey: "interventionsauto",
-          labelFields: [
-            "typeIntervention",
-            "dateIntervention",
-            "statut",
-          ],
-          tone: "workshop",
-        },
-        {
-          relationField: "produitId",
-          moduleKey: "produitsauto",
-          labelFields: [
-            "reference",
-            "nom",
-            "categorie",
-          ],
-          tone: "product",
-        },
-        {
-          relationField: "stockId",
-          moduleKey: "stocksauto",
-          labelFields: [
-            "produitNom",
-            "quantite",
-            "seuilMinimum",
-          ],
-          tone: "stock",
-        },
-      ],
-    },
-
     // Q15F_B_REQUIRED_PARENT_CONTEXT
     // Une ligne d'intervention doit toujours être créée dans le contexte d'une intervention parente.
     requiresParentContext: true,

@@ -157,25 +157,8 @@ export interface ERPCompositionRequiredParent {
   foreignKey: string;
 }
 
-
-export interface ERPCompositionContextBannerItem {
-  relationField?: string;
-  field?: string;
-  moduleKey: string;
-  labelFields?: string[];
-  title?: string;
-  icon?: string;
-  tone?: string;
-}
-
-export interface ERPCompositionContextBanner {
-  title?: string;
-  items: ERPCompositionContextBannerItem[];
-}
-
 export interface ERPModuleComposition {
-    contextBanner?: ERPCompositionContextBanner;
-    labelFields?: string[];
+  labelFields?: string[];
   breadcrumbs?: ERPCompositionBreadcrumb[];
   relations?: ERPCompositionRelation[];
   lockedFields?: string[];

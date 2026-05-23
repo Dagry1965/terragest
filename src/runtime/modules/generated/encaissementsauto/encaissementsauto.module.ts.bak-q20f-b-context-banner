@@ -268,42 +268,6 @@ export const encaissementsautoModule: ERPModule = {
   },
 
   composition: {
-    contextBanner: {
-      title: "Contexte encaissement",
-      items: [
-        {
-          relationField: "factureId",
-          moduleKey: "facturesauto",
-          labelFields: [
-            "numeroFacture",
-            "statutPaiement",
-            "resteAPayer",
-          ],
-          tone: "invoice",
-        },
-        {
-          relationField: "clientId",
-          moduleKey: "clientsauto",
-          labelFields: [
-            "prenom",
-            "nom",
-            "telephone",
-          ],
-          tone: "client",
-        },
-        {
-          relationField: "vehiculeId",
-          moduleKey: "vehicules",
-          labelFields: [
-            "marque",
-            "modele",
-            "immatriculation",
-          ],
-          tone: "vehicle",
-        },
-      ],
-    },
-
     readOnlyFields: [
       "numeroRecu",
       "statutEnvoiRecu",

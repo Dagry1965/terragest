@@ -324,42 +324,6 @@ export const facturesautoModule: ERPModule = {
   },
 
   composition: {
-    contextBanner: {
-      title: "Contexte facture",
-      items: [
-        {
-          relationField: "clientId",
-          moduleKey: "clientsauto",
-          labelFields: [
-            "prenom",
-            "nom",
-            "telephone",
-          ],
-          tone: "client",
-        },
-        {
-          relationField: "vehiculeId",
-          moduleKey: "vehicules",
-          labelFields: [
-            "marque",
-            "modele",
-            "immatriculation",
-          ],
-          tone: "vehicle",
-        },
-        {
-          relationField: "interventionId",
-          moduleKey: "interventionsauto",
-          labelFields: [
-            "typeIntervention",
-            "dateIntervention",
-            "statut",
-          ],
-          tone: "workshop",
-        },
-      ],
-    },
-
     lockedFields: [
       "numeroFacture",
       "clientId",

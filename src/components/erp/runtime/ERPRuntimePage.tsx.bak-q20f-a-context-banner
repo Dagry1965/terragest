@@ -12,7 +12,6 @@ import { ERPEnterpriseForm } from "@/components/erp/forms/enterprise/ERPEnterpri
 import { ERPRuntimeDetails } from "./ERPRuntimeDetails";
 import { ERPRuntimeTable } from "./ERPRuntimeTable";
 import { ERPRelatedRecordsPanel } from "./ERPRelatedRecordsPanel";
-import { ERPContextBanner } from "@/components/erp/context/ERPContextBanner";
 
 import type { ERPModule } from "@/runtime/modules/ERPModule";
 
@@ -300,14 +299,6 @@ export function ERPRuntimePage({
           <div className="rounded-2xl border border-[var(--erp-border)] bg-[var(--erp-surface)] p-4 text-sm text-[var(--erp-text-muted)]">
             Chargement des données...
           </div>
-        ) : null}
-
-        {module && record && (type === "detail" || type === "edit") ? (
-          <ERPContextBanner
-            module={module}
-            record={record}
-            mode={type}
-          />
         ) : null}
 
         <div data-erp-related-children-before className="space-y-4">
