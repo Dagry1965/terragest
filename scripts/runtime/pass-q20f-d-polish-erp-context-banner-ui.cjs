@@ -1,4 +1,32 @@
-"use client";
+const fs = require("fs");
+const path = require("path");
+
+const root = process.cwd();
+
+function p(rel) {
+  return path.join(root, rel);
+}
+
+function backup(rel, suffix) {
+  const source = p(rel);
+  const target = source + suffix;
+
+  if (fs.existsSync(source) && !fs.existsSync(target)) {
+    fs.copyFileSync(source, target);
+    console.log("[BACKUP]", rel + suffix);
+  }
+}
+
+function write(rel, content) {
+  fs.writeFileSync(p(rel), content, "utf8");
+  console.log("[WRITTEN]", rel);
+}
+
+const file = "src/components/erp/context/ERPContextBanner.tsx";
+
+backup(file, ".bak-q20f-d-polish-ui");
+
+const content = `"use client";
 
 import {
   useEffect,
@@ -439,3 +467,12 @@ export function ERPContextBanner({
     </section>
   );
 }
+`;
+
+write(file, content);
+
+console.log("");
+console.log("[Q20F_D_DONE] ERPContextBanner UI polished.");
+console.log("");
+console.log("Next:");
+console.log("  pnpm build");
