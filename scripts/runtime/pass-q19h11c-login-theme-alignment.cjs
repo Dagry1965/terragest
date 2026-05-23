@@ -1,4 +1,32 @@
-"use client";
+const fs = require("fs");
+const path = require("path");
+
+const root = process.cwd();
+
+function p(rel) {
+  return path.join(root, rel);
+}
+
+function backup(rel, suffix) {
+  const source = p(rel);
+  const target = source + suffix;
+
+  if (fs.existsSync(source) && !fs.existsSync(target)) {
+    fs.copyFileSync(source, target);
+    console.log("[BACKUP]", rel + suffix);
+  }
+}
+
+function write(rel, content) {
+  fs.writeFileSync(p(rel), content, "utf8");
+  console.log("[WRITTEN]", rel);
+}
+
+const pagePath = "src/app/login/page.tsx";
+
+backup(pagePath, ".bak-q19h11c-login-theme");
+
+write(pagePath, String.raw`"use client";
 
 import {
   FormEvent,
@@ -320,3 +348,10 @@ export default function LoginPage() {
     </main>
   );
 }
+`);
+
+console.log("");
+console.log("[Q19H11C_DONE] Login page aligned with AMARKHYS premium theme.");
+console.log("");
+console.log("Next:");
+console.log("  pnpm build");

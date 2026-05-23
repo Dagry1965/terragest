@@ -1,11 +1,11 @@
 import {
+  PublicContact,
+  PublicCTA,
   PublicHero,
   PublicLayout,
   PublicServices,
-  PublicWhy,
-  PublicCTA,
   PublicTrust,
-  PublicContact,
+  PublicWhy,
 } from "@/components/public";
 
 export default function HomePage() {

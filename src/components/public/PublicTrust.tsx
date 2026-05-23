@@ -1,104 +1,59 @@
-"use client";
-
-import { motion } from "framer-motion";
 import {
-  BadgeCheck,
-  FileCheck2,
+  Clock3,
+  LockKeyhole,
   ShieldCheck,
-  Sparkles,
-  TimerReset,
+  Star,
 } from "lucide-react";
 
-const guarantees = [
-  {
-    icon: FileCheck2,
-    title: "Devis lisible",
-    description:
-      "Chaque intervention est expliquée avant validation pour éviter les mauvaises surprises.",
-  },
+const trust = [
   {
     icon: ShieldCheck,
-    title: "Contrôle sécurité",
-    description:
-      "Les points sensibles du véhicule sont traités avec méthode et priorité.",
+    title: "Données sécurisées",
+    description: "Vos informations restent confidentielles.",
   },
   {
-    icon: TimerReset,
-    title: "Suivi après service",
-    description:
-      "Les rappels d’entretien permettent d’anticiper les prochaines échéances.",
+    icon: Clock3,
+    title: "Réponse rapide",
+    description: "Confirmation sous 1h ouvrée.",
   },
-];
-
-const proofItems = [
-  "Diagnostic structuré",
-  "Rendez-vous tracé",
-  "Suivi client digital",
-  "Historique véhicule",
+  {
+    icon: Star,
+    title: "Service premium",
+    description: "Accueil, suivi, facture et reçu.",
+  },
+  {
+    icon: LockKeyhole,
+    title: "Confidentialité",
+    description: "Votre demande est traitée avec soin.",
+  },
 ];
 
 export function PublicTrust() {
   return (
-    <section className="mx-auto max-w-7xl px-6 py-24">
-      <div className="relative overflow-hidden rounded-[2.5rem] border border-white/10 bg-white/[0.045] p-8 backdrop-blur-xl md:p-12">
-        <div className="absolute right-0 top-0 h-72 w-72 rounded-full bg-[#00A19C]/20 blur-[100px]" />
+    <section className="bg-[#020807] px-5 py-12 sm:px-8 lg:px-10">
+      <div className="mx-auto max-w-[1460px] rounded-[1.45rem] border border-[#d7a83f]/24 bg-gradient-to-r from-[#1a1608]/78 via-[#061915]/84 to-[#1a1608]/78 p-6 shadow-[0_28px_90px_rgba(0,0,0,0.38)]">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          {trust.map((item) => {
+            const Icon = item.icon;
 
-        <div className="relative grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-          <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-[#00A19C]/30 bg-[#00A19C]/10 px-4 py-2 text-sm font-bold text-[#7FFFE8]">
-              <Sparkles className="h-4 w-4" />
-              Confiance atelier
-            </div>
+            return (
+              <div key={item.title} className="flex items-center gap-4">
+                <span className="inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-[#d7a83f]/35 bg-[#2a2108]/55 text-[#f8d479]">
+                  <Icon className="h-6 w-6" />
+                </span>
 
-            <h2 className="mt-6 text-4xl font-black tracking-tight text-white md:text-5xl">
-              Une expérience garage plus transparente et plus rassurante.
-            </h2>
-
-            <p className="mt-5 text-base leading-8 text-slate-400">
-              Le premium ne vient pas seulement du design : il vient surtout de la clarté, du suivi, de la qualité d’exécution et de la relation client.
-            </p>
-
-            <div className="mt-8 grid gap-3 sm:grid-cols-2">
-              {proofItems.map((item) => (
-                <div
-                  key={item}
-                  className="flex items-center gap-3 rounded-2xl border border-white/10 bg-black/20 px-4 py-3"
-                >
-                  <BadgeCheck className="h-5 w-5 text-[#7FFFE8]" />
-                  <span className="text-sm font-bold text-slate-200">
-                    {item}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="grid gap-4">
-            {guarantees.map((guarantee, index) => {
-              const Icon = guarantee.icon;
-
-              return (
-                <motion.article
-                  key={guarantee.title}
-                  initial={{ opacity: 0, x: 18 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.45, delay: index * 0.06 }}
-                  className="rounded-3xl border border-white/10 bg-black/25 p-6 transition hover:border-[#00A19C]/40 hover:bg-[#00A19C]/10"
-                >
-                  <Icon className="h-7 w-7 text-[#7FFFE8]" />
-
-                  <h3 className="mt-5 text-xl font-black text-white">
-                    {guarantee.title}
-                  </h3>
-
-                  <p className="mt-3 text-sm leading-7 text-slate-400">
-                    {guarantee.description}
+                <div>
+                  <p className="text-sm font-black uppercase tracking-[0.12em] text-[#f8d479]">
+                    {item.title}
                   </p>
-                </motion.article>
-              );
-            })}
-          </div>
+
+                  <p className="mt-1 text-sm text-slate-300">
+                    {item.description}
+                  </p>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>

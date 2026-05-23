@@ -1,57 +1,50 @@
-"use client";
-
 import Link from "next/link";
-import { ArrowRight, MessageCircle, Phone } from "lucide-react";
-
 import {
-  publicContactConfig,
-} from "./publicContactConfig";
+  ArrowRight,
+  CalendarPlus,
+  MessageCircle,
+} from "lucide-react";
+
+const whatsappHref =
+  "https://wa.me/2250700000000?text=Bonjour%20AMARKHYS%2C%20je%20souhaite%20prendre%20rendez-vous%20pour%20mon%20v%C3%A9hicule.";
 
 export function PublicCTA() {
   return (
-    <section id="performance" className="mx-auto max-w-7xl px-6 py-24">
-      <div className="relative overflow-hidden rounded-[2.5rem] border border-[#00A19C]/25 bg-[#00A19C]/10 p-8 shadow-[0_0_90px_rgba(0,161,156,0.16)] md:p-12">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(127,255,232,0.22),transparent_35%)]" />
-
-        <div className="relative grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-          <div>
-            <p className="text-sm font-black uppercase tracking-[0.24em] text-[#7FFFE8]">
-              Performance moteur
+    <section className="bg-[#020807] px-5 py-16 sm:px-8 lg:px-10">
+      <div className="mx-auto max-w-[1460px] overflow-hidden rounded-[1.6rem] border border-[#d7a83f]/26 bg-gradient-to-br from-[#075f53] via-[#053d36] to-[#031612] p-8 shadow-[0_38px_110px_rgba(0,0,0,0.58)] ring-1 ring-[#23ead4]/12 lg:p-12">
+        <div className="grid gap-7 lg:grid-cols-12 lg:items-center">
+          <div className="lg:col-span-7">
+            <p className="text-xs font-black uppercase tracking-[0.26em] text-[#f8d479]">
+              Prêt à réserver ?
             </p>
 
-            <h2 className="mt-4 text-4xl font-black tracking-tight text-white md:text-5xl">
-              Un entretien premium pour préserver la performance.
+            <h2 className="mt-3 text-4xl font-black text-white">
+              Demandez votre rendez-vous atelier maintenant.
             </h2>
 
-            <p className="mt-5 max-w-2xl text-base leading-8 text-slate-300">
-              Lubrifiants PETRONAS disponibles, diagnostic clair et suivi digital : AMARKHYS donne à votre véhicule une expérience d’entretien plus moderne.
+            <p className="mt-4 text-base leading-7 text-cyan-50/75">
+              Un conseiller AMARKHYS vous recontacte rapidement pour confirmer le créneau.
             </p>
           </div>
 
-          <div className="flex flex-col gap-3 sm:flex-row lg:justify-end">
+          <div className="flex flex-col gap-3 sm:flex-row lg:col-span-5 lg:justify-end">
             <Link
               href="/rdv"
-              className="inline-flex items-center justify-center gap-3 rounded-2xl bg-[#00A19C] px-6 py-4 text-sm font-black text-[#021111] transition hover:bg-[#7FFFE8]"
+              className="inline-flex items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-[#f5c04a] via-[#d7a83f] to-[#9a6a17] px-6 py-4 text-sm font-black uppercase tracking-wide text-[#0b0b05] shadow-[0_0_60px_rgba(215,168,63,0.22)] transition hover:scale-[1.01]"
             >
-              Prendre rendez-vous
-              <ArrowRight className="h-4 w-4" />
+              <CalendarPlus className="h-5 w-5" />
+              Prendre RDV
+              <ArrowRight className="h-5 w-5" />
             </Link>
 
             <a
-              href={publicContactConfig.whatsappHref}
+              href={whatsappHref}
               target="_blank"
-              className="inline-flex items-center justify-center gap-3 rounded-2xl border border-white/15 bg-white/5 px-6 py-4 text-sm font-black text-white transition hover:bg-white/10"
+              rel="noreferrer"
+              className="inline-flex items-center justify-center gap-3 rounded-xl border border-[#23ead4]/24 bg-black/18 px-6 py-4 text-sm font-black text-white transition hover:bg-black/28"
             >
-              <MessageCircle className="h-4 w-4 text-[#7FFFE8]" />
+              <MessageCircle className="h-5 w-5 text-[#23ead4]" />
               WhatsApp
-            </a>
-
-            <a
-              href={publicContactConfig.phoneHref}
-              className="inline-flex items-center justify-center gap-3 rounded-2xl border border-white/15 bg-white/5 px-6 py-4 text-sm font-black text-white transition hover:bg-white/10"
-            >
-              <Phone className="h-4 w-4 text-[#7FFFE8]" />
-              Appeler
             </a>
           </div>
         </div>

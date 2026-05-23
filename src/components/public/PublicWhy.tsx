@@ -1,85 +1,68 @@
-"use client";
-
-import { motion } from "framer-motion";
 import {
-  BellRing,
-  ClipboardCheck,
-  ScanLine,
-  Smartphone,
+  CalendarCheck,
+  FileCheck2,
+  Receipt,
 } from "lucide-react";
 
-const reasons = [
+const items = [
   {
-    icon: ScanLine,
-    title: "Diagnostic clair",
+    icon: CalendarCheck,
+    title: "Rendez-vous rapide",
     description:
-      "Vous comprenez les priorités avant d’engager une intervention.",
+      "Le client envoie sa demande et le garage confirme le passage.",
   },
   {
-    icon: ClipboardCheck,
-    title: "Devis transparent",
+    icon: FileCheck2,
+    title: "Intervention suivie",
     description:
-      "Les travaux sont structurés, suivis et validés étape par étape.",
+      "Le dossier client, le véhicule et l’intervention restent structurés.",
   },
   {
-    icon: Smartphone,
-    title: "Suivi digital",
+    icon: Receipt,
+    title: "Facture et reçu",
     description:
-      "Le rendez-vous, l’intervention et la facturation restent traçables.",
-  },
-  {
-    icon: BellRing,
-    title: "Rappels intelligents",
-    description:
-      "Vidanges, entretiens et échéances ne sont plus oubliés.",
+      "La chaîne client peut aller jusqu’au paiement et au reçu numérique.",
   },
 ];
 
 export function PublicWhy() {
   return (
-    <section id="process" className="mx-auto max-w-7xl px-6 py-24">
-      <div className="rounded-[2rem] border border-white/10 bg-white/[0.04] p-8 backdrop-blur-xl md:p-10">
-        <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
-          <div>
-            <p className="text-sm font-black uppercase tracking-[0.24em] text-[#7FFFE8]">
-              Pourquoi AMARKHYS
-            </p>
+    <section className="bg-[#020807] px-5 py-16 sm:px-8 lg:px-10">
+      <div className="mx-auto grid max-w-[1460px] gap-8 lg:grid-cols-12 lg:items-center">
+        <div className="lg:col-span-5">
+          <p className="text-xs font-black uppercase tracking-[0.26em] text-[#f8d479]">
+            Pourquoi AMARKHYS
+          </p>
 
-            <h2 className="mt-4 text-4xl font-black tracking-tight text-white">
-              Un garage pensé comme une plateforme de suivi.
-            </h2>
+          <h2 className="mt-3 text-4xl font-black text-white">
+            Une expérience client cohérente du premier contact au règlement.
+          </h2>
 
-            <p className="mt-5 text-base leading-8 text-slate-400">
-              AMARKHYS connecte la relation client, le rendez-vous, l’intervention et la facturation dans un parcours digital cohérent.
-            </p>
-          </div>
+          <p className="mt-5 text-base leading-8 text-slate-300">
+            AMARKHYS ne se limite pas à un formulaire : le rendez-vous ouvre un workflow garage complet.
+          </p>
+        </div>
 
-          <div className="grid gap-4 sm:grid-cols-2">
-            {reasons.map((reason, index) => {
-              const Icon = reason.icon;
+        <div className="grid gap-5 lg:col-span-7">
+          {items.map((item) => {
+            const Icon = item.icon;
 
-              return (
-                <motion.div
-                  key={reason.title}
-                  initial={{ opacity: 0, y: 14 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: index * 0.05 }}
-                  className="rounded-3xl border border-white/10 bg-black/20 p-5"
-                >
-                  <Icon className="h-6 w-6 text-[#7FFFE8]" />
+            return (
+              <article
+                key={item.title}
+                className="flex gap-5 rounded-[1.45rem] border border-[#d7a83f]/24 bg-gradient-to-r from-[#1a1608]/78 via-[#061915]/84 to-[#041b18] p-6 shadow-[0_28px_90px_rgba(0,0,0,0.38)]"
+              >
+                <span className="inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-[#d7a83f]/35 bg-[#2a2108]/55 text-[#f8d479]">
+                  <Icon className="h-6 w-6" />
+                </span>
 
-                  <h3 className="mt-4 font-black text-white">
-                    {reason.title}
-                  </h3>
-
-                  <p className="mt-2 text-sm leading-6 text-slate-400">
-                    {reason.description}
-                  </p>
-                </motion.div>
-              );
-            })}
-          </div>
+                <div>
+                  <h3 className="text-xl font-black text-white">{item.title}</h3>
+                  <p className="mt-2 text-sm leading-6 text-slate-300">{item.description}</p>
+                </div>
+              </article>
+            );
+          })}
         </div>
       </div>
     </section>
