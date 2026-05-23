@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import {
   useEffect,
   useMemo,
@@ -211,23 +210,6 @@ async function loadInterventionLines(
 export default function PublicInvoiceDetailsPage({
   params,
 }: PublicInvoiceDetailsPageProps) {
-  const router =
-    useRouter();
-
-  const [isFlipping, setIsFlipping] =
-    useState(false);
-
-  function flipTo(targetHref: string) {
-    if (isFlipping) {
-      return;
-    }
-
-    setIsFlipping(true);
-
-    window.setTimeout(() => {
-      router.push(targetHref);
-    }, 760);
-  }
   const [token, setToken] =
     useState("");
 
@@ -423,14 +405,13 @@ export default function PublicInvoiceDetailsPage({
 
       <section className="relative mx-auto max-w-[1240px]">
         <header className="mb-7">
-          <button
-            type="button"
-            onClick={() => flipTo("/facture/" + token)}
+          <Link
+            href={"/facture/" + token}
             className="mb-5 inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.045] px-4 py-2 text-xs font-black text-slate-200 transition hover:border-[#23ead4]/30 hover:text-white"
           >
             <ArrowLeft className="h-4 w-4" />
-            Retour au recto
-          </button>
+            Retour à la facture
+          </Link>
 
           <div className="flex items-end gap-4">
             <h1 className="text-4xl font-black uppercase tracking-tight text-white sm:text-5xl">
@@ -443,23 +424,17 @@ export default function PublicInvoiceDetailsPage({
           </div>
 
           <h2 className="mt-6 text-3xl font-black text-white sm:text-4xl">
-            Verso de facture
+            Détail de l’intervention
           </h2>
 
           <p className="mt-2 max-w-2xl text-base leading-7 text-slate-300">
-            Détail des actes, prestations, quantités et prix liés à la facture {buildInvoiceNumber(invoice)}.
+            Actes, prestations, quantités et prix liés à la facture {buildInvoiceNumber(invoice)}.
           </p>
         </header>
 
         <div className="grid gap-5 lg:grid-cols-12">
           <div className="lg:col-span-8">
-            <div style={{ perspective: "1600px" }}
-              className={
-                "overflow-hidden rounded-[1.6rem] border border-[#d7a83f]/24 bg-[#fffaf0] text-[#0f172a] shadow-[0_38px_110px_rgba(0,0,0,0.58)] ring-1 ring-[#d7a83f]/18 transition-all duration-[760ms] [transform-style:preserve-3d] hover:-translate-y-1 hover:shadow-[0_48px_130px_rgba(0,0,0,0.62)] " +
-                (isFlipping
-                  ? "[transform:rotateY(88deg)_scale(0.985)] opacity-80"
-                  : "opacity-100")
-              }>
+            <div className="overflow-hidden rounded-[1.6rem] border border-[#d7a83f]/24 bg-[#fffaf0] text-[#0f172a] shadow-[0_38px_110px_rgba(0,0,0,0.58)] ring-1 ring-[#d7a83f]/18">
               <div className="border-b border-[#e8dcc0] bg-gradient-to-br from-white via-[#fffaf0] to-[#f5eddc] p-6 sm:p-8">
                 <div className="flex gap-4">
                   <span className="inline-flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl border border-[#d7a83f]/45 bg-[#2b2208] text-[#f8d479] shadow-[0_0_35px_rgba(215,168,63,0.16)]">

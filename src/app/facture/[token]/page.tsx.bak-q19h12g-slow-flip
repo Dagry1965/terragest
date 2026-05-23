@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import {
   ArrowLeft,
@@ -407,23 +406,6 @@ function QuickAction({
 export default function PublicInvoicePage({
   params,
 }: PublicInvoicePageProps) {
-  const router =
-    useRouter();
-
-  const [isFlipping, setIsFlipping] =
-    useState(false);
-
-  function flipTo(targetHref: string) {
-    if (isFlipping) {
-      return;
-    }
-
-    setIsFlipping(true);
-
-    window.setTimeout(() => {
-      router.push(targetHref);
-    }, 760);
-  }
   const [token, setToken] =
     useState("");
 
@@ -671,13 +653,7 @@ export default function PublicInvoicePage({
 
         <div className="grid gap-5 lg:grid-cols-12">
           <div className="lg:col-span-8">
-            <div style={{ perspective: "1600px" }}
-              className={
-                "overflow-hidden rounded-[1.6rem] border border-[#d7a83f]/24 bg-[#fffaf0] text-[#0f172a] shadow-[0_38px_110px_rgba(0,0,0,0.58)] ring-1 ring-[#d7a83f]/18 transition-all duration-[760ms] [transform-style:preserve-3d] hover:-translate-y-1 hover:shadow-[0_48px_130px_rgba(0,0,0,0.62)] " +
-                (isFlipping
-                  ? "[transform:rotateY(-88deg)_scale(0.985)] opacity-80"
-                  : "opacity-100")
-              }>
+            <div className="overflow-hidden rounded-[1.6rem] border border-[#d7a83f]/24 bg-[#fffaf0] text-[#0f172a] shadow-[0_38px_110px_rgba(0,0,0,0.58)] ring-1 ring-[#d7a83f]/18 transition duration-300 hover:-translate-y-1 hover:shadow-[0_48px_130px_rgba(0,0,0,0.62)]">
               <div className="border-b border-[#e8dcc0] bg-gradient-to-br from-white via-[#fffaf0] to-[#f5eddc] p-6 sm:p-8">
                 <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
                   <div className="flex gap-4">
@@ -796,14 +772,13 @@ export default function PublicInvoicePage({
                         </p>
                       </div>
 
-                      <button
-                        type="button"
-                        onClick={() => flipTo("/facture/" + token + "/details")}
+                      <Link
+                        href={"/facture/" + token + "/details"}
                         className="inline-flex shrink-0 items-center justify-center gap-3 rounded-xl border border-[#0f766e]/20 bg-[#0f766e] px-5 py-3 text-sm font-black text-white shadow-[0_18px_40px_rgba(15,118,110,0.22)] transition hover:bg-[#115e59]"
                       >
                         Retourner la facture
                         <ArrowRight className="h-4 w-4" />
-                      </button>
+                      </Link>
                     </div>
                   </div>
                 </div>
