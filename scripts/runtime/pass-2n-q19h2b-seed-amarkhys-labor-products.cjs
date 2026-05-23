@@ -80,24 +80,29 @@ function profitability(item) {
 }
 
 function product(item) {
+  const reference = item.reference;
+
   return {
-    id: item.reference,
+    id: reference,
+
     tenantId: "ORG_AMARKHYS_001",
     workspace: "amarkhys",
     moduleKey: "produitsauto",
     contextPath: "ORG_AMARKHYS_001/amarkhys/produitsauto",
     userId: "RGHcNSezlSbFQDUJQBUBfy0vMo13",
+
     createdAt: now(),
     updatedAt: now(),
 
-    reference: item.reference,
+    reference,
     nom: item.nom,
-    marque: item.marque,
+    marque: "AMARKHYS Garage",
+
     typeRecord: "simple",
     parentProductId: "",
 
     typeArticle: "service",
-    categorie: "Main d’œuvre",
+    categorie: "Main d'oeuvre",
     sousCategorie: item.sousCategorie,
     typeProduit: "non_stockable",
 
@@ -116,7 +121,7 @@ function product(item) {
     unitePoids: "",
     taille: "",
     couleur: "",
-    modele: "",
+    modele: item.modele,
     compatibilites: item.compatibilites,
 
     visibleBoutique: false,
@@ -140,34 +145,40 @@ function product(item) {
 
 const laborProducts = [
   {
-    reference: "MO-LEGERE",
-    nom: "Main d’œuvre légère",
-    marque: "AMARKHYS Garage",
-    sousCategorie: "Petite intervention",
+    reference: "MO-ESSENTIELLE",
+    nom: "Main d'oeuvre essentielle",
+    sousCategorie: "Intervention courte",
+    modele: "Forfait court",
     prixAchat: 0,
     prixVente: 10000,
-    compatibilites: "Diagnostic rapide, contrôle simple, petite opération atelier.",
-    description: "Forfait main d’œuvre pour intervention légère ou diagnostic simple.",
+    compatibilites:
+      "Diagnostic rapide, controle simple, petite operation atelier.",
+    description:
+      "Forfait main d'oeuvre pour intervention courte ou diagnostic simple.",
   },
   {
-    reference: "MO-STANDARD",
-    nom: "Main d’œuvre standard",
-    marque: "AMARKHYS Garage",
-    sousCategorie: "Intervention courante",
+    reference: "MO-TECHNIQUE",
+    nom: "Main d'oeuvre technique",
+    sousCategorie: "Intervention standard",
+    modele: "Forfait standard",
     prixAchat: 0,
     prixVente: 25000,
-    compatibilites: "Vidange, remplacement courant, contrôle approfondi, intervention mécanique standard.",
-    description: "Forfait main d’œuvre pour intervention mécanique courante.",
+    compatibilites:
+      "Vidange, remplacement courant, controle approfondi, intervention mecanique standard.",
+    description:
+      "Forfait main d'oeuvre pour intervention mecanique courante.",
   },
   {
-    reference: "MO-RENFORCEE",
-    nom: "Main d’œuvre renforcée",
-    marque: "AMARKHYS Garage",
+    reference: "MO-EXPERTISE",
+    nom: "Main d'oeuvre expertise",
     sousCategorie: "Intervention complexe",
+    modele: "Forfait complexe",
     prixAchat: 0,
     prixVente: 50000,
-    compatibilites: "Diagnostic complexe, démontage important, intervention longue ou technique.",
-    description: "Forfait main d’œuvre pour intervention complexe ou longue durée.",
+    compatibilites:
+      "Diagnostic complexe, demontage important, intervention longue ou technique.",
+    description:
+      "Forfait main d'oeuvre pour intervention complexe ou longue duree.",
   },
 ];
 
@@ -175,7 +186,12 @@ async function main() {
   readEnvLocal();
 
   const { initializeApp, getApps } = await import("firebase/app");
-  const { getFirestore, doc, setDoc, getDoc } = await import("firebase/firestore");
+  const {
+    getFirestore,
+    doc,
+    setDoc,
+    getDoc,
+  } = await import("firebase/firestore");
 
   const firebaseConfig = {
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -186,11 +202,14 @@ async function main() {
     appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
   };
 
-  const app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
+  const app = getApps().length
+    ? getApps()[0]
+    : initializeApp(firebaseConfig);
+
   const db = getFirestore(app);
 
   console.log("[PROJECT]", process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID);
-  console.log("[SEED]", laborProducts.length, "prestations main d’œuvre");
+  console.log("[SEED]", laborProducts.length, "prestations main d'oeuvre");
 
   for (const item of laborProducts) {
     const payload = product(item);
@@ -204,11 +223,18 @@ async function main() {
       throw new Error("Ecriture non confirmee pour " + payload.reference);
     }
 
-    console.log("[SERVICE]", payload.reference, "-", payload.nom);
+    console.log(
+      "[SERVICE]",
+      payload.reference,
+      "-",
+      payload.nom,
+      "- stockable:",
+      payload.stockable
+    );
   }
 
   console.log("");
-  console.log("[DONE] Prestations main d’œuvre AMARKHYS importées.");
+  console.log("[DONE] Prestations main d'oeuvre AMARKHYS importees.");
   console.log("Total : 3");
 }
 
