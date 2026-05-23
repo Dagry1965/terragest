@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import {
   ArrowLeft,
-  ArrowRight,
   BadgeCheck,
   Car,
   CheckCircle2,
@@ -708,77 +707,99 @@ export default function PublicInvoicePage({
               <div className="grid gap-5 bg-[#fffaf0] p-6 sm:p-8">
                 <div>
                   <p className="mb-4 text-xs font-black uppercase tracking-[0.26em] text-[#8a640f]">
-                    Synthèse facture
+                    Informations facture
                   </p>
 
                   <div className="grid gap-4 md:grid-cols-2">
-                    <div className="rounded-[1.25rem] border border-[#e8dcc0] bg-white p-5 shadow-sm">
-                      <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-full border border-[#e8dcc0] bg-[#fffaf0]">
-                        <FileText className="h-5 w-5 text-[#0f766e]" />
-                      </div>
+                    <InfoItem
+                      icon={FileText}
+                      label="Numéro"
+                      value={summary.numero}
+                      gold
+                    />
 
-                      <p className="text-xs font-black uppercase tracking-[0.18em] text-slate-500">
-                        Facture
-                      </p>
+                    <InfoItem
+                      icon={Clock3}
+                      label="Date facture"
+                      value={summary.date || "-"}
+                    />
 
-                      <p className="mt-3 text-lg font-black text-[#0f172a]">
-                        {summary.numero}
-                      </p>
+                    <InfoItem
+                      icon={User}
+                      label="Client"
+                      value={buildClientLabel(client)}
+                    />
 
-                      <p className="mt-1 text-sm font-semibold text-slate-600">
-                        Date : {summary.date || "-"}
-                      </p>
-                    </div>
+                    <InfoItem
+                      icon={Phone}
+                      label="Contact"
+                      value={buildClientContact(client) || "-"}
+                    />
 
-                    <div className="rounded-[1.25rem] border border-[#e8dcc0] bg-white p-5 shadow-sm">
-                      <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-full border border-[#e8dcc0] bg-[#fffaf0]">
-                        <Car className="h-5 w-5 text-[#0f766e]" />
-                      </div>
+                    <InfoItem
+                      icon={Car}
+                      label="Véhicule"
+                      value={buildVehicleLabel(vehicule)}
+                    />
 
-                      <p className="text-xs font-black uppercase tracking-[0.18em] text-slate-500">
-                        Client & véhicule
-                      </p>
-
-                      <p className="mt-3 text-lg font-black text-[#0f172a]">
-                        {buildClientLabel(client)}
-                      </p>
-
-                      <p className="mt-1 text-sm font-semibold text-slate-600">
-                        Téléphone : {value(client, "telephone", "-")}
-                      </p>
-
-                      <p className="mt-1 text-sm font-semibold text-slate-600">
-                        Véhicule : {buildVehicleLabel(vehicule)}
-                      </p>
-                    </div>
+                    <InfoItem
+                      icon={Wrench}
+                      label="Intervention"
+                      value={buildInterventionLabel(intervention)}
+                    />
                   </div>
                 </div>
 
                 <div>
                   <p className="mb-4 text-xs font-black uppercase tracking-[0.26em] text-[#8a640f]">
-                    Intervention
+                    Détail intervention
                   </p>
 
                   <div className="rounded-[1.25rem] border border-[#e8dcc0] bg-white p-5 shadow-sm">
-                    <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
+                    <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                       <div>
-                        <p className="text-lg font-black text-[#0f172a]">
+                        <p className="text-sm font-black text-[#0f172a]">
                           {buildInterventionLabel(intervention)}
                         </p>
 
-                        <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600">
-                          Cette facture présente la synthèse financière. Le détail des actes,
-                          prestations, quantités et prix est disponible dans une page dédiée.
+                        <p className="mt-2 text-sm leading-6 text-slate-600">
+                          Cette zone est prévue pour afficher le détail des prestations,
+                          diagnostics, pièces, main d’œuvre et remarques liées à l’intervention.
                         </p>
                       </div>
 
-                      <Link
-                        href={"/facture/" + token + "/details"}
-                        className="inline-flex shrink-0 items-center justify-center gap-3 rounded-xl border border-[#0f766e]/20 bg-[#0f766e] px-5 py-3 text-sm font-black text-white shadow-[0_18px_40px_rgba(15,118,110,0.22)] transition hover:bg-[#115e59]"
-                      >
-                        Voir le détail
-                        <ArrowRight className="h-4 w-4" />
-                      </Link>
+                      <span className="inline-flex shrink-0 rounded-full border border-[#0f766e]/20 bg-[#ecfdf5] px-4 py-2 text-xs font-black uppercase tracking-[0.14em] text-[#0f766e]">
+                        Suivi atelier
+                      </span>
+                    </div>
+
+                    <div className="mt-5 grid gap-3">
+                      <div className="flex items-start gap-3 rounded-2xl border border-[#e8dcc0] bg-[#fffaf0] p-4">
+                        <span className="mt-1 h-2.5 w-2.5 shrink-0 rounded-full bg-[#0f766e]" />
+                        <div>
+                          <p className="text-sm font-black text-[#0f172a]">
+                            Intervention liée à cette facture
+                          </p>
+                          <p className="mt-1 text-sm leading-6 text-slate-600">
+                            Les opérations détaillées pourront être affichées ici sous forme
+                            de liste ou de tableau lorsque les lignes d’intervention seront
+                            exposées au client.
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-start gap-3 rounded-2xl border border-[#e8dcc0] bg-[#fffaf0] p-4">
+                        <span className="mt-1 h-2.5 w-2.5 shrink-0 rounded-full bg-[#d7a83f]" />
+                        <div>
+                          <p className="text-sm font-black text-[#0f172a]">
+                            Document de synthèse client
+                          </p>
+                          <p className="mt-1 text-sm leading-6 text-slate-600">
+                            Cette facture présente le résumé financier. Le détail technique
+                            complet peut être communiqué par AMARKHYS si nécessaire.
+                          </p>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>

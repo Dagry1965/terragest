@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import {
   ArrowLeft,
-  ArrowRight,
   BadgeCheck,
   Car,
   CheckCircle2,
@@ -258,8 +257,8 @@ function StatusBadge({
     <div
       className={
         cancelled
-          ? "rounded-2xl border border-red-400/35 bg-red-500/10 px-5 py-4 text-red-700"
-          : "rounded-2xl border border-[#d7a83f]/45 bg-[#2b2208]/60 px-5 py-4 text-[#8a640f] shadow-[0_0_24px_rgba(215,168,63,0.12)]"
+          ? "rounded-2xl border border-red-400/35 bg-red-500/10 px-5 py-4 text-red-100"
+          : "rounded-2xl border border-[#d7a83f]/45 bg-[#2b2208]/60 px-5 py-4 text-[#f8d479] shadow-[0_0_24px_rgba(215,168,63,0.12)]"
       }
     >
       <p className="text-xs font-black uppercase tracking-[0.2em] opacity-80">
@@ -288,25 +287,25 @@ function InfoItem({
     <div
       className={
         gold
-          ? "rounded-[1.25rem] border border-[#e8dcc0] bg-white p-5 shadow-[0_24px_70px_rgba(0,0,0,0.32)]"
-          : "rounded-[1.25rem] border border-[#e8dcc0] bg-white p-5 shadow-[0_24px_70px_rgba(0,0,0,0.28)]"
+          ? "rounded-[1.25rem] border border-[#d7a83f]/28 bg-[#2b2208]/35 p-5 shadow-[0_24px_70px_rgba(0,0,0,0.32)]"
+          : "rounded-[1.25rem] border border-[#23ead4]/18 bg-black/18 p-5 shadow-[0_24px_70px_rgba(0,0,0,0.28)]"
       }
     >
-      <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-full border border-[#e8dcc0] bg-[#fffaf0]">
+      <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.055]">
         <Icon
           className={
             gold
-              ? "h-5 w-5 text-[#8a640f]"
-              : "h-5 w-5 text-[#0f766e]"
+              ? "h-5 w-5 text-[#f8d479]"
+              : "h-5 w-5 text-[#23ead4]"
           }
         />
       </div>
 
-      <p className="text-xs font-black uppercase tracking-[0.18em] text-slate-500">
+      <p className="text-xs font-black uppercase tracking-[0.18em] text-slate-400">
         {label}
       </p>
 
-      <p className="mt-2 text-sm font-black leading-6 text-[#0f172a]">
+      <p className="mt-2 text-sm font-black leading-6 text-white">
         {value || "-"}
       </p>
     </div>
@@ -328,23 +327,23 @@ function MoneyCard({
     <div
       className={
         cancelled
-          ? "rounded-[1.25rem] border border-red-200 bg-red-50 p-5"
+          ? "rounded-[1.25rem] border border-red-400/30 bg-red-500/10 p-5"
           : highlight
-            ? "rounded-[1.25rem] border border-[#d7a83f]/45 bg-[#fff6d8] p-5 shadow-[0_0_38px_rgba(215,168,63,0.10)]"
-            : "rounded-[1.25rem] border border-[#e8dcc0] bg-white p-5"
+            ? "rounded-[1.25rem] border border-[#d7a83f]/45 bg-[#2b2208]/50 p-5 shadow-[0_0_38px_rgba(215,168,63,0.10)]"
+            : "rounded-[1.25rem] border border-[#23ead4]/18 bg-black/18 p-5"
       }
     >
-      <p className="text-xs font-black uppercase tracking-[0.18em] text-slate-500">
+      <p className="text-xs font-black uppercase tracking-[0.18em] text-slate-400">
         {label}
       </p>
 
       <p
         className={
           cancelled
-            ? "mt-3 text-xl font-black text-red-700"
+            ? "mt-3 text-xl font-black text-red-100"
             : highlight
-              ? "mt-3 text-xl font-black text-[#8a640f]"
-              : "mt-3 text-xl font-black text-[#0f172a]"
+              ? "mt-3 text-xl font-black text-[#f8d479]"
+              : "mt-3 text-xl font-black text-white"
         }
       >
         {cancelled ? "Désactivé" : formatMoney(value)}
@@ -367,7 +366,7 @@ function QuickAction({
   const className =
     gold
       ? "flex w-full items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-[#f5c04a] via-[#d7a83f] to-[#9a6a17] px-5 py-4 text-sm font-black uppercase tracking-wide text-[#0b0b05] shadow-[0_0_48px_rgba(215,168,63,0.18)] transition hover:scale-[1.01]"
-      : "flex w-full items-center justify-center gap-3 rounded-xl border border-[#23ead4]/24 bg-black/18 px-5 py-4 text-sm font-black text-[#0f172a] transition hover:bg-black/28";
+      : "flex w-full items-center justify-center gap-3 rounded-xl border border-[#23ead4]/24 bg-black/18 px-5 py-4 text-sm font-black text-white transition hover:bg-black/28";
 
   if (external) {
     return (
@@ -560,10 +559,10 @@ export default function PublicInvoicePage({
 
   if (loading) {
     return (
-      <main className="min-h-screen bg-[#020807] px-5 py-8 text-[#0f172a]">
+      <main className="min-h-screen bg-[#020807] px-5 py-8 text-white">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_16%_10%,rgba(35,234,212,0.10),transparent_30%),radial-gradient(circle_at_84%_8%,rgba(215,168,63,0.10),transparent_24%),linear-gradient(135deg,#020807_0%,#03130f_50%,#020807_100%)]" />
         <div className="relative mx-auto max-w-5xl rounded-[1.6rem] border border-[#23ead4]/24 bg-white/[0.045] p-8 shadow-[0_38px_110px_rgba(0,0,0,0.55)] backdrop-blur-xl">
-          <p className="text-sm font-black uppercase tracking-[0.3em] text-[#0f766e]">
+          <p className="text-sm font-black uppercase tracking-[0.3em] text-[#23ead4]">
             {AMARKHYS_BUSINESS_IDENTITY.displayName.toUpperCase()}
           </p>
           <h1 className="mt-4 text-3xl font-black">
@@ -576,7 +575,7 @@ export default function PublicInvoicePage({
 
   if (!invoice || !summary) {
     return (
-      <main className="min-h-screen bg-[#020807] px-5 py-8 text-[#0f172a]">
+      <main className="min-h-screen bg-[#020807] px-5 py-8 text-white">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_16%_10%,rgba(35,234,212,0.10),transparent_30%),radial-gradient(circle_at_84%_8%,rgba(215,168,63,0.10),transparent_24%),linear-gradient(135deg,#020807_0%,#03130f_50%,#020807_100%)]" />
         <div className="relative mx-auto max-w-5xl rounded-[1.6rem] border border-red-400/25 bg-red-500/10 p-8 shadow-[0_38px_110px_rgba(0,0,0,0.55)] backdrop-blur-xl">
           <p className="text-sm font-black uppercase tracking-[0.3em] text-red-300">
@@ -603,7 +602,7 @@ export default function PublicInvoicePage({
   }
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-[#020807] px-5 py-7 text-[#0f172a] sm:px-8 lg:px-10">
+    <main className="relative min-h-screen overflow-hidden bg-[#020807] px-5 py-7 text-white sm:px-8 lg:px-10">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_16%_10%,rgba(35,234,212,0.10),transparent_30%),radial-gradient(circle_at_84%_8%,rgba(215,168,63,0.10),transparent_24%),radial-gradient(circle_at_70%_80%,rgba(7,95,83,0.34),transparent_34%),linear-gradient(135deg,#020807_0%,#03130f_50%,#020807_100%)]" />
       <div className="absolute inset-0 opacity-[0.035] [background-image:linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] [background-size:46px_46px]" />
 
@@ -612,7 +611,7 @@ export default function PublicInvoicePage({
           <div>
             <Link
               href="/"
-              className="mb-5 inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.045] px-4 py-2 text-xs font-black text-slate-200 transition hover:border-[#23ead4]/30 hover:text-[#0f172a]"
+              className="mb-5 inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.045] px-4 py-2 text-xs font-black text-slate-200 transition hover:border-[#23ead4]/30 hover:text-white"
             >
               <ArrowLeft className="h-4 w-4" />
               Retour au site
@@ -653,30 +652,30 @@ export default function PublicInvoicePage({
 
         <div className="grid gap-5 lg:grid-cols-12">
           <div className="lg:col-span-8">
-            <div className="overflow-hidden rounded-[1.6rem] border border-[#d7a83f]/24 bg-[#fffaf0] text-[#0f172a] shadow-[0_38px_110px_rgba(0,0,0,0.58)] ring-1 ring-[#d7a83f]/18">
-              <div className="border-b border-[#e8dcc0] bg-gradient-to-br from-white via-[#fffaf0] to-[#f5eddc] p-6 sm:p-8">
+            <div className="overflow-hidden rounded-[1.6rem] border border-[#d7a83f]/20 bg-gradient-to-br from-[#075f53] via-[#053d36] to-[#031612] shadow-[0_38px_110px_rgba(0,0,0,0.58)] ring-1 ring-[#23ead4]/12">
+              <div className="border-b border-white/10 p-6 sm:p-8">
                 <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
                   <div className="flex gap-4">
-                    <span className="inline-flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl border border-[#d7a83f]/45 bg-[#2b2208] text-[#8a640f] shadow-[0_0_35px_rgba(215,168,63,0.16)]">
+                    <span className="inline-flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl border border-[#23ead4]/35 bg-[#052e2a] text-[#23ead4] shadow-[0_0_45px_rgba(35,234,212,0.12)]">
                       <Receipt className="h-8 w-8" />
                     </span>
 
                     <div>
-                      <p className="text-xs font-black uppercase tracking-[0.28em] text-[#0f766e]">
+                      <p className="text-xs font-black uppercase tracking-[0.28em] text-[#23ead4]">
                         Facture client
                       </p>
 
-                      <h3 className="mt-2 text-3xl font-black text-[#0f172a]">
+                      <h3 className="mt-2 text-3xl font-black text-white">
                         {summary.numero}
                       </h3>
 
-                      <p className="mt-1 text-sm font-semibold text-slate-600">
+                      <p className="mt-1 text-sm text-cyan-50/75">
                         Date facture : {summary.date || "-"}
                       </p>
                     </div>
                   </div>
 
-                  <div className="rounded-xl border border-[#d7a83f]/45 bg-[#fff6d8] px-4 py-3 text-sm font-black text-[#8a640f]">
+                  <div className="rounded-xl border border-[#d7a83f]/45 bg-[#2b2208]/60 px-4 py-3 text-sm font-black text-[#f8d479]">
                     <div className="flex items-center gap-2">
                       {summary.isCancelledInvoice ? (
                         <XCircle className="h-4 w-4" />
@@ -695,7 +694,7 @@ export default function PublicInvoicePage({
                     Facture annulée
                   </p>
 
-                  <h4 className="mt-3 text-2xl font-black text-[#0f172a]">
+                  <h4 className="mt-3 text-2xl font-black text-white">
                     Aucune nouvelle opération de paiement
                   </h4>
 
@@ -705,86 +704,54 @@ export default function PublicInvoicePage({
                 </div>
               ) : null}
 
-              <div className="grid gap-5 bg-[#fffaf0] p-6 sm:p-8">
+              <div className="grid gap-5 p-6 sm:p-8">
                 <div>
-                  <p className="mb-4 text-xs font-black uppercase tracking-[0.26em] text-[#8a640f]">
-                    Synthèse facture
+                  <p className="mb-4 text-xs font-black uppercase tracking-[0.26em] text-[#f8d479]">
+                    Informations facture
                   </p>
 
                   <div className="grid gap-4 md:grid-cols-2">
-                    <div className="rounded-[1.25rem] border border-[#e8dcc0] bg-white p-5 shadow-sm">
-                      <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-full border border-[#e8dcc0] bg-[#fffaf0]">
-                        <FileText className="h-5 w-5 text-[#0f766e]" />
-                      </div>
+                    <InfoItem
+                      icon={FileText}
+                      label="Numéro"
+                      value={summary.numero}
+                      gold
+                    />
 
-                      <p className="text-xs font-black uppercase tracking-[0.18em] text-slate-500">
-                        Facture
-                      </p>
+                    <InfoItem
+                      icon={Clock3}
+                      label="Date facture"
+                      value={summary.date || "-"}
+                    />
 
-                      <p className="mt-3 text-lg font-black text-[#0f172a]">
-                        {summary.numero}
-                      </p>
+                    <InfoItem
+                      icon={User}
+                      label="Client"
+                      value={buildClientLabel(client)}
+                    />
 
-                      <p className="mt-1 text-sm font-semibold text-slate-600">
-                        Date : {summary.date || "-"}
-                      </p>
-                    </div>
+                    <InfoItem
+                      icon={Phone}
+                      label="Contact"
+                      value={buildClientContact(client) || "-"}
+                    />
 
-                    <div className="rounded-[1.25rem] border border-[#e8dcc0] bg-white p-5 shadow-sm">
-                      <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-full border border-[#e8dcc0] bg-[#fffaf0]">
-                        <Car className="h-5 w-5 text-[#0f766e]" />
-                      </div>
+                    <InfoItem
+                      icon={Car}
+                      label="Véhicule"
+                      value={buildVehicleLabel(vehicule)}
+                    />
 
-                      <p className="text-xs font-black uppercase tracking-[0.18em] text-slate-500">
-                        Client & véhicule
-                      </p>
-
-                      <p className="mt-3 text-lg font-black text-[#0f172a]">
-                        {buildClientLabel(client)}
-                      </p>
-
-                      <p className="mt-1 text-sm font-semibold text-slate-600">
-                        Téléphone : {value(client, "telephone", "-")}
-                      </p>
-
-                      <p className="mt-1 text-sm font-semibold text-slate-600">
-                        Véhicule : {buildVehicleLabel(vehicule)}
-                      </p>
-                    </div>
+                    <InfoItem
+                      icon={Wrench}
+                      label="Intervention"
+                      value={buildInterventionLabel(intervention)}
+                    />
                   </div>
                 </div>
 
                 <div>
-                  <p className="mb-4 text-xs font-black uppercase tracking-[0.26em] text-[#8a640f]">
-                    Intervention
-                  </p>
-
-                  <div className="rounded-[1.25rem] border border-[#e8dcc0] bg-white p-5 shadow-sm">
-                    <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
-                      <div>
-                        <p className="text-lg font-black text-[#0f172a]">
-                          {buildInterventionLabel(intervention)}
-                        </p>
-
-                        <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600">
-                          Cette facture présente la synthèse financière. Le détail des actes,
-                          prestations, quantités et prix est disponible dans une page dédiée.
-                        </p>
-                      </div>
-
-                      <Link
-                        href={"/facture/" + token + "/details"}
-                        className="inline-flex shrink-0 items-center justify-center gap-3 rounded-xl border border-[#0f766e]/20 bg-[#0f766e] px-5 py-3 text-sm font-black text-white shadow-[0_18px_40px_rgba(15,118,110,0.22)] transition hover:bg-[#115e59]"
-                      >
-                        Voir le détail
-                        <ArrowRight className="h-4 w-4" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <p className="mb-4 text-xs font-black uppercase tracking-[0.26em] text-[#8a640f]">
+                  <p className="mb-4 text-xs font-black uppercase tracking-[0.26em] text-[#f8d479]">
                     Paiement
                   </p>
 
@@ -815,8 +782,8 @@ export default function PublicInvoicePage({
                   </div>
                 </div>
 
-                <div className="rounded-[1.25rem] border border-[#e8dcc0] bg-[#fff6d8] p-5 shadow-sm">
-                  <p className="text-sm font-bold leading-7 text-[#493b16]">
+                <div className="rounded-[1.25rem] border border-[#d7a83f]/24 bg-gradient-to-r from-[#1a1608]/78 via-[#061915]/84 to-[#041b18] p-5">
+                  <p className="text-sm font-bold leading-7 text-cyan-50/85">
                     {summary.isCancelledInvoice
                       ? "Cette facture est annulée. Pour toute question, contactez " + AMARKHYS_BUSINESS_IDENTITY.displayName + " avec le numéro de facture."
                       : "Pour toute question sur cette facture, contactez " + AMARKHYS_BUSINESS_IDENTITY.displayName + " avec le numéro de facture."}
@@ -828,8 +795,8 @@ export default function PublicInvoicePage({
 
           <aside className="lg:col-span-4">
             <div className="sticky top-7 space-y-5">
-              <div className="rounded-[1.6rem] border border-[#d7a83f]/32 bg-gradient-to-br from-[#241d08]/86 via-[#06231f]/92 to-[#04110f] p-6 text-white shadow-[0_34px_100px_rgba(0,0,0,0.48)] ring-1 ring-[#23ead4]/10">
-                <p className="text-xs font-black uppercase tracking-[0.26em] text-[#8a640f]">
+              <div className="rounded-[1.6rem] border border-[#d7a83f]/24 bg-gradient-to-br from-[#1a1608]/78 via-[#061915]/84 to-[#041b18] p-6 shadow-[0_28px_90px_rgba(0,0,0,0.38)]">
+                <p className="text-xs font-black uppercase tracking-[0.26em] text-[#f8d479]">
                   Actions rapides
                 </p>
 
@@ -844,27 +811,27 @@ export default function PublicInvoicePage({
                   </QuickAction>
 
                   <QuickAction href={buildAmarkhysTelHref()}>
-                    <Phone className="h-5 w-5 text-[#0f766e]" />
+                    <Phone className="h-5 w-5 text-[#23ead4]" />
                     Appeler le garage
                   </QuickAction>
 
                   <QuickAction href="/">
-                    <ArrowLeft className="h-5 w-5 text-[#0f766e]" />
+                    <ArrowLeft className="h-5 w-5 text-[#23ead4]" />
                     Retour au site
                   </QuickAction>
                 </div>
               </div>
 
-              <div className="rounded-[1.35rem] border border-[#23ead4]/35 bg-gradient-to-br from-[#087264] via-[#065147] to-[#04211d] p-6 text-white shadow-[0_34px_100px_rgba(0,0,0,0.48)] ring-1 ring-[#23ead4]/16">
-                <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-full border border-[#23ead4]/35 bg-[#063f39] text-[#0f766e]">
-                  <ShieldCheck className="h-6 w-6 drop-shadow-[0_0_10px_rgba(55,255,228,0.28)]" />
+              <div className="rounded-[1.35rem] border border-[#23ead4]/22 bg-gradient-to-br from-[#075f53] via-[#06443d] to-[#041b18] p-6 shadow-[0_30px_90px_rgba(0,0,0,0.42)]">
+                <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-full border border-[#23ead4]/35 bg-[#063f39] text-[#23ead4]">
+                  <ShieldCheck className="h-6 w-6" />
                 </div>
 
-                <p className="text-sm font-black uppercase tracking-[0.16em] text-[#0f766e]">
+                <p className="text-sm font-black uppercase tracking-[0.16em] text-[#23ead4]">
                   Paiement en ligne
                 </p>
 
-                <p className="mt-3 text-sm leading-6 text-cyan-50/85">
+                <p className="mt-3 text-sm leading-6 text-cyan-50/75">
                   Module de règlement sécurisé à connecter dans une prochaine étape.
                 </p>
               </div>

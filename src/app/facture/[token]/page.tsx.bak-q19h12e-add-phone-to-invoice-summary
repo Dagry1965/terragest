@@ -744,11 +744,7 @@ export default function PublicInvoicePage({
                       </p>
 
                       <p className="mt-1 text-sm font-semibold text-slate-600">
-                        Téléphone : {value(client, "telephone", "-")}
-                      </p>
-
-                      <p className="mt-1 text-sm font-semibold text-slate-600">
-                        Véhicule : {buildVehicleLabel(vehicule)}
+                        {buildVehicleLabel(vehicule)}
                       </p>
                     </div>
                   </div>
