@@ -41,7 +41,7 @@ const amarkhysModules: SidebarModule[] = [
   },
   {
     key: "vehicules",
-    label: "Véhicules",
+    label: "Vehicules",
     href: "/vehicules",
   },
   {
@@ -74,7 +74,27 @@ const amarkhysModules: SidebarModule[] = [
     label: "Stocks",
     href: "/stocksauto",
   },
-];
+  {
+    key: "mouvementsstockauto",
+    label: "Mouvements stock",
+    href: "/mouvementsstockauto",
+  },
+  {
+    key: "fournisseursauto",
+    label: "Fournisseurs",
+    href: "/fournisseursauto",
+  },
+  {
+    key: "commandesstockauto",
+    label: "Commandes stock",
+    href: "/commandesstockauto",
+  },
+  {
+    key: "receptionsstockauto",
+    label: "Receptions stock",
+    href: "/receptionsstockauto",
+  },
+]
 
 const amarkhysWorkspace: SidebarWorkspace = {
   key: "amarkhys",
@@ -104,7 +124,17 @@ function isAmarkhysPath(
     pathname === "/produitsauto" ||
     pathname.startsWith("/produitsauto/") ||
     pathname === "/stocksauto" ||
-    pathname.startsWith("/stocksauto/")
+    pathname.startsWith("/stocksauto/") ||
+    pathname === "/mouvementsstockauto" ||
+    pathname.startsWith("/mouvementsstockauto/") ||
+    pathname === "/fournisseursauto" ||
+    pathname.startsWith("/fournisseursauto/") ||
+    pathname === "/commandesstockauto" ||
+    pathname.startsWith("/commandesstockauto/") ||
+    pathname === "/lignescommandestockauto" ||
+    pathname.startsWith("/lignescommandestockauto/") ||
+    pathname === "/receptionsstockauto" ||
+    pathname.startsWith("/receptionsstockauto/")
   );
 }
 
@@ -123,13 +153,11 @@ function getSidebarNavigation(
     return [
       {
         ...amarkhysWorkspace,
-        modules:
-          amarkhysWorkspace.modules.filter(
-            (module) =>
-              ERPSessionRuntime.canAccessModule(
-                module.key
-              )
-          ),
+        // Q21B4B_AMARKHYS_NAVIGATION_VISIBILITY
+        // AMARKHYS has its own hardcoded garage navigation for now.
+        // Module activation / deactivation will be centralized later.
+        // Here, workspace access is enough to show the garage menu.
+        modules: amarkhysWorkspace.modules,
       },
     ];
   }
