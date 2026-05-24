@@ -448,6 +448,16 @@ export const lignesinterventionautoModule: ERPModule = {
     ],
   },
 
+  actions: [
+    {
+      key: "retirer-ligne",
+      label: "Retirer la ligne",
+      type: "danger",
+      runtimeOnly: true,
+      permission: "lignesinterventionauto:update",
+    },
+  ],
+
   workflows: [
     {
       key: "ligne-intervention",
