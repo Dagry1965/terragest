@@ -71,7 +71,7 @@ const runtimeStatusPolicies: RuntimeStatusGovernancePolicy[] = [
         title: "Ligne en préparation",
         message:
           "Cette ligne n'est pas encore comptabilisée. Elle ne sortira pas du stock tant qu'elle n'est pas validée.",
-        tone: "default",
+        tone: "warning",
       },
       {
         status: "validee",

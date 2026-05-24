@@ -487,6 +487,39 @@ export function ERPEnterpriseForm({
       (field) => field.type === "relation"
     );
 
+  const statusGovernance =
+    RuntimeStatusGovernanceEngine.resolve({
+      moduleKey: module.metadata.key,
+      record: {
+        ...initialData,
+        ...formValues,
+      },
+    });
+
+  const statusGuidance =
+    statusGovernance?.guidance?.[0] ?? null;
+
+  const statusGuidanceToneClass =
+    // Q20H4C2_STATUS_GUIDANCE_TONE
+    statusGuidance?.tone === "success"
+      ? "border-emerald-100 bg-emerald-50/70 text-emerald-950"
+      : statusGuidance?.tone === "warning"
+        ? "border-amber-200 bg-amber-50/80 text-amber-950"
+        : statusGuidance?.tone === "danger"
+          ? "border-rose-200 bg-rose-50/80 text-rose-950"
+          : statusGuidance?.tone === "info"
+            ? "border-cyan-200 bg-cyan-50/80 text-cyan-950"
+            : "border-amber-200 bg-amber-50/80 text-amber-950";
+
+  const statusGuidanceMessageClass =
+    statusGuidance?.tone === "success"
+      ? "text-emerald-900/80"
+      : statusGuidance?.tone === "danger"
+        ? "text-rose-900/80"
+        : statusGuidance?.tone === "info"
+          ? "text-cyan-900/80"
+          : "text-amber-900/80";
+
   const errorByField =
     Object.fromEntries(
       errors.map((error) => [
@@ -1649,7 +1682,28 @@ preparedPayload.terrainId
             </>
           )}
 <div className="flex flex-wrap gap-3 rounded-2xl sm:rounded-3xl border border-[var(--erp-border)] bg-[var(--erp-surface)] p-5 shadow-sm">
-            {errors.length > 0 && (
+            {statusGuidance && (
+          <div
+            className={[
+              "rounded-2xl border px-5 py-4 text-sm shadow-sm",
+              statusGuidanceToneClass,
+            ].join(" ")}
+          >
+            <div className="font-semibold">
+              {statusGuidance.title}
+            </div>
+            <p
+              className={[
+                "mt-1 leading-6",
+                statusGuidanceMessageClass,
+              ].join(" ")}
+            >
+              {statusGuidance.message}
+            </p>
+          </div>
+        )}
+
+        {errors.length > 0 && (
               <div className="w-full rounded-2xl sm:rounded-3xl border border-red-200 bg-red-50 p-5">
                 <h3 className="text-sm font-black text-red-700">
                   Validation métier
