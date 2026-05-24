@@ -123,10 +123,14 @@ export const receptionsstockautoModule: ERPModule = {
         options: [
           { label: "Brouillon", value: "brouillon" },
           { label: "Validee", value: "validee" },
-          { label: "Annulee", value: "annulee" },
         ],
         list: { order: 7 },
         grid: { cols: 4 },
+        // Q21D_RECEPTION_STATUS_RULE
+        // Statuts visibles volontairement limites :
+        // brouillon = preparation sans impact stock
+        // validee = entree stock traitee par runtime
+        // annulation = future action controlee avec mouvement inverse
       },
       {
         key: "notes",

@@ -91,6 +91,42 @@ const runtimeStatusPolicies: RuntimeStatusGovernancePolicy[] = [
       "removedReason",
     ],
   },
+  {
+    moduleKey: "receptionsstockauto",
+    statusField: "statut",
+    editMode: "manual",
+    statuses: [
+      {
+        key: "brouillon",
+        label: "Brouillon",
+        description:
+          "La reception est en preparation. Elle ne declenche aucun mouvement stock.",
+        visibility: "visible",
+        tone: "default",
+      },
+      {
+        key: "validee",
+        label: "Validee",
+        description:
+          "La reception est validee. Elle cree une entree stock et ne doit plus etre modifiee librement.",
+        visibility: "visible",
+        tone: "success",
+      },
+      {
+        key: "annulee",
+        label: "Annulee",
+        description:
+          "L'annulation d'une reception validee devra passer par une action controlee avec mouvement inverse.",
+        visibility: "hidden",
+        tone: "danger",
+      },
+    ],
+    technicalFields: [
+      "mouvementStockId",
+      "stockProcessedAt",
+      "stockProcessedQuantity",
+    ],
+  },
 ];
 
 function getPolicy(moduleKey: string): RuntimeStatusGovernancePolicy | undefined {
