@@ -403,7 +403,11 @@ export function ERPEnterpriseForm({
         );
 
   const isRemovedRecord =
-    forceReadOnlyBecauseRemoved || Boolean(initialData?.removedAt);
+    forceReadOnlyBecauseRemoved ||
+    Boolean(initialData?.removedAt) ||
+    Boolean(initialData?.removedFromStatus) ||
+    Boolean(initialData?.removedReason) ||
+    Boolean(initialData?.stockReversalMovementId);
 
   const readOnlyFields =
     isRemovedRecord
@@ -417,9 +421,9 @@ export function ERPEnterpriseForm({
           );
 
   // Q15F_A2_ACTIVE_CREATE_LOCK_POLICY
-  // Création directe : aucun champ composition.lockedFields n'est bloqué.
-  // Création enfant : seuls les champs transmis par lockFields dans l'URL sont bloqués.
-  // Edit/detail : les verrous de composition restent appliqués.
+  // Creation directe : aucun champ composition.lockedFields n'est bloque.
+  // Creation enfant : seuls les champs transmis par lockFields dans l'URL sont bloques.es.
+  // Edit/detail : les verrous de composition restent appliques.
 
   const [saving, setSaving] = useState(false);
 
@@ -504,11 +508,13 @@ export function ERPEnterpriseForm({
     });
 
   const statusGuidance =
-    statusGovernance?.guidance?.[0] ?? null;
+    isRemovedRecord
+      ? null
+      : statusGovernance?.guidance?.[0] ?? null;
 
   const isStatusActionOnly =
     // Q20H4D_ACTION_ONLY_STATUS_NOTICE
-    statusGovernance?.editMode === "action_only";
+    !isRemovedRecord && statusGovernance?.editMode === "action_only";
 
   const statusGuidanceToneClass =
     // Q20H4C2_STATUS_GUIDANCE_TONE
@@ -552,10 +558,10 @@ export function ERPEnterpriseForm({
         "Conflit de planning"
       ) ||
       message.includes(
-        "ce véhicule possède déjÃƒÆ’Ã‚  un rendez-vous"
+        "ce vehicule possede dej  un rendez-vous"
       )
     ) {
-      return "Ce véhicule a déjÃƒÆ’Ã‚  un rendez-vous sur cette plage horaire. Choisissez un autre créneau ou modifiez le rendez-vous existant.";
+      return "Ce vehicule a dej  un rendez-vous sur cette plage horaire. Choisissez une autre heure ou modifiez le rendez-vous existant.";
     }
 
     if (
@@ -566,10 +572,10 @@ export function ERPEnterpriseForm({
         "heureRendezVous"
       ) ||
       message.includes(
-        "créneau"
+        "creneau"
       )
     ) {
-      return "Le rendez-vous doit avoir une date et une heure valides avant d'être enregistré.";
+      return "Le rendez-vous doit avoir une date et une heure valides avant d'etre enregistre.";
     }
 
     if (
@@ -577,7 +583,7 @@ export function ERPEnterpriseForm({
         "clientId manquant"
       )
     ) {
-      return "Veuillez sélectionner un client avant d'enregistrer.";
+      return "Veuillez selectionner un client avant d'enregistrer.";
     }
 
     if (
@@ -585,15 +591,15 @@ export function ERPEnterpriseForm({
         "vehiculeId manquant"
       )
     ) {
-      return "Veuillez sélectionner un véhicule avant d'enregistrer.";
+      return "Veuillez selectionner un vehicule avant d'enregistrer.";
     }
 
     if (
       message.includes(
-        "déjÃƒÆ’Ã‚  été consommé"
+        "dej  ete consomme"
       )
     ) {
-      return "Ce rendez-vous a déjÃƒÆ’Ã‚  généré une intervention. Aucune nouvelle intervention ne sera créée.";
+      return "Ce rendez-vous a dej  genere une intervention. Aucune nouvelle intervention ne sera creee.";
     }
 
     return message;
@@ -1083,7 +1089,7 @@ const formData =
         {
           field: "businessRules",
           message:
-            "Les règles métier ERP bloquent cet enregistrement.",
+            "Les regles metier ERP bloquent cet enregistrement.",
         },
       ]);
 
@@ -1274,7 +1280,7 @@ preparedPayload.terrainId
 
   async function handleDeleteRecord() {
     const confirmed = window.confirm(
-      "Supprimer cet élément ?"
+      "Supprimer cet element ?"
     );
 
     if (!confirmed) {
@@ -1325,16 +1331,16 @@ preparedPayload.terrainId
         label: "Archiver client",
         nextStatus: "archive",
         confirmMessage:
-          "Archiver ce client ? Il ne sera pas supprimé et son historique sera conservé.",
+          "Archiver ce client ? Il ne sera pas supprime et son historique sera conserve.",
       };
     }
 
     if (moduleKey === "vehicules" && currentStatus !== "archive") {
       return {
-        label: "Archiver véhicule",
+        label: "Archiver vehicule",
         nextStatus: "archive",
         confirmMessage:
-          "Archiver ce véhicule ? Il ne sera pas supprimé et son historique sera conservé.",
+          "Archiver ce vehicule ? Il ne sera pas supprime et son historique sera conserve.",
       };
     }
 
@@ -1350,7 +1356,7 @@ preparedPayload.terrainId
         nextStatus: "annulee",
         statusField: "statutFacture",
         confirmMessage:
-          "Annuler cette facture ? Les paiements, échéances et historiques seront conservés.",
+          "Annuler cette facture ? Les paiements, echeances et historiques seront conserves.",
       };
     }
 
@@ -1359,16 +1365,16 @@ preparedPayload.terrainId
         label: "Annuler encaissement",
         nextStatus: "annule",
         confirmMessage:
-          "Annuler cet encaissement ? Le paiement restera conservé dans lÃƒ¢ââ€š¬ââ€ž¢historique.",
+          "Annuler cet encaissement ? Le paiement restera conserve dans l'historique.",
       };
     }
 
     if (moduleKey === "echeancespaiementauto" && currentStatus !== "annulee") {
       return {
-        label: "Annuler échéance",
+        label: "Annuler echeance",
         nextStatus: "annulee",
         confirmMessage:
-          "Annuler cette échéance ? Elle restera conservée dans lÃƒ¢ââ€š¬ââ€ž¢historique.",
+          "Annuler cette echeance ? Elle restera conservee dans l'historique.",
       };
     }
 
@@ -1410,7 +1416,7 @@ preparedPayload.terrainId
       const message =
         error instanceof Error
           ? error.message
-          : "Action métier impossible.";
+          : "Action metier impossible.";
 
       setErrors([
         {
@@ -1423,7 +1429,7 @@ preparedPayload.terrainId
     }
   }
 
-  const businessStatusAction = getBusinessStatusAction();
+  const businessStatusAction = isRemovedRecord ? null : getBusinessStatusAction();
 
   function isSensitiveBusinessModule() {
     return [
@@ -1471,9 +1477,31 @@ preparedPayload.terrainId
               ? "agri-enterprise"
               : "default-enterprise"
         }
-        onSubmit={handleSubmit}
+        onSubmit={isRemovedRecord ? (event) => event.preventDefault() : handleSubmit}
       >
       <ERPReturnBreadcrumb />
+
+      {isRemovedRecord ? (
+        <section
+          data-removed-record-readonly-banner
+          className="
+            rounded-2xl
+            border
+            border-slate-200
+            bg-slate-50
+            px-5
+            py-4
+            shadow-sm
+          "
+        >
+          <div className="text-sm font-black text-slate-900">
+            Ligne retiree - lecture seule
+          </div>
+          <p className="mt-1 text-sm font-medium text-slate-600">
+            Cette ligne a ete retiree du flux actif. Elle reste conservee pour l'audit, la tracabilite, les mouvements stock et les totaux, mais elle ne peut plus etre modifiee.
+          </p>
+        </section>
+      ) : null}
 
       {isInvoiceEditForm ? (
         <div data-invoice-document-actions>
@@ -1504,7 +1532,7 @@ preparedPayload.terrainId
               </h2>
 
               <p className="mt-2 max-w-3xl text-sm leading-6 text-[var(--erp-text-muted)]">
-                Crée un encaissement lié ÃƒÆ’Ã‚  cette facture. Le montant payé, le reste ÃƒÆ’Ã‚  payer et le statut de paiement seront recalculés automatiquement.
+                Cree un encaissement lie   cette facture. Le montant paye, le reste   payer et l'historique de paiement seront mis   jour proprement.
               </p>
 
               <div className="mt-5 grid gap-3 md:grid-cols-3">
@@ -1519,7 +1547,7 @@ preparedPayload.terrainId
 
                 <div className="rounded-2xl border border-[var(--erp-border-strong)] bg-white p-4">
                   <p className="text-xs font-bold uppercase tracking-wide text-[var(--erp-text-muted)]">
-                    DéjÃƒÆ’Ã‚  payé
+                    Dej  paye
                   </p>
                   <p className="mt-1 text-xl font-black text-[var(--erp-text)]">
                     {invoiceAmountSummary.montantPaye.toLocaleString("fr-FR")} FCFA
@@ -1528,7 +1556,7 @@ preparedPayload.terrainId
 
                 <div className="rounded-2xl border border-[var(--erp-border-strong)] bg-white p-4">
                   <p className="text-xs font-bold uppercase tracking-wide text-[var(--erp-text-muted)]">
-                    Reste ÃƒÆ’Ã‚  payer
+                    Reste   payer
                   </p>
                   <p className="mt-1 text-xl font-black text-[var(--erp-primary)]">
                     {invoiceAmountSummary.resteAPayer.toLocaleString("fr-FR")} FCFA
@@ -1582,14 +1610,14 @@ preparedPayload.terrainId
         </div>
       ) : null}
 
-      {mode === "edit" && workflowActions.length > 0 && (
+      {mode === "edit" && !isRemovedRecord && workflowActions.length > 0 && (
         <section className="rounded-2xl sm:rounded-3xl border border-[#D5E4E8] bg-[#F8FAFC] p-4 shadow-[0_8px_24px_rgba(15,23,42,0.06)]">
           <div className="mb-3">
             <p className="text-xs font-black uppercase tracking-wide text-[#334155]">
               Workflow
             </p>
             <p className="text-sm text-[#111827]">
-              Ces actions enregistrent d'abord le formulaire, puis exécutent le workflow.
+              Ces actions enregistrent d'abord le formulaire, puis executent le workflow.low.
             </p>
           </div>
 
@@ -1628,7 +1656,7 @@ preparedPayload.terrainId
         <div className="bg-gradient-to-r from-white via-white to-[var(--erp-primary-soft)] px-8 py-8 text-[var(--erp-text)]">
           <p className="text-sm font-bold uppercase tracking-wide text-[#475569]">
             {mode === "create"
-              ? "Création"
+              ? "Creation"
               : "Modification"}
           </p>
 
@@ -1637,7 +1665,7 @@ preparedPayload.terrainId
           </h1>
 
           <p className="mt-3 max-w-3xl text-base leading-7 text-slate-300">
-            Formulaire métier connecté au binding runtime.
+            Formulaire metier connecte au binding runtime.
           </p>
         </div>
       </section>
@@ -1676,7 +1704,7 @@ preparedPayload.terrainId
               {relationFields.length > 0 && (
                 <ERPFormSection
                   title="Relations"
-                  description="Associe cet élément aux autres objets métier."
+                  description="Associe cet element aux autres objets metier."
                 >
                   {relationFields.map((field) => (
                     <ERPFormField
@@ -1709,10 +1737,10 @@ preparedPayload.terrainId
             "
           >
             <span className="font-semibold text-slate-900">
-              Statut piloté par les actions.
+              Statut pilote par les actions.
             </span>{" "}
-            Le statut indique lÃƒ¢ââ€š¬ââ€ž¢état métier de la fiche. Pour changer cet état,
-            utilisez les boutons dÃƒ¢ââ€š¬ââ€ž¢action prévus par le système.
+            Le statut indique l'etat metier de la fiche. Pour changer cet etat,
+            utilisez les boutons d'action prevus par le systeme.
           </div>
         )}
 
@@ -1740,7 +1768,7 @@ preparedPayload.terrainId
         {errors.length > 0 && (
               <div className="w-full rounded-2xl sm:rounded-3xl border border-red-200 bg-red-50 p-5">
                 <h3 className="text-sm font-black text-red-700">
-                  Validation métier
+                  Validation metier
                 </h3>
 
                 <div className="mt-3 space-y-2">
@@ -1749,7 +1777,7 @@ preparedPayload.terrainId
                       key={index}
                       className="text-sm text-red-600"
                     >
-                      Ãƒ¢ââ€š¬Ã‚¢ {error.field} : {error.message}
+                      - {error.field} : {error.message}
                     </div>
                   ))}
                 </div>
@@ -1780,7 +1808,7 @@ preparedPayload.terrainId
                     <p className="text-xs font-black uppercase tracking-wide text-amber-700">
 
 
-                      Action métier
+                      Action metier
 
 
                     </p>
@@ -1804,7 +1832,7 @@ preparedPayload.terrainId
                     <p className="mt-2 text-sm leading-6 text-[var(--erp-text-muted)]">
 
 
-                      Cette action conserve lÃƒ¢ââ€š¬ââ€ž¢historique et évite une suppression brute.
+                      Cette action conserve l'historique et evite une suppression brutale.
 
 
                     </p>
@@ -1850,38 +1878,40 @@ preparedPayload.terrainId
 
 
 
-            <ERPButton
-              type="submit"
-              disabled={saving}
-            >
-              {saving
-                ? "Enregistrement..."
-                : "Enregistrer"}
-            </ERPButton>
+            {!isRemovedRecord ? (
+              <>
+                <ERPButton
+                  type="submit"
+                  disabled={saving}
+                >
+                  {saving
+                    ? "Enregistrement..."
+                    : "Enregistrer"}
+                </ERPButton>
 
-            <ERPButton
-              variant="secondary"
-              type="button"
-              disabled={saving}
-              onClick={() =>
-                router.push(
-                  returnTo ??
-                    module.metadata.routes?.list ??
-                    `/${module.metadata.key}`
-                )
-              }
-            >
-              Annuler
-            </ERPButton>
+                <ERPButton
+                  variant="secondary"
+                  type="button"
+                  disabled={saving}
+                  onClick={() =>
+                    router.push(
+                      returnTo ??
+                        module.metadata.routes?.list ??
+                        `/${module.metadata.key}`
+                    )
+                  }
+                >
+                  Annuler
+                </ERPButton>
+              </>
+            ) : null}
 
                         {mode === "edit" && Boolean(initialData?.id) && sensitiveBusinessModule ? (
               <div
                 data-sensitive-delete-hidden-notice
                 className="w-full rounded-2xl border border-[var(--erp-border-strong)] bg-[var(--erp-primary-soft)] px-4 py-3 text-sm text-[var(--erp-text-muted)]"
               >
-                Suppression masquée pour préserver lÃƒ¢ââ€š¬ââ€ž¢historique. Utilisez lÃƒ¢ââ€š¬ââ€ž¢action métier
-                adaptée, comme Ãƒ¢ââ€š¬Ã…"Retirer la ligneÃƒ¢ââ€š¬Ã‚, afin que le stock, les totaux et
-                la traçabilité soient corrigés proprement.
+                Suppression masquee pour preserver l'historique. Utilisez l'action metier adaptee, comme "Retirer la ligne", afin que le stock, les totaux et la tracabilite soient corriges proprement.
               </div>
             ) : null}
 
@@ -1889,7 +1919,7 @@ preparedPayload.terrainId
               <ERPButton
                 type="button"
                 variant="danger"
-                disabled={saving}
+                disabled={saving || isRemovedRecord}
                 onClick={handleDeleteRecord}
               >
                 Supprimer
