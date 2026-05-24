@@ -35,6 +35,114 @@ function formatMoney(value: unknown): string {
   );
 }
 
+function normalizeRelatedStatusValue(value: unknown): string {
+  return String(value ?? "")
+    .trim()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+}
+
+function isRelatedStatusValue(value: unknown): boolean {
+  // Q20H5E_B2_STATUS_BADGE
+  const status = normalizeRelatedStatusValue(value);
+
+  return [
+    "brouillon",
+    "draft",
+    "validee",
+    "valide",
+    "retiree",
+  ].includes(status);
+}
+
+function getRelatedStatusBadgeClass(value: unknown): string {
+  const status = normalizeRelatedStatusValue(value);
+
+  if (status === "validee" || status === "valide") {
+    return "border-emerald-200 bg-emerald-50 text-emerald-800";
+  }
+
+  if (status === "brouillon" || status === "draft") {
+    return "border-amber-200 bg-amber-50 text-amber-800";
+  }
+
+  if (status === "retiree") {
+    return "border-slate-200 bg-slate-50 text-slate-700";
+  }
+
+  return "border-slate-200 bg-slate-50 text-slate-700";
+}
+
+function getRecordStatusValue(record: Record<string, unknown>): string {
+  // Q20H5E_B3_AMOUNT_STATUS_TONE
+  return normalizeRelatedStatusValue(record.statut ?? record.status);
+}
+
+function getRelatedAmountBoxClassByStatus(record: Record<string, unknown>): string {
+  const status = getRecordStatusValue(record);
+
+  if (status === "validee" || status === "valide") {
+    return "border-emerald-200 bg-emerald-50";
+  }
+
+  if (status === "brouillon" || status === "draft") {
+    return "border-amber-200 bg-amber-50";
+  }
+
+  if (status === "retiree") {
+    return "border-slate-200 bg-slate-50";
+  }
+
+  return "border-slate-200 bg-slate-50";
+}
+
+function getRelatedAmountLabelClassByStatus(record: Record<string, unknown>): string {
+  const status = getRecordStatusValue(record);
+
+  if (status === "validee" || status === "valide") {
+    return "text-emerald-700";
+  }
+
+  if (status === "brouillon" || status === "draft") {
+    return "text-amber-700";
+  }
+
+  if (status === "retiree") {
+    return "text-slate-600";
+  }
+
+  return "text-slate-600";
+}
+
+function getRelatedAmountValueClassByStatus(record: Record<string, unknown>): string {
+  const status = getRecordStatusValue(record);
+
+  if (status === "validee" || status === "valide") {
+    return "text-emerald-950";
+  }
+
+  if (status === "brouillon" || status === "draft") {
+    return "text-amber-950";
+  }
+
+  if (status === "retiree") {
+    return "text-slate-700";
+  }
+
+  return "text-slate-950";
+}
+
+function formatRelatedStatusLabel(value: unknown): string {
+  const status = normalizeRelatedStatusValue(value);
+
+  if (status === "validee" || status === "valide") return "Validée";
+  if (status === "brouillon" || status === "draft") return "Brouillon";
+  if (status === "retiree") return "Retirée";
+
+  return String(value ?? "");
+}
+
 function getAmount(record: Record<string, unknown>, field?: string): number {
   if (!field) return 0;
 
@@ -678,6 +786,15 @@ export function ERPRelatedRecordsPanel({
             ? getAmount(record, child.totalField)
             : null;
 
+          const amountBoxClass =
+            getRelatedAmountBoxClassByStatus(record);
+
+          const amountLabelClass =
+            getRelatedAmountLabelClassByStatus(record);
+
+          const amountValueClass =
+            getRelatedAmountValueClassByStatus(record);
+
           const relationParts = (child.relations ?? [])
             .map((relation) => {
               const relationId = String(record[relation.field] ?? "");
@@ -710,24 +827,50 @@ export function ERPRelatedRecordsPanel({
 
                 {configuredSubtitleParts.length > 0 || relationParts.length > 0 ? (
                   <div className="mt-2 flex flex-wrap gap-2 text-xs font-bold text-slate-600">
-                    {[...configuredSubtitleParts, ...relationParts].map((part) => (
-                      <span
-                        key={part}
-                        className="rounded-full bg-slate-100 px-3 py-1"
-                      >
-                        {part}
-                      </span>
-                    ))}
+                    {[...configuredSubtitleParts, ...relationParts].map((part) => {
+                      const isStatus = isRelatedStatusValue(part);
+
+                      return (
+                        <span
+                          key={part}
+                          className={[
+                            "rounded-full border px-3 py-1 font-black",
+                            isStatus
+                              ? getRelatedStatusBadgeClass(part)
+                              : "border-slate-200 bg-slate-100 text-slate-600",
+                          ].join(" ")}
+                        >
+                          {isStatus
+                            ? formatRelatedStatusLabel(part)
+                            : part}
+                        </span>
+                      );
+                    })}
                   </div>
                 ) : null}
               </div>
 
               {amount !== null ? (
-                <div className="rounded-2xl border border-emerald-100 bg-emerald-50 px-4 py-3 text-right">
-                  <p className="text-xs font-black uppercase tracking-wide text-emerald-700">
+                <div
+                  className={[
+                    "rounded-2xl border px-4 py-3 text-right",
+                    amountBoxClass,
+                  ].join(" ")}
+                >
+                  <p
+                    className={[
+                      "text-xs font-black uppercase tracking-wide",
+                      amountLabelClass,
+                    ].join(" ")}
+                  >
                     Montant
                   </p>
-                  <p className="mt-1 whitespace-nowrap text-base font-black text-slate-950">
+                  <p
+                    className={[
+                      "mt-1 whitespace-nowrap text-base font-black",
+                      amountValueClass,
+                    ].join(" ")}
+                  >
                     {formatMoney(amount)}
                   </p>
                 </div>
