@@ -55,8 +55,14 @@ function roundMoney(value: number): number {
   return Math.round(value * 100) / 100;
 }
 
-function isCancelled(line: RuntimeRecord): boolean {
-  return asText(line.statut) === "annulee";
+function isCountableLine(line: RuntimeRecord): boolean {
+  // Q20H5D_VALIDATED_LINES_ONLY
+  // Une ligne est comptabilisée uniquement lorsqu'elle est validée
+  // et qu'elle n'a pas été retirée techniquement.
+  return (
+    asText(line.statut) === "validee" &&
+    !line.removedAt
+  );
 }
 
 function getLineHT(line: RuntimeRecord): number {
@@ -113,7 +119,7 @@ function getLineTTC(
 function computeTotals(lines: RuntimeRecord[]): InterventionTotals {
   return lines.reduce<InterventionTotals>(
     (totals, line) => {
-      if (isCancelled(line)) {
+      if (!isCountableLine(line)) {
         return totals;
       }
 
