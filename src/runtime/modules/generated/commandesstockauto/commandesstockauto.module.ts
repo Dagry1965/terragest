@@ -1,0 +1,160 @@
+import type { ERPModule } from "@/runtime/modules/ERPModule";
+
+export const commandesstockautoModule: ERPModule = {
+  metadata: {
+    key: "commandesstockauto",
+    label: "Commandes stock",
+    description: "Commandes fournisseurs pour pieces et consommables AMARKHYS",
+    icon: "shopping-cart",
+    category: "amarkhys",
+    features: {
+      dashboard: true,
+      analytics: true,
+      workflows: true,
+      automation: true,
+      notifications: true,
+      observability: true,
+      audit: true,
+      realtime: true,
+    },
+  },
+
+  schema: {
+    collection: "commandesstockauto",
+    fields: [
+      {
+        key: "numeroCommande",
+        label: "Numero commande",
+        type: "text",
+        searchable: true,
+        list: { order: 1 },
+        grid: { cols: 4 },
+      },
+      {
+        key: "fournisseurId",
+        label: "Fournisseur",
+        type: "relation",
+        relation: { module: "fournisseursauto" },
+        required: true,
+        searchable: true,
+        list: { order: 2 },
+        grid: { cols: 4 },
+      },
+      {
+        key: "dateCommande",
+        label: "Date commande",
+        type: "date",
+        required: true,
+        list: { order: 3 },
+        grid: { cols: 4 },
+      },
+      {
+        key: "dateLivraisonPrevue",
+        label: "Date livraison prevue",
+        type: "date",
+        grid: { cols: 4 },
+      },
+      {
+        key: "montantHT",
+        label: "Montant HT",
+        type: "number",
+        defaultValue: 0,
+        list: { order: 4 },
+        grid: { cols: 4 },
+      },
+      {
+        key: "montantTTC",
+        label: "Montant TTC",
+        type: "number",
+        defaultValue: 0,
+        list: { order: 5 },
+        grid: { cols: 4 },
+      },
+      {
+        key: "statut",
+        label: "Statut",
+        type: "select",
+        defaultValue: "brouillon",
+        options: [
+          { label: "Brouillon", value: "brouillon" },
+          { label: "Envoyee", value: "envoyee" },
+          { label: "Partiellement recue", value: "partiellement_recue" },
+          { label: "Recue", value: "recue" },
+          { label: "Annulee", value: "annulee" },
+        ],
+        list: { order: 6 },
+        grid: { cols: 4 },
+      },
+      {
+        key: "notes",
+        label: "Notes",
+        type: "textarea",
+        grid: { cols: 12 },
+      },
+    ],
+  },
+
+  form: {
+    layout: "tabs",
+    tabs: [
+      {
+        key: "commande",
+        label: "Commande",
+        fields: [
+          "numeroCommande",
+          "fournisseurId",
+          "dateCommande",
+          "dateLivraisonPrevue",
+          "montantHT",
+          "montantTTC",
+          "statut",
+          "notes",
+        ],
+        sections: [
+          {
+            key: "general",
+            title: "Commande fournisseur",
+            fields: [
+              "numeroCommande",
+              "fournisseurId",
+              "dateCommande",
+              "dateLivraisonPrevue",
+              "montantHT",
+              "montantTTC",
+              "statut",
+              "notes",
+            ],
+          },
+        ],
+      },
+    ],
+  },
+
+  composition: {
+    labelFields: ["numeroCommande", "fournisseurId", "statut"],
+    children: [
+      {
+        key: "lignes-commandestock",
+        moduleKey: "lignescommandestockauto",
+        foreignKey: "commandeId",
+        title: "Lignes de commande",
+        displayIn: ["detail", "edit"],
+        lazy: true,
+        position: "after",
+        allowCreate: true,
+        labelFields: ["produitId", "quantiteCommandee", "prixUnitaireHT", "statut"],
+      },
+      {
+        key: "receptions-stock",
+        moduleKey: "receptionsstockauto",
+        foreignKey: "commandeId",
+        title: "Receptions",
+        displayIn: ["detail", "edit"],
+        lazy: true,
+        position: "after",
+        allowCreate: true,
+        labelFields: ["produitId", "quantiteRecue", "dateReception", "statut"],
+      },
+    ],
+  },
+};

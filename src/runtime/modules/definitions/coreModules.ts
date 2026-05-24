@@ -1,3 +1,7 @@
+import { receptionsstockautoModule } from "@/runtime/modules/generated/receptionsstockauto";
+import { lignescommandestockautoModule } from "@/runtime/modules/generated/lignescommandestockauto";
+import { commandesstockautoModule } from "@/runtime/modules/generated/commandesstockauto";
+import { fournisseursautoModule } from "@/runtime/modules/generated/fournisseursauto";
 import { rappelsautoModule } from "@/runtime/modules/generated/rappelsauto";
 import { stocksautoModule } from "@/runtime/modules/generated/stocksauto";
 import { mouvementsstockautoModule } from "@/runtime/modules/generated/mouvementsstockauto";
@@ -23,6 +27,10 @@ import {
 from "../factory";
 
 export const coreERPModules: ERPModule[] = [
+  fournisseursautoModule,
+  commandesstockautoModule,
+  lignescommandestockautoModule,
+  receptionsstockautoModule,
   rappelsautoModule,
   stocksautoModule,
   produitsautoModule,
@@ -227,6 +235,10 @@ for (const module of mergedERPModules) {
   stocksautoModule,
   mouvementsstockautoModule,
   rappelsautoModule,
+  fournisseursautoModule,
+  commandesstockautoModule,
+  lignescommandestockautoModule,
+  receptionsstockautoModule,
 ].forEach((module) => {
   preferredERPModules.set(
     module.metadata.key,
