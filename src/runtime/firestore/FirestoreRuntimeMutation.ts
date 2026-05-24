@@ -178,27 +178,32 @@ async function processRuntimePostMutationSideEffects(
   module: ERPModule,
   record: Record<string, unknown>
 ): Promise<void> {
-  if (module.metadata.key !== "lignesinterventionauto") {
+  if (
+    module.metadata.key !== "lignesinterventionauto" &&
+    module.metadata.key !== "receptionsstockauto"
+  ) {
     return;
   }
 
-  try {
-    const { RuntimeInterventionTotalsService } =
-      await import("@/runtime/interventions");
+  if (module.metadata.key === "lignesinterventionauto") {
+    try {
+      const { RuntimeInterventionTotalsService } =
+        await import("@/runtime/interventions");
 
-    const interventionId =
-      String(record.interventionId ?? "").trim();
+      const interventionId =
+        String(record.interventionId ?? "").trim();
 
-    if (interventionId) {
-      await RuntimeInterventionTotalsService.syncInterventionTotals({
-        interventionId,
-      });
+      if (interventionId) {
+        await RuntimeInterventionTotalsService.syncInterventionTotals({
+          interventionId,
+        });
+      }
+    } catch (error) {
+      console.error(
+        "[RUNTIME_INTERVENTION_TOTALS_SYNC_ERROR]",
+        error
+      );
     }
-  } catch (error) {
-    console.error(
-      "[RUNTIME_INTERVENTION_TOTALS_SYNC_ERROR]",
-      error
-    );
   }
 
   try {
@@ -206,9 +211,13 @@ async function processRuntimePostMutationSideEffects(
       await import("@/runtime/stock");
 
     const result =
-      await RuntimeStockMovementService.processInterventionLineStock({
-        line: record,
-      });
+      module.metadata.key === "receptionsstockauto"
+        ? await RuntimeStockMovementService.processStockReception({
+            reception: record,
+          })
+        : await RuntimeStockMovementService.processInterventionLineStock({
+            line: record,
+          });
 
 
     if (result.processed) {
@@ -330,7 +339,8 @@ export class FirestoreRuntimeMutation {
     // Une update partielle peut ne pas contenir interventionId.
     // On récupère l'ancien record pour transmettre un record complet aux side-effects.
     const previousRecordForSideEffects =
-      module.metadata.key === "lignesinterventionauto"
+      module.metadata.key === "lignesinterventionauto" ||
+      module.metadata.key === "receptionsstockauto"
         ? await FirestoreRuntimeRepository.findById(
             module,
             id
