@@ -115,6 +115,17 @@ function getRelatedAmountLabelClassByStatus(record: Record<string, unknown>): st
   return "text-slate-600";
 }
 
+function isRelatedRecordCountable(record: Record<string, unknown>): boolean {
+  // Q20H5E_C_VALID_TOTAL_RIGHT
+  // Le total visible du panneau ne compte que les lignes confirmées.
+  const status = normalizeRelatedStatusValue(record.statut ?? record.status);
+
+  return (
+    (status === "validee" || status === "valide") &&
+    !record.removedAt
+  );
+}
+
 function getRelatedAmountValueClassByStatus(record: Record<string, unknown>): string {
   const status = getRecordStatusValue(record);
 
@@ -703,7 +714,10 @@ export function ERPRelatedRecordsPanel({
   );
 
   const total = records.reduce(
-    (sum, record) => sum + getAmount(record, child.totalField),
+    (sum, record) =>
+      isRelatedRecordCountable(record)
+        ? sum + getAmount(record, child.totalField)
+        : sum,
     0
   );
 
@@ -728,7 +742,7 @@ export function ERPRelatedRecordsPanel({
               : child.badgeLabel
                 ? `${records.length} ${child.badgeLabel}`
                 : child.totalField
-                  ? `${records.length} ligne(s) · total ${formatMoney(total)}`
+                  ? `${records.length} ligne(s)`
                   : `${records.length} enregistrement(s)`}
           </p>
 
@@ -740,6 +754,17 @@ export function ERPRelatedRecordsPanel({
         </div>
 
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+          {child.totalField ? (
+            <div className="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-right shadow-sm">
+              <p className="text-[10px] font-black uppercase tracking-wide text-emerald-700">
+                Total lignes validées
+              </p>
+              <p className="mt-1 whitespace-nowrap text-base font-black text-emerald-950">
+                {formatMoney(total)}
+              </p>
+            </div>
+          ) : null}
+
           <label className="flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-3 py-2 text-xs font-black text-slate-600">
             Trier :
             <select
