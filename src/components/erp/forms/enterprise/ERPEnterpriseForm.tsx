@@ -499,6 +499,10 @@ export function ERPEnterpriseForm({
   const statusGuidance =
     statusGovernance?.guidance?.[0] ?? null;
 
+  const isStatusActionOnly =
+    // Q20H4D_ACTION_ONLY_STATUS_NOTICE
+    statusGovernance?.editMode === "action_only";
+
   const statusGuidanceToneClass =
     // Q20H4C2_STATUS_GUIDANCE_TONE
     statusGuidance?.tone === "success"
@@ -1682,7 +1686,29 @@ preparedPayload.terrainId
             </>
           )}
 <div className="flex flex-wrap gap-3 rounded-2xl sm:rounded-3xl border border-[var(--erp-border)] bg-[var(--erp-surface)] p-5 shadow-sm">
-            {statusGuidance && (
+            {isStatusActionOnly && (
+          <div
+            className="
+              rounded-2xl
+              border
+              border-slate-200
+              bg-slate-50
+              px-5
+              py-3
+              text-sm
+              text-slate-700
+              shadow-sm
+            "
+          >
+            <span className="font-semibold text-slate-900">
+              Statut piloté par les actions.
+            </span>{" "}
+            Le statut indique l’état métier de la fiche. Pour changer cet état,
+            utilisez les boutons d’action prévus par le système.
+          </div>
+        )}
+
+        {statusGuidance && (
           <div
             className={[
               "rounded-2xl border px-5 py-4 text-sm shadow-sm",
