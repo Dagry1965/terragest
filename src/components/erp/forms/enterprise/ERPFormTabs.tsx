@@ -175,7 +175,8 @@ export function ERPFormTabs({
                         key={field.key}
                         field={field}
                         value={formValues[field.key]}
-                        onChange={onFieldChange}
+                        formValues={formValues}
+                    onChange={onFieldChange}
                         error={fieldErrors[field.key]}
                         lockedFields={lockedFields}
                         readOnlyFields={readOnlyFields}
@@ -193,7 +194,8 @@ export function ERPFormTabs({
                         key={field.key}
                         field={field}
                         value={formValues[field.key]}
-                        onChange={onFieldChange}
+                        formValues={formValues}
+                    onChange={onFieldChange}
                         error={fieldErrors[field.key]}
                         lockedFields={lockedFields}
                         readOnlyFields={readOnlyFields}

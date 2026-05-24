@@ -23,6 +23,7 @@ interface ERPFormRelationChangeContext {
 interface ERPFormFieldProps {
   field: ERPModuleField;
   value?: unknown;
+  formValues?: Record<string, unknown>;
   onChange?: (
     key: string,
     value: unknown,
@@ -321,6 +322,7 @@ function FieldWrapper({
 export function ERPFormField({
   field,
   value,
+  formValues = {},
   onChange,
   error,
   lockedFields = [],
@@ -421,46 +423,15 @@ export function ERPFormField({
       return;
     }
 
-    const sourceField =
-      filterConfig.sourceField;
+    const sourceValue =
+      formValues[filterConfig.sourceField];
 
-    function refreshRelationFilterSourceValue() {
-      setRelationFilterSourceValue(
-        getCurrentFormValue(sourceField)
-      );
-    }
-
-    refreshRelationFilterSourceValue();
-
-    const sourceElement =
-      typeof document === "undefined"
-        ? null
-        : document.querySelector(
-            `[name="${sourceField}"]`
-          );
-
-    sourceElement?.addEventListener(
-      "change",
-      refreshRelationFilterSourceValue
+    setRelationFilterSourceValue(
+      sourceValue === undefined || sourceValue === null
+        ? ""
+        : String(sourceValue)
     );
-
-    sourceElement?.addEventListener(
-      "input",
-      refreshRelationFilterSourceValue
-    );
-
-    return () => {
-      sourceElement?.removeEventListener(
-        "change",
-        refreshRelationFilterSourceValue
-      );
-
-      sourceElement?.removeEventListener(
-        "input",
-        refreshRelationFilterSourceValue
-      );
-    };
-  }, [field]);
+  }, [field, formValues]);
 
   const label = (
     <span className="text-sm font-bold text-[var(--erp-text)]">
@@ -534,26 +505,35 @@ export function ERPFormField({
           .includes(relationSearch.toLowerCase())
       );
 
+      const hasActiveRelationFilter =
+        Boolean(
+          filterConfig?.sourceField &&
+          filterConfig?.targetField
+        );
+
       const currentOptionInFilteredList =
         filteredOptions.some((option) =>
           String(option.id) === String(currentValue)
         );
 
       const safeFilteredOptions =
-        currentValue && !currentOptionInFilteredList
-          ? [
-              {
-                id: String(currentValue),
-                label:
-                  selectedOption?.label &&
-                  true
-                    ? selectedOption.label
-                    : "Relation actuelle conservée",
-                record: selectedOption?.record,
-              },
-              ...filteredOptions,
-            ]
-          : filteredOptions;
+        hasActiveRelationFilter
+          ? filteredOptions
+          : currentValue && !currentOptionInFilteredList
+            ? [
+                {
+                  id: String(currentValue),
+                  label:
+                    selectedOption?.label &&
+                    true
+                      ? selectedOption.label
+                      : "Relation actuelle conservee",
+                  record:
+                    selectedOption?.record,
+                },
+                ...filteredOptions,
+              ]
+            : filteredOptions;
 
 
     const lockedDisplayLabel =

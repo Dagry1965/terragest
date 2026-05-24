@@ -788,6 +788,33 @@ export function ERPEnterpriseForm({
     };
   }
 
+  function getDependentRelationFieldKeys(
+    changedFieldKey: string
+  ): string[] {
+    const dependentKeys = new Set<string>();
+
+    for (const field of module.schema.fields) {
+      if (
+        !field.relation ||
+        typeof field.relation === "string"
+      ) {
+        continue;
+      }
+
+      const relationConfig = field.relation as {
+        filterBy?: {
+          sourceField?: string;
+        };
+      };
+
+      if (relationConfig.filterBy?.sourceField === changedFieldKey) {
+        dependentKeys.add(field.key);
+      }
+    }
+
+    return Array.from(dependentKeys);
+  }
+
   function handleFieldChange(
     key: string,
     value: unknown,
@@ -798,6 +825,15 @@ export function ERPEnterpriseForm({
         ...currentValues,
         [key]: value,
       };
+
+      const dependentRelationKeys =
+        getDependentRelationFieldKeys(key);
+
+      for (const dependentKey of dependentRelationKeys) {
+        if (dependentKey !== key) {
+          nextValues[dependentKey] = "";
+        }
+      }
 
       const autoFilledValues =
         applyRelationAutoFill(
@@ -1693,6 +1729,7 @@ preparedPayload.terrainId
                     key={field.key}
                     field={field}
                     value={formValues[field.key]}
+                    formValues={formValues}
                     onChange={handleFieldChange}
                     error={errorByField[field.key]}
                     lockedFields={lockedFields}
@@ -1711,7 +1748,8 @@ preparedPayload.terrainId
                       key={field.key}
                       field={field}
                       value={formValues[field.key]}
-                      onChange={handleFieldChange}
+                      formValues={formValues}
+                    onChange={handleFieldChange}
                       error={errorByField[field.key]}
                       lockedFields={lockedFields}
                       readOnlyFields={readOnlyFields}
