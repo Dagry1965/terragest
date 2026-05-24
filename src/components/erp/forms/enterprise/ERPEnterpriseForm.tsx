@@ -10,6 +10,7 @@ import type { ERPModule } from "@/runtime/modules";
 import type { ERPModuleAction } from "@/runtime/modules/ERPModule";
 import { ERPModuleBuilder } from "@/runtime/modules";
 import { RuntimeDataBinding } from "@/runtime/data-binding";
+import { RuntimeStatusGovernanceEngine } from "@/runtime/status";
 import { RuntimeActionEngine } from "@/runtime/actions/RuntimeActionEngine";
 import {
   RuntimeNotificationCenter,
@@ -80,6 +81,31 @@ import {
 import {
   getWorkspaceThemeStyle,
 } from "@/runtime/theme";
+
+function applyRuntimeStatusGovernanceToField(
+  moduleKey: string,
+  field: ERPModule["schema"]["fields"][number]
+): ERPModule["schema"]["fields"][number] {
+  // Q20H4B_STATUS_GOVERNANCE_FIELD_OPTIONS
+  // La policy runtime filtre les statuts visibles sans changer la sauvegarde.
+  if (field.key !== "statut" && field.key !== "status") {
+    return field;
+  }
+
+  const visibleStatusKeys =
+    RuntimeStatusGovernanceEngine.getVisibleStatusKeys(moduleKey);
+
+  if (visibleStatusKeys.length === 0 || !Array.isArray(field.options)) {
+    return field;
+  }
+
+  return {
+    ...field,
+    options: field.options.filter((option) =>
+      visibleStatusKeys.includes(String(option.value))
+    ),
+  };
+}
 
 interface ERPEnterpriseFormProps {
   module: ERPModule;
@@ -432,17 +458,24 @@ export function ERPEnterpriseForm({
   const currentUserRole = "admin";
 
   const visibleFields =
-    form.fields.filter(
-      (field) =>
-        RuntimeVisibilityEngine.isVisible(
-          field,
-          formValues
-        ) &&
-        RuntimePermissionEngine.canAccessField(
-          field,
-          currentUserRole
+    form.fields
+      .filter(
+        (field) =>
+          RuntimeVisibilityEngine.isVisible(
+            field,
+            formValues
+          ) &&
+          RuntimePermissionEngine.canAccessField(
+            field,
+            currentUserRole
+          )
+      )
+      .map((field) =>
+        applyRuntimeStatusGovernanceToField(
+          module.metadata.key,
+          field
         )
-    );
+      );
 
   const mainFields =
     visibleFields.filter(
