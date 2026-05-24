@@ -703,17 +703,23 @@ export function ERPRelatedRecordsPanel({
     };
   }, [parentRecordId, childModule, child]);
 
+  const activeRecords =
+    // Q20H5F_HIDE_REMOVED_RELATED_RECORDS
+    // Les lignes retirées restent en base pour audit,
+    // mais ne sont plus affichées comme lignes actives.
+    records.filter((record) => !record.removedAt);
+
   const sortedRecords = useMemo(
     () =>
       sortRelatedRecords(
-        records,
+        activeRecords,
         sortDirection,
         child.moduleKey
       ),
-    [records, sortDirection, child.moduleKey]
+    [activeRecords, sortDirection, child.moduleKey]
   );
 
-  const total = records.reduce(
+  const total = activeRecords.reduce(
     (sum, record) =>
       isRelatedRecordCountable(record)
         ? sum + getAmount(record, child.totalField)
@@ -740,10 +746,10 @@ export function ERPRelatedRecordsPanel({
             {loading
               ? "Chargement..."
               : child.badgeLabel
-                ? `${records.length} ${child.badgeLabel}`
+                ? `${activeRecords.length} ${child.badgeLabel}`
                 : child.totalField
-                  ? `${records.length} ligne(s)`
-                  : `${records.length} enregistrement(s)`}
+                  ? `${activeRecords.length} ligne(s)`
+                  : `${activeRecords.length} enregistrement(s)`}
           </p>
 
           {child.description ? (
@@ -793,7 +799,7 @@ export function ERPRelatedRecordsPanel({
       </div>
 
       <div className="space-y-3 bg-white p-4 sm:p-5">
-        {!loading && records.length === 0 ? (
+        {!loading && activeRecords.length === 0 ? (
           <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50 p-5 text-sm font-semibold text-slate-500">
             Aucun enregistrement lié pour le moment.
           </div>
