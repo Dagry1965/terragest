@@ -370,6 +370,20 @@ export const interventionsautoModule: ERPModule = {
         ],
         position: "after",
         lazy: true,
+
+        // Q20H5E_LINE_PANEL_STATUS_FIELDS
+        // Affichage métier des lignes liées dans l'intervention.
+        labelFields: [
+          "designation",
+          "produitNom",
+          "typeLigne",
+        ],
+        subtitleFields: [
+          "statut",
+          "quantite",
+          "montantTotal",
+        ],
+
         totalField: "montantTotal",
         relations: [
           {
