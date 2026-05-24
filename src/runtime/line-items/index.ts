@@ -1,8 +1,6 @@
-export {
-  RuntimeLineItemEngine,
-} from "./RuntimeLineItemEngine";
-
+export { RuntimeLineItemEngine } from "./RuntimeLineItemEngine";
+export { RuntimeLineRemovalService } from "./RuntimeLineRemovalService";
 export type {
-  RuntimeLineItemData,
-  RuntimeLineItemProductSnapshot,
-} from "./RuntimeLineItemEngine";
+  RuntimeLineRemovalParams,
+  RuntimeLineRemovalResult,
+} from "./RuntimeLineRemovalService";
