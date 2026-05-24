@@ -101,7 +101,7 @@ function getRuntimePageTypeLabel(type: string): string {
     case "list":
       return "liste";
     case "create":
-      return "crÃ©ation";
+      return "création";
     case "edit":
       return "modification";
     case "detail":
@@ -174,7 +174,7 @@ export function ERPRuntimePage({
     module?.metadata?.description;
 
   const resolvedTitle =
-    title ?? `${moduleLabel} â€” ${getRuntimePageTypeLabel(type)}`;
+    title ?? `${moduleLabel} — ${getRuntimePageTypeLabel(type)}`;
 
 
   const createActionLabel =
@@ -198,14 +198,9 @@ export function ERPRuntimePage({
 
 
       ? RuntimeActionEngine.getAvailableActions({
-
-
           actions: module?.actions ?? [],
-
-
+          workflow: module?.workflows?.[0],
           record,
-
-
         })
 
 
@@ -249,7 +244,7 @@ export function ERPRuntimePage({
       description={
         description ??
         moduleDescription ??
-        "Page gÃ©nÃ©rÃ©e automatiquement par le Runtime ERP."
+        "Page générée automatiquement par le Runtime ERP."
       }
     >
       <div className="space-y-6">
@@ -312,7 +307,7 @@ export function ERPRuntimePage({
 
         {loading && type === "list" ? (
           <div className="rounded-2xl border border-[var(--erp-border)] bg-[var(--erp-surface)] p-4 text-sm text-[var(--erp-text-muted)]">
-            Chargement des donnÃ©es...
+            Chargement des données...
           </div>
         ) : null}
 
@@ -396,7 +391,7 @@ export function ERPRuntimePage({
         {!module && (
           <ERPEmptyState
             title="Module introuvable"
-            description="Aucun module runtime n'a Ã©tÃ© trouvÃ©."
+            description="Aucun module runtime n'a été trouvé."
           />
         )}
       </div>
