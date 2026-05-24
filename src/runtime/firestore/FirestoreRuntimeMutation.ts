@@ -210,6 +210,7 @@ async function processRuntimePostMutationSideEffects(
         line: record,
       });
 
+
     if (result.processed) {
       console.info(
         "[RUNTIME_STOCK_MOVEMENT_PROCESSED]",

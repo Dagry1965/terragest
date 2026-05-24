@@ -1119,6 +1119,7 @@ preparedPayload.terrainId
         if (interventionId) {
           await syncInterventionTotalsFromLines(interventionId);
         }
+
       }
 
       if (workflowAction && savedRecord) {
