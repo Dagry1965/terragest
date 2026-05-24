@@ -101,7 +101,7 @@ function getRuntimePageTypeLabel(type: string): string {
     case "list":
       return "liste";
     case "create":
-      return "création";
+      return "crÃ©ation";
     case "edit":
       return "modification";
     case "detail":
@@ -174,7 +174,7 @@ export function ERPRuntimePage({
     module?.metadata?.description;
 
   const resolvedTitle =
-    title ?? `${moduleLabel} — ${getRuntimePageTypeLabel(type)}`;
+    title ?? `${moduleLabel} â€” ${getRuntimePageTypeLabel(type)}`;
 
 
   const createActionLabel =
@@ -187,14 +187,28 @@ export function ERPRuntimePage({
       ? `/${module.metadata.key}/nouveau`
       : "#";
 
+  const isRemovedRecord = Boolean(record?.removedAt);
+
+
+
   const runtimeActions =
-    type !== "list" && record
+
+
+    (type === "detail" || type === "edit") && !isRemovedRecord
+
+
       ? RuntimeActionEngine.getAvailableActions({
+
+
           actions: module?.actions ?? [],
-          userPermissions: ["*"],
-          workflow: module?.workflows?.[0],
+
+
           record,
+
+
         })
+
+
       : [];
 
   const isInvoiceDetailPage =
@@ -235,7 +249,7 @@ export function ERPRuntimePage({
       description={
         description ??
         moduleDescription ??
-        "Page générée automatiquement par le Runtime ERP."
+        "Page gÃ©nÃ©rÃ©e automatiquement par le Runtime ERP."
       }
     >
       <div className="space-y-6">
@@ -298,7 +312,7 @@ export function ERPRuntimePage({
 
         {loading && type === "list" ? (
           <div className="rounded-2xl border border-[var(--erp-border)] bg-[var(--erp-surface)] p-4 text-sm text-[var(--erp-text-muted)]">
-            Chargement des données...
+            Chargement des donnÃ©es...
           </div>
         ) : null}
 
@@ -335,7 +349,8 @@ export function ERPRuntimePage({
             module={module}
             mode="edit"
             initialData={record}
-            workflowActions={runtimeActions}
+            workflowActions={isRemovedRecord ? [] : runtimeActions}
+            forceReadOnlyBecauseRemoved={isRemovedRecord}
           />
         )}
 
@@ -381,7 +396,7 @@ export function ERPRuntimePage({
         {!module && (
           <ERPEmptyState
             title="Module introuvable"
-            description="Aucun module runtime n'a été trouvé."
+            description="Aucun module runtime n'a Ã©tÃ© trouvÃ©."
           />
         )}
       </div>

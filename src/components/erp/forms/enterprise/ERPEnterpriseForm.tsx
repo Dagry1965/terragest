@@ -112,6 +112,7 @@ interface ERPEnterpriseFormProps {
   mode?: "create" | "edit";
   initialData?: Record<string, unknown>;
   workflowActions?: ERPModuleAction[];
+  forceReadOnlyBecauseRemoved?: boolean;
 }
 
 interface ERPFormRelationChangeContext {
@@ -338,6 +339,7 @@ export function ERPEnterpriseForm({
   mode = "create",
   initialData = {},
   workflowActions = [],
+  forceReadOnlyBecauseRemoved = false,
 }: ERPEnterpriseFormProps) {
   const router = useRouter();
 
@@ -400,19 +402,24 @@ export function ERPEnterpriseForm({
           ])
         );
 
+  const isRemovedRecord =
+    forceReadOnlyBecauseRemoved || Boolean(initialData?.removedAt);
+
   const readOnlyFields =
-    mode === "create"
-      ? []
-      : Array.from(
-          new Set([
-            ...compositionReadOnlyFields,
-          ])
-        );
+    isRemovedRecord
+      ? module.schema.fields.map((field) => field.key)
+      : mode === "create"
+        ? []
+        : Array.from(
+            new Set([
+              ...compositionReadOnlyFields,
+            ])
+          );
 
   // Q15F_A2_ACTIVE_CREATE_LOCK_POLICY
-  // Création directe : aucun champ composition.lockedFields n'est bloqué.
-  // Création enfant : seuls les champs transmis par lockFields dans l'URL sont bloqués.
-  // Edit/detail : les verrous de composition restent appliqués.
+  // CrÃƒÆ’Ã‚Â©ation directe : aucun champ composition.lockedFields n'est bloquÃƒÆ’Ã‚Â©.
+  // CrÃƒÆ’Ã‚Â©ation enfant : seuls les champs transmis par lockFields dans l'URL sont bloquÃƒÆ’Ã‚Â©s.
+  // Edit/detail : les verrous de composition restent appliquÃƒÆ’Ã‚Â©s.
 
   const [saving, setSaving] = useState(false);
 
@@ -545,10 +552,10 @@ export function ERPEnterpriseForm({
         "Conflit de planning"
       ) ||
       message.includes(
-        "ce véhicule possède déjà un rendez-vous"
+        "ce vÃƒÆ’Ã‚Â©hicule possÃƒÆ’Ã‚Â¨de dÃƒÆ’Ã‚Â©jÃƒÆ’Ã‚Â  un rendez-vous"
       )
     ) {
-      return "Ce véhicule a déjà un rendez-vous sur cette plage horaire. Choisissez un autre créneau ou modifiez le rendez-vous existant.";
+      return "Ce vÃƒÆ’Ã‚Â©hicule a dÃƒÆ’Ã‚Â©jÃƒÆ’Ã‚Â  un rendez-vous sur cette plage horaire. Choisissez un autre crÃƒÆ’Ã‚Â©neau ou modifiez le rendez-vous existant.";
     }
 
     if (
@@ -559,10 +566,10 @@ export function ERPEnterpriseForm({
         "heureRendezVous"
       ) ||
       message.includes(
-        "créneau"
+        "crÃƒÆ’Ã‚Â©neau"
       )
     ) {
-      return "Le rendez-vous doit avoir une date et une heure valides avant d'être enregistré.";
+      return "Le rendez-vous doit avoir une date et une heure valides avant d'ÃƒÆ’Ã‚Âªtre enregistrÃƒÆ’Ã‚Â©.";
     }
 
     if (
@@ -570,7 +577,7 @@ export function ERPEnterpriseForm({
         "clientId manquant"
       )
     ) {
-      return "Veuillez sélectionner un client avant d'enregistrer.";
+      return "Veuillez sÃƒÆ’Ã‚Â©lectionner un client avant d'enregistrer.";
     }
 
     if (
@@ -578,15 +585,15 @@ export function ERPEnterpriseForm({
         "vehiculeId manquant"
       )
     ) {
-      return "Veuillez sélectionner un véhicule avant d'enregistrer.";
+      return "Veuillez sÃƒÆ’Ã‚Â©lectionner un vÃƒÆ’Ã‚Â©hicule avant d'enregistrer.";
     }
 
     if (
       message.includes(
-        "déjà été consommé"
+        "dÃƒÆ’Ã‚Â©jÃƒÆ’Ã‚Â  ÃƒÆ’Ã‚Â©tÃƒÆ’Ã‚Â© consommÃƒÆ’Ã‚Â©"
       )
     ) {
-      return "Ce rendez-vous a déjà généré une intervention. Aucune nouvelle intervention ne sera créée.";
+      return "Ce rendez-vous a dÃƒÆ’Ã‚Â©jÃƒÆ’Ã‚Â  gÃƒÆ’Ã‚Â©nÃƒÆ’Ã‚Â©rÃƒÆ’Ã‚Â© une intervention. Aucune nouvelle intervention ne sera crÃƒÆ’Ã‚Â©ÃƒÆ’Ã‚Â©e.";
     }
 
     return message;
@@ -1076,7 +1083,7 @@ const formData =
         {
           field: "businessRules",
           message:
-            "Les règles métier ERP bloquent cet enregistrement.",
+            "Les rÃƒÆ’Ã‚Â¨gles mÃƒÆ’Ã‚Â©tier ERP bloquent cet enregistrement.",
         },
       ]);
 
@@ -1267,7 +1274,7 @@ preparedPayload.terrainId
 
   async function handleDeleteRecord() {
     const confirmed = window.confirm(
-      "Supprimer cet élément ?"
+      "Supprimer cet ÃƒÆ’Ã‚Â©lÃƒÆ’Ã‚Â©ment ?"
     );
 
     if (!confirmed) {
@@ -1318,16 +1325,16 @@ preparedPayload.terrainId
         label: "Archiver client",
         nextStatus: "archive",
         confirmMessage:
-          "Archiver ce client ? Il ne sera pas supprimé et son historique sera conservé.",
+          "Archiver ce client ? Il ne sera pas supprimÃƒÆ’Ã‚Â© et son historique sera conservÃƒÆ’Ã‚Â©.",
       };
     }
 
     if (moduleKey === "vehicules" && currentStatus !== "archive") {
       return {
-        label: "Archiver véhicule",
+        label: "Archiver vÃƒÆ’Ã‚Â©hicule",
         nextStatus: "archive",
         confirmMessage:
-          "Archiver ce véhicule ? Il ne sera pas supprimé et son historique sera conservé.",
+          "Archiver ce vÃƒÆ’Ã‚Â©hicule ? Il ne sera pas supprimÃƒÆ’Ã‚Â© et son historique sera conservÃƒÆ’Ã‚Â©.",
       };
     }
 
@@ -1343,7 +1350,7 @@ preparedPayload.terrainId
         nextStatus: "annulee",
         statusField: "statutFacture",
         confirmMessage:
-          "Annuler cette facture ? Les paiements, échéances et historiques seront conservés.",
+          "Annuler cette facture ? Les paiements, ÃƒÆ’Ã‚Â©chÃƒÆ’Ã‚Â©ances et historiques seront conservÃƒÆ’Ã‚Â©s.",
       };
     }
 
@@ -1352,16 +1359,16 @@ preparedPayload.terrainId
         label: "Annuler encaissement",
         nextStatus: "annule",
         confirmMessage:
-          "Annuler cet encaissement ? Le paiement restera conservé dans l’historique.",
+          "Annuler cet encaissement ? Le paiement restera conservÃƒÆ’Ã‚Â© dans lÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢historique.",
       };
     }
 
     if (moduleKey === "echeancespaiementauto" && currentStatus !== "annulee") {
       return {
-        label: "Annuler échéance",
+        label: "Annuler ÃƒÆ’Ã‚Â©chÃƒÆ’Ã‚Â©ance",
         nextStatus: "annulee",
         confirmMessage:
-          "Annuler cette échéance ? Elle restera conservée dans l’historique.",
+          "Annuler cette ÃƒÆ’Ã‚Â©chÃƒÆ’Ã‚Â©ance ? Elle restera conservÃƒÆ’Ã‚Â©e dans lÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢historique.",
       };
     }
 
@@ -1403,7 +1410,7 @@ preparedPayload.terrainId
       const message =
         error instanceof Error
           ? error.message
-          : "Action métier impossible.";
+          : "Action mÃƒÆ’Ã‚Â©tier impossible.";
 
       setErrors([
         {
@@ -1497,7 +1504,7 @@ preparedPayload.terrainId
               </h2>
 
               <p className="mt-2 max-w-3xl text-sm leading-6 text-[var(--erp-text-muted)]">
-                Crée un encaissement lié à cette facture. Le montant payé, le reste à payer et le statut de paiement seront recalculés automatiquement.
+                CrÃƒÆ’Ã‚Â©e un encaissement liÃƒÆ’Ã‚Â© ÃƒÆ’Ã‚Â  cette facture. Le montant payÃƒÆ’Ã‚Â©, le reste ÃƒÆ’Ã‚Â  payer et le statut de paiement seront recalculÃƒÆ’Ã‚Â©s automatiquement.
               </p>
 
               <div className="mt-5 grid gap-3 md:grid-cols-3">
@@ -1512,7 +1519,7 @@ preparedPayload.terrainId
 
                 <div className="rounded-2xl border border-[var(--erp-border-strong)] bg-white p-4">
                   <p className="text-xs font-bold uppercase tracking-wide text-[var(--erp-text-muted)]">
-                    Déjà payé
+                    DÃƒÆ’Ã‚Â©jÃƒÆ’Ã‚Â  payÃƒÆ’Ã‚Â©
                   </p>
                   <p className="mt-1 text-xl font-black text-[var(--erp-text)]">
                     {invoiceAmountSummary.montantPaye.toLocaleString("fr-FR")} FCFA
@@ -1521,7 +1528,7 @@ preparedPayload.terrainId
 
                 <div className="rounded-2xl border border-[var(--erp-border-strong)] bg-white p-4">
                   <p className="text-xs font-bold uppercase tracking-wide text-[var(--erp-text-muted)]">
-                    Reste à payer
+                    Reste ÃƒÆ’Ã‚Â  payer
                   </p>
                   <p className="mt-1 text-xl font-black text-[var(--erp-primary)]">
                     {invoiceAmountSummary.resteAPayer.toLocaleString("fr-FR")} FCFA
@@ -1582,7 +1589,7 @@ preparedPayload.terrainId
               Workflow
             </p>
             <p className="text-sm text-[#111827]">
-              Ces actions enregistrent d'abord le formulaire, puis exécutent le workflow.
+              Ces actions enregistrent d'abord le formulaire, puis exÃƒÆ’Ã‚Â©cutent le workflow.
             </p>
           </div>
 
@@ -1621,7 +1628,7 @@ preparedPayload.terrainId
         <div className="bg-gradient-to-r from-white via-white to-[var(--erp-primary-soft)] px-8 py-8 text-[var(--erp-text)]">
           <p className="text-sm font-bold uppercase tracking-wide text-[#475569]">
             {mode === "create"
-              ? "Création"
+              ? "CrÃƒÆ’Ã‚Â©ation"
               : "Modification"}
           </p>
 
@@ -1630,7 +1637,7 @@ preparedPayload.terrainId
           </h1>
 
           <p className="mt-3 max-w-3xl text-base leading-7 text-slate-300">
-            Formulaire métier connecté au binding runtime.
+            Formulaire mÃƒÆ’Ã‚Â©tier connectÃƒÆ’Ã‚Â© au binding runtime.
           </p>
         </div>
       </section>
@@ -1669,7 +1676,7 @@ preparedPayload.terrainId
               {relationFields.length > 0 && (
                 <ERPFormSection
                   title="Relations"
-                  description="Associe cet élément aux autres objets métier."
+                  description="Associe cet ÃƒÆ’Ã‚Â©lÃƒÆ’Ã‚Â©ment aux autres objets mÃƒÆ’Ã‚Â©tier."
                 >
                   {relationFields.map((field) => (
                     <ERPFormField
@@ -1702,10 +1709,10 @@ preparedPayload.terrainId
             "
           >
             <span className="font-semibold text-slate-900">
-              Statut piloté par les actions.
+              Statut pilotÃƒÆ’Ã‚Â© par les actions.
             </span>{" "}
-            Le statut indique l’état métier de la fiche. Pour changer cet état,
-            utilisez les boutons d’action prévus par le système.
+            Le statut indique lÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã‚Â©tat mÃƒÆ’Ã‚Â©tier de la fiche. Pour changer cet ÃƒÆ’Ã‚Â©tat,
+            utilisez les boutons dÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢action prÃƒÆ’Ã‚Â©vus par le systÃƒÆ’Ã‚Â¨me.
           </div>
         )}
 
@@ -1733,7 +1740,7 @@ preparedPayload.terrainId
         {errors.length > 0 && (
               <div className="w-full rounded-2xl sm:rounded-3xl border border-red-200 bg-red-50 p-5">
                 <h3 className="text-sm font-black text-red-700">
-                  Validation métier
+                  Validation mÃƒÆ’Ã‚Â©tier
                 </h3>
 
                 <div className="mt-3 space-y-2">
@@ -1742,7 +1749,7 @@ preparedPayload.terrainId
                       key={index}
                       className="text-sm text-red-600"
                     >
-                      • {error.field} : {error.message}
+                      ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ {error.field} : {error.message}
                     </div>
                   ))}
                 </div>
@@ -1773,7 +1780,7 @@ preparedPayload.terrainId
                     <p className="text-xs font-black uppercase tracking-wide text-amber-700">
 
 
-                      Action métier
+                      Action mÃƒÆ’Ã‚Â©tier
 
 
                     </p>
@@ -1797,7 +1804,7 @@ preparedPayload.terrainId
                     <p className="mt-2 text-sm leading-6 text-[var(--erp-text-muted)]">
 
 
-                      Cette action conserve l’historique et évite une suppression brute.
+                      Cette action conserve lÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢historique et ÃƒÆ’Ã‚Â©vite une suppression brute.
 
 
                     </p>
@@ -1872,9 +1879,9 @@ preparedPayload.terrainId
                 data-sensitive-delete-hidden-notice
                 className="w-full rounded-2xl border border-[var(--erp-border-strong)] bg-[var(--erp-primary-soft)] px-4 py-3 text-sm text-[var(--erp-text-muted)]"
               >
-                Suppression masquée pour préserver l’historique. Utilisez l’action métier
-                adaptée, comme “Retirer la ligne”, afin que le stock, les totaux et
-                la traçabilité soient corrigés proprement.
+                Suppression masquÃƒÆ’Ã‚Â©e pour prÃƒÆ’Ã‚Â©server lÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢historique. Utilisez lÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢action mÃƒÆ’Ã‚Â©tier
+                adaptÃƒÆ’Ã‚Â©e, comme ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œRetirer la ligneÃƒÂ¢Ã¢â€šÂ¬Ã‚Â, afin que le stock, les totaux et
+                la traÃƒÆ’Ã‚Â§abilitÃƒÆ’Ã‚Â© soient corrigÃƒÆ’Ã‚Â©s proprement.
               </div>
             ) : null}
 
