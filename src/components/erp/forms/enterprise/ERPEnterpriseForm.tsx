@@ -1425,6 +1425,7 @@ preparedPayload.terrainId
       "facturesauto",
       "encaissementsauto",
       "echeancespaiementauto",
+      "lignesinterventionauto",
     ].includes(module.metadata.key);
   }
 
@@ -1871,8 +1872,9 @@ preparedPayload.terrainId
                 data-sensitive-delete-hidden-notice
                 className="w-full rounded-2xl border border-[var(--erp-border-strong)] bg-[var(--erp-primary-soft)] px-4 py-3 text-sm text-[var(--erp-text-muted)]"
               >
-                Suppression masquée pour ce module sensible. Utilisez l’action métier
-                d’archivage ou d’annulation afin de conserver l’historique.
+                Suppression masquée pour préserver l’historique. Utilisez l’action métier
+                adaptée, comme “Retirer la ligne”, afin que le stock, les totaux et
+                la traçabilité soient corrigés proprement.
               </div>
             ) : null}
 
