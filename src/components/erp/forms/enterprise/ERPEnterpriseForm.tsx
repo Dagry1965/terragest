@@ -409,6 +409,27 @@ export function ERPEnterpriseForm({
     Boolean(initialData?.removedReason) ||
     Boolean(initialData?.stockReversalMovementId);
 
+  const validatedReceptionReadOnlyFields =
+    // Q21D1B_VALIDATED_RECEPTION_READONLY_FIELDS
+    // A validated reception is a stock proof.
+    // Its critical fields must not be edited freely after stock impact.
+    module.metadata.key === "receptionsstockauto" &&
+    mode === "edit" &&
+    (
+      String(initialData?.statut ?? "") === "validee" ||
+      Boolean(initialData?.mouvementStockId)
+    )
+      ? [
+          "commandeId",
+          "ligneCommandeId",
+          "produitId",
+          "stockId",
+          "quantiteRecue",
+          "dateReception",
+          "statut",
+        ]
+      : [];
+
   const readOnlyFields =
     isRemovedRecord
       ? module.schema.fields.map((field) => field.key)
@@ -417,6 +438,7 @@ export function ERPEnterpriseForm({
         : Array.from(
             new Set([
               ...compositionReadOnlyFields,
+              ...validatedReceptionReadOnlyFields,
             ])
           );
 
