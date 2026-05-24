@@ -78,9 +78,13 @@ export class RuntimeActionEngine {
     }
 
     return actions.filter((action) => {
+      // Q20H5C_RUNTIME_ONLY_ACTIONS
+      // Une action runtimeOnly est une action métier contrôlée
+      // qui ne correspond pas forcément à une transition de statut.
       if (
         allowedActionKeys &&
-        !allowedActionKeys.includes(action.key)
+        !allowedActionKeys.includes(action.key) &&
+        !action.runtimeOnly
       ) {
         return false;
       }

@@ -8,6 +8,12 @@ export interface ERPModuleAction {
   permission?: string;
   event?: string;
   href?: string;
+
+  /**
+   * Action métier runtime qui n'est pas forcément une transition workflow.
+   * Exemple : retirer une ligne sans réintroduire un statut utilisateur "annulée".
+   */
+  runtimeOnly?: boolean;
 }
 
 export interface ERPModuleRelation {
