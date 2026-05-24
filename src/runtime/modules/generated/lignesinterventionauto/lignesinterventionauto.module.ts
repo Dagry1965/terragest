@@ -181,11 +181,12 @@ export const lignesinterventionautoModule: ERPModule = {
         label: "Statut",
         type: "select",
         defaultValue: "brouillon",
+        // Q20H3_SIMPLIFIED_LINE_STATUSES
+        // Côté utilisateur, une ligne est seulement préparée ou confirmée.
+        // Facturation/retrait sont gérés par relations/actions runtime, pas par statut manuel.
         options: [
           { label: "Brouillon", value: "brouillon" },
           { label: "Validée", value: "validee" },
-          { label: "Facturée", value: "facturee" },
-          { label: "Annulée", value: "annulee" },
         ],
         list: { order: 8 },
         grid: { cols: 4 },
@@ -453,18 +454,16 @@ export const lignesinterventionautoModule: ERPModule = {
       label: "Cycle ligne intervention",
       initialState: "brouillon",
 
+      // Q20H3_SIMPLIFIED_LINE_WORKFLOW
+      // Le workflow visible reste volontairement simple.
+      // Les états de facturation, retrait ou neutralisation sont techniques.
       states: [
         { key: "brouillon", label: "Brouillon", color: "default" },
         { key: "validee", label: "Validée", color: "success" },
-        { key: "facturee", label: "Facturée", color: "info" },
-        { key: "annulee", label: "Annulée", color: "danger" },
       ],
 
       transitions: [
         { from: "brouillon", to: "validee", action: "Valider" },
-        { from: "validee", to: "facturee", action: "Marquer facturée" },
-        { from: "brouillon", to: "annulee", action: "Annuler" },
-        { from: "validee", to: "annulee", action: "Annuler" },
       ],
     },
   ],
