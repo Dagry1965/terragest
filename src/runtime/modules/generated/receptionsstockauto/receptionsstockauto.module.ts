@@ -43,6 +43,12 @@ export const receptionsstockautoModule: ERPModule = {
             targetField: "commandeId",
             includeEmptyTarget: false,
           },
+          // Q21D3C3A_EXCLUDE_USED_BY
+          // Exclude order lines already used in an existing reception.
+          excludeUsedBy: {
+            module: "receptionsstockauto",
+            field: "ligneCommandeId",
+          },
         },
         required: true,
         searchable: true,

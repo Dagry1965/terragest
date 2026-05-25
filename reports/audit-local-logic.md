@@ -1,13 +1,13 @@
 # Audit local logic / ERP generic compliance
 
-Date: 2026-05-25T04:56:54.805Z
+Date: 2026-05-25T05:08:43.281Z
 
 ## Synthèse
 
 - HIGH: 204
-- MEDIUM: 302
+- MEDIUM: 304
 - INFO: 181
-- OK_METADATA: 217
+- OK_METADATA: 218
 
 ## Règle
 
@@ -3862,6 +3862,22 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Nom de module métier codé en dur.
 - Action cible: Vérifier si c’est une metadata, une route, ou une logique locale à généraliser.
 
+#### src/runtime/modules/schemas/ERPModuleSchema.ts:148
+
+- Type: hardcoded-business-module
+- Match: `receptionsstockauto`
+- Code: `* Example: receptionsstockauto.ligneCommandeId excludes lines already used by receptionsstockauto.`
+- Diagnostic: Nom de module métier codé en dur.
+- Action cible: Acceptable seulement si c’est dans un moteur runtime générique ou une règle documentée.
+
+#### src/runtime/modules/schemas/ERPModuleSchema.ts:148
+
+- Type: hardcoded-business-module
+- Match: `receptionsstockauto`
+- Code: `* Example: receptionsstockauto.ligneCommandeId excludes lines already used by receptionsstockauto.`
+- Diagnostic: Nom de module métier codé en dur.
+- Action cible: Acceptable seulement si c’est dans un moteur runtime générique ou une règle documentée.
+
 #### src/runtime/observability/RuntimeMetricAlertEvaluator.ts:35
 
 - Type: hardcoded-business-module
@@ -7146,7 +7162,15 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Nom de module métier codé en dur.
 - Action cible: Acceptable si c’est déclaratif. Vérifier qu’il n’y a pas de logique exécutable.
 
-#### src/runtime/modules/generated/receptionsstockauto/receptionsstockauto.module.ts:100
+#### src/runtime/modules/generated/receptionsstockauto/receptionsstockauto.module.ts:49
+
+- Type: hardcoded-business-module
+- Match: `receptionsstockauto`
+- Code: `module: "receptionsstockauto",`
+- Diagnostic: Nom de module métier codé en dur.
+- Action cible: Acceptable si c’est déclaratif. Vérifier qu’il n’y a pas de logique exécutable.
+
+#### src/runtime/modules/generated/receptionsstockauto/receptionsstockauto.module.ts:106
 
 - Type: hardcoded-business-module
 - Match: `mouvementsstockauto`
@@ -7154,7 +7178,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Nom de module métier codé en dur.
 - Action cible: Acceptable si c’est déclaratif. Vérifier qu’il n’y a pas de logique exécutable.
 
-#### src/runtime/modules/generated/receptionsstockauto/receptionsstockauto.module.ts:184
+#### src/runtime/modules/generated/receptionsstockauto/receptionsstockauto.module.ts:190
 
 - Type: hardcoded-business-module
 - Match: `commandesstockauto`

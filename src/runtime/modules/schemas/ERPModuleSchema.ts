@@ -141,6 +141,16 @@ relation?:
           targetField: string;
           includeEmptyTarget?: boolean;
         };
+
+        /**
+         * Q21D3C3A_EXCLUDE_USED_BY_TYPE
+         * Declarative exclusion of relation options already referenced by another module.
+         * Example: receptionsstockauto.ligneCommandeId excludes lines already used by receptionsstockauto.
+         */
+        excludeUsedBy?: {
+          module: string;
+          field: string;
+        };
         create?: {
 
         enabled:

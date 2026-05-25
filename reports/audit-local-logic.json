@@ -8331,7 +8331,17 @@
   },
   {
     "file": "src/runtime/modules/generated/receptionsstockauto/receptionsstockauto.module.ts",
-    "line": 100,
+    "line": 49,
+    "key": "hardcoded-business-module",
+    "severity": "OK_METADATA",
+    "match": "receptionsstockauto",
+    "code": "module: \"receptionsstockauto\",",
+    "message": "Nom de module métier codé en dur.",
+    "action": "Acceptable si c’est déclaratif. Vérifier qu’il n’y a pas de logique exécutable."
+  },
+  {
+    "file": "src/runtime/modules/generated/receptionsstockauto/receptionsstockauto.module.ts",
+    "line": 106,
     "key": "hardcoded-business-module",
     "severity": "OK_METADATA",
     "match": "mouvementsstockauto",
@@ -8341,7 +8351,7 @@
   },
   {
     "file": "src/runtime/modules/generated/receptionsstockauto/receptionsstockauto.module.ts",
-    "line": 184,
+    "line": 190,
     "key": "hardcoded-business-module",
     "severity": "OK_METADATA",
     "match": "commandesstockauto",
@@ -8718,6 +8728,26 @@
     "code": "montantTTC ||",
     "message": "Calcul financier ou champ montant détecté.",
     "action": "Vérifier si le calcul passe par RuntimeComputedFieldsEngine."
+  },
+  {
+    "file": "src/runtime/modules/schemas/ERPModuleSchema.ts",
+    "line": 148,
+    "key": "hardcoded-business-module",
+    "severity": "MEDIUM",
+    "match": "receptionsstockauto",
+    "code": "* Example: receptionsstockauto.ligneCommandeId excludes lines already used by receptionsstockauto.",
+    "message": "Nom de module métier codé en dur.",
+    "action": "Acceptable seulement si c’est dans un moteur runtime générique ou une règle documentée."
+  },
+  {
+    "file": "src/runtime/modules/schemas/ERPModuleSchema.ts",
+    "line": 148,
+    "key": "hardcoded-business-module",
+    "severity": "MEDIUM",
+    "match": "receptionsstockauto",
+    "code": "* Example: receptionsstockauto.ligneCommandeId excludes lines already used by receptionsstockauto.",
+    "message": "Nom de module métier codé en dur.",
+    "action": "Acceptable seulement si c’est dans un moteur runtime générique ou une règle documentée."
   },
   {
     "file": "src/runtime/modules/schemas/ERPModuleSchema.ts",
