@@ -184,3 +184,13 @@ export interface RuntimeSchedulingSettingsValidationResult {
   ok: boolean;
   issues: RuntimeSchedulingSettingsValidationIssue[];
 }
+
+export interface RuntimeStoredSchedulingSettings {
+  scope: RuntimeSchedulingSettingsScope;
+  tenantId: string;
+  workspaceId?: string;
+  moduleKey?: string;
+  settings: RuntimeSchedulingSettings;
+  updatedAt?: unknown;
+  updatedBy?: string;
+}
