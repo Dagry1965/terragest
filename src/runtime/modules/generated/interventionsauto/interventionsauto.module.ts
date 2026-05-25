@@ -28,43 +28,44 @@ export const interventionsautoModule: ERPModule = {
     collection: "interventionsauto",
 
     fields: [
-      {
+{
         key: "clientId",
         label: "Client",
         type: "relation",
         relation: { module: "clientsauto" },
         required: true,
         searchable: true,
-        list: { order: 1 },
+        list: { visible: true, order: 1 },
         grid: { cols: 6 },
       },
-      {
+{
         key: "vehiculeId",
         label: "Véhicule",
         type: "relation",
         relation: { module: "vehicules" },
         required: true,
         searchable: true,
-        list: { order: 2 },
+        list: { visible: true, order: 2 },
         grid: { cols: 6 },
       },
-      {
+{
         key: "rendezVousId",
         label: "Rendez-vous",
         type: "relation",
         relation: { module: "rendezvous" },
         searchable: true,
+        list: { visible: false },
         grid: { cols: 6 },
       },
-      {
+{
         key: "dateIntervention",
         label: "Date intervention",
         type: "date",
         required: true,
-        list: { order: 3 },
+        list: { visible: true, order: 3 },
         grid: { cols: 6 },
       },
-      {
+{
         key: "typeIntervention",
         label: "Type intervention",
         type: "select",
@@ -76,45 +77,52 @@ export const interventionsautoModule: ERPModule = {
           { label: "Contrôle", value: "controle" },
           { label: "Autre", value: "autre" },
         ],
+        list: { visible: true, order: 4 },
         grid: { cols: 6 },
       },
-      {
+{
         key: "kilometrage",
         label: "Kilométrage",
         type: "number",
+        list: { visible: false },
         grid: { cols: 6 },
       },
-      {
+{
         key: "diagnostic",
         label: "Diagnostic",
         type: "textarea",
+        list: { visible: false },
         grid: { cols: 12 },
       },
-      {
+{
         key: "travauxEffectues",
         label: "Travaux effectués",
         type: "textarea",
+        list: { visible: false },
         grid: { cols: 12 },
       },
-      {
+{
         key: "coutPieces",
         label: "Coût pièces",
         type: "number",
+        list: { visible: false },
         grid: { cols: 4 },
       },
-      {
+{
         key: "coutMainOeuvre",
         label: "Coût main d'oeuvre",
         type: "number",
+        list: { visible: false },
         grid: { cols: 4 },
       },
-      {
+{
         key: "coutTotal",
         label: "Coût total",
         type: "number",
+        list: { visible: true, order: 6 },
         grid: { cols: 4 },
       },
-      {
+{
         key: "statut",
         label: "Statut",
         type: "select",
@@ -127,9 +135,9 @@ export const interventionsautoModule: ERPModule = {
           { label: "Facturée", value: "facturee" },
           { label: "Annulée", value: "annulee" },
         ],
-        list: { order: 4 },
+        list: { visible: true, order: 5 },
         grid: { cols: 6 },
-      },
+      }
     ],
   },
 
