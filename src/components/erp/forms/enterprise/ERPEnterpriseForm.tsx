@@ -1384,6 +1384,16 @@ preparedPayload.terrainId
     const moduleKey = module.metadata.key;
     const currentStatus = String(formValues.statut ?? "");
 
+    if (moduleKey === "receptionsstockauto" && currentStatus === "brouillon") {
+      return {
+        // Q21D1C_VALIDATE_RECEPTION_ACTION
+        label: "Valider reception",
+        nextStatus: "validee",
+        confirmMessage:
+          "Valider cette reception ? Une entree stock sera creee automatiquement et les champs critiques seront verrouilles.",
+      };
+    }
+
     if (moduleKey === "clientsauto" && currentStatus !== "archive") {
       return {
         label: "Archiver client",
@@ -1497,6 +1507,7 @@ preparedPayload.terrainId
       "encaissementsauto",
       "echeancespaiementauto",
       "lignesinterventionauto",
+      "receptionsstockauto",
     ].includes(module.metadata.key);
   }
 
