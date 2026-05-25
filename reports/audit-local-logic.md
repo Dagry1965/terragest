@@ -1,13 +1,13 @@
 # Audit local logic / ERP generic compliance
 
-Date: 2026-05-25T03:23:40.530Z
+Date: 2026-05-25T03:54:00.950Z
 
 ## Synthèse
 
 - HIGH: 204
 - MEDIUM: 302
 - INFO: 180
-- OK_METADATA: 211
+- OK_METADATA: 219
 
 ## Règle
 
@@ -858,7 +858,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Nom de module métier codé en dur.
 - Action cible: Les pages ne doivent pas contenir de métier. Déplacer vers runtime/generic page/metadata.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:416
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:417
 
 - Type: module-metadata-key-conditional
 - Match: `module.metadata.key === "receptionsstockauto"`
@@ -866,7 +866,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Condition directe sur module.metadata.key dans du code générique.
 - Action cible: Remonter vers metadata + moteur runtime générique.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:636
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:637
 
 - Type: module-metadata-key-conditional
 - Match: `module.metadata.key === "facturesauto"`
@@ -874,7 +874,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Condition directe sur module.metadata.key dans du code générique.
 - Action cible: Remonter vers metadata + moteur runtime générique.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:774
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:775
 
 - Type: module-metadata-key-conditional
 - Match: `module.metadata.key !== "lignesinterventionauto"`
@@ -882,7 +882,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Condition directe sur module.metadata.key dans du code générique.
 - Action cible: Remonter vers metadata + moteur runtime générique.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:867
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:880
 
 - Type: module-metadata-key-conditional
 - Match: `module.metadata.key === "lignesinterventionauto"`
@@ -890,7 +890,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Condition directe sur module.metadata.key dans du code générique.
 - Action cible: Remonter vers metadata + moteur runtime générique.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:909
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:922
 
 - Type: module-metadata-key-conditional
 - Match: `module.metadata.key !== "terrains"`
@@ -898,7 +898,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Condition directe sur module.metadata.key dans du code générique.
 - Action cible: Remonter vers metadata + moteur runtime générique.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:937
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:950
 
 - Type: module-metadata-key-conditional
 - Match: `module.metadata.key !== "terrains"`
@@ -906,7 +906,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Condition directe sur module.metadata.key dans du code générique.
 - Action cible: Remonter vers metadata + moteur runtime générique.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:979
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:992
 
 - Type: module-metadata-key-conditional
 - Match: `module.metadata.key !== "contrats"`
@@ -914,7 +914,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Condition directe sur module.metadata.key dans du code générique.
 - Action cible: Remonter vers metadata + moteur runtime générique.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1002
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1015
 
 - Type: module-metadata-key-conditional
 - Match: `module.metadata.key !== "contrats"`
@@ -922,7 +922,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Condition directe sur module.metadata.key dans du code générique.
 - Action cible: Remonter vers metadata + moteur runtime générique.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1088
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1101
 
 - Type: module-metadata-key-conditional
 - Match: `module.metadata.key === "terrains"`
@@ -930,7 +930,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Condition directe sur module.metadata.key dans du code générique.
 - Action cible: Remonter vers metadata + moteur runtime générique.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1095
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1108
 
 - Type: module-metadata-key-conditional
 - Match: `module.metadata.key === "contrats"`
@@ -938,7 +938,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Condition directe sur module.metadata.key dans du code générique.
 - Action cible: Remonter vers metadata + moteur runtime générique.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1176
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1189
 
 - Type: module-metadata-key-conditional
 - Match: `module.metadata.key ===
@@ -947,7 +947,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Condition directe sur module.metadata.key dans du code générique.
 - Action cible: Remonter vers metadata + moteur runtime générique.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1191
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1204
 
 - Type: module-metadata-key-conditional
 - Match: `module.metadata.key === "contrats"`
@@ -955,7 +955,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Condition directe sur module.metadata.key dans du code générique.
 - Action cible: Remonter vers metadata + moteur runtime générique.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1227
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1240
 
 - Type: module-metadata-key-conditional
 - Match: `module.metadata.key ===
@@ -964,7 +964,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Condition directe sur module.metadata.key dans du code générique.
 - Action cible: Remonter vers metadata + moteur runtime générique.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1242
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1255
 
 - Type: module-metadata-key-conditional
 - Match: `module.metadata.key === "contrats"`
@@ -972,7 +972,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Condition directe sur module.metadata.key dans du code générique.
 - Action cible: Remonter vers metadata + moteur runtime générique.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1251
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1264
 
 - Type: module-metadata-key-conditional
 - Match: `module.metadata.key === "lignesinterventionauto"`
@@ -980,7 +980,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Condition directe sur module.metadata.key dans du code générique.
 - Action cible: Remonter vers metadata + moteur runtime générique.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1387
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1400
 
 - Type: module-key-conditional
 - Match: `moduleKey === "receptionsstockauto"`
@@ -988,7 +988,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Condition directe sur moduleKey.
 - Action cible: Remonter vers metadata + moteur runtime générique.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1397
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1410
 
 - Type: module-key-conditional
 - Match: `moduleKey === "clientsauto"`
@@ -996,7 +996,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Condition directe sur moduleKey.
 - Action cible: Remonter vers metadata + moteur runtime générique.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1406
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1419
 
 - Type: module-key-conditional
 - Match: `moduleKey === "vehicules"`
@@ -1004,7 +1004,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Condition directe sur moduleKey.
 - Action cible: Remonter vers metadata + moteur runtime générique.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1419
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1432
 
 - Type: module-key-conditional
 - Match: `moduleKey === "facturesauto"`
@@ -1012,7 +1012,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Condition directe sur moduleKey.
 - Action cible: Remonter vers metadata + moteur runtime générique.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1431
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1444
 
 - Type: module-key-conditional
 - Match: `moduleKey === "encaissementsauto"`
@@ -1020,7 +1020,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Condition directe sur moduleKey.
 - Action cible: Remonter vers metadata + moteur runtime générique.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1440
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1453
 
 - Type: module-key-conditional
 - Match: `moduleKey === "echeancespaiementauto"`
@@ -1028,7 +1028,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Condition directe sur moduleKey.
 - Action cible: Remonter vers metadata + moteur runtime générique.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:230
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:231
 
 - Type: metadata-key-conditional
 - Match: `metadata.key === "lignesinterventionauto"`
@@ -1036,7 +1036,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Condition directe sur metadata.key.
 - Action cible: Remonter vers metadata + moteur runtime générique.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:235
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:236
 
 - Type: metadata-key-conditional
 - Match: `metadata.key === "interventionsauto"`
@@ -1044,7 +1044,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Condition directe sur metadata.key.
 - Action cible: Remonter vers metadata + moteur runtime générique.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:416
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:417
 
 - Type: metadata-key-conditional
 - Match: `metadata.key === "receptionsstockauto"`
@@ -1052,7 +1052,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Condition directe sur metadata.key.
 - Action cible: Remonter vers metadata + moteur runtime générique.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:636
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:637
 
 - Type: metadata-key-conditional
 - Match: `metadata.key === "facturesauto"`
@@ -1060,7 +1060,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Condition directe sur metadata.key.
 - Action cible: Remonter vers metadata + moteur runtime générique.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:774
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:775
 
 - Type: metadata-key-conditional
 - Match: `metadata.key !== "lignesinterventionauto"`
@@ -1068,7 +1068,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Condition directe sur metadata.key.
 - Action cible: Remonter vers metadata + moteur runtime générique.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:867
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:880
 
 - Type: metadata-key-conditional
 - Match: `metadata.key === "lignesinterventionauto"`
@@ -1076,7 +1076,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Condition directe sur metadata.key.
 - Action cible: Remonter vers metadata + moteur runtime générique.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:909
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:922
 
 - Type: metadata-key-conditional
 - Match: `metadata.key !== "terrains"`
@@ -1084,7 +1084,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Condition directe sur metadata.key.
 - Action cible: Remonter vers metadata + moteur runtime générique.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:937
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:950
 
 - Type: metadata-key-conditional
 - Match: `metadata.key !== "terrains"`
@@ -1092,7 +1092,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Condition directe sur metadata.key.
 - Action cible: Remonter vers metadata + moteur runtime générique.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:979
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:992
 
 - Type: metadata-key-conditional
 - Match: `metadata.key !== "contrats"`
@@ -1100,7 +1100,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Condition directe sur metadata.key.
 - Action cible: Remonter vers metadata + moteur runtime générique.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1002
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1015
 
 - Type: metadata-key-conditional
 - Match: `metadata.key !== "contrats"`
@@ -1108,7 +1108,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Condition directe sur metadata.key.
 - Action cible: Remonter vers metadata + moteur runtime générique.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1088
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1101
 
 - Type: metadata-key-conditional
 - Match: `metadata.key === "terrains"`
@@ -1116,7 +1116,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Condition directe sur metadata.key.
 - Action cible: Remonter vers metadata + moteur runtime générique.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1095
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1108
 
 - Type: metadata-key-conditional
 - Match: `metadata.key === "contrats"`
@@ -1124,7 +1124,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Condition directe sur metadata.key.
 - Action cible: Remonter vers metadata + moteur runtime générique.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1176
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1189
 
 - Type: metadata-key-conditional
 - Match: `metadata.key ===
@@ -1133,7 +1133,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Condition directe sur metadata.key.
 - Action cible: Remonter vers metadata + moteur runtime générique.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1191
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1204
 
 - Type: metadata-key-conditional
 - Match: `metadata.key === "contrats"`
@@ -1141,7 +1141,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Condition directe sur metadata.key.
 - Action cible: Remonter vers metadata + moteur runtime générique.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1227
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1240
 
 - Type: metadata-key-conditional
 - Match: `metadata.key ===
@@ -1150,7 +1150,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Condition directe sur metadata.key.
 - Action cible: Remonter vers metadata + moteur runtime générique.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1242
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1255
 
 - Type: metadata-key-conditional
 - Match: `metadata.key === "contrats"`
@@ -1158,7 +1158,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Condition directe sur metadata.key.
 - Action cible: Remonter vers metadata + moteur runtime générique.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1251
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1264
 
 - Type: metadata-key-conditional
 - Match: `metadata.key === "lignesinterventionauto"`
@@ -1166,7 +1166,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Condition directe sur metadata.key.
 - Action cible: Remonter vers metadata + moteur runtime générique.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1379
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1392
 
 - Type: business-status-action-local
 - Match: `getBusinessStatusAction`
@@ -1174,7 +1174,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Action métier probablement codée dans un composant générique.
 - Action cible: Remonter vers RuntimeActionEngine + module.actions metadata.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1452
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1465
 
 - Type: business-status-action-local
 - Match: `handleBusinessStatusAction`
@@ -1182,7 +1182,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Action métier probablement codée dans un composant générique.
 - Action cible: Remonter vers RuntimeActionEngine + module.actions metadata.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1453
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1466
 
 - Type: business-status-action-local
 - Match: `getBusinessStatusAction`
@@ -1190,7 +1190,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Action métier probablement codée dans un composant générique.
 - Action cible: Remonter vers RuntimeActionEngine + module.actions metadata.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1500
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1513
 
 - Type: business-status-action-local
 - Match: `businessStatusAction`
@@ -1198,7 +1198,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Action métier probablement codée dans un composant générique.
 - Action cible: Remonter vers RuntimeActionEngine + module.actions metadata.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1500
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1513
 
 - Type: business-status-action-local
 - Match: `getBusinessStatusAction`
@@ -1206,7 +1206,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Action métier probablement codée dans un composant générique.
 - Action cible: Remonter vers RuntimeActionEngine + module.actions metadata.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1858
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1871
 
 - Type: business-status-action-local
 - Match: `businessStatusAction`
@@ -1214,7 +1214,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Action métier probablement codée dans un composant générique.
 - Action cible: Remonter vers RuntimeActionEngine + module.actions metadata.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1894
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1907
 
 - Type: business-status-action-local
 - Match: `businessStatusAction`
@@ -1222,7 +1222,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Action métier probablement codée dans un composant générique.
 - Action cible: Remonter vers RuntimeActionEngine + module.actions metadata.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1927
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1940
 
 - Type: business-status-action-local
 - Match: `handleBusinessStatusAction`
@@ -1230,7 +1230,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Action métier probablement codée dans un composant générique.
 - Action cible: Remonter vers RuntimeActionEngine + module.actions metadata.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1936
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1949
 
 - Type: business-status-action-local
 - Match: `businessStatusAction`
@@ -1930,7 +1930,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Nom de module métier codé en dur.
 - Action cible: Vérifier si c’est une metadata, une route, ou une logique locale à généraliser.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:206
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:207
 
 - Type: hardcoded-business-module
 - Match: `facturesauto`
@@ -1938,7 +1938,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Nom de module métier codé en dur.
 - Action cible: Vérifier si c’est une metadata, une route, ou une logique locale à généraliser.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:214
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:215
 
 - Type: hardcoded-business-module
 - Match: `encaissementsauto`
@@ -1946,7 +1946,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Nom de module métier codé en dur.
 - Action cible: Vérifier si c’est une metadata, une route, ou une logique locale à généraliser.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:230
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:231
 
 - Type: hardcoded-business-module
 - Match: `lignesinterventionauto`
@@ -1954,7 +1954,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Nom de module métier codé en dur.
 - Action cible: Vérifier si c’est une metadata, une route, ou une logique locale à généraliser.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:235
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:236
 
 - Type: hardcoded-business-module
 - Match: `interventionsauto`
@@ -1962,7 +1962,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Nom de module métier codé en dur.
 - Action cible: Vérifier si c’est une metadata, une route, ou une logique locale à généraliser.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:416
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:417
 
 - Type: hardcoded-business-module
 - Match: `receptionsstockauto`
@@ -1970,7 +1970,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Nom de module métier codé en dur.
 - Action cible: Vérifier si c’est une metadata, une route, ou une logique locale à généraliser.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:636
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:637
 
 - Type: hardcoded-business-module
 - Match: `facturesauto`
@@ -1978,7 +1978,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Nom de module métier codé en dur.
 - Action cible: Vérifier si c’est une metadata, une route, ou une logique locale à généraliser.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:774
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:775
 
 - Type: hardcoded-business-module
 - Match: `lignesinterventionauto`
@@ -1986,7 +1986,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Nom de module métier codé en dur.
 - Action cible: Vérifier si c’est une metadata, une route, ou une logique locale à généraliser.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:867
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:880
 
 - Type: hardcoded-business-module
 - Match: `lignesinterventionauto`
@@ -1994,7 +1994,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Nom de module métier codé en dur.
 - Action cible: Vérifier si c’est une metadata, une route, ou une logique locale à généraliser.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1251
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1264
 
 - Type: hardcoded-business-module
 - Match: `lignesinterventionauto`
@@ -2002,7 +2002,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Nom de module métier codé en dur.
 - Action cible: Vérifier si c’est une metadata, une route, ou une logique locale à généraliser.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1387
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1400
 
 - Type: hardcoded-business-module
 - Match: `receptionsstockauto`
@@ -2010,7 +2010,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Nom de module métier codé en dur.
 - Action cible: Vérifier si c’est une metadata, une route, ou une logique locale à généraliser.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1397
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1410
 
 - Type: hardcoded-business-module
 - Match: `clientsauto`
@@ -2018,7 +2018,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Nom de module métier codé en dur.
 - Action cible: Vérifier si c’est une metadata, une route, ou une logique locale à généraliser.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1406
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1419
 
 - Type: hardcoded-business-module
 - Match: `vehicules`
@@ -2026,7 +2026,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Nom de module métier codé en dur.
 - Action cible: Vérifier si c’est une metadata, une route, ou une logique locale à généraliser.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1419
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1432
 
 - Type: hardcoded-business-module
 - Match: `facturesauto`
@@ -2034,7 +2034,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Nom de module métier codé en dur.
 - Action cible: Vérifier si c’est une metadata, une route, ou une logique locale à généraliser.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1431
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1444
 
 - Type: hardcoded-business-module
 - Match: `encaissementsauto`
@@ -2042,7 +2042,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Nom de module métier codé en dur.
 - Action cible: Vérifier si c’est une metadata, une route, ou une logique locale à généraliser.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1504
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1517
 
 - Type: hardcoded-business-module
 - Match: `clientsauto`
@@ -2050,7 +2050,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Nom de module métier codé en dur.
 - Action cible: Vérifier si c’est une metadata, une route, ou une logique locale à généraliser.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1505
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1518
 
 - Type: hardcoded-business-module
 - Match: `vehicules`
@@ -2058,7 +2058,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Nom de module métier codé en dur.
 - Action cible: Vérifier si c’est une metadata, une route, ou une logique locale à généraliser.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1506
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1519
 
 - Type: hardcoded-business-module
 - Match: `facturesauto`
@@ -2066,7 +2066,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Nom de module métier codé en dur.
 - Action cible: Vérifier si c’est une metadata, une route, ou une logique locale à généraliser.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1507
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1520
 
 - Type: hardcoded-business-module
 - Match: `encaissementsauto`
@@ -2074,7 +2074,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Nom de module métier codé en dur.
 - Action cible: Vérifier si c’est une metadata, une route, ou une logique locale à généraliser.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1509
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1522
 
 - Type: hardcoded-business-module
 - Match: `lignesinterventionauto`
@@ -2082,7 +2082,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Nom de module métier codé en dur.
 - Action cible: Vérifier si c’est une metadata, une route, ou une logique locale à généraliser.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1510
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1523
 
 - Type: hardcoded-business-module
 - Match: `receptionsstockauto`
@@ -3718,7 +3718,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Nom de module métier codé en dur.
 - Action cible: Acceptable seulement si c’est dans un moteur runtime générique ou une règle documentée.
 
-#### src/runtime/modules/ERPModule.ts:200
+#### src/runtime/modules/ERPModule.ts:213
 
 - Type: hardcoded-business-module
 - Match: `lignesinterventionauto`
@@ -3726,7 +3726,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Nom de module métier codé en dur.
 - Action cible: Acceptable seulement si c’est dans un moteur runtime générique ou une règle documentée.
 
-#### src/runtime/modules/ERPModule.ts:200
+#### src/runtime/modules/ERPModule.ts:213
 
 - Type: hardcoded-business-module
 - Match: `interventionsauto`
@@ -4424,7 +4424,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Calcul financier ou champ montant détecté.
 - Action cible: Vérifier si le calcul passe par RuntimeComputedFieldsEngine.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:146
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:147
 
 - Type: manual-amount-calculation
 - Match: `montantTTC`
@@ -4432,7 +4432,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Calcul financier ou champ montant détecté.
 - Action cible: Vérifier si le calcul passe par RuntimeComputedFieldsEngine.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:147
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:148
 
 - Type: manual-amount-calculation
 - Match: `montantTTC`
@@ -4440,19 +4440,11 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Calcul financier ou champ montant détecté.
 - Action cible: Vérifier si le calcul passe par RuntimeComputedFieldsEngine.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:159
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:160
 
 - Type: manual-amount-calculation
 - Match: `montantTTC`
 - Code: `montantTTC - montantPaye,`
-- Diagnostic: Calcul financier ou champ montant détecté.
-- Action cible: Vérifier si le calcul passe par RuntimeComputedFieldsEngine.
-
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:313
-
-- Type: manual-amount-calculation
-- Match: `montantTTC`
-- Code: `const montantTTC =`
 - Diagnostic: Calcul financier ou champ montant détecté.
 - Action cible: Vérifier si le calcul passe par RuntimeComputedFieldsEngine.
 
@@ -4460,11 +4452,19 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 
 - Type: manual-amount-calculation
 - Match: `montantTTC`
+- Code: `const montantTTC =`
+- Diagnostic: Calcul financier ou champ montant détecté.
+- Action cible: Vérifier si le calcul passe par RuntimeComputedFieldsEngine.
+
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:315
+
+- Type: manual-amount-calculation
+- Match: `montantTTC`
 - Code: `Number(invoice.montantTTC ?? 0);`
 - Diagnostic: Calcul financier ou champ montant détecté.
 - Action cible: Vérifier si le calcul passe par RuntimeComputedFieldsEngine.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:326
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:327
 
 - Type: manual-amount-calculation
 - Match: `montantTTC`
@@ -4472,7 +4472,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Calcul financier ou champ montant détecté.
 - Action cible: Vérifier si le calcul passe par RuntimeComputedFieldsEngine.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:331
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:332
 
 - Type: manual-amount-calculation
 - Match: `montantTTC`
@@ -4480,7 +4480,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Calcul financier ou champ montant détecté.
 - Action cible: Vérifier si le calcul passe par RuntimeComputedFieldsEngine.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:783
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:784
 
 - Type: manual-amount-calculation
 - Match: `prixUnitaireHT`
@@ -4488,7 +4488,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Calcul financier ou champ montant détecté.
 - Action cible: Vérifier si le calcul passe par RuntimeComputedFieldsEngine.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:789
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:790
 
 - Type: manual-amount-calculation
 - Match: `tauxTVA`
@@ -4496,7 +4496,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Calcul financier ou champ montant détecté.
 - Action cible: Vérifier si le calcul passe par RuntimeComputedFieldsEngine.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:791
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:792
 
 - Type: manual-amount-calculation
 - Match: `montantHT`
@@ -4504,7 +4504,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Calcul financier ou champ montant détecté.
 - Action cible: Vérifier si le calcul passe par RuntimeComputedFieldsEngine.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:795
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:796
 
 - Type: manual-amount-calculation
 - Match: `montantHT`
@@ -4512,7 +4512,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Calcul financier ou champ montant détecté.
 - Action cible: Vérifier si le calcul passe par RuntimeComputedFieldsEngine.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:797
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:798
 
 - Type: manual-amount-calculation
 - Match: `montantTTC`
@@ -4520,7 +4520,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Calcul financier ou champ montant détecté.
 - Action cible: Vérifier si le calcul passe par RuntimeComputedFieldsEngine.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:798
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:799
 
 - Type: manual-amount-calculation
 - Match: `montantHT`
@@ -4528,7 +4528,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Calcul financier ou champ montant détecté.
 - Action cible: Vérifier si le calcul passe par RuntimeComputedFieldsEngine.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:804
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:805
 
 - Type: manual-amount-calculation
 - Match: `prixUnitaireHT`
@@ -4536,7 +4536,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Calcul financier ou champ montant détecté.
 - Action cible: Vérifier si le calcul passe par RuntimeComputedFieldsEngine.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:805
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:806
 
 - Type: manual-amount-calculation
 - Match: `tauxTVA`
@@ -4544,7 +4544,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Calcul financier ou champ montant détecté.
 - Action cible: Vérifier si le calcul passe par RuntimeComputedFieldsEngine.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:806
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:807
 
 - Type: manual-amount-calculation
 - Match: `montantHT`
@@ -4552,7 +4552,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Calcul financier ou champ montant détecté.
 - Action cible: Vérifier si le calcul passe par RuntimeComputedFieldsEngine.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:808
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:809
 
 - Type: manual-amount-calculation
 - Match: `montantTTC`
@@ -4560,7 +4560,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Calcul financier ou champ montant détecté.
 - Action cible: Vérifier si le calcul passe par RuntimeComputedFieldsEngine.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:809
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:810
 
 - Type: manual-amount-calculation
 - Match: `montantHT`
@@ -4568,7 +4568,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Calcul financier ou champ montant détecté.
 - Action cible: Vérifier si le calcul passe par RuntimeComputedFieldsEngine.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:871
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:884
 
 - Type: manual-amount-calculation
 - Match: `prixUnitaireHT`
@@ -4576,7 +4576,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Calcul financier ou champ montant détecté.
 - Action cible: Vérifier si le calcul passe par RuntimeComputedFieldsEngine.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:872
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:885
 
 - Type: manual-amount-calculation
 - Match: `tauxTVA`
@@ -4584,7 +4584,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Calcul financier ou champ montant détecté.
 - Action cible: Vérifier si le calcul passe par RuntimeComputedFieldsEngine.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1613
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1626
 
 - Type: manual-amount-calculation
 - Match: `montantTTC`
@@ -4592,7 +4592,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Calcul financier ou champ montant détecté.
 - Action cible: Vérifier si le calcul passe par RuntimeComputedFieldsEngine.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1664
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1677
 
 - Type: manual-amount-calculation
 - Match: `montantTTC`
@@ -4600,7 +4600,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Calcul financier ou champ montant détecté.
 - Action cible: Vérifier si le calcul passe par RuntimeComputedFieldsEngine.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1664
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1677
 
 - Type: manual-amount-calculation
 - Match: `montantTTC`
@@ -4608,7 +4608,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Calcul financier ou champ montant détecté.
 - Action cible: Vérifier si le calcul passe par RuntimeComputedFieldsEngine.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1675
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1688
 
 - Type: manual-amount-calculation
 - Match: `montantTTC`
@@ -4616,7 +4616,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Calcul financier ou champ montant détecté.
 - Action cible: Vérifier si le calcul passe par RuntimeComputedFieldsEngine.
 
-#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1675
+#### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1688
 
 - Type: manual-amount-calculation
 - Match: `montantTTC`
@@ -6522,7 +6522,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Nom de module métier codé en dur.
 - Action cible: Acceptable si c’est déclaratif. Vérifier qu’il n’y a pas de logique exécutable.
 
-#### src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts:165
+#### src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts:186
 
 - Type: hardcoded-business-module
 - Match: `commandesstockauto`
@@ -6642,7 +6642,71 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Calcul financier ou champ montant détecté.
 - Action cible: Acceptable si c’est déclaratif. Vérifier qu’il n’y a pas de logique exécutable.
 
-#### src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts:170
+#### src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts:165
+
+- Type: manual-amount-calculation
+- Match: `montantHT`
+- Code: `readOnlyFields: ["designation", "montantHT", "montantTTC"],`
+- Diagnostic: Calcul financier ou champ montant détecté.
+- Action cible: Acceptable si c’est déclaratif. Vérifier qu’il n’y a pas de logique exécutable.
+
+#### src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts:165
+
+- Type: manual-amount-calculation
+- Match: `montantTTC`
+- Code: `readOnlyFields: ["designation", "montantHT", "montantTTC"],`
+- Diagnostic: Calcul financier ou champ montant détecté.
+- Action cible: Acceptable si c’est déclaratif. Vérifier qu’il n’y a pas de logique exécutable.
+
+#### src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts:169
+
+- Type: manual-amount-calculation
+- Match: `montantHT`
+- Code: `target: "montantHT",`
+- Diagnostic: Calcul financier ou champ montant détecté.
+- Action cible: Acceptable si c’est déclaratif. Vérifier qu’il n’y a pas de logique exécutable.
+
+#### src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts:171
+
+- Type: manual-amount-calculation
+- Match: `quantiteCommandee`
+- Code: `sources: ["quantiteCommandee", "prixUnitaireHT"],`
+- Diagnostic: Calcul financier ou champ montant détecté.
+- Action cible: Acceptable si c’est déclaratif. Vérifier qu’il n’y a pas de logique exécutable.
+
+#### src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts:171
+
+- Type: manual-amount-calculation
+- Match: `prixUnitaireHT`
+- Code: `sources: ["quantiteCommandee", "prixUnitaireHT"],`
+- Diagnostic: Calcul financier ou champ montant détecté.
+- Action cible: Acceptable si c’est déclaratif. Vérifier qu’il n’y a pas de logique exécutable.
+
+#### src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts:176
+
+- Type: manual-amount-calculation
+- Match: `montantTTC`
+- Code: `target: "montantTTC",`
+- Diagnostic: Calcul financier ou champ montant détecté.
+- Action cible: Acceptable si c’est déclaratif. Vérifier qu’il n’y a pas de logique exécutable.
+
+#### src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts:178
+
+- Type: manual-amount-calculation
+- Match: `montantHT`
+- Code: `sources: ["montantHT", "tauxTVA"],`
+- Diagnostic: Calcul financier ou champ montant détecté.
+- Action cible: Acceptable si c’est déclaratif. Vérifier qu’il n’y a pas de logique exécutable.
+
+#### src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts:178
+
+- Type: manual-amount-calculation
+- Match: `tauxTVA`
+- Code: `sources: ["montantHT", "tauxTVA"],`
+- Diagnostic: Calcul financier ou champ montant détecté.
+- Action cible: Acceptable si c’est déclaratif. Vérifier qu’il n’y a pas de logique exécutable.
+
+#### src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts:191
 
 - Type: manual-amount-calculation
 - Match: `quantiteCommandee`

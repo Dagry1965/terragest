@@ -11,6 +11,7 @@ import type { ERPModuleAction } from "@/runtime/modules/ERPModule";
 import { ERPModuleBuilder } from "@/runtime/modules";
 import { RuntimeDataBinding } from "@/runtime/data-binding";
 import { RuntimeStatusGovernanceEngine } from "@/runtime/status";
+import { RuntimeComputedFieldsEngine } from "@/runtime/computed";
 import { RuntimeActionEngine } from "@/runtime/actions/RuntimeActionEngine";
 import {
   RuntimeNotificationCenter,
@@ -863,6 +864,18 @@ export function ERPEnterpriseForm({
           context
         );
 
+      // Q21D3A3_COMPUTED_FIELDS_ENGINE
+      // Generic metadata-driven computed fields.
+      // The form updates values; RuntimeComputedFieldsEngine applies module.composition.computedFields.
+      const computedResult =
+        RuntimeComputedFieldsEngine.apply({
+          module,
+          values: autoFilledValues,
+        });
+
+      const computedValues =
+        computedResult.values;
+
       if (
         module.metadata.key === "lignesinterventionauto" &&
         [
@@ -873,10 +886,10 @@ export function ERPEnterpriseForm({
           "produitId",
         ].includes(key)
       ) {
-        return applyLineItemFormCalculations(autoFilledValues);
+        return applyLineItemFormCalculations(computedValues);
       }
 
-      return autoFilledValues;
+      return computedValues;
     });
   }
 
