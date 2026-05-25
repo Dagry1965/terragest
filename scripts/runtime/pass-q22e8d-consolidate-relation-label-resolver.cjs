@@ -1,4 +1,35 @@
-import type { ERPModule } from "@/runtime/modules/ERPModule";
+const fs = require("fs");
+const path = require("path");
+
+const root = process.cwd();
+
+const targetPath = path.join(
+  root,
+  "src",
+  "runtime",
+  "relations",
+  "RuntimeRelationLabelResolver.ts"
+);
+
+const backupPath = `${targetPath}.bak-q22e8d-consolidate-resolver`;
+
+function fail(message) {
+  console.error(`\n[ERROR] ${message}`);
+  process.exit(1);
+}
+
+if (!fs.existsSync(targetPath)) {
+  fail(`File not found: ${targetPath}`);
+}
+
+if (!fs.existsSync(backupPath)) {
+  fs.copyFileSync(targetPath, backupPath);
+  console.log(`[BACKUP] ${path.relative(root, backupPath)}`);
+} else {
+  console.log(`[BACKUP_EXISTS] ${path.relative(root, backupPath)}`);
+}
+
+const content = `import type { ERPModule } from "@/runtime/modules/ERPModule";
 import { allERPModules } from "@/runtime/modules/definitions/coreModules";
 import { RuntimeDataBinding } from "@/runtime/data-binding/RuntimeDataBinding";
 import { RuntimeRelationLabelEngine } from "@/runtime/relations/RuntimeRelationLabelEngine";
@@ -256,3 +287,21 @@ export class RuntimeRelationLabelResolver {
     return engineLabel.label || fallbackLabel;
   }
 }
+`;
+
+fs.writeFileSync(targetPath, content, "utf8");
+
+console.log(`
+[Q22E8D_DONE] RuntimeRelationLabelResolver consolidé.
+
+Décision:
+  - RuntimeRelationLabelEngine reste le moteur de formatage métier.
+  - RuntimeRelationLabelResolver devient une façade batch pour les écrans.
+  - Pas de moteur parallèle.
+  - Planning reste consommateur du resolver.
+  - Préparation pour tables/panels/context sans duplication.
+
+Next:
+  pnpm build
+  tester /rendezvous/planning
+`);
