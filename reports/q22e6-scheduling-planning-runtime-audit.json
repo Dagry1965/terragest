@@ -1,0 +1,22 @@
+{
+  "generatedAt": "2026-05-25T12:41:04.286Z",
+  "pass": "Q22E-6",
+  "title": "Scheduling planning runtime audit",
+  "status": "ok",
+  "capabilities": [
+    "generic scheduling planning view",
+    "module.scheduling driven rendering",
+    "RuntimeDataBinding records loading",
+    "RuntimeSchedulingEngine availability calculation",
+    "bufferMinutes support",
+    "calendarExceptions support",
+    "capacity and remainingCapacity support",
+    "rendezvous as first consumer only"
+  ],
+  "files": {
+    "planningView": "src/components/erp/scheduling/ERPSchedulingPlanningView.tsx",
+    "schedulingIndex": "src/components/erp/scheduling/index.ts",
+    "rendezvousPlanningPage": "src/app/(private)/rendezvous/planning/page.tsx",
+    "rendezvousModule": "src/runtime/modules/generated/rendezvous/rendezvous.module.ts"
+  }
+}
