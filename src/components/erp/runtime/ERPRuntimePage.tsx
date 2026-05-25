@@ -206,7 +206,7 @@ export function ERPRuntimePage({
 
       : [];
 
-  const listNavigationActions =
+  const moduleHrefActions =
     // Q22E4B_LIST_NAVIGATION_ACTIONS
     // Generic runtime: list pages may expose module actions with href.
     type === "list"
@@ -214,6 +214,33 @@ export function ERPRuntimePage({
           Boolean(action.href)
         )
       : [];
+
+  const hasPlanningAction =
+    moduleHrefActions.some((action) =>
+      String(action.href ?? "").includes("/planning")
+    );
+
+  const schedulingPlanningAction =
+    // Q22E4C_AUTO_SCHEDULING_PLANNING_ACTION
+    // Any module declaring scheduling.enabled gets a generic Planning entry.
+    // The first consumer is rendezvous, but this remains runtime-driven.
+    type === "list" &&
+    module?.scheduling?.enabled &&
+    !hasPlanningAction
+      ? [
+          {
+            key: "runtime-planning",
+            label: "Planning",
+            href: `/${module.metadata.key}/planning`,
+            type: "secondary" as const,
+          },
+        ]
+      : [];
+
+  const listNavigationActions = [
+    ...schedulingPlanningAction,
+    ...moduleHrefActions,
+  ];
 
   const isInvoiceDetailPage =
     type === "detail" &&
