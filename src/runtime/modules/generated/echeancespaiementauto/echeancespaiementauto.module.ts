@@ -200,6 +200,56 @@ export const echeancespaiementautoModule: ERPModule = {
   },
 
   actions: echeancespaiementautoActions,
+  composition: {
+    // Q21E_C_PAYMENT_SCHEDULE_RELATIONSHIP_COMPOSITION
+    // Échéance belongs to a facture and inherits invoice context.
+    requiresParentContext: true,
+    allowedParents: [
+      {
+        moduleKey: "facturesauto",
+        foreignKey: "factureId",
+      },
+    ],
+    lockedFields: ["factureId", "clientId", "vehiculeId"],
+    labelFields: ["factureId", "montantPrevu", "montantPaye", "dateEcheance", "statut"],
+
+    contextBanner: {
+      title: "Contexte échéance",
+      items: [
+        {
+          relationField: "factureId",
+          moduleKey: "facturesauto",
+          labelFields: [
+            "numeroFacture",
+            "statutPaiement",
+            "resteAPayer",
+          ],
+          tone: "invoice",
+        },
+        {
+          relationField: "clientId",
+          moduleKey: "clientsauto",
+          labelFields: [
+            "prenom",
+            "nom",
+            "telephone",
+          ],
+          tone: "client",
+        },
+        {
+          relationField: "vehiculeId",
+          moduleKey: "vehicules",
+          labelFields: [
+            "marque",
+            "modele",
+            "immatriculation",
+          ],
+          tone: "vehicle",
+        },
+      ],
+    },
+  },
+
 
   workflows: [
     {

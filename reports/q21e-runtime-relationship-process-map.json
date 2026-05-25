@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-05-25T06:20:01.125Z",
+  "generatedAt": "2026-05-25T06:40:08.849Z",
   "mode": "REPORT_ONLY",
   "summary": {
     "filesScanned": 20,
     "modulesScanned": 20,
-    "modulesWithChildren": 7,
-    "modulesWithParentContext": 3,
-    "modulesWithLabelFields": 12,
+    "modulesWithChildren": 10,
+    "modulesWithParentContext": 5,
+    "modulesWithLabelFields": 13,
     "modulesWithRelationFilterBy": 3,
     "modulesWithRelationExcludeUsedBy": 0,
     "modulesWithRelationAutoFill": 1,
@@ -24,15 +24,157 @@
         "echeancespaiementauto"
       ],
       "foundModules": [
-        "lignesinterventionauto",
-        "interventionsauto",
-        "facturesauto",
+        "echeancespaiementauto",
         "encaissementsauto",
-        "rendezvous",
-        "echeancespaiementauto"
+        "lignesinterventionauto",
+        "facturesauto",
+        "interventionsauto",
+        "rendezvous"
       ],
       "missingModules": [],
       "modules": [
+        {
+          "moduleKey": "echeancespaiementauto",
+          "file": "src/runtime/modules/generated/echeancespaiementauto/echeancespaiementauto.module.ts",
+          "score": 6,
+          "capabilities": {
+            "parentContext": true,
+            "children": true,
+            "labelFields": true,
+            "subtitleFields": false,
+            "childRelations": false,
+            "relationFields": true,
+            "relationFilterBy": false,
+            "relationExcludeUsedBy": false,
+            "relationAutoFill": false,
+            "computedFields": false,
+            "lockedFields": true,
+            "readOnlyFields": false,
+            "workflowActions": true,
+            "businessRules": false,
+            "formTabs": true,
+            "listFields": 6
+          },
+          "relationFields": [
+            {
+              "key": "echeancespaiementauto",
+              "module": "facturesauto",
+              "hasFilterBy": false,
+              "hasExcludeUsedBy": false,
+              "hasAutoFill": false,
+              "hasCreate": false
+            },
+            {
+              "key": "clientId",
+              "module": "clientsauto",
+              "hasFilterBy": false,
+              "hasExcludeUsedBy": false,
+              "hasAutoFill": false,
+              "hasCreate": false
+            },
+            {
+              "key": "vehiculeId",
+              "module": "vehicules",
+              "hasFilterBy": false,
+              "hasExcludeUsedBy": false,
+              "hasAutoFill": false,
+              "hasCreate": false
+            }
+          ],
+          "children": [
+            {
+              "key": "echeancespaiementauto",
+              "moduleKey": "facturesauto",
+              "foreignKey": "factureId",
+              "hasLabelFields": false,
+              "hasSubtitleFields": false,
+              "hasRelations": false,
+              "hasPrefillFromParent": false,
+              "hasLockFields": false,
+              "displayIn": "",
+              "position": ""
+            }
+          ],
+          "rawCounts": {
+            "relationFields": 3,
+            "children": 1,
+            "filterBy": 0,
+            "excludeUsedBy": 0,
+            "autoFill": 0,
+            "listFields": 6
+          }
+        },
+        {
+          "moduleKey": "encaissementsauto",
+          "file": "src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts",
+          "score": 6,
+          "capabilities": {
+            "parentContext": true,
+            "children": true,
+            "labelFields": true,
+            "subtitleFields": false,
+            "childRelations": false,
+            "relationFields": true,
+            "relationFilterBy": false,
+            "relationExcludeUsedBy": false,
+            "relationAutoFill": false,
+            "computedFields": false,
+            "lockedFields": true,
+            "readOnlyFields": true,
+            "workflowActions": true,
+            "businessRules": false,
+            "formTabs": true,
+            "listFields": 6
+          },
+          "relationFields": [
+            {
+              "key": "encaissementsauto",
+              "module": "facturesauto",
+              "hasFilterBy": false,
+              "hasExcludeUsedBy": false,
+              "hasAutoFill": false,
+              "hasCreate": false
+            },
+            {
+              "key": "clientId",
+              "module": "clientsauto",
+              "hasFilterBy": false,
+              "hasExcludeUsedBy": false,
+              "hasAutoFill": false,
+              "hasCreate": false
+            },
+            {
+              "key": "vehiculeId",
+              "module": "vehicules",
+              "hasFilterBy": false,
+              "hasExcludeUsedBy": false,
+              "hasAutoFill": false,
+              "hasCreate": false
+            }
+          ],
+          "children": [
+            {
+              "key": "encaissementsauto",
+              "moduleKey": "facturesauto",
+              "foreignKey": "factureId",
+              "hasLabelFields": false,
+              "hasSubtitleFields": false,
+              "hasRelations": false,
+              "hasPrefillFromParent": false,
+              "hasLockFields": false,
+              "displayIn": "",
+              "position": ""
+            }
+          ],
+          "rawCounts": {
+            "relationFields": 3,
+            "children": 1,
+            "filterBy": 0,
+            "excludeUsedBy": 0,
+            "autoFill": 0,
+            "listFields": 6
+          }
+        },
         {
           "moduleKey": "lignesinterventionauto",
           "file": "src/runtime/modules/generated/lignesinterventionauto/lignesinterventionauto.module.ts",
@@ -113,6 +255,89 @@
           }
         },
         {
+          "moduleKey": "facturesauto",
+          "file": "src/runtime/modules/generated/facturesauto/facturesauto.module.ts",
+          "score": 5,
+          "capabilities": {
+            "parentContext": false,
+            "children": true,
+            "labelFields": true,
+            "subtitleFields": true,
+            "childRelations": true,
+            "relationFields": true,
+            "relationFilterBy": false,
+            "relationExcludeUsedBy": false,
+            "relationAutoFill": false,
+            "computedFields": false,
+            "lockedFields": true,
+            "readOnlyFields": true,
+            "workflowActions": true,
+            "businessRules": false,
+            "formTabs": true,
+            "listFields": 6
+          },
+          "relationFields": [
+            {
+              "key": "facturesauto",
+              "module": "clientsauto",
+              "hasFilterBy": false,
+              "hasExcludeUsedBy": false,
+              "hasAutoFill": false,
+              "hasCreate": false
+            },
+            {
+              "key": "vehiculeId",
+              "module": "vehicules",
+              "hasFilterBy": false,
+              "hasExcludeUsedBy": false,
+              "hasAutoFill": false,
+              "hasCreate": false
+            },
+            {
+              "key": "interventionId",
+              "module": "interventionsauto",
+              "hasFilterBy": false,
+              "hasExcludeUsedBy": false,
+              "hasAutoFill": false,
+              "hasCreate": false
+            }
+          ],
+          "children": [
+            {
+              "key": "facturesauto",
+              "moduleKey": "clientsauto",
+              "foreignKey": "factureId",
+              "hasLabelFields": true,
+              "hasSubtitleFields": true,
+              "hasRelations": false,
+              "hasPrefillFromParent": true,
+              "hasLockFields": false,
+              "displayIn": "\"detail\", \"edit\"",
+              "position": "after"
+            },
+            {
+              "key": "echeances-facture",
+              "moduleKey": "echeancespaiementauto",
+              "foreignKey": "factureId",
+              "hasLabelFields": true,
+              "hasSubtitleFields": true,
+              "hasRelations": false,
+              "hasPrefillFromParent": true,
+              "hasLockFields": false,
+              "displayIn": "\"detail\", \"edit\"",
+              "position": "after"
+            }
+          ],
+          "rawCounts": {
+            "relationFields": 3,
+            "children": 2,
+            "filterBy": 0,
+            "excludeUsedBy": 0,
+            "autoFill": 0,
+            "listFields": 6
+          }
+        },
+        {
           "moduleKey": "interventionsauto",
           "file": "src/runtime/modules/generated/interventionsauto/interventionsauto.module.ts",
           "score": 5,
@@ -184,122 +409,6 @@
           }
         },
         {
-          "moduleKey": "facturesauto",
-          "file": "src/runtime/modules/generated/facturesauto/facturesauto.module.ts",
-          "score": 4,
-          "capabilities": {
-            "parentContext": false,
-            "children": false,
-            "labelFields": true,
-            "subtitleFields": false,
-            "childRelations": false,
-            "relationFields": true,
-            "relationFilterBy": false,
-            "relationExcludeUsedBy": false,
-            "relationAutoFill": false,
-            "computedFields": false,
-            "lockedFields": true,
-            "readOnlyFields": true,
-            "workflowActions": true,
-            "businessRules": false,
-            "formTabs": true,
-            "listFields": 6
-          },
-          "relationFields": [
-            {
-              "key": "facturesauto",
-              "module": "clientsauto",
-              "hasFilterBy": false,
-              "hasExcludeUsedBy": false,
-              "hasAutoFill": false,
-              "hasCreate": false
-            },
-            {
-              "key": "vehiculeId",
-              "module": "vehicules",
-              "hasFilterBy": false,
-              "hasExcludeUsedBy": false,
-              "hasAutoFill": false,
-              "hasCreate": false
-            },
-            {
-              "key": "interventionId",
-              "module": "interventionsauto",
-              "hasFilterBy": false,
-              "hasExcludeUsedBy": false,
-              "hasAutoFill": false,
-              "hasCreate": false
-            }
-          ],
-          "children": [],
-          "rawCounts": {
-            "relationFields": 3,
-            "children": 0,
-            "filterBy": 0,
-            "excludeUsedBy": 0,
-            "autoFill": 0,
-            "listFields": 6
-          }
-        },
-        {
-          "moduleKey": "encaissementsauto",
-          "file": "src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts",
-          "score": 3,
-          "capabilities": {
-            "parentContext": false,
-            "children": false,
-            "labelFields": true,
-            "subtitleFields": false,
-            "childRelations": false,
-            "relationFields": true,
-            "relationFilterBy": false,
-            "relationExcludeUsedBy": false,
-            "relationAutoFill": false,
-            "computedFields": false,
-            "lockedFields": false,
-            "readOnlyFields": true,
-            "workflowActions": true,
-            "businessRules": false,
-            "formTabs": true,
-            "listFields": 6
-          },
-          "relationFields": [
-            {
-              "key": "encaissementsauto",
-              "module": "facturesauto",
-              "hasFilterBy": false,
-              "hasExcludeUsedBy": false,
-              "hasAutoFill": false,
-              "hasCreate": false
-            },
-            {
-              "key": "clientId",
-              "module": "clientsauto",
-              "hasFilterBy": false,
-              "hasExcludeUsedBy": false,
-              "hasAutoFill": false,
-              "hasCreate": false
-            },
-            {
-              "key": "vehiculeId",
-              "module": "vehicules",
-              "hasFilterBy": false,
-              "hasExcludeUsedBy": false,
-              "hasAutoFill": false,
-              "hasCreate": false
-            }
-          ],
-          "children": [],
-          "rawCounts": {
-            "relationFields": 3,
-            "children": 0,
-            "filterBy": 0,
-            "excludeUsedBy": 0,
-            "autoFill": 0,
-            "listFields": 6
-          }
-        },
-        {
           "moduleKey": "rendezvous",
           "file": "src/runtime/modules/generated/rendezvous/rendezvous.module.ts",
           "score": 3,
@@ -355,64 +464,6 @@
             "excludeUsedBy": 0,
             "autoFill": 0,
             "listFields": 9
-          }
-        },
-        {
-          "moduleKey": "echeancespaiementauto",
-          "file": "src/runtime/modules/generated/echeancespaiementauto/echeancespaiementauto.module.ts",
-          "score": 2,
-          "capabilities": {
-            "parentContext": false,
-            "children": false,
-            "labelFields": false,
-            "subtitleFields": false,
-            "childRelations": false,
-            "relationFields": true,
-            "relationFilterBy": false,
-            "relationExcludeUsedBy": false,
-            "relationAutoFill": false,
-            "computedFields": false,
-            "lockedFields": false,
-            "readOnlyFields": false,
-            "workflowActions": true,
-            "businessRules": false,
-            "formTabs": true,
-            "listFields": 6
-          },
-          "relationFields": [
-            {
-              "key": "echeancespaiementauto",
-              "module": "facturesauto",
-              "hasFilterBy": false,
-              "hasExcludeUsedBy": false,
-              "hasAutoFill": false,
-              "hasCreate": false
-            },
-            {
-              "key": "clientId",
-              "module": "clientsauto",
-              "hasFilterBy": false,
-              "hasExcludeUsedBy": false,
-              "hasAutoFill": false,
-              "hasCreate": false
-            },
-            {
-              "key": "vehiculeId",
-              "module": "vehicules",
-              "hasFilterBy": false,
-              "hasExcludeUsedBy": false,
-              "hasAutoFill": false,
-              "hasCreate": false
-            }
-          ],
-          "children": [],
-          "rawCounts": {
-            "relationFields": 3,
-            "children": 0,
-            "filterBy": 0,
-            "excludeUsedBy": 0,
-            "autoFill": 0,
-            "listFields": 6
           }
         }
       ]
@@ -1011,22 +1062,164 @@
         "echeancespaiementauto"
       ],
       "foundModules": [
-        "facturesauto",
+        "echeancespaiementauto",
         "encaissementsauto",
-        "echeancespaiementauto"
+        "facturesauto"
       ],
       "missingModules": [],
       "modules": [
         {
-          "moduleKey": "facturesauto",
-          "file": "src/runtime/modules/generated/facturesauto/facturesauto.module.ts",
-          "score": 4,
+          "moduleKey": "echeancespaiementauto",
+          "file": "src/runtime/modules/generated/echeancespaiementauto/echeancespaiementauto.module.ts",
+          "score": 6,
           "capabilities": {
-            "parentContext": false,
-            "children": false,
+            "parentContext": true,
+            "children": true,
             "labelFields": true,
             "subtitleFields": false,
             "childRelations": false,
+            "relationFields": true,
+            "relationFilterBy": false,
+            "relationExcludeUsedBy": false,
+            "relationAutoFill": false,
+            "computedFields": false,
+            "lockedFields": true,
+            "readOnlyFields": false,
+            "workflowActions": true,
+            "businessRules": false,
+            "formTabs": true,
+            "listFields": 6
+          },
+          "relationFields": [
+            {
+              "key": "echeancespaiementauto",
+              "module": "facturesauto",
+              "hasFilterBy": false,
+              "hasExcludeUsedBy": false,
+              "hasAutoFill": false,
+              "hasCreate": false
+            },
+            {
+              "key": "clientId",
+              "module": "clientsauto",
+              "hasFilterBy": false,
+              "hasExcludeUsedBy": false,
+              "hasAutoFill": false,
+              "hasCreate": false
+            },
+            {
+              "key": "vehiculeId",
+              "module": "vehicules",
+              "hasFilterBy": false,
+              "hasExcludeUsedBy": false,
+              "hasAutoFill": false,
+              "hasCreate": false
+            }
+          ],
+          "children": [
+            {
+              "key": "echeancespaiementauto",
+              "moduleKey": "facturesauto",
+              "foreignKey": "factureId",
+              "hasLabelFields": false,
+              "hasSubtitleFields": false,
+              "hasRelations": false,
+              "hasPrefillFromParent": false,
+              "hasLockFields": false,
+              "displayIn": "",
+              "position": ""
+            }
+          ],
+          "rawCounts": {
+            "relationFields": 3,
+            "children": 1,
+            "filterBy": 0,
+            "excludeUsedBy": 0,
+            "autoFill": 0,
+            "listFields": 6
+          }
+        },
+        {
+          "moduleKey": "encaissementsauto",
+          "file": "src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts",
+          "score": 6,
+          "capabilities": {
+            "parentContext": true,
+            "children": true,
+            "labelFields": true,
+            "subtitleFields": false,
+            "childRelations": false,
+            "relationFields": true,
+            "relationFilterBy": false,
+            "relationExcludeUsedBy": false,
+            "relationAutoFill": false,
+            "computedFields": false,
+            "lockedFields": true,
+            "readOnlyFields": true,
+            "workflowActions": true,
+            "businessRules": false,
+            "formTabs": true,
+            "listFields": 6
+          },
+          "relationFields": [
+            {
+              "key": "encaissementsauto",
+              "module": "facturesauto",
+              "hasFilterBy": false,
+              "hasExcludeUsedBy": false,
+              "hasAutoFill": false,
+              "hasCreate": false
+            },
+            {
+              "key": "clientId",
+              "module": "clientsauto",
+              "hasFilterBy": false,
+              "hasExcludeUsedBy": false,
+              "hasAutoFill": false,
+              "hasCreate": false
+            },
+            {
+              "key": "vehiculeId",
+              "module": "vehicules",
+              "hasFilterBy": false,
+              "hasExcludeUsedBy": false,
+              "hasAutoFill": false,
+              "hasCreate": false
+            }
+          ],
+          "children": [
+            {
+              "key": "encaissementsauto",
+              "moduleKey": "facturesauto",
+              "foreignKey": "factureId",
+              "hasLabelFields": false,
+              "hasSubtitleFields": false,
+              "hasRelations": false,
+              "hasPrefillFromParent": false,
+              "hasLockFields": false,
+              "displayIn": "",
+              "position": ""
+            }
+          ],
+          "rawCounts": {
+            "relationFields": 3,
+            "children": 1,
+            "filterBy": 0,
+            "excludeUsedBy": 0,
+            "autoFill": 0,
+            "listFields": 6
+          }
+        },
+        {
+          "moduleKey": "facturesauto",
+          "file": "src/runtime/modules/generated/facturesauto/facturesauto.module.ts",
+          "score": 5,
+          "capabilities": {
+            "parentContext": false,
+            "children": true,
+            "labelFields": true,
+            "subtitleFields": true,
+            "childRelations": true,
             "relationFields": true,
             "relationFilterBy": false,
             "relationExcludeUsedBy": false,
@@ -1065,126 +1258,35 @@
               "hasCreate": false
             }
           ],
-          "children": [],
-          "rawCounts": {
-            "relationFields": 3,
-            "children": 0,
-            "filterBy": 0,
-            "excludeUsedBy": 0,
-            "autoFill": 0,
-            "listFields": 6
-          }
-        },
-        {
-          "moduleKey": "encaissementsauto",
-          "file": "src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts",
-          "score": 3,
-          "capabilities": {
-            "parentContext": false,
-            "children": false,
-            "labelFields": true,
-            "subtitleFields": false,
-            "childRelations": false,
-            "relationFields": true,
-            "relationFilterBy": false,
-            "relationExcludeUsedBy": false,
-            "relationAutoFill": false,
-            "computedFields": false,
-            "lockedFields": false,
-            "readOnlyFields": true,
-            "workflowActions": true,
-            "businessRules": false,
-            "formTabs": true,
-            "listFields": 6
-          },
-          "relationFields": [
+          "children": [
             {
-              "key": "encaissementsauto",
-              "module": "facturesauto",
-              "hasFilterBy": false,
-              "hasExcludeUsedBy": false,
-              "hasAutoFill": false,
-              "hasCreate": false
+              "key": "facturesauto",
+              "moduleKey": "clientsauto",
+              "foreignKey": "factureId",
+              "hasLabelFields": true,
+              "hasSubtitleFields": true,
+              "hasRelations": false,
+              "hasPrefillFromParent": true,
+              "hasLockFields": false,
+              "displayIn": "\"detail\", \"edit\"",
+              "position": "after"
             },
             {
-              "key": "clientId",
-              "module": "clientsauto",
-              "hasFilterBy": false,
-              "hasExcludeUsedBy": false,
-              "hasAutoFill": false,
-              "hasCreate": false
-            },
-            {
-              "key": "vehiculeId",
-              "module": "vehicules",
-              "hasFilterBy": false,
-              "hasExcludeUsedBy": false,
-              "hasAutoFill": false,
-              "hasCreate": false
+              "key": "echeances-facture",
+              "moduleKey": "echeancespaiementauto",
+              "foreignKey": "factureId",
+              "hasLabelFields": true,
+              "hasSubtitleFields": true,
+              "hasRelations": false,
+              "hasPrefillFromParent": true,
+              "hasLockFields": false,
+              "displayIn": "\"detail\", \"edit\"",
+              "position": "after"
             }
           ],
-          "children": [],
           "rawCounts": {
             "relationFields": 3,
-            "children": 0,
-            "filterBy": 0,
-            "excludeUsedBy": 0,
-            "autoFill": 0,
-            "listFields": 6
-          }
-        },
-        {
-          "moduleKey": "echeancespaiementauto",
-          "file": "src/runtime/modules/generated/echeancespaiementauto/echeancespaiementauto.module.ts",
-          "score": 2,
-          "capabilities": {
-            "parentContext": false,
-            "children": false,
-            "labelFields": false,
-            "subtitleFields": false,
-            "childRelations": false,
-            "relationFields": true,
-            "relationFilterBy": false,
-            "relationExcludeUsedBy": false,
-            "relationAutoFill": false,
-            "computedFields": false,
-            "lockedFields": false,
-            "readOnlyFields": false,
-            "workflowActions": true,
-            "businessRules": false,
-            "formTabs": true,
-            "listFields": 6
-          },
-          "relationFields": [
-            {
-              "key": "echeancespaiementauto",
-              "module": "facturesauto",
-              "hasFilterBy": false,
-              "hasExcludeUsedBy": false,
-              "hasAutoFill": false,
-              "hasCreate": false
-            },
-            {
-              "key": "clientId",
-              "module": "clientsauto",
-              "hasFilterBy": false,
-              "hasExcludeUsedBy": false,
-              "hasAutoFill": false,
-              "hasCreate": false
-            },
-            {
-              "key": "vehiculeId",
-              "module": "vehicules",
-              "hasFilterBy": false,
-              "hasExcludeUsedBy": false,
-              "hasAutoFill": false,
-              "hasCreate": false
-            }
-          ],
-          "children": [],
-          "rawCounts": {
-            "relationFields": 3,
-            "children": 0,
+            "children": 2,
             "filterBy": 0,
             "excludeUsedBy": 0,
             "autoFill": 0,
@@ -1378,6 +1480,148 @@
       }
     },
     {
+      "moduleKey": "echeancespaiementauto",
+      "file": "src/runtime/modules/generated/echeancespaiementauto/echeancespaiementauto.module.ts",
+      "score": 6,
+      "capabilities": {
+        "parentContext": true,
+        "children": true,
+        "labelFields": true,
+        "subtitleFields": false,
+        "childRelations": false,
+        "relationFields": true,
+        "relationFilterBy": false,
+        "relationExcludeUsedBy": false,
+        "relationAutoFill": false,
+        "computedFields": false,
+        "lockedFields": true,
+        "readOnlyFields": false,
+        "workflowActions": true,
+        "businessRules": false,
+        "formTabs": true,
+        "listFields": 6
+      },
+      "relationFields": [
+        {
+          "key": "echeancespaiementauto",
+          "module": "facturesauto",
+          "hasFilterBy": false,
+          "hasExcludeUsedBy": false,
+          "hasAutoFill": false,
+          "hasCreate": false
+        },
+        {
+          "key": "clientId",
+          "module": "clientsauto",
+          "hasFilterBy": false,
+          "hasExcludeUsedBy": false,
+          "hasAutoFill": false,
+          "hasCreate": false
+        },
+        {
+          "key": "vehiculeId",
+          "module": "vehicules",
+          "hasFilterBy": false,
+          "hasExcludeUsedBy": false,
+          "hasAutoFill": false,
+          "hasCreate": false
+        }
+      ],
+      "children": [
+        {
+          "key": "echeancespaiementauto",
+          "moduleKey": "facturesauto",
+          "foreignKey": "factureId",
+          "hasLabelFields": false,
+          "hasSubtitleFields": false,
+          "hasRelations": false,
+          "hasPrefillFromParent": false,
+          "hasLockFields": false,
+          "displayIn": "",
+          "position": ""
+        }
+      ],
+      "rawCounts": {
+        "relationFields": 3,
+        "children": 1,
+        "filterBy": 0,
+        "excludeUsedBy": 0,
+        "autoFill": 0,
+        "listFields": 6
+      }
+    },
+    {
+      "moduleKey": "encaissementsauto",
+      "file": "src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts",
+      "score": 6,
+      "capabilities": {
+        "parentContext": true,
+        "children": true,
+        "labelFields": true,
+        "subtitleFields": false,
+        "childRelations": false,
+        "relationFields": true,
+        "relationFilterBy": false,
+        "relationExcludeUsedBy": false,
+        "relationAutoFill": false,
+        "computedFields": false,
+        "lockedFields": true,
+        "readOnlyFields": true,
+        "workflowActions": true,
+        "businessRules": false,
+        "formTabs": true,
+        "listFields": 6
+      },
+      "relationFields": [
+        {
+          "key": "encaissementsauto",
+          "module": "facturesauto",
+          "hasFilterBy": false,
+          "hasExcludeUsedBy": false,
+          "hasAutoFill": false,
+          "hasCreate": false
+        },
+        {
+          "key": "clientId",
+          "module": "clientsauto",
+          "hasFilterBy": false,
+          "hasExcludeUsedBy": false,
+          "hasAutoFill": false,
+          "hasCreate": false
+        },
+        {
+          "key": "vehiculeId",
+          "module": "vehicules",
+          "hasFilterBy": false,
+          "hasExcludeUsedBy": false,
+          "hasAutoFill": false,
+          "hasCreate": false
+        }
+      ],
+      "children": [
+        {
+          "key": "encaissementsauto",
+          "moduleKey": "facturesauto",
+          "foreignKey": "factureId",
+          "hasLabelFields": false,
+          "hasSubtitleFields": false,
+          "hasRelations": false,
+          "hasPrefillFromParent": false,
+          "hasLockFields": false,
+          "displayIn": "",
+          "position": ""
+        }
+      ],
+      "rawCounts": {
+        "relationFields": 3,
+        "children": 1,
+        "filterBy": 0,
+        "excludeUsedBy": 0,
+        "autoFill": 0,
+        "listFields": 6
+      }
+    },
+    {
       "moduleKey": "lignesinterventionauto",
       "file": "src/runtime/modules/generated/lignesinterventionauto/lignesinterventionauto.module.ts",
       "score": 6,
@@ -1454,6 +1698,89 @@
         "excludeUsedBy": 0,
         "autoFill": 0,
         "listFields": 10
+      }
+    },
+    {
+      "moduleKey": "facturesauto",
+      "file": "src/runtime/modules/generated/facturesauto/facturesauto.module.ts",
+      "score": 5,
+      "capabilities": {
+        "parentContext": false,
+        "children": true,
+        "labelFields": true,
+        "subtitleFields": true,
+        "childRelations": true,
+        "relationFields": true,
+        "relationFilterBy": false,
+        "relationExcludeUsedBy": false,
+        "relationAutoFill": false,
+        "computedFields": false,
+        "lockedFields": true,
+        "readOnlyFields": true,
+        "workflowActions": true,
+        "businessRules": false,
+        "formTabs": true,
+        "listFields": 6
+      },
+      "relationFields": [
+        {
+          "key": "facturesauto",
+          "module": "clientsauto",
+          "hasFilterBy": false,
+          "hasExcludeUsedBy": false,
+          "hasAutoFill": false,
+          "hasCreate": false
+        },
+        {
+          "key": "vehiculeId",
+          "module": "vehicules",
+          "hasFilterBy": false,
+          "hasExcludeUsedBy": false,
+          "hasAutoFill": false,
+          "hasCreate": false
+        },
+        {
+          "key": "interventionId",
+          "module": "interventionsauto",
+          "hasFilterBy": false,
+          "hasExcludeUsedBy": false,
+          "hasAutoFill": false,
+          "hasCreate": false
+        }
+      ],
+      "children": [
+        {
+          "key": "facturesauto",
+          "moduleKey": "clientsauto",
+          "foreignKey": "factureId",
+          "hasLabelFields": true,
+          "hasSubtitleFields": true,
+          "hasRelations": false,
+          "hasPrefillFromParent": true,
+          "hasLockFields": false,
+          "displayIn": "\"detail\", \"edit\"",
+          "position": "after"
+        },
+        {
+          "key": "echeances-facture",
+          "moduleKey": "echeancespaiementauto",
+          "foreignKey": "factureId",
+          "hasLabelFields": true,
+          "hasSubtitleFields": true,
+          "hasRelations": false,
+          "hasPrefillFromParent": true,
+          "hasLockFields": false,
+          "displayIn": "\"detail\", \"edit\"",
+          "position": "after"
+        }
+      ],
+      "rawCounts": {
+        "relationFields": 3,
+        "children": 2,
+        "filterBy": 0,
+        "excludeUsedBy": 0,
+        "autoFill": 0,
+        "listFields": 6
       }
     },
     {
@@ -1662,64 +1989,6 @@
       }
     },
     {
-      "moduleKey": "facturesauto",
-      "file": "src/runtime/modules/generated/facturesauto/facturesauto.module.ts",
-      "score": 4,
-      "capabilities": {
-        "parentContext": false,
-        "children": false,
-        "labelFields": true,
-        "subtitleFields": false,
-        "childRelations": false,
-        "relationFields": true,
-        "relationFilterBy": false,
-        "relationExcludeUsedBy": false,
-        "relationAutoFill": false,
-        "computedFields": false,
-        "lockedFields": true,
-        "readOnlyFields": true,
-        "workflowActions": true,
-        "businessRules": false,
-        "formTabs": true,
-        "listFields": 6
-      },
-      "relationFields": [
-        {
-          "key": "facturesauto",
-          "module": "clientsauto",
-          "hasFilterBy": false,
-          "hasExcludeUsedBy": false,
-          "hasAutoFill": false,
-          "hasCreate": false
-        },
-        {
-          "key": "vehiculeId",
-          "module": "vehicules",
-          "hasFilterBy": false,
-          "hasExcludeUsedBy": false,
-          "hasAutoFill": false,
-          "hasCreate": false
-        },
-        {
-          "key": "interventionId",
-          "module": "interventionsauto",
-          "hasFilterBy": false,
-          "hasExcludeUsedBy": false,
-          "hasAutoFill": false,
-          "hasCreate": false
-        }
-      ],
-      "children": [],
-      "rawCounts": {
-        "relationFields": 3,
-        "children": 0,
-        "filterBy": 0,
-        "excludeUsedBy": 0,
-        "autoFill": 0,
-        "listFields": 6
-      }
-    },
-    {
       "moduleKey": "clientsauto",
       "file": "src/runtime/modules/generated/clientsauto/clientsauto.module.ts",
       "score": 3,
@@ -1763,64 +2032,6 @@
         "excludeUsedBy": 0,
         "autoFill": 0,
         "listFields": 4
-      }
-    },
-    {
-      "moduleKey": "encaissementsauto",
-      "file": "src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts",
-      "score": 3,
-      "capabilities": {
-        "parentContext": false,
-        "children": false,
-        "labelFields": true,
-        "subtitleFields": false,
-        "childRelations": false,
-        "relationFields": true,
-        "relationFilterBy": false,
-        "relationExcludeUsedBy": false,
-        "relationAutoFill": false,
-        "computedFields": false,
-        "lockedFields": false,
-        "readOnlyFields": true,
-        "workflowActions": true,
-        "businessRules": false,
-        "formTabs": true,
-        "listFields": 6
-      },
-      "relationFields": [
-        {
-          "key": "encaissementsauto",
-          "module": "facturesauto",
-          "hasFilterBy": false,
-          "hasExcludeUsedBy": false,
-          "hasAutoFill": false,
-          "hasCreate": false
-        },
-        {
-          "key": "clientId",
-          "module": "clientsauto",
-          "hasFilterBy": false,
-          "hasExcludeUsedBy": false,
-          "hasAutoFill": false,
-          "hasCreate": false
-        },
-        {
-          "key": "vehiculeId",
-          "module": "vehicules",
-          "hasFilterBy": false,
-          "hasExcludeUsedBy": false,
-          "hasAutoFill": false,
-          "hasCreate": false
-        }
-      ],
-      "children": [],
-      "rawCounts": {
-        "relationFields": 3,
-        "children": 0,
-        "filterBy": 0,
-        "excludeUsedBy": 0,
-        "autoFill": 0,
-        "listFields": 6
       }
     },
     {
@@ -1987,64 +2198,6 @@
         "excludeUsedBy": 0,
         "autoFill": 0,
         "listFields": 3
-      }
-    },
-    {
-      "moduleKey": "echeancespaiementauto",
-      "file": "src/runtime/modules/generated/echeancespaiementauto/echeancespaiementauto.module.ts",
-      "score": 2,
-      "capabilities": {
-        "parentContext": false,
-        "children": false,
-        "labelFields": false,
-        "subtitleFields": false,
-        "childRelations": false,
-        "relationFields": true,
-        "relationFilterBy": false,
-        "relationExcludeUsedBy": false,
-        "relationAutoFill": false,
-        "computedFields": false,
-        "lockedFields": false,
-        "readOnlyFields": false,
-        "workflowActions": true,
-        "businessRules": false,
-        "formTabs": true,
-        "listFields": 6
-      },
-      "relationFields": [
-        {
-          "key": "echeancespaiementauto",
-          "module": "facturesauto",
-          "hasFilterBy": false,
-          "hasExcludeUsedBy": false,
-          "hasAutoFill": false,
-          "hasCreate": false
-        },
-        {
-          "key": "clientId",
-          "module": "clientsauto",
-          "hasFilterBy": false,
-          "hasExcludeUsedBy": false,
-          "hasAutoFill": false,
-          "hasCreate": false
-        },
-        {
-          "key": "vehiculeId",
-          "module": "vehicules",
-          "hasFilterBy": false,
-          "hasExcludeUsedBy": false,
-          "hasAutoFill": false,
-          "hasCreate": false
-        }
-      ],
-      "children": [],
-      "rawCounts": {
-        "relationFields": 3,
-        "children": 0,
-        "filterBy": 0,
-        "excludeUsedBy": 0,
-        "autoFill": 0,
-        "listFields": 6
       }
     },
     {

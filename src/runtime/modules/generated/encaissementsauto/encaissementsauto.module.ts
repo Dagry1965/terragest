@@ -268,6 +268,18 @@ export const encaissementsautoModule: ERPModule = {
   },
 
   composition: {
+    // Q21E_C_PAYMENT_RELATIONSHIP_COMPOSITION
+    // Encaissement belongs to a facture and inherits invoice context.
+    requiresParentContext: true,
+    allowedParents: [
+      {
+        moduleKey: "facturesauto",
+        foreignKey: "factureId",
+      },
+    ],
+    lockedFields: ["factureId", "clientId", "vehiculeId"],
+    labelFields: ["factureId", "numeroRecu", "montant", "datePaiement", "statut"],
+
     contextBanner: {
       title: "Contexte encaissement",
       items: [

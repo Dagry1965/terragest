@@ -5,9 +5,9 @@ Mode: REPORT ONLY. Cet audit ne modifie aucun fichier runtime.
 ## Synthèse
 
 - Modules scannés: 20
-- Modules avec enfants: 7
-- Modules avec contexte parent: 3
-- Modules avec labelFields: 12
+- Modules avec enfants: 10
+- Modules avec contexte parent: 5
+- Modules avec labelFields: 13
 - Modules avec relation.filterBy: 3
 - Modules avec relation.excludeUsedBy: 0
 - Modules avec relation.autoFill: 1
@@ -17,8 +17,52 @@ Mode: REPORT ONLY. Cet audit ne modifie aucun fichier runtime.
 
 ### intervention-rdv-facture
 
-- Modules trouvés: lignesinterventionauto, interventionsauto, facturesauto, encaissementsauto, rendezvous, echeancespaiementauto
+- Modules trouvés: echeancespaiementauto, encaissementsauto, lignesinterventionauto, facturesauto, interventionsauto, rendezvous
 - Modules manquants: aucun
+
+#### echeancespaiementauto
+
+- Fichier: `src/runtime/modules/generated/echeancespaiementauto/echeancespaiementauto.module.ts`
+- Score relationnel: 6/10
+- Parent context: oui
+- Children: oui (1)
+- labelFields: oui
+- relation.filterBy: non
+- relation.excludeUsedBy: non
+- relation.autoFill: non
+- computedFields: non
+
+Relations:
+
+- `echeancespaiementauto` → `facturesauto`
+- `clientId` → `clientsauto`
+- `vehiculeId` → `vehicules`
+
+Enfants déclarés:
+
+- `echeancespaiementauto` → `facturesauto` via `factureId`
+
+#### encaissementsauto
+
+- Fichier: `src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts`
+- Score relationnel: 6/10
+- Parent context: oui
+- Children: oui (1)
+- labelFields: oui
+- relation.filterBy: non
+- relation.excludeUsedBy: non
+- relation.autoFill: non
+- computedFields: non
+
+Relations:
+
+- `encaissementsauto` → `facturesauto`
+- `clientId` → `clientsauto`
+- `vehiculeId` → `vehicules`
+
+Enfants déclarés:
+
+- `encaissementsauto` → `facturesauto` via `factureId`
 
 #### lignesinterventionauto
 
@@ -43,6 +87,29 @@ Enfants déclarés:
 
 - `lignesinterventionauto` → `interventionsauto` via `interventionId` (labelFields)
 
+#### facturesauto
+
+- Fichier: `src/runtime/modules/generated/facturesauto/facturesauto.module.ts`
+- Score relationnel: 5/10
+- Parent context: non
+- Children: oui (2)
+- labelFields: oui
+- relation.filterBy: non
+- relation.excludeUsedBy: non
+- relation.autoFill: non
+- computedFields: non
+
+Relations:
+
+- `facturesauto` → `clientsauto`
+- `vehiculeId` → `vehicules`
+- `interventionId` → `interventionsauto`
+
+Enfants déclarés:
+
+- `facturesauto` → `clientsauto` via `factureId` (labelFields, subtitleFields, prefillFromParent)
+- `echeances-facture` → `echeancespaiementauto` via `factureId` (labelFields, subtitleFields, prefillFromParent)
+
 #### interventionsauto
 
 - Fichier: `src/runtime/modules/generated/interventionsauto/interventionsauto.module.ts`
@@ -65,42 +132,6 @@ Enfants déclarés:
 
 - `interventionsauto` → `clientsauto` via `interventionId` (labelFields, subtitleFields, relations)
 
-#### facturesauto
-
-- Fichier: `src/runtime/modules/generated/facturesauto/facturesauto.module.ts`
-- Score relationnel: 4/10
-- Parent context: non
-- Children: non (0)
-- labelFields: oui
-- relation.filterBy: non
-- relation.excludeUsedBy: non
-- relation.autoFill: non
-- computedFields: non
-
-Relations:
-
-- `facturesauto` → `clientsauto`
-- `vehiculeId` → `vehicules`
-- `interventionId` → `interventionsauto`
-
-#### encaissementsauto
-
-- Fichier: `src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts`
-- Score relationnel: 3/10
-- Parent context: non
-- Children: non (0)
-- labelFields: oui
-- relation.filterBy: non
-- relation.excludeUsedBy: non
-- relation.autoFill: non
-- computedFields: non
-
-Relations:
-
-- `encaissementsauto` → `facturesauto`
-- `clientId` → `clientsauto`
-- `vehiculeId` → `vehicules`
-
 #### rendezvous
 
 - Fichier: `src/runtime/modules/generated/rendezvous/rendezvous.module.ts`
@@ -118,24 +149,6 @@ Relations:
 - `rendezvous` → `clientsauto`
 - `vehiculeId` → `vehicules` (filterBy)
 - `dateRendezVous` → `interventionsauto`
-
-#### echeancespaiementauto
-
-- Fichier: `src/runtime/modules/generated/echeancespaiementauto/echeancespaiementauto.module.ts`
-- Score relationnel: 2/10
-- Parent context: non
-- Children: non (0)
-- labelFields: non
-- relation.filterBy: non
-- relation.excludeUsedBy: non
-- relation.autoFill: non
-- computedFields: non
-
-Relations:
-
-- `echeancespaiementauto` → `facturesauto`
-- `clientId` → `clientsauto`
-- `vehiculeId` → `vehicules`
 
 ### stock-fournisseur-reception
 
@@ -318,15 +331,15 @@ Enfants déclarés:
 
 ### paiement-recouvrement
 
-- Modules trouvés: facturesauto, encaissementsauto, echeancespaiementauto
+- Modules trouvés: echeancespaiementauto, encaissementsauto, facturesauto
 - Modules manquants: aucun
 
-#### facturesauto
+#### echeancespaiementauto
 
-- Fichier: `src/runtime/modules/generated/facturesauto/facturesauto.module.ts`
-- Score relationnel: 4/10
-- Parent context: non
-- Children: non (0)
+- Fichier: `src/runtime/modules/generated/echeancespaiementauto/echeancespaiementauto.module.ts`
+- Score relationnel: 6/10
+- Parent context: oui
+- Children: oui (1)
 - labelFields: oui
 - relation.filterBy: non
 - relation.excludeUsedBy: non
@@ -335,16 +348,20 @@ Enfants déclarés:
 
 Relations:
 
-- `facturesauto` → `clientsauto`
+- `echeancespaiementauto` → `facturesauto`
+- `clientId` → `clientsauto`
 - `vehiculeId` → `vehicules`
-- `interventionId` → `interventionsauto`
+
+Enfants déclarés:
+
+- `echeancespaiementauto` → `facturesauto` via `factureId`
 
 #### encaissementsauto
 
 - Fichier: `src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts`
-- Score relationnel: 3/10
-- Parent context: non
-- Children: non (0)
+- Score relationnel: 6/10
+- Parent context: oui
+- Children: oui (1)
 - labelFields: oui
 - relation.filterBy: non
 - relation.excludeUsedBy: non
@@ -357,13 +374,17 @@ Relations:
 - `clientId` → `clientsauto`
 - `vehiculeId` → `vehicules`
 
-#### echeancespaiementauto
+Enfants déclarés:
 
-- Fichier: `src/runtime/modules/generated/echeancespaiementauto/echeancespaiementauto.module.ts`
-- Score relationnel: 2/10
+- `encaissementsauto` → `facturesauto` via `factureId`
+
+#### facturesauto
+
+- Fichier: `src/runtime/modules/generated/facturesauto/facturesauto.module.ts`
+- Score relationnel: 5/10
 - Parent context: non
-- Children: non (0)
-- labelFields: non
+- Children: oui (2)
+- labelFields: oui
 - relation.filterBy: non
 - relation.excludeUsedBy: non
 - relation.autoFill: non
@@ -371,25 +392,30 @@ Relations:
 
 Relations:
 
-- `echeancespaiementauto` → `facturesauto`
-- `clientId` → `clientsauto`
+- `facturesauto` → `clientsauto`
 - `vehiculeId` → `vehicules`
+- `interventionId` → `interventionsauto`
+
+Enfants déclarés:
+
+- `facturesauto` → `clientsauto` via `factureId` (labelFields, subtitleFields, prefillFromParent)
+- `echeances-facture` → `echeancespaiementauto` via `factureId` (labelFields, subtitleFields, prefillFromParent)
 
 ## Modules triés par maturité relationnelle
 
 - 9/10 — `lignescommandestockauto` — src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts
 - 7/10 — `receptionsstockauto` — src/runtime/modules/generated/receptionsstockauto/receptionsstockauto.module.ts
+- 6/10 — `echeancespaiementauto` — src/runtime/modules/generated/echeancespaiementauto/echeancespaiementauto.module.ts
+- 6/10 — `encaissementsauto` — src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts
 - 6/10 — `lignesinterventionauto` — src/runtime/modules/generated/lignesinterventionauto/lignesinterventionauto.module.ts
+- 5/10 — `facturesauto` — src/runtime/modules/generated/facturesauto/facturesauto.module.ts
 - 5/10 — `interventionsauto` — src/runtime/modules/generated/interventionsauto/interventionsauto.module.ts
 - 5/10 — `vehicules` — src/runtime/modules/generated/vehicules/vehicules.module.ts
 - 4/10 — `commandesstockauto` — src/runtime/modules/generated/commandesstockauto/commandesstockauto.module.ts
-- 4/10 — `facturesauto` — src/runtime/modules/generated/facturesauto/facturesauto.module.ts
 - 3/10 — `clientsauto` — src/runtime/modules/generated/clientsauto/clientsauto.module.ts
-- 3/10 — `encaissementsauto` — src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts
 - 3/10 — `mouvementsstockauto` — src/runtime/modules/generated/mouvementsstockauto/mouvementsstockauto.module.ts
 - 3/10 — `rendezvous` — src/runtime/modules/generated/rendezvous/rendezvous.module.ts
 - 3/10 — `stocksauto` — src/runtime/modules/generated/stocksauto/stocksauto.module.ts
-- 2/10 — `echeancespaiementauto` — src/runtime/modules/generated/echeancespaiementauto/echeancespaiementauto.module.ts
 - 2/10 — `fournisseursauto` — src/runtime/modules/generated/fournisseursauto/fournisseursauto.module.ts
 - 2/10 — `produitsauto` — src/runtime/modules/generated/produitsauto/produitsauto.module.ts
 - 2/10 — `rappelsauto` — src/runtime/modules/generated/rappelsauto/rappelsauto.module.ts

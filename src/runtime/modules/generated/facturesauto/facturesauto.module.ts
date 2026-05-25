@@ -324,6 +324,10 @@ export const facturesautoModule: ERPModule = {
   },
 
   composition: {
+    // Q21E_C_BILLING_RELATIONSHIP_COMPOSITION
+    // Facture knows its payments and payment schedules.
+    labelFields: ["numeroFacture", "clientId", "montantTTC", "resteAPayer", "statutPaiement"],
+
     contextBanner: {
       title: "Contexte facture",
       items: [
@@ -376,6 +380,73 @@ export const facturesautoModule: ERPModule = {
       "canalDernierEnvoiFacture",
       "destinataireDernierEnvoiFacture",
       "nombreEnvoisFacture",
+    ],
+
+    children: [
+      {
+        key: "encaissements-facture",
+        moduleKey: "encaissementsauto",
+        foreignKey: "factureId",
+        title: "Encaissements",
+        description: "Paiements enregistrés pour cette facture.",
+        displayIn: ["detail", "edit"],
+        lazy: true,
+        position: "after",
+        allowCreate: true,
+        createLabel: "Ajouter un encaissement",
+        labelFields: ["numeroRecu", "montant", "datePaiement", "statut"],
+        subtitleFields: ["clientId", "vehiculeId", "modePaiement", "referenceTransaction"],
+        totalField: "montant",
+        prefillFromParent: {
+          clientId: "clientId",
+          vehiculeId: "vehiculeId",
+        },
+        lockFields: ["factureId", "clientId", "vehiculeId"],
+        relations: [
+          {
+            field: "clientId",
+            moduleKey: "clientsauto",
+            labelFields: ["prenom", "nom", "telephone"],
+          },
+          {
+            field: "vehiculeId",
+            moduleKey: "vehicules",
+            labelFields: ["marque", "modele", "immatriculation"],
+          },
+        ],
+      },
+      {
+        key: "echeances-facture",
+        moduleKey: "echeancespaiementauto",
+        foreignKey: "factureId",
+        title: "Échéances de paiement",
+        description: "Plan de paiement et relances liées à cette facture.",
+        displayIn: ["detail", "edit"],
+        lazy: true,
+        position: "after",
+        allowCreate: true,
+        createLabel: "Ajouter une échéance",
+        labelFields: ["montantPrevu", "montantPaye", "dateEcheance", "statut"],
+        subtitleFields: ["clientId", "vehiculeId", "canalRelance"],
+        totalField: "montantPrevu",
+        prefillFromParent: {
+          clientId: "clientId",
+          vehiculeId: "vehiculeId",
+        },
+        lockFields: ["factureId", "clientId", "vehiculeId"],
+        relations: [
+          {
+            field: "clientId",
+            moduleKey: "clientsauto",
+            labelFields: ["prenom", "nom", "telephone"],
+          },
+          {
+            field: "vehiculeId",
+            moduleKey: "vehicules",
+            labelFields: ["marque", "modele", "immatriculation"],
+          },
+        ],
+      },
     ],
   },
 
