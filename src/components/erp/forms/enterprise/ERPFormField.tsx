@@ -403,6 +403,10 @@ export function ERPFormField({
       end: string;
       label: string;
       available: boolean;
+      capacity?: number;
+      usedCapacity?: number;
+      remainingCapacity?: number;
+      reason?: string;
     }>
   >([]);
   const [schedulingSlotsLoading, setSchedulingSlotsLoading] = useState(false);
@@ -664,6 +668,10 @@ export function ERPFormField({
             // Generic ERP scheduling: calendar exceptions can close or override a specific date.
             calendarExceptions:
               schedulingConfig.calendarExceptions,
+            // Q22F3B_PASS_CAPACITY_TO_SLOTS
+            // Generic ERP scheduling: capacity controls how many bookings can share a slot.
+            capacity:
+              schedulingConfig.capacity,
           });
 
         setSchedulingSlots(slots);
@@ -768,8 +776,12 @@ export function ERPFormField({
                 disabled={!slot.available}
               >
                 {slot.available
-                  ? slot.label + " · Disponible"
-                  : slot.label + " · Déjà réservé"}
+                  ? slot.remainingCapacity !== undefined &&
+                    slot.capacity !== undefined &&
+                    slot.capacity > 1
+                    ? slot.label + " · " + slot.remainingCapacity + " place(s) restante(s)"
+                    : slot.label + " · Disponible"
+                  : slot.reason ?? "Créneau complet"}
               </option>
             ))}
           </select>
@@ -796,7 +808,10 @@ export function ERPFormField({
             <div className="rounded-xl border border-emerald-100 bg-emerald-50/70 px-3 py-2 text-xs font-semibold text-emerald-900">
               {availableSlotsCount} créneau(x) disponible(s)
               {unavailableSlotsCount > 0
-                ? " · " + unavailableSlotsCount + " déjà réservé(s)"
+                ? " · " + unavailableSlotsCount + " complet(s)"
+                : ""}
+              {schedulingConfig?.capacity && schedulingConfig.capacity > 1
+                ? " · capacité " + schedulingConfig.capacity + " par créneau"
                 : ""}
               . Calcul ERP Scheduling Runtime.
             </div>
