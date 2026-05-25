@@ -219,6 +219,21 @@ export function ERPSchedulingPlanningView({
     };
   }, [module, records, schedulingConfig, selectedDate]);
 
+  const totalSlots =
+    planning.slots.length;
+
+  const availableSlots =
+    planning.slots.filter((slot) => slot.available).length;
+
+  const fullSlots =
+    totalSlots - availableSlots;
+
+  const totalBookings =
+    Array.from(planning.bookingsBySlot.values()).reduce(
+      (total, items) => total + items.length,
+      0
+    );
+
   if (!schedulingConfig) {
     return (
       <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
@@ -249,6 +264,25 @@ export function ERPSchedulingPlanningView({
               Vue générique basée sur module.scheduling : horaires, buffer,
               exceptions calendrier, capacité et réservations existantes.
             </p>
+
+            <div className="mt-5 flex flex-wrap gap-3">
+              <Link
+                href={"/" + module.metadata.key}
+                className="rounded-2xl border border-[var(--erp-border)] bg-white px-4 py-2 text-sm font-black text-[var(--erp-text)] shadow-sm transition hover:bg-slate-50"
+              >
+                Retour liste
+              </Link>
+
+              <Link
+                href={
+                  module.metadata.routes?.create ??
+                  "/" + module.metadata.key + "/nouveau"
+                }
+                className="rounded-2xl bg-[var(--erp-primary)] px-4 py-2 text-sm font-black text-[var(--erp-table-head-text)] shadow-sm transition hover:brightness-110"
+              >
+                Nouveau rendez-vous
+              </Link>
+            </div>
           </div>
 
           <div className="flex flex-col gap-2">
@@ -268,7 +302,48 @@ export function ERPSchedulingPlanningView({
         </div>
       </div>
 
-      <div className="rounded-3xl border border-[var(--erp-border)] bg-[var(--erp-surface)] p-4 shadow-sm">
+      <div className="grid gap-3 md:grid-cols-4">
+        <div className="rounded-3xl border border-[var(--erp-border)] bg-[var(--erp-surface)] p-5 shadow-sm">
+          <p className="text-xs font-black uppercase tracking-wide text-[var(--erp-text-muted)]">
+            Créneaux
+          </p>
+          <p className="mt-2 text-3xl font-black text-[var(--erp-text)]">
+            {totalSlots}
+          </p>
+        </div>
+
+        <div className="rounded-3xl border border-emerald-100 bg-emerald-50 p-5 shadow-sm">
+          <p className="text-xs font-black uppercase tracking-wide text-emerald-700">
+            Disponibles
+          </p>
+          <p className="mt-2 text-3xl font-black text-emerald-900">
+            {availableSlots}
+          </p>
+        </div>
+
+        <div className="rounded-3xl border border-rose-100 bg-rose-50 p-5 shadow-sm">
+          <p className="text-xs font-black uppercase tracking-wide text-rose-700">
+            Complets
+          </p>
+          <p className="mt-2 text-3xl font-black text-rose-900">
+            {fullSlots}
+          </p>
+        </div>
+
+        <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
+          <p className="text-xs font-black uppercase tracking-wide text-slate-500">
+            Réservations
+          </p>
+          <p className="mt-2 text-3xl font-black text-slate-950">
+            {totalBookings}
+          </p>
+        </div>
+      </div>
+
+      <div
+        // Q22E5_PLANNING_DAY_UI_POLISH
+        className="rounded-3xl border border-[var(--erp-border)] bg-[var(--erp-surface)] p-4 shadow-sm"
+      >
         {loading ? (
           <p className="p-6 text-sm font-semibold text-[var(--erp-text-muted)]">
             Chargement du planning...
