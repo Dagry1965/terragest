@@ -24,38 +24,40 @@ export const stocksautoModule: ERPModule = {
     collection: "stocksauto",
 
     fields: [
-      {
+{
         key: "produitId",
         label: "Produit",
         type: "relation",
         relation: { module: "produitsauto" },
         required: true,
         searchable: true,
-        list: { order: 1 },
+        list: { visible: true, order: 1 },
         grid: { cols: 6 },
       },
-      {
+{
         key: "quantite",
         label: "Quantité",
         type: "number",
         required: true,
-        list: { order: 2 },
+        list: { visible: true, order: 4 },
         grid: { cols: 3 },
       },
-      {
+{
         key: "seuilAlerte",
         label: "Seuil alerte",
         type: "number",
+        list: { visible: true, order: 5 },
         grid: { cols: 3 },
       },
-      {
+{
         key: "emplacement",
         label: "Emplacement",
         type: "text",
         searchable: true,
+        list: { visible: true, order: 2 },
         grid: { cols: 6 },
       },
-      {
+{
         key: "typeStock",
         label: "Type stock",
         type: "select",
@@ -65,9 +67,10 @@ export const stocksautoModule: ERPModule = {
           { label: "Dépôt", value: "depot" },
           { label: "Réserve", value: "reserve" },
         ],
+        list: { visible: true, order: 3 },
         grid: { cols: 6 },
       },
-      {
+{
         key: "statut",
         label: "Statut",
         type: "select",
@@ -78,15 +81,16 @@ export const stocksautoModule: ERPModule = {
           { label: "Rupture", value: "rupture" },
           { label: "Archivé", value: "archive" },
         ],
-        list: { order: 3 },
+        list: { visible: true, order: 6 },
         grid: { cols: 6 },
       },
-      {
+{
         key: "observations",
         label: "Observations",
         type: "textarea",
+        list: { visible: false },
         grid: { cols: 12 },
-      },
+      }
     ],
   },
 
