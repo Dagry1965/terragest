@@ -7,6 +7,7 @@ import type {
   RuntimeAvailabilitySlot,
   RuntimeDateTimeRange,
   RuntimeOpeningHoursProfile,
+  RuntimeBooking,
 } from "./RuntimeSchedulingTypes";
 
 export type RuntimeRecord = Record<string, unknown>;
@@ -332,6 +333,76 @@ export class RuntimeSchedulingEngine {
     }
 
     return slots;
+  }
+
+
+  static getAvailableSlotsWithBookings(params: {
+    date: string;
+    durationMinutes?: number;
+    profile?: RuntimeOpeningHoursProfile;
+    bookings?: RuntimeBooking[];
+    ignoreBookingId?: string;
+  }): RuntimeAvailabilitySlot[] {
+    // Q22D1_BOOKING_AWARE_AVAILABILITY
+    // Generic ERP availability: opening-hours slots minus existing bookings.
+    const slots = RuntimeSchedulingEngine.getAvailableSlotsForDate({
+      date: params.date,
+      durationMinutes: params.durationMinutes,
+      profile: params.profile,
+    });
+
+    const bookings = params.bookings ?? [];
+    const ignoredId = asString(params.ignoreBookingId);
+
+    return slots.map((slot) => {
+      const slotRange = RuntimeSchedulingEngine.buildDateTimeRange({
+        date: params.date,
+        time: slot.start,
+        durationMinutes: params.durationMinutes,
+      });
+
+      const occupied = bookings.some((booking) => {
+        if (!booking) {
+          return false;
+        }
+
+        if (
+          ignoredId &&
+          asString(booking.id) === ignoredId
+        ) {
+          return false;
+        }
+
+        if (
+          !asString(booking.startAt) ||
+          !asString(booking.endAt)
+        ) {
+          return false;
+        }
+
+        return rangesOverlap(
+          {
+            startAt: slotRange.startAt,
+            endAt: slotRange.endAt,
+            durationMinutes:
+              params.durationMinutes ??
+              RuntimeSchedulingEngine.defaultDurationMinutes,
+          },
+          {
+            startAt: asString(booking.startAt),
+            endAt: asString(booking.endAt),
+            durationMinutes:
+              params.durationMinutes ??
+              RuntimeSchedulingEngine.defaultDurationMinutes,
+          }
+        );
+      });
+
+      return {
+        ...slot,
+        available: !occupied,
+      };
+    });
   }
 
   static assertWithinOpeningHours(params: {
