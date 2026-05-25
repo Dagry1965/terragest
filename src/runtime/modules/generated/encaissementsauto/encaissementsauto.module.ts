@@ -29,7 +29,7 @@ export const encaissementsautoModule: ERPModule = {
     collection: "encaissementsauto",
 
     fields: [
-      {
+{
         key: "factureId",
         label: "Facture",
         type: "relation",
@@ -38,10 +38,10 @@ export const encaissementsautoModule: ERPModule = {
         },
         required: true,
         searchable: true,
-        list: { order: 1 },
+        list: { visible: true, order: 1 },
         grid: { cols: 6 },
       },
-      {
+{
         key: "clientId",
         label: "Client",
         type: "relation",
@@ -49,10 +49,10 @@ export const encaissementsautoModule: ERPModule = {
           module: "clientsauto",
         },
         searchable: true,
-        list: { order: 2 },
+        list: { visible: true, order: 2 },
         grid: { cols: 6 },
       },
-      {
+{
         key: "vehiculeId",
         label: "Véhicule",
         type: "relation",
@@ -60,25 +60,26 @@ export const encaissementsautoModule: ERPModule = {
           module: "vehicules",
         },
         searchable: true,
+        list: { visible: false },
         grid: { cols: 6 },
       },
-      {
+{
         key: "montant",
         label: "Montant encaissé",
         type: "number",
         required: true,
-        list: { order: 3 },
+        list: { visible: true, order: 3 },
         grid: { cols: 6 },
       },
-      {
+{
         key: "datePaiement",
         label: "Date paiement",
         type: "date",
         required: true,
-        list: { order: 4 },
+        list: { visible: true, order: 4 },
         grid: { cols: 6 },
       },
-      {
+{
         key: "modePaiement",
         label: "Mode paiement",
         type: "select",
@@ -91,17 +92,18 @@ export const encaissementsautoModule: ERPModule = {
           { label: "Chèque", value: "cheque" },
           { label: "Autre", value: "autre" },
         ],
-        list: { order: 5 },
+        list: { visible: true, order: 5 },
         grid: { cols: 6 },
       },
-      {
+{
         key: "referenceTransaction",
         label: "Référence transaction",
         type: "text",
         searchable: true,
+        list: { visible: false },
         grid: { cols: 6 },
       },
-      {
+{
         key: "statut",
         label: "Statut",
         type: "select",
@@ -112,17 +114,18 @@ export const encaissementsautoModule: ERPModule = {
           { label: "Rejeté", value: "rejete" },
           { label: "Annulé", value: "annule" },
         ],
-        list: { order: 6 },
+        list: { visible: true, order: 6 },
         grid: { cols: 6 },
       },
-      {
+{
         key: "numeroRecu",
         label: "Numéro reçu",
         type: "text",
         searchable: true,
+        list: { visible: false },
         grid: { cols: 6 },
       },
-      {
+{
         key: "statutEnvoiRecu",
         label: "Statut envoi reçu",
         type: "select",
@@ -132,15 +135,17 @@ export const encaissementsautoModule: ERPModule = {
           { label: "Envoyé", value: "envoye" },
           { label: "Échec envoi", value: "echec" },
         ],
+        list: { visible: false },
         grid: { cols: 6 },
       },
-      {
+{
         key: "dernierEnvoiRecuAt",
         label: "Dernier envoi reçu",
         type: "datetime",
+        list: { visible: false },
         grid: { cols: 6 },
       },
-      {
+{
         key: "canalDernierEnvoiRecu",
         label: "Canal dernier envoi reçu",
         type: "select",
@@ -150,27 +155,31 @@ export const encaissementsautoModule: ERPModule = {
           { label: "Email", value: "email" },
           { label: "Manuel", value: "manuel" },
         ],
+        list: { visible: false },
         grid: { cols: 6 },
       },
-      {
+{
         key: "destinataireDernierEnvoiRecu",
         label: "Destinataire dernier envoi reçu",
         type: "text",
+        list: { visible: false },
         grid: { cols: 6 },
       },
-      {
+{
         key: "nombreEnvoisRecu",
         label: "Nombre d'envois reçu",
         type: "number",
         defaultValue: 0,
+        list: { visible: false },
         grid: { cols: 6 },
       },
-      {
+{
         key: "notes",
         label: "Notes",
         type: "textarea",
+        list: { visible: false },
         grid: { cols: 12 },
-      },
+      }
     ],
   },
 
