@@ -278,7 +278,7 @@ async function guardRendezvousMutation(
         )
       : {};
 
-  const mergedRecord = {
+  const mergedRecord: RuntimeRecord = {
     ...currentRecord,
     ...data,
     id:
@@ -297,6 +297,26 @@ async function guardRendezvousMutation(
   if (!hasRealAppointmentDateAndTime(mergedRecord)) {
     throw new Error(
       "Le rendez-vous doit avoir une date et une heure réelles avant sauvegarde."
+    );
+  }
+
+  const openingHoursValidation =
+    RuntimeSchedulingEngine.assertWithinOpeningHours({
+      // Q22C_OPENING_HOURS_GUARD
+      // First consumer of the generic ERP Scheduling Runtime.
+      // This remains generic: rendezvous provides date/time/duration, the engine validates the slot.
+      date: asString(mergedRecord.dateRendezVous),
+      time: asString(mergedRecord.heureRendezVous),
+      durationMinutes:
+        typeof mergedRecord.durationMinutes === "number"
+          ? mergedRecord.durationMinutes
+          : Number(mergedRecord.durationMinutes ?? 0) || undefined,
+    });
+
+  if (!openingHoursValidation.ok) {
+    throw new Error(
+      openingHoursValidation.reason ??
+      "Créneau indisponible selon les horaires d'ouverture."
     );
   }
 
