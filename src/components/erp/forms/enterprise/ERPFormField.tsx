@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { ReactNode } from "react";
-import type { ERPModuleField } from "@/runtime/modules";
+import type { ERPModule, ERPModuleField } from "@/runtime/modules";
 import { coreERPModules } from "@/runtime/modules/definitions/coreModules";
 import { ERPRelationDataLoader } from "@/runtime/modules/lifecycle/ERPRelationDataLoader";
 import { RuntimeRelationFilterEngine } from "@/runtime/relations";
@@ -24,6 +24,7 @@ interface ERPFormRelationChangeContext {
 }
 
 interface ERPFormFieldProps {
+  module?: ERPModule;
   field: ERPModuleField;
   value?: unknown;
   formValues?: Record<string, unknown>;
@@ -374,6 +375,7 @@ function FieldWrapper({
 }
 
 export function ERPFormField({
+  module,
   field,
   value,
   formValues = {},
@@ -394,6 +396,11 @@ export function ERPFormField({
   const [relationSearch, setRelationSearch] = useState("");
   const [lockedRelationLabel, setLockedRelationLabel] = useState("");
   const [relationFilterSourceValue, setRelationFilterSourceValue] = useState("");
+
+  // Q22D3B_MODULE_CONTEXT_READY
+  // ERPFormField can now receive the module context for generic runtime capabilities.
+  // Scheduling UI will consume module.scheduling in the next pass.
+  const schedulingConfig = module?.scheduling;
 
   const currentValue = normalizeFormFieldValue(field, value);
 

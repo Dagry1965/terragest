@@ -13,6 +13,8 @@ import {
 
 import { ERPFormField } from "./ERPFormField";
 
+// Q22D3B_MODULE_CONTEXT_TO_FIELD
+// ERPFormTabs forwards module context to ERPFormField for generic runtime capabilities.
 interface ERPFormTabsProps {
   module: ERPModule;
   initialData?: Record<string, unknown>;
@@ -173,6 +175,7 @@ export function ERPFormTabs({
                     {sectionFields.map((field) => (
                    <ERPFormField
                         key={field.key}
+                        module={module}
                         field={field}
                         value={formValues[field.key]}
                         formValues={formValues}
@@ -192,6 +195,7 @@ export function ERPFormTabs({
             {visibleFields.map((field) => (
               <ERPFormField
                         key={field.key}
+                        module={module}
                         field={field}
                         value={formValues[field.key]}
                         formValues={formValues}
