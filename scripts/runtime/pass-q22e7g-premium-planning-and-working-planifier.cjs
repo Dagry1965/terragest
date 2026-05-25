@@ -1,4 +1,36 @@
-"use client";
+const fs = require("fs");
+const path = require("path");
+
+const root = process.cwd();
+
+const targetPath = path.join(
+  root,
+  "src",
+  "components",
+  "erp",
+  "scheduling",
+  "ERPSchedulingPlanningView.tsx"
+);
+
+const backupPath = `${targetPath}.bak-q22e7g-premium-planning-working-planifier`;
+
+function fail(message) {
+  console.error(`\n[ERROR] ${message}`);
+  process.exit(1);
+}
+
+if (!fs.existsSync(targetPath)) {
+  fail(`File not found: ${targetPath}`);
+}
+
+if (!fs.existsSync(backupPath)) {
+  fs.copyFileSync(targetPath, backupPath);
+  console.log(`[BACKUP] ${path.relative(root, backupPath)}`);
+} else {
+  console.log(`[BACKUP_EXISTS] ${path.relative(root, backupPath)}`);
+}
+
+const content = `"use client";
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
@@ -44,8 +76,9 @@ function getCreateHref(module: ERPModule) {
   return (
     module.metadata?.routes?.create ||
     (module as { routes?: { create?: string; new?: string } }).routes?.create ||
+    module.metadata?.routes?.new ||
     (module as { routes?: { create?: string; new?: string } }).routes?.new ||
-    `/${moduleKey}/nouveau`
+    \`/\${moduleKey}/nouveau\`
   );
 }
 
@@ -82,18 +115,18 @@ function buildPlanningCreateHref(params: {
   if (schedulingConfig.startField) {
     searchParams.set(
       schedulingConfig.startField,
-      `${dateOnly}T${slot.start}:00`
+      \`\${dateOnly}T\${slot.start}:00\`
     );
   }
 
   if (schedulingConfig.endField) {
     searchParams.set(
       schedulingConfig.endField,
-      `${dateOnly}T${slot.end}:00`
+      \`\${dateOnly}T\${slot.end}:00\`
     );
   }
 
-  return `${getCreateHref(module)}?${searchParams.toString()}`;
+  return \`\${getCreateHref(module)}?\${searchParams.toString()}\`;
 }
 
 function formatRecordLabel(
@@ -123,7 +156,7 @@ function formatRecordLabel(
 }
 
 function addDays(dateOnly: string, amount: number) {
-  const date = new Date(`${dateOnly}T00:00:00`);
+  const date = new Date(\`\${dateOnly}T00:00:00\`);
   date.setDate(date.getDate() + amount);
 
   return date.toISOString().slice(0, 10);
@@ -135,7 +168,7 @@ function formatReadableDate(dateOnly: string) {
     day: "2-digit",
     month: "long",
     year: "numeric",
-  }).format(new Date(`${dateOnly}T00:00:00`));
+  }).format(new Date(\`\${dateOnly}T00:00:00\`));
 }
 
 export function ERPSchedulingPlanningView({
@@ -567,7 +600,7 @@ export function ERPSchedulingPlanningView({
                             key={id || JSON.stringify(record)}
                             href={
                               id
-                                ? `/${module.metadata.key}/${id}/edit`
+                                ? \`/\${module.metadata.key}/\${id}/edit\`
                                 : "#"
                             }
                             className="rounded-2xl border border-white/80 bg-white/90 px-4 py-3 text-sm font-bold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:bg-white hover:shadow-md"
@@ -587,3 +620,29 @@ export function ERPSchedulingPlanningView({
     </section>
   );
 }
+`;
+
+fs.writeFileSync(targetPath, content, "utf8");
+
+console.log(`
+[Q22E7G_DONE] Planning premium appliqué et bouton Planifier corrigé.
+
+Correction principale:
+  - Planifier ne tombe plus sur "#"
+  - fallback générique: /{moduleKey}/nouveau
+  - query params scheduling transmis à la création
+
+UI:
+  - header premium dark
+  - navigation jour précédent / suivant / aujourd'hui
+  - KPI cards premium
+  - slots plus lisibles
+  - CTA Planifier plus visible
+  - réservations séparées sous chaque créneau
+
+Next:
+  pnpm build
+  tester /rendezvous/planning
+  cliquer sur Planifier
+  vérifier ouverture /rendezvous/nouveau?... 
+`);
