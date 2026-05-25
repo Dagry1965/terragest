@@ -8461,7 +8461,7 @@
   },
   {
     "file": "src/runtime/modules/lifecycle/ERPRelationDataLoader.ts",
-    "line": 11,
+    "line": 12,
     "key": "hardcoded-business-module",
     "severity": "MEDIUM",
     "match": "clientsauto",
@@ -8471,7 +8471,7 @@
   },
   {
     "file": "src/runtime/modules/lifecycle/ERPRelationDataLoader.ts",
-    "line": 12,
+    "line": 13,
     "key": "hardcoded-business-module",
     "severity": "MEDIUM",
     "match": "clientsauto",
@@ -8481,7 +8481,7 @@
   },
   {
     "file": "src/runtime/modules/lifecycle/ERPRelationDataLoader.ts",
-    "line": 14,
+    "line": 15,
     "key": "hardcoded-business-module",
     "severity": "MEDIUM",
     "match": "vehicules",
@@ -8491,7 +8491,7 @@
   },
   {
     "file": "src/runtime/modules/lifecycle/ERPRelationDataLoader.ts",
-    "line": 15,
+    "line": 16,
     "key": "hardcoded-business-module",
     "severity": "MEDIUM",
     "match": "vehicules",
@@ -8501,7 +8501,7 @@
   },
   {
     "file": "src/runtime/modules/lifecycle/ERPRelationDataLoader.ts",
-    "line": 26,
+    "line": 27,
     "key": "hardcoded-business-module",
     "severity": "MEDIUM",
     "match": "facturesauto",
@@ -8511,7 +8511,7 @@
   },
   {
     "file": "src/runtime/modules/lifecycle/ERPRelationDataLoader.ts",
-    "line": 27,
+    "line": 28,
     "key": "hardcoded-business-module",
     "severity": "MEDIUM",
     "match": "facturesauto",
@@ -8521,7 +8521,7 @@
   },
   {
     "file": "src/runtime/modules/lifecycle/ERPRelationDataLoader.ts",
-    "line": 30,
+    "line": 31,
     "key": "hardcoded-business-module",
     "severity": "MEDIUM",
     "match": "interventionsauto",
@@ -8531,7 +8531,7 @@
   },
   {
     "file": "src/runtime/modules/lifecycle/ERPRelationDataLoader.ts",
-    "line": 31,
+    "line": 32,
     "key": "hardcoded-business-module",
     "severity": "MEDIUM",
     "match": "interventionsauto",
@@ -8541,7 +8541,7 @@
   },
   {
     "file": "src/runtime/modules/lifecycle/ERPRelationDataLoader.ts",
-    "line": 42,
+    "line": 43,
     "key": "hardcoded-business-module",
     "severity": "MEDIUM",
     "match": "encaissementsauto",
@@ -8551,7 +8551,7 @@
   },
   {
     "file": "src/runtime/modules/lifecycle/ERPRelationDataLoader.ts",
-    "line": 43,
+    "line": 44,
     "key": "hardcoded-business-module",
     "severity": "MEDIUM",
     "match": "encaissementsauto",
@@ -8561,7 +8561,7 @@
   },
   {
     "file": "src/runtime/modules/lifecycle/ERPRelationDataLoader.ts",
-    "line": 521,
+    "line": 550,
     "key": "hardcoded-business-module",
     "severity": "MEDIUM",
     "match": "clientsauto",
@@ -8571,7 +8571,7 @@
   },
   {
     "file": "src/runtime/modules/lifecycle/ERPRelationDataLoader.ts",
-    "line": 533,
+    "line": 562,
     "key": "hardcoded-business-module",
     "severity": "MEDIUM",
     "match": "vehicules",
@@ -8581,7 +8581,7 @@
   },
   {
     "file": "src/runtime/modules/lifecycle/ERPRelationDataLoader.ts",
-    "line": 564,
+    "line": 593,
     "key": "hardcoded-business-module",
     "severity": "MEDIUM",
     "match": "interventionsauto",
@@ -8591,7 +8591,7 @@
   },
   {
     "file": "src/runtime/modules/lifecycle/ERPRelationDataLoader.ts",
-    "line": 618,
+    "line": 647,
     "key": "hardcoded-business-module",
     "severity": "MEDIUM",
     "match": "facturesauto",
@@ -8601,7 +8601,7 @@
   },
   {
     "file": "src/runtime/modules/lifecycle/ERPRelationDataLoader.ts",
-    "line": 630,
+    "line": 659,
     "key": "hardcoded-business-module",
     "severity": "MEDIUM",
     "match": "lignesinterventionauto",
@@ -8611,7 +8611,7 @@
   },
   {
     "file": "src/runtime/modules/lifecycle/ERPRelationDataLoader.ts",
-    "line": 642,
+    "line": 671,
     "key": "hardcoded-business-module",
     "severity": "MEDIUM",
     "match": "mouvementsstockauto",
@@ -8621,7 +8621,7 @@
   },
   {
     "file": "src/runtime/modules/lifecycle/ERPRelationDataLoader.ts",
-    "line": 621,
+    "line": 650,
     "key": "manual-amount-calculation",
     "severity": "INFO",
     "match": "montantTTC",
@@ -8631,7 +8631,7 @@
   },
   {
     "file": "src/runtime/modules/lifecycle/ERPRelationDataLoader.ts",
-    "line": 672,
+    "line": 701,
     "key": "manual-amount-calculation",
     "severity": "INFO",
     "match": "montantTTC",
@@ -8641,7 +8641,7 @@
   },
   {
     "file": "src/runtime/modules/lifecycle/ERPRelationDataLoader.ts",
-    "line": 673,
+    "line": 702,
     "key": "manual-amount-calculation",
     "severity": "INFO",
     "match": "montantTTC",
@@ -8651,7 +8651,7 @@
   },
   {
     "file": "src/runtime/modules/lifecycle/ERPRelationDataLoader.ts",
-    "line": 721,
+    "line": 750,
     "key": "manual-amount-calculation",
     "severity": "INFO",
     "match": "montantTTC",

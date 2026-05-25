@@ -4,6 +4,22 @@ export interface RuntimeRelationLabelContext {
   moduleKey: string;
   record: Record<string, unknown>;
   modules: ERPModule[];
+
+  /**
+   * Maximum nested relation label resolution depth.
+   * 0 = no nested resolution, 1 = resolve direct relation fields only.
+   */
+  depth?: number;
+
+  /**
+   * Optional resolver injected by the caller.
+   * Keeps this engine generic and avoids importing the data loader here.
+   */
+  resolveRelationLabel?: (
+    moduleKey: string,
+    id: string,
+    depth: number
+  ) => Promise<string>;
 }
 
 export interface RuntimeRelationLabelResult {
@@ -114,6 +130,99 @@ export class RuntimeRelationLabelEngine {
           source: "metadata",
         };
       }
+    }
+
+    return {
+      label: RuntimeRelationLabelEngine.buildFallbackLabel(context.record),
+      source: "fallback",
+    };
+  }
+
+  static async buildLabelAsync(
+    context: RuntimeRelationLabelContext
+  ): Promise<RuntimeRelationLabelResult> {
+    const module = findModule(context.modules, context.moduleKey);
+    const labelFields =
+      (module?.composition as { labelFields?: string[] } | undefined)
+        ?.labelFields ?? [];
+
+    if (labelFields.length === 0) {
+      return {
+        label: RuntimeRelationLabelEngine.buildFallbackLabel(context.record),
+        source: "fallback",
+      };
+    }
+
+    const depth = context.depth ?? 1;
+    const parts: string[] = [];
+
+    for (const fieldKey of labelFields) {
+      const raw = context.record[fieldKey];
+
+      if (raw === null || raw === undefined || raw === "") {
+        continue;
+      }
+
+      const fieldDefinition = module?.schema?.fields?.find(
+        (field) => field.key === fieldKey
+      ) as
+        | {
+            key: string;
+            type?: string;
+            relation?: string | { module?: string };
+            references?: { module?: string };
+          }
+        | undefined;
+
+      const targetModule =
+        fieldDefinition?.references?.module ??
+        (typeof fieldDefinition?.relation === "string"
+          ? fieldDefinition.relation
+          : fieldDefinition?.relation?.module) ??
+        "";
+
+      if (
+        depth > 0 &&
+        fieldDefinition?.type === "relation" &&
+        targetModule &&
+        context.resolveRelationLabel
+      ) {
+        try {
+          const resolved = await context.resolveRelationLabel(
+            targetModule,
+            String(raw),
+            depth - 1
+          );
+
+          if (resolved && resolved !== String(raw)) {
+            parts.push(resolved);
+            continue;
+          }
+        } catch {
+          // Never break relation option loading because a nested label failed.
+        }
+      }
+
+      if (isStatusField(fieldKey)) {
+        parts.push(formatStatus(raw));
+        continue;
+      }
+
+      if (isMoneyField(fieldKey)) {
+        parts.push(formatMoney(raw));
+        continue;
+      }
+
+      parts.push(String(raw).trim());
+    }
+
+    const label = compact(...parts);
+
+    if (label) {
+      return {
+        label,
+        source: "metadata",
+      };
     }
 
     return {

@@ -6,6 +6,7 @@ import { RuntimeDataBinding } from "@/runtime/data-binding";
 import { resolveDashboardModule } from "@/runtime/dashboard/generic/ERPDashboardModuleResolver";
 
 import { allERPModules } from "../definitions/coreModules";
+import { RuntimeRelationLabelEngine } from "@/runtime/relations";
 
 const relationCollectionAliases: Record<string, string[]> = {
   clientsauto: [
@@ -126,9 +127,10 @@ export class ERPRelationDataLoader {
 
           merged.set(id, {
             id,
-            label: ERPRelationDataLoader.getLabel(
+            label: await ERPRelationDataLoader.getLabelAsync(
               record as Record<string, unknown>,
-              module.metadata.key
+              module.metadata.key,
+              1
             ),
             record: record as Record<string, unknown>,
           });
@@ -141,9 +143,11 @@ export class ERPRelationDataLoader {
     return Array.from(merged.values());
   }
 
+
   static async resolveLabel(
     moduleKey: string,
-    id: string
+    id: string,
+    depth = 1
   ): Promise<string> {
     const relationId =
       String(id ?? "").trim();
@@ -172,9 +176,10 @@ export class ERPRelationDataLoader {
         }
 
         const label =
-          ERPRelationDataLoader.getLabel(
+          await ERPRelationDataLoader.getLabelAsync(
             record as Record<string, unknown>,
-            module.metadata.key
+            module.metadata.key,
+            depth
           );
 
         if (label && label !== relationId) {
@@ -200,9 +205,10 @@ export class ERPRelationDataLoader {
         }
 
         const label =
-          ERPRelationDataLoader.getLabel(
+          await ERPRelationDataLoader.getLabelAsync(
             record as Record<string, unknown>,
-            module.metadata.key
+            module.metadata.key,
+            depth
           );
 
         if (label && label !== relationId) {
@@ -214,6 +220,29 @@ export class ERPRelationDataLoader {
     }
 
     return relationId;
+  }
+
+
+  // Q21X_C3C_GET_LABEL_ASYNC_FROM_ENGINE
+  static async getLabelAsync(
+    record: Record<string, unknown>,
+    moduleKey = "",
+    depth = 1
+  ): Promise<string> {
+    const engineLabel = await RuntimeRelationLabelEngine.buildLabelAsync({
+      moduleKey,
+      record,
+      modules: allERPModules,
+      depth,
+      resolveRelationLabel: (targetModuleKey, id, nextDepth) =>
+        ERPRelationDataLoader.resolveLabel(targetModuleKey, id, nextDepth),
+    });
+
+    if (engineLabel.label) {
+      return engineLabel.label;
+    }
+
+    return ERPRelationDataLoader.getLabel(record, moduleKey);
   }
 
   static getLabel(

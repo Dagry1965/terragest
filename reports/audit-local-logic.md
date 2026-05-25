@@ -1,6 +1,6 @@
 # Audit local logic / ERP generic compliance
 
-Date: 2026-05-25T02:49:03.720Z
+Date: 2026-05-25T03:14:31.883Z
 
 ## Synthèse
 
@@ -3734,7 +3734,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Nom de module métier codé en dur.
 - Action cible: Acceptable seulement si c’est dans un moteur runtime générique ou une règle documentée.
 
-#### src/runtime/modules/lifecycle/ERPRelationDataLoader.ts:11
+#### src/runtime/modules/lifecycle/ERPRelationDataLoader.ts:12
 
 - Type: hardcoded-business-module
 - Match: `clientsauto`
@@ -3742,7 +3742,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Nom de module métier codé en dur.
 - Action cible: Vérifier si c’est une metadata, une route, ou une logique locale à généraliser.
 
-#### src/runtime/modules/lifecycle/ERPRelationDataLoader.ts:12
+#### src/runtime/modules/lifecycle/ERPRelationDataLoader.ts:13
 
 - Type: hardcoded-business-module
 - Match: `clientsauto`
@@ -3750,7 +3750,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Nom de module métier codé en dur.
 - Action cible: Vérifier si c’est une metadata, une route, ou une logique locale à généraliser.
 
-#### src/runtime/modules/lifecycle/ERPRelationDataLoader.ts:14
+#### src/runtime/modules/lifecycle/ERPRelationDataLoader.ts:15
 
 - Type: hardcoded-business-module
 - Match: `vehicules`
@@ -3758,7 +3758,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Nom de module métier codé en dur.
 - Action cible: Vérifier si c’est une metadata, une route, ou une logique locale à généraliser.
 
-#### src/runtime/modules/lifecycle/ERPRelationDataLoader.ts:15
+#### src/runtime/modules/lifecycle/ERPRelationDataLoader.ts:16
 
 - Type: hardcoded-business-module
 - Match: `vehicules`
@@ -3766,7 +3766,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Nom de module métier codé en dur.
 - Action cible: Vérifier si c’est une metadata, une route, ou une logique locale à généraliser.
 
-#### src/runtime/modules/lifecycle/ERPRelationDataLoader.ts:26
+#### src/runtime/modules/lifecycle/ERPRelationDataLoader.ts:27
 
 - Type: hardcoded-business-module
 - Match: `facturesauto`
@@ -3774,7 +3774,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Nom de module métier codé en dur.
 - Action cible: Vérifier si c’est une metadata, une route, ou une logique locale à généraliser.
 
-#### src/runtime/modules/lifecycle/ERPRelationDataLoader.ts:27
+#### src/runtime/modules/lifecycle/ERPRelationDataLoader.ts:28
 
 - Type: hardcoded-business-module
 - Match: `facturesauto`
@@ -3782,7 +3782,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Nom de module métier codé en dur.
 - Action cible: Vérifier si c’est une metadata, une route, ou une logique locale à généraliser.
 
-#### src/runtime/modules/lifecycle/ERPRelationDataLoader.ts:30
+#### src/runtime/modules/lifecycle/ERPRelationDataLoader.ts:31
 
 - Type: hardcoded-business-module
 - Match: `interventionsauto`
@@ -3790,7 +3790,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Nom de module métier codé en dur.
 - Action cible: Vérifier si c’est une metadata, une route, ou une logique locale à généraliser.
 
-#### src/runtime/modules/lifecycle/ERPRelationDataLoader.ts:31
+#### src/runtime/modules/lifecycle/ERPRelationDataLoader.ts:32
 
 - Type: hardcoded-business-module
 - Match: `interventionsauto`
@@ -3798,7 +3798,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Nom de module métier codé en dur.
 - Action cible: Vérifier si c’est une metadata, une route, ou une logique locale à généraliser.
 
-#### src/runtime/modules/lifecycle/ERPRelationDataLoader.ts:42
+#### src/runtime/modules/lifecycle/ERPRelationDataLoader.ts:43
 
 - Type: hardcoded-business-module
 - Match: `encaissementsauto`
@@ -3806,7 +3806,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Nom de module métier codé en dur.
 - Action cible: Vérifier si c’est une metadata, une route, ou une logique locale à généraliser.
 
-#### src/runtime/modules/lifecycle/ERPRelationDataLoader.ts:43
+#### src/runtime/modules/lifecycle/ERPRelationDataLoader.ts:44
 
 - Type: hardcoded-business-module
 - Match: `encaissementsauto`
@@ -3814,7 +3814,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Nom de module métier codé en dur.
 - Action cible: Vérifier si c’est une metadata, une route, ou une logique locale à généraliser.
 
-#### src/runtime/modules/lifecycle/ERPRelationDataLoader.ts:521
+#### src/runtime/modules/lifecycle/ERPRelationDataLoader.ts:550
 
 - Type: hardcoded-business-module
 - Match: `clientsauto`
@@ -3822,7 +3822,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Nom de module métier codé en dur.
 - Action cible: Vérifier si c’est une metadata, une route, ou une logique locale à généraliser.
 
-#### src/runtime/modules/lifecycle/ERPRelationDataLoader.ts:533
+#### src/runtime/modules/lifecycle/ERPRelationDataLoader.ts:562
 
 - Type: hardcoded-business-module
 - Match: `vehicules`
@@ -3830,7 +3830,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Nom de module métier codé en dur.
 - Action cible: Vérifier si c’est une metadata, une route, ou une logique locale à généraliser.
 
-#### src/runtime/modules/lifecycle/ERPRelationDataLoader.ts:564
+#### src/runtime/modules/lifecycle/ERPRelationDataLoader.ts:593
 
 - Type: hardcoded-business-module
 - Match: `interventionsauto`
@@ -3838,7 +3838,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Nom de module métier codé en dur.
 - Action cible: Vérifier si c’est une metadata, une route, ou une logique locale à généraliser.
 
-#### src/runtime/modules/lifecycle/ERPRelationDataLoader.ts:618
+#### src/runtime/modules/lifecycle/ERPRelationDataLoader.ts:647
 
 - Type: hardcoded-business-module
 - Match: `facturesauto`
@@ -3846,7 +3846,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Nom de module métier codé en dur.
 - Action cible: Vérifier si c’est une metadata, une route, ou une logique locale à généraliser.
 
-#### src/runtime/modules/lifecycle/ERPRelationDataLoader.ts:630
+#### src/runtime/modules/lifecycle/ERPRelationDataLoader.ts:659
 
 - Type: hardcoded-business-module
 - Match: `lignesinterventionauto`
@@ -3854,7 +3854,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Nom de module métier codé en dur.
 - Action cible: Vérifier si c’est une metadata, une route, ou une logique locale à généraliser.
 
-#### src/runtime/modules/lifecycle/ERPRelationDataLoader.ts:642
+#### src/runtime/modules/lifecycle/ERPRelationDataLoader.ts:671
 
 - Type: hardcoded-business-module
 - Match: `mouvementsstockauto`
@@ -5520,7 +5520,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Calcul financier ou champ montant détecté.
 - Action cible: Acceptable seulement si c’est dans un moteur runtime générique ou une règle documentée.
 
-#### src/runtime/modules/lifecycle/ERPRelationDataLoader.ts:621
+#### src/runtime/modules/lifecycle/ERPRelationDataLoader.ts:650
 
 - Type: manual-amount-calculation
 - Match: `montantTTC`
@@ -5528,7 +5528,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Calcul financier ou champ montant détecté.
 - Action cible: Vérifier si le calcul passe par RuntimeComputedFieldsEngine.
 
-#### src/runtime/modules/lifecycle/ERPRelationDataLoader.ts:672
+#### src/runtime/modules/lifecycle/ERPRelationDataLoader.ts:701
 
 - Type: manual-amount-calculation
 - Match: `montantTTC`
@@ -5536,7 +5536,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Calcul financier ou champ montant détecté.
 - Action cible: Vérifier si le calcul passe par RuntimeComputedFieldsEngine.
 
-#### src/runtime/modules/lifecycle/ERPRelationDataLoader.ts:673
+#### src/runtime/modules/lifecycle/ERPRelationDataLoader.ts:702
 
 - Type: manual-amount-calculation
 - Match: `montantTTC`
@@ -5544,7 +5544,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Calcul financier ou champ montant détecté.
 - Action cible: Vérifier si le calcul passe par RuntimeComputedFieldsEngine.
 
-#### src/runtime/modules/lifecycle/ERPRelationDataLoader.ts:721
+#### src/runtime/modules/lifecycle/ERPRelationDataLoader.ts:750
 
 - Type: manual-amount-calculation
 - Match: `montantTTC`
