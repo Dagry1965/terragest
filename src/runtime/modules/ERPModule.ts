@@ -92,6 +92,7 @@ export interface ERPModuleScheduling {
   statusField?: string;
   resourceField?: string;
   blockingStatuses?: string[];
+  bufferMinutes?: number;
 }
 
 export interface ERPModuleFormSection {

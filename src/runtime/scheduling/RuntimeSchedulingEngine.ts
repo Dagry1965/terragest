@@ -342,6 +342,7 @@ export class RuntimeSchedulingEngine {
     profile?: RuntimeOpeningHoursProfile;
     bookings?: RuntimeBooking[];
     ignoreBookingId?: string;
+    bufferMinutes?: number;
   }): RuntimeAvailabilitySlot[] {
     // Q22D1_BOOKING_AWARE_AVAILABILITY
     // Generic ERP availability: opening-hours slots minus existing bookings.
@@ -350,6 +351,11 @@ export class RuntimeSchedulingEngine {
       durationMinutes: params.durationMinutes,
       profile: params.profile,
     });
+
+    const bufferMinutes = Math.max(
+      0,
+      asNumber(params.bufferMinutes, 0)
+    );
 
     const bookings = params.bookings ?? [];
     const ignoredId = asString(params.ignoreBookingId);
@@ -380,6 +386,18 @@ export class RuntimeSchedulingEngine {
           return false;
         }
 
+        const bookingStart =
+          new Date(asString(booking.startAt));
+
+        const bookingEnd =
+          new Date(asString(booking.endAt));
+
+        const bookingEndWithBuffer =
+          new Date(
+            bookingEnd.getTime() +
+            bufferMinutes * 60 * 1000
+          );
+
         return rangesOverlap(
           {
             startAt: slotRange.startAt,
@@ -389,8 +407,10 @@ export class RuntimeSchedulingEngine {
               RuntimeSchedulingEngine.defaultDurationMinutes,
           },
           {
-            startAt: asString(booking.startAt),
-            endAt: asString(booking.endAt),
+            // Q22F1_SCHEDULING_BUFFER_MINUTES
+            // The visible booking ends at endAt, but the blocked range may include bufferMinutes.
+            startAt: bookingStart.toISOString(),
+            endAt: bookingEndWithBuffer.toISOString(),
             durationMinutes:
               params.durationMinutes ??
               RuntimeSchedulingEngine.defaultDurationMinutes,

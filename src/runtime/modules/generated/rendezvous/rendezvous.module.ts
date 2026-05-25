@@ -221,6 +221,7 @@ export const rendezvousModule: ERPModule = {
     statusField: "statut",
     resourceField: "vehiculeId",
     blockingStatuses: ["planifie", "confirme", "en_cours"],
+    bufferMinutes: 15,
   },
   composition: {
     // Q21E_D_APPOINTMENT_RELATIONSHIP_COMPOSITION
