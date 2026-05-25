@@ -101,6 +101,13 @@ export const fournisseursautoModule: ERPModule = {
     ],
   },
 
+  composition: {
+    // Q21X_C2B_SUPPLIER_LABEL_METADATA
+    // Metadata-driven relation label:
+    // used by commande.fournisseurId and every generic relation select.
+    labelFields: ["nom", "codeFournisseur", "telephone"],
+  },
+
   form: {
     layout: "tabs",
     tabs: [
