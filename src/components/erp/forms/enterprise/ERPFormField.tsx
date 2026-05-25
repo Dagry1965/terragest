@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import type { ReactNode } from "react";
 import type { ERPModuleField } from "@/runtime/modules";
 import { ERPRelationDataLoader } from "@/runtime/modules/lifecycle/ERPRelationDataLoader";
+import { RuntimeRelationFilterEngine } from "@/runtime/relations";
 import {
   useAuth,
 } from "@/providers/AuthProvider";
@@ -471,31 +472,14 @@ export function ERPFormField({
     const filterConfig =
       getRelationFilterConfig(field);
 
+    // Q21D3C2_RELATION_FILTER_ENGINE
+    // Generic metadata-driven relation filtering.
+    // ERPFormField provides UI context; RuntimeRelationFilterEngine applies filterBy.
     const filteredByContext =
-      relationOptions.filter((option) => {
-        if (
-          !filterConfig?.sourceField ||
-          !filterConfig?.targetField
-        ) {
-          return true;
-        }
-
-        const targetValue =
-          option.record?.[filterConfig.targetField];
-
-        if (!relationFilterSourceValue) {
-          return filterConfig.includeEmptyTarget
-            ? relationTargetIsEmpty(targetValue)
-            : true;
-        }
-
-        return (
-          String(targetValue ?? "") === String(relationFilterSourceValue) ||
-          (
-            Boolean(filterConfig.includeEmptyTarget) &&
-            relationTargetIsEmpty(targetValue)
-          )
-        );
+      RuntimeRelationFilterEngine.apply({
+        options: relationOptions,
+        filterBy: filterConfig,
+        formValues,
       });
 
     const filteredOptions =
