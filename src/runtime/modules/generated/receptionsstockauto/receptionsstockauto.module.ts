@@ -195,6 +195,8 @@ export const receptionsstockautoModule: ERPModule = {
   },
 
   composition: {
+    // Q21E_B_RECEPTION_RELATIONSHIP_COMPOSITION
+    // Réception knows its parent command and generated stock movements.
     requiresParentContext: true,
     allowedParents: [
       {
@@ -203,6 +205,34 @@ export const receptionsstockautoModule: ERPModule = {
       },
     ],
     lockedFields: ["commandeId"],
-    labelFields: ["produitId", "quantiteRecue", "dateReception", "statut"],
+    labelFields: ["ligneCommandeId", "produitId", "stockId", "quantiteRecue", "dateReception", "statut"],
+
+    children: [
+      {
+        key: "mouvements-stock-reception",
+        moduleKey: "mouvementsstockauto",
+        foreignKey: "sourceId",
+        title: "Mouvements stock générés",
+        description: "Mouvements stock créés automatiquement depuis cette réception.",
+        displayIn: ["detail", "edit"],
+        lazy: true,
+        position: "after",
+        allowCreate: false,
+        labelFields: ["typeMouvement", "produitId", "quantite", "stockId"],
+        subtitleFields: ["dateMouvement", "sourceModule"],
+        relations: [
+          {
+            field: "produitId",
+            moduleKey: "produitsauto",
+            labelFields: ["reference", "nom", "designation", "marque"],
+          },
+          {
+            field: "stockId",
+            moduleKey: "stocksauto",
+            labelFields: ["produitId", "emplacement", "typeStock", "quantite", "statut"],
+          },
+        ],
+      },
+    ],
   },
 };

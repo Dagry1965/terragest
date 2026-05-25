@@ -858,12 +858,12 @@ export function ERPRelatedRecordsPanel({
 
                 {configuredSubtitleParts.length > 0 || relationParts.length > 0 ? (
                   <div className="mt-2 flex flex-wrap gap-2 text-xs font-bold text-slate-600">
-                    {[...configuredSubtitleParts, ...relationParts].map((part) => {
+                    {[...configuredSubtitleParts, ...relationParts].map((part, partIndex) => {
                       const isStatus = isRelatedStatusValue(part);
 
                       return (
                         <span
-                          key={part}
+                          key={String(part) + "-" + partIndex}
                           className={[
                             "rounded-full border px-3 py-1 font-black",
                             isStatus

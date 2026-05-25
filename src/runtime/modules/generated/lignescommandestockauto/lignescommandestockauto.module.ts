@@ -189,6 +189,7 @@ export const lignescommandestockautoModule: ERPModule = {
         defaultValue: 0,
       },
     ],
+
     requiresParentContext: true,
     allowedParents: [
       {
@@ -198,5 +199,39 @@ export const lignescommandestockautoModule: ERPModule = {
     ],
     lockedFields: ["commandeId"],
     labelFields: ["produitId", "quantiteCommandee", "statut"],
+
+    // Q21E_B_ORDER_LINE_RECEPTIONS_CHILDREN
+    // Ligne commande knows its receptions.
+    children: [
+      {
+        key: "receptions-ligne-commande",
+        moduleKey: "receptionsstockauto",
+        foreignKey: "ligneCommandeId",
+        title: "Réceptions de la ligne",
+        displayIn: ["detail", "edit"],
+        lazy: true,
+        position: "after",
+        allowCreate: true,
+        labelFields: ["produitId", "quantiteRecue", "dateReception", "statut"],
+        subtitleFields: ["stockId", "mouvementStockId"],
+        relations: [
+          {
+            field: "produitId",
+            moduleKey: "produitsauto",
+            labelFields: ["reference", "nom", "designation", "marque"],
+          },
+          {
+            field: "stockId",
+            moduleKey: "stocksauto",
+            labelFields: ["produitId", "emplacement", "typeStock", "quantite", "statut"],
+          },
+          {
+            field: "mouvementStockId",
+            moduleKey: "mouvementsstockauto",
+            labelFields: ["typeMouvement", "produitId", "quantite", "stockId"],
+          },
+        ],
+      },
+    ],
   },
 };

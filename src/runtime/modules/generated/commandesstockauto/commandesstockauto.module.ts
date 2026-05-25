@@ -131,7 +131,10 @@ export const commandesstockautoModule: ERPModule = {
   },
 
   composition: {
+    // Q21E_B_STOCK_ORDER_RELATIONSHIP_COMPOSITION
+    // Commande stock knows its lines and receptions.
     labelFields: ["numeroCommande", "fournisseurId", "statut"],
+
     children: [
       {
         key: "lignes-commandestock",
@@ -143,17 +146,49 @@ export const commandesstockautoModule: ERPModule = {
         position: "after",
         allowCreate: true,
         labelFields: ["produitId", "quantiteCommandee", "prixUnitaireHT", "statut"],
+        subtitleFields: ["designation", "montantHT", "montantTTC"],
+        totalField: "montantTTC",
+        relations: [
+          {
+            field: "produitId",
+            moduleKey: "produitsauto",
+            labelFields: ["reference", "nom", "designation", "marque"],
+          },
+        ],
       },
       {
         key: "receptions-stock",
         moduleKey: "receptionsstockauto",
         foreignKey: "commandeId",
-        title: "Receptions",
+        title: "Réceptions",
         displayIn: ["detail", "edit"],
         lazy: true,
         position: "after",
         allowCreate: true,
-        labelFields: ["produitId", "quantiteRecue", "dateReception", "statut"],
+        labelFields: ["ligneCommandeId", "produitId", "quantiteRecue", "dateReception", "statut"],
+        subtitleFields: ["stockId", "mouvementStockId"],
+        relations: [
+          {
+            field: "ligneCommandeId",
+            moduleKey: "lignescommandestockauto",
+            labelFields: ["produitId", "quantiteCommandee", "statut"],
+          },
+          {
+            field: "produitId",
+            moduleKey: "produitsauto",
+            labelFields: ["reference", "nom", "designation", "marque"],
+          },
+          {
+            field: "stockId",
+            moduleKey: "stocksauto",
+            labelFields: ["produitId", "emplacement", "typeStock", "quantite", "statut"],
+          },
+          {
+            field: "mouvementStockId",
+            moduleKey: "mouvementsstockauto",
+            labelFields: ["typeMouvement", "produitId", "quantite", "stockId"],
+          },
+        ],
       },
     ],
   },

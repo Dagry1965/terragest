@@ -208,6 +208,12 @@ export const mouvementsstockautoModule: ERPModule = {
       },
     ],
   },
+  composition: {
+    // Q21E_B_STOCK_MOVEMENT_LABEL_FIELDS
+    // Stock movement labels are metadata-driven and relation-aware.
+    labelFields: ["typeMouvement", "produitId", "quantite", "stockId", "dateMouvement"],
+  },
+
 
   workflows: [
     {
