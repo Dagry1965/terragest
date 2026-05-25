@@ -653,9 +653,13 @@ export function ERPFormField({
 
         const slots =
           RuntimeSchedulingEngine.getAvailableSlotsWithBookings({
+            // Q22F1B_PASS_BUFFER_TO_SLOTS
+            // Generic ERP scheduling: form passes metadata buffer to the runtime availability engine.
             date: String(schedulingDateValue),
             durationMinutes,
             bookings,
+            bufferMinutes:
+              schedulingConfig.bufferMinutes,
           });
 
         setSchedulingSlots(slots);
