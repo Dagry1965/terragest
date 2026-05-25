@@ -693,8 +693,39 @@ export function ERPFormField({
     `${className} cursor-not-allowed bg-slate-100 text-[var(--erp-text-muted)]`;
 
   if (isSchedulingTimeField) {
+    // Q22D5_SCHEDULING_SLOTS_UX_POLISH
+    // Generic ERP scheduling UX: explain date/resource prerequisites and slot availability.
     const hasDate =
       Boolean(String(schedulingDateValue ?? "").trim());
+
+    const schedulingResourceField =
+      schedulingConfig?.resourceField;
+
+    const schedulingResourceValue =
+      schedulingResourceField
+        ? String(formValues[schedulingResourceField] ?? "").trim()
+        : "";
+
+    const requiresResource =
+      Boolean(schedulingResourceField);
+
+    const hasRequiredResource =
+      !requiresResource || Boolean(schedulingResourceValue);
+
+    const disabledReason =
+      !hasDate
+        ? "Choisir d'abord une date"
+        : !hasRequiredResource
+          ? "Choisir d'abord la ressource"
+          : schedulingSlotsLoading
+            ? "Chargement des créneaux..."
+            : field.placeholder ?? "Sélectionner un créneau";
+
+    const availableSlotsCount =
+      schedulingSlots.filter((slot) => slot.available).length;
+
+    const unavailableSlotsCount =
+      schedulingSlots.length - availableSlotsCount;
 
     return (
       <FieldWrapper field={field} error={error}>
@@ -705,20 +736,21 @@ export function ERPFormField({
             name={field.key}
             required={field.required}
             value={currentValue}
-            disabled={isProtected || !hasDate || schedulingSlotsLoading}
+            disabled={
+              isProtected ||
+              !hasDate ||
+              !hasRequiredResource ||
+              schedulingSlotsLoading
+            }
             onChange={(event) => onChange?.(field.key, event.target.value)}
             className={`${className} ${
-              isProtected || !hasDate
+              isProtected || !hasDate || !hasRequiredResource
                 ? "cursor-not-allowed bg-slate-100 text-[var(--erp-text-muted)]"
                 : ""
             }`}
           >
             <option value="">
-              {!hasDate
-                ? "Choisir d'abord une date"
-                : schedulingSlotsLoading
-                  ? "Chargement des créneaux..."
-                  : field.placeholder ?? "Sélectionner un créneau"}
+              {disabledReason}
             </option>
 
             {schedulingSlots.map((slot) => (
@@ -728,22 +760,38 @@ export function ERPFormField({
                 disabled={!slot.available}
               >
                 {slot.available
-                  ? slot.label
-                  : slot.label + " — indisponible"}
+                  ? slot.label + " · Disponible"
+                  : slot.label + " · Déjà réservé"}
               </option>
             ))}
           </select>
 
-          {hasDate && schedulingSlots.length === 0 ? (
-            <p className="rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-xs font-semibold text-amber-800">
-              Aucun créneau disponible pour cette date.
+          {!hasDate ? (
+            <p className="rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-semibold text-slate-600">
+              Sélectionnez une date pour afficher les créneaux disponibles.
             </p>
           ) : null}
 
-          {hasDate && schedulingSlots.length > 0 ? (
-            <p className="text-xs text-[var(--erp-text-muted)]">
-              Créneaux calculés par le moteur ERP Scheduling Runtime.
+          {hasDate && !hasRequiredResource ? (
+            <p className="rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-semibold text-slate-600">
+              Sélectionnez la ressource concernée pour calculer les disponibilités.
             </p>
+          ) : null}
+
+          {hasDate && hasRequiredResource && schedulingSlots.length === 0 ? (
+            <p className="rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-xs font-semibold text-amber-800">
+              Aucun créneau disponible pour cette date selon les horaires configurés.
+            </p>
+          ) : null}
+
+          {hasDate && hasRequiredResource && schedulingSlots.length > 0 ? (
+            <div className="rounded-xl border border-emerald-100 bg-emerald-50/70 px-3 py-2 text-xs font-semibold text-emerald-900">
+              {availableSlotsCount} créneau(x) disponible(s)
+              {unavailableSlotsCount > 0
+                ? " · " + unavailableSlotsCount + " déjà réservé(s)"
+                : ""}
+              . Calcul ERP Scheduling Runtime.
+            </div>
           ) : null}
         </label>
       </FieldWrapper>
