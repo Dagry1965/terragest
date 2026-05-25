@@ -36,7 +36,18 @@ export const lignescommandestockautoModule: ERPModule = {
         key: "produitId",
         label: "Produit",
         type: "relation",
-        relation: { module: "produitsauto" },
+        relation: {
+          module: "produitsauto",
+          // Q21D3B3_PRODUCT_AUTOFILL
+          // Product is the source of designation and purchase price.
+          autoFill: {
+            map: {
+              designation: ["nom", "designation", "reference", "code"],
+              prixUnitaireHT: ["prixAchat"],
+            },
+            recalculate: false,
+          },
+        },
         required: true,
         searchable: true,
         list: { order: 2 },

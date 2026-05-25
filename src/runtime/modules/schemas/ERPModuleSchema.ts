@@ -129,6 +129,13 @@ relation?:
       module: string;
       collection?: string;
       labelField?: string;
+
+      /**
+       * Q21D3B3_RELATION_AUTOFILL_TYPE
+       * Declarative relation autofill executed by RuntimeAutoFillEngine.
+       * Example: produitId -> designation / prixUnitaireHT.
+       */
+      autoFill?: RuntimeRelationAutoFillConfig;
         filterBy?: {
           sourceField: string;
           targetField: string;
