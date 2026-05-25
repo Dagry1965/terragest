@@ -352,6 +352,9 @@ export function ERPEnterpriseForm({
     useRef<ERPModuleAction | null>(null);
   const searchParams = useSearchParams();
 
+  const queryInitialValuesAppliedRef =
+    useRef(false);
+
   const queryValues =
     Object.fromEntries(
       Array.from(searchParams.entries()).filter(
@@ -489,6 +492,69 @@ export function ERPEnterpriseForm({
     useState<Record<string, unknown>>(
       () => resolveInitialFormValues()
     );
+
+  const queryValuesSignature =
+    JSON.stringify(queryValues);
+
+  useEffect(() => {
+    // Q22E7E_APPLY_CREATE_QUERY_VALUES
+    // Generic create forms must be able to receive initial values from URL.
+    // This is used by runtime planning, parent/child creation links,
+    // contextual creation buttons, and any future metadata-driven entry point.
+    // Applied once only to avoid overwriting user input while editing the form.
+    if (mode !== "create") {
+      return;
+    }
+
+    if (queryInitialValuesAppliedRef.current) {
+      return;
+    }
+
+    const entries =
+      Object.entries(queryValues).filter(
+        ([, value]) =>
+          value !== undefined &&
+          value !== null &&
+          String(value).trim() !== ""
+      );
+
+    if (entries.length === 0) {
+      return;
+    }
+
+    queryInitialValuesAppliedRef.current = true;
+
+    setFormValues((currentValues) => {
+      const nextValues = {
+        ...currentValues,
+      };
+
+      let changed = false;
+
+      for (const [key, value] of entries) {
+        if (nextValues[key] !== value) {
+          nextValues[key] = value;
+          changed = true;
+        }
+      }
+
+      if (!changed) {
+        return currentValues;
+      }
+
+      const computedResult =
+        RuntimeComputedFieldsEngine.apply({
+          module,
+          values: nextValues,
+        });
+
+      return computedResult.values;
+    });
+  }, [
+    mode,
+    module,
+    queryValuesSignature,
+  ]);
 
   const currentUserRole = "admin";
 
