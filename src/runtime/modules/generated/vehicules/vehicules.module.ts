@@ -445,7 +445,39 @@ export const vehiculesModule: ERPModule = {
           },
         ],
       },
-    ],
+
+      // Q21E_D_VEHICLE_BILLING_CHILDREN
+      {
+        key: "factures-vehicule",
+        moduleKey: "facturesauto",
+        foreignKey: "vehiculeId",
+        title: "Factures du véhicule",
+        createLabel: "Ajouter une facture",
+        displayIn: ["detail", "edit"],
+        lazy: true,
+        position: "after",
+        allowCreate: true,
+        prefillFromParent: {
+          vehiculeId: "id",
+          clientId: "clientId",
+        },
+        lockFields: ["clientId", "vehiculeId"],
+        labelFields: ["numeroFacture", "montantTTC", "resteAPayer", "statutPaiement"],
+        subtitleFields: ["clientId", "interventionId", "dateFacture"],
+        totalField: "montantTTC",
+        relations: [
+          {
+            field: "clientId",
+            moduleKey: "clientsauto",
+            labelFields: ["prenom", "nom", "telephone"],
+          },
+          {
+            field: "interventionId",
+            moduleKey: "interventionsauto",
+            labelFields: ["dateIntervention", "typeIntervention", "statut"],
+          },
+        ],
+      }],
   },
 
   workflows:[

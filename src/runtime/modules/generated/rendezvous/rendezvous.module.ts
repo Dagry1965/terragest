@@ -205,6 +205,66 @@ export const rendezvousModule: ERPModule = {
   },
 
   actions: rendezvousActions,
+  composition: {
+    // Q21E_D_APPOINTMENT_RELATIONSHIP_COMPOSITION
+    // Rendez-vous knows its client, vehicle and generated intervention.
+    labelFields: ["clientId", "vehiculeId", "dateRendezVous", "heureRendezVous", "typeService", "statut"],
+
+    contextBanner: {
+      title: "Contexte rendez-vous",
+      items: [
+        {
+          relationField: "clientId",
+          moduleKey: "clientsauto",
+          labelFields: ["prenom", "nom", "telephone"],
+          tone: "client",
+        },
+        {
+          relationField: "vehiculeId",
+          moduleKey: "vehicules",
+          labelFields: ["marque", "modele", "immatriculation"],
+          tone: "vehicle",
+        },
+      ],
+    },
+
+    children: [
+      {
+        key: "interventions-rendezvous",
+        moduleKey: "interventionsauto",
+        foreignKey: "rendezVousId",
+        title: "Intervention générée",
+        description: "Intervention créée ou liée à ce rendez-vous.",
+        displayIn: ["detail", "edit"],
+        lazy: true,
+        position: "after",
+        allowCreate: true,
+        createLabel: "Créer une intervention",
+        prefillFromParent: {
+          rendezVousId: "id",
+          clientId: "clientId",
+          vehiculeId: "vehiculeId",
+        },
+        lockFields: ["rendezVousId", "clientId", "vehiculeId"],
+        labelFields: ["dateIntervention", "typeIntervention", "statut"],
+        subtitleFields: ["clientId", "vehiculeId", "coutTotal"],
+        totalField: "coutTotal",
+        relations: [
+          {
+            field: "clientId",
+            moduleKey: "clientsauto",
+            labelFields: ["prenom", "nom", "telephone"],
+          },
+          {
+            field: "vehiculeId",
+            moduleKey: "vehicules",
+            labelFields: ["marque", "modele", "immatriculation"],
+          },
+        ],
+      },
+    ],
+  },
+
 
   workflows: [
     {

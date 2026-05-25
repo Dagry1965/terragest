@@ -261,7 +261,122 @@ export const clientsautoModule: ERPModule = {
           "kilometrage",
         ],
       },
-    ],
+
+      // Q21E_D_CLIENT_RELATIONSHIP_CHILDREN
+      {
+        key: "rendezvous-client",
+        moduleKey: "rendezvous",
+        foreignKey: "clientId",
+        title: "Rendez-vous du client",
+        createLabel: "Ajouter un rendez-vous",
+        displayIn: ["detail", "edit"],
+        lazy: true,
+        position: "after",
+        allowCreate: true,
+        prefillFromParent: {
+          clientId: "id",
+        },
+        lockFields: ["clientId"],
+        labelFields: ["dateRendezVous", "heureRendezVous", "typeService", "statut"],
+        subtitleFields: ["vehiculeId", "motif"],
+        relations: [
+          {
+            field: "vehiculeId",
+            moduleKey: "vehicules",
+            labelFields: ["marque", "modele", "immatriculation"],
+          },
+        ],
+      },
+      {
+        key: "interventions-client",
+        moduleKey: "interventionsauto",
+        foreignKey: "clientId",
+        title: "Interventions du client",
+        createLabel: "Ajouter une intervention",
+        displayIn: ["detail", "edit"],
+        lazy: true,
+        position: "after",
+        allowCreate: true,
+        prefillFromParent: {
+          clientId: "id",
+        },
+        lockFields: ["clientId"],
+        labelFields: ["dateIntervention", "typeIntervention", "statut"],
+        subtitleFields: ["vehiculeId", "rendezVousId"],
+        totalField: "coutTotal",
+        relations: [
+          {
+            field: "vehiculeId",
+            moduleKey: "vehicules",
+            labelFields: ["marque", "modele", "immatriculation"],
+          },
+          {
+            field: "rendezVousId",
+            moduleKey: "rendezvous",
+            labelFields: ["dateRendezVous", "heureRendezVous", "typeService", "statut"],
+          },
+        ],
+      },
+      {
+        key: "factures-client",
+        moduleKey: "facturesauto",
+        foreignKey: "clientId",
+        title: "Factures du client",
+        createLabel: "Ajouter une facture",
+        displayIn: ["detail", "edit"],
+        lazy: true,
+        position: "after",
+        allowCreate: true,
+        prefillFromParent: {
+          clientId: "id",
+        },
+        lockFields: ["clientId"],
+        labelFields: ["numeroFacture", "montantTTC", "resteAPayer", "statutPaiement"],
+        subtitleFields: ["vehiculeId", "interventionId", "dateFacture"],
+        totalField: "montantTTC",
+        relations: [
+          {
+            field: "vehiculeId",
+            moduleKey: "vehicules",
+            labelFields: ["marque", "modele", "immatriculation"],
+          },
+          {
+            field: "interventionId",
+            moduleKey: "interventionsauto",
+            labelFields: ["dateIntervention", "typeIntervention", "statut"],
+          },
+        ],
+      },
+      {
+        key: "encaissements-client",
+        moduleKey: "encaissementsauto",
+        foreignKey: "clientId",
+        title: "Encaissements du client",
+        createLabel: "Ajouter un encaissement",
+        displayIn: ["detail", "edit"],
+        lazy: true,
+        position: "after",
+        allowCreate: true,
+        prefillFromParent: {
+          clientId: "id",
+        },
+        lockFields: ["clientId"],
+        labelFields: ["numeroRecu", "montant", "datePaiement", "statut"],
+        subtitleFields: ["factureId", "vehiculeId", "modePaiement"],
+        totalField: "montant",
+        relations: [
+          {
+            field: "factureId",
+            moduleKey: "facturesauto",
+            labelFields: ["numeroFacture", "montantTTC", "resteAPayer", "statutPaiement"],
+          },
+          {
+            field: "vehiculeId",
+            moduleKey: "vehicules",
+            labelFields: ["marque", "modele", "immatriculation"],
+          },
+        ],
+      }],
   },
 
   workflows:[

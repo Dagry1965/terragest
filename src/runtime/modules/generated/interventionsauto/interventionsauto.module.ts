@@ -409,7 +409,40 @@ export const interventionsautoModule: ERPModule = {
           },
         ],
       },
-    ],
+
+      // Q21E_D_INTERVENTION_BILLING_CHILDREN
+      {
+        key: "factures-intervention",
+        moduleKey: "facturesauto",
+        foreignKey: "interventionId",
+        title: "Factures de l'intervention",
+        createLabel: "Ajouter une facture",
+        displayIn: ["detail", "edit"],
+        lazy: true,
+        position: "after",
+        allowCreate: true,
+        prefillFromParent: {
+          interventionId: "id",
+          clientId: "clientId",
+          vehiculeId: "vehiculeId",
+        },
+        lockFields: ["interventionId", "clientId", "vehiculeId"],
+        labelFields: ["numeroFacture", "montantTTC", "resteAPayer", "statutPaiement"],
+        subtitleFields: ["clientId", "vehiculeId", "dateFacture"],
+        totalField: "montantTTC",
+        relations: [
+          {
+            field: "clientId",
+            moduleKey: "clientsauto",
+            labelFields: ["prenom", "nom", "telephone"],
+          },
+          {
+            field: "vehiculeId",
+            moduleKey: "vehicules",
+            labelFields: ["marque", "modele", "immatriculation"],
+          },
+        ],
+      }],
   },
 
   actions: interventionsautoActions,
