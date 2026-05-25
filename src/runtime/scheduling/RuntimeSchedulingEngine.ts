@@ -1,3 +1,14 @@
+import {
+  DEFAULT_WORKSPACE_OPENING_HOURS,
+  getOpeningDayForDate,
+} from "./RuntimeOpeningHours";
+
+import type {
+  RuntimeAvailabilitySlot,
+  RuntimeDateTimeRange,
+  RuntimeOpeningHoursProfile,
+} from "./RuntimeSchedulingTypes";
+
 export type RuntimeRecord = Record<string, unknown>;
 
 export interface RuntimeAppointmentSlot {
@@ -212,8 +223,157 @@ function rangesOverlap(a: RuntimeAppointmentSlot, b: RuntimeAppointmentSlot): bo
   return startA < endB && startB < endA;
 }
 
+
+function parseRuntimeTimeToMinutes(value: string): number {
+  const normalized = normalizeTimeOnly(value);
+
+  if (!normalized) {
+    throw new Error(`Invalid runtime time value: ${value}`);
+  }
+
+  const [hours, minutes] = normalized.split(":").map(Number);
+
+  return hours * 60 + minutes;
+}
+
+function formatRuntimeMinutesToTime(value: number): string {
+  const hours = Math.floor(value / 60);
+  const minutes = value % 60;
+
+  return (
+    String(hours).padStart(2, "0") +
+    ":" +
+    String(minutes).padStart(2, "0")
+  );
+}
+
+function buildRuntimeDateTimeIso(dateOnly: string, timeOnly: string): string {
+  const date = buildLocalDateTime(dateOnly, timeOnly);
+
+  if (!date) {
+    throw new Error(
+      "Impossible de construire le créneau : date ou heure invalide."
+    );
+  }
+
+  return date.toISOString();
+}
+
 export class RuntimeSchedulingEngine {
   static readonly defaultDurationMinutes = 60;
+
+  static buildDateTimeRange(params: {
+    date: string;
+    time: string;
+    durationMinutes?: number;
+  }): RuntimeDateTimeRange {
+    // Q22B2_GENERIC_OPENING_HOURS
+    const durationMinutes = Math.max(
+      1,
+      asNumber(params.durationMinutes, RuntimeSchedulingEngine.defaultDurationMinutes)
+    );
+
+    const startAt = buildRuntimeDateTimeIso(params.date, params.time);
+    const startDate = new Date(startAt);
+    const endDate = new Date(startDate.getTime() + durationMinutes * 60 * 1000);
+
+    return {
+      startAt,
+      endAt: endDate.toISOString(),
+    };
+  }
+
+  static getAvailableSlotsForDate(params: {
+    date: string;
+    durationMinutes?: number;
+    profile?: RuntimeOpeningHoursProfile;
+  }): RuntimeAvailabilitySlot[] {
+    const profile = params.profile ?? DEFAULT_WORKSPACE_OPENING_HOURS;
+
+    const durationMinutes = Math.max(
+      1,
+      asNumber(params.durationMinutes, profile.defaultSlotDurationMinutes)
+    );
+
+    const normalizedDate = normalizeDateOnly(params.date);
+
+    if (!normalizedDate) {
+      return [];
+    }
+
+    const date = new Date(normalizedDate + "T00:00:00");
+    const openingDay = getOpeningDayForDate(profile, date);
+
+    if (!openingDay || !openingDay.isOpen) {
+      return [];
+    }
+
+    const slots: RuntimeAvailabilitySlot[] = [];
+
+    for (const period of openingDay.periods) {
+      const periodStart = parseRuntimeTimeToMinutes(period.start);
+      const periodEnd = parseRuntimeTimeToMinutes(period.end);
+
+      for (
+        let cursor = periodStart;
+        cursor + durationMinutes <= periodEnd;
+        cursor += durationMinutes
+      ) {
+        const start = formatRuntimeMinutesToTime(cursor);
+        const end = formatRuntimeMinutesToTime(cursor + durationMinutes);
+
+        slots.push({
+          start,
+          end,
+          label: start + " - " + end,
+          available: true,
+        });
+      }
+    }
+
+    return slots;
+  }
+
+  static assertWithinOpeningHours(params: {
+    date: string;
+    time: string;
+    durationMinutes?: number;
+    profile?: RuntimeOpeningHoursProfile;
+  }): SchedulingValidationResult {
+    const profile = params.profile ?? DEFAULT_WORKSPACE_OPENING_HOURS;
+
+    const durationMinutes = Math.max(
+      1,
+      asNumber(params.durationMinutes, profile.defaultSlotDurationMinutes)
+    );
+
+    const normalizedTime = normalizeTimeOnly(params.time);
+
+    if (!normalizedTime) {
+      return {
+        ok: false,
+        reason: "L'heure sélectionnée est invalide.",
+      };
+    }
+
+    const slots = RuntimeSchedulingEngine.getAvailableSlotsForDate({
+      date: params.date,
+      durationMinutes,
+      profile,
+    });
+
+    const allowed = slots.some((slot) => slot.start === normalizedTime);
+
+    if (!allowed) {
+      return {
+        ok: false,
+        reason:
+          "Le créneau sélectionné est en dehors des horaires d'ouverture.",
+      };
+    }
+
+    return { ok: true };
+  }
 
   static computeAppointmentSlot(record: RuntimeRecord): RuntimeAppointmentSlot {
     if (!hasRealDateAndTime(record)) {
