@@ -660,6 +660,10 @@ export function ERPFormField({
             bookings,
             bufferMinutes:
               schedulingConfig.bufferMinutes,
+            // Q22F2B_PASS_CALENDAR_EXCEPTIONS_TO_SLOTS
+            // Generic ERP scheduling: calendar exceptions can close or override a specific date.
+            calendarExceptions:
+              schedulingConfig.calendarExceptions,
           });
 
         setSchedulingSlots(slots);

@@ -172,6 +172,12 @@ function isRendezvousModule(module: ERPModule): boolean {
   return module.metadata.key === "rendezvous";
 }
 
+function getSchedulingConfig(module: ERPModule) {
+  return module.scheduling?.enabled
+    ? module.scheduling
+    : null;
+}
+
 function hasRealAppointmentDateAndTime(record: RuntimeRecord): boolean {
   return Boolean(
     asString(record.dateRendezVous) &&
@@ -311,6 +317,10 @@ async function guardRendezvousMutation(
         typeof mergedRecord.durationMinutes === "number"
           ? mergedRecord.durationMinutes
           : Number(mergedRecord.durationMinutes ?? 0) || undefined,
+      // Q22F2B_PASS_CALENDAR_EXCEPTIONS_TO_GUARD
+      // Generic ERP scheduling: persistence guard also applies calendar exceptions.
+      calendarExceptions:
+        getSchedulingConfig(module)?.calendarExceptions,
     });
 
   if (!openingHoursValidation.ok) {
