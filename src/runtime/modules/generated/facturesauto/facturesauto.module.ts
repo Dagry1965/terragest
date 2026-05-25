@@ -26,26 +26,26 @@ export const facturesautoModule: ERPModule = {
   schema: {
     collection: "facturesauto",
     fields: [
-      {
+{
         key: "numeroFacture",
         label: "Numéro facture",
         type: "text",
         required: true,
         unique: true,
         searchable: true,
-        list: { order: 1 },
+        list: { visible: true, order: 1 },
         grid: { cols: 4 },
       },
-      {
+{
         key: "dateFacture",
         label: "Date facture",
         type: "date",
         required: true,
         unique: true,
-        list: { order: 2 },
+        list: { visible: true, order: 4 },
         grid: { cols: 4 },
       },
-      {
+{
         key: "statutFacture",
         label: "Statut facture",
         type: "select",
@@ -55,10 +55,10 @@ export const facturesautoModule: ERPModule = {
           { label: "Émise", value: "emise" },
           { label: "Annulée", value: "annulee" },
         ],
-        list: { order: 3 },
+        list: { visible: false },
         grid: { cols: 4 },
       },
-      {
+{
         key: "statutPaiement",
         label: "Statut paiement",
         type: "select",
@@ -68,9 +68,10 @@ export const facturesautoModule: ERPModule = {
           { label: "Partiel", value: "partiel" },
           { label: "Payé", value: "paye" },
         ],
+        list: { visible: true, order: 7 },
         grid: { cols: 4 },
       },
-      {
+{
         key: "clientId",
         label: "Client",
         type: "relation",
@@ -78,9 +79,10 @@ export const facturesautoModule: ERPModule = {
           module: "clientsauto",
         },
         searchable: true,
+        list: { visible: true, order: 2 },
         grid: { cols: 6 },
       },
-      {
+{
         key: "vehiculeId",
         label: "Véhicule",
         type: "relation",
@@ -88,9 +90,10 @@ export const facturesautoModule: ERPModule = {
           module: "vehicules",
         },
         searchable: true,
+        list: { visible: true, order: 3 },
         grid: { cols: 6 },
       },
-      {
+{
         key: "interventionId",
         label: "Intervention",
         type: "relation",
@@ -98,22 +101,25 @@ export const facturesautoModule: ERPModule = {
           module: "interventionsauto",
         },
         searchable: true,
+        list: { visible: false },
         grid: { cols: 12 },
       },
-      {
+{
         key: "montantHT",
         label: "Montant HT",
         type: "number",
+        list: { visible: false },
         grid: { cols: 4 },
       },
-      {
+{
         key: "tva",
         label: "Taux TVA (%)",
         type: "number",
         defaultValue: 18,
+        list: { visible: false },
         grid: { cols: 4 },
       },
-      {
+{
         key: "montantTTC",
         label: "Montant TTC",
         type: "number",
@@ -121,25 +127,26 @@ export const facturesautoModule: ERPModule = {
           formula: "montantHT + (montantHT * tva / 100)",
           dependsOn: ["montantHT", "tva"],
         },
+        list: { visible: true, order: 5 },
         grid: { cols: 4 },
       },
-      {
+{
         key: "montantPaye",
         label: "Montant payé",
         type: "number",
         defaultValue: 0,
-        list: { order: 7 },
+        list: { visible: false },
         grid: { cols: 4 },
       },
-      {
+{
         key: "resteAPayer",
         label: "Reste à payer",
         type: "number",
         defaultValue: 0,
-        list: { order: 8 },
+        list: { visible: true, order: 6 },
         grid: { cols: 4 },
       },
-      {
+{
         key: "modePaiement",
         label: "Mode paiement",
         type: "select",
@@ -149,9 +156,10 @@ export const facturesautoModule: ERPModule = {
           { label: "Virement", value: "virement" },
           { label: "Mobile Money", value: "mobile_money" },
         ],
+        list: { visible: false },
         grid: { cols: 6 },
       },
-      {
+{
         key: "statutEnvoiFacture",
         label: "Statut envoi facture",
         type: "select",
@@ -161,16 +169,17 @@ export const facturesautoModule: ERPModule = {
           { label: "Envoyée", value: "envoyee" },
           { label: "Échec envoi", value: "echec" },
         ],
-        list: { order: 9 },
+        list: { visible: false },
         grid: { cols: 4 },
       },
-      {
+{
         key: "dernierEnvoiFactureAt",
         label: "Dernier envoi facture",
         type: "datetime",
+        list: { visible: false },
         grid: { cols: 4 },
       },
-      {
+{
         key: "canalDernierEnvoiFacture",
         label: "Canal dernier envoi",
         type: "select",
@@ -181,27 +190,31 @@ export const facturesautoModule: ERPModule = {
           { label: "Lien", value: "lien" },
           { label: "Manuel", value: "manuel" },
         ],
+        list: { visible: false },
         grid: { cols: 4 },
       },
-      {
+{
         key: "destinataireDernierEnvoiFacture",
         label: "Destinataire dernier envoi",
         type: "text",
+        list: { visible: false },
         grid: { cols: 6 },
       },
-      {
+{
         key: "nombreEnvoisFacture",
         label: "Nombre d'envois",
         type: "number",
         defaultValue: 0,
+        list: { visible: false },
         grid: { cols: 6 },
       },
-      {
+{
         key: "observations",
         label: "Observations",
         type: "textarea",
+        list: { visible: false },
         grid: { cols: 12 },
-      },
+      }
     ],
   },
 
