@@ -22,67 +22,72 @@ export const clientsautoModule: ERPModule = {
   schema: {
     collection: "clientsauto",
     fields: [
-      {
+{
         key: "codeClient",
         label: "Code client",
         type: "text",
         required: true,
         unique: true,
         searchable: true,
-        list: { order: 1 },
+        list: { visible: true, order: 1 },
         grid: { cols: 4 }
       },
-      {
+{
         key: "nom",
         label: "Nom",
         type: "text",
         required: true,
         searchable: true,
-        list: { order: 2 },
+        list: { visible: true, order: 2 },
         grid: { cols: 4 }
       },
-      {
+{
         key: "prenom",
         label: "Prénom",
         type: "text",
         required: true,
-        list: { order: 3 },
+        list: { visible: true, order: 3 },
         grid: { cols: 4 }
       },
-      {
+{
         key: "telephone",
         label: "Téléphone",
         type: "text",
         searchable: true,
+        list: { visible: true, order: 4 },
         grid: { cols: 6 }
       },
-      {
+{
         key: "email",
         label: "Email",
         type: "email",
         searchable: true,
+        list: { visible: true, order: 5 },
         grid: { cols: 6 }
       },
-      {
+{
         key: "adresse",
         label: "Adresse",
         type: "textarea",
+        list: { visible: false },
         grid: { cols: 12 }
       },
-      {
+{
         key: "ville",
         label: "Ville",
         type: "text",
+        list: { visible: false },
         grid: { cols: 6 }
       },
-      {
+{
         key: "pays",
         label: "Pays",
         type: "text",
         defaultValue: "Côte d'Ivoire",
+        list: { visible: false },
         grid: { cols: 6 }
       },
-      {
+{
         key: "typeClient",
         label: "Type client",
         type: "select",
@@ -91,21 +96,24 @@ export const clientsautoModule: ERPModule = {
           { label:"Entreprise", value:"entreprise" },
           { label:"Flotte", value:"flotte" }
         ],
+        list: { visible: false },
         grid:{ cols:6 }
       },
-      {
+{
         key:"dateInscription",
         label:"Date inscription",
         type:"date",
+        list: { visible: false },
         grid:{ cols:6 }
       },
-      {
+{
         key:"observations",
         label:"Observations",
         type:"textarea",
+        list: { visible: false },
         grid:{ cols:12 }
       },
-      {
+{
         key:"statut",
         label:"Statut",
         type:"select",
@@ -128,7 +136,7 @@ export const clientsautoModule: ERPModule = {
               value:"archive"
             }
         ],
-        list:{ order:4 },
+        list: { visible: true, order: 6 },
         grid:{ cols:6 }
       }
     ]
