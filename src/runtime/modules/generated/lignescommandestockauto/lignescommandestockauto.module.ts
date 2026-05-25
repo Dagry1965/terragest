@@ -159,6 +159,27 @@ export const lignescommandestockautoModule: ERPModule = {
   },
 
   composition: {
+    // Q21D3A2_ORDER_LINE_COMPUTED_FIELDS
+    // Metadata-driven computed fields.
+    // The runtime engine calculates these values; the form must not recalculate locally.
+    readOnlyFields: ["designation", "montantHT", "montantTTC"],
+
+    computedFields: [
+      {
+        target: "montantHT",
+        formula: "multiply",
+        sources: ["quantiteCommandee", "prixUnitaireHT"],
+        round: 2,
+        defaultValue: 0,
+      },
+      {
+        target: "montantTTC",
+        formula: "taxIncluded",
+        sources: ["montantHT", "tauxTVA"],
+        round: 2,
+        defaultValue: 0,
+      },
+    ],
     requiresParentContext: true,
     allowedParents: [
       {

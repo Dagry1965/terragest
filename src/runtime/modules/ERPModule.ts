@@ -186,6 +186,19 @@ export interface ERPModuleComposition {
   relations?: ERPCompositionRelation[];
   lockedFields?: string[];
   readOnlyFields?: string[];
+
+  /**
+   * Q21D3A2_COMPUTED_FIELDS_METADATA
+   * Declarative computed fields executed by RuntimeComputedFieldsEngine.
+   * Modules declare formulas; forms and pages must not hardcode calculations.
+   */
+  computedFields?: Array<{
+    target: string;
+    formula: "multiply" | "taxIncluded" | "taxAmount" | "add" | "subtract";
+    sources: string[];
+    round?: number;
+    defaultValue?: number;
+  }>;
   allowOverride?: string[];
   children?: ERPCompositionChild[];
 
