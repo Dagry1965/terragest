@@ -24,33 +24,34 @@ export const produitsautoModule: ERPModule = {
     collection: "produitsauto",
 
     fields: [
-      {
+{
         key: "reference",
         label: "Référence",
         type: "text",
         required: true,
         searchable: true,
-        list: { order: 1 },
+        list: { visible: true, order: 1 },
         grid: { cols: 4 },
       },
-      {
+{
         key: "nom",
         label: "Nom",
         type: "text",
         required: true,
         searchable: true,
-        list: { order: 2 },
+        list: { visible: true, order: 2 },
         grid: { cols: 4 },
       },
-      {
+{
         key: "marque",
         label: "Marque",
         type: "text",
         defaultValue: "PETRONAS",
         searchable: true,
+        list: { visible: false },
         grid: { cols: 4 },
       },
-      {
+{
         key: "typeRecord",
         label: "Type fiche",
         type: "select",
@@ -60,18 +61,19 @@ export const produitsautoModule: ERPModule = {
           { label: "Famille", value: "family" },
           { label: "Variante", value: "variant" },
         ],
-        list: { order: 0 },
+        list: { visible: false },
         grid: { cols: 6 },
       },
-      {
+{
         key: "parentProductId",
         label: "Famille produit",
         type: "relation",
         relation: { module: "produitsauto" },
         searchable: true,
+        list: { visible: false },
         grid: { cols: 6 },
       },
-      {
+{
         key: "typeArticle",
         label: "Type article",
         type: "select",
@@ -82,44 +84,48 @@ export const produitsautoModule: ERPModule = {
           { label: "Service", value: "service" },
           { label: "Remise", value: "remise" },
         ],
-        list: { order: 3 },
+        list: { visible: true, order: 4 },
         grid: { cols: 6 },
       },
-      {
+{
         key: "sousCategorie",
         label: "Sous-catégorie",
         type: "text",
         searchable: true,
-        list: { order: 5 },
+        list: { visible: false },
         grid: { cols: 6 },
       },
-      {
+{
         key: "tauxTVA",
         label: "Taux TVA",
         type: "number",
         defaultValue: 18,
+        list: { visible: false },
         grid: { cols: 4 },
       },
-      {
+{
         key: "prixPromo",
         label: "Prix promotionnel",
         type: "number",
+        list: { visible: false },
         grid: { cols: 4 },
       },
-      {
+{
         key: "stockable",
         label: "Stockable",
         type: "checkbox",
         defaultValue: true,
+        list: { visible: false },
         grid: { cols: 4 },
       },
-      {
+{
         key: "contenance",
         label: "Contenance",
         type: "number",
+        list: { visible: false },
         grid: { cols: 4 },
       },
-      {
+{
         key: "uniteContenance",
         label: "Unité contenance",
         type: "select",
@@ -127,15 +133,17 @@ export const produitsautoModule: ERPModule = {
           { label: "ml", value: "ml" },
           { label: "L", value: "L" },
         ],
+        list: { visible: false },
         grid: { cols: 4 },
       },
-      {
+{
         key: "poids",
         label: "Poids",
         type: "number",
+        list: { visible: false },
         grid: { cols: 4 },
       },
-      {
+{
         key: "unitePoids",
         label: "Unité poids",
         type: "select",
@@ -143,96 +151,111 @@ export const produitsautoModule: ERPModule = {
           { label: "g", value: "g" },
           { label: "kg", value: "kg" },
         ],
+        list: { visible: false },
         grid: { cols: 4 },
       },
-      {
+{
         key: "taille",
         label: "Taille",
         type: "text",
+        list: { visible: false },
         grid: { cols: 4 },
       },
-      {
+{
         key: "couleur",
         label: "Couleur",
         type: "text",
+        list: { visible: false },
         grid: { cols: 4 },
       },
-      {
+{
         key: "modele",
         label: "Modèle",
         type: "text",
         searchable: true,
+        list: { visible: false },
         grid: { cols: 6 },
       },
-      {
+{
         key: "compatibilites",
         label: "Compatibilités",
         type: "textarea",
+        list: { visible: false },
         grid: { cols: 12 },
       },
-      {
+{
         key: "visibleBoutique",
         label: "Visible boutique",
         type: "checkbox",
         defaultValue: false,
+        list: { visible: false },
         grid: { cols: 4 },
       },
-      {
+{
         key: "slugBoutique",
         label: "Slug boutique",
         type: "text",
         searchable: true,
+        list: { visible: false },
         grid: { cols: 8 },
       },
-      {
+{
         key: "seoTitle",
         label: "Titre SEO",
         type: "text",
+        list: { visible: false },
         grid: { cols: 6 },
       },
-      {
+{
         key: "seoDescription",
         label: "Description SEO",
         type: "textarea",
+        list: { visible: false },
         grid: { cols: 12 },
       },
-      {
+{
         key: "imageOriginalUrl",
         label: "Image originale",
         type: "text",
+        list: { visible: false },
         grid: { cols: 12 },
       },
-      {
+{
         key: "imageThumbnailUrl",
         label: "Image miniature",
         type: "text",
+        list: { visible: false },
         grid: { cols: 12 },
       },
-      {
+{
         key: "imageMediumUrl",
         label: "Image moyenne",
         type: "text",
+        list: { visible: false },
         grid: { cols: 12 },
       },
-      {
+{
         key: "imageLargeUrl",
         label: "Image large",
         type: "text",
+        list: { visible: false },
         grid: { cols: 12 },
       },
-      {
+{
         key: "imageAlt",
         label: "Texte alternatif image",
         type: "text",
+        list: { visible: false },
         grid: { cols: 12 },
       },
-      {
+{
         key: "imageStoragePath",
         label: "Chemin stockage image",
         type: "text",
+        list: { visible: false },
         grid: { cols: 12 },
       },
-      {
+{
         key: "categorie",
         label: "Catégorie",
         type: "select",
@@ -244,9 +267,10 @@ export const produitsautoModule: ERPModule = {
           { label: "Consommable", value: "consommable" },
           { label: "Service", value: "service" },
         ],
+        list: { visible: true, order: 5 },
         grid: { cols: 6 },
       },
-      {
+{
         key: "typeProduit",
         label: "Type produit",
         type: "select",
@@ -255,44 +279,46 @@ export const produitsautoModule: ERPModule = {
           { label: "Non stockable", value: "non_stockable" },
         ],
         defaultValue: "stockable",
+        list: { visible: false },
         grid: { cols: 6 },
       },
-      {
+{
         key: "unite",
         label: "Unité",
         type: "text",
         defaultValue: "unité",
+        list: { visible: false },
         grid: { cols: 4 },
       },
-      {
+{
         key: "prixAchat",
         label: "Prix achat",
         type: "number",
+        list: { visible: false },
         grid: { cols: 4 },
       },
-      {
+{
         key: "prixVente",
         label: "Prix vente",
         type: "number",
+        list: { visible: true, order: 6 },
         grid: { cols: 4 },
       },
-      {
+{
         key: "seuilMinimum",
         label: "Seuil minimum",
         type: "number",
+        list: { visible: false },
         grid: { cols: 6 },
       },
-      
-
-      
-
-      {
+{
         key: "description",
         label: "Description",
         type: "textarea",
+        list: { visible: false },
         grid: { cols: 12 },
       },
-      {
+{
         key: "statut",
         label: "Statut",
         type: "select",
@@ -303,9 +329,9 @@ export const produitsautoModule: ERPModule = {
           { label: "Inactif", value: "inactif" },
           { label: "Archivé", value: "archive" },
         ],
-        list: { order: 3 },
+        list: { visible: true, order: 7 },
         grid: { cols: 6 },
-      },
+      }
     ],
   },
 
