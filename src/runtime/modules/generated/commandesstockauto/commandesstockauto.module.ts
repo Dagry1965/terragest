@@ -22,55 +22,56 @@ export const commandesstockautoModule: ERPModule = {
   schema: {
     collection: "commandesstockauto",
     fields: [
-      {
+{
         key: "numeroCommande",
         label: "Numero commande",
         type: "text",
         searchable: true,
-        list: { order: 1 },
+        list: { visible: true, order: 1 },
         grid: { cols: 4 },
       },
-      {
+{
         key: "fournisseurId",
         label: "Fournisseur",
         type: "relation",
         relation: { module: "fournisseursauto" },
         required: true,
         searchable: true,
-        list: { order: 2 },
+        list: { visible: true, order: 2 },
         grid: { cols: 4 },
       },
-      {
+{
         key: "dateCommande",
         label: "Date commande",
         type: "date",
         required: true,
-        list: { order: 3 },
+        list: { visible: true, order: 3 },
         grid: { cols: 4 },
       },
-      {
+{
         key: "dateLivraisonPrevue",
         label: "Date livraison prevue",
         type: "date",
+        list: { visible: false },
         grid: { cols: 4 },
       },
-      {
+{
         key: "montantHT",
         label: "Montant HT",
         type: "number",
         defaultValue: 0,
-        list: { order: 4 },
+        list: { visible: false },
         grid: { cols: 4 },
       },
-      {
+{
         key: "montantTTC",
         label: "Montant TTC",
         type: "number",
         defaultValue: 0,
-        list: { order: 5 },
+        list: { visible: true, order: 4 },
         grid: { cols: 4 },
       },
-      {
+{
         key: "statut",
         label: "Statut",
         type: "select",
@@ -82,15 +83,16 @@ export const commandesstockautoModule: ERPModule = {
           { label: "Recue", value: "recue" },
           { label: "Annulee", value: "annulee" },
         ],
-        list: { order: 6 },
+        list: { visible: true, order: 5 },
         grid: { cols: 4 },
       },
-      {
+{
         key: "notes",
         label: "Notes",
         type: "textarea",
+        list: { visible: false },
         grid: { cols: 12 },
-      },
+      }
     ],
   },
 
