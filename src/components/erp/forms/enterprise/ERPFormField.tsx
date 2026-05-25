@@ -4,8 +4,10 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { ReactNode } from "react";
 import type { ERPModuleField } from "@/runtime/modules";
+import { coreERPModules } from "@/runtime/modules/definitions/coreModules";
 import { ERPRelationDataLoader } from "@/runtime/modules/lifecycle/ERPRelationDataLoader";
 import { RuntimeRelationFilterEngine } from "@/runtime/relations";
+import { RuntimeDataBinding } from "@/runtime/data-binding/RuntimeDataBinding";
 import {
   useAuth,
 } from "@/providers/AuthProvider";
@@ -219,6 +221,33 @@ function getRelationTargetModule(
   );
 }
 
+function resolveRuntimeModuleByKey(moduleKey?: string) {
+  if (!moduleKey) {
+    return null;
+  }
+
+  return (
+    coreERPModules.find((runtimeModule) => {
+      const moduleRecord =
+        runtimeModule as unknown as {
+          key?: string;
+          collection?: string;
+          metadata?: {
+            key?: string;
+            collection?: string;
+          };
+        };
+
+      return (
+        moduleRecord.key === moduleKey ||
+        moduleRecord.collection === moduleKey ||
+        moduleRecord.metadata?.key === moduleKey ||
+        moduleRecord.metadata?.collection === moduleKey
+      );
+    }) ?? null
+  );
+}
+
 function getRelationFilterConfig(
   field: ERPModuleField
 ): {
@@ -243,6 +272,30 @@ function getRelationFilterConfig(
     };
 
   return relationWithFilter.filterBy ?? null;
+}
+
+function getRelationExcludeUsedByConfig(
+  field: ERPModuleField
+): {
+  module?: string;
+  field?: string;
+} | null {
+  if (
+    !field.relation ||
+    typeof field.relation === "string"
+  ) {
+    return null;
+  }
+
+  const relationWithExcludeUsedBy =
+    field.relation as {
+      excludeUsedBy?: {
+        module?: string;
+        field?: string;
+      };
+    };
+
+  return relationWithExcludeUsedBy.excludeUsedBy ?? null;
 }
 
 function getCurrentFormValue(
@@ -337,6 +390,7 @@ export function ERPFormField({
   } = useAuth();
 
   const [relationOptions, setRelationOptions] = useState<RelationOption[]>([]);
+  const [relationUsedRecords, setRelationUsedRecords] = useState<Record<string, unknown>[]>([]);
   const [relationSearch, setRelationSearch] = useState("");
   const [lockedRelationLabel, setLockedRelationLabel] = useState("");
   const [relationFilterSourceValue, setRelationFilterSourceValue] = useState("");
@@ -434,6 +488,55 @@ export function ERPFormField({
     );
   }, [field, formValues]);
 
+  useEffect(() => {
+    async function loadRelationUsedRecords() {
+      if (field.type !== "relation") {
+        setRelationUsedRecords([]);
+        return;
+      }
+
+      if (authLoading) {
+        return;
+      }
+
+      const excludeUsedBy =
+        getRelationExcludeUsedByConfig(field);
+
+      if (!excludeUsedBy?.module || !excludeUsedBy?.field) {
+        setRelationUsedRecords([]);
+        return;
+      }
+
+      try {
+        const excludeUsedByModule =
+          resolveRuntimeModuleByKey(excludeUsedBy.module);
+
+        if (!excludeUsedByModule) {
+          setRelationUsedRecords([]);
+          return;
+        }
+
+        const usedRecords =
+          await RuntimeDataBinding.list(excludeUsedByModule);
+
+        setRelationUsedRecords(
+          Array.isArray(usedRecords)
+            ? usedRecords as Record<string, unknown>[]
+            : []
+        );
+      } catch (error) {
+        console.error("ERP RELATION USED RECORDS LOAD ERROR", error);
+        setRelationUsedRecords([]);
+      }
+    }
+
+    loadRelationUsedRecords();
+  }, [
+    field,
+    authLoading,
+    authUser?.uid,
+  ]);
+
   const label = (
     <span className="text-sm font-bold text-[var(--erp-text)]">
       {field.label}
@@ -472,13 +575,19 @@ export function ERPFormField({
     const filterConfig =
       getRelationFilterConfig(field);
 
-    // Q21D3C2_RELATION_FILTER_ENGINE
+    const excludeUsedByConfig =
+      getRelationExcludeUsedByConfig(field);
+
+    // Q21D3C3B_RELATION_EXCLUDE_USED_BY
     // Generic metadata-driven relation filtering.
-    // ERPFormField provides UI context; RuntimeRelationFilterEngine applies filterBy.
+    // ERPFormField provides UI context; RuntimeRelationFilterEngine applies filterBy/excludeUsedBy.
     const filteredByContext =
       RuntimeRelationFilterEngine.apply({
         options: relationOptions,
         filterBy: filterConfig,
+        excludeUsedBy: excludeUsedByConfig,
+        usedRecords: relationUsedRecords,
+        currentValue,
         formValues,
       });
 

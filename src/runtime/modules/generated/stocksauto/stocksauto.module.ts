@@ -144,6 +144,13 @@ export const stocksautoModule: ERPModule = {
     ],
   },
 
+  composition: {
+    // Q21D3D_STOCK_RELATION_LABEL_FIELDS
+    // Relation labels are metadata-driven.
+    // produitId is resolved by RuntimeRelationLabelEngine through ERPRelationDataLoader.
+    labelFields: ["produitId", "emplacement", "typeStock", "quantite", "statut"],
+  },
+
   workflows: [
     {
       key: "stock",

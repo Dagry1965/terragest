@@ -10,9 +10,17 @@ export interface RuntimeRelationFilterConfig {
   includeEmptyTarget?: boolean;
 }
 
+export interface RuntimeRelationExcludeUsedByConfig {
+  module?: string;
+  field?: string;
+}
+
 export interface RuntimeRelationFilterContext {
   options: RuntimeRelationOption[];
   filterBy?: RuntimeRelationFilterConfig | null;
+  excludeUsedBy?: RuntimeRelationExcludeUsedByConfig | null;
+  usedRecords?: Record<string, unknown>[];
+  currentValue?: unknown;
   formValues?: Record<string, unknown>;
 }
 
@@ -20,33 +28,64 @@ function relationTargetIsEmpty(value: unknown): boolean {
   return value === undefined || value === null || value === "";
 }
 
+function normalizeRelationValue(value: unknown): string {
+  return value === undefined || value === null ? "" : String(value);
+}
+
 export class RuntimeRelationFilterEngine {
   static apply(context: RuntimeRelationFilterContext): RuntimeRelationOption[] {
     const filterBy = context.filterBy;
+    const excludeUsedBy = context.excludeUsedBy;
 
-    if (!filterBy?.sourceField || !filterBy?.targetField) {
-      return context.options;
+    const currentValue =
+      normalizeRelationValue(context.currentValue);
+
+    let options =
+      context.options;
+
+    if (filterBy?.sourceField && filterBy?.targetField) {
+      const sourceValue =
+        context.formValues?.[filterBy.sourceField];
+
+      const sourceText =
+        normalizeRelationValue(sourceValue);
+
+      options = options.filter((option) => {
+        const targetValue =
+          option.record?.[filterBy.targetField as string];
+
+        if (!sourceText) {
+          return filterBy.includeEmptyTarget
+            ? relationTargetIsEmpty(targetValue)
+            : true;
+        }
+
+        return normalizeRelationValue(targetValue) === sourceText;
+      });
     }
 
-    const sourceValue =
-      context.formValues?.[filterBy.sourceField];
+    if (excludeUsedBy?.field) {
+      const usedValues =
+        new Set(
+          (context.usedRecords ?? [])
+            .map((record) =>
+              normalizeRelationValue(record?.[excludeUsedBy.field as string])
+            )
+            .filter(Boolean)
+        );
 
-    const sourceText =
-      sourceValue === undefined || sourceValue === null
-        ? ""
-        : String(sourceValue);
+      options = options.filter((option) => {
+        const optionId =
+          normalizeRelationValue(option.id);
 
-    return context.options.filter((option) => {
-      const targetValue =
-        option.record?.[filterBy.targetField as string];
+        if (currentValue && optionId === currentValue) {
+          return true;
+        }
 
-      if (!sourceText) {
-        return filterBy.includeEmptyTarget
-          ? relationTargetIsEmpty(targetValue)
-          : true;
-      }
+        return !usedValues.has(optionId);
+      });
+    }
 
-      return String(targetValue ?? "") === sourceText;
-    });
+    return options;
   }
 }

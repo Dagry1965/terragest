@@ -49,6 +49,17 @@ export const receptionsstockautoModule: ERPModule = {
             module: "receptionsstockauto",
             field: "ligneCommandeId",
           },
+
+          // Q21D3D_LINE_COMMAND_AUTOFILL_PRODUCT
+          // The selected order line carries the product and ordered quantity.
+          // RuntimeAutoFillEngine applies this generically from relation metadata.
+          autoFill: {
+            map: {
+              produitId: ["produitId"],
+              quantiteRecue: ["quantiteCommandee"],
+            },
+            recalculate: true,
+          },
         },
         required: true,
         searchable: true,
