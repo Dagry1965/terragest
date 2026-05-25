@@ -33,49 +33,47 @@ export const vehiculesModule: ERPModule = {
     collection: "vehicules",
 
     fields: [
-
-      {
+{
         key:"immatriculation",
         label:"Immatriculation",
         type:"text",
         required:true,
         unique: true,
         searchable:true,
-        list:{ order:1 },
+        list: { visible: true, order: 1 },
         grid:{ cols:4 }
       },
-
-      {
+{
         key:"marque",
         label:"Marque",
         type:"text",
         required:true,
+        list: { visible: true, order: 2 },
         grid:{ cols:4 }
       },
-
-      {
+{
         key:"modele",
         label:"Modèle",
         type:"text",
         required:true,
+        list: { visible: true, order: 3 },
         grid:{ cols:4 }
       },
-
-      {
+{
         key:"annee",
         label:"Année",
         type:"number",
+        list: { visible: false },
         grid:{ cols:3 }
       },
-
-      {
+{
         key:"vin",
         label:"VIN",
         type:"text",
+        list: { visible: false },
         grid:{ cols:9 }
       },
-
-      {
+{
         key:"carburant",
 
         label:"Carburant",
@@ -88,25 +86,25 @@ export const vehiculesModule: ERPModule = {
           { label:"Hybride", value:"hybride" },
           { label:"Électrique", value:"electrique" }
         ],
+        list: { visible: false },
 
         grid:{ cols:6 }
       },
-
-      {
+{
         key:"kilometrage",
         label:"Kilométrage",
         type:"number",
+        list: { visible: true, order: 5 },
         grid:{ cols:6 }
       },
-
-      {
+{
         key:"dateMiseEnCirculation",
         label:"Mise en circulation",
         type:"date",
+        list: { visible: false },
         grid:{ cols:6 }
       },
-
-      {
+{
         key:"clientId",
 
         label:"Client",
@@ -117,39 +115,39 @@ export const vehiculesModule: ERPModule = {
         },
 
         searchable:true,
+        list: { visible: true, order: 4 },
 
         grid:{ cols:6 }
       },
-
-      {
+{
         key:"prochaineVidange",
         label:"Prochaine vidange",
         type:"date",
+        list: { visible: false },
         grid:{ cols:6 }
       },
-
-      {
+{
         key:"prochainControleTechnique",
         label:"Contrôle technique",
         type:"date",
+        list: { visible: false },
         grid:{ cols:6 }
       },
-
-      {
+{
         key:"assuranceExpiration",
         label:"Expiration assurance",
         type:"date",
+        list: { visible: false },
         grid:{ cols:6 }
       },
-
-      {
+{
         key:"observations",
         label:"Observations",
         type:"textarea",
+        list: { visible: false },
         grid:{ cols:12 }
       },
-
-      {
+{
         key:"statut",
 
         label:"Statut",
@@ -165,11 +163,10 @@ export const vehiculesModule: ERPModule = {
           { label:"Archivé", value:"archive" }
         ],
 
-        list:{ order:2 },
+        list: { visible: true, order: 6 },
 
         grid:{ cols:6 }
       }
-
     ]
 
   },
