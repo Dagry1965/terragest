@@ -22,17 +22,17 @@ export const receptionsstockautoModule: ERPModule = {
   schema: {
     collection: "receptionsstockauto",
     fields: [
-      {
+{
         key: "commandeId",
         label: "Commande",
         type: "relation",
         relation: { module: "commandesstockauto" },
         required: true,
         searchable: true,
-        list: { order: 1 },
+        list: { visible: true, order: 1 },
         grid: { cols: 4 },
       },
-      {
+{
         key: "ligneCommandeId",
         label: "Ligne commande",
         type: "relation",
@@ -63,20 +63,20 @@ export const receptionsstockautoModule: ERPModule = {
         },
         required: true,
         searchable: true,
-        list: { order: 2 },
+        list: { visible: true, order: 2 },
         grid: { cols: 4 },
       },
-      {
+{
         key: "produitId",
         label: "Produit",
         type: "relation",
         relation: { module: "produitsauto" },
         required: true,
         searchable: true,
-        list: { order: 3 },
+        list: { visible: true, order: 3 },
         grid: { cols: 4 },
       },
-      {
+{
         key: "stockId",
         label: "Stock destination",
         type: "relation",
@@ -90,27 +90,27 @@ export const receptionsstockautoModule: ERPModule = {
         },
         required: true,
         searchable: true,
-        list: { order: 4 },
+        list: { visible: true, order: 4 },
         grid: { cols: 4 },
       },
-      {
+{
         key: "quantiteRecue",
         label: "Quantite recue",
         type: "number",
         required: true,
         defaultValue: 1,
-        list: { order: 5 },
+        list: { visible: true, order: 5 },
         grid: { cols: 4 },
       },
-      {
+{
         key: "dateReception",
         label: "Date reception",
         type: "date",
         required: true,
-        list: { order: 6 },
+        list: { visible: true, order: 6 },
         grid: { cols: 4 },
       },
-      {
+{
         key: "mouvementStockId",
         label: "Mouvement stock",
         type: "relation",
@@ -118,21 +118,21 @@ export const receptionsstockautoModule: ERPModule = {
         grid: { cols: 4 },
         list: { visible: false },
       },
-      {
+{
         key: "stockProcessedAt",
         label: "Date traitement stock",
         type: "date",
         grid: { cols: 4 },
         list: { visible: false },
       },
-      {
+{
         key: "stockProcessedQuantity",
         label: "Quantite traitee stock",
         type: "number",
         grid: { cols: 4 },
         list: { visible: false },
       },
-      {
+{
         key: "statut",
         label: "Statut",
         type: "select",
@@ -141,7 +141,7 @@ export const receptionsstockautoModule: ERPModule = {
           { label: "Brouillon", value: "brouillon" },
           { label: "Validee", value: "validee" },
         ],
-        list: { order: 7 },
+        list: { visible: true, order: 7 },
         grid: { cols: 4 },
         // Q21D_RECEPTION_STATUS_RULE
         // Statuts visibles volontairement limites :
@@ -149,12 +149,13 @@ export const receptionsstockautoModule: ERPModule = {
         // validee = entree stock traitee par runtime
         // annulation = future action controlee avec mouvement inverse
       },
-      {
+{
         key: "notes",
         label: "Notes",
         type: "textarea",
+        list: { visible: false },
         grid: { cols: 12 },
-      },
+      }
     ],
   },
 
