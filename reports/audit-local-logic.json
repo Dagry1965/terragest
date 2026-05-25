@@ -7561,7 +7561,7 @@
   },
   {
     "file": "src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts",
-    "line": 186,
+    "line": 184,
     "key": "hardcoded-business-module",
     "severity": "OK_METADATA",
     "match": "commandesstockauto",
@@ -7651,17 +7651,7 @@
   },
   {
     "file": "src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts",
-    "line": 137,
-    "key": "manual-amount-calculation",
-    "severity": "OK_METADATA",
-    "match": "montantTTC",
-    "code": "\"montantTTC\",",
-    "message": "Calcul financier ou champ montant détecté.",
-    "action": "Acceptable si c’est déclaratif. Vérifier qu’il n’y a pas de logique exécutable."
-  },
-  {
-    "file": "src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts",
-    "line": 148,
+    "line": 147,
     "key": "manual-amount-calculation",
     "severity": "OK_METADATA",
     "match": "quantiteCommandee",
@@ -7671,7 +7661,7 @@
   },
   {
     "file": "src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts",
-    "line": 149,
+    "line": 148,
     "key": "manual-amount-calculation",
     "severity": "OK_METADATA",
     "match": "prixUnitaireHT",
@@ -7681,7 +7671,7 @@
   },
   {
     "file": "src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts",
-    "line": 150,
+    "line": 149,
     "key": "manual-amount-calculation",
     "severity": "OK_METADATA",
     "match": "montantHT",
@@ -7691,7 +7681,7 @@
   },
   {
     "file": "src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts",
-    "line": 151,
+    "line": 150,
     "key": "manual-amount-calculation",
     "severity": "OK_METADATA",
     "match": "montantTTC",
@@ -7701,17 +7691,7 @@
   },
   {
     "file": "src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts",
-    "line": 152,
-    "key": "manual-amount-calculation",
-    "severity": "OK_METADATA",
-    "match": "montantTTC",
-    "code": "\"montantTTC\",",
-    "message": "Calcul financier ou champ montant détecté.",
-    "action": "Acceptable si c’est déclaratif. Vérifier qu’il n’y a pas de logique exécutable."
-  },
-  {
-    "file": "src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts",
-    "line": 165,
+    "line": 163,
     "key": "manual-amount-calculation",
     "severity": "OK_METADATA",
     "match": "montantHT",
@@ -7721,7 +7701,7 @@
   },
   {
     "file": "src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts",
-    "line": 165,
+    "line": 163,
     "key": "manual-amount-calculation",
     "severity": "OK_METADATA",
     "match": "montantTTC",
@@ -7731,7 +7711,7 @@
   },
   {
     "file": "src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts",
-    "line": 169,
+    "line": 167,
     "key": "manual-amount-calculation",
     "severity": "OK_METADATA",
     "match": "montantHT",
@@ -7741,7 +7721,7 @@
   },
   {
     "file": "src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts",
-    "line": 171,
+    "line": 169,
     "key": "manual-amount-calculation",
     "severity": "OK_METADATA",
     "match": "quantiteCommandee",
@@ -7751,7 +7731,7 @@
   },
   {
     "file": "src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts",
-    "line": 171,
+    "line": 169,
     "key": "manual-amount-calculation",
     "severity": "OK_METADATA",
     "match": "prixUnitaireHT",
@@ -7761,7 +7741,7 @@
   },
   {
     "file": "src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts",
-    "line": 176,
+    "line": 174,
     "key": "manual-amount-calculation",
     "severity": "OK_METADATA",
     "match": "montantTTC",
@@ -7771,27 +7751,17 @@
   },
   {
     "file": "src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts",
-    "line": 178,
+    "line": 176,
     "key": "manual-amount-calculation",
     "severity": "OK_METADATA",
     "match": "montantHT",
-    "code": "sources: [\"montantHT\", \"tauxTVA\"],",
+    "code": "sources: [\"montantHT\"],",
     "message": "Calcul financier ou champ montant détecté.",
     "action": "Acceptable si c’est déclaratif. Vérifier qu’il n’y a pas de logique exécutable."
   },
   {
     "file": "src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts",
-    "line": 178,
-    "key": "manual-amount-calculation",
-    "severity": "OK_METADATA",
-    "match": "tauxTVA",
-    "code": "sources: [\"montantHT\", \"tauxTVA\"],",
-    "message": "Calcul financier ou champ montant détecté.",
-    "action": "Acceptable si c’est déclaratif. Vérifier qu’il n’y a pas de logique exécutable."
-  },
-  {
-    "file": "src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts",
-    "line": 191,
+    "line": 189,
     "key": "manual-amount-calculation",
     "severity": "OK_METADATA",
     "match": "quantiteCommandee",

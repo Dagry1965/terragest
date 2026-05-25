@@ -134,7 +134,6 @@ export const lignescommandestockautoModule: ERPModule = {
                  "prixUnitaireHT",
           "montantHT",
        "montantTTC",
-   "montantTTC",
           "statut",
         ],
         sections: [
@@ -149,7 +148,6 @@ export const lignescommandestockautoModule: ERPModule = {
                          "prixUnitaireHT",
               "montantHT",
        "montantTTC",
-   "montantTTC",
               "statut",
             ],
           },
@@ -174,8 +172,8 @@ export const lignescommandestockautoModule: ERPModule = {
       },
       {
         target: "montantTTC",
-        formula: "taxIncluded",
-        sources: ["montantHT", "tauxTVA"],
+        formula: "add",
+        sources: ["montantHT"],
         round: 2,
         defaultValue: 0,
       },

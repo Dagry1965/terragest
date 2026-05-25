@@ -1,13 +1,13 @@
 # Audit local logic / ERP generic compliance
 
-Date: 2026-05-25T03:54:00.950Z
+Date: 2026-05-25T04:03:36.139Z
 
 ## Synthèse
 
 - HIGH: 204
 - MEDIUM: 302
 - INFO: 180
-- OK_METADATA: 219
+- OK_METADATA: 216
 
 ## Règle
 
@@ -6522,7 +6522,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Nom de module métier codé en dur.
 - Action cible: Acceptable si c’est déclaratif. Vérifier qu’il n’y a pas de logique exécutable.
 
-#### src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts:186
+#### src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts:184
 
 - Type: hardcoded-business-module
 - Match: `commandesstockauto`
@@ -6594,15 +6594,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Calcul financier ou champ montant détecté.
 - Action cible: Acceptable si c’est déclaratif. Vérifier qu’il n’y a pas de logique exécutable.
 
-#### src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts:137
-
-- Type: manual-amount-calculation
-- Match: `montantTTC`
-- Code: `"montantTTC",`
-- Diagnostic: Calcul financier ou champ montant détecté.
-- Action cible: Acceptable si c’est déclaratif. Vérifier qu’il n’y a pas de logique exécutable.
-
-#### src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts:148
+#### src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts:147
 
 - Type: manual-amount-calculation
 - Match: `quantiteCommandee`
@@ -6610,7 +6602,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Calcul financier ou champ montant détecté.
 - Action cible: Acceptable si c’est déclaratif. Vérifier qu’il n’y a pas de logique exécutable.
 
-#### src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts:149
+#### src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts:148
 
 - Type: manual-amount-calculation
 - Match: `prixUnitaireHT`
@@ -6618,7 +6610,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Calcul financier ou champ montant détecté.
 - Action cible: Acceptable si c’est déclaratif. Vérifier qu’il n’y a pas de logique exécutable.
 
-#### src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts:150
+#### src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts:149
 
 - Type: manual-amount-calculation
 - Match: `montantHT`
@@ -6626,7 +6618,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Calcul financier ou champ montant détecté.
 - Action cible: Acceptable si c’est déclaratif. Vérifier qu’il n’y a pas de logique exécutable.
 
-#### src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts:151
+#### src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts:150
 
 - Type: manual-amount-calculation
 - Match: `montantTTC`
@@ -6634,15 +6626,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Calcul financier ou champ montant détecté.
 - Action cible: Acceptable si c’est déclaratif. Vérifier qu’il n’y a pas de logique exécutable.
 
-#### src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts:152
-
-- Type: manual-amount-calculation
-- Match: `montantTTC`
-- Code: `"montantTTC",`
-- Diagnostic: Calcul financier ou champ montant détecté.
-- Action cible: Acceptable si c’est déclaratif. Vérifier qu’il n’y a pas de logique exécutable.
-
-#### src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts:165
+#### src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts:163
 
 - Type: manual-amount-calculation
 - Match: `montantHT`
@@ -6650,7 +6634,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Calcul financier ou champ montant détecté.
 - Action cible: Acceptable si c’est déclaratif. Vérifier qu’il n’y a pas de logique exécutable.
 
-#### src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts:165
+#### src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts:163
 
 - Type: manual-amount-calculation
 - Match: `montantTTC`
@@ -6658,7 +6642,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Calcul financier ou champ montant détecté.
 - Action cible: Acceptable si c’est déclaratif. Vérifier qu’il n’y a pas de logique exécutable.
 
-#### src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts:169
+#### src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts:167
 
 - Type: manual-amount-calculation
 - Match: `montantHT`
@@ -6666,7 +6650,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Calcul financier ou champ montant détecté.
 - Action cible: Acceptable si c’est déclaratif. Vérifier qu’il n’y a pas de logique exécutable.
 
-#### src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts:171
+#### src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts:169
 
 - Type: manual-amount-calculation
 - Match: `quantiteCommandee`
@@ -6674,7 +6658,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Calcul financier ou champ montant détecté.
 - Action cible: Acceptable si c’est déclaratif. Vérifier qu’il n’y a pas de logique exécutable.
 
-#### src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts:171
+#### src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts:169
 
 - Type: manual-amount-calculation
 - Match: `prixUnitaireHT`
@@ -6682,7 +6666,7 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Calcul financier ou champ montant détecté.
 - Action cible: Acceptable si c’est déclaratif. Vérifier qu’il n’y a pas de logique exécutable.
 
-#### src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts:176
+#### src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts:174
 
 - Type: manual-amount-calculation
 - Match: `montantTTC`
@@ -6690,23 +6674,15 @@ Toute logique doit passer par metadata + moteur runtime générique, sauf except
 - Diagnostic: Calcul financier ou champ montant détecté.
 - Action cible: Acceptable si c’est déclaratif. Vérifier qu’il n’y a pas de logique exécutable.
 
-#### src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts:178
+#### src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts:176
 
 - Type: manual-amount-calculation
 - Match: `montantHT`
-- Code: `sources: ["montantHT", "tauxTVA"],`
+- Code: `sources: ["montantHT"],`
 - Diagnostic: Calcul financier ou champ montant détecté.
 - Action cible: Acceptable si c’est déclaratif. Vérifier qu’il n’y a pas de logique exécutable.
 
-#### src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts:178
-
-- Type: manual-amount-calculation
-- Match: `tauxTVA`
-- Code: `sources: ["montantHT", "tauxTVA"],`
-- Diagnostic: Calcul financier ou champ montant détecté.
-- Action cible: Acceptable si c’est déclaratif. Vérifier qu’il n’y a pas de logique exécutable.
-
-#### src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts:191
+#### src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts:189
 
 - Type: manual-amount-calculation
 - Match: `quantiteCommandee`
