@@ -6,8 +6,10 @@ import Link from "next/link";
 import type { ERPModule } from "@/runtime/modules";
 import { RuntimeDataBinding } from "@/runtime/data-binding/RuntimeDataBinding";
 import { RuntimeSchedulingEngine } from "@/runtime/scheduling";
+import { allERPModules } from "@/runtime/modules/definitions/coreModules";
 
 type RuntimePlanningRecord = Record<string, unknown>;
+type RuntimeRelationLabelMap = Record<string, string>;
 
 interface ERPSchedulingPlanningViewProps {
   module: ERPModule;
@@ -93,12 +95,205 @@ function buildPlanningCreateHref(params: {
     );
   }
 
+  if (schedulingConfig.durationField) {
+    const durationMinutes =
+      getVisibleSchedulingDurationMinutes(schedulingConfig);
+
+    searchParams.set(
+      schedulingConfig.durationField,
+      String(durationMinutes)
+    );
+  }
+
   return `${getCreateHref(module)}?${searchParams.toString()}`;
+}
+
+function getRelationLabelKey(
+  fieldKey: string,
+  value: string
+) {
+  return fieldKey + "::" + value;
+}
+
+function getRelationModuleKey(
+  field: ERPModule["schema"]["fields"][number]
+) {
+  const relation =
+    field.relation as
+      | string
+      | {
+          module?: string;
+          moduleKey?: string;
+          collection?: string;
+        }
+      | undefined;
+
+  if (!relation) {
+    return "";
+  }
+
+  if (typeof relation === "string") {
+    return relation;
+  }
+
+  return (
+    relation.module ??
+    relation.moduleKey ??
+    relation.collection ??
+    ""
+  );
+}
+
+function getContextRelationLabelFields(
+  module: ERPModule,
+  fieldKey: string
+): string[] | null {
+  const contextBanner =
+    module.composition?.contextBanner as
+      | {
+          items?: Array<{
+            relationField?: string;
+            labelFields?: string[];
+          }>;
+        }
+      | undefined;
+
+  const item =
+    contextBanner?.items?.find(
+      (entry) => entry.relationField === fieldKey
+    );
+
+  return Array.isArray(item?.labelFields)
+    ? item.labelFields
+    : null;
+}
+
+function formatRelationRecordLabel(
+  record: RuntimePlanningRecord,
+  labelFields?: string[]
+) {
+  const fields =
+    labelFields && labelFields.length > 0
+      ? labelFields
+      : [
+          "nom",
+          "prenom",
+          "label",
+          "name",
+          "code",
+          "telephone",
+          "immatriculation",
+          "marque",
+          "modele",
+          "email",
+        ];
+
+  const parts =
+    fields
+      .map((field) => asString(record[field]))
+      .filter(Boolean);
+
+  return parts.join(" · ");
+}
+
+function isLikelyTechnicalId(value: string) {
+  return /^[A-Za-z0-9_-]{12,}$/.test(value);
+}
+
+async function buildPlanningRelationLabels(params: {
+  module: ERPModule;
+  records: RuntimePlanningRecord[];
+}) {
+  // Q22E8B_PLANNING_RELATION_LABELS
+  // Planning labels must display business labels, not raw relation IDs.
+  // This is generic: every relation field can be resolved from metadata.
+  const { module, records } = params;
+
+  const relationFields =
+    module.schema.fields.filter((field) =>
+      Boolean(field.relation)
+    );
+
+  const labelMap: RuntimeRelationLabelMap = {};
+
+  for (const field of relationFields) {
+    const relationModuleKey =
+      getRelationModuleKey(field);
+
+    if (!relationModuleKey) {
+      continue;
+    }
+
+    const relationModule =
+      allERPModules.find(
+        (item) => item.metadata.key === relationModuleKey
+      );
+
+    if (!relationModule) {
+      continue;
+    }
+
+    const ids =
+      Array.from(
+        new Set(
+          records
+            .map((record) => asString(record[field.key]))
+            .filter(Boolean)
+        )
+      );
+
+    if (ids.length === 0) {
+      continue;
+    }
+
+    try {
+      const relatedRecords =
+        await RuntimeDataBinding.list(relationModule);
+
+      const wantedIds =
+        new Set(ids);
+
+      const labelFields =
+        getContextRelationLabelFields(module, field.key) ??
+        relationModule.composition?.labelFields;
+
+      for (const relatedRecord of relatedRecords) {
+        const relatedId =
+          getRecordId(relatedRecord);
+
+        if (!wantedIds.has(relatedId)) {
+          continue;
+        }
+
+        const label =
+          formatRelationRecordLabel(
+            relatedRecord,
+            labelFields
+          );
+
+        if (label) {
+          labelMap[
+            getRelationLabelKey(field.key, relatedId)
+          ] = label;
+        }
+      }
+    } catch (error) {
+      console.error(
+        "[PLANNING_RELATION_LABELS_ERROR]",
+        field.key,
+        relationModuleKey,
+        error
+      );
+    }
+  }
+
+  return labelMap;
 }
 
 function formatRecordLabel(
   record: RuntimePlanningRecord,
-  module: ERPModule
+  module: ERPModule,
+  relationLabels: RuntimeRelationLabelMap = {}
 ) {
   const labelFields =
     module.composition?.labelFields ?? [
@@ -112,14 +307,34 @@ function formatRecordLabel(
 
   const parts =
     labelFields
-      .map((field) => asString(record[field]))
+      .map((field) => {
+        const rawValue =
+          asString(record[field]);
+
+        if (!rawValue) {
+          return "";
+        }
+
+        const relationLabel =
+          relationLabels[
+            getRelationLabelKey(field, rawValue)
+          ];
+
+        if (relationLabel) {
+          return relationLabel;
+        }
+
+        return isLikelyTechnicalId(rawValue)
+          ? ""
+          : rawValue;
+      })
       .filter(Boolean);
 
   if (parts.length > 0) {
     return parts.join(" · ");
   }
 
-  return getRecordId(record) || "Réservation";
+  return "Réservation";
 }
 
 function addDays(dateOnly: string, amount: number) {
@@ -127,6 +342,37 @@ function addDays(dateOnly: string, amount: number) {
   date.setDate(date.getDate() + amount);
 
   return date.toISOString().slice(0, 10);
+}
+
+function getVisibleSchedulingDurationMinutes(
+  schedulingConfig: NonNullable<ERPModule["scheduling"]>
+) {
+  // Q22E8A_VISIBLE_DURATION_SEPARATE_FROM_BUFFER
+  // The visible appointment duration must stay independent from bufferMinutes.
+  // bufferMinutes protects availability but must not stretch labels like 08:00-09:15.
+  const configWithDuration =
+    schedulingConfig as {
+      defaultDurationMinutes?: number;
+      slotDurationMinutes?: number;
+      durationMinutes?: number;
+    };
+
+  const candidates = [
+    configWithDuration.defaultDurationMinutes,
+    configWithDuration.slotDurationMinutes,
+    configWithDuration.durationMinutes,
+    RuntimeSchedulingEngine.defaultDurationMinutes,
+  ];
+
+  for (const candidate of candidates) {
+    const value = Number(candidate);
+
+    if (Number.isFinite(value) && value > 0) {
+      return value;
+    }
+  }
+
+  return 60;
 }
 
 function formatReadableDate(dateOnly: string) {
@@ -153,6 +399,9 @@ export function ERPSchedulingPlanningView({
   const [records, setRecords] =
     useState<RuntimePlanningRecord[]>([]);
 
+  const [relationLabels, setRelationLabels] =
+    useState<RuntimeRelationLabelMap>({});
+
   const [loading, setLoading] =
     useState(true);
 
@@ -162,6 +411,7 @@ export function ERPSchedulingPlanningView({
     async function loadRecords() {
       if (!schedulingConfig) {
         setRecords([]);
+        setRelationLabels({});
         setLoading(false);
         return;
       }
@@ -172,12 +422,23 @@ export function ERPSchedulingPlanningView({
         const result =
           await RuntimeDataBinding.list(module);
 
+        const rows =
+          Array.isArray(result)
+            ? result as RuntimePlanningRecord[]
+            : [];
+
         if (active) {
-          setRecords(
-            Array.isArray(result)
-              ? result as RuntimePlanningRecord[]
-              : []
-          );
+          setRecords(rows);
+        }
+
+        const labels =
+          await buildPlanningRelationLabels({
+            module,
+            records: rows,
+          });
+
+        if (active) {
+          setRelationLabels(labels);
         }
       } catch (error) {
         console.error(
@@ -187,6 +448,7 @@ export function ERPSchedulingPlanningView({
 
         if (active) {
           setRecords([]);
+          setRelationLabels({});
         }
       } finally {
         if (active) {
@@ -260,18 +522,13 @@ export function ERPSchedulingPlanningView({
           Boolean(booking.startAt && booking.endAt)
         );
 
-    const durationField =
-      schedulingConfig.durationField;
-
-    const fallbackDuration =
-      durationField
-        ? Number(records[0]?.[durationField] ?? 0) || undefined
-        : undefined;
+    const visibleDurationMinutes =
+      getVisibleSchedulingDurationMinutes(schedulingConfig);
 
     const slots =
       RuntimeSchedulingEngine.getAvailableSlotsWithBookings({
         date: selectedDate,
-        durationMinutes: fallbackDuration,
+        durationMinutes: visibleDurationMinutes,
         bookings,
         bufferMinutes: schedulingConfig.bufferMinutes,
         calendarExceptions: schedulingConfig.calendarExceptions,
@@ -572,7 +829,7 @@ export function ERPSchedulingPlanningView({
                             }
                             className="rounded-2xl border border-white/80 bg-white/90 px-4 py-3 text-sm font-bold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:bg-white hover:shadow-md"
                           >
-                            {formatRecordLabel(record, module)}
+                            {formatRecordLabel(record, module, relationLabels)}
                           </Link>
                         );
                       })}
