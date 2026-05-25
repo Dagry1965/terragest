@@ -28,17 +28,17 @@ export const rendezvousModule: ERPModule = {
     collection: "rendezvous",
 
     fields: [
-      {
+{
         key: "clientId",
         label: "Client",
         type: "relation",
         relation: { module: "clientsauto" },
         required: true,
         searchable: true,
-        list: { order: 1 },
+        list: { visible: true, order: 1 },
         grid: { cols: 6 },
       },
-      {
+{
         key: "vehiculeId",
         label: "Véhicule",
         type: "relation",
@@ -52,48 +52,48 @@ export const rendezvousModule: ERPModule = {
         },
         required: true,
         searchable: true,
-        list: { order: 2 },
+        list: { visible: true, order: 2 },
         grid: { cols: 6 },
       },
-      {
+{
         key: "dateRendezVous",
         label: "Date rendez-vous",
         type: "date",
         required: true,
-        list: { order: 3 },
+        list: { visible: true, order: 3 },
         grid: { cols: 4 },
       },
-      {
+{
         key: "heureRendezVous",
         label: "Heure",
         type: "text",
         required: true,
-        list: { order: 4 },
+        list: { visible: true, order: 4 },
         grid: { cols: 4 },
       },
-      {
+{
         key: "durationMinutes",
         label: "Durée prévue",
         type: "number",
         defaultValue: 60,
-        list: { order: 5 },
+        list: { visible: false },
         grid: { cols: 4 },
       },
-      {
+{
         key: "startAt",
         label: "Début créneau",
         type: "text",
         list: { visible: false },
         grid: { cols: 4 },
       },
-      {
+{
         key: "endAt",
         label: "Fin créneau",
         type: "text",
         list: { visible: false },
         grid: { cols: 4 },
       },
-      {
+{
         key: "consumedByInterventionId",
         label: "Intervention liée",
         type: "relation",
@@ -102,7 +102,7 @@ export const rendezvousModule: ERPModule = {
         list: { visible: false },
         grid: { cols: 4 },
       },
-      {
+{
         key: "typeService",
         label: "Type service",
         type: "select",
@@ -113,21 +113,24 @@ export const rendezvousModule: ERPModule = {
           { label: "Contrôle", value: "controle" },
           { label: "Autre", value: "autre" },
         ],
+        list: { visible: true, order: 5 },
         grid: { cols: 4 },
       },
-      {
+{
         key: "motif",
         label: "Motif",
         type: "textarea",
+        list: { visible: false },
         grid: { cols: 12 },
       },
-      {
+{
         key: "commentaire",
         label: "Commentaire",
         type: "textarea",
+        list: { visible: false },
         grid: { cols: 12 },
       },
-      {
+{
         key: "statut",
         label: "Statut",
         type: "select",
@@ -140,9 +143,9 @@ export const rendezvousModule: ERPModule = {
           { label: "Facturé", value: "facture" },
           { label: "Annulé", value: "annule" },
         ],
-        list: { order: 6 },
+        list: { visible: true, order: 6 },
         grid: { cols: 6 },
-      },
+      }
     ],
   },
 

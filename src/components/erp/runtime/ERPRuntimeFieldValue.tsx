@@ -151,6 +151,20 @@ export function ERPRuntimeFieldValue({
     );
   }
 
+  if (field.type === "select") {
+    // Q21F_A3B_FORMAT_SELECT_LABELS
+    // Display business labels in runtime lists/details instead of technical values.
+    const option = Array.isArray(field.options)
+      ? field.options.find((item) => item?.value === value)
+      : undefined;
+
+    return (
+      <span>
+        {String(option?.label ?? value)}
+      </span>
+    );
+  }
+
   if (field.type === "boolean") {
     return (
       <ERPBadge tone={value ? "success" : "danger"}>
