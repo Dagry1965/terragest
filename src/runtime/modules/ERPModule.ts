@@ -93,6 +93,21 @@ export interface ERPModuleScheduling {
   resourceField?: string;
   blockingStatuses?: string[];
   bufferMinutes?: number;
+
+  /**
+   * Q22F2A_CALENDAR_EXCEPTIONS_METADATA
+   * Dates ponctuelles qui sortent ou modifient la planification standard.
+   */
+  calendarExceptions?: Array<{
+    date: string;
+    isClosed?: boolean;
+    periods?: Array<{
+      start: string;
+      end: string;
+      capacity?: number;
+    }>;
+    reason?: string;
+  }>;
 }
 
 export interface ERPModuleFormSection {

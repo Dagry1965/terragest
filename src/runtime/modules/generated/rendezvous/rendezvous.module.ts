@@ -222,6 +222,12 @@ export const rendezvousModule: ERPModule = {
     resourceField: "vehiculeId",
     blockingStatuses: ["planifie", "confirme", "en_cours"],
     bufferMinutes: 15,
+
+    calendarExceptions: [
+      // Q22F2A_RENDEZVOUS_CALENDAR_EXCEPTIONS_EXAMPLE
+      // Exemple générique désactivé : à remplacer plus tard par une configuration tenant/workspace.
+      // { date: "2026-01-01", isClosed: true, reason: "Jour fermé" },
+    ],
   },
   composition: {
     // Q21E_D_APPOINTMENT_RELATIONSHIP_COMPOSITION

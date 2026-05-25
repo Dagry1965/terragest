@@ -70,6 +70,8 @@ export interface RuntimeBooking {
 }
 
 export interface RuntimeCalendarException {
+  // Q22F2A_RUNTIME_CALENDAR_EXCEPTION
+  // Generic ERP calendar exception: close or override opening periods for a specific date.
   date: string;
   isClosed?: boolean;
   periods?: RuntimeOpeningPeriod[];

@@ -8,6 +8,7 @@ import type {
   RuntimeDateTimeRange,
   RuntimeOpeningHoursProfile,
   RuntimeBooking,
+  RuntimeCalendarException,
 } from "./RuntimeSchedulingTypes";
 
 export type RuntimeRecord = Record<string, unknown>;
@@ -288,6 +289,7 @@ export class RuntimeSchedulingEngine {
     date: string;
     durationMinutes?: number;
     profile?: RuntimeOpeningHoursProfile;
+    calendarExceptions?: RuntimeCalendarException[];
   }): RuntimeAvailabilitySlot[] {
     const profile = params.profile ?? DEFAULT_WORKSPACE_OPENING_HOURS;
 
@@ -305,13 +307,29 @@ export class RuntimeSchedulingEngine {
     const date = new Date(normalizedDate + "T00:00:00");
     const openingDay = getOpeningDayForDate(profile, date);
 
+    const exception =
+      (params.calendarExceptions ?? []).find(
+        (item) => item.date === normalizedDate
+      );
+
+    if (exception?.isClosed) {
+      return [];
+    }
+
     if (!openingDay || !openingDay.isOpen) {
       return [];
     }
 
+    // Q22F2A_APPLY_CALENDAR_EXCEPTIONS
+    // Calendar exception can override the standard opening periods for this date.
+    const periods =
+      exception?.periods && exception.periods.length > 0
+        ? exception.periods
+        : openingDay.periods;
+
     const slots: RuntimeAvailabilitySlot[] = [];
 
-    for (const period of openingDay.periods) {
+    for (const period of periods) {
       const periodStart = parseRuntimeTimeToMinutes(period.start);
       const periodEnd = parseRuntimeTimeToMinutes(period.end);
 
@@ -343,6 +361,7 @@ export class RuntimeSchedulingEngine {
     bookings?: RuntimeBooking[];
     ignoreBookingId?: string;
     bufferMinutes?: number;
+    calendarExceptions?: RuntimeCalendarException[];
   }): RuntimeAvailabilitySlot[] {
     // Q22D1_BOOKING_AWARE_AVAILABILITY
     // Generic ERP availability: opening-hours slots minus existing bookings.
@@ -350,6 +369,7 @@ export class RuntimeSchedulingEngine {
       date: params.date,
       durationMinutes: params.durationMinutes,
       profile: params.profile,
+      calendarExceptions: params.calendarExceptions,
     });
 
     const bufferMinutes = Math.max(
@@ -430,6 +450,7 @@ export class RuntimeSchedulingEngine {
     time: string;
     durationMinutes?: number;
     profile?: RuntimeOpeningHoursProfile;
+    calendarExceptions?: RuntimeCalendarException[];
   }): SchedulingValidationResult {
     const profile = params.profile ?? DEFAULT_WORKSPACE_OPENING_HOURS;
 
@@ -451,6 +472,7 @@ export class RuntimeSchedulingEngine {
       date: params.date,
       durationMinutes,
       profile,
+      calendarExceptions: params.calendarExceptions,
     });
 
     const allowed = slots.some((slot) => slot.start === normalizedTime);
