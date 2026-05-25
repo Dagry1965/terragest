@@ -14,7 +14,8 @@
     "test:coverage": "vitest run --coverage",
     "test:e2e": "playwright test",
     "test:e2e:headed": "playwright test --headed",
-    "test:e2e:debug": "playwright test --debug"
+    "test:e2e:debug": "playwright test --debug",
+    "audit:local": "node scripts/runtime/audit-local-logic.cjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
