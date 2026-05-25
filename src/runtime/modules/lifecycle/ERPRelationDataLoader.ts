@@ -238,8 +238,7 @@ export class ERPRelationDataLoader {
 
       return /^[A-Za-z0-9_-]{16,}$/.test(text);
     };
-
-    const statusLabel = (input: string) => {
+const statusLabel = (input: string) => {
       const text = String(input ?? "").trim();
 
       const labels: Record<string, string> = {
@@ -420,6 +419,76 @@ export class ERPRelationDataLoader {
       }
 
       return start;
+
+
+    // Q21X_C1_GENERIC_LABEL_FIELDS
+    // Relation labels must be metadata-driven first.
+    // Module-specific fallbacks remain temporary compatibility only.
+    const getModuleDefinition = () =>
+      allERPModules.find(
+        (item) =>
+          item.metadata.key === moduleKey ||
+          item.schema?.collection === moduleKey
+      );
+
+    const fieldLabelValue = (fieldKey: string) => {
+      const raw = record[fieldKey];
+
+      if (raw === null || raw === undefined || raw === "") {
+        return "";
+      }
+
+      const text = String(raw).trim();
+
+      if (!text) {
+        return "";
+      }
+
+      if (
+        fieldKey.toLowerCase().includes("statut") ||
+        fieldKey.toLowerCase().includes("status")
+      ) {
+        return statusLabel(text) || text;
+      }
+
+      if (
+        fieldKey.toLowerCase().includes("montant") ||
+        fieldKey.toLowerCase().includes("prix")
+      ) {
+        const amount = Number(raw);
+        return Number.isFinite(amount)
+          ? amount.toLocaleString("fr-FR") + " FCFA"
+          : text;
+      }
+
+      return text;
+    };
+
+    const buildLabelFromMetadata = () => {
+      const moduleDefinition = getModuleDefinition();
+
+      const labelFields =
+        (moduleDefinition?.composition as { labelFields?: string[] } | undefined)
+          ?.labelFields ?? [];
+
+      const metadataLabel = compact(
+        ...labelFields.map((fieldKey) => fieldLabelValue(fieldKey))
+      );
+
+      if (metadataLabel) {
+        return metadataLabel;
+      }
+
+      return "";
+    };
+
+    const metadataDrivenLabel = buildLabelFromMetadata();
+
+    if (metadataDrivenLabel) {
+      return metadataDrivenLabel;
+    }
+
+    
     };const money = (key: string) => {
       const raw =
         record[key];
@@ -843,6 +912,10 @@ export class ERPRelationDataLoader {
       return id;
     }
 
-    return "Enregistrement lié";
+    if (id) {
+      return "Enregistrement " + id.slice(0, 8);
+    }
+
+    return "Enregistrement";
   }
 }
