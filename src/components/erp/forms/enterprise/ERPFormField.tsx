@@ -597,9 +597,43 @@ export function ERPFormField({
         const endField =
           schedulingConfig.endField ?? "endAt";
 
+        const resourceField =
+          schedulingConfig.resourceField;
+
+        const resourceValue =
+          resourceField
+            ? String(formValues[resourceField] ?? "").trim()
+            : "";
+
+        const blockingStatuses =
+          schedulingConfig.blockingStatuses ?? [];
+
         const bookings =
           Array.isArray(existingRecords)
             ? existingRecords
+                // Q22D4_RESOURCE_FIELD_BOOKING_FILTER
+                // Generic ERP scheduling: only records sharing the configured resourceField
+                // can block the current resource availability.
+                .filter((record) => {
+                  if (!resourceField) {
+                    return true;
+                  }
+
+                  if (!resourceValue) {
+                    return false;
+                  }
+
+                  return String(record[resourceField] ?? "").trim() === resourceValue;
+                })
+                .filter((record) => {
+                  if (blockingStatuses.length === 0 || !schedulingConfig.statusField) {
+                    return true;
+                  }
+
+                  return blockingStatuses.includes(
+                    String(record[schedulingConfig.statusField] ?? "")
+                  );
+                })
                 .map((record) => ({
                   id: String(record.id ?? record._id ?? ""),
                   startAt: String(record[startField] ?? ""),
