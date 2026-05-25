@@ -76,6 +76,24 @@ export interface ERPModulePermissions {
   import?: boolean;
   export?: boolean;
 }
+
+export interface ERPModuleScheduling {
+  /**
+   * Q22D3A_GENERIC_SCHEDULING_METADATA
+   * Generic ERP scheduling declaration.
+   * Modules describe how their date/time/duration fields map to the Scheduling Runtime.
+   */
+  enabled: boolean;
+  dateField: string;
+  timeField: string;
+  durationField?: string;
+  startField?: string;
+  endField?: string;
+  statusField?: string;
+  resourceField?: string;
+  blockingStatuses?: string[];
+}
+
 export interface ERPModuleFormSection {
   key: string;
   title: string;
@@ -226,6 +244,8 @@ export interface ERPModule {
   visibility?: ERPModuleVisibility;
 
   form?: ERPModuleFormConfig;
+
+  scheduling?: ERPModuleScheduling;
 
   actions?: ERPModuleAction[];
 

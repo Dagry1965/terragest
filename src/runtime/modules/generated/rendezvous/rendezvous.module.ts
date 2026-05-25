@@ -208,6 +208,20 @@ export const rendezvousModule: ERPModule = {
   },
 
   actions: rendezvousActions,
+
+  scheduling: {
+    // Q22D3A_RENDEZVOUS_SCHEDULING_METADATA
+    // First consumer of the generic ERP Scheduling Runtime.
+    enabled: true,
+    dateField: "dateRendezVous",
+    timeField: "heureRendezVous",
+    durationField: "durationMinutes",
+    startField: "startAt",
+    endField: "endAt",
+    statusField: "statut",
+    resourceField: "vehiculeId",
+    blockingStatuses: ["planifie", "confirme", "en_cours"],
+  },
   composition: {
     // Q21E_D_APPOINTMENT_RELATIONSHIP_COMPOSITION
     // Rendez-vous knows its client, vehicle and generated intervention.
