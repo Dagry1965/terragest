@@ -58,6 +58,14 @@ export interface RuntimeAvailabilitySlot {
   label: string;
   available: boolean;
   capacity?: number;
+
+  /**
+   * Q22F3A_RUNTIME_SLOT_CAPACITY
+   * Capacity-aware availability details.
+   */
+  usedCapacity?: number;
+  remainingCapacity?: number;
+  reason?: string;
 }
 
 export interface RuntimeBooking {

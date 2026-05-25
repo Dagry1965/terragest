@@ -95,6 +95,12 @@ export interface ERPModuleScheduling {
   bufferMinutes?: number;
 
   /**
+   * Q22F3A_SCHEDULING_CAPACITY_METADATA
+   * Nombre maximal de bookings acceptés sur un même créneau.
+   */
+  capacity?: number;
+
+  /**
    * Q22F2A_CALENDAR_EXCEPTIONS_METADATA
    * Dates ponctuelles qui sortent ou modifient la planification standard.
    */

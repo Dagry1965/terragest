@@ -362,6 +362,7 @@ export class RuntimeSchedulingEngine {
     ignoreBookingId?: string;
     bufferMinutes?: number;
     calendarExceptions?: RuntimeCalendarException[];
+    capacity?: number;
   }): RuntimeAvailabilitySlot[] {
     // Q22D1_BOOKING_AWARE_AVAILABILITY
     // Generic ERP availability: opening-hours slots minus existing bookings.
@@ -377,6 +378,11 @@ export class RuntimeSchedulingEngine {
       asNumber(params.bufferMinutes, 0)
     );
 
+    const capacity = Math.max(
+      1,
+      asNumber(params.capacity, 1)
+    );
+
     const bookings = params.bookings ?? [];
     const ignoredId = asString(params.ignoreBookingId);
 
@@ -387,7 +393,9 @@ export class RuntimeSchedulingEngine {
         durationMinutes: params.durationMinutes,
       });
 
-      const occupied = bookings.some((booking) => {
+      let usedCapacity = 0;
+
+      const overlappingBookings = bookings.filter((booking) => {
         if (!booking) {
           return false;
         }
@@ -438,9 +446,24 @@ export class RuntimeSchedulingEngine {
         );
       });
 
+      usedCapacity = overlappingBookings.length;
+
+      const remainingCapacity =
+        Math.max(capacity - usedCapacity, 0);
+
+      const available =
+        remainingCapacity > 0;
+
       return {
+        // Q22F3A_CAPACITY_AWARE_AVAILABILITY
         ...slot,
-        available: !occupied,
+        available,
+        capacity,
+        usedCapacity,
+        remainingCapacity,
+        reason: available
+          ? undefined
+          : "Créneau complet",
       };
     });
   }

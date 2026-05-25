@@ -222,6 +222,7 @@ export const rendezvousModule: ERPModule = {
     resourceField: "vehiculeId",
     blockingStatuses: ["planifie", "confirme", "en_cours"],
     bufferMinutes: 15,
+    capacity: 1,
 
     calendarExceptions: [
       // Q22F2A_RENDEZVOUS_CALENDAR_EXCEPTIONS_EXAMPLE
