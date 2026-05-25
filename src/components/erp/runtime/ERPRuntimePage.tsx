@@ -206,6 +206,15 @@ export function ERPRuntimePage({
 
       : [];
 
+  const listNavigationActions =
+    // Q22E4B_LIST_NAVIGATION_ACTIONS
+    // Generic runtime: list pages may expose module actions with href.
+    type === "list"
+      ? (module?.actions ?? []).filter((action) =>
+          Boolean(action.href)
+        )
+      : [];
+
   const isInvoiceDetailPage =
     type === "detail" &&
     module?.metadata?.key === "facturesauto" &&
@@ -249,8 +258,25 @@ export function ERPRuntimePage({
     >
       <div className="space-y-6">
         {type === "list" && module && (
-          <div className="flex items-center justify-end">
-            <a
+          <div className="flex flex-wrap items-center justify-end gap-3">
+            {listNavigationActions.map((action) => (
+              <Link
+                key={action.key}
+                href={action.href ?? "#"}
+                className={[
+                  "rounded-2xl px-5 py-3 text-sm font-bold shadow-[0_14px_40px_rgba(15,23,42,0.07)] transition",
+                  action.type === "secondary"
+                    ? "bg-slate-100 text-[var(--erp-text)] hover:bg-slate-200"
+                    : action.type === "danger"
+                      ? "bg-red-600 text-white hover:bg-red-700"
+                      : "bg-[var(--erp-table-head)] text-[var(--erp-table-head-text)] hover:bg-[#007F6D]",
+                ].join(" ")}
+              >
+                {action.label}
+              </Link>
+            ))}
+
+            <Link
               href={createActionHref}
               className="
                 rounded-2xl
@@ -266,7 +292,7 @@ export function ERPRuntimePage({
               "
             >
               {createActionLabel}
-            </a>
+            </Link>
           </div>
         )}
 
