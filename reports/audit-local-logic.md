@@ -1,6 +1,6 @@
 # Audit local logic / ERP generic compliance
 
-Date: 2026-05-25T02:35:29.115Z
+Date: 2026-05-25T02:46:01.545Z
 
 ## Synthèse
 
