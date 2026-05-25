@@ -1741,7 +1741,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 417,
+    "line": 418,
     "key": "module-metadata-key-conditional",
     "severity": "HIGH",
     "match": "module.metadata.key === \"receptionsstockauto\"",
@@ -1751,7 +1751,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 637,
+    "line": 638,
     "key": "module-metadata-key-conditional",
     "severity": "HIGH",
     "match": "module.metadata.key === \"facturesauto\"",
@@ -1761,7 +1761,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 775,
+    "line": 767,
     "key": "module-metadata-key-conditional",
     "severity": "HIGH",
     "match": "module.metadata.key !== \"lignesinterventionauto\"",
@@ -1771,7 +1771,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 880,
+    "line": 872,
     "key": "module-metadata-key-conditional",
     "severity": "HIGH",
     "match": "module.metadata.key === \"lignesinterventionauto\"",
@@ -1781,7 +1781,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 922,
+    "line": 914,
     "key": "module-metadata-key-conditional",
     "severity": "HIGH",
     "match": "module.metadata.key !== \"terrains\"",
@@ -1791,7 +1791,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 950,
+    "line": 942,
     "key": "module-metadata-key-conditional",
     "severity": "HIGH",
     "match": "module.metadata.key !== \"terrains\"",
@@ -1801,7 +1801,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 992,
+    "line": 984,
     "key": "module-metadata-key-conditional",
     "severity": "HIGH",
     "match": "module.metadata.key !== \"contrats\"",
@@ -1811,7 +1811,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 1015,
+    "line": 1007,
     "key": "module-metadata-key-conditional",
     "severity": "HIGH",
     "match": "module.metadata.key !== \"contrats\"",
@@ -1821,7 +1821,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 1101,
+    "line": 1093,
     "key": "module-metadata-key-conditional",
     "severity": "HIGH",
     "match": "module.metadata.key === \"terrains\"",
@@ -1831,7 +1831,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 1108,
+    "line": 1100,
     "key": "module-metadata-key-conditional",
     "severity": "HIGH",
     "match": "module.metadata.key === \"contrats\"",
@@ -1841,7 +1841,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 1189,
+    "line": 1181,
     "key": "module-metadata-key-conditional",
     "severity": "HIGH",
     "match": "module.metadata.key ===\n\"exploitations\"",
@@ -1851,7 +1851,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 1204,
+    "line": 1196,
     "key": "module-metadata-key-conditional",
     "severity": "HIGH",
     "match": "module.metadata.key === \"contrats\"",
@@ -1861,7 +1861,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 1240,
+    "line": 1232,
     "key": "module-metadata-key-conditional",
     "severity": "HIGH",
     "match": "module.metadata.key ===\n\"exploitations\"",
@@ -1871,7 +1871,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 1255,
+    "line": 1247,
     "key": "module-metadata-key-conditional",
     "severity": "HIGH",
     "match": "module.metadata.key === \"contrats\"",
@@ -1881,7 +1881,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 1264,
+    "line": 1256,
     "key": "module-metadata-key-conditional",
     "severity": "HIGH",
     "match": "module.metadata.key === \"lignesinterventionauto\"",
@@ -1891,7 +1891,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 1400,
+    "line": 1392,
     "key": "module-key-conditional",
     "severity": "HIGH",
     "match": "moduleKey === \"receptionsstockauto\"",
@@ -1901,7 +1901,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 1410,
+    "line": 1402,
     "key": "module-key-conditional",
     "severity": "HIGH",
     "match": "moduleKey === \"clientsauto\"",
@@ -1911,7 +1911,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 1419,
+    "line": 1411,
     "key": "module-key-conditional",
     "severity": "HIGH",
     "match": "moduleKey === \"vehicules\"",
@@ -1921,7 +1921,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 1432,
+    "line": 1424,
     "key": "module-key-conditional",
     "severity": "HIGH",
     "match": "moduleKey === \"facturesauto\"",
@@ -1931,7 +1931,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 1444,
+    "line": 1436,
     "key": "module-key-conditional",
     "severity": "HIGH",
     "match": "moduleKey === \"encaissementsauto\"",
@@ -1941,7 +1941,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 1453,
+    "line": 1445,
     "key": "module-key-conditional",
     "severity": "HIGH",
     "match": "moduleKey === \"echeancespaiementauto\"",
@@ -1951,7 +1951,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 231,
+    "line": 232,
     "key": "metadata-key-conditional",
     "severity": "HIGH",
     "match": "metadata.key === \"lignesinterventionauto\"",
@@ -1961,7 +1961,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 236,
+    "line": 237,
     "key": "metadata-key-conditional",
     "severity": "HIGH",
     "match": "metadata.key === \"interventionsauto\"",
@@ -1971,7 +1971,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 417,
+    "line": 418,
     "key": "metadata-key-conditional",
     "severity": "HIGH",
     "match": "metadata.key === \"receptionsstockauto\"",
@@ -1981,7 +1981,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 637,
+    "line": 638,
     "key": "metadata-key-conditional",
     "severity": "HIGH",
     "match": "metadata.key === \"facturesauto\"",
@@ -1991,7 +1991,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 775,
+    "line": 767,
     "key": "metadata-key-conditional",
     "severity": "HIGH",
     "match": "metadata.key !== \"lignesinterventionauto\"",
@@ -2001,7 +2001,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 880,
+    "line": 872,
     "key": "metadata-key-conditional",
     "severity": "HIGH",
     "match": "metadata.key === \"lignesinterventionauto\"",
@@ -2011,7 +2011,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 922,
+    "line": 914,
     "key": "metadata-key-conditional",
     "severity": "HIGH",
     "match": "metadata.key !== \"terrains\"",
@@ -2021,7 +2021,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 950,
+    "line": 942,
     "key": "metadata-key-conditional",
     "severity": "HIGH",
     "match": "metadata.key !== \"terrains\"",
@@ -2031,7 +2031,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 992,
+    "line": 984,
     "key": "metadata-key-conditional",
     "severity": "HIGH",
     "match": "metadata.key !== \"contrats\"",
@@ -2041,7 +2041,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 1015,
+    "line": 1007,
     "key": "metadata-key-conditional",
     "severity": "HIGH",
     "match": "metadata.key !== \"contrats\"",
@@ -2051,7 +2051,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 1101,
+    "line": 1093,
     "key": "metadata-key-conditional",
     "severity": "HIGH",
     "match": "metadata.key === \"terrains\"",
@@ -2061,7 +2061,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 1108,
+    "line": 1100,
     "key": "metadata-key-conditional",
     "severity": "HIGH",
     "match": "metadata.key === \"contrats\"",
@@ -2071,7 +2071,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 1189,
+    "line": 1181,
     "key": "metadata-key-conditional",
     "severity": "HIGH",
     "match": "metadata.key ===\n\"exploitations\"",
@@ -2081,7 +2081,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 1204,
+    "line": 1196,
     "key": "metadata-key-conditional",
     "severity": "HIGH",
     "match": "metadata.key === \"contrats\"",
@@ -2091,7 +2091,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 1240,
+    "line": 1232,
     "key": "metadata-key-conditional",
     "severity": "HIGH",
     "match": "metadata.key ===\n\"exploitations\"",
@@ -2101,7 +2101,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 1255,
+    "line": 1247,
     "key": "metadata-key-conditional",
     "severity": "HIGH",
     "match": "metadata.key === \"contrats\"",
@@ -2111,7 +2111,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 1264,
+    "line": 1256,
     "key": "metadata-key-conditional",
     "severity": "HIGH",
     "match": "metadata.key === \"lignesinterventionauto\"",
@@ -2121,7 +2121,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 207,
+    "line": 208,
     "key": "hardcoded-business-module",
     "severity": "MEDIUM",
     "match": "facturesauto",
@@ -2131,7 +2131,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 215,
+    "line": 216,
     "key": "hardcoded-business-module",
     "severity": "MEDIUM",
     "match": "encaissementsauto",
@@ -2141,7 +2141,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 231,
+    "line": 232,
     "key": "hardcoded-business-module",
     "severity": "MEDIUM",
     "match": "lignesinterventionauto",
@@ -2151,7 +2151,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 236,
+    "line": 237,
     "key": "hardcoded-business-module",
     "severity": "MEDIUM",
     "match": "interventionsauto",
@@ -2161,7 +2161,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 417,
+    "line": 418,
     "key": "hardcoded-business-module",
     "severity": "MEDIUM",
     "match": "receptionsstockauto",
@@ -2171,7 +2171,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 637,
+    "line": 638,
     "key": "hardcoded-business-module",
     "severity": "MEDIUM",
     "match": "facturesauto",
@@ -2181,7 +2181,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 775,
+    "line": 767,
     "key": "hardcoded-business-module",
     "severity": "MEDIUM",
     "match": "lignesinterventionauto",
@@ -2191,7 +2191,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 880,
+    "line": 872,
     "key": "hardcoded-business-module",
     "severity": "MEDIUM",
     "match": "lignesinterventionauto",
@@ -2201,7 +2201,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 1264,
+    "line": 1256,
     "key": "hardcoded-business-module",
     "severity": "MEDIUM",
     "match": "lignesinterventionauto",
@@ -2211,7 +2211,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 1400,
+    "line": 1392,
     "key": "hardcoded-business-module",
     "severity": "MEDIUM",
     "match": "receptionsstockauto",
@@ -2221,7 +2221,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 1410,
+    "line": 1402,
     "key": "hardcoded-business-module",
     "severity": "MEDIUM",
     "match": "clientsauto",
@@ -2231,7 +2231,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 1419,
+    "line": 1411,
     "key": "hardcoded-business-module",
     "severity": "MEDIUM",
     "match": "vehicules",
@@ -2241,7 +2241,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 1432,
+    "line": 1424,
     "key": "hardcoded-business-module",
     "severity": "MEDIUM",
     "match": "facturesauto",
@@ -2251,7 +2251,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 1444,
+    "line": 1436,
     "key": "hardcoded-business-module",
     "severity": "MEDIUM",
     "match": "encaissementsauto",
@@ -2261,7 +2261,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 1517,
+    "line": 1509,
     "key": "hardcoded-business-module",
     "severity": "MEDIUM",
     "match": "clientsauto",
@@ -2271,7 +2271,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 1518,
+    "line": 1510,
     "key": "hardcoded-business-module",
     "severity": "MEDIUM",
     "match": "vehicules",
@@ -2281,7 +2281,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 1519,
+    "line": 1511,
     "key": "hardcoded-business-module",
     "severity": "MEDIUM",
     "match": "facturesauto",
@@ -2291,7 +2291,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 1520,
+    "line": 1512,
     "key": "hardcoded-business-module",
     "severity": "MEDIUM",
     "match": "encaissementsauto",
@@ -2301,7 +2301,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 1522,
+    "line": 1514,
     "key": "hardcoded-business-module",
     "severity": "MEDIUM",
     "match": "lignesinterventionauto",
@@ -2311,7 +2311,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 1523,
+    "line": 1515,
     "key": "hardcoded-business-module",
     "severity": "MEDIUM",
     "match": "receptionsstockauto",
@@ -2321,7 +2321,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 1392,
+    "line": 1384,
     "key": "business-status-action-local",
     "severity": "HIGH",
     "match": "getBusinessStatusAction",
@@ -2331,7 +2331,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 1465,
+    "line": 1457,
     "key": "business-status-action-local",
     "severity": "HIGH",
     "match": "handleBusinessStatusAction",
@@ -2341,7 +2341,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 1466,
+    "line": 1458,
     "key": "business-status-action-local",
     "severity": "HIGH",
     "match": "getBusinessStatusAction",
@@ -2351,7 +2351,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 1513,
+    "line": 1505,
     "key": "business-status-action-local",
     "severity": "HIGH",
     "match": "businessStatusAction",
@@ -2361,7 +2361,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 1513,
+    "line": 1505,
     "key": "business-status-action-local",
     "severity": "HIGH",
     "match": "getBusinessStatusAction",
@@ -2371,7 +2371,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 1871,
+    "line": 1863,
     "key": "business-status-action-local",
     "severity": "HIGH",
     "match": "businessStatusAction",
@@ -2381,7 +2381,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 1907,
+    "line": 1899,
     "key": "business-status-action-local",
     "severity": "HIGH",
     "match": "businessStatusAction",
@@ -2391,7 +2391,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 1940,
+    "line": 1932,
     "key": "business-status-action-local",
     "severity": "HIGH",
     "match": "handleBusinessStatusAction",
@@ -2401,7 +2401,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 1949,
+    "line": 1941,
     "key": "business-status-action-local",
     "severity": "HIGH",
     "match": "businessStatusAction",
@@ -2411,7 +2411,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 147,
+    "line": 148,
     "key": "manual-amount-calculation",
     "severity": "INFO",
     "match": "montantTTC",
@@ -2421,7 +2421,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 148,
+    "line": 149,
     "key": "manual-amount-calculation",
     "severity": "INFO",
     "match": "montantTTC",
@@ -2431,21 +2431,11 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 160,
+    "line": 161,
     "key": "manual-amount-calculation",
     "severity": "INFO",
     "match": "montantTTC",
     "code": "montantTTC - montantPaye,",
-    "message": "Calcul financier ou champ montant détecté.",
-    "action": "Vérifier si le calcul passe par RuntimeComputedFieldsEngine."
-  },
-  {
-    "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 314,
-    "key": "manual-amount-calculation",
-    "severity": "INFO",
-    "match": "montantTTC",
-    "code": "const montantTTC =",
     "message": "Calcul financier ou champ montant détecté.",
     "action": "Vérifier si le calcul passe par RuntimeComputedFieldsEngine."
   },
@@ -2455,13 +2445,23 @@
     "key": "manual-amount-calculation",
     "severity": "INFO",
     "match": "montantTTC",
+    "code": "const montantTTC =",
+    "message": "Calcul financier ou champ montant détecté.",
+    "action": "Vérifier si le calcul passe par RuntimeComputedFieldsEngine."
+  },
+  {
+    "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
+    "line": 316,
+    "key": "manual-amount-calculation",
+    "severity": "INFO",
+    "match": "montantTTC",
     "code": "Number(invoice.montantTTC ?? 0);",
     "message": "Calcul financier ou champ montant détecté.",
     "action": "Vérifier si le calcul passe par RuntimeComputedFieldsEngine."
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 327,
+    "line": 328,
     "key": "manual-amount-calculation",
     "severity": "INFO",
     "match": "montantTTC",
@@ -2471,7 +2471,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 332,
+    "line": 333,
     "key": "manual-amount-calculation",
     "severity": "INFO",
     "match": "montantTTC",
@@ -2481,7 +2481,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 784,
+    "line": 776,
     "key": "manual-amount-calculation",
     "severity": "INFO",
     "match": "prixUnitaireHT",
@@ -2491,7 +2491,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 790,
+    "line": 782,
     "key": "manual-amount-calculation",
     "severity": "INFO",
     "match": "tauxTVA",
@@ -2501,7 +2501,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 792,
+    "line": 784,
     "key": "manual-amount-calculation",
     "severity": "INFO",
     "match": "montantHT",
@@ -2511,7 +2511,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 796,
+    "line": 788,
     "key": "manual-amount-calculation",
     "severity": "INFO",
     "match": "montantHT",
@@ -2521,7 +2521,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 798,
+    "line": 790,
     "key": "manual-amount-calculation",
     "severity": "INFO",
     "match": "montantTTC",
@@ -2531,7 +2531,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 799,
+    "line": 791,
     "key": "manual-amount-calculation",
     "severity": "INFO",
     "match": "montantHT",
@@ -2541,7 +2541,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 805,
+    "line": 797,
     "key": "manual-amount-calculation",
     "severity": "INFO",
     "match": "prixUnitaireHT",
@@ -2551,7 +2551,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 806,
+    "line": 798,
     "key": "manual-amount-calculation",
     "severity": "INFO",
     "match": "tauxTVA",
@@ -2561,7 +2561,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 807,
+    "line": 799,
     "key": "manual-amount-calculation",
     "severity": "INFO",
     "match": "montantHT",
@@ -2571,7 +2571,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 809,
+    "line": 801,
     "key": "manual-amount-calculation",
     "severity": "INFO",
     "match": "montantTTC",
@@ -2581,7 +2581,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 810,
+    "line": 802,
     "key": "manual-amount-calculation",
     "severity": "INFO",
     "match": "montantHT",
@@ -2591,7 +2591,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 884,
+    "line": 876,
     "key": "manual-amount-calculation",
     "severity": "INFO",
     "match": "prixUnitaireHT",
@@ -2601,7 +2601,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 885,
+    "line": 877,
     "key": "manual-amount-calculation",
     "severity": "INFO",
     "match": "tauxTVA",
@@ -2611,7 +2611,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 1626,
+    "line": 1618,
     "key": "manual-amount-calculation",
     "severity": "INFO",
     "match": "montantTTC",
@@ -2621,7 +2621,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 1677,
+    "line": 1669,
     "key": "manual-amount-calculation",
     "severity": "INFO",
     "match": "montantTTC",
@@ -2631,7 +2631,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 1677,
+    "line": 1669,
     "key": "manual-amount-calculation",
     "severity": "INFO",
     "match": "montantTTC",
@@ -2641,7 +2641,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 1688,
+    "line": 1680,
     "key": "manual-amount-calculation",
     "severity": "INFO",
     "match": "montantTTC",
@@ -2651,7 +2651,7 @@
   },
   {
     "file": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx",
-    "line": 1688,
+    "line": 1680,
     "key": "manual-amount-calculation",
     "severity": "INFO",
     "match": "montantTTC",

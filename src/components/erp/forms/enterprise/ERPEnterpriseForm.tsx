@@ -12,6 +12,7 @@ import { ERPModuleBuilder } from "@/runtime/modules";
 import { RuntimeDataBinding } from "@/runtime/data-binding";
 import { RuntimeStatusGovernanceEngine } from "@/runtime/status";
 import { RuntimeComputedFieldsEngine } from "@/runtime/computed";
+import { RuntimeAutoFillEngine } from "@/runtime/autofill";
 import { RuntimeActionEngine } from "@/runtime/actions/RuntimeActionEngine";
 import {
   RuntimeNotificationCenter,
@@ -745,28 +746,19 @@ export function ERPEnterpriseForm({
       return currentValues;
     }
 
-    const nextValues = {
-      ...currentValues,
-    };
-
-    for (const [targetField, sourceFields] of Object.entries(autoFillConfig.map)) {
-      const value =
-        resolveAutoFillValue(
-          record,
-          sourceFields
-        );
-
-      if (
-        value !== undefined &&
-        value !== null
-      ) {
-        nextValues[targetField] = value;
-      }
-    }
+    // Q21D3B2_AUTOFILL_ENGINE
+    // Generic metadata-driven autofill.
+    // The form extracts the relation context; RuntimeAutoFillEngine applies the mapping.
+    const autoFillResult =
+      RuntimeAutoFillEngine.apply({
+        values: currentValues,
+        selectedRecord: record,
+        autoFill: autoFillConfig,
+      });
 
     return autoFillConfig.recalculate
-      ? applyLineItemFormCalculations(nextValues)
-      : nextValues;
+      ? applyLineItemFormCalculations(autoFillResult.values)
+      : autoFillResult.values;
   }
 
   function applyLineItemFormCalculations(
