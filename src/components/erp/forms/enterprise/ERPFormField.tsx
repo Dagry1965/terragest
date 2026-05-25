@@ -8,6 +8,7 @@ import { coreERPModules } from "@/runtime/modules/definitions/coreModules";
 import { ERPRelationDataLoader } from "@/runtime/modules/lifecycle/ERPRelationDataLoader";
 import { RuntimeRelationFilterEngine } from "@/runtime/relations";
 import { RuntimeDataBinding } from "@/runtime/data-binding/RuntimeDataBinding";
+import { RuntimeSchedulingEngine } from "@/runtime/scheduling";
 import {
   useAuth,
 } from "@/providers/AuthProvider";
@@ -396,6 +397,15 @@ export function ERPFormField({
   const [relationSearch, setRelationSearch] = useState("");
   const [lockedRelationLabel, setLockedRelationLabel] = useState("");
   const [relationFilterSourceValue, setRelationFilterSourceValue] = useState("");
+  const [schedulingSlots, setSchedulingSlots] = useState<
+    Array<{
+      start: string;
+      end: string;
+      label: string;
+      available: boolean;
+    }>
+  >([]);
+  const [schedulingSlotsLoading, setSchedulingSlotsLoading] = useState(false);
 
   // Q22D3B_MODULE_CONTEXT_READY
   // ERPFormField can now receive the module context for generic runtime capabilities.
@@ -403,6 +413,22 @@ export function ERPFormField({
   const schedulingConfig = module?.scheduling;
 
   const currentValue = normalizeFormFieldValue(field, value);
+
+  const isSchedulingTimeField =
+    Boolean(
+      schedulingConfig?.enabled &&
+      schedulingConfig.timeField === field.key
+    );
+
+  const schedulingDateValue =
+    schedulingConfig?.dateField
+      ? formValues[schedulingConfig.dateField]
+      : "";
+
+  const schedulingDurationValue =
+    schedulingConfig?.durationField
+      ? formValues[schedulingConfig.durationField]
+      : undefined;
 
   const isLocked =
     lockedFields.includes(field.key);
@@ -544,6 +570,81 @@ export function ERPFormField({
     authUser?.uid,
   ]);
 
+  useEffect(() => {
+    async function loadSchedulingSlots() {
+      // Q22D3C_SCHEDULING_SLOTS_FIELD
+      // Generic ERP scheduling UI: any module declaring scheduling metadata
+      // can expose availability slots on its configured time field.
+      if (
+        !module ||
+        !schedulingConfig?.enabled ||
+        !isSchedulingTimeField ||
+        !schedulingDateValue
+      ) {
+        setSchedulingSlots([]);
+        return;
+      }
+
+      setSchedulingSlotsLoading(true);
+
+      try {
+        const existingRecords =
+          await RuntimeDataBinding.list(module);
+
+        const startField =
+          schedulingConfig.startField ?? "startAt";
+
+        const endField =
+          schedulingConfig.endField ?? "endAt";
+
+        const bookings =
+          Array.isArray(existingRecords)
+            ? existingRecords
+                .map((record) => ({
+                  id: String(record.id ?? record._id ?? ""),
+                  startAt: String(record[startField] ?? ""),
+                  endAt: String(record[endField] ?? ""),
+                  status: schedulingConfig.statusField
+                    ? String(record[schedulingConfig.statusField] ?? "")
+                    : undefined,
+                }))
+                .filter((booking) =>
+                  Boolean(booking.startAt && booking.endAt)
+                )
+            : [];
+
+        const durationMinutes =
+          Number(schedulingDurationValue ?? 0) ||
+          undefined;
+
+        const slots =
+          RuntimeSchedulingEngine.getAvailableSlotsWithBookings({
+            date: String(schedulingDateValue),
+            durationMinutes,
+            bookings,
+          });
+
+        setSchedulingSlots(slots);
+      } catch (error) {
+        console.error(
+          "ERP SCHEDULING SLOTS LOAD ERROR",
+          error
+        );
+        setSchedulingSlots([]);
+      } finally {
+        setSchedulingSlotsLoading(false);
+      }
+    }
+
+    loadSchedulingSlots();
+  }, [
+    module,
+    schedulingConfig,
+    isSchedulingTimeField,
+    schedulingDateValue,
+    schedulingDurationValue,
+  ]);
+
   const label = (
     <span className="text-sm font-bold text-[var(--erp-text)]">
       {field.label}
@@ -556,6 +657,64 @@ export function ERPFormField({
 
   const lockedClassName =
     `${className} cursor-not-allowed bg-slate-100 text-[var(--erp-text-muted)]`;
+
+  if (isSchedulingTimeField) {
+    const hasDate =
+      Boolean(String(schedulingDateValue ?? "").trim());
+
+    return (
+      <FieldWrapper field={field} error={error}>
+        <label className="block space-y-2">
+          {label}
+
+          <select
+            name={field.key}
+            required={field.required}
+            value={currentValue}
+            disabled={isProtected || !hasDate || schedulingSlotsLoading}
+            onChange={(event) => onChange?.(field.key, event.target.value)}
+            className={`${className} ${
+              isProtected || !hasDate
+                ? "cursor-not-allowed bg-slate-100 text-[var(--erp-text-muted)]"
+                : ""
+            }`}
+          >
+            <option value="">
+              {!hasDate
+                ? "Choisir d'abord une date"
+                : schedulingSlotsLoading
+                  ? "Chargement des créneaux..."
+                  : field.placeholder ?? "Sélectionner un créneau"}
+            </option>
+
+            {schedulingSlots.map((slot) => (
+              <option
+                key={slot.start + "-" + slot.end}
+                value={slot.start}
+                disabled={!slot.available}
+              >
+                {slot.available
+                  ? slot.label
+                  : slot.label + " — indisponible"}
+              </option>
+            ))}
+          </select>
+
+          {hasDate && schedulingSlots.length === 0 ? (
+            <p className="rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-xs font-semibold text-amber-800">
+              Aucun créneau disponible pour cette date.
+            </p>
+          ) : null}
+
+          {hasDate && schedulingSlots.length > 0 ? (
+            <p className="text-xs text-[var(--erp-text-muted)]">
+              Créneaux calculés par le moteur ERP Scheduling Runtime.
+            </p>
+          ) : null}
+        </label>
+      </FieldWrapper>
+    );
+  }
 
   if (field.type === "relation") {
     const relationConfig =
