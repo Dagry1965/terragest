@@ -1,3 +1,4 @@
+import { RuntimeRecordMappingEngine } from "../mapping";
 import {
   RuntimeBusinessRule,
 }
@@ -366,8 +367,7 @@ export const runtimeBusinessRules:
       }
 
       const interventionPayload =
-        RuntimeSchedulingEngine
-          .buildInterventionFromRendezvous(
+        buildInterventionFromRendezvousRecord(
             effectiveRendezvous
           );
 
@@ -529,8 +529,7 @@ export const runtimeBusinessRules:
       }
 
       const interventionPayload =
-        RuntimeSchedulingEngine
-          .buildInterventionFromRendezvous(
+        buildInterventionFromRendezvousRecord(
             effectiveRendezvous
           );
 
@@ -1799,3 +1798,22 @@ RuntimeMetrics.increment(
 },
 
 ];
+
+
+function buildInterventionFromRendezvousRecord(
+  rendezvous: Record<string, unknown>
+): Record<string, unknown> {
+  return RuntimeRecordMappingEngine.mapRecord(rendezvous, {
+    clientId: "clientId",
+    vehiculeId: "vehiculeId",
+    rendezVousId: "id",
+    typeIntervention: {
+      from: "typeService",
+      fallback: "autre",
+    },
+    dateIntervention: "dateRendezVous",
+    statut: {
+      value: "planifiee",
+    },
+  });
+}
