@@ -29,6 +29,12 @@ type PublicAppointmentInput = {
   immatriculation: string;
 };
 
+
+type PublicAppointmentResult = {
+  ok: true;
+  message: string;
+};
+
 function buildPublicAppointmentMessage(
   data: PublicAppointmentInput
 ): string {
@@ -56,7 +62,7 @@ function addDays(
 
 export async function createPublicAppointment(
   data: PublicAppointmentInput
-) {
+): Promise<PublicAppointmentResult> {
   const now =
     new Date();
 
@@ -139,5 +145,9 @@ export async function createPublicAppointment(
     }
   );
 
-  return rendezvous;
+  return {
+    ok: true,
+    message:
+      "Votre demande de rendez-vous a bien été enregistrée. Notre équipe vous contactera rapidement.",
+  };
 }
