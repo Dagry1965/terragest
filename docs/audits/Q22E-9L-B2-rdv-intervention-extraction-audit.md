@@ -10,7 +10,7 @@ Le scheduling engine calcule des disponibilités, slots, conflits, buffers et ca
 
 ## Résumé
 
-- Findings : 101
+- Findings : 97
 
 ## Findings
 
@@ -102,11 +102,7 @@ Le scheduling engine calcule des disponibilités, slots, conflits, buffers et ca
 | dateIntervention | `src/runtime/modules/lifecycle/ERPRelationDataLoader.ts` | 817 | `const dateIntervention =` |
 | dateIntervention | `src/runtime/modules/lifecycle/ERPRelationDataLoader.ts` | 818 | `value("dateIntervention");` |
 | dateIntervention | `src/runtime/modules/lifecycle/ERPRelationDataLoader.ts` | 821 | `return compact(typeIntervention, dateIntervention);` |
-| buildInterventionFromRendezvous | `src/runtime/scheduling/RuntimeSchedulingEngine.ts` | 778 | `static buildInterventionFromRendezvous(rendezvous: RuntimeRecord): RuntimeRecord {` |
 | consumedByInterventionId | `src/runtime/scheduling/RuntimeSchedulingEngine.ts` | 746 | `if (asString(rendezvous.consumedByInterventionId)) {` |
-| typeIntervention | `src/runtime/scheduling/RuntimeSchedulingEngine.ts` | 791 | `typeIntervention: rendezvous.typeService \|\| "autre",` |
-| rendezVousId | `src/runtime/scheduling/RuntimeSchedulingEngine.ts` | 790 | `rendezVousId: rendezvous.id,` |
-| dateIntervention | `src/runtime/scheduling/RuntimeSchedulingEngine.ts` | 792 | `dateIntervention: rendezvous.dateRendezVous,` |
 | typeIntervention | `src/components/erp/billing/InvoiceDocumentActions.tsx` | 266 | `value(intervention, "typeIntervention"),` |
 | dateIntervention | `src/components/erp/billing/InvoiceDocumentActions.tsx` | 267 | `value(intervention, "dateIntervention"),` |
 | typeIntervention | `src/components/erp/context/ERPContextBanner.tsx` | 189 | `"typeIntervention",` |

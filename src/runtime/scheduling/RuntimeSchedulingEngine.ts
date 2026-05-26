@@ -775,22 +775,4 @@ export class RuntimeSchedulingEngine {
     return { ok: true };
   }
 
-  static buildInterventionFromRendezvous(rendezvous: RuntimeRecord): RuntimeRecord {
-    const validation = RuntimeSchedulingEngine.assertRendezvousCanCreateIntervention(
-      rendezvous
-    );
-
-    if (!validation.ok) {
-      throw new Error(validation.reason || "Rendez-vous invalide.");
-    }
-
-    return {
-      clientId: rendezvous.clientId,
-      vehiculeId: rendezvous.vehiculeId,
-      rendezVousId: rendezvous.id,
-      typeIntervention: rendezvous.typeService || "autre",
-      dateIntervention: rendezvous.dateRendezVous,
-      statut: "ouverte",
-    };
-  }
 }
