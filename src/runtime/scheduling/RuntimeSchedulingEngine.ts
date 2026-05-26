@@ -246,8 +246,18 @@ function buildLocalDateTime(dateOnly: string, timeOnly: string): Date | null {
   return date;
 }
 
-function isCancelledAppointment(record: RuntimeRecord): boolean {
-  return asString(record.statut).toLowerCase() === "annule";
+const DEFAULT_NON_BLOCKING_SCHEDULING_STATUSES = [
+  "annule",
+  "annulee",
+  "annulé",
+  "annulée",
+  "cancelled",
+  "canceled",
+];
+
+function isNonBlockingSchedulingRecord(record: RuntimeRecord): boolean {
+  const status = asString(record.statut).toLowerCase();
+  return DEFAULT_NON_BLOCKING_SCHEDULING_STATUSES.includes(status);
 }
 
 function sameVehicle(
@@ -667,7 +677,7 @@ export class RuntimeSchedulingEngine {
     record: RuntimeRecord,
     options: AppointmentConflictOptions = {}
   ): SchedulingValidationResult {
-    if (isCancelledAppointment(record)) {
+    if (isNonBlockingSchedulingRecord(record)) {
       return { ok: true };
     }
 
@@ -684,7 +694,7 @@ export class RuntimeSchedulingEngine {
     const ignoredId = options.ignoreAppointmentId || currentId;
 
     const conflictingAppointment = (options.existingAppointments || []).find((existing) => {
-      if (!existing || isCancelledAppointment(existing)) return false;
+      if (!existing || isNonBlockingSchedulingRecord(existing)) return false;
 
       const existingId = asString(existing.id);
 
@@ -720,55 +730,6 @@ export class RuntimeSchedulingEngine {
         ok: false,
         reason:
           "Conflit de planning : ce véhicule possède déjà un rendez-vous sur ce créneau.",
-      };
-    }
-
-    return { ok: true };
-  }
-
-  static assertRendezvousCanCreateIntervention(
-    rendezvous: RuntimeRecord
-  ): SchedulingValidationResult {
-    if (!rendezvous) {
-      return {
-        ok: false,
-        reason: "Rendez-vous introuvable.",
-      };
-    }
-
-    if (isCancelledAppointment(rendezvous)) {
-      return {
-        ok: false,
-        reason: "Impossible de créer une intervention depuis un rendez-vous annulé.",
-      };
-    }
-
-    if (asString(rendezvous.consumedByInterventionId)) {
-      return {
-        ok: false,
-        reason:
-          "Impossible de créer une intervention : ce rendez-vous a déjà été consommé.",
-      };
-    }
-
-    if (!asString(rendezvous.clientId)) {
-      return {
-        ok: false,
-        reason: "Impossible de créer une intervention : clientId manquant.",
-      };
-    }
-
-    if (!asString(rendezvous.vehiculeId)) {
-      return {
-        ok: false,
-        reason: "Impossible de créer une intervention : vehiculeId manquant.",
-      };
-    }
-
-    if (!asString(rendezvous.id)) {
-      return {
-        ok: false,
-        reason: "Impossible de créer une intervention : identifiant rendez-vous manquant.",
       };
     }
 

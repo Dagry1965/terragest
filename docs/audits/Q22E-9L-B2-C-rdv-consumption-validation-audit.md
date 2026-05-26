@@ -10,35 +10,30 @@ Le scheduling engine calcule les slots, disponibilités, conflits, buffers et ca
 
 ## Résumé
 
-- Findings : 17
-- HIGH : 10
-- REVIEW : 4
+- Findings : 13
+- HIGH : 0
+- REVIEW : 10
 - INFO : 3
 
 ## Findings HIGH — à sortir du scheduling engine
 
-| Sévérité | Couche | Cible | Fichier | Ligne | Extrait | Décision |
-|---|---|---|---|---:|---|---|
-| HIGH | Engine violation | consumedByInterventionId | `src/runtime/scheduling/RuntimeSchedulingEngine.ts` | 746 | `if (asString(rendezvous.consumedByInterventionId)) {` | À sortir du scheduling engine : validation métier RDV/intervention. |
-| HIGH | Engine violation | isCancelledAppointment | `src/runtime/scheduling/RuntimeSchedulingEngine.ts` | 249 | `function isCancelledAppointment(record: RuntimeRecord): boolean {` | À sortir du scheduling engine : validation métier RDV/intervention. |
-| HIGH | Engine violation | isCancelledAppointment | `src/runtime/scheduling/RuntimeSchedulingEngine.ts` | 670 | `if (isCancelledAppointment(record)) {` | À sortir du scheduling engine : validation métier RDV/intervention. |
-| HIGH | Engine violation | isCancelledAppointment | `src/runtime/scheduling/RuntimeSchedulingEngine.ts` | 687 | `if (!existing \|\| isCancelledAppointment(existing)) return false;` | À sortir du scheduling engine : validation métier RDV/intervention. |
-| HIGH | Engine violation | isCancelledAppointment | `src/runtime/scheduling/RuntimeSchedulingEngine.ts` | 739 | `if (isCancelledAppointment(rendezvous)) {` | À sortir du scheduling engine : validation métier RDV/intervention. |
-| HIGH | Engine violation | Impossible de créer une intervention | `src/runtime/scheduling/RuntimeSchedulingEngine.ts` | 742 | `reason: "Impossible de créer une intervention depuis un rendez-vous annulé.",` | À sortir du scheduling engine : validation métier RDV/intervention. |
-| HIGH | Engine violation | Impossible de créer une intervention | `src/runtime/scheduling/RuntimeSchedulingEngine.ts` | 750 | `"Impossible de créer une intervention : ce rendez-vous a déjà été consommé.",` | À sortir du scheduling engine : validation métier RDV/intervention. |
-| HIGH | Engine violation | Impossible de créer une intervention | `src/runtime/scheduling/RuntimeSchedulingEngine.ts` | 757 | `reason: "Impossible de créer une intervention : clientId manquant.",` | À sortir du scheduling engine : validation métier RDV/intervention. |
-| HIGH | Engine violation | Impossible de créer une intervention | `src/runtime/scheduling/RuntimeSchedulingEngine.ts` | 764 | `reason: "Impossible de créer une intervention : vehiculeId manquant.",` | À sortir du scheduling engine : validation métier RDV/intervention. |
-| HIGH | Engine violation | Impossible de créer une intervention | `src/runtime/scheduling/RuntimeSchedulingEngine.ts` | 771 | `reason: "Impossible de créer une intervention : identifiant rendez-vous manquant.",` | À sortir du scheduling engine : validation métier RDV/intervention. |
+_Aucun finding._
 
 
 ## Findings REVIEW — à classer
 
 | Sévérité | Couche | Cible | Fichier | Ligne | Extrait | Décision |
 |---|---|---|---|---:|---|---|
-| REVIEW | BusinessRule | consumedByInterventionId | `src/runtime/business-rules/runtimeBusinessRules.ts` | 343 | `if (effectiveRendezvous.consumedByInterventionId) {` | Acceptable provisoirement si la validation métier est portée par business rule. |
-| REVIEW | BusinessRule | consumedByInterventionId | `src/runtime/business-rules/runtimeBusinessRules.ts` | 413 | `consumedByInterventionId:` | Acceptable provisoirement si la validation métier est portée par business rule. |
-| REVIEW | BusinessRule | consumedByInterventionId | `src/runtime/business-rules/runtimeBusinessRules.ts` | 505 | `if (effectiveRendezvous.consumedByInterventionId) {` | Acceptable provisoirement si la validation métier est portée par business rule. |
-| REVIEW | BusinessRule | consumedByInterventionId | `src/runtime/business-rules/runtimeBusinessRules.ts` | 575 | `consumedByInterventionId:` | Acceptable provisoirement si la validation métier est portée par business rule. |
+| REVIEW | BusinessRule | consumedByInterventionId | `src/runtime/business-rules/runtimeBusinessRules.ts` | 342 | `if (effectiveRendezvous.consumedByInterventionId) {` | Acceptable provisoirement si la validation métier est portée par business rule. |
+| REVIEW | BusinessRule | consumedByInterventionId | `src/runtime/business-rules/runtimeBusinessRules.ts` | 412 | `consumedByInterventionId:` | Acceptable provisoirement si la validation métier est portée par business rule. |
+| REVIEW | BusinessRule | consumedByInterventionId | `src/runtime/business-rules/runtimeBusinessRules.ts` | 503 | `if (effectiveRendezvous.consumedByInterventionId) {` | Acceptable provisoirement si la validation métier est portée par business rule. |
+| REVIEW | BusinessRule | consumedByInterventionId | `src/runtime/business-rules/runtimeBusinessRules.ts` | 573 | `consumedByInterventionId:` | Acceptable provisoirement si la validation métier est portée par business rule. |
+| REVIEW | BusinessRule | consumedByInterventionId | `src/runtime/business-rules/runtimeBusinessRules.ts` | 1824 | `if (businessRuleAsString(rendezvous.consumedByInterventionId)) {` | Acceptable provisoirement si la validation métier est portée par business rule. |
+| REVIEW | BusinessRule | Impossible de créer une intervention | `src/runtime/business-rules/runtimeBusinessRules.ts` | 1820 | `reason: "Impossible de créer une intervention depuis un rendez-vous annulé.",` | Acceptable provisoirement si la validation métier est portée par business rule. |
+| REVIEW | BusinessRule | Impossible de créer une intervention | `src/runtime/business-rules/runtimeBusinessRules.ts` | 1827 | `reason: "Impossible de créer une intervention : ce rendez-vous a déjà été consommé.",` | Acceptable provisoirement si la validation métier est portée par business rule. |
+| REVIEW | BusinessRule | Impossible de créer une intervention | `src/runtime/business-rules/runtimeBusinessRules.ts` | 1834 | `reason: "Impossible de créer une intervention : clientId manquant.",` | Acceptable provisoirement si la validation métier est portée par business rule. |
+| REVIEW | BusinessRule | Impossible de créer une intervention | `src/runtime/business-rules/runtimeBusinessRules.ts` | 1841 | `reason: "Impossible de créer une intervention : vehiculeId manquant.",` | Acceptable provisoirement si la validation métier est portée par business rule. |
+| REVIEW | BusinessRule | Impossible de créer une intervention | `src/runtime/business-rules/runtimeBusinessRules.ts` | 1848 | `reason: "Impossible de créer une intervention : identifiant rendez-vous manquant.",` | Acceptable provisoirement si la validation métier est portée par business rule. |
 
 
 ## Findings INFO — probablement metadata/UI

@@ -334,8 +334,7 @@ export const runtimeBusinessRules:
       };
 
       const validation =
-        RuntimeSchedulingEngine
-          .assertRendezvousCanCreateIntervention(
+        assertRendezvousCanCreateInterventionRecord(
             effectiveRendezvous
           );
 
@@ -496,8 +495,7 @@ export const runtimeBusinessRules:
       };
 
       const validation =
-        RuntimeSchedulingEngine
-          .assertRendezvousCanCreateIntervention(
+        assertRendezvousCanCreateInterventionRecord(
             effectiveRendezvous
           );
 
@@ -1799,6 +1797,60 @@ RuntimeMetrics.increment(
 
 ];
 
+
+
+function businessRuleAsString(value: unknown): string {
+  if (value === undefined || value === null) return "";
+  return String(value).trim();
+}
+
+function assertRendezvousCanCreateInterventionRecord(
+  rendezvous: Record<string, unknown> | null | undefined
+): { ok: boolean; reason?: string } {
+  if (!rendezvous) {
+    return {
+      ok: false,
+      reason: "Rendez-vous introuvable.",
+    };
+  }
+
+  if (businessRuleAsString(rendezvous.statut).toLowerCase() === "annule") {
+    return {
+      ok: false,
+      reason: "Impossible de créer une intervention depuis un rendez-vous annulé.",
+    };
+  }
+
+  if (businessRuleAsString(rendezvous.consumedByInterventionId)) {
+    return {
+      ok: false,
+      reason: "Impossible de créer une intervention : ce rendez-vous a déjà été consommé.",
+    };
+  }
+
+  if (!businessRuleAsString(rendezvous.clientId)) {
+    return {
+      ok: false,
+      reason: "Impossible de créer une intervention : clientId manquant.",
+    };
+  }
+
+  if (!businessRuleAsString(rendezvous.vehiculeId)) {
+    return {
+      ok: false,
+      reason: "Impossible de créer une intervention : vehiculeId manquant.",
+    };
+  }
+
+  if (!businessRuleAsString(rendezvous.id)) {
+    return {
+      ok: false,
+      reason: "Impossible de créer une intervention : identifiant rendez-vous manquant.",
+    };
+  }
+
+  return { ok: true };
+}
 
 function buildInterventionFromRendezvousRecord(
   rendezvous: Record<string, unknown>
