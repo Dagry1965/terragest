@@ -27,6 +27,9 @@ type PublicAppointmentInput = {
   telephone: string;
   vehicule: string;
   immatriculation: string;
+  dateSouhaitee?: string;
+  heureSouhaitee?: string;
+  durationMinutes?: number;
 };
 
 
@@ -60,11 +63,54 @@ function addDays(
   return next;
 }
 
+function normalizePublicAppointmentDate(value: unknown): string {
+  if (typeof value !== "string") {
+    return new Date().toISOString().slice(0, 10);
+  }
+
+  const trimmed = value.trim();
+
+  return /^\d{4}-\d{2}-\d{2}$/.test(trimmed)
+    ? trimmed
+    : new Date().toISOString().slice(0, 10);
+}
+
+function normalizePublicAppointmentTime(value: unknown): string {
+  if (typeof value !== "string") {
+    return "";
+  }
+
+  const trimmed = value.trim();
+
+  return /^\d{2}:\d{2}$/.test(trimmed)
+    ? trimmed
+    : "";
+}
+
+function normalizePublicAppointmentDuration(value: unknown): number {
+  const parsed = Number(value);
+
+  if (!Number.isFinite(parsed)) {
+    return 60;
+  }
+
+  return Math.max(1, Math.min(Math.trunc(parsed), 480));
+}
+
 export async function createPublicAppointment(
   data: PublicAppointmentInput
 ): Promise<PublicAppointmentResult> {
   const now =
     new Date();
+
+  const dateRendezVous =
+    normalizePublicAppointmentDate(data.dateSouhaitee);
+
+  const heureRendezVous =
+    normalizePublicAppointmentTime(data.heureSouhaitee);
+
+  const durationMinutes =
+    normalizePublicAppointmentDuration(data.durationMinutes);
 
   const client =
     await RuntimeDataBinding.create(
@@ -96,8 +142,9 @@ export async function createPublicAppointment(
         clientId: client.id,
         vehiculeId: vehicule.id,
         statut: "planifie",
-        dateRendezVous: now,
-        heureRendezVous: "",
+        dateRendezVous,
+        heureRendezVous,
+        durationMinutes,
         typeService: "autre",
         motif: "Demande de rendez-vous depuis le site public",
         commentaire: buildPublicAppointmentMessage(data),

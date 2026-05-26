@@ -277,6 +277,9 @@ export function AmarkhysPublicAppointmentLanding() {
     if (!form.telephone.trim()) return "Indiquez votre numéro de téléphone.";
     if (!form.vehicule.trim()) return "Indiquez votre véhicule.";
     if (!form.immatriculation.trim()) return "Indiquez l’immatriculation.";
+    if (!form.dateSouhaitee.trim() || !form.heureSouhaitee.trim()) {
+      return "Choisissez un créneau disponible.";
+    }
     return "";
   }
 
@@ -297,6 +300,18 @@ export function AmarkhysPublicAppointmentLanding() {
         telephone: form.telephone,
         vehicule: form.vehicule,
         immatriculation: form.immatriculation,
+      dateSouhaitee: form.dateSouhaitee,
+        heureSouhaitee: form.heureSouhaitee,
+        durationMinutes: selectedSlot
+          ? Math.max(
+              1,
+              Math.round(
+                (new Date(selectedSlot.date + "T" + selectedSlot.endTime + ":00").getTime() -
+                  new Date(selectedSlot.date + "T" + selectedSlot.startTime + ":00").getTime()) /
+                  60000
+              )
+            )
+          : 60,
       });
 
       setSuccess(true);
