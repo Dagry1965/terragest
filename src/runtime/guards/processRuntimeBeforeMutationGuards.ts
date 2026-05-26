@@ -25,6 +25,9 @@ import {
 export interface RuntimeBeforeMutationGuardContext {
   operation: "create" | "update";
   id?: string;
+  tenantId?: string;
+  workspaceId?: string;
+  moduleKey?: string;
   systemMutation?: boolean;
   mutationSource?: string;
 }

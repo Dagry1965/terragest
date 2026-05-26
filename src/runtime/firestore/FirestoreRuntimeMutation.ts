@@ -257,6 +257,29 @@ export interface RuntimeMutationOptions {
   mutationSource?: string;
 }
 
+
+function asString(value: unknown): string {
+  return typeof value === "string" ? value.trim() : "";
+}
+
+function asRuntimeTenantId(record: Record<string, unknown>): string | undefined {
+  const tenantId =
+    asString(record.tenantId) ||
+    asString(record.tenant) ||
+    asString(record.runtimeTenantId);
+
+  return tenantId || undefined;
+}
+
+function asRuntimeWorkspaceId(record: Record<string, unknown>): string | undefined {
+  const workspaceId =
+    asString(record.workspaceId) ||
+    asString(record.workspace) ||
+    asString(record.runtimeWorkspaceId);
+
+  return workspaceId || undefined;
+}
+
 export class FirestoreRuntimeMutation {
   static async create(
     module: ERPModule,
