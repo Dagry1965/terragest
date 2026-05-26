@@ -1,4 +1,32 @@
-import {
+/* eslint-disable no-console */
+const fs = require("fs");
+const path = require("path");
+
+const ROOT = process.cwd();
+
+const repositoryPath = path.join(
+  ROOT,
+  "src",
+  "runtime",
+  "scheduling",
+  "settings",
+  "RuntimeSchedulingSettingsRepository.ts"
+);
+
+function fail(message) {
+  console.error(`[FAIL] ${message}`);
+  process.exit(1);
+}
+
+function ok(message) {
+  console.log(`[OK] ${message}`);
+}
+
+if (!fs.existsSync(repositoryPath)) {
+  fail("RuntimeSchedulingSettingsRepository.ts introuvable");
+}
+
+const content = `import {
   collection,
   doc,
   getDoc,
@@ -11,7 +39,7 @@ import { runtimeFirestore } from "@/runtime/firebase/runtime-firestore";
 
 import type {
   RuntimeSchedulingSettings,
-  RuntimeSchedulingSettingsStorageScope,
+  RuntimeSchedulingSettingsScope,
   RuntimeStoredSchedulingSettings,
 } from "./RuntimeSchedulingSettingsTypes";
 
@@ -31,7 +59,7 @@ export interface RuntimeSchedulingStoredSettingsBundle {
 
 export interface RuntimeSchedulingSettingsSaveInput {
   context: RuntimeSchedulingSettingsRepositoryContext;
-  scope: RuntimeSchedulingSettingsStorageScope;
+  scope: RuntimeSchedulingSettingsScope;
   settings: RuntimeSchedulingSettings;
 }
 
@@ -225,3 +253,15 @@ export class RuntimeSchedulingSettingsRepository {
     };
   }
 }
+`;
+
+fs.writeFileSync(repositoryPath, content, "utf8");
+
+ok("RuntimeSchedulingSettingsRepository.ts corrigé avec helpers typés requireTenantId/workspaceId/moduleKey");
+
+console.log("");
+console.log("[Q22E9D2_FIX_DONE] Repository scheduling settings corrigé.");
+console.log("");
+console.log("Next:");
+console.log("  pnpm build");
+console.log("  git status --short");

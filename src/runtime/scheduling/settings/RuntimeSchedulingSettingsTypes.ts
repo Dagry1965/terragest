@@ -1,3 +1,10 @@
+export interface RuntimeSchedulingSettingsScope {
+  tenantId?: string;
+  workspaceId?: string;
+  moduleKey?: string;
+}
+
+
 import type {
   RuntimeCalendarException,
   RuntimeOpeningHoursProfile,
@@ -15,12 +22,6 @@ export type RuntimeSchedulingSettingsCriticity =
   | "high"
   | "medium"
   | "low";
-
-export interface RuntimeSchedulingSettingsScope {
-  tenantId?: string;
-  workspaceKey?: string;
-  moduleKey: string;
-}
 
 export interface RuntimeSchedulingOpeningPeriodSettings {
   start: string;
@@ -186,7 +187,7 @@ export interface RuntimeSchedulingSettingsValidationResult {
 }
 
 export interface RuntimeStoredSchedulingSettings {
-  scope: RuntimeSchedulingSettingsScope;
+  scope: RuntimeSchedulingSettingsStorageScope;
   tenantId: string;
   workspaceId?: string;
   moduleKey?: string;
@@ -194,3 +195,5 @@ export interface RuntimeStoredSchedulingSettings {
   updatedAt?: unknown;
   updatedBy?: string;
 }
+
+export type RuntimeSchedulingSettingsStorageScope = "tenant" | "workspace" | "module";
