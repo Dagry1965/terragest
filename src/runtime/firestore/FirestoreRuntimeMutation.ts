@@ -310,6 +310,9 @@ export class FirestoreRuntimeMutation {
         computedData,
         {
           operation: "create",
+          tenantId: asRuntimeTenantId(computedData),
+          workspaceId: asRuntimeWorkspaceId(computedData),
+          moduleKey: module.metadata.key,
           systemMutation: options.systemMutation,
           mutationSource: options.mutationSource,
         }
@@ -395,6 +398,9 @@ const isolatedData =
         {
           operation: "update",
           id,
+          tenantId: asRuntimeTenantId(computedData),
+          workspaceId: asRuntimeWorkspaceId(computedData),
+          moduleKey: module.metadata.key,
           systemMutation: options.systemMutation,
           mutationSource: options.mutationSource,
         }
