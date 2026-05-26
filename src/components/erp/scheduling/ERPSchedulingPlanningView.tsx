@@ -105,16 +105,6 @@ function buildPlanningCreateHref(params: {
     );
   }
 
-  if (schedulingConfig.durationField) {
-    const durationMinutes =
-      getVisibleSchedulingDurationMinutes(schedulingConfig);
-
-    searchParams.set(
-      schedulingConfig.durationField,
-      String(durationMinutes)
-    );
-  }
-
   return `${getCreateHref(module)}?${searchParams.toString()}`;
 }
 
@@ -354,37 +344,6 @@ function addDays(dateOnly: string, amount: number) {
   return formatLocalDateOnly(date);
 }
 
-function getVisibleSchedulingDurationMinutes(
-  schedulingConfig: NonNullable<ERPModule["scheduling"]>
-) {
-  // Q22E8A_VISIBLE_DURATION_SEPARATE_FROM_BUFFER
-  // The visible appointment duration must stay independent from bufferMinutes.
-  // bufferMinutes protects availability but must not stretch labels like 08:00-09:15.
-  const configWithDuration =
-    schedulingConfig as {
-      defaultDurationMinutes?: number;
-      slotDurationMinutes?: number;
-      durationMinutes?: number;
-    };
-
-  const candidates = [
-    configWithDuration.defaultDurationMinutes,
-    configWithDuration.slotDurationMinutes,
-    configWithDuration.durationMinutes,
-    RuntimeSchedulingEngine.defaultDurationMinutes,
-  ];
-
-  for (const candidate of candidates) {
-    const value = Number(candidate);
-
-    if (Number.isFinite(value) && value > 0) {
-      return value;
-    }
-  }
-
-  return 60;
-}
-
 function buildPlanningDateTime(dateOnly: string, timeOnly: string) {
   return new Date(`${dateOnly}T${timeOnly}:00`);
 }
@@ -594,16 +553,10 @@ const [records, setRecords] =
         .filter((booking) =>
           Boolean(booking.startAt && booking.endAt)
         );
-
-    const visibleDurationMinutes =
-      getVisibleSchedulingDurationMinutes(schedulingConfig);
-
-    const slots =
+const slots =
       RuntimeSchedulingEngine.getAvailableSlotsWithBookings({
         date: selectedDate,
-        durationMinutes: visibleDurationMinutes,
         bookings,
-        bufferMinutes: schedulingConfig.bufferMinutes,
         calendarExceptions: schedulingConfig.calendarExceptions,
         capacity: schedulingConfig.capacity,
       });
