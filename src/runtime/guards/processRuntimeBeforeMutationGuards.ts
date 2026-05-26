@@ -17,6 +17,7 @@ import {
   type RuntimeRecord,
 } from "@/runtime/scheduling/RuntimeSchedulingEngine";
 import { RuntimeSchedulingSettingsResolver } from "@/runtime/scheduling/settings";
+import { SchedulingSlotPolicyResolver } from "@/runtime/scheduling";
 
 import {
   guardRuntimeChronologyMutation,
@@ -340,6 +341,15 @@ async function guardRendezvousMutation(
   const schedulingConfig =
     await getSchedulingConfig(module, context);
 
+  const slotPolicy = SchedulingSlotPolicyResolver.resolve({
+    durationMinutes:
+      typeof mergedRecord.durationMinutes === "number"
+        ? mergedRecord.durationMinutes
+        : Number(mergedRecord.durationMinutes ?? 0) || undefined,
+    bufferMinutes: schedulingConfig?.bufferMinutes,
+    capacity: schedulingConfig?.capacity,
+  });
+
   const openingHoursValidation =
     RuntimeSchedulingEngine.assertWithinOpeningHours({
       // Q22C_OPENING_HOURS_GUARD
@@ -374,11 +384,7 @@ async function guardRendezvousMutation(
       normalizedRecord
     );
 
-  const capacity =
-    Math.max(
-      1,
-      Number(schedulingConfig?.capacity ?? 1) || 1
-    );
+  const capacity = slotPolicy.capacity;
 
   if (capacity <= 1) {
     const conflict =
@@ -458,16 +464,12 @@ async function guardRendezvousMutation(
     const slots =
       RuntimeSchedulingEngine.getAvailableSlotsWithBookings({
         date: asString(mergedRecord.dateRendezVous),
-        durationMinutes:
-          typeof normalizedRecord.durationMinutes === "number"
-            ? normalizedRecord.durationMinutes
-            : Number(normalizedRecord.durationMinutes ?? 0) || undefined,
+        durationMinutes: slotPolicy.visibleDurationMinutes,
         bookings,
         ignoreBookingId:
           context.id ??
           asString(normalizedRecord.id),
-        bufferMinutes:
-          schedulingConfig?.bufferMinutes,
+        bufferMinutes: slotPolicy.bufferMinutes,
         calendarExceptions:
           schedulingConfig?.calendarExceptions,
         capacity,
