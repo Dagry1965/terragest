@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
   ArrowRight,
@@ -23,6 +23,26 @@ import {
 } from "lucide-react";
 
 import { createPublicAppointment } from "@/components/public/PublicAppointmentService";
+
+import {
+  getPublicSchedulingAvailabilityAction,
+} from "@/runtime/scheduling/public";
+
+type PublicRuntimeSlot = {
+  date: string;
+  startTime: string;
+  endTime: string;
+  label: string;
+  available: boolean;
+  remainingCapacity?: number;
+  reason?: string;
+};
+
+type PublicRuntimeDay = {
+  date: string;
+  label: string;
+  slots: PublicRuntimeSlot[];
+};
 
 type AppointmentForm = {
   nom: string;
@@ -178,6 +198,10 @@ export function AmarkhysPublicAppointmentLanding() {
   const [saving, setSaving] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
+  const [availabilityDays, setAvailabilityDays] = useState<PublicRuntimeDay[]>([]);
+  const [loadingAvailability, setLoadingAvailability] = useState(true);
+  const [availabilityError, setAvailabilityError] = useState("");
+  const [selectedSlot, setSelectedSlot] = useState<PublicRuntimeSlot | null>(null);
 
   function updateField(key: keyof AppointmentForm, value: string) {
     setForm((current) => ({
@@ -188,7 +212,65 @@ export function AmarkhysPublicAppointmentLanding() {
     if (error) {
       setError("");
     }
+  }  useEffect(() => {
+    let cancelled = false;
+
+    async function loadAvailability() {
+      setLoadingAvailability(true);
+      setAvailabilityError("");
+
+      try {
+        const result = await getPublicSchedulingAvailabilityAction({
+          moduleKey: "rendezvous",
+          days: 7,
+        });
+
+        if (cancelled) {
+          return;
+        }
+
+        setAvailabilityDays(result.days);
+      } catch (loadError) {
+        console.error("PUBLIC_SCHEDULING_AVAILABILITY_ERROR", loadError);
+
+        if (!cancelled) {
+          setAvailabilityError(
+            "Impossible de charger les disponibilités pour le moment."
+          );
+        }
+      } finally {
+        if (!cancelled) {
+          setLoadingAvailability(false);
+        }
+      }
+    }
+
+    loadAvailability();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const availableSlots = useMemo(
+    () =>
+      availabilityDays.flatMap((day) =>
+        day.slots.filter((slot) => slot.available)
+      ),
+    [availabilityDays]
+  );
+
+  function selectRuntimeSlot(slot: PublicRuntimeSlot) {
+    if (!slot.available) {
+      return;
+    }
+
+    setSelectedSlot(slot);
+    updateField("dateSouhaitee", slot.date);
+    updateField("heureSouhaitee", slot.startTime);
   }
+
+
 
   function validateForm() {
     if (!form.nom.trim()) return "Indiquez votre nom.";
@@ -227,17 +309,7 @@ export function AmarkhysPublicAppointmentLanding() {
     } finally {
       setSaving(false);
     }
-  }
-
-  const days = [
-    { label: "LUN", date: "27 MAI", active: false, dots: 2 },
-    { label: "MAR", date: "28 MAI", active: false, dots: 2 },
-    { label: "MER", date: "29 MAI", active: true, dots: 3 },
-    { label: "JEU", date: "30 MAI", active: false, dots: 2 },
-    { label: "VEN", date: "31 MAI", active: false, dots: 2 },
-    { label: "SAM", date: "01 JUIN", active: false, dots: 2, gold: true },
-    { label: "DIM", date: "02 JUIN", active: false, dots: 0 },
-  ];
+  }  const days = availabilityDays;
 
   return (
     <section className="relative min-h-screen overflow-hidden bg-[#020807] text-white">
@@ -331,43 +403,70 @@ export function AmarkhysPublicAppointmentLanding() {
                   </div>
 
                   <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 lg:grid-cols-7">
-                    {days.map((day) => (
-                      <div
-                        key={day.label}
-                        className={cn(
-                          "rounded-xl border p-4 text-center",
-                          day.active
-                            ? "border-[#23ead4]/70 bg-[#0b7569]/60 shadow-[0_0_30px_rgba(35,234,212,0.14)]"
-                            : day.gold
-                              ? "border-[#d7a83f]/30 bg-[#2b2208]/35"
-                              : "border-white/10 bg-white/[0.035]"
-                        )}
-                      >
-                        <p className="text-xs font-black text-slate-300">
-                          {day.label}
-                        </p>
-
-                        <p className="mt-2 text-sm font-black text-white">
-                          {day.date}
-                        </p>
-
-                        <div className="mt-4 flex justify-center gap-1.5">
-                          {[0, 1, 2].map((index) => (
-                            <span
-                              key={index}
-                              className={cn(
-                                "h-2.5 w-2.5 rounded-full",
-                                index < day.dots
-                                  ? day.gold
-                                    ? "bg-[#f8d479]"
-                                    : "bg-[#23ead4]"
-                                  : "bg-slate-600"
-                              )}
-                            />
-                          ))}
-                        </div>
+                    {loadingAvailability ? (
+                      <div className="col-span-full rounded-xl border border-white/10 bg-white/[0.035] p-4 text-center text-sm font-semibold text-slate-300">
+                        Chargement des disponibilités...
                       </div>
-                    ))}
+                    ) : availabilityError ? (
+                      <div className="col-span-full rounded-xl border border-red-400/30 bg-red-500/10 p-4 text-center text-sm font-semibold text-red-100">
+                        {availabilityError}
+                      </div>
+                    ) : days.length === 0 ? (
+                      <div className="col-span-full rounded-xl border border-white/10 bg-white/[0.035] p-4 text-center text-sm font-semibold text-slate-300">
+                        Aucun créneau disponible pour le moment.
+                      </div>
+                    ) : (
+                      days.map((day) => {
+                        const dayAvailableSlots = day.slots.filter(
+                          (slot) => slot.available
+                        );
+
+                        return (
+                          <div
+                            key={day.date}
+                            className="rounded-xl border border-white/10 bg-white/[0.035] p-4 text-center"
+                          >
+                            <p className="text-xs font-black text-slate-300">
+                              {day.label}
+                            </p>
+
+                            <p className="mt-2 text-sm font-black text-white">
+                              {day.date}
+                            </p>
+
+                            <div className="mt-4 flex flex-wrap justify-center gap-1.5">
+                              {dayAvailableSlots.slice(0, 4).map((slot) => {
+                                const active =
+                                  selectedSlot?.date === slot.date &&
+                                  selectedSlot?.startTime === slot.startTime;
+
+                                return (
+                                  <button
+                                    key={slot.date + "-" + slot.startTime}
+                                    type="button"
+                                    onClick={() => selectRuntimeSlot(slot)}
+                                    className={cn(
+                                      "rounded-full border px-2.5 py-1 text-[11px] font-black transition",
+                                      active
+                                        ? "border-[#f8d479]/80 bg-[#f8d479]/20 text-[#f8d479]"
+                                        : "border-[#23ead4]/35 bg-[#23ead4]/10 text-[#bffcf6] hover:border-[#23ead4]/70 hover:bg-[#23ead4]/20"
+                                    )}
+                                  >
+                                    {slot.startTime}
+                                  </button>
+                                );
+                              })}
+
+                              {dayAvailableSlots.length === 0 ? (
+                                <span className="text-xs font-semibold text-slate-500">
+                                  Complet
+                                </span>
+                              ) : null}
+                            </div>
+                          </div>
+                        );
+                      })
+                    )}
                   </div>
                 </div>
               </div>
