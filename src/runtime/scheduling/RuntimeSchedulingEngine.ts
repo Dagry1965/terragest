@@ -641,7 +641,8 @@ export class RuntimeSchedulingEngine {
     };
   }
 
-  static normalizeAppointmentForScheduling(record: RuntimeRecord): RuntimeRecord {
+  static normalizeAppointmentForScheduling(record: RuntimeRecord,
+    config?: Partial<RuntimeSchedulingFieldConfig>): RuntimeRecord {
     if (!hasRealDateAndTime(record)) {
       return {
         ...record,
