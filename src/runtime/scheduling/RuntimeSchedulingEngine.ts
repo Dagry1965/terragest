@@ -11,6 +11,7 @@ import type {
   RuntimeCalendarException,
 } from "./RuntimeSchedulingTypes";
 
+import { SchedulingSlotPolicyResolver } from "./SchedulingSlotPolicy";
 export type RuntimeRecord = Record<string, unknown>;
 
 interface RuntimeSchedulingFieldConfig {
@@ -246,18 +247,9 @@ function buildLocalDateTime(dateOnly: string, timeOnly: string): Date | null {
   return date;
 }
 
-const DEFAULT_NON_BLOCKING_SCHEDULING_STATUSES = [
-  "annule",
-  "annulee",
-  "annulé",
-  "annulée",
-  "cancelled",
-  "canceled",
-];
-
 function isNonBlockingSchedulingRecord(record: RuntimeRecord): boolean {
-  const status = asString(record.statut).toLowerCase();
-  return DEFAULT_NON_BLOCKING_SCHEDULING_STATUSES.includes(status);
+  const policy = SchedulingSlotPolicyResolver.resolve();
+  return SchedulingSlotPolicyResolver.isNonBlockingRecord(record, policy);
 }
 
 function sameVehicle(
