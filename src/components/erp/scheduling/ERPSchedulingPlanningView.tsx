@@ -22,8 +22,17 @@ function toDateOnly(value?: string) {
     return value;
   }
 
-  return new Date().toISOString().slice(0, 10);
+  return formatLocalDateOnly(new Date());
 }
+
+function formatLocalDateOnly(date: Date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+}
+
 
 function asString(value: unknown) {
   return String(value ?? "").trim();
@@ -342,7 +351,7 @@ function addDays(dateOnly: string, amount: number) {
   const date = new Date(`${dateOnly}T00:00:00`);
   date.setDate(date.getDate() + amount);
 
-  return date.toISOString().slice(0, 10);
+  return formatLocalDateOnly(date);
 }
 
 function getVisibleSchedulingDurationMinutes(
@@ -389,24 +398,43 @@ export function ERPSchedulingPlanningView({
   module,
   initialDate,
 }: ERPSchedulingPlanningViewProps) {
-  const effectiveSchedulingConfig =
-    RuntimeSchedulingSettingsResolver.resolve({
-      module,
-      context: {
-        tenantId: "runtime",
-        moduleKey: module.metadata.key,
-      },
-    });
+  const effectiveSchedulingConfig = useMemo(
+    () =>
+      RuntimeSchedulingSettingsResolver.resolve({
+        module,
+        context: {
+          tenantId: "runtime",
+          moduleKey: module.metadata.key,
+        },
+      }),
+    [module]
+  );
 
-  const schedulingConfig =
-    effectiveSchedulingConfig.enabled
-      ? effectiveSchedulingConfig
-      : null;
+  const schedulingConfig = useMemo(
+    () =>
+      effectiveSchedulingConfig.enabled
+        ? effectiveSchedulingConfig
+        : null,
+    [effectiveSchedulingConfig]
+  );
 
   const [selectedDate, setSelectedDate] =
     useState(toDateOnly(initialDate));
 
-  const [records, setRecords] =
+  
+
+  const goToPreviousDate = () => {
+    setSelectedDate((current) => addDays(current, -1));
+  };
+
+  const goToNextDate = () => {
+    setSelectedDate((current) => addDays(current, 1));
+  };
+
+  const goToToday = () => {
+    setSelectedDate(toDateOnly());
+  };
+const [records, setRecords] =
     useState<RuntimePlanningRecord[]>([]);
 
   const [relationLabels, setRelationLabels] =
@@ -644,39 +672,42 @@ export function ERPSchedulingPlanningView({
                 Date du planning
               </label>
 
-              <div className="mt-3 flex flex-wrap items-center gap-2">
+              <div className="relative z-20 mt-3 flex flex-wrap items-center gap-2">
                 <button
                   type="button"
-                  onClick={() => setSelectedDate(addDays(selectedDate, -1))}
-                  className="rounded-2xl border border-white/10 bg-white/10 px-3 py-2 text-sm font-black text-white transition hover:bg-white/15"
-                >
-                  ←
-                </button>
+                  aria-label="Jour précédent"
+                  onClick={() => {
+                    setSelectedDate((current) => addDays(current, -1));
+                  }}
+                  className="pointer-events-auto rounded-2xl border border-white/10 bg-white/10 px-4 py-3 text-sm font-black text-white transition hover:bg-white/15"
+                >←</button>
 
                 <input
                   type="date"
                   value={selectedDate}
-                  onChange={(event) =>
-                    setSelectedDate(event.target.value)
-                  }
-                  className="rounded-2xl border border-white/10 bg-white px-4 py-3 text-sm font-black text-slate-950 outline-none"
+                  onChange={(event) => {
+                    setSelectedDate(event.target.value);
+                  }}
+                  className="pointer-events-auto rounded-2xl border border-white/10 bg-white px-4 py-3 text-sm font-black text-slate-950 outline-none"
                 />
 
                 <button
                   type="button"
-                  onClick={() => setSelectedDate(addDays(selectedDate, 1))}
-                  className="rounded-2xl border border-white/10 bg-white/10 px-3 py-2 text-sm font-black text-white transition hover:bg-white/15"
-                >
-                  →
-                </button>
+                  aria-label="Jour suivant"
+                  onClick={() => {
+                    setSelectedDate((current) => addDays(current, 1));
+                  }}
+                  className="pointer-events-auto rounded-2xl border border-white/10 bg-white/10 px-4 py-3 text-sm font-black text-white transition hover:bg-white/15"
+                >→</button>
 
                 <button
                   type="button"
-                  onClick={() => setSelectedDate(toDateOnly())}
-                  className="rounded-2xl bg-white px-3 py-2 text-sm font-black text-slate-950 transition hover:bg-slate-100"
-                >
-                  Aujourd’hui
-                </button>
+                  aria-label="Aujourd’hui"
+                  onClick={() => {
+                    setSelectedDate(toDateOnly());
+                  }}
+                  className="pointer-events-auto rounded-2xl bg-white px-4 py-3 text-sm font-black text-slate-950 transition hover:bg-slate-100"
+                >Aujourd’hui</button>
               </div>
 
               <p className="mt-3 text-sm font-semibold capitalize text-teal-100">
