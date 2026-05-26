@@ -554,12 +554,16 @@ const [records, setRecords] =
           Boolean(booking.startAt && booking.endAt)
         );
 const slots =
-      RuntimeSchedulingEngine.getAvailableSlotsWithBookings({
-        date: selectedDate,
-        bookings,
-        calendarExceptions: schedulingConfig.calendarExceptions,
-        capacity: schedulingConfig.capacity,
-      });
+  RuntimeSchedulingEngine.getAvailableSlotsWithBookings({
+    date: selectedDate,
+    bookings,
+    calendarExceptions:
+      schedulingConfig.calendarExceptions,
+    bufferMinutes:
+      schedulingConfig.bufferMinutes,
+    capacity:
+      schedulingConfig.capacity,
+  });
 
     const bookingsBySlot =
       new Map<string, RuntimePlanningRecord[]>();
