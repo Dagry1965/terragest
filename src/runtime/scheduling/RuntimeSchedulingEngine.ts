@@ -378,10 +378,13 @@ export class RuntimeSchedulingEngine {
   }): RuntimeAvailabilitySlot[] {
     const profile = params.profile ?? DEFAULT_WORKSPACE_OPENING_HOURS;
 
-    const durationMinutes = Math.max(
-      1,
-      asNumber(params.durationMinutes, profile.defaultSlotDurationMinutes)
-    );
+    const slotPolicy = SchedulingSlotPolicyResolver.resolve({
+      durationMinutes: params.durationMinutes,
+      defaultDurationMinutes: profile.defaultSlotDurationMinutes,
+      openingHoursProfile: profile,
+    });
+
+    const durationMinutes = slotPolicy.slotDurationMinutes;
 
     const normalizedDate = normalizeDateOnly(params.date);
 
@@ -451,33 +454,24 @@ export class RuntimeSchedulingEngine {
   }): RuntimeAvailabilitySlot[] {
     // Q22D1_BOOKING_AWARE_AVAILABILITY
     // Generic ERP availability: opening-hours slots minus existing bookings.
-    const bufferMinutes = Math.max(
-      0,
-      asNumber(params.bufferMinutes, 0)
-    );
+    const slotPolicy = SchedulingSlotPolicyResolver.resolve({
+      durationMinutes: params.durationMinutes,
+      bufferMinutes: params.bufferMinutes,
+      capacity: params.capacity,
+      openingHoursProfile: params.profile,
+    });
 
-    const visibleDurationMinutes = Math.max(
-      1,
-      asNumber(
-        params.durationMinutes,
-        RuntimeSchedulingEngine.defaultDurationMinutes
-      )
-    );
-
-    const slotDurationMinutes =
-      visibleDurationMinutes + bufferMinutes;
-
-    const slots = RuntimeSchedulingEngine.getAvailableSlotsForDate({
+    const visibleDurationMinutes = slotPolicy.visibleDurationMinutes;
+    const bufferMinutes = slotPolicy.bufferMinutes;
+    const slotDurationMinutes = slotPolicy.slotDurationMinutes;
+const slots = RuntimeSchedulingEngine.getAvailableSlotsForDate({
       date: params.date,
       durationMinutes: slotDurationMinutes,
       profile: params.profile,
       calendarExceptions: params.calendarExceptions,
     });
 
-    const capacity = Math.max(
-      1,
-      asNumber(params.capacity, 1)
-    );
+    const capacity = slotPolicy.capacity;
 
     const bookings = params.bookings ?? [];
     const ignoredId = asString(params.ignoreBookingId);
@@ -569,10 +563,13 @@ export class RuntimeSchedulingEngine {
   }): SchedulingValidationResult {
     const profile = params.profile ?? DEFAULT_WORKSPACE_OPENING_HOURS;
 
-    const durationMinutes = Math.max(
-      1,
-      asNumber(params.durationMinutes, profile.defaultSlotDurationMinutes)
-    );
+    const slotPolicy = SchedulingSlotPolicyResolver.resolve({
+      durationMinutes: params.durationMinutes,
+      defaultDurationMinutes: profile.defaultSlotDurationMinutes,
+      openingHoursProfile: profile,
+    });
+
+    const durationMinutes = slotPolicy.slotDurationMinutes;
 
     const normalizedTime = normalizeTimeOnly(params.time);
 
