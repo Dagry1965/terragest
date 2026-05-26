@@ -220,6 +220,18 @@ function isPublicAppointmentRequest(record: RuntimeRecord): boolean {
   );
 }
 
+function assertRendezvousServiceType(record: RuntimeRecord): void {
+  const typeService =
+    asString(record.typeService);
+
+  if (!typeService) {
+    throw new Error(
+      "Le type de service est obligatoire pour réserver un créneau."
+    );
+  }
+}
+
+
 function sameRuntimeScope(
   candidate: RuntimeRecord,
   reference: RuntimeRecord
@@ -322,6 +334,8 @@ async function guardRendezvousMutation(
       "Le rendez-vous doit avoir une date et une heure réelles avant sauvegarde."
     );
   }
+
+  assertRendezvousServiceType(mergedRecord);
 
   const schedulingConfig =
     await getSchedulingConfig(module, context);

@@ -385,6 +385,41 @@ function getVisibleSchedulingDurationMinutes(
   return 60;
 }
 
+function buildPlanningDateTime(dateOnly: string, timeOnly: string) {
+  return new Date(`${dateOnly}T${timeOnly}:00`);
+}
+
+function toPlanningTimestamp(value: unknown) {
+  const text = asString(value);
+
+  if (!text) {
+    return Number.NaN;
+  }
+
+  const timestamp = new Date(text).getTime();
+
+  return Number.isFinite(timestamp) ? timestamp : Number.NaN;
+}
+
+function planningRangesOverlap(
+  leftStart: number,
+  leftEnd: number,
+  rightStart: number,
+  rightEnd: number
+) {
+  if (
+    !Number.isFinite(leftStart) ||
+    !Number.isFinite(leftEnd) ||
+    !Number.isFinite(rightStart) ||
+    !Number.isFinite(rightEnd)
+  ) {
+    return false;
+  }
+
+  return leftStart < rightEnd && rightStart < leftEnd;
+}
+
+
 function formatReadableDate(dateOnly: string) {
   return new Intl.DateTimeFormat("fr-FR", {
     weekday: "long",
@@ -577,19 +612,36 @@ const [records, setRecords] =
       new Map<string, RuntimePlanningRecord[]>();
 
     for (const slot of slots) {
+      const slotStart =
+        buildPlanningDateTime(selectedDate, slot.start).getTime();
+
+      const slotEnd =
+        buildPlanningDateTime(selectedDate, slot.end).getTime();
+
       const related =
         dateRecords.filter((record) => {
+          const recordStartAt =
+            toPlanningTimestamp(record[startField]);
+
+          const recordEndAt =
+            toPlanningTimestamp(record[endField]);
+
+          if (
+            Number.isFinite(recordStartAt) &&
+            Number.isFinite(recordEndAt)
+          ) {
+            return planningRangesOverlap(
+              slotStart,
+              slotEnd,
+              recordStartAt,
+              recordEndAt
+            );
+          }
+
           const timeValue =
             asString(record[schedulingConfig.timeField]);
 
-          if (timeValue === slot.start) {
-            return true;
-          }
-
-          const startAt =
-            asString(record[startField]);
-
-          return startAt.includes("T" + slot.start);
+          return timeValue === slot.start;
         });
 
       bookingsBySlot.set(slot.start, related);
@@ -780,6 +832,25 @@ const [records, setRecords] =
               const bookings =
                 planning.bookingsBySlot.get(slot.start) ?? [];
 
+              const slotIsBlockedByBuffer =
+                !slot.available && bookings.length === 0;
+
+              const slotStatusLabel =
+                slot.available
+                  ? slot.remainingCapacity !== undefined && slot.capacity && slot.capacity > 1
+                    ? slot.remainingCapacity + " place(s) restante(s)"
+                    : "Disponible"
+                  : slotIsBlockedByBuffer
+                    ? "Bloqué par buffer"
+                    : slot.reason ?? "Créneau complet";
+
+              const slotActionLabel =
+                slot.available
+                  ? "Planifier"
+                  : slotIsBlockedByBuffer
+                    ? "Buffer"
+                    : "Complet";
+
               const createHref =
                 buildPlanningCreateHref({
                   module,
@@ -822,11 +893,7 @@ const [records, setRecords] =
                               : "text-rose-700",
                           ].join(" ")}
                         >
-                          {slot.available
-                            ? slot.remainingCapacity !== undefined && slot.capacity && slot.capacity > 1
-                              ? slot.remainingCapacity + " place(s) restante(s)"
-                              : "Disponible"
-                            : slot.reason ?? "Créneau complet"}
+                          {slotStatusLabel}
                         </p>
 
                         {bookings.length > 0 ? (
@@ -850,7 +917,7 @@ const [records, setRecords] =
                         disabled
                         className="inline-flex cursor-not-allowed items-center justify-center rounded-2xl bg-slate-200 px-5 py-3 text-sm font-black text-slate-500"
                       >
-                        Complet
+                        {slotActionLabel}
                       </button>
                     )}
                   </div>

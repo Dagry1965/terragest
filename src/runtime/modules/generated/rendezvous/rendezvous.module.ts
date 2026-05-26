@@ -105,6 +105,7 @@ export const rendezvousModule: ERPModule = {
 {
         key: "typeService",
         label: "Type service",
+      required: true,
         type: "select",
         options: [
           { label: "Vidange", value: "vidange" },
