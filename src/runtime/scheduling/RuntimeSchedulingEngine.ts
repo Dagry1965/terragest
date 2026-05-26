@@ -13,6 +13,56 @@ import type {
 
 export type RuntimeRecord = Record<string, unknown>;
 
+interface RuntimeSchedulingFieldConfig {
+  dateField: string;
+  timeField: string;
+  durationField: string;
+  startField: string;
+  endField: string;
+  resourceField?: string;
+}
+
+const DEFAULT_RUNTIME_SCHEDULING_FIELD_CONFIG: RuntimeSchedulingFieldConfig = {
+  dateField: "dateRendezVous",
+  timeField: "heureRendezVous",
+  durationField: "durationMinutes",
+  startField: "startAt",
+  endField: "endAt",
+  resourceField: "resourceId",
+};
+
+function resolveRuntimeSchedulingFieldConfig(
+  config?: Partial<RuntimeSchedulingFieldConfig>
+): RuntimeSchedulingFieldConfig {
+  return {
+    ...DEFAULT_RUNTIME_SCHEDULING_FIELD_CONFIG,
+    ...(config || {}),
+  };
+}
+
+function getRuntimeSchedulingFieldValue(
+  record: RuntimeRecord,
+  fieldName?: string
+): unknown {
+  if (!fieldName) return undefined;
+  return record[fieldName];
+}
+
+function getRuntimeSchedulingFieldString(
+  record: RuntimeRecord,
+  fieldName?: string
+): string {
+  return asString(getRuntimeSchedulingFieldValue(record, fieldName));
+}
+
+function getRuntimeSchedulingFieldNumber(
+  record: RuntimeRecord,
+  fieldName?: string,
+  fallback = 0
+): number {
+  return asNumber(getRuntimeSchedulingFieldValue(record, fieldName), fallback);
+}
+
 export interface RuntimeAppointmentSlot {
   startAt: string;
   endAt: string;
@@ -200,29 +250,62 @@ function isCancelledAppointment(record: RuntimeRecord): boolean {
   return asString(record.statut).toLowerCase() === "annule";
 }
 
-function sameVehicle(a: RuntimeRecord, b: RuntimeRecord): boolean {
-  const vehicleA = asString(a.vehiculeId);
-  const vehicleB = asString(b.vehiculeId);
+function sameVehicle(
+  a: RuntimeRecord,
+  b: RuntimeRecord,
+  resourceField?: string
+): boolean {
+  const resolvedResourceField =
+    resourceField || resolveRuntimeSchedulingFieldConfig().resourceField;
 
-  return Boolean(vehicleA && vehicleB && vehicleA === vehicleB);
+  const resourceA = getRuntimeSchedulingFieldString(a, resolvedResourceField);
+  const resourceB = getRuntimeSchedulingFieldString(b, resolvedResourceField);
+
+  return Boolean(resourceA && resourceB && resourceA === resourceB);
 }
 
-function rangesOverlap(a: RuntimeAppointmentSlot, b: RuntimeAppointmentSlot): boolean {
-  const startA = new Date(a.startAt).getTime();
-  const endA = new Date(a.endAt).getTime();
-  const startB = new Date(b.startAt).getTime();
-  const endB = new Date(b.endAt).getTime();
+function rangesOverlap(
+  left: {
+    startAt: string | Date;
+    endAt: string | Date;
+    durationMinutes?: unknown;
+  },
+  right: {
+    startAt: string | Date;
+    endAt: string | Date;
+    durationMinutes?: unknown;
+  }
+): boolean {
+  const leftStart =
+    left.startAt instanceof Date
+      ? left.startAt.getTime()
+      : new Date(left.startAt).getTime();
+
+  const leftEnd =
+    left.endAt instanceof Date
+      ? left.endAt.getTime()
+      : new Date(left.endAt).getTime();
+
+  const rightStart =
+    right.startAt instanceof Date
+      ? right.startAt.getTime()
+      : new Date(right.startAt).getTime();
+
+  const rightEnd =
+    right.endAt instanceof Date
+      ? right.endAt.getTime()
+      : new Date(right.endAt).getTime();
 
   if (
-    Number.isNaN(startA) ||
-    Number.isNaN(endA) ||
-    Number.isNaN(startB) ||
-    Number.isNaN(endB)
+    !Number.isFinite(leftStart) ||
+    !Number.isFinite(leftEnd) ||
+    !Number.isFinite(rightStart) ||
+    !Number.isFinite(rightEnd)
   ) {
     return false;
   }
 
-  return startA < endB && startB < endA;
+  return leftStart < rightEnd && rightStart < leftEnd;
 }
 
 
@@ -366,17 +449,28 @@ export class RuntimeSchedulingEngine {
   }): RuntimeAvailabilitySlot[] {
     // Q22D1_BOOKING_AWARE_AVAILABILITY
     // Generic ERP availability: opening-hours slots minus existing bookings.
-    const slots = RuntimeSchedulingEngine.getAvailableSlotsForDate({
-      date: params.date,
-      durationMinutes: params.durationMinutes,
-      profile: params.profile,
-      calendarExceptions: params.calendarExceptions,
-    });
-
     const bufferMinutes = Math.max(
       0,
       asNumber(params.bufferMinutes, 0)
     );
+
+    const visibleDurationMinutes = Math.max(
+      1,
+      asNumber(
+        params.durationMinutes,
+        RuntimeSchedulingEngine.defaultDurationMinutes
+      )
+    );
+
+    const slotDurationMinutes =
+      visibleDurationMinutes + bufferMinutes;
+
+    const slots = RuntimeSchedulingEngine.getAvailableSlotsForDate({
+      date: params.date,
+      durationMinutes: slotDurationMinutes,
+      profile: params.profile,
+      calendarExceptions: params.calendarExceptions,
+    });
 
     const capacity = Math.max(
       1,
@@ -390,7 +484,7 @@ export class RuntimeSchedulingEngine {
       const slotRange = RuntimeSchedulingEngine.buildDateTimeRange({
         date: params.date,
         time: slot.start,
-        durationMinutes: params.durationMinutes,
+        durationMinutes: slotDurationMinutes,
       });
 
       let usedCapacity = 0;
@@ -430,18 +524,14 @@ export class RuntimeSchedulingEngine {
           {
             startAt: slotRange.startAt,
             endAt: slotRange.endAt,
-            durationMinutes:
-              params.durationMinutes ??
-              RuntimeSchedulingEngine.defaultDurationMinutes,
+            durationMinutes: slotDurationMinutes,
           },
           {
             // Q22F1_SCHEDULING_BUFFER_MINUTES
             // The visible booking ends at endAt, but the blocked range may include bufferMinutes.
             startAt: bookingStart.toISOString(),
             endAt: bookingEndWithBuffer.toISOString(),
-            durationMinutes:
-              params.durationMinutes ??
-              RuntimeSchedulingEngine.defaultDurationMinutes,
+            durationMinutes: slotDurationMinutes,
           }
         );
       });
@@ -511,7 +601,11 @@ export class RuntimeSchedulingEngine {
     return { ok: true };
   }
 
-  static computeAppointmentSlot(record: RuntimeRecord): RuntimeAppointmentSlot {
+  static computeAppointmentSlot(
+    record: RuntimeRecord,
+    config?: Partial<RuntimeSchedulingFieldConfig>
+  ): RuntimeAppointmentSlot {
+    const fieldConfig = resolveRuntimeSchedulingFieldConfig(config);
     if (!hasRealDateAndTime(record)) {
       throw new Error(
         "Impossible de calculer le créneau : dateRendezVous et heureRendezVous sont obligatoires."
@@ -519,19 +613,23 @@ export class RuntimeSchedulingEngine {
     }
 
     const startDate = buildLocalDateTime(
-      asString(record.dateRendezVous),
-      asString(record.heureRendezVous)
+      getRuntimeSchedulingFieldString(record, fieldConfig.dateField),
+      getRuntimeSchedulingFieldString(record, fieldConfig.timeField)
     );
 
     if (!startDate) {
       throw new Error(
-        "Impossible de calculer le créneau : dateRendezVous ou heureRendezVous invalide."
+        "Impossible de calculer le créneau : date ou heure de planification invalide."
       );
     }
 
     const durationMinutes = Math.max(
       1,
-      asNumber(record.durationMinutes, RuntimeSchedulingEngine.defaultDurationMinutes)
+      getRuntimeSchedulingFieldNumber(
+      record,
+      fieldConfig.durationField,
+      RuntimeSchedulingEngine.defaultDurationMinutes
+    )
     );
 
     const endDate = new Date(startDate.getTime() + durationMinutes * 60 * 1000);
@@ -554,7 +652,7 @@ export class RuntimeSchedulingEngine {
       };
     }
 
-    const slot = RuntimeSchedulingEngine.computeAppointmentSlot(record);
+    const slot = RuntimeSchedulingEngine.computeAppointmentSlot(record, config);
 
     return {
       ...record,
