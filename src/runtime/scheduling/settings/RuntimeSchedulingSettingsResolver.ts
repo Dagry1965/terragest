@@ -77,4 +77,28 @@ export class RuntimeSchedulingSettingsResolver {
       moduleSettings: storedSettings.moduleSettings,
     });
   }
+
+  static async resolveForRuntimeGuard(input: RuntimeSchedulingSettingsResolverLoadInput) {
+    const hasPersistedSettingsContext =
+      Boolean(input.context.tenantId?.trim()) &&
+      Boolean(input.context.workspaceId?.trim()) &&
+      Boolean(input.context.moduleKey?.trim());
+
+    if (!hasPersistedSettingsContext) {
+      return this.resolve({
+        module: input.module,
+        context: input.context,
+      });
+    }
+
+    try {
+      return await this.loadAndResolve(input);
+    } catch {
+      return this.resolve({
+        module: input.module,
+        context: input.context,
+      });
+    }
+  }
 }
+

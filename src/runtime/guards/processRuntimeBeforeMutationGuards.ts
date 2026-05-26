@@ -176,13 +176,17 @@ function isRendezvousModule(module: ERPModule): boolean {
   return module.metadata.key === "rendezvous";
 }
 
-function getSchedulingConfig(module: ERPModule) {
+async function getSchedulingConfig(
+  module: ERPModule,
+  context: RuntimeBeforeMutationGuardContext
+) {
   const effectiveSchedulingConfig =
-    RuntimeSchedulingSettingsResolver.resolve({
+    await RuntimeSchedulingSettingsResolver.resolveForRuntimeGuard({
       module,
       context: {
-        tenantId: "runtime",
-        moduleKey: module.metadata.key,
+        tenantId: context.tenantId ?? "runtime",
+        workspaceId: context.workspaceId,
+        moduleKey: context.moduleKey ?? module.metadata.key,
       },
     });
 
@@ -319,6 +323,9 @@ async function guardRendezvousMutation(
     );
   }
 
+  const schedulingConfig =
+    await getSchedulingConfig(module, context);
+
   const openingHoursValidation =
     RuntimeSchedulingEngine.assertWithinOpeningHours({
       // Q22C_OPENING_HOURS_GUARD
@@ -332,8 +339,7 @@ async function guardRendezvousMutation(
           : Number(mergedRecord.durationMinutes ?? 0) || undefined,
       // Q22F2B_PASS_CALENDAR_EXCEPTIONS_TO_GUARD
       // Generic ERP scheduling: persistence guard also applies calendar exceptions.
-      calendarExceptions:
-        getSchedulingConfig(module)?.calendarExceptions,
+      calendarExceptions: schedulingConfig?.calendarExceptions,
     });
 
   if (!openingHoursValidation.ok) {
@@ -353,9 +359,6 @@ async function guardRendezvousMutation(
       module,
       normalizedRecord
     );
-
-  const schedulingConfig =
-    getSchedulingConfig(module);
 
   const capacity =
     Math.max(
