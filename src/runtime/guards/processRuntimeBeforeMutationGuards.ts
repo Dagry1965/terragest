@@ -16,6 +16,7 @@ import {
   RuntimeSchedulingEngine,
   type RuntimeRecord,
 } from "@/runtime/scheduling/RuntimeSchedulingEngine";
+import { RuntimeSchedulingSettingsResolver } from "@/runtime/scheduling/settings";
 
 import {
   guardRuntimeChronologyMutation,
@@ -173,8 +174,17 @@ function isRendezvousModule(module: ERPModule): boolean {
 }
 
 function getSchedulingConfig(module: ERPModule) {
-  return module.scheduling?.enabled
-    ? module.scheduling
+  const effectiveSchedulingConfig =
+    RuntimeSchedulingSettingsResolver.resolve({
+      module,
+      context: {
+        tenantId: "runtime",
+        moduleKey: module.metadata.key,
+      },
+    });
+
+  return effectiveSchedulingConfig.enabled
+    ? effectiveSchedulingConfig
     : null;
 }
 
