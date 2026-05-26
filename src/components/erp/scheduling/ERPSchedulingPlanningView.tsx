@@ -8,6 +8,7 @@ import { RuntimeDataBinding } from "@/runtime/data-binding/RuntimeDataBinding";
 import { RuntimeSchedulingEngine } from "@/runtime/scheduling";
 import { allERPModules } from "@/runtime/modules/definitions/coreModules";
 
+import { RuntimeSchedulingSettingsResolver } from "@/runtime/scheduling/settings";
 type RuntimePlanningRecord = Record<string, unknown>;
 type RuntimeRelationLabelMap = Record<string, string>;
 
@@ -388,9 +389,18 @@ export function ERPSchedulingPlanningView({
   module,
   initialDate,
 }: ERPSchedulingPlanningViewProps) {
+  const effectiveSchedulingConfig =
+    RuntimeSchedulingSettingsResolver.resolve({
+      module,
+      context: {
+        tenantId: "runtime",
+        moduleKey: module.metadata.key,
+      },
+    });
+
   const schedulingConfig =
-    module.scheduling?.enabled
-      ? module.scheduling
+    effectiveSchedulingConfig.enabled
+      ? effectiveSchedulingConfig
       : null;
 
   const [selectedDate, setSelectedDate] =
