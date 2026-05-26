@@ -7,7 +7,7 @@ import {
 } from "@/runtime/security/sessions/ERPSessionRuntime";
 
 export function getERPWorkspacesNavigation() {
-  return ERPWorkspaceRegistry
+  const workspaceNavigation = ERPWorkspaceRegistry
     .filter((workspace) =>
       ERPSessionRuntime.canAccessWorkspace(
         workspace.key
@@ -31,4 +31,22 @@ export function getERPWorkspacesNavigation() {
         })),
       quickActions: workspace.quickActions,
     }));
+
+  return [
+    ...workspaceNavigation,
+    {
+      key: "settings",
+      label: "Paramètres ERP",
+      href: "/settings",
+      defaultHref: "/settings/scheduling",
+      modules: [
+        {
+          key: "settings-scheduling",
+          label: "Planning",
+          href: "/settings/scheduling",
+        },
+      ],
+      quickActions: [],
+    },
+  ];
 }
