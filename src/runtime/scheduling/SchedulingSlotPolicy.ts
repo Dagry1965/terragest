@@ -1,4 +1,7 @@
-import type { RuntimeOpeningHoursProfile } from "./RuntimeSchedulingTypes";
+import type {
+  RuntimeOpeningHoursProfile,
+  RuntimeSchedulingFieldMapping,
+} from "./RuntimeSchedulingTypes";
 
 export interface SchedulingSlotPolicyInput {
   durationMinutes?: number;
@@ -7,6 +10,7 @@ export interface SchedulingSlotPolicyInput {
   bufferMinutes?: number;
   capacity?: number;
   statusField?: string;
+  fieldMapping?: Partial<RuntimeSchedulingFieldMapping>;
   nonBlockingStatuses?: string[];
   openingHoursProfile?: RuntimeOpeningHoursProfile;
 }
@@ -17,6 +21,7 @@ export interface SchedulingSlotPolicy {
   slotDurationMinutes: number;
   capacity: number;
   statusField: string;
+  fieldMapping: RuntimeSchedulingFieldMapping;
   nonBlockingStatuses: string[];
   openingHoursProfile?: RuntimeOpeningHoursProfile;
 }
@@ -25,6 +30,16 @@ export const DEFAULT_SCHEDULING_VISIBLE_DURATION_MINUTES = 60;
 export const DEFAULT_SCHEDULING_BUFFER_MINUTES = 0;
 export const DEFAULT_SCHEDULING_CAPACITY = 1;
 export const DEFAULT_SCHEDULING_STATUS_FIELD = "statut";
+
+export const DEFAULT_SCHEDULING_FIELD_MAPPING: RuntimeSchedulingFieldMapping = {
+  dateField: "date",
+  timeField: "time",
+  durationField: "durationMinutes",
+  startField: "startAt",
+  endField: "endAt",
+  resourceField: "resourceId",
+  statusField: DEFAULT_SCHEDULING_STATUS_FIELD,
+};
 
 export const DEFAULT_NON_BLOCKING_SCHEDULING_STATUSES = [
   "annule",
@@ -79,12 +94,21 @@ export class SchedulingSlotPolicyResolver {
       DEFAULT_SCHEDULING_CAPACITY
     );
 
+    const statusField = input.statusField || DEFAULT_SCHEDULING_STATUS_FIELD;
+
+    const fieldMapping: RuntimeSchedulingFieldMapping = {
+      ...DEFAULT_SCHEDULING_FIELD_MAPPING,
+      ...input.fieldMapping,
+      statusField,
+    };
+
     return {
       visibleDurationMinutes,
       bufferMinutes,
       slotDurationMinutes,
       capacity,
-      statusField: input.statusField || DEFAULT_SCHEDULING_STATUS_FIELD,
+      statusField,
+      fieldMapping,
       nonBlockingStatuses:
         input.nonBlockingStatuses && input.nonBlockingStatuses.length > 0
           ? input.nonBlockingStatuses

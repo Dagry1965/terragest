@@ -24,8 +24,8 @@ interface RuntimeSchedulingFieldConfig {
 }
 
 const DEFAULT_RUNTIME_SCHEDULING_FIELD_CONFIG: RuntimeSchedulingFieldConfig = {
-  dateField: "dateRendezVous",
-  timeField: "heureRendezVous",
+  dateField: "date",
+  timeField: "time",
   durationField: "durationMinutes",
   startField: "startAt",
   endField: "endAt",
@@ -116,11 +116,14 @@ function asNumber(value: unknown, fallback: number): number {
   return fallback;
 }
 
-function hasRealDateAndTime(record: RuntimeRecord): boolean {
-  const dateRendezVous = asString(record.dateRendezVous);
-  const heureRendezVous = asString(record.heureRendezVous);
+function hasRealDateAndTime(
+  record: RuntimeRecord,
+  fieldConfig: RuntimeSchedulingFieldConfig = resolveRuntimeSchedulingFieldConfig()
+): boolean {
+  const dateValue = getRuntimeSchedulingFieldString(record, fieldConfig.dateField);
+  const timeValue = getRuntimeSchedulingFieldString(record, fieldConfig.timeField);
 
-  return Boolean(dateRendezVous && heureRendezVous);
+  return Boolean(dateValue && timeValue);
 }
 
 function normalizeDateOnly(value: string): string {
@@ -605,9 +608,9 @@ const slots = RuntimeSchedulingEngine.getAvailableSlotsForDate({
     config?: Partial<RuntimeSchedulingFieldConfig>
   ): RuntimeAppointmentSlot {
     const fieldConfig = resolveRuntimeSchedulingFieldConfig(config);
-    if (!hasRealDateAndTime(record)) {
+    if (!hasRealDateAndTime(record, fieldConfig)) {
       throw new Error(
-        "Impossible de calculer le créneau : dateRendezVous et heureRendezVous sont obligatoires."
+        "Impossible de calculer le créneau : les champs date et heure configurés sont obligatoires."
       );
     }
 
@@ -642,11 +645,13 @@ const slots = RuntimeSchedulingEngine.getAvailableSlotsForDate({
 
   static normalizeAppointmentForScheduling(record: RuntimeRecord,
     config?: Partial<RuntimeSchedulingFieldConfig>): RuntimeRecord {
-    if (!hasRealDateAndTime(record)) {
+    const fieldConfig = resolveRuntimeSchedulingFieldConfig(config);
+
+    if (!hasRealDateAndTime(record, fieldConfig)) {
       return {
         ...record,
-        durationMinutes: asNumber(
-          record.durationMinutes,
+        [fieldConfig.durationField]: asNumber(
+          record[fieldConfig.durationField],
           RuntimeSchedulingEngine.defaultDurationMinutes
         ),
       };
@@ -656,9 +661,9 @@ const slots = RuntimeSchedulingEngine.getAvailableSlotsForDate({
 
     return {
       ...record,
-      durationMinutes: slot.durationMinutes,
-      startAt: slot.startAt,
-      endAt: slot.endAt,
+      [fieldConfig.durationField]: slot.durationMinutes,
+      [fieldConfig.startField]: slot.startAt,
+      [fieldConfig.endField]: slot.endAt,
     };
   }
 
@@ -670,7 +675,8 @@ const slots = RuntimeSchedulingEngine.getAvailableSlotsForDate({
       return { ok: true };
     }
 
-    if (!hasRealDateAndTime(record)) {
+    const fieldConfig = resolveRuntimeSchedulingFieldConfig();
+    if (!hasRealDateAndTime(record, fieldConfig)) {
       return {
         ok: false,
         reason:

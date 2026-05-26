@@ -52,6 +52,17 @@ export interface RuntimeSchedulingContext {
   resourceField?: string;
 }
 
+
+export interface RuntimeSchedulingFieldMapping {
+  dateField: string;
+  timeField: string;
+  durationField: string;
+  startField: string;
+  endField: string;
+  resourceField?: string;
+  statusField?: string;
+}
+
 export interface RuntimeAvailabilitySlot {
   start: string;
   end: string;

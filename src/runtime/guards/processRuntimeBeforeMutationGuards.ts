@@ -173,8 +173,15 @@ async function guardParentChildContextMutation(
   };
 }
 
-function isRendezvousModule(module: ERPModule): boolean {
-  return module.metadata.key === "rendezvous";
+function isSchedulableModule(module: ERPModule): boolean {
+  const metadata = module.metadata as ERPModule["metadata"] &
+    Record<string, unknown>;
+
+  const scheduling = metadata.scheduling as
+    | { enabled?: boolean }
+    | undefined;
+
+  return scheduling?.enabled === true;
 }
 
 async function getSchedulingConfig(
@@ -196,10 +203,16 @@ async function getSchedulingConfig(
     : null;
 }
 
-function hasRealAppointmentDateAndTime(record: RuntimeRecord): boolean {
+function hasRealSchedulingDateAndTime(
+  record: RuntimeRecord,
+  fieldConfig: {
+    dateField: string;
+    timeField: string;
+  }
+): boolean {
   return Boolean(
-    asString(record.dateRendezVous) &&
-    asString(record.heureRendezVous)
+    asString(record[fieldConfig.dateField]) &&
+    asString(record[fieldConfig.timeField])
   );
 }
 
@@ -220,18 +233,6 @@ function isPublicAppointmentRequest(record: RuntimeRecord): boolean {
     source === "site_public"
   );
 }
-
-function assertRendezvousServiceType(record: RuntimeRecord): void {
-  const typeService =
-    asString(record.typeService);
-
-  if (!typeService) {
-    throw new Error(
-      "Le type de service est obligatoire pour réserver un créneau."
-    );
-  }
-}
-
 
 function sameRuntimeScope(
   candidate: RuntimeRecord,
@@ -268,7 +269,7 @@ function sameRuntimeScope(
   return true;
 }
 
-async function loadExistingRendezvousForConflictCheck(
+async function loadExistingSchedulableRecordsForConflictCheck(
   module: ERPModule,
   reference: RuntimeRecord
 ): Promise<RuntimeRecord[]> {
@@ -301,7 +302,7 @@ async function loadCurrentRecordForUpdate(
   return currentRecord;
 }
 
-async function guardRendezvousMutation(
+async function guardSchedulableMutation(
   module: ERPModule,
   data: RuntimeRecord,
   context: RuntimeBeforeMutationGuardContext
@@ -323,29 +324,42 @@ async function guardRendezvousMutation(
       currentRecord.id,
   };
 
+  const schedulingConfig =
+    await getSchedulingConfig(module, context);
+
+  if (!schedulingConfig) {
+    return data;
+  }
+
+  const dateField = schedulingConfig.dateField ?? "date";
+  const timeField = schedulingConfig.timeField ?? "time";
+  const durationField = schedulingConfig.durationField ?? "durationMinutes";
+  const startField = schedulingConfig.startField ?? "startAt";
+  const endField = schedulingConfig.endField ?? "endAt";
+
+  const schedulingFieldConfig = {
+    dateField,
+    timeField,
+  };
+
   if (
-    !hasRealAppointmentDateAndTime(mergedRecord) &&
+    !hasRealSchedulingDateAndTime(mergedRecord, schedulingFieldConfig) &&
     isPublicAppointmentRequest(mergedRecord)
   ) {
     return data;
   }
 
-  if (!hasRealAppointmentDateAndTime(mergedRecord)) {
+  if (!hasRealSchedulingDateAndTime(mergedRecord, schedulingFieldConfig)) {
     throw new Error(
-      "Le rendez-vous doit avoir une date et une heure réelles avant sauvegarde."
+      "Le module planifiable doit avoir une date et une heure reelles avant sauvegarde."
     );
   }
 
-  assertRendezvousServiceType(mergedRecord);
-
-  const schedulingConfig =
-    await getSchedulingConfig(module, context);
-
   const slotPolicy = SchedulingSlotPolicyResolver.resolve({
     durationMinutes:
-      typeof mergedRecord.durationMinutes === "number"
-        ? mergedRecord.durationMinutes
-        : Number(mergedRecord.durationMinutes ?? 0) || undefined,
+      typeof mergedRecord[durationField] === "number"
+        ? (mergedRecord[durationField] as number)
+        : Number(mergedRecord[durationField] ?? 0) || undefined,
     bufferMinutes: schedulingConfig?.bufferMinutes,
     capacity: schedulingConfig?.capacity,
   });
@@ -355,12 +369,12 @@ async function guardRendezvousMutation(
       // Q22C_OPENING_HOURS_GUARD
       // First consumer of the generic ERP Scheduling Runtime.
       // This remains generic: rendezvous provides date/time/duration, the engine validates the slot.
-      date: asString(mergedRecord.dateRendezVous),
-      time: asString(mergedRecord.heureRendezVous),
+      date: asString(mergedRecord[dateField]),
+      time: asString(mergedRecord[timeField]),
       durationMinutes:
-        typeof mergedRecord.durationMinutes === "number"
-          ? mergedRecord.durationMinutes
-          : Number(mergedRecord.durationMinutes ?? 0) || undefined,
+        typeof mergedRecord[durationField] === "number"
+        ? (mergedRecord[durationField] as number)
+        : Number(mergedRecord[durationField] ?? 0) || undefined,
       // Q22F2B_PASS_CALENDAR_EXCEPTIONS_TO_GUARD
       // Generic ERP scheduling: persistence guard also applies calendar exceptions.
       calendarExceptions: schedulingConfig?.calendarExceptions,
@@ -379,7 +393,7 @@ async function guardRendezvousMutation(
     );
 
   const existingAppointments =
-    await loadExistingRendezvousForConflictCheck(
+    await loadExistingSchedulableRecordsForConflictCheck(
       module,
       normalizedRecord
     );
@@ -419,12 +433,6 @@ async function guardRendezvousMutation(
     const statusField =
       schedulingConfig?.statusField;
 
-    const startField =
-      schedulingConfig?.startField ?? "startAt";
-
-    const endField =
-      schedulingConfig?.endField ?? "endAt";
-
     const bookings =
       existingAppointments
         // Q22F3C_CAPACITY_GUARD
@@ -463,7 +471,7 @@ async function guardRendezvousMutation(
 
     const slots =
       RuntimeSchedulingEngine.getAvailableSlotsWithBookings({
-        date: asString(mergedRecord.dateRendezVous),
+        date: asString(mergedRecord[dateField]),
         durationMinutes: slotPolicy.visibleDurationMinutes,
         bookings,
         ignoreBookingId:
@@ -476,7 +484,7 @@ async function guardRendezvousMutation(
       });
 
     const selectedTime =
-      asString(mergedRecord.heureRendezVous);
+      asString(mergedRecord[timeField]);
 
     const selectedSlot =
       slots.find((slot) => slot.start === selectedTime);
@@ -492,12 +500,12 @@ async function guardRendezvousMutation(
   if (context.operation === "update") {
     return {
       ...data,
-      durationMinutes:
-        normalizedRecord.durationMinutes,
-      startAt:
-        normalizedRecord.startAt,
-      endAt:
-        normalizedRecord.endAt,
+      [durationField]:
+        normalizedRecord[durationField],
+      [startField]:
+        normalizedRecord[startField],
+      [endField]:
+        normalizedRecord[endField],
     };
   }
 
@@ -522,9 +530,9 @@ export async function processRuntimeBeforeMutationGuards(
       data as RuntimeRecord
     );
 
-  if (isRendezvousModule(module)) {
+  if (isSchedulableModule(module)) {
     guardedData =
-      await guardRendezvousMutation(
+      await guardSchedulableMutation(
         module,
         guardedData,
         context
