@@ -22,6 +22,10 @@ import {
   rappelsautoModule,
 } from "@/runtime/modules/generated/rappelsauto/rappelsauto.module";
 
+import {
+  RuntimePublicSchedulingContractBridge,
+} from "@/runtime/scheduling/public";
+
 type PublicAppointmentInput = {
   nom: string;
   telephone: string;
@@ -114,17 +118,25 @@ export async function createPublicAppointment(
   const now =
     new Date();
 
-  const dateRendezVous =
-    normalizePublicAppointmentDate(data.dateSouhaitee);
+  const normalizedAppointment =
+    RuntimePublicSchedulingContractBridge.normalizePublicAppointment({
+      dateRendezVous:
+        normalizePublicAppointmentDate(data.dateSouhaitee),
+      heureRendezVous:
+        normalizePublicAppointmentTime(data.heureSouhaitee),
+      durationMinutes:
+        normalizePublicAppointmentDuration(data.durationMinutes),
+      service:
+        normalizePublicAppointmentService(data.service),
+      typeService:
+        normalizePublicAppointmentService(data.service),
+    });
 
-  const heureRendezVous =
-    normalizePublicAppointmentTime(data.heureSouhaitee);
-
-  const durationMinutes =
-    normalizePublicAppointmentDuration(data.durationMinutes);
-
-  const typeService =
-    normalizePublicAppointmentService(data.service);
+  if (!normalizedAppointment) {
+    throw new Error(
+      "Impossible de normaliser le rendez-vous public demandé."
+    );
+  }
 
   const client =
     await RuntimeDataBinding.create(
@@ -156,10 +168,22 @@ export async function createPublicAppointment(
         clientId: client.id,
         vehiculeId: vehicule.id,
         statut: "planifie",
-        dateRendezVous,
-        heureRendezVous,
-        durationMinutes,
-        typeService,
+        dateRendezVous:
+          normalizePublicAppointmentDate(data.dateSouhaitee),
+        heureRendezVous:
+          normalizePublicAppointmentTime(data.heureSouhaitee),
+        durationMinutes:
+          normalizedAppointment.durationMinutes,
+        startAt:
+          normalizedAppointment.startAt,
+        endAt:
+          normalizedAppointment.endAt,
+        typeService:
+          normalizedAppointment.serviceCode,
+        serviceCode:
+          normalizedAppointment.serviceCode,
+        serviceLabel:
+          normalizedAppointment.serviceLabel,
         motif: "Demande de rendez-vous depuis le site public",
         commentaire: buildPublicAppointmentMessage(data),
         source: "site_public",
