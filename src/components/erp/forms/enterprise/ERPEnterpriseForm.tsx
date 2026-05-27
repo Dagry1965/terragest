@@ -109,6 +109,112 @@ function applyRuntimeStatusGovernanceToField(
   };
 }
 
+function isBlankRuntimeValue(value: unknown) {
+  return (
+    value === undefined ||
+    value === null ||
+    String(value).trim() === ""
+  );
+}
+
+function extractDateOnlyFromRuntimeDateTime(value: unknown) {
+  if (typeof value !== "string") {
+    return "";
+  }
+
+  const trimmed = value.trim();
+
+  if (!trimmed) {
+    return "";
+  }
+
+  if (/^\d{4}-\d{2}-\d{2}/.test(trimmed)) {
+    return trimmed.slice(0, 10);
+  }
+
+  return "";
+}
+
+function extractTimeOnlyFromRuntimeDateTime(value: unknown) {
+  if (typeof value !== "string") {
+    return "";
+  }
+
+  const trimmed = value.trim();
+
+  if (!trimmed) {
+    return "";
+  }
+
+  const timeMatch =
+    trimmed.match(/T(\d{2}:\d{2})/) ??
+    trimmed.match(/^(\d{2}:\d{2})/);
+
+  return timeMatch?.[1] ?? "";
+}
+
+function applySchedulingInitialValues(
+  module: ERPModule,
+  values: Record<string, unknown>
+) {
+  const schedulingConfig =
+    module.scheduling;
+
+  if (!schedulingConfig?.enabled) {
+    return values;
+  }
+
+  const startField =
+    schedulingConfig.startField ?? "startAt";
+
+  const dateField =
+    schedulingConfig.dateField;
+
+  const timeField =
+    schedulingConfig.timeField;
+
+  if (!dateField && !timeField) {
+    return values;
+  }
+
+  const startAt =
+    values[startField];
+
+  if (isBlankRuntimeValue(startAt)) {
+    return values;
+  }
+
+  const nextValues = {
+    ...values,
+  };
+
+  if (
+    dateField &&
+    isBlankRuntimeValue(nextValues[dateField])
+  ) {
+    const dateOnly =
+      extractDateOnlyFromRuntimeDateTime(startAt);
+
+    if (dateOnly) {
+      nextValues[dateField] = dateOnly;
+    }
+  }
+
+  if (
+    timeField &&
+    isBlankRuntimeValue(nextValues[timeField])
+  ) {
+    const timeOnly =
+      extractTimeOnlyFromRuntimeDateTime(startAt);
+
+    if (timeOnly) {
+      nextValues[timeField] = timeOnly;
+    }
+  }
+
+  return nextValues;
+}
+
 interface ERPEnterpriseFormProps {
   module: ERPModule;
   mode?: "create" | "edit";
@@ -475,17 +581,23 @@ export function ERPEnterpriseForm({
       );
 
     if (mode === "create") {
-      return {
-        ...defaultValues,
-        ...initialData,
-        ...queryValues,
-      };
+      return applySchedulingInitialValues(
+        module,
+        {
+          ...defaultValues,
+          ...initialData,
+          ...queryValues,
+        }
+      );
     }
 
-    return {
-      ...initialData,
-      ...queryValues,
-    };
+    return applySchedulingInitialValues(
+      module,
+      {
+        ...initialData,
+        ...queryValues,
+      }
+    );
   }
 
   const [formValues, setFormValues] =
