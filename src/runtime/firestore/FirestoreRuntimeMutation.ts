@@ -352,6 +352,17 @@ export class FirestoreRuntimeMutation {
       persistedRecordForSideEffects
     );
 
+    if (module.metadata.key === "rendezvous") {
+      const { PublicSchedulingAvailabilityMirrorService } =
+        await import("@/runtime/scheduling/public-availability");
+
+      await PublicSchedulingAvailabilityMirrorService.syncFromRecord({
+        moduleKey: module.metadata.key,
+        operation: "create",
+        record: persistedRecordForSideEffects,
+      });
+    }
+
     return result;
   }
 
@@ -440,6 +451,17 @@ const isolatedData =
       updatedRecordForSideEffects
     );
 
+    if (module.metadata.key === "rendezvous") {
+      const { PublicSchedulingAvailabilityMirrorService } =
+        await import("@/runtime/scheduling/public-availability");
+
+      await PublicSchedulingAvailabilityMirrorService.syncFromRecord({
+        moduleKey: module.metadata.key,
+        operation: "update",
+        record: updatedRecordForSideEffects,
+      });
+    }
+
     return result;
   }
 
@@ -450,7 +472,8 @@ const isolatedData =
     // Q16B2_PREVIOUS_LINE_RECORD_BEFORE_DELETE
     // Si une ligne est supprimée, on garde son interventionId pour recalculer le parent.
     const previousRecordForSideEffects =
-      module.metadata.key === "lignesinterventionauto"
+      module.metadata.key === "lignesinterventionauto" ||
+      module.metadata.key === "rendezvous"
         ? await FirestoreRuntimeRepository.findById(
             module,
             id
@@ -496,6 +519,20 @@ await RuntimeReferentialIntegrityEngine.assertCanDelete(
           error
         );
       }
+    }
+
+    if (
+      module.metadata.key === "rendezvous" &&
+      previousRecordForSideEffects
+    ) {
+      const { PublicSchedulingAvailabilityMirrorService } =
+        await import("@/runtime/scheduling/public-availability");
+
+      await PublicSchedulingAvailabilityMirrorService.syncFromRecord({
+        moduleKey: module.metadata.key,
+        operation: "delete",
+        record: previousRecordForSideEffects,
+      });
     }
 
     return result;
