@@ -556,6 +556,8 @@ const [records, setRecords] =
 const slots =
   RuntimeSchedulingEngine.getAvailableSlotsWithBookings({
     date: selectedDate,
+    durationMinutes:
+      schedulingConfig.defaultDurationMinutes,
     bookings,
     calendarExceptions:
       schedulingConfig.calendarExceptions,
