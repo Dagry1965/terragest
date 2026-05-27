@@ -1,0 +1,432 @@
+{
+  "audit": "Q-FREEZE-AMARKHYS-1",
+  "title": "Audit final avant gel / présentation",
+  "generatedAt": "2026-05-27T15:48:27.122Z",
+  "summary": {
+    "okCount": 52,
+    "failCount": 0,
+    "highFailCount": 0
+  },
+  "checks": [
+    {
+      "level": "OK",
+      "label": "Fichier présent: dashboard",
+      "ok": true,
+      "details": "src/app/(private)/dashboard/page.tsx"
+    },
+    {
+      "level": "OK",
+      "label": "Fichier présent: cockpit",
+      "ok": true,
+      "details": "src/components/erp/cockpit/AmarkhysOperationalCockpit.tsx"
+    },
+    {
+      "level": "OK",
+      "label": "Fichier présent: cockpitResolver",
+      "ok": true,
+      "details": "src/runtime/cockpit/RuntimeOperationalCockpitResolver.ts"
+    },
+    {
+      "level": "OK",
+      "label": "Fichier présent: publicRdv",
+      "ok": true,
+      "details": "src/app/rdv/page.tsx"
+    },
+    {
+      "level": "OK",
+      "label": "Fichier présent: publicAppointmentService",
+      "ok": true,
+      "details": "src/components/public/PublicAppointmentService.ts"
+    },
+    {
+      "level": "OK",
+      "label": "Fichier présent: publicSchedulingBridge",
+      "ok": true,
+      "details": "src/runtime/scheduling/public/RuntimePublicSchedulingContractBridge.ts"
+    },
+    {
+      "level": "OK",
+      "label": "Fichier présent: clients",
+      "ok": true,
+      "details": "src/runtime/modules/generated/clientsauto/clientsauto.module.ts"
+    },
+    {
+      "level": "OK",
+      "label": "Fichier présent: vehicules",
+      "ok": true,
+      "details": "src/runtime/modules/generated/vehicules/vehicules.module.ts"
+    },
+    {
+      "level": "OK",
+      "label": "Fichier présent: rendezvous",
+      "ok": true,
+      "details": "src/runtime/modules/generated/rendezvous/rendezvous.module.ts"
+    },
+    {
+      "level": "OK",
+      "label": "Fichier présent: interventions",
+      "ok": true,
+      "details": "src/runtime/modules/generated/interventionsauto/interventionsauto.module.ts"
+    },
+    {
+      "level": "OK",
+      "label": "Fichier présent: lignesIntervention",
+      "ok": true,
+      "details": "src/runtime/modules/generated/lignesinterventionauto/lignesinterventionauto.module.ts"
+    },
+    {
+      "level": "OK",
+      "label": "Fichier présent: factures",
+      "ok": true,
+      "details": "src/runtime/modules/generated/facturesauto/facturesauto.module.ts"
+    },
+    {
+      "level": "OK",
+      "label": "Fichier présent: encaissements",
+      "ok": true,
+      "details": "src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts"
+    },
+    {
+      "level": "OK",
+      "label": "Fichier présent: produits",
+      "ok": true,
+      "details": "src/runtime/modules/generated/produitsauto/produitsauto.module.ts"
+    },
+    {
+      "level": "OK",
+      "label": "Fichier présent: stocks",
+      "ok": true,
+      "details": "src/runtime/modules/generated/stocksauto/stocksauto.module.ts"
+    },
+    {
+      "level": "OK",
+      "label": "Fichier présent: runtimePage",
+      "ok": true,
+      "details": "src/components/erp/runtime/ERPRuntimePage.tsx"
+    },
+    {
+      "level": "OK",
+      "label": "Fichier présent: relatedPanel",
+      "ok": true,
+      "details": "src/components/erp/runtime/ERPRelatedRecordsPanel.tsx"
+    },
+    {
+      "level": "OK",
+      "label": "Fichier présent: enterpriseForm",
+      "ok": true,
+      "details": "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx"
+    },
+    {
+      "level": "OK",
+      "label": "Fichier présent: formField",
+      "ok": true,
+      "details": "src/components/erp/forms/enterprise/ERPFormField.tsx"
+    },
+    {
+      "level": "OK",
+      "label": "Fichier présent: schedulingEngine",
+      "ok": true,
+      "details": "src/runtime/scheduling/RuntimeSchedulingEngine.ts"
+    },
+    {
+      "level": "OK",
+      "label": "Fichier présent: schedulingSettingsEngine",
+      "ok": true,
+      "details": "src/runtime/scheduling/settings/RuntimeSchedulingSettingsEngine.ts"
+    },
+    {
+      "level": "OK",
+      "label": "Fichier présent: schedulingRepository",
+      "ok": true,
+      "details": "src/runtime/scheduling/settings/RuntimeSchedulingSettingsRepository.ts"
+    },
+    {
+      "level": "OK",
+      "label": "Fichier présent: stockMovementService",
+      "ok": true,
+      "details": "src/runtime/stock/RuntimeStockMovementService.ts"
+    },
+    {
+      "level": "OK",
+      "label": "Fichier présent: lineRemovalService",
+      "ok": true,
+      "details": "src/runtime/line-items/RuntimeLineRemovalService.ts"
+    },
+    {
+      "level": "OK",
+      "label": "Fichier présent: actionEngine",
+      "ok": true,
+      "details": "src/runtime/actions/RuntimeActionEngine.ts"
+    },
+    {
+      "level": "OK",
+      "label": "Fichier présent: statusGovernance",
+      "ok": true,
+      "details": "src/runtime/status/RuntimeStatusGovernanceEngine.ts"
+    },
+    {
+      "level": "OK",
+      "label": "Fichier présent: contextEnforcer",
+      "ok": true,
+      "details": "src/runtime/context/RuntimeContextEnforcer.ts"
+    },
+    {
+      "level": "OK",
+      "label": "/dashboard branché sur AmarkhysOperationalCockpit",
+      "ok": true,
+      "details": "src/app/(private)/dashboard/page.tsx"
+    },
+    {
+      "level": "OK",
+      "label": "clientsauto possède composition.children",
+      "ok": true,
+      "details": "src/runtime/modules/generated/clientsauto/clientsauto.module.ts"
+    },
+    {
+      "level": "OK",
+      "label": "clientsauto contient action Nouveau RDV",
+      "ok": true,
+      "details": "src/runtime/modules/generated/clientsauto/clientsauto.module.ts"
+    },
+    {
+      "level": "OK",
+      "label": "clientsauto expose véhicules liés",
+      "ok": true,
+      "details": "src/runtime/modules/generated/clientsauto/clientsauto.module.ts"
+    },
+    {
+      "level": "OK",
+      "label": "clientsauto expose RDV/interventions/factures/encaissements liés",
+      "ok": true,
+      "details": "src/runtime/modules/generated/clientsauto/clientsauto.module.ts"
+    },
+    {
+      "level": "OK",
+      "label": "ERPFormField FieldWrapper lisible",
+      "ok": true,
+      "details": "src/components/erp/forms/enterprise/ERPFormField.tsx"
+    },
+    {
+      "level": "OK",
+      "label": "ERPRuntimePage rend ERPRelatedRecordsPanel",
+      "ok": true,
+      "details": "src/components/erp/runtime/ERPRuntimePage.tsx"
+    },
+    {
+      "level": "OK",
+      "label": "ERPRuntimePage rend ERPEnterpriseForm en edit",
+      "ok": true,
+      "details": "src/components/erp/runtime/ERPRuntimePage.tsx"
+    },
+    {
+      "level": "OK",
+      "label": "ERPRelatedRecordsPanel filtre les enfants par foreignKey",
+      "ok": true,
+      "details": "src/components/erp/runtime/ERPRelatedRecordsPanel.tsx"
+    },
+    {
+      "level": "OK",
+      "label": "ERPRelatedRecordsPanel permet création enfant contextualisée",
+      "ok": true,
+      "details": "src/components/erp/runtime/ERPRelatedRecordsPanel.tsx"
+    },
+    {
+      "level": "OK",
+      "label": "rendezvous déclare scheduling",
+      "ok": true,
+      "details": "src/runtime/modules/generated/rendezvous/rendezvous.module.ts"
+    },
+    {
+      "level": "OK",
+      "label": "RuntimeSchedulingEngine présent avec slots/bookings",
+      "ok": true,
+      "details": "src/runtime/scheduling/RuntimeSchedulingEngine.ts"
+    },
+    {
+      "level": "OK",
+      "label": "Service RDV public expose createPublicAppointment",
+      "ok": true,
+      "details": "src/components/public/PublicAppointmentService.ts"
+    },
+    {
+      "level": "OK",
+      "label": "/rdv public consomme le landing public AMARKHYS",
+      "ok": true,
+      "details": "src/app/rdv/page.tsx"
+    },
+    {
+      "level": "OK",
+      "label": "Landing public consomme disponibilité scheduling runtime",
+      "ok": true,
+      "details": "src/components/public/AmarkhysPublicAppointmentLanding.tsx"
+    },
+    {
+      "level": "OK",
+      "label": "RuntimeStockMovementService protège mouvements stock",
+      "ok": true,
+      "details": "src/runtime/stock/RuntimeStockMovementService.ts"
+    },
+    {
+      "level": "OK",
+      "label": "RuntimeActionEngine présent",
+      "ok": true,
+      "details": "src/runtime/actions/RuntimeActionEngine.ts"
+    },
+    {
+      "level": "OK",
+      "label": "RuntimeContextEnforcer protège tenant/workspace/moduleKey",
+      "ok": true,
+      "details": "src/runtime/context/RuntimeContextEnforcer.ts"
+    },
+    {
+      "level": "OK",
+      "label": "Aucun diagnostic temporaire: GENERIC_EDIT_RECORD_LOADED",
+      "ok": true,
+      "details": ""
+    },
+    {
+      "level": "OK",
+      "label": "Aucun diagnostic temporaire: ERP_RUNTIME_PAGE_RENDER",
+      "ok": true,
+      "details": ""
+    },
+    {
+      "level": "OK",
+      "label": "Aucun diagnostic temporaire: ERP_ENTERPRISE_FORM_RENDER",
+      "ok": true,
+      "details": ""
+    },
+    {
+      "level": "OK",
+      "label": "Aucun diagnostic temporaire: ERP_FORM_TABS_RENDER",
+      "ok": true,
+      "details": ""
+    },
+    {
+      "level": "OK",
+      "label": "Aucun diagnostic temporaire: QCLIENT360_VISIBLE_FIELDS_DEBUG",
+      "ok": true,
+      "details": ""
+    },
+    {
+      "level": "OK",
+      "label": "Aucun diagnostic temporaire: QCLIENT360_SECTION_FIELDS_DEBUG",
+      "ok": true,
+      "details": ""
+    },
+    {
+      "level": "OK",
+      "label": "Aucun diagnostic temporaire: QCLIENT360_FIELD_WRAPPER_DEBUG",
+      "ok": true,
+      "details": ""
+    }
+  ],
+  "files": {
+    "src/app/(private)/dashboard/page.tsx": {
+      "exists": true,
+      "length": 159
+    },
+    "src/components/erp/cockpit/AmarkhysOperationalCockpit.tsx": {
+      "exists": true
+    },
+    "src/runtime/cockpit/RuntimeOperationalCockpitResolver.ts": {
+      "exists": true
+    },
+    "src/app/rdv/page.tsx": {
+      "exists": true,
+      "length": 309
+    },
+    "src/components/public/PublicAppointmentService.ts": {
+      "exists": true,
+      "length": 5750
+    },
+    "src/runtime/scheduling/public/RuntimePublicSchedulingContractBridge.ts": {
+      "exists": true
+    },
+    "src/runtime/modules/generated/clientsauto/clientsauto.module.ts": {
+      "exists": true,
+      "length": 10644
+    },
+    "src/runtime/modules/generated/vehicules/vehicules.module.ts": {
+      "exists": true
+    },
+    "src/runtime/modules/generated/rendezvous/rendezvous.module.ts": {
+      "exists": true,
+      "length": 8547
+    },
+    "src/runtime/modules/generated/interventionsauto/interventionsauto.module.ts": {
+      "exists": true
+    },
+    "src/runtime/modules/generated/lignesinterventionauto/lignesinterventionauto.module.ts": {
+      "exists": true
+    },
+    "src/runtime/modules/generated/facturesauto/facturesauto.module.ts": {
+      "exists": true
+    },
+    "src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts": {
+      "exists": true
+    },
+    "src/runtime/modules/generated/produitsauto/produitsauto.module.ts": {
+      "exists": true
+    },
+    "src/runtime/modules/generated/stocksauto/stocksauto.module.ts": {
+      "exists": true
+    },
+    "src/components/erp/runtime/ERPRuntimePage.tsx": {
+      "exists": true,
+      "length": 11899
+    },
+    "src/components/erp/runtime/ERPRelatedRecordsPanel.tsx": {
+      "exists": true,
+      "length": 24558
+    },
+    "src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx": {
+      "exists": true,
+      "length": 55770
+    },
+    "src/components/erp/forms/enterprise/ERPFormField.tsx": {
+      "exists": true,
+      "length": 34381
+    },
+    "src/runtime/scheduling/RuntimeSchedulingEngine.ts": {
+      "exists": true,
+      "length": 19263
+    },
+    "src/runtime/scheduling/settings/RuntimeSchedulingSettingsEngine.ts": {
+      "exists": true
+    },
+    "src/runtime/scheduling/settings/RuntimeSchedulingSettingsRepository.ts": {
+      "exists": true
+    },
+    "src/runtime/stock/RuntimeStockMovementService.ts": {
+      "exists": true,
+      "length": 7946
+    },
+    "src/runtime/line-items/RuntimeLineRemovalService.ts": {
+      "exists": true
+    },
+    "src/runtime/actions/RuntimeActionEngine.ts": {
+      "exists": true,
+      "length": 5329
+    },
+    "src/runtime/status/RuntimeStatusGovernanceEngine.ts": {
+      "exists": true
+    },
+    "src/runtime/context/RuntimeContextEnforcer.ts": {
+      "exists": true,
+      "length": 6464
+    },
+    "src/components/public/AmarkhysPublicAppointmentLanding.tsx": {
+      "exists": true,
+      "length": 35241
+    },
+    "src/components/erp/forms/enterprise/ERPFormTabs.tsx": {
+      "exists": true,
+      "length": 6482
+    },
+    "src/components/erp/generic/GenericEditPage.tsx": {
+      "exists": true,
+      "length": 1666
+    }
+  }
+}
