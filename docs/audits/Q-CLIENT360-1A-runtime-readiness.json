@@ -1,0 +1,201 @@
+{
+  "audit": "Q-CLIENT360-1A",
+  "title": "Audit fiche client 360 runtime readiness",
+  "generatedAt": "2026-05-27T14:13:24.229Z",
+  "files": {
+    "src/runtime/modules/generated/clientsauto/clientsauto.module.ts": {
+      "exists": true,
+      "length": 10495,
+      "hasComposition": true,
+      "hasChildren": true,
+      "hasActions": false,
+      "hasRelations": true,
+      "hasClientId": true,
+      "hasVehiculeId": true,
+      "hasInterventionId": true,
+      "hasFactureId": true,
+      "hasLabelFields": true,
+      "hasSubtitleFields": true,
+      "hasDisplayIn": true,
+      "hasNouveauRdv": false
+    },
+    "src/runtime/modules/generated/vehicules/vehicules.module.ts": {
+      "exists": true,
+      "length": 10508,
+      "hasComposition": true,
+      "hasChildren": true,
+      "hasActions": false,
+      "hasRelations": true,
+      "hasClientId": true,
+      "hasVehiculeId": true,
+      "hasInterventionId": true,
+      "hasFactureId": false,
+      "hasLabelFields": true,
+      "hasSubtitleFields": true,
+      "hasDisplayIn": true,
+      "hasNouveauRdv": false
+    },
+    "src/runtime/modules/generated/rendezvous/rendezvous.module.ts": {
+      "exists": true,
+      "length": 8547,
+      "hasComposition": true,
+      "hasChildren": true,
+      "hasActions": true,
+      "hasRelations": true,
+      "hasClientId": true,
+      "hasVehiculeId": true,
+      "hasInterventionId": false,
+      "hasFactureId": false,
+      "hasLabelFields": true,
+      "hasSubtitleFields": true,
+      "hasDisplayIn": true,
+      "hasNouveauRdv": false
+    },
+    "src/runtime/modules/generated/interventionsauto/interventionsauto.module.ts": {
+      "exists": true,
+      "length": 11788,
+      "hasComposition": true,
+      "hasChildren": true,
+      "hasActions": true,
+      "hasRelations": true,
+      "hasClientId": true,
+      "hasVehiculeId": true,
+      "hasInterventionId": true,
+      "hasFactureId": false,
+      "hasLabelFields": true,
+      "hasSubtitleFields": true,
+      "hasDisplayIn": true,
+      "hasNouveauRdv": false
+    },
+    "src/runtime/modules/generated/facturesauto/facturesauto.module.ts": {
+      "exists": true,
+      "length": 12788,
+      "hasComposition": true,
+      "hasChildren": true,
+      "hasActions": true,
+      "hasRelations": true,
+      "hasClientId": true,
+      "hasVehiculeId": true,
+      "hasInterventionId": true,
+      "hasFactureId": true,
+      "hasLabelFields": true,
+      "hasSubtitleFields": true,
+      "hasDisplayIn": true,
+      "hasNouveauRdv": false
+    },
+    "src/components/erp/runtime/ERPRelatedRecordsPanel.tsx": {
+      "exists": true,
+      "length": 24558,
+      "hasComposition": false,
+      "hasChildren": false,
+      "hasActions": false,
+      "hasRelations": true,
+      "hasClientId": false,
+      "hasVehiculeId": false,
+      "hasInterventionId": false,
+      "hasFactureId": false,
+      "hasLabelFields": true,
+      "hasSubtitleFields": true,
+      "hasDisplayIn": false,
+      "hasNouveauRdv": false
+    },
+    "src/components/erp/runtime/ERPContextBanner.tsx": {
+      "exists": false
+    },
+    "src/components/erp/runtime/ERPRuntimeDetails.tsx": {
+      "exists": true,
+      "length": 9079,
+      "hasComposition": false,
+      "hasChildren": false,
+      "hasActions": false,
+      "hasRelations": false,
+      "hasClientId": true,
+      "hasVehiculeId": true,
+      "hasInterventionId": false,
+      "hasFactureId": true,
+      "hasLabelFields": false,
+      "hasSubtitleFields": false,
+      "hasDisplayIn": false,
+      "hasNouveauRdv": false
+    },
+    "src/components/erp/runtime/ERPRuntimePage.tsx": {
+      "exists": true,
+      "length": 11633,
+      "hasComposition": false,
+      "hasChildren": false,
+      "hasActions": true,
+      "hasRelations": false,
+      "hasClientId": true,
+      "hasVehiculeId": true,
+      "hasInterventionId": false,
+      "hasFactureId": true,
+      "hasLabelFields": false,
+      "hasSubtitleFields": false,
+      "hasDisplayIn": true,
+      "hasNouveauRdv": true
+    },
+    "src/runtime/modules/ERPModule.ts": {
+      "exists": true,
+      "length": 6120,
+      "hasComposition": false,
+      "hasChildren": false,
+      "hasActions": false,
+      "hasRelations": true,
+      "hasClientId": false,
+      "hasVehiculeId": false,
+      "hasInterventionId": true,
+      "hasFactureId": false,
+      "hasLabelFields": true,
+      "hasSubtitleFields": true,
+      "hasDisplayIn": true,
+      "hasNouveauRdv": false
+    }
+  },
+  "findings": [
+    {
+      "level": "OK",
+      "text": "Module clientsauto présent."
+    },
+    {
+      "level": "OK",
+      "text": "clientsauto possède une composition runtime."
+    },
+    {
+      "level": "OK",
+      "text": "clientsauto semble déjà déclarer des enfants liés."
+    },
+    {
+      "level": "OK",
+      "text": "vehicules contient clientId : relation client → véhicules possible."
+    },
+    {
+      "level": "OK",
+      "text": "rendezvous contient clientId : historique RDV client possible."
+    },
+    {
+      "level": "OK",
+      "text": "interventionsauto contient clientId/vehiculeId : historique interventions possible."
+    },
+    {
+      "level": "OK",
+      "text": "facturesauto contient clientId/interventionId : historique factures possible."
+    },
+    {
+      "level": "OK",
+      "text": "ERPRelatedRecordsPanel existe : on peut éviter une page locale spécifique."
+    },
+    {
+      "level": "WARN",
+      "text": "ERPRuntimePage existe mais children non détecté par audit simple."
+    },
+    {
+      "level": "INFO",
+      "text": "Action Nouveau RDV non détectée dans clientsauto."
+    }
+  ],
+  "recommendations": [
+    "Ajouter une action contextuelle Nouveau RDV via metadata/actions si absente.",
+    "V1 recommandée : enrichir clientsauto.composition.children et actions, puis améliorer le rendu générique existant.",
+    "Ne pas créer ClientDetail.tsx local ; rester sur ERPRuntimePage + metadata + panels génériques."
+  ]
+}

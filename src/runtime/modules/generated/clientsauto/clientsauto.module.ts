@@ -387,7 +387,16 @@ export const clientsautoModule: ERPModule = {
       }],
   },
 
-  workflows:[
+
+  actions: [
+    {
+      key: "nouveau-rdv-client",
+      label: "Nouveau RDV",
+      type: "primary",
+      href: "/rendezvous/nouveau",
+    },
+  ],
+workflows:[
     {
       key:"client",
       label:"Cycle client",
