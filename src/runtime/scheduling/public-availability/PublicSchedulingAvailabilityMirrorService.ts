@@ -78,6 +78,40 @@ function resolveDate(record: PublicSchedulingAvailabilitySourceRecord): string {
   );
 }
 
+function normalizePublicSchedulingTime(value: unknown): string {
+  const raw = asString(value)
+    .toLowerCase()
+    .replace(/\s+/g, "")
+    .replace("h", ":");
+
+  if (!raw) {
+    return "";
+  }
+
+  const match =
+    raw.match(/^(\d{1,2})(?::(\d{1,2}))?$/);
+
+  if (!match) {
+    return raw;
+  }
+
+  const hour = Number(match[1]);
+  const minute = Number(match[2] ?? "0");
+
+  if (
+    !Number.isFinite(hour) ||
+    !Number.isFinite(minute) ||
+    hour < 0 ||
+    hour > 23 ||
+    minute < 0 ||
+    minute > 59
+  ) {
+    return "";
+  }
+
+  return String(hour).padStart(2, "0") + ":" + String(minute).padStart(2, "0");
+}
+
 function resolveStartTime(record: PublicSchedulingAvailabilitySourceRecord): string {
   const explicitTime =
     asString(record.heureRendezVous) ||
@@ -85,13 +119,13 @@ function resolveStartTime(record: PublicSchedulingAvailabilitySourceRecord): str
     asString(record.time);
 
   if (explicitTime) {
-    return explicitTime;
+    return normalizePublicSchedulingTime(explicitTime);
   }
 
   const startAt = asString(record.startAt);
 
   if (startAt.includes("T")) {
-    return startAt.slice(11, 16);
+    return normalizePublicSchedulingTime(startAt.slice(11, 16));
   }
 
   return "";
@@ -103,13 +137,13 @@ function resolveEndTime(record: PublicSchedulingAvailabilitySourceRecord): strin
     asString(record.finRendezVous);
 
   if (explicitEnd) {
-    return explicitEnd;
+    return normalizePublicSchedulingTime(explicitEnd);
   }
 
   const endAt = asString(record.endAt);
 
   if (endAt.includes("T")) {
-    return endAt.slice(11, 16);
+    return normalizePublicSchedulingTime(endAt.slice(11, 16));
   }
 
   return "";
