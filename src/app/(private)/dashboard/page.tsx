@@ -1,7 +1,5 @@
-import { ERPBusinessDashboard } from "@/components/erp/dashboard/business/ERPBusinessDashboard";
-
-export const dynamic = "force-dynamic";
+import { AmarkhysOperationalCockpit } from "@/components/erp/cockpit";
 
 export default function DashboardPage() {
-  return <ERPBusinessDashboard />;
+  return <AmarkhysOperationalCockpit />;
 }
