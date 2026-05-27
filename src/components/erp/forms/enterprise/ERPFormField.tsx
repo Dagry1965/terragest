@@ -355,6 +355,13 @@ function FieldWrapper({
       className={`
         space-y-2
         col-span-12
+        rounded-2xl
+        border
+        border-slate-200
+        bg-white
+        p-4
+        shadow-sm
+        text-slate-950
         ${field.grid?.cols ? gridClassMap[field.grid.cols] : ""}
       `}
     >
