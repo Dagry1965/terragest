@@ -743,6 +743,31 @@ export function ERPFormField({
     const unavailableSlotsCount =
       schedulingSlots.length - availableSlotsCount;
 
+    const currentSchedulingValue =
+      String(currentValue ?? "").trim();
+
+    const currentValueInSchedulingSlots =
+      schedulingSlots.some((slot) =>
+        String(slot.start) === currentSchedulingValue
+      );
+
+    const safeSchedulingSlots =
+      currentSchedulingValue && !currentValueInSchedulingSlots
+        ? [
+            {
+              start: currentSchedulingValue,
+              end: currentSchedulingValue,
+              label: currentSchedulingValue + " · Créneau actuel",
+              available: true,
+              remainingCapacity: undefined,
+              capacity: undefined,
+              usedCapacity: undefined,
+              reason: undefined,
+            },
+            ...schedulingSlots,
+          ]
+        : schedulingSlots;
+
     return (
       <FieldWrapper field={field} error={error}>
         <label className="block space-y-2">
@@ -769,7 +794,7 @@ export function ERPFormField({
               {disabledReason}
             </option>
 
-            {schedulingSlots.map((slot) => (
+            {safeSchedulingSlots.map((slot) => (
               <option
                 key={slot.start + "-" + slot.end}
                 value={slot.start}
