@@ -242,7 +242,7 @@ export function AmarkhysPublicAppointmentLanding() {
 
         if (!cancelled) {
           setAvailabilityError(
-            "Impossible de charger les disponibilités pour le moment."
+            "Impossible de charger les disponibilitÃ©s pour le moment."
           );
         }
       } finally {
@@ -294,7 +294,7 @@ export function AmarkhysPublicAppointmentLanding() {
     availabilityDays.length > 0
       ? "Jours " +
         String(publicDaysStartIndex + 1) +
-        " à " +
+        " Ã  " +
         String(
           Math.min(
             publicDaysStartIndex + PUBLIC_AVAILABILITY_DAYS_PER_PAGE,
@@ -330,11 +330,11 @@ export function AmarkhysPublicAppointmentLanding() {
 
   function validateForm() {
     if (!form.nom.trim()) return "Indiquez votre nom.";
-    if (!form.telephone.trim()) return "Indiquez votre numéro de téléphone.";
-    if (!form.vehicule.trim()) return "Indiquez votre véhicule.";
-    if (!form.immatriculation.trim()) return "Indiquez l’immatriculation.";
+    if (!form.telephone.trim()) return "Indiquez votre numÃ©ro de tÃ©lÃ©phone.";
+    if (!form.vehicule.trim()) return "Indiquez votre vÃ©hicule.";
+    if (!form.immatriculation.trim()) return "Indiquez lâ€™immatriculation.";
     if (!form.dateSouhaitee.trim() || !form.heureSouhaitee.trim()) {
-      return "Choisissez un créneau disponible.";
+      return "Choisissez un crÃ©neau disponible.";
     }
     return "";
   }
@@ -359,16 +359,8 @@ export function AmarkhysPublicAppointmentLanding() {
               service: form.service,
 dateSouhaitee: form.dateSouhaitee,
         heureSouhaitee: form.heureSouhaitee,
-        durationMinutes: selectedSlot
-          ? Math.max(
-              1,
-              Math.round(
-                (new Date(selectedSlot.date + "T" + selectedSlot.endTime + ":00").getTime() -
-                  new Date(selectedSlot.date + "T" + selectedSlot.startTime + ":00").getTime()) /
-                  60000
-              )
-            )
-          : 60,
+        durationMinutes:
+          selectedSlot?.durationMinutes ?? 60,
       });
 
       setSuccess(true);
@@ -376,7 +368,7 @@ dateSouhaitee: form.dateSouhaitee,
     } catch (submitError) {
       console.error("PUBLIC_APPOINTMENT_ERROR", submitError);
       setError(
-        "Impossible d’envoyer la demande pour le moment. Veuillez réessayer."
+        "Impossible dâ€™envoyer la demande pour le moment. Veuillez rÃ©essayer."
       );
     } finally {
       setSaving(false);
@@ -406,7 +398,7 @@ dateSouhaitee: form.dateSouhaitee,
             </h2>
 
             <p className="mt-2 max-w-2xl text-base text-slate-300">
-              Réservez votre créneau et profitez d’un service premium pour votre véhicule.
+              RÃ©servez votre crÃ©neau et profitez dâ€™un service premium pour votre vÃ©hicule.
             </p>
           </div>
 
@@ -462,7 +454,7 @@ dateSouhaitee: form.dateSouhaitee,
                       </p>
 
                       <h3 className="mt-2 text-2xl font-black text-white">
-                        Créneaux disponibles cette semaine
+                        CrÃ©neaux disponibles cette semaine
                       </h3>
                     </div>
 
@@ -480,7 +472,7 @@ dateSouhaitee: form.dateSouhaitee,
                       }}
                       className="hidden rounded-xl border border-[#d7a83f]/45 bg-[#2b2208]/70 px-4 py-3 text-sm font-black text-[#f8d479] shadow-[0_0_24px_rgba(215,168,63,0.12)] sm:inline-flex"
                     >
-                      Voir tous les créneaux
+                      Voir tous les crÃ©neaux
                     </button>
                   </div>
 
@@ -490,7 +482,7 @@ dateSouhaitee: form.dateSouhaitee,
                         Planning sur 30 jours
                       </p>
                       <p className="mt-1 text-sm font-semibold text-slate-300">
-                        {publicDaysRangeLabel || "Aucun créneau chargé"}
+                        {publicDaysRangeLabel || "Aucun crÃ©neau chargÃ©"}
                       </p>
                     </div>
 
@@ -501,7 +493,7 @@ dateSouhaitee: form.dateSouhaitee,
                         disabled={publicDaysPage <= 0}
                         className="rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2 text-xs font-black text-slate-200 transition hover:bg-white/[0.08] disabled:cursor-not-allowed disabled:opacity-40"
                       >
-                        ← Jours précédents
+                        â† Jours prÃ©cÃ©dents
                       </button>
 
                       <span className="rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2 text-xs font-black text-slate-300">
@@ -514,7 +506,7 @@ dateSouhaitee: form.dateSouhaitee,
                         disabled={publicDaysPage >= publicDaysPageCount - 1}
                         className="rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2 text-xs font-black text-slate-200 transition hover:bg-white/[0.08] disabled:cursor-not-allowed disabled:opacity-40"
                       >
-                        Jours suivants →
+                        Jours suivants â†’
                       </button>
                     </div>
                   </div>
@@ -527,7 +519,7 @@ dateSouhaitee: form.dateSouhaitee,
                   >
                     {loadingAvailability ? (
                       <div className="col-span-full rounded-xl border border-white/10 bg-white/[0.035] p-4 text-center text-sm font-semibold text-slate-300">
-                        Chargement des disponibilités...
+                        Chargement des disponibilitÃ©s...
                       </div>
                     ) : availabilityError ? (
                       <div className="col-span-full rounded-xl border border-red-400/30 bg-red-500/10 p-4 text-center text-sm font-semibold text-red-100">
@@ -535,7 +527,7 @@ dateSouhaitee: form.dateSouhaitee,
                       </div>
                     ) : displayedAvailabilityDays.length === 0 ? (
                       <div className="col-span-full rounded-xl border border-white/10 bg-white/[0.035] p-4 text-center text-sm font-semibold text-slate-300">
-                        Aucun créneau disponible pour le moment.
+                        Aucun crÃ©neau disponible pour le moment.
                       </div>
                     ) : (
                       displayedAvailabilityDays.map((day) => {
@@ -581,7 +573,7 @@ dateSouhaitee: form.dateSouhaitee,
                                           : "border-[#23ead4]/35 bg-[#23ead4]/10 text-[#bffcf6] hover:border-[#23ead4]/70 hover:bg-[#23ead4]/20"
                                     )}
                                   >
-                                    {slot.available ? slot.startTime : slot.startTime + " occupé"}
+                                    {slot.available ? slot.startTime : slot.startTime + " occupÃ©"}
                                   </button>
                                 );
                               })}
@@ -604,21 +596,21 @@ dateSouhaitee: form.dateSouhaitee,
             <div className="mt-5 grid gap-4 sm:grid-cols-3">
               <MetricCard
                 icon={Zap}
-                title="Réponse rapide"
-                description="Votre demande est transmise instantanément au garage."
+                title="RÃ©ponse rapide"
+                description="Votre demande est transmise instantanÃ©ment au garage."
               />
 
               <MetricCard
                 icon={CalendarDays}
-                title="Créneau confirmé"
+                title="CrÃ©neau confirmÃ©"
                 description="Nous vous recontactons rapidement pour valider votre passage."
                 gold
               />
 
               <MetricCard
                 icon={Headphones}
-                title="Suivi personnalisé"
-                description="Votre véhicule est pris en charge avec un suivi complet."
+                title="Suivi personnalisÃ©"
+                description="Votre vÃ©hicule est pris en charge avec un suivi complet."
               />
             </div>
           </motion.div>
@@ -642,7 +634,7 @@ dateSouhaitee: form.dateSouhaitee,
                     </p>
 
                     <h3 className="mt-2 text-3xl font-black text-white">
-                      Réserver un créneau
+                      RÃ©server un crÃ©neau
                     </h3>
                   </div>
                 </div>
@@ -663,11 +655,11 @@ dateSouhaitee: form.dateSouhaitee,
                   <CheckCircle2 className="h-10 w-10 text-[#23ead4]" />
 
                   <h4 className="mt-4 text-2xl font-black text-white">
-                    Demande envoyée
+                    Demande envoyÃ©e
                   </h4>
 
                   <p className="mt-3 text-sm leading-7 text-cyan-50/75">
-                    Votre demande a bien été transmise à AMARKHYS Garage.
+                    Votre demande a bien Ã©tÃ© transmise Ã  AMARKHYS Garage.
                   </p>
 
                   <button
@@ -699,7 +691,7 @@ dateSouhaitee: form.dateSouhaitee,
 
                     <label className="space-y-2">
                       <span className="text-sm font-black text-white">
-                        Téléphone *
+                        TÃ©lÃ©phone *
                       </span>
                       <InputShell icon={Phone}>
                         <input
@@ -717,7 +709,7 @@ dateSouhaitee: form.dateSouhaitee,
                   <div className="grid gap-4 sm:grid-cols-2">
                     <label className="space-y-2">
                       <span className="text-sm font-black text-white">
-                        Véhicule *
+                        VÃ©hicule *
                       </span>
                       <InputShell icon={Car}>
                         <input
@@ -725,7 +717,7 @@ dateSouhaitee: form.dateSouhaitee,
                           onChange={(event) =>
                             updateField("vehicule", event.target.value)
                           }
-                          placeholder="Marque, modèle"
+                          placeholder="Marque, modÃ¨le"
                           className="w-full bg-transparent px-3 py-3.5 text-sm font-semibold text-white outline-none placeholder:text-slate-400"
                         />
                       </InputShell>
@@ -750,7 +742,7 @@ dateSouhaitee: form.dateSouhaitee,
 
                   <label className="space-y-2">
                     <span className="text-sm font-black text-white">
-                      Service souhaité
+                      Service souhaitÃ©
                     </span>
                     <InputShell icon={Wrench}>
                       <select
@@ -772,7 +764,7 @@ dateSouhaitee: form.dateSouhaitee,
                           >
                             {service.label}
                             {service.durationMinutes
-                              ? " · " + service.durationMinutes + " min"
+                              ? " Â· " + service.durationMinutes + " min"
                               : ""}
                           </option>
                         ))}
@@ -783,7 +775,7 @@ dateSouhaitee: form.dateSouhaitee,
                   <div className="grid gap-4 sm:grid-cols-2">
                     <label className="space-y-2">
                       <span className="text-sm font-black text-white">
-                        Date souhaitée
+                        Date souhaitÃ©e
                       </span>
                       <InputShell icon={CalendarDays}>
                         <input
@@ -799,7 +791,7 @@ dateSouhaitee: form.dateSouhaitee,
 
                     <label className="space-y-2">
                       <span className="text-sm font-black text-white">
-                        Heure souhaitée
+                        Heure souhaitÃ©e
                       </span>
                       <InputShell icon={Clock3}>
                         <input
@@ -824,7 +816,7 @@ dateSouhaitee: form.dateSouhaitee,
                       onChange={(event) =>
                         updateField("message", event.target.value)
                       }
-                      placeholder="Précisez votre demande, un symptôme, une remarque..."
+                      placeholder="PrÃ©cisez votre demande, un symptÃ´me, une remarque..."
                       rows={4}
                       className="w-full rounded-xl border border-white/13 bg-black/20 px-4 py-4 text-sm font-semibold text-white outline-none placeholder:text-slate-400 transition focus:border-[#23ead4]/50 focus:shadow-[0_0_0_4px_rgba(35,234,212,0.08)]"
                     />
@@ -876,26 +868,26 @@ dateSouhaitee: form.dateSouhaitee,
           <div className="grid gap-6 lg:grid-cols-4">
             <BottomInfo
               icon={ShieldCheck}
-              title="Données sécurisées"
+              title="DonnÃ©es sÃ©curisÃ©es"
               description="Vos informations restent confidentielles."
             />
 
             <BottomInfo
               icon={Clock3}
-              title="Réponse rapide"
-              description="Confirmation sous 1h ouvrée."
+              title="RÃ©ponse rapide"
+              description="Confirmation sous 1h ouvrÃ©e."
             />
 
             <BottomInfo
               icon={CheckCircle2}
-              title="Atelier certifié"
-              description="Service premium et suivi structuré."
+              title="Atelier certifiÃ©"
+              description="Service premium et suivi structurÃ©."
             />
 
             <BottomInfo
               icon={LockKeyhole}
-              title="Confidentialité"
-              description="Votre demande est traitée avec soin."
+              title="ConfidentialitÃ©"
+              description="Votre demande est traitÃ©e avec soin."
             />
           </div>
         </footer>
