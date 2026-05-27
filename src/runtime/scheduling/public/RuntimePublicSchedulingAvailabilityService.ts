@@ -1,6 +1,6 @@
 import {
-  RuntimeDataBinding,
-} from "@/runtime/data-binding";
+  PublicRuntimeReadAdapter,
+} from "@/runtime/public-read";
 
 import {
   rendezvousModule,
@@ -284,11 +284,29 @@ export class RuntimePublicSchedulingAvailabilityService {
       },
     };
 
+    const publicRead =
+      await PublicRuntimeReadAdapter.list({
+        module: rendezvousModule,
+        context: readOptions,
+        purpose: "availability",
+        policy: {
+          allowedFields: [
+            "id",
+            "tenantId",
+            "workspace",
+            "moduleKey",
+            "dateRendezVous",
+            "heureRendezVous",
+            "durationMinutes",
+            "startAt",
+            "endAt",
+            "statut",
+          ],
+        },
+      });
+
     const records =
-      (await RuntimeDataBinding.list(
-        rendezvousModule,
-        readOptions
-      )) as RuntimeRecord[];
+      publicRead.records as RuntimeRecord[];
 
     const startDate =
       input.startDate && input.startDate.trim()
