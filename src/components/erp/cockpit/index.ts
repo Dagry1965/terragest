@@ -1,5 +1,5 @@
-export * from "./ERPCockpitMetricGrid";
-export * from "./ERPCockpitModuleMatrix";
-export * from "./ERPCockpitStreamsPanel";
-export * from "./ERPCockpitHealthPanel";
-export * from "./ERPRuntimeCockpitDashboard";
+export * from "./AmarkhysOperationalCockpit";
+
+export {
+  AmarkhysOperationalCockpit as ERPRuntimeCockpitDashboard,
+} from "./AmarkhysOperationalCockpit";
