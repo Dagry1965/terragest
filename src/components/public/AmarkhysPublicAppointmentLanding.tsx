@@ -267,6 +267,12 @@ export function AmarkhysPublicAppointmentLanding() {
     [availabilityDays]
   );
 
+  const publicServiceOptions = useMemo(
+    () =>
+      RuntimePublicSchedulingContractBridge.getPublicServices(),
+    []
+  );
+
   const publicDaysPageCount = Math.max(
     1,
     Math.ceil(availabilityDays.length / PUBLIC_AVAILABILITY_DAYS_PER_PAGE)
@@ -747,14 +753,30 @@ dateSouhaitee: form.dateSouhaitee,
                       Service souhaité
                     </span>
                     <InputShell icon={Wrench}>
-                      <input
+                      <select
                         value={form.service}
                         onChange={(event) =>
                           updateField("service", event.target.value)
                         }
-                        placeholder="Vidange, diagnostic, entretien..."
-                        className="w-full bg-transparent px-3 py-3.5 text-sm font-semibold text-white outline-none placeholder:text-slate-400"
-                      />
+                        className="w-full bg-transparent px-3 py-3.5 text-sm font-semibold text-white outline-none"
+                      >
+                        <option value="" className="bg-slate-950 text-white">
+                          Choisir un service
+                        </option>
+
+                        {publicServiceOptions.map((service) => (
+                          <option
+                            key={service.code}
+                            value={service.code}
+                            className="bg-slate-950 text-white"
+                          >
+                            {service.label}
+                            {service.durationMinutes
+                              ? " · " + service.durationMinutes + " min"
+                              : ""}
+                          </option>
+                        ))}
+                      </select>
                     </InputShell>
                   </label>
 
