@@ -26,26 +26,23 @@ import { createPublicAppointment } from "@/components/public/PublicAppointmentSe
 
 import {
   getPublicSchedulingAvailabilityAction,
+  RuntimePublicSchedulingContractBridge,
 } from "@/runtime/scheduling/public";
+
+import type {
+  PublicSchedulingContractDayView,
+} from "@/runtime/scheduling/public";
+
+import type {
+  RuntimeSchedulingSlotView,
+} from "@/runtime/scheduling/contract";
 
 const PUBLIC_AVAILABILITY_HORIZON_DAYS = 30;
 const PUBLIC_AVAILABILITY_DAYS_PER_PAGE = 7;
 
-type PublicRuntimeSlot = {
-  date: string;
-  startTime: string;
-  endTime: string;
-  label: string;
-  available: boolean;
-  remainingCapacity?: number;
-  reason?: string;
-};
+type PublicRuntimeSlot = RuntimeSchedulingSlotView;
 
-type PublicRuntimeDay = {
-  date: string;
-  label: string;
-  slots: PublicRuntimeSlot[];
-};
+type PublicRuntimeDay = PublicSchedulingContractDayView;
 
 type AppointmentForm = {
   nom: string;
@@ -237,7 +234,9 @@ export function AmarkhysPublicAppointmentLanding() {
           return;
         }
 
-        setAvailabilityDays(result.days);
+        setAvailabilityDays(
+          RuntimePublicSchedulingContractBridge.normalizePublicDays(result.days)
+        );
       } catch (loadError) {
         console.error("PUBLIC_SCHEDULING_AVAILABILITY_ERROR", loadError);
 
