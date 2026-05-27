@@ -11,12 +11,18 @@ import type {
   RuntimeMutationOptions,
 } from "@/runtime/firestore/FirestoreRuntimeMutation";
 
+import type {
+  RuntimeContextOptions,
+} from "@/runtime/context";
+
 export class RuntimeDataBinding {
   static async list(
-    module: ERPModule
+    module: ERPModule,
+    options: RuntimeContextOptions = {}
   ) {
     return FirestoreRuntimeQuery.list(
-      module
+      module,
+      options
     );
   }
 

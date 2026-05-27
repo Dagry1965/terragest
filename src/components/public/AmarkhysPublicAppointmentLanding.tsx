@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import {
   ArrowRight,
@@ -202,6 +202,8 @@ export function AmarkhysPublicAppointmentLanding() {
   const [loadingAvailability, setLoadingAvailability] = useState(true);
   const [availabilityError, setAvailabilityError] = useState("");
   const [selectedSlot, setSelectedSlot] = useState<PublicRuntimeSlot | null>(null);
+  const [showAllPublicSlots, setShowAllPublicSlots] = useState(false);
+  const availabilitySectionRef = useRef<HTMLDivElement | null>(null);
 
   function updateField(key: keyof AppointmentForm, value: string) {
     setForm((current) => ({
@@ -264,7 +266,6 @@ export function AmarkhysPublicAppointmentLanding() {
     if (!slot.available) {
       return;
     }
-
     setSelectedSlot(slot);
     updateField("dateSouhaitee", slot.date);
     updateField("heureSouhaitee", slot.startTime);
@@ -300,7 +301,8 @@ export function AmarkhysPublicAppointmentLanding() {
         telephone: form.telephone,
         vehicule: form.vehicule,
         immatriculation: form.immatriculation,
-      dateSouhaitee: form.dateSouhaitee,
+              service: form.service,
+dateSouhaitee: form.dateSouhaitee,
         heureSouhaitee: form.heureSouhaitee,
         durationMinutes: selectedSlot
           ? Math.max(
@@ -411,13 +413,27 @@ export function AmarkhysPublicAppointmentLanding() {
 
                     <button
                       type="button"
+                      onClick={() => {
+                        setShowAllPublicSlots(true);
+
+                        document
+                          .getElementById("public-rdv-availability")
+                          ?.scrollIntoView({
+                            behavior: "smooth",
+                            block: "center",
+                          });
+                      }}
                       className="hidden rounded-xl border border-[#d7a83f]/45 bg-[#2b2208]/70 px-4 py-3 text-sm font-black text-[#f8d479] shadow-[0_0_24px_rgba(215,168,63,0.12)] sm:inline-flex"
                     >
-                      Voir calendrier
+                      Voir tous les créneaux
                     </button>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 lg:grid-cols-7">
+                  <div
+                    id="public-rdv-availability"
+                    ref={availabilitySectionRef}
+                    className="grid grid-cols-2 gap-2 sm:grid-cols-4 lg:grid-cols-7"
+                  >
                     {loadingAvailability ? (
                       <div className="col-span-full rounded-xl border border-white/10 bg-white/[0.035] p-4 text-center text-sm font-semibold text-slate-300">
                         Chargement des disponibilités...
@@ -432,6 +448,10 @@ export function AmarkhysPublicAppointmentLanding() {
                       </div>
                     ) : (
                       days.map((day) => {
+                        const dayVisibleSlots = showAllPublicSlots
+                          ? day.slots
+                          : day.slots.filter((slot) => slot.available);
+
                         const dayAvailableSlots = day.slots.filter(
                           (slot) => slot.available
                         );
@@ -450,7 +470,7 @@ export function AmarkhysPublicAppointmentLanding() {
                             </p>
 
                             <div className="mt-4 flex flex-wrap justify-center gap-1.5">
-                              {dayAvailableSlots.slice(0, 4).map((slot) => {
+                              {dayVisibleSlots.slice(0, showAllPublicSlots ? dayVisibleSlots.length : 6).map((slot) => {
                                 const active =
                                   selectedSlot?.date === slot.date &&
                                   selectedSlot?.startTime === slot.startTime;
@@ -460,14 +480,17 @@ export function AmarkhysPublicAppointmentLanding() {
                                     key={slot.date + "-" + slot.startTime}
                                     type="button"
                                     onClick={() => selectRuntimeSlot(slot)}
+                                    disabled={!slot.available}
                                     className={cn(
                                       "rounded-full border px-2.5 py-1 text-[11px] font-black transition",
-                                      active
-                                        ? "border-[#f8d479]/80 bg-[#f8d479]/20 text-[#f8d479]"
-                                        : "border-[#23ead4]/35 bg-[#23ead4]/10 text-[#bffcf6] hover:border-[#23ead4]/70 hover:bg-[#23ead4]/20"
+                                      !slot.available
+                                        ? "cursor-not-allowed border-slate-600 bg-slate-800/60 text-slate-500"
+                                        : active
+                                          ? "border-[#f8d479]/80 bg-[#f8d479]/20 text-[#f8d479]"
+                                          : "border-[#23ead4]/35 bg-[#23ead4]/10 text-[#bffcf6] hover:border-[#23ead4]/70 hover:bg-[#23ead4]/20"
                                     )}
                                   >
-                                    {slot.startTime}
+                                    {slot.available ? slot.startTime : slot.startTime + " occupé"}
                                   </button>
                                 );
                               })}

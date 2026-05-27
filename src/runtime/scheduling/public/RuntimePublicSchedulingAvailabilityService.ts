@@ -65,6 +65,31 @@ function normalizeDays(value: unknown): number {
   return Math.max(1, Math.min(Math.trunc(parsed), 21));
 }
 
+function buildPublicAvailabilityDateTimeRange(params: {
+  date: string;
+  time: string;
+  durationMinutes?: number;
+}) {
+  const durationMinutes =
+    typeof params.durationMinutes === "number" &&
+    Number.isFinite(params.durationMinutes)
+      ? Math.max(1, Math.trunc(params.durationMinutes))
+      : 60;
+
+  if (!params.date || !params.time) {
+    return {
+      startAt: "",
+      endAt: "",
+    };
+  }
+
+  return RuntimeSchedulingEngine.buildDateTimeRange({
+    date: params.date,
+    time: params.time,
+    durationMinutes,
+  });
+}
+
 function buildBookingsForDate(
   records: RuntimeRecord[],
   dateOnly: string,
@@ -72,6 +97,8 @@ function buildBookingsForDate(
     dateField: string;
     startField: string;
     endField: string;
+    timeField?: string;
+    durationField?: string;
     statusField?: string;
     blockingStatuses?: string[];
   }
@@ -86,25 +113,122 @@ function buildBookingsForDate(
       return dateValue === dateOnly || startAt.startsWith(dateOnly);
     })
     .filter((record) => {
-      if (!config.statusField || blockingStatuses.length === 0) {
+      if (!config.statusField) {
         return true;
       }
 
-      return blockingStatuses.includes(
-        asString(record[config.statusField])
+      return !isPublicSchedulingCancelledStatus(
+        record[config.statusField]
       );
     })
-    .map((record) => ({
-      id: getRecordId(record),
-      startAt: asString(record[config.startField]),
-      endAt: asString(record[config.endField]),
-      status: config.statusField
-        ? asString(record[config.statusField])
-        : undefined,
-    }))
+    .map((record) => {
+      const directStartAt =
+        asString(record[config.startField]);
+
+      const directEndAt =
+        asString(record[config.endField]);
+
+      const timeField =
+        config.timeField ?? "time";
+
+      const durationField =
+        config.durationField ?? "durationMinutes";
+
+      const fallbackRange =
+        directStartAt && directEndAt
+          ? { startAt: directStartAt, endAt: directEndAt }
+          : buildPublicAvailabilityDateTimeRange({
+              date:
+                asString(record[config.dateField]) ||
+                asString(record.dateRendezVous) ||
+                asString(record.date),
+              time:
+                asString(record[timeField]) ||
+                asString(record.heureRendezVous) ||
+                asString(record.time),
+              durationMinutes:
+                typeof record[durationField] === "number"
+                  ? record[durationField] as number
+                  : Number(
+                      record[durationField] ??
+                        record.durationMinutes ??
+                        60
+                    ),
+            });
+
+      return {
+        id: getRecordId(record),
+        startAt: directStartAt || fallbackRange.startAt,
+        endAt: directEndAt || fallbackRange.endAt,
+        status: config.statusField
+          ? asString(record[config.statusField])
+          : undefined,
+      };
+    })
     .filter((booking) =>
       Boolean(booking.startAt && booking.endAt)
     );
+}
+
+function isPublicSchedulingCancelledStatus(value: unknown): boolean {
+  const status = String(value ?? "")
+    .trim()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+
+  return [
+    "annule",
+    "annulee",
+    "cancelled",
+    "canceled",
+    "inactive",
+  ].includes(status);
+}
+
+function buildOccupiedStartTimesForDate(
+  records: RuntimeRecord[],
+  dateOnly: string,
+  config: {
+    dateField: string;
+    timeField?: string;
+    statusField?: string;
+    blockingStatuses?: string[];
+  }
+): Set<string> {
+  const blockingStatuses = config.blockingStatuses ?? [];
+  const occupied = new Set<string>();
+
+  for (const record of records) {
+    const recordDate =
+      asString(record[config.dateField]) ||
+      asString(record.dateRendezVous) ||
+      asString(record.date);
+
+    if (recordDate !== dateOnly) {
+      continue;
+    }
+
+    if (
+      config.statusField &&
+      isPublicSchedulingCancelledStatus(record[config.statusField])
+    ) {
+      continue;
+    }
+
+    const timeField = config.timeField ?? "time";
+
+    const recordTime =
+      asString(record[timeField]) ||
+      asString(record.heureRendezVous) ||
+      asString(record.time);
+
+    if (recordTime) {
+      occupied.add(recordTime);
+    }
+  }
+
+  return occupied;
 }
 
 function toPublicSlot(
@@ -153,8 +277,18 @@ export class RuntimePublicSchedulingAvailabilityService {
         },
       });
 
+    const readOptions = {
+      context: {
+        tenantId,
+        workspace: workspaceId,
+      },
+    };
+
     const records =
-      (await RuntimeDataBinding.list(rendezvousModule)) as RuntimeRecord[];
+      (await RuntimeDataBinding.list(
+        rendezvousModule,
+        readOptions
+      )) as RuntimeRecord[];
 
     const startDate =
       input.startDate && input.startDate.trim()
@@ -180,6 +314,8 @@ export class RuntimePublicSchedulingAvailabilityService {
           dateField: schedulingConfig.dateField ?? "dateRendezVous",
           startField: schedulingConfig.startField ?? "startAt",
           endField: schedulingConfig.endField ?? "endAt",
+          timeField: schedulingConfig.timeField ?? "heureRendezVous",
+          durationField: schedulingConfig.durationField ?? "durationMinutes",
           statusField: schedulingConfig.statusField,
           blockingStatuses: schedulingConfig.blockingStatuses,
         }
@@ -197,11 +333,33 @@ export class RuntimePublicSchedulingAvailabilityService {
             schedulingConfig.capacity,
         });
 
+      const occupiedStartTimes =
+        buildOccupiedStartTimesForDate(
+          records,
+          date,
+          {
+            dateField: schedulingConfig.dateField ?? "dateRendezVous",
+            timeField: schedulingConfig.timeField ?? "heureRendezVous",
+            statusField: schedulingConfig.statusField,
+            blockingStatuses: schedulingConfig.blockingStatuses,
+          }
+        );
+
       days.push({
         date,
         label: formatPublicDayLabel(date),
         slots: slots.map((slot) =>
-          toPublicSlot(date, slot)
+          toPublicSlot(
+            date,
+            occupiedStartTimes.has(slot.start)
+              ? {
+                  ...slot,
+                  available: false,
+                  remainingCapacity: 0,
+                  reason: slot.reason ?? "Créneau complet",
+                }
+              : slot
+          )
         ),
       });
     }

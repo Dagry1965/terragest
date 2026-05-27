@@ -27,7 +27,8 @@ type PublicAppointmentInput = {
   telephone: string;
   vehicule: string;
   immatriculation: string;
-  dateSouhaitee?: string;
+    service?: string;
+dateSouhaitee?: string;
   heureSouhaitee?: string;
   durationMinutes?: number;
 };
@@ -97,6 +98,16 @@ function normalizePublicAppointmentDuration(value: unknown): number {
   return Math.max(1, Math.min(Math.trunc(parsed), 480));
 }
 
+function normalizePublicAppointmentService(value: unknown): string {
+  if (typeof value !== "string") {
+    return "autre";
+  }
+
+  const trimmed = value.trim();
+
+  return trimmed ? trimmed : "autre";
+}
+
 export async function createPublicAppointment(
   data: PublicAppointmentInput
 ): Promise<PublicAppointmentResult> {
@@ -111,6 +122,9 @@ export async function createPublicAppointment(
 
   const durationMinutes =
     normalizePublicAppointmentDuration(data.durationMinutes);
+
+  const typeService =
+    normalizePublicAppointmentService(data.service);
 
   const client =
     await RuntimeDataBinding.create(
@@ -145,7 +159,7 @@ export async function createPublicAppointment(
         dateRendezVous,
         heureRendezVous,
         durationMinutes,
-        typeService: "autre",
+        typeService,
         motif: "Demande de rendez-vous depuis le site public",
         commentaire: buildPublicAppointmentMessage(data),
         source: "site_public",

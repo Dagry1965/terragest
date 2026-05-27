@@ -6,13 +6,18 @@ import {
   RuntimeContextEnforcer,
 } from "@/runtime/context";
 
+import type {
+  RuntimeContextOptions,
+} from "@/runtime/context";
+
 import {
   FirestoreRuntimeRepository,
 } from "./FirestoreRuntimeRepository";
 
 export class FirestoreRuntimeQuery {
   static async list(
-    module: ERPModule
+    module: ERPModule,
+    options: RuntimeContextOptions = {}
   ) {
     const records =
       await FirestoreRuntimeRepository.findMany(
@@ -21,7 +26,8 @@ export class FirestoreRuntimeQuery {
 
     return RuntimeContextEnforcer.filterReadContext(
       module,
-      records
+      records,
+      options
     );
   }
 
