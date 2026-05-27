@@ -1,4 +1,4 @@
-import { AmarkhysOperationalCockpit } from "@/components/erp/cockpit";
+﻿import { AmarkhysOperationalCockpit } from "@/components/erp/cockpit";
 
 export default function DashboardPage() {
   return <AmarkhysOperationalCockpit />;
