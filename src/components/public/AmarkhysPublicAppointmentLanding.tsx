@@ -28,6 +28,9 @@ import {
   getPublicSchedulingAvailabilityAction,
 } from "@/runtime/scheduling/public";
 
+const PUBLIC_AVAILABILITY_HORIZON_DAYS = 30;
+const PUBLIC_AVAILABILITY_DAYS_PER_PAGE = 7;
+
 type PublicRuntimeSlot = {
   date: string;
   startTime: string;
@@ -203,6 +206,7 @@ export function AmarkhysPublicAppointmentLanding() {
   const [availabilityError, setAvailabilityError] = useState("");
   const [selectedSlot, setSelectedSlot] = useState<PublicRuntimeSlot | null>(null);
   const [showAllPublicSlots, setShowAllPublicSlots] = useState(false);
+  const [publicDaysPage, setPublicDaysPage] = useState(0);
   const availabilitySectionRef = useRef<HTMLDivElement | null>(null);
 
   function updateField(key: keyof AppointmentForm, value: string) {
@@ -223,9 +227,11 @@ export function AmarkhysPublicAppointmentLanding() {
 
       try {
         const result = await getPublicSchedulingAvailabilityAction({
-          moduleKey: "rendezvous",
-          days: 7,
-        });
+        days: PUBLIC_AVAILABILITY_HORIZON_DAYS,
+        moduleKey: "rendezvous",
+        tenantId: "ORG_AMARKHYS_001",
+        workspaceId: "amarkhys",
+      });
 
         if (cancelled) {
           return;
@@ -261,6 +267,50 @@ export function AmarkhysPublicAppointmentLanding() {
       ),
     [availabilityDays]
   );
+
+  const publicDaysPageCount = Math.max(
+    1,
+    Math.ceil(availabilityDays.length / PUBLIC_AVAILABILITY_DAYS_PER_PAGE)
+  );
+
+  const publicDaysStartIndex =
+    publicDaysPage * PUBLIC_AVAILABILITY_DAYS_PER_PAGE;
+
+  const displayedAvailabilityDays = useMemo(
+    () =>
+      availabilityDays.slice(
+        publicDaysStartIndex,
+        publicDaysStartIndex + PUBLIC_AVAILABILITY_DAYS_PER_PAGE
+      ),
+    [availabilityDays, publicDaysStartIndex]
+  );
+
+  const publicDaysRangeLabel =
+    availabilityDays.length > 0
+      ? "Jours " +
+        String(publicDaysStartIndex + 1) +
+        " à " +
+        String(
+          Math.min(
+            publicDaysStartIndex + PUBLIC_AVAILABILITY_DAYS_PER_PAGE,
+            availabilityDays.length
+          )
+        ) +
+        " sur " +
+        String(availabilityDays.length)
+      : "";
+
+  function goToPreviousPublicDays() {
+    setPublicDaysPage((current) =>
+      Math.max(0, current - 1)
+    );
+  }
+
+  function goToNextPublicDays() {
+    setPublicDaysPage((current) =>
+      Math.min(publicDaysPageCount - 1, current + 1)
+    );
+  }
 
   function selectRuntimeSlot(slot: PublicRuntimeSlot) {
     if (!slot.available) {
@@ -429,6 +479,42 @@ dateSouhaitee: form.dateSouhaitee,
                     </button>
                   </div>
 
+                  <div className="mb-4 flex flex-col gap-3 rounded-2xl border border-white/10 bg-black/20 p-3 sm:flex-row sm:items-center sm:justify-between">
+                    <div>
+                      <p className="text-xs font-black uppercase tracking-[0.22em] text-[#23ead4]">
+                        Planning sur 30 jours
+                      </p>
+                      <p className="mt-1 text-sm font-semibold text-slate-300">
+                        {publicDaysRangeLabel || "Aucun créneau chargé"}
+                      </p>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={goToPreviousPublicDays}
+                        disabled={publicDaysPage <= 0}
+                        className="rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2 text-xs font-black text-slate-200 transition hover:bg-white/[0.08] disabled:cursor-not-allowed disabled:opacity-40"
+                      >
+                        ← Jours précédents
+                      </button>
+
+                      <span className="rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2 text-xs font-black text-slate-300">
+                        {publicDaysPage + 1} / {publicDaysPageCount}
+                      </span>
+
+                      <button
+                        type="button"
+                        onClick={goToNextPublicDays}
+                        disabled={publicDaysPage >= publicDaysPageCount - 1}
+                        className="rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2 text-xs font-black text-slate-200 transition hover:bg-white/[0.08] disabled:cursor-not-allowed disabled:opacity-40"
+                      >
+                        Jours suivants →
+                      </button>
+                    </div>
+                  </div>
+                  {/* Q_PUBLIC_SCHED_EB8C1E8_DAYS_NAVIGATION */}
+
                   <div
                     id="public-rdv-availability"
                     ref={availabilitySectionRef}
@@ -442,12 +528,12 @@ dateSouhaitee: form.dateSouhaitee,
                       <div className="col-span-full rounded-xl border border-red-400/30 bg-red-500/10 p-4 text-center text-sm font-semibold text-red-100">
                         {availabilityError}
                       </div>
-                    ) : days.length === 0 ? (
+                    ) : displayedAvailabilityDays.length === 0 ? (
                       <div className="col-span-full rounded-xl border border-white/10 bg-white/[0.035] p-4 text-center text-sm font-semibold text-slate-300">
                         Aucun créneau disponible pour le moment.
                       </div>
                     ) : (
-                      days.map((day) => {
+                      displayedAvailabilityDays.map((day) => {
                         const dayVisibleSlots = showAllPublicSlots
                           ? day.slots
                           : day.slots.filter((slot) => slot.available);

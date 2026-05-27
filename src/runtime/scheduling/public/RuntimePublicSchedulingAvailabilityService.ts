@@ -1,5 +1,5 @@
 import {
-  PublicRuntimeReadAdapter,
+  PublicRuntimeServerReadRepository,
 } from "@/runtime/public-read";
 
 import {
@@ -66,7 +66,7 @@ function normalizeDays(value: unknown): number {
     return 7;
   }
 
-  return Math.max(1, Math.min(Math.trunc(parsed), 21));
+  return Math.max(1, Math.min(Math.trunc(parsed), 30));
 }
 
 function buildPublicAvailabilityDateTimeRange(params: {
@@ -288,33 +288,17 @@ export class RuntimePublicSchedulingAvailabilityService {
       },
     };
 
-    const publicRead =
-      await PublicRuntimeReadAdapter.list({
-        module: PublicSchedulingAvailabilityMirrorService.module,
-        context: readOptions,
-        purpose: "availability",
-        policy: {
-          allowedFields: [
-            "id",
-            "tenantId",
-            "workspace",
-            "moduleKey",
-            "date",
-            "startTime",
-            "endTime",
-            "status",
-            "blocking",
-            "capacityUsed",
-            "sourceModule",
-            "sourceRecordId",
-          ],
-        },
-      });
+    const publicLocks =
+      await PublicRuntimeServerReadRepository.findMany(
+        PublicSchedulingAvailabilityMirrorService.module
+      );
 
     const records =
-      publicRead.records
+      publicLocks
         .filter((record) =>
           String(record.moduleKey ?? "") === moduleKey &&
+          String(record.tenantId ?? "") === tenantId &&
+          String(record.workspace ?? "") === workspaceId &&
           record.blocking !== false
         )
         .map((record) => ({
