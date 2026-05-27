@@ -3,6 +3,11 @@ export type RuntimeSchedulingSource =
   | "private"
   | "system";
 
+export type RuntimeSchedulingSlotStatus =
+  | "available"
+  | "limited"
+  | "full";
+
 export type RuntimeSchedulingServiceOption = {
   id: string;
   code: string;
@@ -39,24 +44,28 @@ export type RuntimeSchedulingSlotAvailabilityStatus =
   | "full";
 
 export type RuntimeSchedulingSlotView = {
+  id?: string;
   date: string;
   startTime: string;
   endTime: string;
   label: string;
-
-  availabilityStatus: RuntimeSchedulingSlotAvailabilityStatus;
-  selectable: boolean;
-
-  capacity: number;
-  usedCapacity: number;
-  remainingCapacity: number;
-
-  serviceCode?: string;
-  serviceLabel?: string;
   durationMinutes: number;
 
-  reservations: RuntimeSchedulingReservationSummary[];
+  capacity: number;
+  usedCapacity?: number;
+  remainingCapacity: number;
 
+  available: boolean;
+  status: RuntimeSchedulingSlotStatus;
+
+  /**
+   * Legacy/runtime display aliases kept during convergence.
+   * Public/private views must progressively consume status + available.
+   */
+  availabilityStatus?: RuntimeSchedulingSlotStatus;
+  selectable?: boolean;
+
+  reservations?: RuntimeSchedulingReservationSummary[];
   reason?: string;
 };
 

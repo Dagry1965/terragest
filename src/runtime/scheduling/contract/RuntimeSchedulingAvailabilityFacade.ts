@@ -29,6 +29,17 @@ function toReservationSummary(
   };
 }
 
+function toRuntimeSchedulingSlotStatus(
+  value: string | undefined,
+  selectable: boolean
+): "available" | "limited" | "full" {
+  if (value === "available" || value === "limited" || value === "full") {
+    return value;
+  }
+
+  return selectable ? "available" : "full";
+}
+
 export class RuntimeSchedulingAvailabilityFacade {
   static buildSlotViews(params: {
     date: string;
@@ -79,14 +90,20 @@ export class RuntimeSchedulingAvailabilityFacade {
             ? "limited"
             : "available";
 
+      const status = availabilityStatus;
+
+      const available = status !== "full";
+
       return {
         date: params.date,
         startTime: slot.start,
         endTime: slot.end,
         label: slot.label,
 
-        availabilityStatus,
-        selectable: availabilityStatus !== "full",
+        availabilityStatus: status,
+        selectable: available,
+        available,
+        status,
 
         capacity,
         usedCapacity,
@@ -96,9 +113,9 @@ export class RuntimeSchedulingAvailabilityFacade {
 
         reservations,
         reason:
-          availabilityStatus === "full"
+          status === "full"
             ? "Créneau complet"
-            : availabilityStatus === "limited"
+            : status === "limited"
               ? "Créneau partiellement réservé"
               : undefined,
       };
