@@ -10,6 +10,10 @@ import {
   RuntimeSchedulingEngine,
 } from "@/runtime/scheduling/RuntimeSchedulingEngine";
 
+import {
+  PublicSchedulingAvailabilityMirrorService,
+} from "@/runtime/scheduling/public-availability";
+
 import type {
   RuntimeBooking,
 } from "@/runtime/scheduling/RuntimeSchedulingTypes";
@@ -286,7 +290,7 @@ export class RuntimePublicSchedulingAvailabilityService {
 
     const publicRead =
       await PublicRuntimeReadAdapter.list({
-        module: rendezvousModule,
+        module: PublicSchedulingAvailabilityMirrorService.module,
         context: readOptions,
         purpose: "availability",
         policy: {
@@ -295,18 +299,40 @@ export class RuntimePublicSchedulingAvailabilityService {
             "tenantId",
             "workspace",
             "moduleKey",
-            "dateRendezVous",
-            "heureRendezVous",
-            "durationMinutes",
-            "startAt",
-            "endAt",
-            "statut",
+            "date",
+            "startTime",
+            "endTime",
+            "status",
+            "blocking",
+            "capacityUsed",
+            "sourceModule",
+            "sourceRecordId",
           ],
         },
       });
 
     const records =
-      publicRead.records as RuntimeRecord[];
+      publicRead.records
+        .filter((record) =>
+          String(record.moduleKey ?? "") === moduleKey &&
+          record.blocking !== false
+        )
+        .map((record) => ({
+          id: record.id,
+          tenantId: record.tenantId,
+          workspace: record.workspace,
+          moduleKey: record.moduleKey,
+          dateRendezVous: record.date,
+          heureRendezVous: record.startTime,
+          durationMinutes: 60,
+          startAt: record.date && record.startTime
+            ? String(record.date) + "T" + String(record.startTime) + ":00"
+            : "",
+          endAt: record.date && record.endTime
+            ? String(record.date) + "T" + String(record.endTime) + ":00"
+            : "",
+          statut: record.status ?? "blocked",
+        })) as RuntimeRecord[];
 
     const startDate =
       input.startDate && input.startDate.trim()
