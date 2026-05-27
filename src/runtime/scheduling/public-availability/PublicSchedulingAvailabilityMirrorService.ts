@@ -180,9 +180,23 @@ function buildLock(
   const date = resolveDate(record);
   const startTime = resolveStartTime(record);
   const durationMinutes = asNumber(record.durationMinutes, 60);
+
+  // Public availability uses business local time first.
+  // Some legacy records store startAt/endAt as UTC ISO strings while heureRendezVous
+  // is the local business slot displayed to users. To avoid inverted public locks
+  // like 09:00 -> 08:00, compute endTime from startTime + duration.
+  const hasBusinessStartTime =
+    Boolean(
+      asString(record.heureRendezVous) ||
+      asString(record.startTime) ||
+      asString(record.time)
+    );
+
   const endTime =
-    resolveEndTime(record) ||
-    addMinutesToTime(startTime, durationMinutes);
+    hasBusinessStartTime
+      ? addMinutesToTime(startTime, durationMinutes)
+      : resolveEndTime(record) ||
+        addMinutesToTime(startTime, durationMinutes);
 
   if (!date || !startTime || !endTime) {
     return null;
