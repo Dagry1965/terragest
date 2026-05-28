@@ -340,6 +340,11 @@ export const facturesautoModule: ERPModule = {
     enabled: true,
     title: "Factures",
     subtitle: "Vue opérationnelle de la facturation atelier.",
+    branding: {
+      brandName: "AMARKHYS",
+      runtimeLabel: "Runtime ERP",
+      eyebrow: "AMARKHYS · Runtime ERP",
+    },
     kpis: [
       {
         key: "total",

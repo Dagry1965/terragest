@@ -107,10 +107,15 @@ export function ERPOperationalModulePage({
   }, [data, filters, search, config?.filters]);
 
   const title = config?.title ?? module.metadata.label;
+  const branding = config?.branding ?? {};
+  const brandName = branding.brandName ?? "ERP";
+  const runtimeLabel = branding.runtimeLabel ?? "Runtime ERP";
+  const eyebrow = branding.eyebrow ?? `${brandName} · ${runtimeLabel}`;
+
   const subtitle =
     config?.subtitle ??
     module.metadata.description ??
-    "Vue opérationnelle générée par le Runtime ERP.";
+    `Vue opérationnelle générée par le ${runtimeLabel}.`;
 
   const todayLabel = formatOperationalDate(new Date());
   const userLabel = getOperationalUserLabel(user) || authUserLabel;
@@ -126,7 +131,7 @@ export function ERPOperationalModulePage({
         <div className="grid gap-6 p-5 lg:grid-cols-[minmax(0,1fr)_auto] lg:p-7">
           <div className="min-w-0">
             <div className="inline-flex rounded-full border border-emerald-200 bg-white px-3 py-1 text-[11px] font-black uppercase tracking-[0.22em] text-emerald-700 shadow-sm">
-              AMARKHYS · Runtime ERP
+              {eyebrow}
             </div>
 
             <div className="mt-2 flex flex-wrap items-center gap-2 text-xs font-bold text-slate-500">

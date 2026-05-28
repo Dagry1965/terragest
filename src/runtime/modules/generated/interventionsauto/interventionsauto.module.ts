@@ -227,6 +227,11 @@ export const interventionsautoModule: ERPModule = {
     enabled: true,
     title: "Interventions",
     subtitle: "Vue opérationnelle des interventions atelier.",
+    branding: {
+      brandName: "AMARKHYS",
+      runtimeLabel: "Runtime ERP",
+      eyebrow: "AMARKHYS · Runtime ERP",
+    },
     kpis: [
       {
         key: "total",

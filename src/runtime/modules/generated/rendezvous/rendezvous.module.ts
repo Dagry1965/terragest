@@ -231,6 +231,11 @@ export const rendezvousModule: ERPModule = {
     enabled: true,
     title: "Rendez-vous",
     subtitle: "Vue opérationnelle des rendez-vous atelier.",
+    branding: {
+      brandName: "AMARKHYS",
+      runtimeLabel: "Runtime ERP",
+      eyebrow: "AMARKHYS · Runtime ERP",
+    },
     kpis: [
       {
         key: "total",

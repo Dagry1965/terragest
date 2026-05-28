@@ -61,8 +61,29 @@ export interface ERPOperationalRightPanelConfig {
   type?: "planning" | "summary" | "actions";
 }
 
+export interface ERPOperationalBrandingConfig {
+  /**
+   * Nom affiché dans l'eyebrow/header opérationnel.
+   * Exemple : AMARKHYS, Terragest, ERP.
+   */
+  brandName?: string;
+
+  /**
+   * Libellé de runtime ou contexte technique.
+   * Exemple : Runtime ERP, Cockpit opérationnel.
+   */
+  runtimeLabel?: string;
+
+  /**
+   * Libellé complet prioritaire.
+   * Si absent, le rendu utilise brandName + runtimeLabel.
+   */
+  eyebrow?: string;
+}
+
 export interface ERPOperationalModuleConfig {
-  enabled?: boolean;
+    branding?: ERPOperationalBrandingConfig;
+enabled?: boolean;
   title?: string;
   subtitle?: string;
   kpis?: ERPOperationalKpiConfig[];
