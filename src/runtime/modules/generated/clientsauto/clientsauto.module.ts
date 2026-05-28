@@ -241,6 +241,46 @@ export const clientsautoModule: ERPModule = {
     ]
   },
 
+  operational: {
+    enabled: true,
+    title: "Clients",
+    subtitle: "Vue opérationnelle des clients, véhicules et suivi atelier.",
+    branding: {
+      brandName: "AMARKHYS",
+      runtimeLabel: "Runtime ERP",
+      eyebrow: "AMARKHYS · Runtime ERP",
+    },
+    rightPanel: {
+      enabled: true,
+      title: "Portefeuille clients",
+      type: "summary",
+      metrics: [
+        {
+          key: "total",
+          label: "Clients affichés",
+          type: "count",
+          format: "number",
+        },
+        {
+          key: "actifs",
+          label: "Clients actifs",
+          type: "countWhere",
+          field: "statut",
+          equals: "actif",
+          format: "number",
+        },
+        {
+          key: "prospects",
+          label: "Prospects",
+          type: "countWhere",
+          field: "statut",
+          equals: "prospect",
+          format: "number",
+        },
+      ],
+    },
+  },
+
   composition: {
     labelFields: [
       "codeClient",
