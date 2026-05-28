@@ -146,7 +146,6 @@ export async function createPublicAppointment(
         telephone: data.telephone,
         statut: "prospect",
         source: "site_public",
-        codeClient: crypto.randomUUID(),
       }
     );
 

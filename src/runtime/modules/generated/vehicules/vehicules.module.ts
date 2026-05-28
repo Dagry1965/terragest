@@ -3,6 +3,14 @@ import type { ERPModule } from "@/runtime/modules/ERPModule";
 export const vehiculesModule: ERPModule = {
 
   metadata: {
+    businessCode: {
+      field: "codeVehicule",
+      prefix: "VEH",
+      sequenceScope: "year",
+      padLength: 6,
+      readonly: true,
+      required: true,
+    },
 
     key: "vehicules",
 
@@ -34,13 +42,23 @@ export const vehiculesModule: ERPModule = {
 
     fields: [
 {
+        key:"codeVehicule",
+        label:"Code véhicule",
+        type:"text",
+        required:true,
+        unique:true,
+        searchable:true,
+        list:{ visible:true, order:1 },
+        grid:{ cols:4 }
+      },
+{
         key:"immatriculation",
         label:"Immatriculation",
         type:"text",
         required:true,
         unique: true,
         searchable:true,
-        list: { visible: true, order: 1 },
+        list: { visible: true, order: 2 },
         grid:{ cols:4 }
       },
 {
@@ -48,7 +66,7 @@ export const vehiculesModule: ERPModule = {
         label:"Marque",
         type:"text",
         required:true,
-        list: { visible: true, order: 2 },
+        list: { visible: true, order: 3 },
         grid:{ cols:4 }
       },
 {
@@ -56,7 +74,7 @@ export const vehiculesModule: ERPModule = {
         label:"Modèle",
         type:"text",
         required:true,
-        list: { visible: true, order: 3 },
+        list: { visible: true, order: 4 },
         grid:{ cols:4 }
       },
 {
@@ -94,7 +112,7 @@ export const vehiculesModule: ERPModule = {
         key:"kilometrage",
         label:"Kilométrage",
         type:"number",
-        list: { visible: true, order: 5 },
+        list: { visible: true, order: 6 },
         grid:{ cols:6 }
       },
 {
@@ -115,7 +133,7 @@ export const vehiculesModule: ERPModule = {
         },
 
         searchable:true,
-        list: { visible: true, order: 4 },
+        list: { visible: true, order: 6 },
 
         grid:{ cols:6 }
       },
@@ -163,7 +181,7 @@ export const vehiculesModule: ERPModule = {
           { label:"Archivé", value:"archive" }
         ],
 
-        list: { visible: true, order: 6 },
+        list: { visible: true, order: 7 },
 
         grid:{ cols:6 }
       }

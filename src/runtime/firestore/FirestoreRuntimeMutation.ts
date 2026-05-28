@@ -11,6 +11,7 @@ import {
 import {
   FirestoreRuntimeRepository,
 } from "./FirestoreRuntimeRepository";
+import { RuntimeBusinessCodeGenerator } from "@/runtime/codes";
 
 import {
   RuntimeReferentialIntegrityEngine,
@@ -304,14 +305,20 @@ export class FirestoreRuntimeMutation {
         lineItemData
       );
 
+    const businessCodedData =
+      await RuntimeBusinessCodeGenerator.apply({
+        module,
+        data: computedData,
+      });
+
     const guardedData =
       await processRuntimeBeforeMutationGuards(
         module,
-        computedData,
+        businessCodedData,
         {
           operation: "create",
-          tenantId: asRuntimeTenantId(computedData),
-          workspaceId: asRuntimeWorkspaceId(computedData),
+          tenantId: asRuntimeTenantId(businessCodedData),
+          workspaceId: asRuntimeWorkspaceId(businessCodedData),
           moduleKey: module.metadata.key,
           systemMutation: options.systemMutation,
           mutationSource: options.mutationSource,

@@ -1,6 +1,16 @@
+export interface ERPBusinessCodeConfig {
+  field: string;
+  prefix: string;
+  sequenceScope?: "year" | "global";
+  padLength?: number;
+  readonly?: boolean;
+  required?: boolean;
+}
+
 import type { ERPModuleField } from "../schemas/ERPModuleSchema";
 
 export interface ERPModuleMetadata {
+  businessCode?: ERPBusinessCodeConfig;
   key: string;
   label: string;
   description?: string;

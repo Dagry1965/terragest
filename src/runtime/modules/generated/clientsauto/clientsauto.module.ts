@@ -2,6 +2,14 @@
 
 export const clientsautoModule: ERPModule = {
   metadata: {
+    businessCode: {
+      field: "codeClient",
+      prefix: "CLI",
+      sequenceScope: "year",
+      padLength: 6,
+      readonly: true,
+      required: true,
+    },
     key: "clientsauto",
     label: "Clients",
     description: "CRM clients automobile",
@@ -395,7 +403,13 @@ export const clientsautoModule: ERPModule = {
       type: "primary",
       href: "/rendezvous/nouveau",
     },
-  ],
+      {
+      key: "client360-demo",
+      label: "Fiche 360 demo",
+      type: "secondary",
+      href: "/client360-demo",
+    },
+],
 workflows:[
     {
       key:"client",

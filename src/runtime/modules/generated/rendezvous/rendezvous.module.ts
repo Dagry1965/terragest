@@ -6,6 +6,14 @@ import {
 
 export const rendezvousModule: ERPModule = {
   metadata: {
+    businessCode: {
+      field: "codeRendezVous",
+      prefix: "RDV",
+      sequenceScope: "year",
+      padLength: 6,
+      readonly: true,
+      required: true,
+    },
     key: "rendezvous",
     label: "Rendez-vous",
     description: "Gestion des rendez-vous atelier AMARKHYS",
@@ -29,13 +37,23 @@ export const rendezvousModule: ERPModule = {
 
     fields: [
 {
+        key: "codeRendezVous",
+        label: "Code rendez-vous",
+        type: "text",
+        required: true,
+        unique: true,
+        searchable: true,
+        list: { visible: true, order: 1 },
+        grid: { cols: 4 },
+      },
+{
         key: "clientId",
         label: "Client",
         type: "relation",
         relation: { module: "clientsauto" },
         required: true,
         searchable: true,
-        list: { visible: true, order: 1 },
+        list: { visible: true, order: 2 },
         grid: { cols: 6 },
       },
 {
@@ -52,7 +70,7 @@ export const rendezvousModule: ERPModule = {
         },
         required: true,
         searchable: true,
-        list: { visible: true, order: 2 },
+        list: { visible: true, order: 3 },
         grid: { cols: 6 },
       },
 {
@@ -60,7 +78,7 @@ export const rendezvousModule: ERPModule = {
         label: "Date rendez-vous",
         type: "date",
         required: true,
-        list: { visible: true, order: 3 },
+        list: { visible: true, order: 4 },
         grid: { cols: 4 },
       },
 {
@@ -68,7 +86,7 @@ export const rendezvousModule: ERPModule = {
         label: "Heure",
         type: "text",
         required: true,
-        list: { visible: true, order: 4 },
+        list: { visible: true, order: 5 },
         grid: { cols: 4 },
       },
 {
@@ -114,7 +132,7 @@ export const rendezvousModule: ERPModule = {
           { label: "Contrôle", value: "controle" },
           { label: "Autre", value: "autre" },
         ],
-        list: { visible: true, order: 5 },
+        list: { visible: true, order: 6 },
         grid: { cols: 4 },
       },
 {
@@ -144,7 +162,7 @@ export const rendezvousModule: ERPModule = {
           { label: "Facturé", value: "facture" },
           { label: "Annulé", value: "annule" },
         ],
-        list: { visible: true, order: 6 },
+        list: { visible: true, order: 7 },
         grid: { cols: 6 },
       }
     ],
