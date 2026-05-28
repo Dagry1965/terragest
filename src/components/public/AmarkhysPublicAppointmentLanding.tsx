@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -204,6 +203,7 @@ export function AmarkhysPublicAppointmentLanding() {
   const [selectedSlot, setSelectedSlot] = useState<PublicRuntimeSlot | null>(null);
   const [showAllPublicSlots, setShowAllPublicSlots] = useState(false);
   const [publicDaysPage, setPublicDaysPage] = useState(0);
+  const [availabilityRefreshKey, setAvailabilityRefreshKey] = useState(0);
   const availabilitySectionRef = useRef<HTMLDivElement | null>(null);
 
   function updateField(key: keyof AppointmentForm, value: string) {
@@ -257,7 +257,7 @@ export function AmarkhysPublicAppointmentLanding() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [availabilityRefreshKey]);
 
   const availableSlots = useMemo(
     () =>
@@ -317,7 +317,42 @@ export function AmarkhysPublicAppointmentLanding() {
     );
   }
 
-  function selectRuntimeSlot(slot: PublicRuntimeSlot) {
+  
+  function markPublicSlotAsBlocked(slotToBlock: PublicRuntimeSlot | null) {
+    if (!slotToBlock) {
+      return;
+    }
+
+    setAvailabilityDays((currentDays) =>
+      currentDays.map((day) => {
+        if (day.date !== slotToBlock.date) {
+          return day;
+        }
+
+        return {
+          ...day,
+          slots: day.slots.map((slot) => {
+            const sameSlot =
+              slot.date === slotToBlock.date &&
+              slot.startTime === slotToBlock.startTime;
+
+            if (!sameSlot) {
+              return slot;
+            }
+
+            return {
+              ...slot,
+              available: false,
+              remainingCapacity: 0,
+              reason: "Créneau transmis",
+            };
+          }),
+        };
+      })
+    );
+  }
+
+function selectRuntimeSlot(slot: PublicRuntimeSlot) {
     if (!slot.available) {
       return;
     }
@@ -351,20 +386,27 @@ export function AmarkhysPublicAppointmentLanding() {
     setError("");
 
     try {
-      await createPublicAppointment({
-        nom: form.nom,
-        telephone: form.telephone,
-        vehicule: form.vehicule,
-        immatriculation: form.immatriculation,
-              service: form.service,
-dateSouhaitee: form.dateSouhaitee,
-        heureSouhaitee: form.heureSouhaitee,
-        durationMinutes:
-          selectedSlot?.durationMinutes ?? 60,
-      });
+        const submittedSlot = selectedSlot;
 
-      setSuccess(true);
-      setForm(initialForm);
+        await createPublicAppointment({
+          nom: form.nom,
+          telephone: form.telephone,
+          vehicule: form.vehicule,
+          immatriculation: form.immatriculation,
+          service: form.service,
+          dateSouhaitee: form.dateSouhaitee,
+          heureSouhaitee: form.heureSouhaitee,
+          durationMinutes:
+            submittedSlot?.durationMinutes ?? 60,
+        });
+
+        setSuccess(true);
+        setForm(initialForm);
+        markPublicSlotAsBlocked(submittedSlot);
+        setSelectedSlot(null);
+        setShowAllPublicSlots(false);
+        setPublicDaysPage(0);
+        setAvailabilityRefreshKey((current) => current + 1);
     } catch (submitError) {
       console.error("PUBLIC_APPOINTMENT_ERROR", submitError);
       setError(
@@ -376,7 +418,7 @@ dateSouhaitee: form.dateSouhaitee,
   }  const days = availabilityDays;
 
   return (
-    <section className="relative min-h-screen overflow-hidden bg-[#020807] text-white">
+    <section className="relative min-h-screen overflow-visible bg-[#020807] text-white">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_16%_10%,rgba(35,234,212,0.10),transparent_30%),radial-gradient(circle_at_84%_8%,rgba(215,168,63,0.10),transparent_24%),radial-gradient(circle_at_70%_80%,rgba(7,95,83,0.34),transparent_34%),linear-gradient(135deg,#020807_0%,#03130f_50%,#020807_100%)]" />
       <div className="absolute inset-0 opacity-[0.035] [background-image:linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] [background-size:46px_46px]" />
 
@@ -433,21 +475,10 @@ dateSouhaitee: form.dateSouhaitee,
             transition={{ duration: 0.45, ease: "easeOut" }}
             className="lg:col-span-7"
           >
-            <div className="overflow-hidden rounded-[1.6rem] border border-[#d7a83f]/20 bg-[#05110f] shadow-[0_38px_110px_rgba(0,0,0,0.55)] ring-1 ring-[#23ead4]/12">
-              <div className="relative aspect-[16/10]">
-                <Image
-                  src="/images/amarkhys/rdv-hero-premium.png"
-                  alt="Atelier premium AMARKHYS"
-                  fill
-                  priority
-                  className="object-cover"
-                />
-
-                <div className="absolute inset-0 bg-gradient-to-t from-[#020807] via-[#020807]/25 to-transparent" />
-                <div className="absolute inset-0 bg-gradient-to-r from-[#020807]/22 via-transparent to-[#020807]/12" />
-
-                <div className="absolute bottom-4 left-4 right-4 rounded-[1.45rem] border border-[#d7a83f]/24 bg-black/62 p-5 shadow-[0_24px_80px_rgba(0,0,0,0.65)] backdrop-blur-xl">
-                  <div className="mb-5 flex items-center justify-between gap-4">
+            <div className="overflow-visible rounded-[1.6rem] border border-[#d7a83f]/20 bg-[#05110f] shadow-[0_38px_110px_rgba(0,0,0,0.55)] ring-1 ring-[#23ead4]/12">
+              <div className="relative h-auto min-h-0 overflow-visible">
+<div className="relative rounded-[1.45rem] border border-[#d7a83f]/24 bg-black/62 p-5 shadow-[0_24px_80px_rgba(0,0,0,0.65)] backdrop-blur-xl">
+                  <div className="mb-5 flex items-start justify-between gap-4">
                     <div>
                       <p className="text-xs font-black uppercase tracking-[0.24em] text-[#23ead4]">
                         Agenda atelier
@@ -461,7 +492,7 @@ dateSouhaitee: form.dateSouhaitee,
                     <button
                       type="button"
                       onClick={() => {
-                        setShowAllPublicSlots(true);
+                        setShowAllPublicSlots((current) => !current);
 
                         document
                           .getElementById("public-rdv-availability")
@@ -470,13 +501,15 @@ dateSouhaitee: form.dateSouhaitee,
                             block: "center",
                           });
                       }}
-                      className="hidden rounded-xl border border-[#d7a83f]/45 bg-[#2b2208]/70 px-4 py-3 text-sm font-black text-[#f8d479] shadow-[0_0_24px_rgba(215,168,63,0.12)] sm:inline-flex"
+                      className="rounded-xl border border-[#d7a83f]/45 bg-[#2b2208]/70 px-4 py-3 text-sm font-black text-[#f8d479] shadow-[0_0_24px_rgba(215,168,63,0.12)] sm:inline-flex"
                     >
-                      Voir tous les crÃ©neaux
-                    </button>
+                        {showAllPublicSlots
+                          ? "Masquer les créneaux occupés"
+                          : "Afficher tous les créneaux"}
+                      </button>
                   </div>
 
-                  <div className="mb-4 flex flex-col gap-3 rounded-2xl border border-white/10 bg-black/20 p-3 sm:flex-row sm:items-center sm:justify-between">
+                  <div className="mb-4 flex flex-col gap-3 rounded-2xl border border-white/10 bg-black/20 p-3 sm:flex-row sm:items-start sm:justify-between">
                     <div>
                       <p className="text-xs font-black uppercase tracking-[0.22em] text-[#23ead4]">
                         Planning sur 30 jours
@@ -486,7 +519,7 @@ dateSouhaitee: form.dateSouhaitee,
                       </p>
                     </div>
 
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-start gap-2">
                       <button
                         type="button"
                         onClick={goToPreviousPublicDays}
@@ -515,7 +548,7 @@ dateSouhaitee: form.dateSouhaitee,
                   <div
                     id="public-rdv-availability"
                     ref={availabilitySectionRef}
-                    className="grid grid-cols-2 gap-2 sm:grid-cols-4 lg:grid-cols-7"
+                    className="grid grid-cols-2 gap-2 sm:grid-cols-4 lg:grid-cols-7 h-auto min-h-0 overflow-visible w-full h-auto min-h-0 overflow-visible"
                   >
                     {loadingAvailability ? (
                       <div className="col-span-full rounded-xl border border-white/10 bg-white/[0.035] p-4 text-center text-sm font-semibold text-slate-300">
@@ -552,7 +585,7 @@ dateSouhaitee: form.dateSouhaitee,
                               {day.date}
                             </p>
 
-                            <div className="mt-4 flex flex-wrap justify-center gap-1.5">
+                            <div className="mt-4 flex h-auto min-h-0 flex-wrap justify-center gap-1.5 overflow-visible">
                               {dayVisibleSlots.slice(0, showAllPublicSlots ? dayVisibleSlots.length : 6).map((slot) => {
                                 const active =
                                   selectedSlot?.date === slot.date &&
@@ -624,7 +657,7 @@ dateSouhaitee: form.dateSouhaitee,
             <div className="rounded-[1.6rem] border border-[#23ead4]/25 bg-gradient-to-br from-[#075f53] via-[#053d36] to-[#031612] p-6 shadow-[0_38px_110px_rgba(0,0,0,0.58)] ring-1 ring-[#23ead4]/12">
               <div className="mb-7 flex items-start justify-between gap-4">
                 <div className="flex gap-4">
-                  <span className="inline-flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl border border-[#23ead4]/35 bg-[#052e2a] text-[#23ead4] shadow-[0_0_45px_rgba(35,234,212,0.12)]">
+                  <span className="inline-flex h-16 w-16 shrink-0 items-start justify-center rounded-2xl border border-[#23ead4]/35 bg-[#052e2a] text-[#23ead4] shadow-[0_0_45px_rgba(35,234,212,0.12)]">
                     <CalendarPlus className="h-8 w-8" />
                   </span>
 
@@ -639,7 +672,7 @@ dateSouhaitee: form.dateSouhaitee,
                   </div>
                 </div>
 
-                <div className="hidden rounded-xl border border-[#d7a83f]/45 bg-[#2b2208]/60 px-4 py-3 text-sm font-black text-[#f8d479] sm:block">
+                <div className="rounded-xl border border-[#d7a83f]/45 bg-[#2b2208]/60 px-4 py-3 text-sm font-black text-[#f8d479] sm:block">
                   <div className="flex items-center gap-2">
                     <Star className="h-4 w-4" />
                     Service premium
