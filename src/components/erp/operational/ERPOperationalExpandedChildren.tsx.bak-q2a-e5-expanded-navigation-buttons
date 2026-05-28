@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import Link from "next/link";
 
 import type {
   ERPCompositionChild,
@@ -25,28 +24,6 @@ type ERPOperationalExpandedChildrenProps = {
 
 function getRecordId(record: Record<string, unknown>): string {
   return String(record.id ?? record._id ?? record.uid ?? "").trim();
-}
-
-function buildRecordHref(moduleKey: string, record: Record<string, unknown>): string {
-  const id = getRecordId(record);
-
-  if (!id) {
-    return "#";
-  }
-
-  return "/" + moduleKey + "/" + id + "/edit";
-}
-
-function getOpenLabel(moduleKey: string): string {
-  if (moduleKey === "interventionsauto") {
-    return "Ouvrir intervention";
-  }
-
-  if (moduleKey === "facturesauto") {
-    return "Ouvrir facture";
-  }
-
-  return "Ouvrir";
 }
 
 function isVisibleRuntimeRecord(record: Record<string, unknown>): boolean {
@@ -222,23 +199,13 @@ export function ERPOperationalExpandedChildren({
               <div className="space-y-3">
                 {group.records.map((record) => {
                   const recordId = getRecordId(record);
-                  const grandchildGroups =
-                    group.grandchildrenByParentId[recordId] ?? [];
+                  const grandchildGroups = group.grandchildrenByParentId[recordId] ?? [];
 
                   return (
                     <div
                       key={recordId}
                       className="rounded-2xl border border-slate-100 bg-slate-50 p-3"
                     >
-                      <div className="mb-3 flex justify-end">
-                        <Link
-                          href={buildRecordHref(group.module.metadata.key, record)}
-                          className="rounded-2xl border border-emerald-200 bg-white px-3 py-2 text-xs font-black text-emerald-700 transition hover:bg-emerald-50"
-                        >
-                          {getOpenLabel(group.module.metadata.key)}
-                        </Link>
-                      </div>
-
                       <div className="grid gap-2 md:grid-cols-4">
                         {fields.map((fieldKey) => {
                           const field = getField(group.module, fieldKey);
@@ -295,13 +262,8 @@ export function ERPOperationalExpandedChildren({
                                             </th>
                                           );
                                         })}
-
-                                        <th className="px-3 py-2 text-right font-black uppercase tracking-wide text-slate-400">
-                                          Action
-                                        </th>
                                       </tr>
                                     </thead>
-
                                     <tbody>
                                       {grandchildGroup.records.map((line) => (
                                         <tr
@@ -328,20 +290,6 @@ export function ERPOperationalExpandedChildren({
                                               </td>
                                             );
                                           })}
-
-                                          <td className="px-3 py-2 text-right">
-                                            <Link
-                                              href={buildRecordHref(
-                                                grandchildGroup.module.metadata.key,
-                                                line
-                                              )}
-                                              className="rounded-xl border border-emerald-200 bg-white px-2.5 py-1.5 text-[11px] font-black text-emerald-700 transition hover:bg-emerald-50"
-                                            >
-                                              {getOpenLabel(
-                                                grandchildGroup.module.metadata.key
-                                              )}
-                                            </Link>
-                                          </td>
                                         </tr>
                                       ))}
                                     </tbody>

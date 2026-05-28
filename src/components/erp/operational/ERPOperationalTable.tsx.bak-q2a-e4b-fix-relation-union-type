@@ -36,21 +36,6 @@ function getField(module: ERPModule, key: string): ERPModuleField | undefined {
   return module.schema.fields.find((field) => field.key === key);
 }
 
-
-function getRelationModuleKey(field: ERPModuleField): string {
-  const relation = field.relation;
-
-  if (!relation) {
-    return "";
-  }
-
-  if (typeof relation === "string") {
-    return relation;
-  }
-
-  return String(relation.module ?? relation.collection ?? "").trim();
-}
-
 function getModule(moduleKey: string): ERPModule | undefined {
   return allERPModules.find((module) => module.metadata.key === moduleKey);
 }
@@ -223,7 +208,7 @@ export function ERPOperationalTable({
 
     async function loadRelationLabels() {
       const relationFields = fieldColumns.filter(
-        (column) => Boolean(getRelationModuleKey(column.field))
+        (column) => column.field.relation?.module
       );
 
       if (relationFields.length === 0) {
@@ -235,7 +220,7 @@ export function ERPOperationalTable({
 
       await Promise.all(
         relationFields.map(async (column) => {
-          const targetModuleKey = getRelationModuleKey(column.field);
+          const targetModuleKey = column.field.relation?.module;
 
           if (!targetModuleKey) return;
 
@@ -435,6 +420,10 @@ export function ERPOperationalTable({
                   {column.kind === "field" ? column.field.label : column.label}
                 </th>
               ))}
+
+              <th className="whitespace-nowrap px-5 py-3.5 text-right text-[11px] font-black uppercase tracking-[0.16em] text-slate-500">
+                Actions
+              </th>
             </tr>
           </thead>
 
@@ -442,7 +431,7 @@ export function ERPOperationalTable({
             {data.length === 0 ? (
               <tr>
                 <td
-                  colSpan={columns.length + (hasExpandableChildren ? 1 : 0)}
+                  colSpan={columns.length + 2}
                   className="px-5 py-12 text-center text-sm font-semibold text-slate-500"
                 >
                   Aucun enregistrement ne correspond aux filtres.
@@ -484,12 +473,25 @@ export function ERPOperationalTable({
                         {renderCell(column, record)}
                       </td>
                     ))}
+
+                    <td className="whitespace-nowrap px-5 py-4 text-right">
+                      <button
+                        type="button"
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          openRecord(record);
+                        }}
+                        className="rounded-2xl border border-slate-200 bg-white px-3 py-2 text-xs font-black text-slate-700 transition hover:bg-slate-50"
+                      >
+                        Ouvrir
+                      </button>
+                    </td>
                   </tr>
 
                   {expanded ? (
                     <tr className="border-b border-slate-100">
                       <td
-                        colSpan={columns.length + (hasExpandableChildren ? 1 : 0)}
+                        colSpan={columns.length + (hasExpandableChildren ? 2 : 1)}
                         className="bg-slate-50 px-5 py-4"
                       >
                         <ERPOperationalExpandedChildren

@@ -23,8 +23,17 @@ type ERPOperationalExpandedChildrenProps = {
   parentRecord: Record<string, unknown>;
 };
 
-function getRecordId(record: Record<string, unknown>): string {
-  return String(record.id ?? record._id ?? record.uid ?? "").trim();
+
+function getOpenLabel(moduleKey: string): string {
+  if (moduleKey === "interventionsauto") {
+    return "Ouvrir intervention";
+  }
+
+  if (moduleKey === "facturesauto") {
+    return "Ouvrir facture";
+  }
+
+  return "Ouvrir";
 }
 
 function buildRecordHref(moduleKey: string, record: Record<string, unknown>): string {
@@ -37,16 +46,8 @@ function buildRecordHref(moduleKey: string, record: Record<string, unknown>): st
   return "/" + moduleKey + "/" + id + "/edit";
 }
 
-function getOpenLabel(moduleKey: string): string {
-  if (moduleKey === "interventionsauto") {
-    return "Ouvrir intervention";
-  }
-
-  if (moduleKey === "facturesauto") {
-    return "Ouvrir facture";
-  }
-
-  return "Ouvrir";
+function getRecordId(record: Record<string, unknown>): string {
+  return String(record.id ?? record._id ?? record.uid ?? "").trim();
 }
 
 function isVisibleRuntimeRecord(record: Record<string, unknown>): boolean {
@@ -222,8 +223,7 @@ export function ERPOperationalExpandedChildren({
               <div className="space-y-3">
                 {group.records.map((record) => {
                   const recordId = getRecordId(record);
-                  const grandchildGroups =
-                    group.grandchildrenByParentId[recordId] ?? [];
+                  const grandchildGroups = group.grandchildrenByParentId[recordId] ?? [];
 
                   return (
                     <div
@@ -238,7 +238,7 @@ export function ERPOperationalExpandedChildren({
                           {getOpenLabel(group.module.metadata.key)}
                         </Link>
                       </div>
-
+                      {/* Q2A_E5_DIRECT_CHILD_OPEN_BUTTON */}
                       <div className="grid gap-2 md:grid-cols-4">
                         {fields.map((fieldKey) => {
                           const field = getField(group.module, fieldKey);
@@ -281,34 +281,6 @@ export function ERPOperationalExpandedChildren({
                                     <thead className="bg-slate-50">
                                       <tr>
                                         {grandchildFields.map((fieldKey) => {
-                                          const field = getField(
-                                            grandchildGroup.module,
-                                            fieldKey
-                                          );
-
-                                          return (
-                                            <th
-                                              key={fieldKey}
-                                              className="px-3 py-2 font-black uppercase tracking-wide text-slate-400"
-                                            >
-                                              {field?.label ?? fieldKey}
-                                            </th>
-                                          );
-                                        })}
-
-                                        <th className="px-3 py-2 text-right font-black uppercase tracking-wide text-slate-400">
-                                          Action
-                                        </th>
-                                      </tr>
-                                    </thead>
-
-                                    <tbody>
-                                      {grandchildGroup.records.map((line) => (
-                                        <tr
-                                          key={getRecordId(line)}
-                                          className="border-t border-slate-100"
-                                        >
-                                          {grandchildFields.map((fieldKey) => {
                                             const field = getField(
                                               grandchildGroup.module,
                                               fieldKey
@@ -331,17 +303,13 @@ export function ERPOperationalExpandedChildren({
 
                                           <td className="px-3 py-2 text-right">
                                             <Link
-                                              href={buildRecordHref(
-                                                grandchildGroup.module.metadata.key,
-                                                line
-                                              )}
+                                              href={buildRecordHref(grandchildGroup.module.metadata.key, line)}
                                               className="rounded-xl border border-emerald-200 bg-white px-2.5 py-1.5 text-[11px] font-black text-emerald-700 transition hover:bg-emerald-50"
                                             >
-                                              {getOpenLabel(
-                                                grandchildGroup.module.metadata.key
-                                              )}
+                                              {getOpenLabel(grandchildGroup.module.metadata.key)}
                                             </Link>
                                           </td>
+                                          {/* Q2A_E5_GRANDCHILD_OPEN_BUTTON */}
                                         </tr>
                                       ))}
                                     </tbody>

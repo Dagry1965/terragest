@@ -1,4 +1,23 @@
-"use client";
+﻿const fs = require("fs");
+const path = require("path");
+
+const ROOT = process.cwd();
+const rel = "src/components/erp/operational/ERPOperationalExpandedChildren.tsx";
+const file = path.join(ROOT, rel);
+
+if (!fs.existsSync(file)) {
+  throw new Error("File not found: " + file);
+}
+
+const original = fs.readFileSync(file, "utf8");
+
+fs.writeFileSync(
+  file + ".bak-q2a-e5b-rewrite-expanded-children",
+  original,
+  "utf8"
+);
+
+const content = `"use client";
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
@@ -363,3 +382,12 @@ export function ERPOperationalExpandedChildren({
     </div>
   );
 }
+`;
+
+fs.writeFileSync(file, content, "utf8");
+
+console.log("[DONE] Q2-A-E5B ERPOperationalExpandedChildren réécrit proprement.");
+console.log("[WRITTEN]", rel);
+console.log("");
+console.log("Next:");
+console.log("pnpm build");

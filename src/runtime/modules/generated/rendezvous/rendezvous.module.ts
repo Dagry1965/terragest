@@ -38,7 +38,7 @@ export const rendezvousModule: ERPModule = {
     fields: [
 {
         key: "codeRendezVous",
-        label: "Code rendez-vous",
+          label: "Code rendez-vous",
         type: "text",
         required: true,
         unique: true,
@@ -303,14 +303,30 @@ export const rendezvousModule: ERPModule = {
       title: "Liste des rendez-vous",
       description: "Rendez-vous issus du runtime ERP.",
       fields: [
-        "codeRendezVous",
         "clientId",
         "vehiculeId",
         "dateRendezVous",
         "heureRendezVous",
         "typeService",
         "statut",
+      ],
+      hiddenFields: [
+        "codeRendezVous",
         "consumedByInterventionId",
+      ],
+      relationLabelFields: {
+        clientId: ["nom", "prenom", "telephone"],
+        vehiculeId: ["immatriculation", "modele"],
+      },
+      childTotals: [
+        {
+          key: "montantTotalIntervention",
+          label: "Montant total",
+          moduleKey: "interventionsauto",
+          foreignKey: "rendezVousId",
+          totalField: "coutTotal",
+          currency: "FCFA",
+        },
       ],
       enableSearch: true,
       enableSelection: true,

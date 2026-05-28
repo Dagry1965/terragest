@@ -33,6 +33,16 @@ export interface ERPOperationalFilterConfig {
   placeholder?: string;
 }
 
+
+export interface ERPOperationalChildTotalConfig {
+  key: string;
+  label: string;
+  moduleKey: string;
+  foreignKey: string;
+  totalField: string;
+  currency?: string;
+}
+
 export interface ERPOperationalTableConfig {
   title?: string;
   description?: string;
@@ -40,6 +50,9 @@ export interface ERPOperationalTableConfig {
   enableSearch?: boolean;
   enableSelection?: boolean;
   enableDensityToggle?: boolean;
+  hiddenFields?: string[];
+  relationLabelFields?: Record<string, string[]>;
+  childTotals?: ERPOperationalChildTotalConfig[];
 }
 
 export interface ERPOperationalRightPanelConfig {

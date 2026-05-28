@@ -1,4 +1,220 @@
-"use client";
+﻿const fs = require("fs");
+const path = require("path");
+
+const ROOT = process.cwd();
+
+const erpModuleRel = "src/runtime/modules/ERPModule.ts";
+const rdvRel = "src/runtime/modules/generated/rendezvous/rendezvous.module.ts";
+const pageRel = "src/components/erp/operational/ERPOperationalModulePage.tsx";
+const tableRel = "src/components/erp/operational/ERPOperationalTable.tsx";
+
+const erpModuleFile = path.join(ROOT, erpModuleRel);
+const rdvFile = path.join(ROOT, rdvRel);
+const pageFile = path.join(ROOT, pageRel);
+const tableFile = path.join(ROOT, tableRel);
+
+for (const file of [erpModuleFile, rdvFile, pageFile, tableFile]) {
+  if (!fs.existsSync(file)) {
+    throw new Error("File not found: " + file);
+  }
+}
+
+function backup(file, suffix) {
+  fs.writeFileSync(file + suffix, fs.readFileSync(file, "utf8"), "utf8");
+  console.log("[BACKUP]", path.relative(ROOT, file + suffix));
+}
+
+/**
+ * 1. Étendre metadata operational.table proprement.
+ */
+{
+  backup(erpModuleFile, ".bak-q2a-e4-operational-table-config");
+
+  let content = fs.readFileSync(erpModuleFile, "utf8");
+
+  if (!content.includes("export interface ERPOperationalChildTotalConfig")) {
+    const marker = "export interface ERPOperationalTableConfig";
+    const index = content.indexOf(marker);
+
+    if (index < 0) {
+      throw new Error("Point insertion introuvable: ERPOperationalTableConfig");
+    }
+
+    const types = `
+export interface ERPOperationalChildTotalConfig {
+  key: string;
+  label: string;
+  moduleKey: string;
+  foreignKey: string;
+  totalField: string;
+  currency?: string;
+}
+
+`;
+
+    content = content.slice(0, index) + types + content.slice(index);
+  }
+
+  if (!content.includes("relationLabelFields?: Record<string, string[]>;")) {
+    content = content.replace(
+      /export interface ERPOperationalTableConfig \{([\s\S]*?)enableDensityToggle\?: boolean;/,
+      `export interface ERPOperationalTableConfig {$1enableDensityToggle?: boolean;
+  hiddenFields?: string[];
+  relationLabelFields?: Record<string, string[]>;
+  childTotals?: ERPOperationalChildTotalConfig[];`
+    );
+  }
+
+  if (!content.includes("childTotals?: ERPOperationalChildTotalConfig[];")) {
+    throw new Error("ERPOperationalTableConfig.childTotals non ajouté.");
+  }
+
+  fs.writeFileSync(erpModuleFile, content, "utf8");
+  console.log("[WRITTEN]", erpModuleRel);
+}
+
+/**
+ * 2. Config rendezvous.table :
+ * - retirer codeRendezVous
+ * - retirer consumedByInterventionId
+ * - ajouter labels relationnels client/véhicule
+ * - ajouter Montant total depuis interventionsauto.coutTotal
+ */
+{
+  backup(rdvFile, ".bak-q2a-e4-rendezvous-operational-table");
+
+  let content = fs.readFileSync(rdvFile, "utf8");
+
+  // Sécurité : réparer les champs importants si un script précédent les avait touchés.
+  content = content.replace(
+    /businessCode:\s*\{\s*field:\s*\r?\n\s*prefix:\s*"RDV",/,
+    `businessCode: {
+      field: "codeRendezVous",
+      prefix: "RDV",`
+  );
+
+  content = content.replace(
+    /key:\s*\r?\n\s*label:\s*"Code rendez-vous",/,
+    `key: "codeRendezVous",
+          label: "Code rendez-vous",`
+  );
+
+  const operationalIndex = content.indexOf("operational:");
+  const tableIndex = content.indexOf("table:", operationalIndex);
+  const rightPanelIndex = content.indexOf("rightPanel:", tableIndex);
+
+  if (operationalIndex < 0 || tableIndex < 0 || rightPanelIndex < 0) {
+    throw new Error("Bloc operational.table/rightPanel introuvable.");
+  }
+
+  const beforeTable = content.slice(0, tableIndex);
+  const afterRightPanel = content.slice(rightPanelIndex);
+
+  const tableBlock = `table: {
+      title: "Liste des rendez-vous",
+      description: "Rendez-vous issus du runtime ERP.",
+      fields: [
+        "clientId",
+        "vehiculeId",
+        "dateRendezVous",
+        "heureRendezVous",
+        "typeService",
+        "statut",
+      ],
+      hiddenFields: [
+        "codeRendezVous",
+        "consumedByInterventionId",
+      ],
+      relationLabelFields: {
+        clientId: ["nom", "prenom", "telephone"],
+        vehiculeId: ["immatriculation", "modele"],
+      },
+      childTotals: [
+        {
+          key: "montantTotalIntervention",
+          label: "Montant total",
+          moduleKey: "interventionsauto",
+          foreignKey: "rendezVousId",
+          totalField: "coutTotal",
+          currency: "FCFA",
+        },
+      ],
+      enableSearch: true,
+      enableSelection: true,
+      enableDensityToggle: true,
+    },
+    `;
+
+  content = beforeTable + tableBlock + afterRightPanel;
+
+  const newTableStart = content.indexOf("table:", operationalIndex);
+  const newRightPanel = content.indexOf("rightPanel:", newTableStart);
+  const tableSlice = content.slice(newTableStart, newRightPanel);
+
+  const problems = [];
+
+  if (tableSlice.includes('"codeRendezVous"') && !tableSlice.includes("hiddenFields")) {
+    problems.push("codeRendezVous encore visible dans table.fields");
+  }
+
+  if (tableSlice.includes('"consumedByInterventionId"') && !tableSlice.includes("hiddenFields")) {
+    problems.push("consumedByInterventionId encore visible dans table.fields");
+  }
+
+  if (!tableSlice.includes("childTotals")) {
+    problems.push("childTotals absent");
+  }
+
+  if (!content.includes('field: "codeRendezVous"')) {
+    problems.push("businessCode.field perdu");
+  }
+
+  if (!content.includes('key: "codeRendezVous"')) {
+    problems.push("schema key codeRendezVous perdu");
+  }
+
+  if (problems.length > 0) {
+    console.log("[FAIL]");
+    for (const problem of problems) console.log(" - " + problem);
+    process.exit(1);
+  }
+
+  fs.writeFileSync(rdvFile, content, "utf8");
+  console.log("[WRITTEN]", rdvRel);
+}
+
+/**
+ * 3. Remonter vraiment la page opérationnelle.
+ */
+{
+  backup(pageFile, ".bak-q2a-e4-lift-page-top");
+
+  let content = fs.readFileSync(pageFile, "utf8");
+
+  content = content
+    .replace('className="-mt-8 space-y-3"', 'className="-mt-20 space-y-3"')
+    .replace('className="-mt-16 space-y-3"', 'className="-mt-20 space-y-3"')
+    .replace('className="-mt-3 space-y-4"', 'className="-mt-20 space-y-3"')
+    .replace('className="space-y-5"', 'className="-mt-20 space-y-3"')
+    .replace("p-4 lg:p-4", "p-3 lg:p-4")
+    .replace("mt-2 flex flex-col gap-1", "mt-1 flex flex-col gap-1")
+    .replace("mt-3 flex flex-wrap gap-2", "mt-2 flex flex-wrap gap-2");
+
+  fs.writeFileSync(pageFile, content, "utf8");
+  console.log("[WRITTEN]", pageRel);
+}
+
+/**
+ * 4. Table opérationnelle enrichie :
+ * - relation labels
+ * - montant total enfants
+ * - hidden fields
+ * - Fragment key
+ */
+{
+  backup(tableFile, ".bak-q2a-e4-table-relation-labels-child-totals");
+
+  const content = `"use client";
 
 import { Fragment, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -34,21 +250,6 @@ function getRecordId(record: Record<string, unknown>): string {
 
 function getField(module: ERPModule, key: string): ERPModuleField | undefined {
   return module.schema.fields.find((field) => field.key === key);
-}
-
-
-function getRelationModuleKey(field: ERPModuleField): string {
-  const relation = field.relation;
-
-  if (!relation) {
-    return "";
-  }
-
-  if (typeof relation === "string") {
-    return relation;
-  }
-
-  return String(relation.module ?? relation.collection ?? "").trim();
 }
 
 function getModule(moduleKey: string): ERPModule | undefined {
@@ -223,7 +424,7 @@ export function ERPOperationalTable({
 
     async function loadRelationLabels() {
       const relationFields = fieldColumns.filter(
-        (column) => Boolean(getRelationModuleKey(column.field))
+        (column) => column.field.relation?.module
       );
 
       if (relationFields.length === 0) {
@@ -235,7 +436,7 @@ export function ERPOperationalTable({
 
       await Promise.all(
         relationFields.map(async (column) => {
-          const targetModuleKey = getRelationModuleKey(column.field);
+          const targetModuleKey = column.field.relation?.module;
 
           if (!targetModuleKey) return;
 
@@ -435,6 +636,10 @@ export function ERPOperationalTable({
                   {column.kind === "field" ? column.field.label : column.label}
                 </th>
               ))}
+
+              <th className="whitespace-nowrap px-5 py-3.5 text-right text-[11px] font-black uppercase tracking-[0.16em] text-slate-500">
+                Actions
+              </th>
             </tr>
           </thead>
 
@@ -442,7 +647,7 @@ export function ERPOperationalTable({
             {data.length === 0 ? (
               <tr>
                 <td
-                  colSpan={columns.length + (hasExpandableChildren ? 1 : 0)}
+                  colSpan={columns.length + 2}
                   className="px-5 py-12 text-center text-sm font-semibold text-slate-500"
                 >
                   Aucun enregistrement ne correspond aux filtres.
@@ -484,12 +689,25 @@ export function ERPOperationalTable({
                         {renderCell(column, record)}
                       </td>
                     ))}
+
+                    <td className="whitespace-nowrap px-5 py-4 text-right">
+                      <button
+                        type="button"
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          openRecord(record);
+                        }}
+                        className="rounded-2xl border border-slate-200 bg-white px-3 py-2 text-xs font-black text-slate-700 transition hover:bg-slate-50"
+                      >
+                        Ouvrir
+                      </button>
+                    </td>
                   </tr>
 
                   {expanded ? (
                     <tr className="border-b border-slate-100">
                       <td
-                        colSpan={columns.length + (hasExpandableChildren ? 1 : 0)}
+                        colSpan={columns.length + (hasExpandableChildren ? 2 : 1)}
                         className="bg-slate-50 px-5 py-4"
                       >
                         <ERPOperationalExpandedChildren
@@ -508,3 +726,14 @@ export function ERPOperationalTable({
     </div>
   );
 }
+`;
+
+  fs.writeFileSync(tableFile, content, "utf8");
+  console.log("[WRITTEN]", tableRel);
+}
+
+console.log("");
+console.log("[DONE] Q2-A-E4 table opérationnelle enrichie.");
+console.log("");
+console.log("Next:");
+console.log("pnpm build");
