@@ -21,10 +21,6 @@ export function ERPOperationalFilters({
   search,
   onSearchChange,
 }: ERPOperationalFiltersProps) {
-  if (filters.length === 0) {
-    return null;
-  }
-
   function updateFilter(key: string, value: string) {
     onChange({
       ...values,
