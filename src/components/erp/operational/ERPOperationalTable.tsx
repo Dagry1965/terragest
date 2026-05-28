@@ -1,11 +1,12 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import type { ERPModule } from "@/runtime/modules/ERPModule";
 import type { ERPModuleField } from "@/runtime/modules/schemas/ERPModuleSchema";
 import { ERPRuntimeFieldValue } from "@/components/erp/runtime/ERPRuntimeFieldValue";
+import { ERPOperationalExpandedChildren } from "./ERPOperationalExpandedChildren";
 
 type OperationalColumn = {
   key: string;
@@ -61,8 +62,11 @@ export function ERPOperationalTable({
   data,
 }: ERPOperationalTableProps) {
   const router = useRouter();
+  const [expandedRows, setExpandedRows] = useState<Record<string, boolean>>({});
 
   const tableConfig = module.operational?.table;
+  const hasExpandableChildren = Boolean(module.composition?.children?.length);
+
   const fieldKeys = tableConfig?.fields?.length
     ? tableConfig.fields
     : module.schema.fields
@@ -91,37 +95,52 @@ export function ERPOperationalTable({
     router.push("/" + module.metadata.key + "/" + id + "/edit");
   }
 
+  function toggleExpanded(record: Record<string, unknown>) {
+    const id = getRecordId(record);
+
+    if (!id) return;
+
+    setExpandedRows((current) => ({
+      ...current,
+      [id]: !current[id],
+    }));
+  }
+
   return (
-    <div className="overflow-hidden rounded-3xl border border-[var(--erp-border)] bg-[var(--erp-surface)] shadow-[0_18px_55px_rgba(15,23,42,0.08)]">
-      <div className="flex flex-col gap-3 border-b border-[var(--erp-border)] px-5 py-5 lg:flex-row lg:items-center lg:justify-between">
+    <div className="overflow-hidden rounded-[1.7rem] border border-slate-200 bg-slate-50 shadow-[0_18px_55px_rgba(15,23,42,0.06)]">
+      <div className="flex flex-col gap-3 border-b border-slate-200 px-5 py-4 lg:flex-row lg:items-center lg:justify-between">
         <div>
-          <h2 className="text-xl font-black text-[var(--erp-text)]">
+          <h2 className="text-lg font-black text-[#10251C]">
             {tableConfig?.title ?? "Liste opérationnelle"}
           </h2>
-          <p className="mt-1 text-sm font-semibold text-[var(--erp-text-muted)]">
+          <p className="mt-1 text-sm font-semibold text-slate-500">
             {tableConfig?.description ?? "Données métier du module."}
           </p>
         </div>
 
-        <div className="rounded-2xl bg-emerald-50 px-4 py-2 text-sm font-black text-emerald-700">
-          {data.length} enregistrement(s)
+        <div className="rounded-full bg-white px-4 py-2 text-xs font-black uppercase tracking-wide text-slate-600 ring-1 ring-slate-200">
+          {data.length} ligne(s)
         </div>
       </div>
 
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto bg-white">
         <table className="w-full border-collapse text-left text-sm">
           <thead>
-            <tr className="border-b border-[var(--erp-border)] bg-slate-50">
+            <tr className="border-b border-slate-200 bg-slate-100/80">
+              {hasExpandableChildren ? (
+                <th className="w-12 px-4 py-3.5" />
+              ) : null}
+
               {columns.map((column) => (
                 <th
                   key={column.key}
-                  className="whitespace-nowrap px-5 py-4 text-xs font-black uppercase tracking-wide text-slate-500"
+                  className="whitespace-nowrap px-5 py-3.5 text-[11px] font-black uppercase tracking-[0.16em] text-slate-500"
                 >
-                  {column.field?.label ?? column.key}
+                  {column.field.label ?? column.key}
                 </th>
               ))}
 
-              <th className="whitespace-nowrap px-5 py-4 text-right text-xs font-black uppercase tracking-wide text-slate-500">
+              <th className="whitespace-nowrap px-5 py-3.5 text-right text-[11px] font-black uppercase tracking-[0.16em] text-slate-500">
                 Actions
               </th>
             </tr>
@@ -131,65 +150,102 @@ export function ERPOperationalTable({
             {data.length === 0 ? (
               <tr>
                 <td
-                  colSpan={columns.length + 1}
-                  className="px-5 py-12 text-center text-sm font-semibold text-[var(--erp-text-muted)]"
+                  colSpan={columns.length + 2}
+                  className="px-5 py-12 text-center text-sm font-semibold text-slate-500"
                 >
                   Aucun enregistrement ne correspond aux filtres.
                 </td>
               </tr>
             ) : null}
 
-            {data.map((record) => (
-              <tr
-                key={getRecordId(record)}
-                onClick={() => openRecord(record)}
-                className="cursor-pointer border-b border-slate-100 transition hover:bg-emerald-50/40"
-              >
-                {columns.map((column) => {
-                  const value = record[column.key];
-                  const isStatus = column.key === "statut" || column.key === "status";
+            {data.map((record) => {
+              const recordId = getRecordId(record);
+              const expanded = Boolean(expandedRows[recordId]);
 
-                  return (
-                    <td
-                      key={column.key}
-                      className="whitespace-nowrap px-5 py-4 font-semibold text-[var(--erp-text)]"
-                    >
-                      {isStatus ? (
-                        <span
-                          className={[
-                            "inline-flex rounded-full border px-3 py-1 text-xs font-black",
-                            getStatusBadgeClass(value),
-                          ].join(" ")}
-                        >
-                          <ERPRuntimeFieldValue
-                            field={column.field}
-                            value={value}
-                          />
-                        </span>
-                      ) : (
-                        <ERPRuntimeFieldValue
-                          field={column.field}
-                          value={value}
-                        />
-                      )}
-                    </td>
-                  );
-                })}
-
-                <td className="whitespace-nowrap px-5 py-4 text-right">
-                  <button
-                    type="button"
-                    onClick={(event) => {
-                      event.stopPropagation();
-                      openRecord(record);
-                    }}
-                    className="rounded-2xl border border-[var(--erp-border)] bg-white px-3 py-2 text-xs font-black text-[var(--erp-text)] transition hover:bg-slate-50"
+              return (
+                <>
+                  <tr
+                    key={recordId}
+                    onClick={() => openRecord(record)}
+                    className="cursor-pointer border-b border-slate-100 transition hover:bg-emerald-50/45"
                   >
-                    Ouvrir
-                  </button>
-                </td>
-              </tr>
-            ))}
+                    {hasExpandableChildren ? (
+                      <td className="px-4 py-4">
+                        <button
+                          type="button"
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            toggleExpanded(record);
+                          }}
+                          className="flex h-8 w-8 items-center justify-center rounded-xl border border-slate-200 bg-white text-sm font-black text-slate-600 transition hover:bg-slate-50"
+                          aria-label={expanded ? "Replier" : "Déplier"}
+                        >
+                          {expanded ? "−" : "+"}
+                        </button>
+                      </td>
+                    ) : null}
+
+                    {columns.map((column) => {
+                      const value = record[column.key];
+                      const isStatus = column.key === "statut" || column.key === "status";
+
+                      return (
+                        <td
+                          key={column.key}
+                          className="whitespace-nowrap px-5 py-4 text-sm font-semibold text-[#10251C]"
+                        >
+                          {isStatus ? (
+                            <span
+                              className={[
+                                "inline-flex rounded-full border px-3 py-1 text-xs font-black",
+                                getStatusBadgeClass(value),
+                              ].join(" ")}
+                            >
+                              <ERPRuntimeFieldValue
+                                field={column.field}
+                                value={value}
+                              />
+                            </span>
+                          ) : (
+                            <ERPRuntimeFieldValue
+                              field={column.field}
+                              value={value}
+                            />
+                          )}
+                        </td>
+                      );
+                    })}
+
+                    <td className="whitespace-nowrap px-5 py-4 text-right">
+                      <button
+                        type="button"
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          openRecord(record);
+                        }}
+                        className="rounded-2xl border border-slate-200 bg-white px-3 py-2 text-xs font-black text-slate-700 transition hover:bg-slate-50"
+                      >
+                        Ouvrir
+                      </button>
+                    </td>
+                  </tr>
+
+                  {expanded ? (
+                    <tr key={recordId + "-expanded"} className="border-b border-slate-100">
+                      <td
+                        colSpan={columns.length + (hasExpandableChildren ? 2 : 1)}
+                        className="bg-slate-50 px-5 py-4"
+                      >
+                        <ERPOperationalExpandedChildren
+                          parentModule={module}
+                          parentRecord={record}
+                        />
+                      </td>
+                    </tr>
+                  ) : null}
+                </>
+              );
+            })}
           </tbody>
         </table>
       </div>

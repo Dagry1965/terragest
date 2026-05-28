@@ -68,52 +68,29 @@ export function ERPOperationalModulePage({
     module.metadata.description ??
     "Vue opérationnelle générée par le Runtime ERP.";
 
-  const activeFiltersCount =
-    Object.values(filters).filter(Boolean).length + (search ? 1 : 0);
-
   return (
-    <div className="-mt-3 space-y-4">
-      <section className="relative overflow-hidden rounded-[2rem] border border-emerald-100 bg-[#F8FBF8] shadow-[0_24px_80px_rgba(15,23,42,0.08)]">
-        <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-emerald-600 via-teal-400 to-amber-300" />
+    <div className="space-y-6">
+      <section className="overflow-hidden rounded-[2rem] border border-emerald-100 bg-gradient-to-br from-[#F8FFFB] via-white to-[#ECFDF5] p-5 shadow-[0_22px_70px_rgba(15,23,42,0.08)] lg:p-7">
+        <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+          <div>
+            <p className="text-xs font-black uppercase tracking-[0.22em] text-emerald-700">
+              AMARKHYS · Vue opérationnelle
+            </p>
 
-        <div className="grid gap-6 p-5 lg:grid-cols-[minmax(0,1fr)_auto] lg:p-7">
-          <div className="min-w-0">
-            <div className="inline-flex rounded-full border border-emerald-200 bg-white px-3 py-1 text-[11px] font-black uppercase tracking-[0.22em] text-emerald-700 shadow-sm">
-              AMARKHYS · Runtime ERP
-            </div>
+            <h1 className="mt-3 text-3xl font-black tracking-tight text-[#10251C] lg:text-4xl">
+              {title}
+            </h1>
 
-            <div className="mt-3 flex flex-col gap-2">
-              <h1 className="text-3xl font-black tracking-tight text-[#10251C] lg:text-[2.65rem]">
-                {title}
-              </h1>
-
-              <p className="max-w-3xl text-sm font-semibold leading-6 text-slate-600">
-                {subtitle}
-              </p>
-            </div>
-
-            <div className="mt-4 flex flex-wrap gap-2">
-              <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-black text-emerald-700">
-                {filteredData.length} résultat(s)
-              </span>
-
-              <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-black text-slate-600">
-                {activeFiltersCount} filtre(s) actif(s)
-              </span>
-
-              {module.scheduling?.enabled ? (
-                <span className="rounded-full bg-teal-50 px-3 py-1 text-xs font-black text-teal-700">
-                  Planning runtime actif
-                </span>
-              ) : null}
-            </div>
+            <p className="mt-2 max-w-3xl text-sm font-semibold leading-6 text-slate-600">
+              {subtitle}
+            </p>
           </div>
 
-          <div className="flex flex-wrap items-start justify-start gap-3 lg:justify-end">
+          <div className="flex flex-wrap gap-3">
             {module.scheduling?.enabled ? (
               <Link
                 href={"/" + module.metadata.key + "/planning"}
-                className="rounded-2xl border border-emerald-200 bg-white px-5 py-3 text-sm font-black text-emerald-800 shadow-sm transition hover:-translate-y-0.5 hover:bg-emerald-50 hover:shadow-md"
+                className="rounded-2xl border border-emerald-200 bg-white px-5 py-3 text-sm font-black text-emerald-800 shadow-sm transition hover:bg-emerald-50"
               >
                 Planning
               </Link>
@@ -121,14 +98,14 @@ export function ERPOperationalModulePage({
 
             <Link
               href={"/" + module.metadata.key + "/nouveau"}
-              className="rounded-2xl bg-[#0F8A5F] px-5 py-3 text-sm font-black text-white shadow-[0_14px_34px_rgba(15,138,95,0.28)] transition hover:-translate-y-0.5 hover:bg-[#0B6F4C]"
+              className="rounded-2xl bg-emerald-600 px-5 py-3 text-sm font-black text-white shadow-[0_12px_30px_rgba(16,185,129,0.28)] transition hover:bg-emerald-700"
             >
               Nouveau
             </Link>
 
             <button
               type="button"
-              className="rounded-2xl border border-slate-200 bg-white px-5 py-3 text-sm font-black text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:bg-slate-50 hover:shadow-md"
+              className="rounded-2xl border border-slate-200 bg-white px-5 py-3 text-sm font-black text-slate-700 shadow-sm transition hover:bg-slate-50"
             >
               Exporter
             </button>
@@ -149,7 +126,7 @@ export function ERPOperationalModulePage({
         onSearchChange={setSearch}
       />
 
-      <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_340px] 2xl:grid-cols-[minmax(0,1fr)_380px]">
+      <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_360px]">
         <ERPOperationalTable
           module={module}
           data={filteredData}

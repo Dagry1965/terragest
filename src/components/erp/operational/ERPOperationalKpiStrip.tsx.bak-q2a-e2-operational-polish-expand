@@ -1,14 +1,5 @@
 "use client";
 
-import {
-  CalendarDays,
-  CheckCircle2,
-  Clock3,
-  XCircle,
-  Activity,
-  BarChart3,
-} from "lucide-react";
-
 import type {
   ERPOperationalKpiConfig,
 } from "@/runtime/modules/ERPModule";
@@ -47,34 +38,22 @@ function getToneClass(tone?: string): string {
   }
 }
 
-function getIconToneClass(tone?: string): string {
+function getDotClass(tone?: string): string {
   switch (tone) {
     case "green":
-      return "bg-emerald-50 text-emerald-700 ring-emerald-100";
+      return "bg-emerald-500";
     case "orange":
-      return "bg-amber-50 text-amber-700 ring-amber-100";
+      return "bg-amber-500";
     case "red":
-      return "bg-red-50 text-red-700 ring-red-100";
+      return "bg-red-500";
     case "purple":
-      return "bg-purple-50 text-purple-700 ring-purple-100";
+      return "bg-purple-500";
     case "gray":
-      return "bg-slate-50 text-slate-600 ring-slate-100";
+      return "bg-slate-400";
     case "blue":
     default:
-      return "bg-sky-50 text-sky-700 ring-sky-100";
+      return "bg-sky-500";
   }
-}
-
-function renderKpiIcon(icon?: string) {
-  const key = String(icon ?? "").toLowerCase();
-
-  if (key.includes("calendar")) return <CalendarDays className="h-5 w-5" />;
-  if (key.includes("check")) return <CheckCircle2 className="h-5 w-5" />;
-  if (key.includes("clock")) return <Clock3 className="h-5 w-5" />;
-  if (key.includes("x")) return <XCircle className="h-5 w-5" />;
-  if (key.includes("bar")) return <BarChart3 className="h-5 w-5" />;
-
-  return <Activity className="h-5 w-5" />;
 }
 
 export function ERPOperationalKpiStrip({
@@ -91,32 +70,29 @@ export function ERPOperationalKpiStrip({
         <div
           key={kpi.key}
           className={[
-            "group relative overflow-hidden rounded-[1.45rem] border p-4 shadow-[0_12px_35px_rgba(15,23,42,0.055)] transition hover:-translate-y-0.5 hover:shadow-[0_18px_50px_rgba(15,23,42,0.09)]",
+            "group relative overflow-hidden rounded-[1.7rem] border p-5 shadow-[0_16px_45px_rgba(15,23,42,0.06)] transition hover:-translate-y-0.5 hover:shadow-[0_22px_60px_rgba(15,23,42,0.10)]",
             getToneClass(kpi.tone),
           ].join(" ")}
         >
+          <div className={["absolute inset-x-0 top-0 h-1", getDotClass(kpi.tone)].join(" ")} />
+
           <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="text-[11px] font-black uppercase tracking-[0.18em] text-slate-500">
+              <p className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-500">
                 {kpi.label}
               </p>
-              <p className="mt-2 text-[2.15rem] font-black leading-none tracking-tight">
+              <p className="mt-3 text-[2.35rem] font-black leading-none tracking-tight">
                 {getKpiValue(kpi, data)}
               </p>
             </div>
 
-            <div
-              className={[
-                "flex h-11 w-11 items-center justify-center rounded-2xl ring-1",
-                getIconToneClass(kpi.tone),
-              ].join(" ")}
-            >
-              {renderKpiIcon(kpi.icon)}
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-slate-50 text-sm font-black text-slate-600 ring-1 ring-slate-100">
+              {kpi.icon ? kpi.icon.slice(0, 1).toUpperCase() : "•"}
             </div>
           </div>
 
           {kpi.description ? (
-            <p className="mt-2 line-clamp-2 text-xs font-semibold leading-5 text-slate-500">
+            <p className="mt-3 line-clamp-2 text-xs font-semibold leading-5 text-slate-500">
               {kpi.description}
             </p>
           ) : null}
