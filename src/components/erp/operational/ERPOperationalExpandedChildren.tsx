@@ -1,5 +1,65 @@
 "use client";
 
+const getOperationalToken = (path: string, fallback: string): string => {
+  const value = path
+    .split(".")
+    .reduce<unknown>((acc, key) => {
+      if (!acc || typeof acc !== "object") {
+        return undefined;
+      }
+
+      return (acc as Record<string, unknown>)[key];
+    }, operationalUiTokens);
+
+  return typeof value === "string" ? value : fallback;
+};
+
+const expandedChildrenTokens = {
+  wrapper: getOperationalToken(
+    "expandedChildren.wrapper",
+    "rounded-2xl border border-slate-200 bg-white/90 p-4 shadow-sm"
+  ),
+  section: getOperationalToken(
+    "expandedChildren.section",
+    "rounded-xl border border-slate-100 bg-slate-50/70 p-3"
+  ),
+  header: getOperationalToken(
+    "expandedChildren.header",
+    "mb-3 flex items-center justify-between gap-3"
+  ),
+  title: getOperationalToken(
+    "expandedChildren.title",
+    "text-sm font-semibold text-slate-900"
+  ),
+  subtitle: getOperationalToken(
+    "expandedChildren.subtitle",
+    "text-xs text-slate-500"
+  ),
+  list: getOperationalToken(
+    "expandedChildren.list",
+    "space-y-2"
+  ),
+  item: getOperationalToken(
+    "expandedChildren.item",
+    "rounded-xl border border-slate-200 bg-white px-3 py-2 shadow-sm transition hover:border-emerald-200 hover:bg-emerald-50/40"
+  ),
+  itemTitle: getOperationalToken(
+    "expandedChildren.itemTitle",
+    "text-sm font-medium text-slate-900"
+  ),
+  itemMeta: getOperationalToken(
+    "expandedChildren.itemMeta",
+    "text-xs text-slate-500"
+  ),
+  empty: getOperationalToken(
+    "expandedChildren.empty",
+    "rounded-xl border border-dashed border-slate-200 bg-white/70 px-3 py-4 text-sm text-slate-500"
+  ),
+  action: getOperationalToken(
+    "expandedChildren.action",
+    "inline-flex items-center rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-medium text-slate-700 shadow-sm transition hover:border-emerald-300 hover:text-emerald-700"
+  ),
+};
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 
@@ -10,6 +70,7 @@ import type {
 import { RuntimeOperationalChildrenResolver } from "@/runtime/operational";
 import { ERPRuntimeFieldValue } from "@/components/erp/runtime/ERPRuntimeFieldValue";
 
+import { operationalUiTokens } from "./operationalUiTokens";
 type ExpandedGroup = {
   child: ERPCompositionChild;
   module: ERPModule;
@@ -209,7 +270,7 @@ export function ERPOperationalExpandedChildren({
               key={group.child.key}
               className="rounded-3xl border border-slate-200 bg-white p-4"
             >
-              <div className="mb-3 flex items-center justify-between gap-3">
+              <div className={expandedChildrenTokens.header}>
                 <div>
                   <h3 className="text-sm font-black text-[#10251C]">
                     {group.child.title ?? group.module.metadata.label}
