@@ -395,6 +395,7 @@ export const rendezvousModule: ERPModule = {
         position: "after",
         allowCreate: true,
         createLabel: "Créer une intervention",
+        openLabel: "Ouvrir intervention",
         prefillFromParent: {
           rendezVousId: "id",
           clientId: "clientId",

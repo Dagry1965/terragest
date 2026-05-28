@@ -37,16 +37,8 @@ function buildRecordHref(moduleKey: string, record: Record<string, unknown>): st
   return "/" + moduleKey + "/" + id + "/edit";
 }
 
-function getOpenLabel(moduleKey: string): string {
-  if (moduleKey === "interventionsauto") {
-    return "Ouvrir intervention";
-  }
-
-  if (moduleKey === "facturesauto") {
-    return "Ouvrir facture";
-  }
-
-  return "Ouvrir";
+function getOpenLabel(child: ERPCompositionChild): string {
+  return child.openLabel ?? "Ouvrir";
 }
 
 function isVisibleRuntimeRecord(record: Record<string, unknown>): boolean {
@@ -235,7 +227,7 @@ export function ERPOperationalExpandedChildren({
                           href={buildRecordHref(group.module.metadata.key, record)}
                           className="rounded-2xl border border-emerald-200 bg-white px-3 py-2 text-xs font-black text-emerald-700 transition hover:bg-emerald-50"
                         >
-                          {getOpenLabel(group.module.metadata.key)}
+                          {getOpenLabel(group.child)}
                         </Link>
                       </div>
 
@@ -337,9 +329,7 @@ export function ERPOperationalExpandedChildren({
                                               )}
                                               className="rounded-xl border border-emerald-200 bg-white px-2.5 py-1.5 text-[11px] font-black text-emerald-700 transition hover:bg-emerald-50"
                                             >
-                                              {getOpenLabel(
-                                                grandchildGroup.module.metadata.key
-                                              )}
+                                              {getOpenLabel(grandchildGroup.child)}
                                             </Link>
                                           </td>
                                         </tr>
