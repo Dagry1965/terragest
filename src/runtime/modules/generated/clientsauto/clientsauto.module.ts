@@ -291,10 +291,12 @@ export const clientsautoModule: ERPModule = {
       hiddenFields: [
         "id",
         "_id",
+        "uid",
         "tenantId",
         "workspaceId",
         "createdAt",
         "updatedAt",
+        "removedAt",
       ],
     },
 

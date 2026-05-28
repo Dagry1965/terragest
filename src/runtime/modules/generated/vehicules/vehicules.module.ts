@@ -379,10 +379,12 @@ export const vehiculesModule: ERPModule = {
       hiddenFields: [
         "id",
         "_id",
+        "uid",
         "tenantId",
         "workspaceId",
         "createdAt",
         "updatedAt",
+        "removedAt",
       ],
     },
 

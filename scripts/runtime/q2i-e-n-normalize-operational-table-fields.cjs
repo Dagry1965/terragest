@@ -18,10 +18,12 @@ const modules = [
     hiddenFields: [
       "id",
       "_id",
+      "uid",
       "tenantId",
       "workspaceId",
       "createdAt",
       "updatedAt",
+      "removedAt",
     ],
   },
   {
@@ -38,10 +40,12 @@ const modules = [
     hiddenFields: [
       "id",
       "_id",
+      "uid",
       "tenantId",
       "workspaceId",
       "createdAt",
       "updatedAt",
+      "removedAt",
     ],
   },
 ];
@@ -99,11 +103,11 @@ function extractObjectBlock(source, propertyName) {
   return "";
 }
 
-function toArrayLiteral(values, indent = "      ") {
+function arrayLiteral(values, indent = "      ") {
   return "[\n" + values.map((value) => `${indent}  "${value}",`).join("\n") + "\n" + indent + "]";
 }
 
-function replaceTableBlock(content, config) {
+function replaceOrInsertTable(content, config) {
   const operational = extractObjectBlock(content, "operational");
 
   if (!operational) {
@@ -112,19 +116,32 @@ function replaceTableBlock(content, config) {
 
   const table = extractObjectBlock(operational, "table");
 
-  if (!table) {
-    fail(`operational.table block not found for ${config.key}`);
-  }
-
   const nextTable = `table: {
       enableSearch: true,
       enableSelection: true,
       enableDensityToggle: true,
-      fields: ${toArrayLiteral(config.fields, "      ")},
-      hiddenFields: ${toArrayLiteral(config.hiddenFields, "      ")},
+      fields: ${arrayLiteral(config.fields, "      ")},
+      hiddenFields: ${arrayLiteral(config.hiddenFields, "      ")},
     }`;
 
-  const nextOperational = operational.replace(table, nextTable);
+  let nextOperational;
+
+  if (table) {
+    nextOperational = operational.replace(table, nextTable);
+  } else {
+    const rightPanelIndex = operational.indexOf("\n    rightPanel:");
+
+    if (rightPanelIndex < 0) {
+      fail(`Unable to find insertion point before rightPanel for ${config.key}`);
+    }
+
+    nextOperational =
+      operational.slice(0, rightPanelIndex).trimEnd() +
+      "\n    " +
+      nextTable +
+      ",\n" +
+      operational.slice(rightPanelIndex);
+  }
 
   return content.replace(operational, nextOperational);
 }
@@ -137,7 +154,7 @@ for (const config of modules) {
   const original = read(config.path);
   write(config.path + ".bak-q2i-e-n-normalize-operational-table-fields", original);
 
-  const updated = replaceTableBlock(original, config);
+  const updated = replaceOrInsertTable(original, config);
   write(config.path, updated);
 
   console.log("[WRITTEN]", path.relative(ROOT, config.path));
@@ -156,28 +173,34 @@ for (const config of modules) {
       ok: table.includes("fields:") && config.fields.every((field) => table.includes(`"${field}"`)),
     },
     {
-      label: `${config.key} keeps search enabled`,
-      ok: table.includes("enableSearch: true"),
+      label: `${config.key} has same table feature structure`,
+      ok:
+        table.includes("enableSearch: true") &&
+        table.includes("enableSelection: true") &&
+        table.includes("enableDensityToggle: true"),
     },
     {
-      label: `${config.key} keeps selection enabled`,
-      ok: table.includes("enableSelection: true"),
+      label: `${config.key} has hidden technical fields`,
+      ok:
+        table.includes("hiddenFields:") &&
+        table.includes('"tenantId"') &&
+        table.includes('"workspaceId"') &&
+        table.includes('"removedAt"'),
     },
     {
-      label: `${config.key} keeps density toggle enabled`,
-      ok: table.includes("enableDensityToggle: true"),
-    },
-    {
-      label: `${config.key} has hiddenFields`,
-      ok: table.includes("hiddenFields:") && table.includes('"tenantId"'),
+      label: `${config.key} keeps kpis`,
+      ok: operational.includes("kpis:"),
     },
     {
       label: `${config.key} keeps rightPanel`,
       ok: operational.includes("rightPanel:") && operational.includes("metrics:"),
     },
     {
-      label: `${config.key} keeps kpis`,
-      ok: operational.includes("kpis:"),
+      label: `${config.key} keeps branding contract`,
+      ok:
+        operational.includes("brandName:") &&
+        operational.includes("runtimeLabel:") &&
+        operational.includes("eyebrow:"),
     }
   );
 }
@@ -200,7 +223,7 @@ if (failed.length > 0) {
 }
 
 console.log("");
-console.log("[DONE] Operational table fields normalized by metadata.");
+console.log("[DONE] Operational table columns normalized by metadata.");
 console.log("");
 console.log("Next:");
 console.log("  pnpm build");
