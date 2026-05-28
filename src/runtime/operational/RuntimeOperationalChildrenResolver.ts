@@ -36,11 +36,21 @@ function normalizeRecordId(record: RuntimeOperationalRecord): string {
 }
 
 function getModuleKey(module: ERPModule): string {
-  return String((module as any).key ?? (module as any).id ?? "");
+  return String(
+    (module as any).metadata?.key ??
+      (module as any).key ??
+      (module as any).id ??
+      ""
+  ).trim();
 }
 
 function getModuleLabel(module: ERPModule): string {
-  return String((module as any).label ?? (module as any).name ?? getModuleKey(module));
+  return String(
+    (module as any).metadata?.label ??
+      (module as any).label ??
+      (module as any).name ??
+      getModuleKey(module)
+  ).trim();
 }
 
 function getCompositionChildren(module: ERPModule): RuntimeOperationalCompositionChild[] {
