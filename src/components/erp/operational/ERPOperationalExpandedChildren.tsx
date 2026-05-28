@@ -94,14 +94,7 @@ async function loadExpandedGroups(
         return null;
       }
 
-      const module = {
-        ...parentModule,
-        metadata: {
-          ...parentModule.metadata,
-          key: group.moduleKey,
-          label: group.moduleLabel,
-        },
-      } as ERPModule;
+      const module = group.module;
 
       const grandchildrenByParentId: Record<string, ExpandedGroup[]> = {};
 
@@ -123,14 +116,7 @@ async function loadExpandedGroups(
               openLabel: childGroup.openLabel,
             };
 
-            const nestedModule = {
-              ...module,
-              metadata: {
-                ...module.metadata,
-                key: childGroup.moduleKey,
-                label: childGroup.moduleLabel,
-              },
-            } as ERPModule;
+            const nestedModule = childGroup.module;
 
             return {
               child: nestedChild,

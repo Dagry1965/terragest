@@ -7,6 +7,7 @@ export type RuntimeOperationalRecord = Record<string, any>;
 export type RuntimeOperationalExpandedGroup = {
   moduleKey: string;
   moduleLabel: string;
+  module: ERPModule;
   parentModuleKey: string;
   parentRecordId: string;
   foreignKey: string;
@@ -173,6 +174,7 @@ async function resolveGroups(params: {
     groups.push({
       moduleKey: getModuleKey(childModule),
       moduleLabel: getModuleLabel(childModule),
+      module: childModule,
       parentModuleKey: getModuleKey(parentModule),
       parentRecordId,
       foreignKey,
