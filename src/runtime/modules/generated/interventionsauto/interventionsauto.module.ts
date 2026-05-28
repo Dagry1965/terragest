@@ -311,8 +311,9 @@ export const interventionsautoModule: ERPModule = {
       },
     ],
     table: {
-      title: "Liste des interventions",
-      description: "Interventions issues du runtime ERP.",
+      enableSearch: true,
+      enableSelection: true,
+      enableDensityToggle: true,
       fields: [
         "clientId",
         "vehiculeId",
@@ -323,13 +324,32 @@ export const interventionsautoModule: ERPModule = {
         "statut",
       ],
       relationLabelFields: {
-        clientId: ["nom", "prenom", "telephone"],
-        vehiculeId: ["immatriculation", "modele"],
-        rendezVousId: ["dateRendezVous", "heureRendezVous", "typeService"],
+        clientId: [
+          "nom",
+          "prenom",
+          "telephone",
+        ],
+        vehiculeId: [
+          "marque",
+          "modele",
+          "immatriculation",
+        ],
+        rendezVousId: [
+          "dateRendezVous",
+          "heureRendezVous",
+          "typeService",
+        ],
       },
-      enableSearch: true,
-      enableSelection: true,
-      enableDensityToggle: true,
+      hiddenFields: [
+        "id",
+        "_id",
+        "uid",
+        "tenantId",
+        "workspaceId",
+        "createdAt",
+        "updatedAt",
+        "removedAt",
+      ],
     },
     rightPanel: {
       enabled: true,
