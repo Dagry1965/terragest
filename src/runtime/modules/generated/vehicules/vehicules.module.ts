@@ -376,6 +376,13 @@ export const vehiculesModule: ERPModule = {
         "clientId",
         "statut",
       ],
+      relationLabelFields: {
+        clientId: [
+          "nom",
+          "prenom",
+          "telephone",
+        ],
+      },
       hiddenFields: [
         "id",
         "_id",
