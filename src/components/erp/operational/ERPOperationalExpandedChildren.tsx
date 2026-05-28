@@ -7,8 +7,7 @@ import type {
   ERPCompositionChild,
   ERPModule,
 } from "@/runtime/modules/ERPModule";
-import { RuntimeDataBinding } from "@/runtime/data-binding/RuntimeDataBinding";
-import { allERPModules } from "@/runtime/modules/definitions/coreModules";
+import { RuntimeOperationalChildrenResolver } from "@/runtime/operational";
 import { ERPRuntimeFieldValue } from "@/components/erp/runtime/ERPRuntimeFieldValue";
 
 type ExpandedGroup = {
@@ -49,10 +48,6 @@ function isVisibleRuntimeRecord(record: Record<string, unknown>): boolean {
   return status !== "retiree";
 }
 
-function getModule(moduleKey: string): ERPModule | undefined {
-  return allERPModules.find((module) => module.metadata.key === moduleKey);
-}
-
 function getDisplayFields(
   module: ERPModule,
   child?: ERPCompositionChild
@@ -77,49 +72,83 @@ function getField(module: ERPModule, key: string) {
   return module.schema.fields.find((field) => field.key === key);
 }
 
-async function loadChildGroup(
-  parentRecordId: string,
-  child: ERPCompositionChild
-): Promise<ExpandedGroup | null> {
-  const module = getModule(child.moduleKey);
+async function loadExpandedGroups(
+  parentModule: ERPModule,
+  parentRecord: Record<string, unknown>
+): Promise<ExpandedGroup[]> {
+  const resolvedGroups = await RuntimeOperationalChildrenResolver.resolveExpandedChildren({
+    module: parentModule,
+    record: parentRecord,
+    maxDepth: 2,
+  });
 
-  if (!module) {
-    return null;
-  }
+  const rootChildren = parentModule.composition?.children ?? [];
 
-  const records = (await RuntimeDataBinding.list(module)).filter(
-    (record) =>
-      String(record[child.foreignKey] ?? "").trim() === parentRecordId &&
-      isVisibleRuntimeRecord(record)
-  );
+  return resolvedGroups
+    .map((group) => {
+      const child = rootChildren.find(
+        (candidate) => candidate.moduleKey === group.moduleKey
+      );
 
-  const grandchildrenByParentId: Record<string, ExpandedGroup[]> = {};
-
-  for (const record of records) {
-    const recordId = getRecordId(record);
-
-    if (!recordId) continue;
-
-    const grandchildren = module.composition?.children ?? [];
-    const groups: ExpandedGroup[] = [];
-
-    for (const grandchild of grandchildren) {
-      const group = await loadChildGroup(recordId, grandchild);
-
-      if (group && group.records.length > 0) {
-        groups.push(group);
+      if (!child) {
+        return null;
       }
-    }
 
-    grandchildrenByParentId[recordId] = groups;
-  }
+      const module = {
+        ...parentModule,
+        metadata: {
+          ...parentModule.metadata,
+          key: group.moduleKey,
+          label: group.moduleLabel,
+        },
+      } as ERPModule;
 
-  return {
-    child,
-    module,
-    records,
-    grandchildrenByParentId,
-  };
+      const grandchildrenByParentId: Record<string, ExpandedGroup[]> = {};
+
+      for (const record of group.records) {
+        const recordId = getRecordId(record);
+
+        if (!recordId) {
+          continue;
+        }
+
+        grandchildrenByParentId[recordId] = group.children
+          .filter((childGroup) => childGroup.parentRecordId === recordId)
+          .map((childGroup) => {
+            const nestedChild = {
+              moduleKey: childGroup.moduleKey,
+              foreignKey: childGroup.foreignKey,
+              label: childGroup.moduleLabel,
+              openLabel: childGroup.openLabel,
+            } as ERPCompositionChild;
+
+            const nestedModule = {
+              ...module,
+              metadata: {
+                ...module.metadata,
+                key: childGroup.moduleKey,
+                label: childGroup.moduleLabel,
+              },
+            } as ERPModule;
+
+            return {
+              child: nestedChild,
+              module: nestedModule,
+              records: childGroup.records,
+              grandchildrenByParentId: {},
+            };
+          })
+          .filter((nestedGroup) => nestedGroup.records.length > 0);
+      }
+
+      return {
+        child,
+        module,
+        records: group.records,
+        grandchildrenByParentId,
+      };
+    })
+    .filter((group): group is ExpandedGroup => Boolean(group));
 }
 
 export function ERPOperationalExpandedChildren({
@@ -147,17 +176,10 @@ export function ERPOperationalExpandedChildren({
       setLoading(true);
 
       try {
-        const loadedGroups = await Promise.all(
-          children.map((child) => loadChildGroup(parentRecordId, child))
-        );
+        const loadedGroups = await loadExpandedGroups(parentModule, parentRecord);
 
         if (mounted) {
-          setGroups(
-            loadedGroups.filter(
-              (group): group is ExpandedGroup =>
-                Boolean(group) && (group?.records.length ?? 0) > 0
-            )
-          );
+          setGroups(loadedGroups.filter((group) => group.records.length > 0));
         }
       } finally {
         if (mounted) {
@@ -171,7 +193,7 @@ export function ERPOperationalExpandedChildren({
     return () => {
       mounted = false;
     };
-  }, [parentRecordId, children]);
+  }, [parentModule, parentRecord, parentRecordId, children]);
 
   if (children.length === 0) {
     return null;
