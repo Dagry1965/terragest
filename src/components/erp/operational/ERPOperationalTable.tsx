@@ -3,12 +3,17 @@
 import { Fragment, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import type { ERPModule } from "@/runtime/modules/ERPModule";
+import type {
+  ERPModule,
+  ERPOperationalChildTotalConfig,
+} from "@/runtime/modules/ERPModule";
 import type { ERPModuleField } from "@/runtime/modules/schemas/ERPModuleSchema";
-import { RuntimeDataBinding } from "@/runtime/data-binding/RuntimeDataBinding";
 import { allERPModules } from "@/runtime/modules/definitions/coreModules";
 import { ERPRuntimeFieldValue } from "@/components/erp/runtime/ERPRuntimeFieldValue";
 import { ERPOperationalExpandedChildren } from "./ERPOperationalExpandedChildren";
+import {
+  RuntimeOperationalDataResolver,
+} from "@/runtime/operational";
 
 type OperationalColumn =
   | {
@@ -219,73 +224,38 @@ export function ERPOperationalTable({
   );
 
   useEffect(() => {
-    let mounted = true;
-
     async function loadRelationLabels() {
-      const relationFields = fieldColumns.filter(
-        (column) => Boolean(getRelationModuleKey(column.field))
-      );
+      const fieldColumns = columns.filter((column) => column.kind === "field");
+      const fieldKeys = fieldColumns.map((column) => column.key);
 
-      if (relationFields.length === 0) {
+      if (fieldKeys.length === 0) {
         setRelationLabels({});
         return;
       }
 
-      const next: Record<string, Record<string, string>> = {};
-
-      await Promise.all(
-        relationFields.map(async (column) => {
-          const targetModuleKey = getRelationModuleKey(column.field);
-
-          if (!targetModuleKey) return;
-
-          const targetModule = getModule(targetModuleKey);
-
-          if (!targetModule) return;
-
-          const records = await RuntimeDataBinding.list(targetModule);
-          const fields = getRelationLabelFields(module, column.key, targetModule);
-          const labels: Record<string, string> = {};
-
-          records.forEach((record) => {
-            const id = getRecordId(record);
-
-            if (!id) return;
-
-            labels[id] =
-              buildRelationLabel(record, fields) ||
-              String(record.nom ?? record.label ?? id);
+      try {
+        const next =
+          await RuntimeOperationalDataResolver.resolveRelationLabels({
+            module,
+            fieldKeys,
           });
 
-          next[column.key] = labels;
-        })
-      );
-
-      if (mounted) {
         setRelationLabels(next);
+      } catch (error) {
+        console.error("[OPERATIONAL RELATION LABELS ERROR]", error);
+        setRelationLabels({});
       }
     }
 
     loadRelationLabels();
-
-    return () => {
-      mounted = false;
-    };
-  }, [fieldColumns, module]);
+  }, [columns, module]);
 
   useEffect(() => {
-    let mounted = true;
-
     async function loadChildTotals() {
       const totalsConfig =
         (tableConfig as
           | {
-              childTotals?: Array<{
-                key: string;
-                moduleKey: string;
-                foreignKey: string;
-                totalField: string;
-              }>;
+              childTotals?: ERPOperationalChildTotalConfig[];
             }
           | undefined)?.childTotals ?? [];
 
@@ -294,44 +264,22 @@ export function ERPOperationalTable({
         return;
       }
 
-      const next: Record<string, Record<string, number>> = {};
+      try {
+        const next =
+          await RuntimeOperationalDataResolver.resolveChildTotals({
+            parentModule: module,
+            totals: totalsConfig,
+          });
 
-      await Promise.all(
-        totalsConfig.map(async (config) => {
-          const childModule = getModule(config.moduleKey);
-
-          if (!childModule) return;
-
-          const children = await RuntimeDataBinding.list(childModule);
-          const totalsByParent: Record<string, number> = {};
-
-          children
-            .filter(isVisibleRuntimeRecord)
-            .forEach((child) => {
-              const parentId = String(child[config.foreignKey] ?? "").trim();
-
-              if (!parentId) return;
-
-              totalsByParent[parentId] =
-                (totalsByParent[parentId] ?? 0) +
-                Number(child[config.totalField] ?? 0);
-            });
-
-          next[config.key] = totalsByParent;
-        })
-      );
-
-      if (mounted) {
         setChildTotals(next);
+      } catch (error) {
+        console.error("[OPERATIONAL CHILD TOTALS ERROR]", error);
+        setChildTotals({});
       }
     }
 
     loadChildTotals();
-
-    return () => {
-      mounted = false;
-    };
-  }, [tableConfig]);
+  }, [module, tableConfig]);
 
   function openRecord(record: Record<string, unknown>) {
     const id = getRecordId(record);
