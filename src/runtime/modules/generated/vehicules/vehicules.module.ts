@@ -329,6 +329,38 @@ export const vehiculesModule: ERPModule = {
 
   },
 
+  operational: {
+    enabled: true,
+    title: "Véhicules",
+    subtitle: "Vue opérationnelle des véhicules, rendez-vous et interventions atelier.",
+    branding: {
+      brandName: "AMARKHYS",
+      runtimeLabel: "Runtime ERP",
+      eyebrow: "AMARKHYS · Runtime ERP",
+    },
+    rightPanel: {
+      enabled: true,
+      title: "Parc véhicules",
+      type: "summary",
+      metrics: [
+        {
+          key: "total",
+          label: "Véhicules affichés",
+          type: "count",
+          format: "number",
+        },
+        {
+          key: "actifs",
+          label: "Véhicules actifs",
+          type: "countWhere",
+          field: "statut",
+          equals: "actif",
+          format: "number",
+        },
+      ],
+    },
+  },
+
   composition: {
     contextBanner: {
       title: "Contexte véhicule",
