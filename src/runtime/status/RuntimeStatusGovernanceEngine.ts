@@ -126,7 +126,126 @@ const runtimeStatusPolicies: RuntimeStatusGovernancePolicy[] = [
       "stockProcessedAt",
       "stockProcessedQuantity",
     ],
+  },  {
+    moduleKey: "rendezvous",
+    statusField: "statut",
+    editMode: "action_only",
+    statuses: [
+      {
+        key: "planifie",
+        label: "Planifié",
+        description: "Le rendez-vous est enregistré et bloque le créneau planning.",
+        visibility: "visible",
+        tone: "info",
+      },
+      {
+        key: "confirme",
+        label: "Confirmé",
+        description: "Le rendez-vous est confirmé. Le runtime peut créer ou lier une intervention.",
+        visibility: "visible",
+        tone: "success",
+      },
+      {
+        key: "en_cours",
+        label: "En cours",
+        description: "Le rendez-vous est en cours de traitement à l'atelier.",
+        visibility: "visible",
+        tone: "warning",
+      },
+      {
+        key: "termine",
+        label: "Terminé",
+        description: "Le rendez-vous est terminé. La suite métier se poursuit dans l'intervention et la facture.",
+        visibility: "visible",
+        tone: "success",
+      },
+      {
+        key: "annule",
+        label: "Annulé",
+        description: "Le rendez-vous est annulé. Le créneau n'est plus bloquant et la trace est conservée.",
+        visibility: "visible",
+        tone: "danger",
+      },
+      {
+        key: "facture",
+        label: "Facturé",
+        description: "Ancien état technique retiré du cycle rendez-vous. La facturation appartient aux interventions/factures.",
+        visibility: "technical",
+        tone: "info",
+      },
+    ],
+    actions: [
+      {
+        key: "Confirmer",
+        label: "Confirmer",
+        from: ["planifie"],
+        to: "confirme",
+        description: "Confirme le rendez-vous et déclenche les règles métier associées.",
+        recommended: true,
+      },
+      {
+        key: "Démarrer",
+        label: "Démarrer",
+        from: ["confirme"],
+        to: "en_cours",
+        description: "Indique que le rendez-vous est pris en charge.",
+      },
+      {
+        key: "Terminer",
+        label: "Terminer",
+        from: ["en_cours"],
+        to: "termine",
+        description: "Clôture le rendez-vous côté planning.",
+      },
+      {
+        key: "Annuler",
+        label: "Annuler",
+        from: ["planifie", "confirme", "en_cours"],
+        to: "annule",
+        description: "Annule le rendez-vous, conserve une trace et libère le créneau.",
+      },
+    ],
+    guidance: [
+      {
+        status: "planifie",
+        title: "Rendez-vous planifié",
+        message: "Le créneau est réservé. Utilisez les actions pour confirmer, démarrer ou annuler.",
+        tone: "info",
+      },
+      {
+        status: "confirme",
+        title: "Rendez-vous confirmé",
+        message: "La confirmation pilote les règles métier, notamment la création ou liaison d'une intervention.",
+        tone: "success",
+      },
+      {
+        status: "en_cours",
+        title: "Rendez-vous en cours",
+        message: "Le rendez-vous est en traitement. Les modifications doivent rester cohérentes avec l'intervention liée.",
+        tone: "warning",
+      },
+      {
+        status: "termine",
+        title: "Rendez-vous terminé",
+        message: "Le rendez-vous est terminé. La facturation se pilote depuis l'intervention et les factures.",
+        tone: "success",
+      },
+      {
+        status: "annule",
+        title: "Rendez-vous annulé",
+        message: "Le rendez-vous est annulé. Il reste consultable pour historique mais ne bloque plus le planning.",
+        tone: "danger",
+      },
+    ],
+    technicalFields: [
+      "consumedByInterventionId",
+      "consumedAt",
+      "cancelledAt",
+      "cancelledBy",
+      "cancelReason",
+    ],
   },
+
 ];
 
 function getPolicy(moduleKey: string): RuntimeStatusGovernancePolicy | undefined {

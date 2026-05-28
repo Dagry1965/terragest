@@ -24,6 +24,69 @@ function sanitizeWorkflowPayload<T extends Record<string, unknown>>(
   return next as T;
 }
 
+
+function isCancellationState(value: unknown): boolean {
+  const status = String(value ?? "").trim().toLowerCase();
+
+  return (
+    status === "annule" ||
+    status === "annulee" ||
+    status === "annulé" ||
+    status === "annulée" ||
+    status === "cancelled" ||
+    status === "canceled"
+  );
+}
+
+function resolveWorkflowActor(user: unknown): string {
+  if (typeof user === "string" && user.trim()) {
+    return user.trim();
+  }
+
+  if (user && typeof user === "object") {
+    const source = user as Record<string, unknown>;
+
+    return String(
+      source.id ??
+      source.uid ??
+      source.email ??
+      source.name ??
+      "system"
+    ).trim();
+  }
+
+  return "system";
+}
+
+function buildWorkflowTransitionPatch({
+  stateField,
+  toState,
+  user,
+  comment,
+}: {
+  stateField: string;
+  toState: string;
+  user?: unknown;
+  comment?: unknown;
+}): Record<string, unknown> {
+  const patch: Record<string, unknown> = {
+    [stateField]: toState,
+  };
+
+  if (isCancellationState(toState)) {
+    const now = new Date().toISOString();
+
+    patch.cancelledAt = now;
+    patch.cancelledBy = resolveWorkflowActor(user);
+    patch.cancelReason =
+      typeof comment === "string" && comment.trim()
+        ? comment.trim()
+        : "Annulation via action workflow.";
+  }
+
+  return patch;
+}
+
 export class WorkflowRuntimeService {
   static resolveStateField(
     workflow: any,
@@ -83,9 +146,12 @@ export class WorkflowRuntimeService {
     await RuntimeDataBinding.update(
       module,
       entityId,
-      {
-        [stateField]: toState,
-      }
+      buildWorkflowTransitionPatch({
+        stateField,
+        toState,
+        user,
+        comment,
+      })
     );
 
     await WorkflowPersistenceEngine.persistTransition(

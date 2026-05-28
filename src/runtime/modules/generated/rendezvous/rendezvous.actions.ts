@@ -22,12 +22,6 @@ export const rendezvousActions: ERPModuleAction[] = [
     permission: "rendezvous.workflow",
   },
   {
-    key: "Facturer",
-    label: "Facturer",
-    type: "secondary",
-    permission: "rendezvous.workflow",
-  },
-  {
     key: "Annuler",
     label: "Annuler",
     type: "danger",
