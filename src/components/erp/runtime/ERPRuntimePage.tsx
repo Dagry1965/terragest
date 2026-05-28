@@ -24,6 +24,7 @@ import {
   RuntimeDataBinding,
 } from "@/runtime/data-binding/RuntimeDataBinding";
 
+import { ERPOperationalModulePage } from "@/components/erp/operational";
 function buildInvoicePaymentHref(
   record: Record<string, unknown>
 ): string {
@@ -212,6 +213,11 @@ export function ERPRuntimePage({
     return actionResult;
   }
 
+
+  const shouldUseOperationalPage =
+    type === "list" &&
+    Boolean(module?.operational?.enabled);
+
   const moduleLabel =
     module?.metadata?.label ?? "Module ERP";
 
@@ -317,7 +323,27 @@ export function ERPRuntimePage({
     relatedChildren.filter((child) => child.position !== "before");
 
 
-  return (
+  
+  if (shouldUseOperationalPage && module) {
+    return (
+      <ERPPage
+        title={title ?? module.metadata.label}
+        description={
+          description ??
+          module.operational?.subtitle ??
+          module.metadata.description ??
+          "Vue opérationnelle générée par le Runtime ERP."
+        }
+      >
+        <ERPOperationalModulePage
+          module={module}
+          data={runtimeData}
+        />
+      </ERPPage>
+    );
+  }
+
+return (
     <ERPPage
       title={resolvedTitle}
       description={

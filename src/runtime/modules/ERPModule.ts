@@ -1,6 +1,63 @@
 import type { ERPModuleMetadata } from "./metadata/ERPModuleMetadata";
 import type { ERPModuleSchema } from "./schemas/ERPModuleSchema";
 
+
+export type ERPOperationalKpiTone =
+  | "blue"
+  | "green"
+  | "orange"
+  | "red"
+  | "gray"
+  | "purple";
+
+export interface ERPOperationalKpiConfig {
+  key: string;
+  label: string;
+  field?: string;
+  count?: boolean;
+  equals?: unknown;
+  tone?: ERPOperationalKpiTone;
+  icon?: string;
+  description?: string;
+}
+
+export interface ERPOperationalFilterConfig {
+  key: string;
+  label: string;
+  field: string;
+  type?: "text" | "select" | "date" | "dateRange" | "relation";
+  options?: Array<{
+    label: string;
+    value: string;
+  }>;
+  placeholder?: string;
+}
+
+export interface ERPOperationalTableConfig {
+  title?: string;
+  description?: string;
+  fields?: string[];
+  enableSearch?: boolean;
+  enableSelection?: boolean;
+  enableDensityToggle?: boolean;
+}
+
+export interface ERPOperationalRightPanelConfig {
+  enabled?: boolean;
+  title?: string;
+  type?: "planning" | "summary" | "actions";
+}
+
+export interface ERPOperationalModuleConfig {
+  enabled?: boolean;
+  title?: string;
+  subtitle?: string;
+  kpis?: ERPOperationalKpiConfig[];
+  filters?: ERPOperationalFilterConfig[];
+  table?: ERPOperationalTableConfig;
+  rightPanel?: ERPOperationalRightPanelConfig;
+}
+
 export interface ERPModuleAction {
   key: string;
   label: string;
@@ -257,6 +314,8 @@ export interface ERPModuleComposition {
 
 export interface ERPModule {
   metadata: ERPModuleMetadata;
+
+    operational?: ERPOperationalModuleConfig;
   schema: ERPModuleSchema;
 
   permissions?: ERPModulePermissions;

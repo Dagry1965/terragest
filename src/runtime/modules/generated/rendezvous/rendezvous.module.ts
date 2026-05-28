@@ -227,6 +227,102 @@ export const rendezvousModule: ERPModule = {
 
   actions: rendezvousActions,
 
+  operational: {
+    enabled: true,
+    title: "Rendez-vous",
+    subtitle: "Vue opérationnelle des rendez-vous atelier.",
+    kpis: [
+      {
+        key: "total",
+        label: "Total",
+        count: true,
+        tone: "blue",
+        icon: "calendar",
+        description: "Nombre total de rendez-vous affichés.",
+      },
+      {
+        key: "confirmes",
+        label: "Confirmés",
+        field: "statut",
+        equals: "confirme",
+        tone: "green",
+        icon: "check",
+      },
+      {
+        key: "en_cours",
+        label: "En cours",
+        field: "statut",
+        equals: "en_cours",
+        tone: "orange",
+        icon: "clock",
+      },
+      {
+        key: "annules",
+        label: "Annulés",
+        field: "statut",
+        equals: "annule",
+        tone: "gray",
+        icon: "x",
+      },
+    ],
+    filters: [
+      {
+        key: "statut",
+        label: "Statut",
+        field: "statut",
+        type: "select",
+        options: [
+          { label: "Planifié", value: "planifie" },
+          { label: "Confirmé", value: "confirme" },
+          { label: "En cours", value: "en_cours" },
+          { label: "Terminé", value: "termine" },
+          { label: "Annulé", value: "annule" },
+        ],
+      },
+      {
+        key: "typeService",
+        label: "Type de service",
+        field: "typeService",
+        type: "select",
+        options: [
+          { label: "Vidange", value: "vidange" },
+          { label: "Diagnostic", value: "diagnostic" },
+          { label: "Réparation", value: "reparation" },
+          { label: "Contrôle", value: "controle" },
+          { label: "Autre", value: "autre" },
+        ],
+      },
+      {
+        key: "vehiculeId",
+        label: "Véhicule",
+        field: "vehiculeId",
+        type: "relation",
+      },
+    ],
+    table: {
+      title: "Liste des rendez-vous",
+      description: "Rendez-vous issus du runtime ERP.",
+      fields: [
+        "codeRendezVous",
+        "clientId",
+        "vehiculeId",
+        "dateRendezVous",
+        "heureRendezVous",
+        "typeService",
+        "statut",
+        "consumedByInterventionId",
+      ],
+      enableSearch: true,
+      enableSelection: true,
+      enableDensityToggle: true,
+    },
+    rightPanel: {
+      enabled: true,
+      title: "Planning du jour",
+      type: "planning",
+    },
+  },
+
   scheduling: {
     // Q22D3A_RENDEZVOUS_SCHEDULING_METADATA
     // First consumer of the generic ERP Scheduling Runtime.

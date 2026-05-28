@@ -1,0 +1,82 @@
+"use client";
+
+import type { ERPModule } from "@/runtime/modules/ERPModule";
+
+type ERPOperationalRightPanelProps = {
+  module: ERPModule;
+  data: Record<string, unknown>[];
+};
+
+export function ERPOperationalRightPanel({
+  module,
+  data,
+}: ERPOperationalRightPanelProps) {
+  const panel = module.operational?.rightPanel;
+
+  if (!panel?.enabled) {
+    return null;
+  }
+
+  const today = new Date().toISOString().slice(0, 10);
+
+  const todayRecords = data.filter((record) => {
+    const dateValue = String(
+      record.dateRendezVous ??
+        record.date ??
+        record.createdAt ??
+        ""
+    );
+
+    return dateValue.startsWith(today);
+  });
+
+  return (
+    <aside className="rounded-3xl border border-[var(--erp-border)] bg-[#061611] p-5 text-white shadow-[0_22px_70px_rgba(2,8,7,0.30)]">
+      <div>
+        <p className="text-xs font-black uppercase tracking-[0.18em] text-emerald-200/70">
+          {panel.type ?? "summary"}
+        </p>
+        <h2 className="mt-2 text-xl font-black">
+          {panel.title ?? "Panneau opérationnel"}
+        </h2>
+        <p className="mt-2 text-sm font-semibold text-emerald-100/70">
+          Synthèse runtime liée au module {module.metadata.label}.
+        </p>
+      </div>
+
+      <div className="mt-6 rounded-2xl border border-white/10 bg-white/8 p-4">
+        <p className="text-xs font-black uppercase tracking-wide text-emerald-100/60">
+          Aujourd’hui
+        </p>
+        <p className="mt-2 text-4xl font-black text-white">
+          {todayRecords.length}
+        </p>
+        <p className="mt-1 text-sm font-semibold text-emerald-100/70">
+          rendez-vous détecté(s)
+        </p>
+      </div>
+
+      <div className="mt-5 space-y-3">
+        {todayRecords.slice(0, 5).map((record) => (
+          <div
+            key={String(record.id ?? record._id)}
+            className="rounded-2xl border border-white/10 bg-white/8 p-4"
+          >
+            <p className="text-sm font-black text-white">
+              {String(record.codeRendezVous ?? record.id ?? "RDV")}
+            </p>
+            <p className="mt-1 text-xs font-semibold text-emerald-100/70">
+              {String(record.heureRendezVous ?? "")} · {String(record.typeService ?? "")}
+            </p>
+          </div>
+        ))}
+
+        {todayRecords.length === 0 ? (
+          <p className="rounded-2xl border border-white/10 bg-white/8 p-4 text-sm font-semibold text-emerald-100/70">
+            Aucun rendez-vous aujourd’hui.
+          </p>
+        ) : null}
+      </div>
+    </aside>
+  );
+}
