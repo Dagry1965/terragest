@@ -133,8 +133,17 @@ export function ERPRuntimePage({
       data
     );
 
+  const [currentRecord, setCurrentRecord] =
+    useState<Record<string, unknown> | undefined>(
+      record
+    );
+
   const [loading, setLoading] =
     useState(false);
+
+  useEffect(() => {
+    setCurrentRecord(record);
+  }, [record]);
 
   useEffect(() => {
     async function loadData() {
@@ -167,6 +176,42 @@ export function ERPRuntimePage({
     loadData();
   }, [module, type]);
 
+
+  async function handleRuntimeAction(action: NonNullable<ERPModule["actions"]>[number]) {
+    if (!module || !currentRecord) {
+      return;
+    }
+
+    const actionResult =
+      await RuntimeActionEngine.execute({
+        module,
+        action,
+        record: currentRecord,
+      });
+
+    const recordId =
+      String(
+        currentRecord.id ??
+        currentRecord._id ??
+        currentRecord.uid ??
+        ""
+      );
+
+    if (recordId) {
+      const freshRecord =
+        await RuntimeDataBinding.detail(
+          module,
+          recordId
+        );
+
+      if (freshRecord) {
+        setCurrentRecord(freshRecord);
+      }
+    }
+
+    return actionResult;
+  }
+
   const moduleLabel =
     module?.metadata?.label ?? "Module ERP";
 
@@ -187,7 +232,7 @@ export function ERPRuntimePage({
       ? `/${module.metadata.key}/nouveau`
       : "#";
 
-  const isRemovedRecord = Boolean(record?.removedAt);
+  const isRemovedRecord = Boolean(currentRecord?.removedAt);
 
 
 
@@ -200,11 +245,9 @@ export function ERPRuntimePage({
       ? RuntimeActionEngine.getAvailableActions({
           actions: module?.actions ?? [],
           workflow: module?.workflows?.[0],
-          record,
-        })
-
-
-      : [];
+          record: currentRecord,
+          })
+        : [];
 
   const moduleHrefActions =
     // Q22E4B_LIST_NAVIGATION_ACTIONS
@@ -245,18 +288,18 @@ export function ERPRuntimePage({
   const isInvoiceDetailPage =
     type === "detail" &&
     module?.metadata?.key === "facturesauto" &&
-    Boolean(record?.id ?? record?._id);
+    Boolean(currentRecord?.id ?? currentRecord?._id);
 
   const invoicePaymentHref =
-    isInvoiceDetailPage && record
-      ? buildInvoicePaymentHref(record)
+    isInvoiceDetailPage && currentRecord
+      ? buildInvoicePaymentHref(currentRecord)
       : "#";
 
   const relatedChildren =
     module?.composition?.children?.filter((child) => {
-      if (!record) {
-        return false;
-      }
+      if (!currentRecord) {
+          return false;
+        }
 
       if (type !== "detail" && type !== "edit") {
         return false;
@@ -329,13 +372,9 @@ export function ERPRuntimePage({
               <button
                 key={action.key}
                 type="button"
-                onClick={() =>
-                  RuntimeActionEngine.execute({
-                    module,
-                    action,
-                    record,
-                  })
-                }
+                onClick={() => {
+                    void handleRuntimeAction(action);
+                  }}
                 className={`
                   rounded-2xl
                   px-4
@@ -364,20 +403,20 @@ export function ERPRuntimePage({
           </div>
         ) : null}
 
-        {module && record && (type === "detail" || type === "edit") ? (
+        {module && currentRecord && (type === "detail" || type === "edit") ? (
           <ERPContextBanner
             module={module}
-            record={record}
+            record={currentRecord}
             mode={type}
           />
         ) : null}
 
         <div data-erp-related-children-before className="space-y-4">
-          {module && record && relatedChildrenBefore.map((child) => (
+          {module && currentRecord && relatedChildrenBefore.map((child) => (
             <ERPRelatedRecordsPanel
               key={child.key}
               parentModule={module}
-              parentRecord={record}
+              parentRecord={currentRecord}
               child={child}
               mode={type as "detail" | "edit"}
             />
@@ -392,29 +431,29 @@ export function ERPRuntimePage({
           />
         )}
 
-        {type === "edit" && module && record && (
+        {type === "edit" && module && currentRecord && (
           <ERPEnterpriseForm
             module={module}
             mode="edit"
-            initialData={record}
+            initialData={currentRecord}
             workflowActions={isRemovedRecord ? [] : runtimeActions}
             forceReadOnlyBecauseRemoved={isRemovedRecord}
           />
         )}
 
-        {type === "detail" && module && record && (
+        {type === "detail" && module && currentRecord && (
           <ERPRuntimeDetails
             module={module}
-            data={record}
+            data={currentRecord}
           />
         )}
 
         <div data-erp-related-children-after className="space-y-4">
-          {module && record && relatedChildrenAfter.map((child) => (
+          {module && currentRecord && relatedChildrenAfter.map((child) => (
             <ERPRelatedRecordsPanel
               key={child.key}
               parentModule={module}
-              parentRecord={record}
+              parentRecord={currentRecord}
               child={child}
               mode={type as "detail" | "edit"}
             />
