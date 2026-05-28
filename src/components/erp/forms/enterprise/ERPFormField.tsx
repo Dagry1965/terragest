@@ -382,6 +382,23 @@ function FieldWrapper({
   );
 }
 
+
+function normalizeRuntimeSchedulingTimeValue(value: unknown): string {
+  const text = String(value ?? "").trim();
+
+  if (!text) {
+    return "";
+  }
+
+  const firstTime = text.match(/\b([01]?\d|2[0-3])[:hH]([0-5]\d)\b/);
+
+  if (!firstTime) {
+    return text;
+  }
+
+  return firstTime[1].padStart(2, "0") + ":" + firstTime[2];
+}
+
 export function ERPFormField({
   module,
   field,
@@ -751,7 +768,7 @@ export function ERPFormField({
       schedulingSlots.length - availableSlotsCount;
 
     const currentSchedulingValue =
-      String(currentValue ?? "").trim();
+      normalizeRuntimeSchedulingTimeValue(currentValue);
 
     const currentValueInSchedulingSlots =
       schedulingSlots.some((slot) =>
@@ -764,7 +781,7 @@ export function ERPFormField({
             {
               start: currentSchedulingValue,
               end: currentSchedulingValue,
-              label: currentSchedulingValue + " · Créneau actuel",
+              label: currentSchedulingValue,
               available: true,
               remainingCapacity: undefined,
               capacity: undefined,
@@ -790,9 +807,13 @@ export function ERPFormField({
               !hasRequiredResource ||
               schedulingSlotsLoading
             }
-            onChange={(event) => onChange?.(field.key, event.target.value)}
-            className={`${className} ${
-              isProtected || !hasDate || !hasRequiredResource
+            onChange={(event) =>
+                onChange?.(
+                  field.key,
+                  normalizeRuntimeSchedulingTimeValue(event.target.value)
+                )
+              }
+              className={`${className} ${isProtected || !hasDate || !hasRequiredResource
                 ? "cursor-not-allowed bg-slate-100 text-[var(--erp-text-muted)]"
                 : ""
             }`}
@@ -808,12 +829,8 @@ export function ERPFormField({
                 disabled={!slot.available}
               >
                 {slot.available
-                  ? slot.remainingCapacity !== undefined &&
-                    slot.capacity !== undefined &&
-                    slot.capacity > 1
-                    ? slot.label + " · " + slot.remainingCapacity + " place(s) restante(s)"
-                    : slot.label + " · Disponible"
-                  : slot.reason ?? "Créneau complet"}
+                    ? slot.start
+                    : slot.start + " · " + (slot.reason ?? "occupé")}
               </option>
             ))}
           </select>
