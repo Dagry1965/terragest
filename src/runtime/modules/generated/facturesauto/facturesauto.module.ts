@@ -443,6 +443,30 @@ export const facturesautoModule: ERPModule = {
       enabled: true,
       title: "Facturation aujourd'hui",
       type: "summary",
+      metrics: [
+        {
+          key: "total",
+          label: "Factures affichées",
+          type: "count",
+          format: "number",
+        },
+        {
+          key: "montant_ttc",
+          label: "Montant TTC",
+          type: "sum",
+          field: "montantTTC",
+          format: "currency",
+          currency: "FCFA",
+        },
+        {
+          key: "reste_a_payer",
+          label: "Reste à payer",
+          type: "sum",
+          field: "resteAPayer",
+          format: "currency",
+          currency: "FCFA",
+        },
+      ],
     },
   },
 

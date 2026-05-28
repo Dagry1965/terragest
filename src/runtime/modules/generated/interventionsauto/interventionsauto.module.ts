@@ -335,6 +335,30 @@ export const interventionsautoModule: ERPModule = {
       enabled: true,
       title: "Atelier aujourd'hui",
       type: "summary",
+      metrics: [
+        {
+          key: "total",
+          label: "Interventions affichées",
+          type: "count",
+          format: "number",
+        },
+        {
+          key: "en_cours",
+          label: "En cours",
+          type: "countWhere",
+          field: "statut",
+          equals: "en_cours",
+          format: "number",
+        },
+        {
+          key: "cout_total",
+          label: "Coût total",
+          type: "sum",
+          field: "coutTotal",
+          format: "currency",
+          currency: "FCFA",
+        },
+      ],
     },
   },
 

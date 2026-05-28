@@ -341,6 +341,30 @@ export const rendezvousModule: ERPModule = {
       enabled: true,
       title: "Planning du jour",
       type: "planning",
+      metrics: [
+        {
+          key: "total",
+          label: "Rendez-vous affichés",
+          type: "count",
+          format: "number",
+        },
+        {
+          key: "confirmes",
+          label: "Confirmés",
+          type: "countWhere",
+          field: "statut",
+          equals: "confirme",
+          format: "number",
+        },
+        {
+          key: "en_cours",
+          label: "En cours",
+          type: "countWhere",
+          field: "statut",
+          equals: "en_cours",
+          format: "number",
+        },
+      ],
     },
   },
 

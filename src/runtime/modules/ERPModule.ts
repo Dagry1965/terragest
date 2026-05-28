@@ -55,8 +55,30 @@ export interface ERPOperationalTableConfig {
   childTotals?: ERPOperationalChildTotalConfig[];
 }
 
+export type ERPOperationalRightPanelMetricType =
+  | "count"
+  | "countWhere"
+  | "sum"
+  | "average";
+
+export type ERPOperationalRightPanelMetricFormat =
+  | "number"
+  | "currency"
+  | "percent";
+
+export interface ERPOperationalRightPanelMetricConfig {
+  key: string;
+  label: string;
+  type: ERPOperationalRightPanelMetricType;
+  field?: string;
+  equals?: unknown;
+  format?: ERPOperationalRightPanelMetricFormat;
+  currency?: string;
+}
+
 export interface ERPOperationalRightPanelConfig {
-  enabled?: boolean;
+    metrics?: ERPOperationalRightPanelMetricConfig[];
+enabled?: boolean;
   title?: string;
   type?: "planning" | "summary" | "actions";
 }
