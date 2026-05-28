@@ -223,6 +223,117 @@ export const interventionsautoModule: ERPModule = {
   },
 
 
+  operational: {
+    enabled: true,
+    title: "Interventions",
+    subtitle: "Vue opérationnelle des interventions atelier.",
+    kpis: [
+      {
+        key: "total",
+        label: "Total",
+        count: true,
+        tone: "blue",
+        icon: "activity",
+        description: "Nombre total d'interventions affichées.",
+      },
+      {
+        key: "ouvertes",
+        label: "Ouvertes",
+        field: "statut",
+        equals: "ouverte",
+        tone: "blue",
+        icon: "calendar",
+      },
+      {
+        key: "en_cours",
+        label: "En cours",
+        field: "statut",
+        equals: "en_cours",
+        tone: "orange",
+        icon: "clock",
+      },
+      {
+        key: "terminees",
+        label: "Terminées",
+        field: "statut",
+        equals: "terminee",
+        tone: "green",
+        icon: "check",
+      },
+      {
+        key: "annulees",
+        label: "Annulées",
+        field: "statut",
+        equals: "annulee",
+        tone: "gray",
+        icon: "x",
+      },
+    ],
+    filters: [
+      {
+        key: "statut",
+        label: "Statut",
+        field: "statut",
+        type: "select",
+        options: [
+          { label: "Ouverte", value: "ouverte" },
+          { label: "Diagnostic", value: "diagnostic" },
+          { label: "En cours", value: "en_cours" },
+          { label: "Terminée", value: "terminee" },
+          { label: "Facturée", value: "facturee" },
+          { label: "Annulée", value: "annulee" },
+        ],
+      },
+      {
+        key: "typeIntervention",
+        label: "Type intervention",
+        field: "typeIntervention",
+        type: "select",
+        options: [
+          { label: "Vidange", value: "vidange" },
+          { label: "Diagnostic", value: "diagnostic" },
+          { label: "Réparation", value: "reparation" },
+          { label: "Pneumatiques", value: "pneumatiques" },
+          { label: "Contrôle", value: "controle" },
+          { label: "Autre", value: "autre" },
+        ],
+      },
+      {
+        key: "clientId",
+        label: "Client",
+        field: "clientId",
+        type: "relation",
+      },
+    ],
+    table: {
+      title: "Liste des interventions",
+      description: "Interventions issues du runtime ERP.",
+      fields: [
+        "clientId",
+        "vehiculeId",
+        "dateIntervention",
+        "typeIntervention",
+        "kilometrage",
+        "coutTotal",
+        "statut",
+      ],
+      relationLabelFields: {
+        clientId: ["nom", "prenom", "telephone"],
+        vehiculeId: ["immatriculation", "modele"],
+        rendezVousId: ["dateRendezVous", "heureRendezVous", "typeService"],
+      },
+      enableSearch: true,
+      enableSelection: true,
+      enableDensityToggle: true,
+    },
+    rightPanel: {
+      enabled: true,
+      title: "Atelier aujourd'hui",
+      type: "summary",
+    },
+  },
+
+
   composition: {
     contextBanner: {
       title: "Contexte intervention",
