@@ -1,7 +1,10 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import { onAuthStateChanged } from "firebase/auth";
+import { useAuth } from "@/contexts/AuthContext";
+import { auth } from "@/lib/firebase/config";
 
 import type { ERPModule } from "@/runtime/modules/ERPModule";
 import { ERPOperationalKpiStrip } from "./ERPOperationalKpiStrip";
@@ -13,6 +16,29 @@ type ERPOperationalModulePageProps = {
   module: ERPModule;
   data: Record<string, unknown>[];
 };
+
+
+function formatOperationalDate(date: Date): string {
+  return new Intl.DateTimeFormat("fr-FR", {
+    weekday: "long",
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  }).format(date);
+}
+
+function getOperationalUserLabel(
+  user: {
+    displayName?: string | null;
+    email?: string | null;
+  } | null
+): string {
+  if (!user) {
+    return "";
+  }
+
+  return String(user.displayName ?? user.email ?? "").trim();
+}
 
 function normalize(value: unknown): string {
   return String(value ?? "")
@@ -42,9 +68,27 @@ export function ERPOperationalModulePage({
   data,
 }: ERPOperationalModulePageProps) {
   const config = module.operational;
+  const { user } = useAuth();
+  const [authUserLabel, setAuthUserLabel] = useState("Utilisateur");
 
   const [filters, setFilters] = useState<Record<string, string>>({});
   const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    const current = auth.currentUser;
+    const currentLabel = getOperationalUserLabel(current);
+
+    if (currentLabel) {
+      setAuthUserLabel(currentLabel);
+    }
+
+    const unsubscribe = onAuthStateChanged(auth, (nextUser) => {
+      const nextLabel = getOperationalUserLabel(nextUser);
+      setAuthUserLabel(nextLabel || "Utilisateur");
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   const filteredData = useMemo(() => {
     return data.filter((record) => {
@@ -68,6 +112,9 @@ export function ERPOperationalModulePage({
     module.metadata.description ??
     "Vue opérationnelle générée par le Runtime ERP.";
 
+  const todayLabel = formatOperationalDate(new Date());
+  const userLabel = getOperationalUserLabel(user) || authUserLabel;
+
   const activeFiltersCount =
     Object.values(filters).filter(Boolean).length + (search ? 1 : 0);
 
@@ -80,6 +127,15 @@ export function ERPOperationalModulePage({
           <div className="min-w-0">
             <div className="inline-flex rounded-full border border-emerald-200 bg-white px-3 py-1 text-[11px] font-black uppercase tracking-[0.22em] text-emerald-700 shadow-sm">
               AMARKHYS · Runtime ERP
+            </div>
+
+            <div className="mt-2 flex flex-wrap items-center gap-2 text-xs font-bold text-slate-500">
+              <span className="rounded-full bg-white px-3 py-1 ring-1 ring-slate-100">
+                Aujourd’hui · {todayLabel}
+              </span>
+              <span className="rounded-full bg-white px-3 py-1 ring-1 ring-slate-100">
+                Connecté : {userLabel}
+              </span>
             </div>
 
             <div className="mt-1 flex flex-col gap-1">
