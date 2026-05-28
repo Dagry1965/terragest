@@ -11,6 +11,7 @@ import { ERPOperationalKpiStrip } from "./ERPOperationalKpiStrip";
 import { ERPOperationalFilters } from "./ERPOperationalFilters";
 import { ERPOperationalTable } from "./ERPOperationalTable";
 import { ERPOperationalRightPanel } from "./ERPOperationalRightPanel";
+import { operationalUiTokens } from "./operationalUiTokens";
 
 type ERPOperationalModulePageProps = {
   module: ERPModule;
@@ -124,8 +125,8 @@ export function ERPOperationalModulePage({
     Object.values(filters).filter(Boolean).length + (search ? 1 : 0);
 
   return (
-    <div className="-mt-36 space-y-3">
-      <section className="relative overflow-hidden rounded-[2rem] border border-emerald-100 bg-[#F8FBF8] shadow-[0_24px_80px_rgba(15,23,42,0.08)]">
+    <div className={operationalUiTokens.shell.pageSpacing}>
+      <section className={operationalUiTokens.shell.hero}>
         <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-emerald-600 via-teal-400 to-amber-300" />
 
         <div className="grid gap-6 p-5 lg:grid-cols-[minmax(0,1fr)_auto] lg:p-7">
@@ -144,11 +145,11 @@ export function ERPOperationalModulePage({
             </div>
 
             <div className="mt-1 flex flex-col gap-1">
-              <h1 className="text-2xl font-black tracking-tight text-[#10251C] lg:text-[2.25rem]">
+              <h1 className={operationalUiTokens.typography.title}>
                 {title}
               </h1>
 
-              <p className="max-w-3xl text-sm font-semibold leading-6 text-slate-600">
+              <p className={"max-w-3xl " + operationalUiTokens.typography.body}>
                 {subtitle}
               </p>
             </div>
@@ -182,7 +183,7 @@ export function ERPOperationalModulePage({
 
             <Link
               href={"/" + module.metadata.key + "/nouveau"}
-              className="rounded-2xl bg-[#0F8A5F] px-5 py-3 text-sm font-black text-white shadow-[0_14px_34px_rgba(15,138,95,0.28)] transition hover:-translate-y-0.5 hover:bg-[#0B6F4C]"
+              className={operationalUiTokens.controls.primaryButton}
             >
               Nouveau
             </Link>
@@ -210,7 +211,7 @@ export function ERPOperationalModulePage({
         onSearchChange={setSearch}
       />
 
-      <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_340px] 2xl:grid-cols-[minmax(0,1fr)_380px]">
+      <div className={operationalUiTokens.shell.contentGrid}>
         <ERPOperationalTable
           module={module}
           data={filteredData}
