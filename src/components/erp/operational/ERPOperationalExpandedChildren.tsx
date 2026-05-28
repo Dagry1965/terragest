@@ -115,12 +115,13 @@ async function loadExpandedGroups(
         grandchildrenByParentId[recordId] = group.children
           .filter((childGroup) => childGroup.parentRecordId === recordId)
           .map((childGroup) => {
-            const nestedChild = {
+            const nestedChild: ERPCompositionChild = {
+              key: childGroup.moduleKey,
+              title: childGroup.moduleLabel,
               moduleKey: childGroup.moduleKey,
               foreignKey: childGroup.foreignKey,
-              label: childGroup.moduleLabel,
               openLabel: childGroup.openLabel,
-            } as ERPCompositionChild;
+            };
 
             const nestedModule = {
               ...module,
