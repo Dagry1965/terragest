@@ -336,6 +336,112 @@ export const facturesautoModule: ERPModule = {
     ],
   },
 
+  operational: {
+    enabled: true,
+    title: "Factures",
+    subtitle: "Vue opérationnelle de la facturation atelier.",
+    kpis: [
+      {
+        key: "total",
+        label: "Total",
+        count: true,
+        tone: "blue",
+        icon: "receipt",
+        description: "Nombre total de factures affichées.",
+      },
+      {
+        key: "en_attente",
+        label: "En attente",
+        field: "statutPaiement",
+        equals: "en_attente",
+        tone: "orange",
+        icon: "clock",
+      },
+      {
+        key: "partiel",
+        label: "Partielles",
+        field: "statutPaiement",
+        equals: "partiel",
+        tone: "purple",
+        icon: "activity",
+      },
+      {
+        key: "payees",
+        label: "Payées",
+        field: "statutPaiement",
+        equals: "paye",
+        tone: "green",
+        icon: "check",
+      },
+      {
+        key: "annulees",
+        label: "Annulées",
+        field: "statutFacture",
+        equals: "annulee",
+        tone: "gray",
+        icon: "x",
+      },
+    ],
+    filters: [
+      {
+        key: "statutPaiement",
+        label: "Statut paiement",
+        field: "statutPaiement",
+        type: "select",
+        options: [
+          { label: "En attente", value: "en_attente" },
+          { label: "Partiel", value: "partiel" },
+          { label: "Payé", value: "paye" },
+        ],
+      },
+      {
+        key: "statutFacture",
+        label: "Statut facture",
+        field: "statutFacture",
+        type: "select",
+        options: [
+          { label: "Brouillon", value: "brouillon" },
+          { label: "Émise", value: "emise" },
+          { label: "Annulée", value: "annulee" },
+        ],
+      },
+      {
+        key: "clientId",
+        label: "Client",
+        field: "clientId",
+        type: "relation",
+      },
+    ],
+    table: {
+      title: "Liste des factures",
+      description: "Factures issues du runtime ERP.",
+      fields: [
+        "numeroFacture",
+        "clientId",
+        "vehiculeId",
+        "dateFacture",
+        "montantTTC",
+        "montantPaye",
+        "resteAPayer",
+        "statutPaiement",
+      ],
+      relationLabelFields: {
+        clientId: ["nom", "prenom", "telephone"],
+        vehiculeId: ["immatriculation", "modele"],
+        interventionId: ["dateIntervention", "typeIntervention", "statut"],
+      },
+      enableSearch: true,
+      enableSelection: true,
+      enableDensityToggle: true,
+    },
+    rightPanel: {
+      enabled: true,
+      title: "Facturation aujourd'hui",
+      type: "summary",
+    },
+  },
+
+
   composition: {
     // Q21E_C_BILLING_RELATIONSHIP_COMPOSITION
     // Facture knows its payments and payment schedules.
