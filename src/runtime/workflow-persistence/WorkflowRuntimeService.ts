@@ -10,6 +10,7 @@ import {
   RuntimeDataBinding,
 } from "@/runtime/data-binding";
 
+import { RuntimeWorkflowCascadeService } from "@/runtime/workflow-cascade";
 function sanitizeWorkflowPayload<T extends Record<string, unknown>>(
   payload: T
 ): T {
@@ -165,6 +166,17 @@ export class WorkflowRuntimeService {
         comment: comment ?? null,
       })
     );
+
+    await RuntimeWorkflowCascadeService.afterTransition({
+      module,
+      entityId,
+      record,
+      fromState,
+      toState,
+      action: executedAction,
+      user,
+      comment,
+    });
 
     return {
       success: true,
