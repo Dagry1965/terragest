@@ -11,6 +11,7 @@ import type { ERPModuleField } from "@/runtime/modules/schemas/ERPModuleSchema";
 import { allERPModules } from "@/runtime/modules/definitions/coreModules";
 import { ERPRuntimeFieldValue } from "@/components/erp/runtime/ERPRuntimeFieldValue";
 import { ERPOperationalExpandedChildren } from "./ERPOperationalExpandedChildren";
+import { operationalUiTokens } from "./operationalUiTokens";
 import {
   RuntimeOperationalDataResolver,
 } from "@/runtime/operational";
@@ -351,7 +352,7 @@ export function ERPOperationalTable({
   }
 
   return (
-    <div className="overflow-hidden rounded-[1.7rem] border border-slate-200 bg-slate-50 shadow-[0_18px_55px_rgba(15,23,42,0.06)]">
+    <div className={operationalUiTokens.table.wrapper}>
       <div className="flex flex-col gap-3 border-b border-slate-200 px-5 py-4 lg:flex-row lg:items-center lg:justify-between">
         <div>
           <h2 className="text-lg font-black text-[#10251C]">
@@ -378,7 +379,7 @@ export function ERPOperationalTable({
               {columns.map((column) => (
                 <th
                   key={column.key}
-                  className="whitespace-nowrap px-5 py-3.5 text-[11px] font-black uppercase tracking-[0.16em] text-slate-500"
+                  className={operationalUiTokens.table.headerCell}
                 >
                   {column.kind === "field" ? column.field.label : column.label}
                 </th>
@@ -406,7 +407,7 @@ export function ERPOperationalTable({
                 <Fragment key={recordId}>
                   <tr
                     onClick={() => openRecord(record)}
-                    className="cursor-pointer border-b border-slate-100 transition hover:bg-emerald-50/45"
+                    className={operationalUiTokens.table.row}
                   >
                     {hasExpandableChildren ? (
                       <td className="px-4 py-4">
@@ -427,7 +428,7 @@ export function ERPOperationalTable({
                     {columns.map((column) => (
                       <td
                         key={column.key}
-                        className="whitespace-nowrap px-5 py-4 text-sm font-semibold text-[#10251C]"
+                        className={operationalUiTokens.table.bodyCell}
                       >
                         {renderCell(column, record)}
                       </td>
