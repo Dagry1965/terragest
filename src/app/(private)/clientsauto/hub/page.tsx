@@ -2,6 +2,12 @@ import { ERPRecordHubPage } from "@/components/erp/hub";
 import type { ERPRecordHubConfig } from "@/runtime/hub";
 import { RuntimeClientOperationalHubLoader } from "@/runtime/hub/RuntimeClientOperationalHubLoader";
 
+type ClientOperationalHubPageProps = {
+  searchParams?: Promise<{
+    clientId?: string;
+  }>;
+};
+
 const clientOperationalHubConfig: ERPRecordHubConfig = {
   enabled: true,
   key: "clientsauto-operational-hub",
@@ -85,10 +91,15 @@ const clientOperationalHubConfig: ERPRecordHubConfig = {
   ],
 };
 
-export default async function ClientOperationalHubPage() {
+export default async function ClientOperationalHubPage({
+  searchParams,
+}: ClientOperationalHubPageProps) {
+  const resolvedSearchParams = await searchParams;
+  const clientId = resolvedSearchParams?.clientId ?? null;
+
   const data = await RuntimeClientOperationalHubLoader.load({
     config: clientOperationalHubConfig,
-    clientId: null,
+    clientId,
   });
 
   return (
