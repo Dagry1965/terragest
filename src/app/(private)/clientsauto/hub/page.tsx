@@ -5,6 +5,7 @@ import { RuntimeClientOperationalHubLoader } from "@/runtime/hub/RuntimeClientOp
 type ClientOperationalHubPageProps = {
   searchParams?: Promise<{
     clientId?: string;
+    selectedVehicleId?: string;
   }>;
 };
 
@@ -95,11 +96,11 @@ export default async function ClientOperationalHubPage({
   searchParams,
 }: ClientOperationalHubPageProps) {
   const resolvedSearchParams = await searchParams;
-  const clientId = resolvedSearchParams?.clientId ?? null;
 
   const data = await RuntimeClientOperationalHubLoader.load({
     config: clientOperationalHubConfig,
-    clientId,
+    clientId: resolvedSearchParams?.clientId ?? null,
+    selectedVehicleId: resolvedSearchParams?.selectedVehicleId ?? null,
   });
 
   return (

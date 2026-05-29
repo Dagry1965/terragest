@@ -1,6 +1,8 @@
 import { RuntimeDataBinding } from "@/runtime/data-binding/RuntimeDataBinding";
 import { clientsautoModule } from "@/runtime/modules/generated/clientsauto/clientsauto.module";
 import { vehiculesModule } from "@/runtime/modules/generated/vehicules/vehicules.module";
+import { interventionsautoModule } from "@/runtime/modules/generated/interventionsauto/interventionsauto.module";
+import { facturesautoModule } from "@/runtime/modules/generated/facturesauto/facturesauto.module";
 import type {
   ERPRecordHubConfig,
   ERPRecordHubRecord,
@@ -16,6 +18,7 @@ export type RuntimeClientOperationalHubLoadResult = {
 export type RuntimeClientOperationalHubLoaderInput = {
   config: ERPRecordHubConfig;
   clientId?: string | null;
+  selectedVehicleId?: string | null;
 };
 
 function normalizeRecord(record: unknown): ERPRecordHubRecord | null {
@@ -42,6 +45,17 @@ function filterByForeignKey(
   expectedValue: string
 ): ERPRecordHubRecord[] {
   return records.filter((record) => String(record[foreignKey] ?? "") === expectedValue);
+}
+
+function findById(
+  records: ERPRecordHubRecord[],
+  id?: string | null
+): ERPRecordHubRecord | null {
+  if (!id) {
+    return null;
+  }
+
+  return records.find((record) => String(record.id ?? "") === String(id)) ?? null;
 }
 
 export class RuntimeClientOperationalHubLoader {
@@ -78,11 +92,40 @@ export class RuntimeClientOperationalHubLoader {
       );
     }
 
+    const selectedVehicle =
+      findById(primaryRecords, input.selectedVehicleId) ?? primaryRecords[0] ?? null;
+
+    const selectedVehicleId = String(selectedVehicle?.id ?? input.selectedVehicleId ?? "");
+
+    const relatedRecordsBySection: Record<string, ERPRecordHubRecord[]> = {};
+
+    if (selectedVehicleId) {
+      const interventions = normalizeRecords(
+        await RuntimeDataBinding.list(interventionsautoModule)
+      );
+
+      const factures = normalizeRecords(
+        await RuntimeDataBinding.list(facturesautoModule)
+      );
+
+      relatedRecordsBySection.interventions = filterByForeignKey(
+        interventions,
+        "vehiculeId",
+        selectedVehicleId
+      );
+
+      relatedRecordsBySection.factures = filterByForeignKey(
+        factures,
+        "vehiculeId",
+        selectedVehicleId
+      );
+    }
+
     return {
       config: input.config,
       rootRecord,
       primaryRecords,
-      relatedRecordsBySection: {},
+      relatedRecordsBySection,
     };
   }
 }
