@@ -1,3 +1,25 @@
+const fs = require("fs");
+const path = require("path");
+
+const root = process.cwd();
+
+function write(relativePath, content) {
+  const full = path.join(root, relativePath);
+  const backup = full + ".bak-q2oh-d-avoid-blind-product-reads";
+
+  if (fs.existsSync(full) && !fs.existsSync(backup)) {
+    fs.writeFileSync(backup, fs.readFileSync(full, "utf8"), "utf8");
+    console.log("[BACKUP] " + path.relative(root, backup));
+  }
+
+  fs.writeFileSync(full, content.trimStart(), "utf8");
+  console.log("[WRITTEN] " + relativePath);
+}
+
+console.log("[Q2-OH-D] Avoid blind Firestore reads in Product / Stock Hub");
+console.log("[ROOT] " + root);
+
+write("src/runtime/hub/RuntimeProductStockOperationalHubLoader.ts", `
 import { RuntimeDataBinding } from "@/runtime/data-binding/RuntimeDataBinding";
 import { produitsautoModule } from "@/runtime/modules/generated/produitsauto/produitsauto.module";
 import { stocksautoModule } from "@/runtime/modules/generated/stocksauto/stocksauto.module";
@@ -42,7 +64,7 @@ function normalizeRecords(records: unknown): ERPRecordHubRecord[] {
 }
 
 function moduleLabel(module: ERPModule): string {
-  return module.metadata?.key ?? "unknown-module";
+  return module.key ?? module.metadata?.key ?? module.label ?? "unknown-module";
 }
 
 async function safeDetail(
@@ -188,3 +210,103 @@ export class RuntimeProductStockOperationalHubLoader {
     };
   }
 }
+`);
+
+write("scripts/runtime/q2oh-d-audit-no-blind-product-hub-reads.cjs", `
+const fs = require("fs");
+const path = require("path");
+
+const root = process.cwd();
+const file = "src/runtime/hub/RuntimeProductStockOperationalHubLoader.ts";
+const full = path.join(root, file);
+
+let ok = 0;
+let fail = 0;
+
+console.log("[Q2-OH-D] No blind Product Hub reads audit");
+console.log("[ROOT] " + root);
+
+if (!fs.existsSync(full)) {
+  console.log("[FAIL] Missing file: " + file);
+  process.exit(1);
+}
+
+console.log("[OK] Found: " + file);
+ok += 1;
+
+const content = fs.readFileSync(full, "utf8");
+
+const expected = [
+  "if (!productId)",
+  "Do not blindly list products",
+  "safeDetail(produitsautoModule, productId)",
+  "safeList(stocksautoModule)",
+  "relatedRecordsBySection",
+];
+
+for (const marker of expected) {
+  if (content.includes(marker)) {
+    console.log("[OK] Marker detected: " + marker);
+    ok += 1;
+  } else {
+    console.log("[FAIL] Marker missing: " + marker);
+    fail += 1;
+  }
+}
+
+const forbidden = [
+  "RuntimeDataBinding.list(produitsautoModule)",
+  "safeList(produitsautoModule)",
+  "firebase/firestore",
+  "getDocs(",
+  "collection(",
+];
+
+for (const marker of forbidden) {
+  if (content.includes(marker)) {
+    console.log("[FAIL] Forbidden marker detected: " + marker);
+    fail += 1;
+  }
+}
+
+function walk(dir, backups) {
+  if (!fs.existsSync(dir)) return;
+
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const fullPath = path.join(dir, entry.name);
+
+    if (entry.isDirectory()) {
+      walk(fullPath, backups);
+      continue;
+    }
+
+    if (entry.name.includes(".bak-q2oh-d")) {
+      backups.push(fullPath);
+    }
+  }
+}
+
+const backups = [];
+walk(root, backups);
+
+if (backups.length > 0) {
+  for (const backup of backups) {
+    console.log("[FAIL] Backup still present: " + path.relative(root, backup));
+    fail += 1;
+  }
+} else {
+  console.log("[OK] No Q2-OH-D backup detected");
+  ok += 1;
+}
+
+console.log("[OK] " + ok);
+console.log("[FAIL] " + fail);
+
+if (fail > 0) {
+  process.exit(1);
+}
+
+console.log("[Q2-OH-D] No blind reads audit completed successfully.");
+`);
+
+console.log("[Q2-OH-D] DONE");
