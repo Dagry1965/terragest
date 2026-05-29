@@ -83,7 +83,9 @@ export function ERPRecordHubSelectedDetails({
         </h2>
 
         <p className="mt-1 text-sm text-emerald-800/80">
-          Sélectionnez un élément à gauche pour afficher ses détails opérationnels.
+          {selectedRecord
+            ? "Consultez les informations op\u00e9rationnelles li\u00e9es \u00e0 cet \u00e9l\u00e9ment."
+            : "S\u00e9lectionnez un \u00e9l\u00e9ment \u00e0 gauche pour afficher ses d\u00e9tails op\u00e9rationnels."}
         </p>
       </div>
 

@@ -83,7 +83,7 @@ const productStockOperationalHubConfig: ERPRecordHubConfig = {
       foreignKey: "stockId",
       layout: "collapsible-list",
       labelFields: ["typeMouvement", "quantite", "motif"],
-      subtitleFields: ["createdAt", "sourceType", "sourceId"],
+      subtitleFields: ["createdAt", "sourceType"],
       actions: [
         {
           key: "open-mouvement",
