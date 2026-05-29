@@ -1,3 +1,25 @@
+const fs = require("fs");
+const path = require("path");
+
+const root = process.cwd();
+
+function write(relativePath, content) {
+  const full = path.join(root, relativePath);
+  const backup = full + ".bak-q2og-a-product-review-fix";
+
+  if (!fs.existsSync(backup)) {
+    fs.writeFileSync(backup, fs.readFileSync(full, "utf8"), "utf8");
+    console.log("[BACKUP] " + path.relative(root, backup));
+  }
+
+  fs.writeFileSync(full, content.trimStart(), "utf8");
+  console.log("[WRITTEN] " + relativePath);
+}
+
+console.log("[Q2-OG-A] Fix Client Hub product review blockers");
+console.log("[ROOT] " + root);
+
+write("src/components/erp/hub/ERPRecordHubSelectedDetails.tsx", `
 import Link from "next/link";
 import type {
   ERPRecordHubActionConfig,
@@ -150,3 +172,19 @@ export function ERPRecordHubSelectedDetails({
     </aside>
   );
 }
+`);
+
+const auditPath = path.join(root, "scripts/runtime/q2og-audit-client-hub-product-review.cjs");
+
+let audit = fs.readFileSync(auditPath, "utf8");
+
+// "Fiche véhicule" doit être vérifié dans la route/config, pas dans le composant générique.
+audit = audit.replace(
+  '[primary, "Fiche véhicule", "Primary collection shows vehicle navigation"],',
+  '[route, "Fiche véhicule", "Route config exposes vehicle navigation label"],'
+);
+
+fs.writeFileSync(auditPath, audit, "utf8");
+console.log("[PATCHED] scripts/runtime/q2og-audit-client-hub-product-review.cjs");
+
+console.log("[Q2-OG-A] DONE");

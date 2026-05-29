@@ -125,6 +125,9 @@ export type ERPRecordHubRelationDescriptor = {
   moduleKey: string;
   foreignKey: string;
   layout: ERPRecordHubSectionLayout;
+  labelFields?: string[];
+  subtitleFields?: string[];
+  actions?: ERPRecordHubActionConfig[];
 };
 
 export type ERPRecordHubResolveInput = {
