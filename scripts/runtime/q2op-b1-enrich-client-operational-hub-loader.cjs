@@ -1,11 +1,34 @@
-import { RuntimeDataBinding } from "@/runtime/data-binding/RuntimeDataBinding";
+const fs = require("fs");
+const path = require("path");
+
+const root = process.cwd();
+
+const loaderPath = "src/runtime/hub/RuntimeClientOperationalHubLoader.ts";
+const fullLoaderPath = path.join(root, loaderPath);
+
+if (!fs.existsSync(fullLoaderPath)) {
+  console.error("[MISSING]", loaderPath);
+  process.exit(1);
+}
+
+const hasPayments = fs.existsSync(
+  path.join(root, "src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts")
+);
+
+const backupPath = `${fullLoaderPath}.bak-q2op-b1-client-operational-view-model`;
+if (!fs.existsSync(backupPath)) {
+  fs.copyFileSync(fullLoaderPath, backupPath);
+  console.log("[BACKUP]", path.relative(root, backupPath));
+}
+
+const nextLoader = `import { RuntimeDataBinding } from "@/runtime/data-binding/RuntimeDataBinding";
 import { clientsautoModule } from "@/runtime/modules/generated/clientsauto/clientsauto.module";
 import { vehiculesModule } from "@/runtime/modules/generated/vehicules/vehicules.module";
 import { rendezvousModule } from "@/runtime/modules/generated/rendezvous/rendezvous.module";
 import { interventionsautoModule } from "@/runtime/modules/generated/interventionsauto/interventionsauto.module";
 import { lignesinterventionautoModule } from "@/runtime/modules/generated/lignesinterventionauto/lignesinterventionauto.module";
 import { facturesautoModule } from "@/runtime/modules/generated/facturesauto/facturesauto.module";
-import { encaissementsautoModule } from "@/runtime/modules/generated/encaissementsauto/encaissementsauto.module";
+${hasPayments ? `import { encaissementsautoModule } from "@/runtime/modules/generated/encaissementsauto/encaissementsauto.module";` : ""}
 import type { ERPModule } from "@/runtime/modules/ERPModule";
 import type {
   ERPRecordHubConfig,
@@ -164,32 +187,32 @@ function buildBusinessLabel(record: ERPRecordHubRecord, fallback: string): strin
     "displayLabel",
     "label",
     "libelle",
-    "libell\u00e9",
+    "libell\\u00e9",
     "raisonSociale",
     "nomComplet",
     "nom",
     "prenom",
-    "pr\u00e9nom",
+    "pr\\u00e9nom",
     "immatriculation",
     "marque",
     "modele",
-    "mod\u00e8le",
+    "mod\\u00e8le",
     "numero",
-    "num\u00e9ro",
+    "num\\u00e9ro",
     "numeroFacture",
-    "num\u00e9roFacture",
+    "num\\u00e9roFacture",
     "numeroIntervention",
-    "num\u00e9roIntervention",
+    "num\\u00e9roIntervention",
     "dateIntervention",
     "dateRendezVous",
     "designation",
-    "d\u00e9signation",
+    "d\\u00e9signation",
     "titre",
     "title",
     "codeClient",
     "code",
     "reference",
-    "r\u00e9f\u00e9rence",
+    "r\\u00e9f\\u00e9rence",
   ]);
 
   return label || fallback;
@@ -241,17 +264,17 @@ function isClosedStatus(record: ERPRecordHubRecord): boolean {
 
   return [
     "terminee",
-    "termin\u00e9e",
+    "termin\\u00e9e",
     "cloturee",
-    "cl\u00f4tur\u00e9e",
+    "cl\\u00f4tur\\u00e9e",
     "annulee",
-    "annul\u00e9e",
+    "annul\\u00e9e",
     "archivee",
-    "archiv\u00e9e",
+    "archiv\\u00e9e",
     "payee",
-    "pay\u00e9e",
+    "pay\\u00e9e",
     "reglee",
-    "r\u00e9gl\u00e9e",
+    "r\\u00e9gl\\u00e9e",
   ].includes(status);
 }
 
@@ -262,21 +285,21 @@ function isPaidInvoice(record: ERPRecordHubRecord): boolean {
 
   return [
     "payee",
-    "pay\u00e9e",
+    "pay\\u00e9e",
     "reglee",
-    "r\u00e9gl\u00e9e",
+    "r\\u00e9gl\\u00e9e",
     "soldee",
-    "sold\u00e9e",
+    "sold\\u00e9e",
   ].includes(status);
 }
 
 function buildClientLabel(client: ERPRecordHubRecord): string {
-  const company = readFirstString(client, ["raisonSociale", "societe", "soci\u00e9t\u00e9"]);
+  const company = readFirstString(client, ["raisonSociale", "societe", "soci\\u00e9t\\u00e9"]);
   if (company) {
     return company;
   }
 
-  const firstName = readFirstString(client, ["prenom", "pr\u00e9nom"]);
+  const firstName = readFirstString(client, ["prenom", "pr\\u00e9nom"]);
   const lastName = readFirstString(client, ["nom"]);
 
   const fullName = [lastName, firstName].filter(Boolean).join(" ").trim();
@@ -358,7 +381,7 @@ function enrichClientRoot(
     "total",
     "montant",
     "resteAPayer",
-    "reste\u00c0Payer",
+    "reste\\u00c0Payer",
   ]);
 
   const visitDates = [
@@ -379,10 +402,10 @@ function enrichClientRoot(
   const clientType = readFirstString(client, [
     "typeClient",
     "categorieClient",
-    "cat\u00e9gorieClient",
+    "cat\\u00e9gorieClient",
     "type",
     "categorie",
-    "cat\u00e9gorie",
+    "cat\\u00e9gorie",
   ]);
 
   return {
@@ -425,11 +448,11 @@ function enrichClientRoot(
     prochainsRendezVous: upcomingAppointments,
 
     businessBenefits: [
-      "Vue 360\u00b0 du client en un coup d\u2019\u0153il",
-      "Meilleure relation client et r\u00e9activit\u00e9",
-      "Suivi clair des impay\u00e9s et du CA",
-      "Gain de temps pour vos \u00e9quipes",
-      "D\u00e9cisions bas\u00e9es sur des donn\u00e9es r\u00e9elles",
+      "Vue 360\\u00b0 du client en un coup d\\u2019\\u0153il",
+      "Meilleure relation client et r\\u00e9activit\\u00e9",
+      "Suivi clair des impay\\u00e9s et du CA",
+      "Gain de temps pour vos \\u00e9quipes",
+      "D\\u00e9cisions bas\\u00e9es sur des donn\\u00e9es r\\u00e9elles",
     ],
   };
 }
@@ -480,15 +503,15 @@ export class RuntimeClientOperationalHubLoader {
       appointmentsRaw,
       interventionsRaw,
       linesRaw,
-      invoicesRaw,
-      paymentsRaw
+      invoicesRaw${hasPayments ? `,
+      paymentsRaw` : ""}
     ] = await Promise.all([
       safeList(vehiculesModule),
       safeList(rendezvousModule),
       safeList(interventionsautoModule),
       safeList(lignesinterventionautoModule),
-      safeList(facturesautoModule),
-      safeList(encaissementsautoModule)
+      safeList(facturesautoModule)${hasPayments ? `,
+      safeList(encaissementsautoModule)` : ""}
     ]);
 
     const vehicles = vehiclesRaw
@@ -500,7 +523,7 @@ export class RuntimeClientOperationalHubLoader {
           "ownerId",
         ].some((key) => String(record[key] ?? "") === clientId);
       })
-      .map((record) => enrichRecord(record, "V\u00e9hicule"));
+      .map((record) => enrichRecord(record, "V\\u00e9hicule"));
 
     const vehicleIds = new Set(
       vehicles.map((record) => String(record.id ?? "")).filter(Boolean)
@@ -539,14 +562,14 @@ export class RuntimeClientOperationalHubLoader {
       invoices.map((record) => String(record.id ?? "")).filter(Boolean)
     );
 
-    const payments = paymentsRaw
+${hasPayments ? `    const payments = paymentsRaw
       .filter((record) => {
         const byClient = String(record.clientId ?? "") === clientId;
         const byVehicle = vehicleIds.has(String(record.vehiculeId ?? record.vehicleId ?? ""));
         const byInvoice = invoiceIds.has(String(record.factureId ?? ""));
         return byClient || byVehicle || byInvoice;
       })
-      .map((record) => enrichRecord(record, "Encaissement"));
+      .map((record) => enrichRecord(record, "Encaissement"));` : `    const payments: ERPRecordHubRecord[] = [];`}
 
     const selectedVehicle =
       findById(vehicles, input.selectedVehicleId) ?? vehicles[0] ?? null;
@@ -645,3 +668,12 @@ export class RuntimeClientOperationalHubLoader {
     };
   }
 }
+`;
+
+fs.writeFileSync(fullLoaderPath, nextLoader, "utf8");
+
+console.log("[WRITTEN]", loaderPath);
+console.log("[Q2-OP-B1] RuntimeClientOperationalHubLoader enriched for the exact Client Operational Sheet.");
+console.log("Next:");
+console.log("  pnpm build");
+console.log("  node .\\\\scripts\\\\runtime\\\\q2op-a1-audit-client-operational-sheet-target.cjs");
