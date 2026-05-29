@@ -57,6 +57,7 @@ const clientOperationalHubConfig: ERPRecordHubConfig = {
     label: "Véhicules",
     defaultDisplayMode: "table",
     displayModeSourceField: "typeClient",
+    selectionQueryParam: "selectedVehicleId",
     displayModes: {
       Particulier: "cards",
       particulier: "cards",
@@ -69,6 +70,16 @@ const clientOperationalHubConfig: ERPRecordHubConfig = {
     subtitleFields: ["annee", "statut"],
     cardFields: ["immatriculation", "marque", "modele", "statut"],
     tableFields: ["immatriculation", "marque", "modele", "statut"],
+    actions: [
+      {
+        key: "open-vehicle",
+        label: "Fiche véhicule",
+        kind: "open-record",
+        moduleKey: "vehicules",
+        hrefTemplate: "/vehicules/{id}",
+        variant: "secondary",
+      },
+    ],
   },
   selectedRecordDetails: [
     {
@@ -79,6 +90,16 @@ const clientOperationalHubConfig: ERPRecordHubConfig = {
       layout: "collapsible-list",
       labelFields: ["numero", "titre", "statut"],
       subtitleFields: ["dateIntervention", "montantTTC"],
+      actions: [
+        {
+          key: "open-intervention",
+          label: "Fiche intervention",
+          kind: "open-record",
+          moduleKey: "interventionsauto",
+          hrefTemplate: "/interventionsauto/{id}",
+          variant: "secondary",
+        },
+      ],
     },
     {
       key: "factures",
@@ -88,6 +109,16 @@ const clientOperationalHubConfig: ERPRecordHubConfig = {
       layout: "collapsible-list",
       labelFields: ["numero", "statut", "montantTTC"],
       subtitleFields: ["dateFacture", "dateEcheance"],
+      actions: [
+        {
+          key: "open-facture",
+          label: "Facture complète",
+          kind: "open-record",
+          moduleKey: "facturesauto",
+          hrefTemplate: "/facturesauto/{id}",
+          variant: "secondary",
+        },
+      ],
     },
   ],
 };

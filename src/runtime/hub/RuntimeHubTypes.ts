@@ -65,6 +65,7 @@ export type ERPRecordHubPrimaryCollectionConfig = {
   defaultDisplayMode?: ERPRecordHubDisplayMode;
   displayModes?: Record<string, ERPRecordHubDisplayMode>;
   displayModeSourceField?: string;
+  selectionQueryParam?: string;
   cardFields?: string[];
   tableFields?: string[];
   labelFields?: string[];

@@ -11,6 +11,9 @@ export class RuntimeHubRelationResolver {
       moduleKey: section.moduleKey,
       foreignKey: section.foreignKey,
       layout: section.layout ?? "collapsible-list",
+      labelFields: section.labelFields,
+      subtitleFields: section.subtitleFields,
+      actions: section.actions,
     }));
   }
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import type {
   ERPRecordHubConfig,
   ERPRecordHubRecord,
@@ -24,8 +25,18 @@ export function ERPRecordHubPage({
   primaryRecords = [],
   relatedRecordsBySection = {},
 }: ERPRecordHubPageProps) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const selectionQueryParam =
+    config.primaryCollection.selectionQueryParam ?? "selectedRecordId";
+
+  const initialSelectedId =
+    searchParams.get(selectionQueryParam) ?? primaryRecords[0]?.id ?? null;
+
   const [selectedPrimaryRecordId, setSelectedPrimaryRecordId] = useState<string | null>(
-    primaryRecords[0]?.id ?? null
+    initialSelectedId
   );
 
   const selectedPrimaryRecord = useMemo(() => {
@@ -40,9 +51,23 @@ export function ERPRecordHubPage({
     });
   }, [config, rootRecord, selectedPrimaryRecord]);
 
+  function handleSelectRecord(recordId: string | null) {
+    setSelectedPrimaryRecordId(recordId);
+
+    const params = new URLSearchParams(searchParams.toString());
+
+    if (recordId) {
+      params.set(selectionQueryParam, recordId);
+    } else {
+      params.delete(selectionQueryParam);
+    }
+
+    router.replace(params.toString() ? pathname + "?" + params.toString() : pathname);
+  }
+
   return (
     <section className="min-h-screen bg-slate-50 px-4 py-6 sm:px-6 lg:px-8">
-      <div className="mx-auto flex w-full max-w-7xl flex-col gap-6">
+      <div className="mx-auto flex w-full max-w-[1600px] flex-col gap-6">
         <ERPRecordHubHeader config={config} rootRecord={rootRecord} />
         <ERPRecordHubKpiStrip kpis={resolved.kpis} />
 
@@ -52,7 +77,7 @@ export function ERPRecordHubPage({
             displayMode={resolved.layout.primaryDisplayMode}
             records={primaryRecords}
             selectedRecordId={selectedPrimaryRecordId}
-            onSelectRecord={setSelectedPrimaryRecordId}
+            onSelectRecord={handleSelectRecord}
           />
 
           <ERPRecordHubSelectedDetails
