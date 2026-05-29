@@ -11,7 +11,7 @@ type ProductStockOperationalHubPageProps = {
 const productStockOperationalHubConfig: ERPRecordHubConfig = {
   enabled: true,
   key: "produitsauto-stock-operational-hub",
-  label: "Fiche Produit / Stock OpÃƒÂ©rationnelle",
+  label: "Fiche Produit / Stock Op\u00e9rationnelle",
   rootModule: "produitsauto",
   layout: "wide",
   search: {
@@ -45,7 +45,7 @@ const productStockOperationalHubConfig: ERPRecordHubConfig = {
     },
     {
       key: "recentMovementsCount",
-      label: "Mouvements rÃƒÂ©cents",
+      label: "Mouvements r\u00e9cents",
       source: "computed",
       format: "number",
     },
@@ -93,7 +93,7 @@ const productStockOperationalHubConfig: ERPRecordHubConfig = {
     },
     {
       key: "commandes",
-      label: "Commandes liÃƒÂ©es au produit",
+      label: "Commandes li\u00e9es au produit",
       moduleKey: "commandesstockauto",
       foreignKey: "produitId",
       layout: "collapsible-list",
@@ -112,7 +112,7 @@ const productStockOperationalHubConfig: ERPRecordHubConfig = {
     },
     {
       key: "receptions",
-      label: "RÃƒÂ©ceptions liÃƒÂ©es",
+      label: "R\u00e9ceptions li\u00e9es",
       moduleKey: "receptionsstockauto",
       foreignKey: "stockId",
       layout: "collapsible-list",
@@ -121,7 +121,7 @@ const productStockOperationalHubConfig: ERPRecordHubConfig = {
       actions: [
         {
           key: "open-reception",
-          label: "Fiche rÃƒÂ©ception",
+          label: "Fiche r\u00e9ception",
           kind: "open-record",
           moduleKey: "receptionsstockauto",
           hrefTemplate: "/receptionsstockauto/{id}",
@@ -142,23 +142,24 @@ function ProductStockHubEmptyState() {
           </p>
 
           <h1 className="mt-2 text-2xl font-semibold text-slate-950">
-            Fiche Produit / Stock OpÃƒÂ©rationnelle
+            {"Fiche Produit / Stock Op\u00e9rationnelle"}
           </h1>
 
           <p className="mt-2 max-w-3xl text-sm text-slate-500">
-            SÃƒÂ©lectionnez un produit pour afficher ses stocks, mouvements, commandes et rÃƒÂ©ceptions.
-            Cette page nÃ¢â‚¬â„¢effectue aucun chargement runtime tant quÃ¢â‚¬â„¢aucun produit nÃ¢â‚¬â„¢est sÃƒÂ©lectionnÃƒÂ©.
+            {"S\u00e9lectionnez un produit pour afficher ses stocks, mouvements, commandes et r\u00e9ceptions. Cette page n\u2019effectue aucun chargement runtime tant qu\u2019aucun produit n\u2019est s\u00e9lectionn\u00e9."}
           </p>
         </header>
 
         <section className="rounded-3xl border border-dashed border-slate-200 bg-white p-8 text-sm text-slate-500">
-          <p className="font-semibold text-slate-800">Aucun produit sÃƒÂ©lectionnÃƒÂ©.</p>
+          <p className="font-semibold text-slate-800">
+            {"Aucun produit s\u00e9lectionn\u00e9."}
+          </p>
           <p className="mt-1">
-            Ouvrez cette page avec un paramÃƒÂ¨tre du type{" "}
+            {"Ouvrez cette page avec un param\u00e8tre du type "}
             <code className="rounded bg-slate-100 px-1.5 py-0.5 text-xs text-slate-700">
               ?productId=&lt;id-produit&gt;
             </code>{" "}
-            pour charger le hub opÃƒÂ©rationnel.
+            {"pour charger le hub op\u00e9rationnel."}
           </p>
         </section>
       </div>
