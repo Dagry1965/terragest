@@ -1,0 +1,106 @@
+# Q2-OK-A2 Product / Stock Hub file discovery
+
+## Matched files
+
+- `src/app/(private)/clientsauto/hub/page.tsx` — ERPRecordHub, RecordHub
+- `src/app/(private)/produitsauto/hub/page.tsx` — ProductStockOperationalHub, ERPRecordHub, RecordHub, produitsauto/hub
+- `src/app/(private)/produitsauto/hub/ProductStockOperationalHubClient.tsx` — ProductStockOperationalHub, RuntimeProductStockOperationalHub, ERPRecordHub, RecordHub, produitsauto/hub
+- `src/components/erp/hub/ERPRecordHubHeader.tsx` — ERPRecordHub, RecordHub
+- `src/components/erp/hub/ERPRecordHubKpiStrip.tsx` — ERPRecordHub, RecordHub
+- `src/components/erp/hub/ERPRecordHubPage.tsx` — ERPRecordHub, RecordHub
+- `src/components/erp/hub/ERPRecordHubPrimaryCollection.tsx` — ERPRecordHub, RecordHub
+- `src/components/erp/hub/ERPRecordHubSelectedDetails.tsx` — ERPRecordHub, RecordHub
+- `src/components/erp/hub/index.ts` — ERPRecordHub, RecordHub
+- `src/runtime/hub/RuntimeClientOperationalHubLoader.ts` — ERPRecordHub, RecordHub
+- `src/runtime/hub/RuntimeHubConfigResolver.ts` — ERPRecordHub, RecordHub
+- `src/runtime/hub/RuntimeHubEngine.ts` — ERPRecordHub, RecordHub
+- `src/runtime/hub/RuntimeHubKpiResolver.ts` — ERPRecordHub, RecordHub
+- `src/runtime/hub/RuntimeHubLayoutResolver.ts` — ERPRecordHub, RecordHub
+- `src/runtime/hub/RuntimeHubRelationResolver.ts` — ERPRecordHub, RecordHub
+- `src/runtime/hub/RuntimeHubTypes.ts` — ERPRecordHub, RecordHub
+- `src/runtime/hub/RuntimeProductStockOperationalHubLoader.ts` — ProductStockOperationalHub, RuntimeProductStockOperationalHub, ERPRecordHub, RecordHub, produitsauto/hub
+
+## Mojibake hits
+
+- `src/components/public/AmarkhysPublicAppointmentLanding.tsx:245` — patterns: Ã
+  - `            "Impossible de charger les disponibilitÃ©s pour le moment."`
+- `src/components/public/AmarkhysPublicAppointmentLanding.tsx:297` — patterns: Ã
+  - `        " Ã  " +`
+- `src/components/public/AmarkhysPublicAppointmentLanding.tsx:368` — patterns: Ã
+  - `    if (!form.telephone.trim()) return "Indiquez votre numÃ©ro de tÃ©lÃ©phone.";`
+- `src/components/public/AmarkhysPublicAppointmentLanding.tsx:369` — patterns: Ã
+  - `    if (!form.vehicule.trim()) return "Indiquez votre vÃ©hicule.";`
+- `src/components/public/AmarkhysPublicAppointmentLanding.tsx:370` — patterns: â
+  - `    if (!form.immatriculation.trim()) return "Indiquez lâ€™immatriculation.";`
+- `src/components/public/AmarkhysPublicAppointmentLanding.tsx:372` — patterns: Ã
+  - `      return "Choisissez un crÃ©neau disponible.";`
+- `src/components/public/AmarkhysPublicAppointmentLanding.tsx:413` — patterns: Ã, â
+  - `        "Impossible dâ€™envoyer la demande pour le moment. Veuillez rÃ©essayer."`
+- `src/components/public/AmarkhysPublicAppointmentLanding.tsx:443` — patterns: Ã, â
+  - `              RÃ©servez votre crÃ©neau et profitez dâ€™un service premium pour votre vÃ©hicule.`
+- `src/components/public/AmarkhysPublicAppointmentLanding.tsx:488` — patterns: Ã
+  - `                        CrÃ©neaux disponibles cette semaine`
+- `src/components/public/AmarkhysPublicAppointmentLanding.tsx:518` — patterns: Ã
+  - `                        {publicDaysRangeLabel || "Aucun crÃ©neau chargÃ©"}`
+- `src/components/public/AmarkhysPublicAppointmentLanding.tsx:529` — patterns: Ã, â
+  - `                        â† Jours prÃ©cÃ©dents`
+- `src/components/public/AmarkhysPublicAppointmentLanding.tsx:542` — patterns: â
+  - `                        Jours suivants â†’`
+- `src/components/public/AmarkhysPublicAppointmentLanding.tsx:555` — patterns: Ã
+  - `                        Chargement des disponibilitÃ©s...`
+- `src/components/public/AmarkhysPublicAppointmentLanding.tsx:563` — patterns: Ã
+  - `                        Aucun crÃ©neau disponible pour le moment.`
+- `src/components/public/AmarkhysPublicAppointmentLanding.tsx:609` — patterns: Ã
+  - `                                    {slot.available ? slot.startTime : slot.startTime + " occupÃ©"}`
+- `src/components/public/AmarkhysPublicAppointmentLanding.tsx:632` — patterns: Ã
+  - `                title="RÃ©ponse rapide"`
+- `src/components/public/AmarkhysPublicAppointmentLanding.tsx:633` — patterns: Ã
+  - `                description="Votre demande est transmise instantanÃ©ment au garage."`
+- `src/components/public/AmarkhysPublicAppointmentLanding.tsx:638` — patterns: Ã
+  - `                title="CrÃ©neau confirmÃ©"`
+- `src/components/public/AmarkhysPublicAppointmentLanding.tsx:645` — patterns: Ã
+  - `                title="Suivi personnalisÃ©"`
+- `src/components/public/AmarkhysPublicAppointmentLanding.tsx:646` — patterns: Ã
+  - `                description="Votre vÃ©hicule est pris en charge avec un suivi complet."`
+- `src/components/public/AmarkhysPublicAppointmentLanding.tsx:670` — patterns: Ã
+  - `                      RÃ©server un crÃ©neau`
+- `src/components/public/AmarkhysPublicAppointmentLanding.tsx:691` — patterns: Ã
+  - `                    Demande envoyÃ©e`
+- `src/components/public/AmarkhysPublicAppointmentLanding.tsx:695` — patterns: Ã
+  - `                    Votre demande a bien Ã©tÃ© transmise Ã  AMARKHYS Garage.`
+- `src/components/public/AmarkhysPublicAppointmentLanding.tsx:727` — patterns: Ã
+  - `                        TÃ©lÃ©phone *`
+- `src/components/public/AmarkhysPublicAppointmentLanding.tsx:745` — patterns: Ã
+  - `                        VÃ©hicule *`
+- `src/components/public/AmarkhysPublicAppointmentLanding.tsx:753` — patterns: Ã
+  - `                          placeholder="Marque, modÃ¨le"`
+- `src/components/public/AmarkhysPublicAppointmentLanding.tsx:778` — patterns: Ã
+  - `                      Service souhaitÃ©`
+- `src/components/public/AmarkhysPublicAppointmentLanding.tsx:800` — patterns: Â
+  - `                              ? " Â· " + service.durationMinutes + " min"`
+- `src/components/public/AmarkhysPublicAppointmentLanding.tsx:811` — patterns: Ã
+  - `                        Date souhaitÃ©e`
+- `src/components/public/AmarkhysPublicAppointmentLanding.tsx:827` — patterns: Ã
+  - `                        Heure souhaitÃ©e`
+- `src/components/public/AmarkhysPublicAppointmentLanding.tsx:852` — patterns: Ã
+  - `                      placeholder="PrÃ©cisez votre demande, un symptÃ´me, une remarque..."`
+- `src/components/public/AmarkhysPublicAppointmentLanding.tsx:904` — patterns: Ã
+  - `              title="DonnÃ©es sÃ©curisÃ©es"`
+- `src/components/public/AmarkhysPublicAppointmentLanding.tsx:910` — patterns: Ã
+  - `              title="RÃ©ponse rapide"`
+- `src/components/public/AmarkhysPublicAppointmentLanding.tsx:911` — patterns: Ã
+  - `              description="Confirmation sous 1h ouvrÃ©e."`
+- `src/components/public/AmarkhysPublicAppointmentLanding.tsx:916` — patterns: Ã
+  - `              title="Atelier certifiÃ©"`
+- `src/components/public/AmarkhysPublicAppointmentLanding.tsx:917` — patterns: Ã
+  - `              description="Service premium et suivi structurÃ©."`
+- `src/components/public/AmarkhysPublicAppointmentLanding.tsx:922` — patterns: Ã
+  - `              title="ConfidentialitÃ©"`
+- `src/components/public/AmarkhysPublicAppointmentLanding.tsx:923` — patterns: Ã
+  - `              description="Votre demande est traitÃ©e avec soin."`
+- `src/runtime/business-rules/runtimeBusinessRules.ts:965` — patterns: Ã
+  - `            "CA mis Ã  jour",`
+- `src/runtime/modules/definitions/coreModules.ts:74` — patterns: â
+  - `    label: "Tâches",`
+- `src/runtime/modules/definitions/generated/exploitations.module.ts:117` — patterns: â
+  - `      { key: "surfaceBatie", label: "Surface bâtie", type: "number", grid: { cols: 4 } },`

@@ -4,14 +4,41 @@ import type {
   ERPRecordHubRecord,
 } from "@/runtime/hub";
 
-function readRecordLabel(record: ERPRecordHubRecord, fields: string[] = []): string {
-  const values = fields
+function readRecordLabel(
+  record: ERPRecordHubRecord,
+  fields: string[] | undefined
+): string {
+  const requestedFields = fields ?? [];
+
+  const fallbackFields =
+    requestedFields.length > 0
+      ? requestedFields
+      : [
+          "displayLabel",
+          "label",
+          "libelle",
+          "nom",
+          "name",
+          "designation",
+          "titre",
+          "emplacement",
+          "code",
+          "reference",
+          "numero",
+          "immatriculation",
+        ];
+
+  const values = fallbackFields
     .map((field) => record[field])
-    .filter((value): value is string | number => typeof value === "string" || typeof value === "number");
+    .filter((value) => typeof value === "string" || typeof value === "number")
+    .map((value) => String(value).trim())
+    .filter((value) => value.length > 0);
 
-  if (values.length > 0) return values.join(" · ");
+  if (values.length > 0) {
+    return values.join(" · ");
+  }
 
-  return String(record.id ?? "Élément");
+  return "\u00c9l\u00e9ment";
 }
 
 export type ERPRecordHubPrimaryCollectionProps = {

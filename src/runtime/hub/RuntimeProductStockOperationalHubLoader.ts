@@ -99,6 +99,198 @@ function filterByAnyStockKey(
   });
 }
 
+function readFirstString(
+  record: ERPRecordHubRecord,
+  fields: string[]
+): string {
+  for (const field of fields) {
+    const value = record[field];
+
+    if (typeof value === "string" && value.trim().length > 0) {
+      return value.trim();
+    }
+
+    if (typeof value === "number" && Number.isFinite(value)) {
+      return String(value);
+    }
+  }
+
+  return "";
+}
+
+function readNumber(record: ERPRecordHubRecord, fields: string[]): number {
+  for (const field of fields) {
+    const value = record[field];
+
+    if (typeof value === "number" && Number.isFinite(value)) {
+      return value;
+    }
+
+    if (typeof value === "string") {
+      const normalized = Number(value.replace(",", "."));
+      if (Number.isFinite(normalized)) {
+        return normalized;
+      }
+    }
+  }
+
+  return 0;
+}
+
+function sumRecords(records: ERPRecordHubRecord[], fields: string[]): number {
+  return records.reduce((total, record) => total + readNumber(record, fields), 0);
+}
+
+function isOpenBusinessRecord(record: ERPRecordHubRecord): boolean {
+  const status = String(
+    record.statut ??
+      record.status ??
+      record.etat ??
+      record.state ??
+      ""
+  )
+    .trim()
+    .toLowerCase();
+
+  if (!status) {
+    return true;
+  }
+
+  const closedStatuses = [
+    "annulee",
+    "annul\u00e9e",
+    "annule",
+    "annul\u00e9",
+    "cloturee",
+    "cl\u00f4tur\u00e9e",
+    "terminee",
+    "termin\u00e9e",
+    "fermee",
+    "ferm\u00e9e",
+    "receptionnee",
+    "r\u00e9ceptionn\u00e9e",
+    "livree",
+    "livr\u00e9e",
+    "archivee",
+    "archiv\u00e9e",
+  ];
+
+  return !closedStatuses.includes(status);
+}
+
+function buildBusinessLabel(record: ERPRecordHubRecord, fallback: string): string {
+  const label = readFirstString(record, [
+    "displayLabel",
+    "label",
+    "libelle",
+    "libell\u00e9",
+    "nom",
+    "name",
+    "designation",
+    "d\u00e9signation",
+    "titre",
+    "title",
+    "emplacement",
+    "code",
+    "reference",
+    "r\u00e9f\u00e9rence",
+    "numero",
+    "num\u00e9ro",
+    "numeroCommande",
+    "num\u00e9roCommande",
+    "immatriculation",
+  ]);
+
+  return label || fallback;
+}
+
+function enrichStockRecord(record: ERPRecordHubRecord): ERPRecordHubRecord {
+  const quantity = readNumber(record, [
+    "quantite",
+    "quantit\u00e9",
+    "currentStock",
+    "stockActuel",
+    "quantiteDisponible",
+    "quantit\u00e9Disponible",
+  ]);
+
+  const label = buildBusinessLabel(record, "Stock");
+
+  return {
+    ...record,
+    label,
+    displayLabel: label,
+    titre: label,
+    stockQuantity: quantity,
+  };
+}
+
+function enrichRelatedRecord(
+  record: ERPRecordHubRecord,
+  fallback: string
+): ERPRecordHubRecord {
+  const label = buildBusinessLabel(record, fallback);
+
+  return {
+    ...record,
+    label,
+    displayLabel: label,
+    titre: label,
+  };
+}
+
+function enrichRootRecord(
+  rootRecord: ERPRecordHubRecord,
+  primaryRecords: ERPRecordHubRecord[],
+  productMovements: ERPRecordHubRecord[],
+  productOrders: ERPRecordHubRecord[],
+  productReceptions: ERPRecordHubRecord[]
+): ERPRecordHubRecord {
+  const stockTotal = sumRecords(primaryRecords, [
+    "quantite",
+    "quantit\u00e9",
+    "currentStock",
+    "stockActuel",
+    "quantiteDisponible",
+    "quantit\u00e9Disponible",
+    "stockQuantity",
+  ]);
+
+  const stockCount = primaryRecords.length;
+  const openOrders = productOrders.filter(isOpenBusinessRecord).length;
+  const recentMovements = productMovements.length;
+  const receptionsCount = productReceptions.length;
+
+  const productLabel = buildBusinessLabel(rootRecord, "Produit");
+
+  return {
+    ...rootRecord,
+    label: productLabel,
+    displayLabel: productLabel,
+    titre: productLabel,
+
+    stockTotal,
+    totalStock: stockTotal,
+    quantiteTotale: stockTotal,
+    quantityTotal: stockTotal,
+
+    stockCount,
+    nombreStocks: stockCount,
+
+    openOrders,
+    commandesOuvertes: openOrders,
+    commandeCount: openOrders,
+
+    recentMovements,
+    mouvementsRecents: recentMovements,
+    mouvementsCount: recentMovements,
+
+    receptionsCount,
+    nombreReceptions: receptionsCount,
+  };
+}
+
+
 function findById(
   records: ERPRecordHubRecord[],
   id?: string | null
@@ -151,7 +343,7 @@ export class RuntimeProductStockOperationalHubLoader {
     }
 
     const stocks = await safeList(stocksautoModule);
-    const primaryRecords = filterByAnyProductKey(stocks, productId);
+    const primaryRecords = filterByAnyProductKey(stocks, productId).map(enrichStockRecord);
 
     const selectedStock =
       findById(primaryRecords, input.selectedStockId) ?? primaryRecords[0] ?? null;
@@ -170,19 +362,37 @@ export class RuntimeProductStockOperationalHubLoader {
       safeList(receptionsstockautoModule),
     ]);
 
-    relatedRecordsBySection.mouvements = selectedStockId
-      ? filterByAnyStockKey(mouvements, selectedStockId)
-      : filterByAnyProductKey(mouvements, productId);
+    const productMovements = filterByAnyProductKey(mouvements, productId);
+    const productOrders = filterByAnyProductKey(commandes, productId);
+    const productReceptions = filterByAnyProductKey(receptions, productId);
 
-    relatedRecordsBySection.commandes = filterByAnyProductKey(commandes, productId);
+    relatedRecordsBySection.mouvements = (
+      selectedStockId
+        ? filterByAnyStockKey(mouvements, selectedStockId)
+        : productMovements
+    ).map((record) => enrichRelatedRecord(record, "Mouvement"));
 
-    relatedRecordsBySection.receptions = selectedStockId
-      ? filterByAnyStockKey(receptions, selectedStockId)
-      : filterByAnyProductKey(receptions, productId);
+    relatedRecordsBySection.commandes = productOrders.map((record) =>
+      enrichRelatedRecord(record, "Commande")
+    );
+
+    relatedRecordsBySection.receptions = (
+      selectedStockId
+        ? filterByAnyStockKey(receptions, selectedStockId)
+        : productReceptions
+    ).map((record) => enrichRelatedRecord(record, "R\u00e9ception"));
+
+    const enrichedRootRecord = enrichRootRecord(
+      rootRecord,
+      primaryRecords,
+      productMovements,
+      productOrders,
+      productReceptions
+    );
 
     return {
       config: input.config,
-      rootRecord,
+      rootRecord: enrichedRootRecord,
       primaryRecords,
       relatedRecordsBySection,
     };

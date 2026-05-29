@@ -6,7 +6,20 @@ import type {
 } from "@/runtime/hub";
 
 function readFallbackLabel(record: ERPRecordHubRecord): string {
-  const preferredFields = ["nom", "name", "label", "code", "immatriculation", "numero", "titre"];
+  const preferredFields = [
+    "displayLabel",
+    "label",
+    "libelle",
+    "nom",
+    "name",
+    "designation",
+    "titre",
+    "emplacement",
+    "code",
+    "reference",
+    "numero",
+    "immatriculation",
+  ];
 
   for (const field of preferredFields) {
     const value = record[field];
@@ -16,7 +29,7 @@ function readFallbackLabel(record: ERPRecordHubRecord): string {
     }
   }
 
-  return String(record.id ?? "Élément lié");
+  return "\u00c9l\u00e9ment li\u00e9";
 }
 
 function readFields(record: ERPRecordHubRecord, fields: string[] = []): string {
