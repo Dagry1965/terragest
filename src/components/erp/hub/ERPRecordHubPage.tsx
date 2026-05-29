@@ -17,6 +17,7 @@ export type ERPRecordHubPageProps = {
   rootRecord?: ERPRecordHubRecord | null;
   primaryRecords?: ERPRecordHubRecord[];
   relatedRecordsBySection?: Record<string, ERPRecordHubRecord[]>;
+  selectedRecordId?: string | null;
 };
 
 export function ERPRecordHubPage({
@@ -24,6 +25,7 @@ export function ERPRecordHubPage({
   rootRecord = null,
   primaryRecords = [],
   relatedRecordsBySection = {},
+  selectedRecordId = null,
 }: ERPRecordHubPageProps) {
   const router = useRouter();
   const pathname = usePathname();
@@ -33,7 +35,10 @@ export function ERPRecordHubPage({
     config.primaryCollection.selectionQueryParam ?? "selectedRecordId";
 
   const initialSelectedId =
-    searchParams.get(selectionQueryParam) ?? primaryRecords[0]?.id ?? null;
+    searchParams.get(selectionQueryParam) ??
+    selectedRecordId ??
+    primaryRecords[0]?.id ??
+    null;
 
   const [selectedPrimaryRecordId, setSelectedPrimaryRecordId] = useState<string | null>(
     initialSelectedId
