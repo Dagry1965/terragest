@@ -14,6 +14,7 @@ import { RuntimeStatusGovernanceEngine } from "@/runtime/status";
 import { RuntimeComputedFieldsEngine } from "@/runtime/computed";
 import { RuntimeAutoFillEngine } from "@/runtime/autofill";
 import { RuntimeActionEngine } from "@/runtime/actions/RuntimeActionEngine";
+import { buildRuntimeFactureEncaissementCreateHref } from "@/runtime/navigation/RuntimeChildCreateHrefBuilder";
 import {
   RuntimeNotificationCenter,
 } from "@/runtime/notifications/RuntimeNotificationCenter";
@@ -245,11 +246,7 @@ function buildInvoicePaymentHref(
   invoice: Record<string, unknown>
 ): string {
   const factureId =
-    String(
-      invoice.id ??
-      invoice._id ??
-      ""
-    );
+    String(invoice.id ?? invoice._id ?? "");
 
   const montantTTC =
     Number(invoice.montantTTC ?? 0);
@@ -268,58 +265,17 @@ function buildInvoicePaymentHref(
           0
         );
 
-  const params =
-    new URLSearchParams();
-
-  params.set(
-    "factureId",
-    factureId
-  );
-
-  if (invoice.clientId) {
-    params.set(
-      "clientId",
-      String(invoice.clientId)
-    );
-  }
-
-  if (invoice.vehiculeId) {
-    params.set(
-      "vehiculeId",
-      String(invoice.vehiculeId)
-    );
-  }
-
-  if (montant > 0) {
-    params.set(
-      "montant",
-      String(montant)
-    );
-  }
-
-  params.set(
-    "datePaiement",
-    new Date()
+  return buildRuntimeFactureEncaissementCreateHref({
+    factureId,
+    clientId: invoice.clientId ? String(invoice.clientId) : undefined,
+    vehiculeId: invoice.vehiculeId ? String(invoice.vehiculeId) : undefined,
+    montant: montant > 0 ? montant : undefined,
+    datePaiement: new Date()
       .toISOString()
-      .split("T")[0]
-  );
-
-  params.set(
-    "statut",
-    "valide"
-  );
-
-  params.set(
-    "returnTo",
-    "/facturesauto/" + factureId + "/edit"
-  );
-
-  params.set(
-    "lockFields",
-    "factureId,clientId,vehiculeId"
-  );
-
-  return "/encaissementsauto/nouveau?" + params.toString();
+      .split("T")[0],
+    statut: "valide",
+    returnTo: "/facturesauto/" + factureId + "/edit",
+  });
 }
 
 async function syncInterventionTotalsFromLines(

@@ -23,87 +23,6 @@ interface ERPRuntimeDetailsProps {
   data?: Record<string, unknown>;
 }
 
-function buildInvoicePaymentHref(
-  data: Record<string, unknown>
-): string {
-  const factureId =
-    String(
-      data.id ??
-      data._id ??
-      ""
-    );
-
-  const montantTTC =
-    Number(data.montantTTC ?? 0);
-
-  const montantPaye =
-    Number(data.montantPaye ?? 0);
-
-  const resteAPayer =
-    Number(data.resteAPayer ?? 0);
-
-  const montant =
-    resteAPayer > 0
-      ? resteAPayer
-      : Math.max(
-          montantTTC - montantPaye,
-          0
-        );
-
-  const params =
-    new URLSearchParams();
-
-  params.set(
-    "factureId",
-    factureId
-  );
-
-  if (data.clientId) {
-    params.set(
-      "clientId",
-      String(data.clientId)
-    );
-  }
-
-  if (data.vehiculeId) {
-    params.set(
-      "vehiculeId",
-      String(data.vehiculeId)
-    );
-  }
-
-  if (montant > 0) {
-    params.set(
-      "montant",
-      String(montant)
-    );
-  }
-
-  params.set(
-    "datePaiement",
-    new Date()
-      .toISOString()
-      .split("T")[0]
-  );
-
-  params.set(
-    "statut",
-    "valide"
-  );
-
-  params.set(
-    "returnTo",
-    "/facturesauto/" + factureId
-  );
-
-  params.set(
-    "lockFields",
-    "factureId,clientId,vehiculeId"
-  );
-
-  return "/encaissementsauto/nouveau?" + params.toString();
-}
-
 function getInvoiceAmountSummary(
   data: Record<string, unknown>
 ) {
@@ -167,10 +86,6 @@ const details = ERPModuleBuilder.buildDetails(module);
       module.schema?.collection ??
       "") as string
   ).toLowerCase();
-const paymentHref =
-    isInvoice
-      ? buildInvoicePaymentHref(data)
-      : "#";
 const amountSummary =
     getInvoiceAmountSummary(data);
 useEffect(() => {
@@ -218,7 +133,7 @@ return (
               </p>
 
               <h2 className="mt-2 text-2xl font-black text-[var(--erp-table-head-text)] min-w-[220px] justify-center self-end mt-auto mb-0 lg:self-end shadow-[0_12px_30px_rgba(0,166,138,0.22)]">
-              Enregistrer un paiement
+              Synthèse paiement facture
               </h2>
 
               <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-300">
@@ -255,11 +170,12 @@ return (
               </div>
             </div>
 
-            <Link
-              href={paymentHref}
-              className="inline-flex items-center justify-center rounded-2xl bg-[var(--erp-primary-soft)]0 px-6 py-4 text-sm font-black text-[var(--erp-text)] shadow-[0_14px_40px_rgba(15,23,42,0.07)] transition hover:bg-emerald-300 min-w-[220px] self-end lg:self-end shadow-[0_12px_30px_rgba(0,166,138,0.22)] mt-auto mb-0">
-              Enregistrer un paiement
-            </Link>
+            <a
+              href="#historique-encaissements"
+              className="inline-flex items-center justify-center rounded-2xl border border-white/10 bg-white/10 px-6 py-4 text-sm font-black text-white transition hover:bg-white/15 min-w-[220px] self-end lg:self-end mt-auto mb-0"
+            >
+              Voir l'historique des encaissements
+            </a>
           </div>
         </section>
       ) : null}

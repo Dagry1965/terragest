@@ -15,6 +15,8 @@ import {
   PaymentReceiptActions,
 } from "./PaymentReceiptActions";
 
+import { buildRuntimeFactureEncaissementCreateHref } from "@/runtime/navigation/RuntimeChildCreateHrefBuilder";
+
 interface InvoicePaymentsHistoryProps {
   factureId: string;
   montantTTC?: number;
@@ -98,42 +100,23 @@ function buildCreatePaymentHref({
   factureId,
   clientId,
   vehiculeId,
+  montant,
 }: {
   factureId: string;
   clientId?: string;
   vehiculeId?: string;
+  montant?: unknown;
 }): string {
-  const params = new URLSearchParams();
-
-  params.set("factureId", factureId);
-
-  if (clientId) {
-    params.set("clientId", clientId);
-  }
-
-  if (vehiculeId) {
-    params.set("vehiculeId", vehiculeId);
-  }
-
-  params.set("parentModuleKey", "facturesauto");
-  params.set("parentRecordId", factureId);
-  params.set("parentForeignKey", "factureId");
-  params.set("returnTo", buildInvoiceReturnTo(factureId));
-  params.set("returnLabel", "Retour facture");
-  params.set(
-    "lockFields",
-    ["factureId", "clientId", "vehiculeId"]
-      .filter((field) =>
-        field === "factureId" ||
-        (field === "clientId" && clientId) ||
-        (field === "vehiculeId" && vehiculeId)
-      )
-      .join(",")
-  );
-
-  return "/encaissementsauto/nouveau?" + params.toString();
+  return buildRuntimeFactureEncaissementCreateHref({
+    factureId,
+    clientId,
+    vehiculeId,
+    montant,
+    datePaiement: new Date().toISOString().slice(0, 10),
+    statut: "valide",
+    returnTo: buildInvoiceReturnTo(factureId),
+  });
 }
-
 function buildEditPaymentHref(
   paymentId: string | undefined,
   factureId: string
@@ -393,6 +376,7 @@ export function InvoicePaymentsHistory({
       factureId,
       clientId,
       vehiculeId,
+      montant: resteAPayer,
     });
 
   return (

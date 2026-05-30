@@ -25,6 +25,7 @@ import {
 } from "@/runtime/data-binding/RuntimeDataBinding";
 
 import { ERPOperationalModulePage } from "@/components/erp/operational";
+import { buildRuntimeFactureEncaissementCreateHref } from "@/runtime/navigation/RuntimeChildCreateHrefBuilder";
 function buildInvoicePaymentHref(
   record: Record<string, unknown>
 ): string {
@@ -45,56 +46,15 @@ function buildInvoicePaymentHref(
       ? resteAPayer
       : Math.max(montantTTC - montantPaye, 0);
 
-  const params =
-    new URLSearchParams();
-
-  params.set(
-    "factureId",
-    factureId
-  );
-
-  if (record.clientId) {
-    params.set(
-      "clientId",
-      String(record.clientId)
-    );
-  }
-
-  if (record.vehiculeId) {
-    params.set(
-      "vehiculeId",
-      String(record.vehiculeId)
-    );
-  }
-
-  if (montant > 0) {
-    params.set(
-      "montant",
-      String(montant)
-    );
-  }
-
-  params.set(
-    "datePaiement",
-    new Date().toISOString().split("T")[0]
-  );
-
-  params.set(
-    "statut",
-    "valide"
-  );
-
-  params.set(
-    "returnTo",
-    "/facturesauto/" + factureId
-  );
-
-  params.set(
-    "lockFields",
-    "factureId,clientId,vehiculeId"
-  );
-
-  return "/encaissementsauto/nouveau?" + params.toString();
+  return buildRuntimeFactureEncaissementCreateHref({
+    factureId,
+    clientId: record.clientId ? String(record.clientId) : undefined,
+    vehiculeId: record.vehiculeId ? String(record.vehiculeId) : undefined,
+    montant: montant > 0 ? montant : undefined,
+    datePaiement: new Date().toISOString().split("T")[0],
+    statut: "valide",
+    returnTo: "/facturesauto/" + factureId + "/edit",
+  });
 }
 
 function getRuntimePageTypeLabel(type: string): string {
