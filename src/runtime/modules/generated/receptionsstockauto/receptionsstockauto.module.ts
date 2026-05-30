@@ -7,7 +7,9 @@ export const receptionsstockautoModule: ERPModule = {
     description: "Receptions fournisseurs et entrees stock AMARKHYS",
     icon: "inbox",
     category: "amarkhys",
-    features: {
+    
+
+  features: {
       dashboard: true,
       analytics: true,
       workflows: true,
@@ -18,6 +20,17 @@ export const receptionsstockautoModule: ERPModule = {
       realtime: true,
     },
   },
+
+  actions: [
+    {
+      key: "valider-reception",
+      label: "Valider reception",
+      type: "primary",
+      runtimeOnly: true,
+    },
+  ],
+
+
 
   schema: {
     collection: "receptionsstockauto",

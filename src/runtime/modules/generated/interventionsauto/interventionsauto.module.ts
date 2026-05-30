@@ -24,6 +24,8 @@ export const interventionsautoModule: ERPModule = {
     },
   },
 
+
+
   schema: {
     collection: "interventionsauto",
 

@@ -3,6 +3,12 @@ import type {
 } from "@/runtime/modules/ERPModule";
 
 export const interventionsautoActions: ERPModuleAction[] = [
+{
+    key: "demarrer-intervention",
+    label: "Demarrer intervention",
+    type: "primary",
+    runtimeOnly: true,
+  },
   {
     key: "Démarrer",
     label: "Démarrer l'intervention",

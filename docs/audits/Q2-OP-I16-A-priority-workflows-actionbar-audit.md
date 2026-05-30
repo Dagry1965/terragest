@@ -4,9 +4,9 @@ Objectif : vérifier que les workflows/actions métier prioritaires peuvent êtr
 
 ## Résumé
 
-- OK : 86
+- OK : 94
 - INFO : 0
-- WARN : 11
+- WARN : 3
 - WARN HIGH : 0
 - FAIL : 0
 - FAIL HIGH : 0
@@ -49,22 +49,22 @@ Objectif : vérifier que les workflows/actions métier prioritaires peuvent êtr
 | actionbar-capability | OK | HIGH | `src/components/erp/runtime/ERPRuntimeActionBar.tsx` | 95 | action.onClick present |
 | actionbar-capability | OK | HIGH | `src/components/erp/runtime/ERPRuntimeActionBar.tsx` | 19, 37, 57, 78, 81, 93, 93 | disabled present |
 | module-file | OK | HIGH | `src/runtime/modules/generated/rendezvous/rendezvous.module.ts` |  | rendezvous module definition found |
-| module-actions | OK | HIGH | `src/runtime/modules/generated/rendezvous/rendezvous.module.ts` | 5, 228 | rendezvous actions declaration found |
-| module-workflow | OK | MEDIUM | `src/runtime/modules/generated/rendezvous/rendezvous.module.ts` | 26, 458 | rendezvous workflow/states/transitions markers found |
+| module-actions | OK | HIGH | `src/runtime/modules/generated/rendezvous/rendezvous.module.ts` | 5, 230 | rendezvous actions declaration found |
+| module-workflow | OK | MEDIUM | `src/runtime/modules/generated/rendezvous/rendezvous.module.ts` | 26, 460, 500, 506, 512, 518 | rendezvous workflow/states/transitions markers found |
 | module-expected-action | OK | MEDIUM | `src/runtime/modules/generated/rendezvous/rendezvous.module.ts` |  | rendezvous expected action marker "confirmer" found |
 | module-expected-action | OK | MEDIUM | `src/runtime/modules/generated/rendezvous/rendezvous.module.ts` |  | rendezvous expected action marker "annuler" found |
-| module-expected-action | WARN | MEDIUM | `src/runtime/modules/generated/rendezvous/rendezvous.module.ts` |  | rendezvous expected action marker "reporter" not found |
-| module-expected-action | OK | MEDIUM | `src/runtime/modules/generated/rendezvous/rendezvous.module.ts` | 118, 398, 421, 422, 430, 431 | rendezvous expected action marker "intervention" found |
+| module-expected-action | OK | MEDIUM | `src/runtime/modules/generated/rendezvous/rendezvous.module.ts` | 491 | rendezvous expected action marker "reporter" found |
+| module-expected-action | OK | MEDIUM | `src/runtime/modules/generated/rendezvous/rendezvous.module.ts` | 120, 400, 423, 424, 432, 433 | rendezvous expected action marker "intervention" found |
 | business-effect-marker | OK | MEDIUM | `src/runtime/modules/generated/rendezvous/rendezvous.module.ts` |  | rendezvous expected effect marker "confirme" found in module/rules/action engine |
 | business-effect-marker | OK | MEDIUM | `src/runtime/modules/generated/rendezvous/rendezvous.module.ts` |  | rendezvous expected effect marker "intervention" found in module/rules/action engine |
 | business-effect-marker | OK | MEDIUM | `src/runtime/modules/generated/rendezvous/rendezvous.module.ts` |  | rendezvous expected effect marker "consumedByInterventionId" found in module/rules/action engine |
 | business-effect-marker | OK | MEDIUM | `src/runtime/modules/generated/rendezvous/rendezvous.module.ts` |  | rendezvous expected effect marker "planning" found in module/rules/action engine |
 | module-file | OK | HIGH | `src/runtime/modules/generated/interventionsauto/interventionsauto.module.ts` |  | interventionsauto module definition found |
-| module-actions | OK | HIGH | `src/runtime/modules/generated/interventionsauto/interventionsauto.module.ts` | 5, 618 | interventionsauto actions declaration found |
-| module-workflow | OK | MEDIUM | `src/runtime/modules/generated/interventionsauto/interventionsauto.module.ts` | 18, 620 | interventionsauto workflow/states/transitions markers found |
-| module-expected-action | WARN | MEDIUM | `src/runtime/modules/generated/interventionsauto/interventionsauto.module.ts` |  | interventionsauto expected action marker "demarrer" not found |
+| module-actions | OK | HIGH | `src/runtime/modules/generated/interventionsauto/interventionsauto.module.ts` | 5, 620 | interventionsauto actions declaration found |
+| module-workflow | OK | MEDIUM | `src/runtime/modules/generated/interventionsauto/interventionsauto.module.ts` | 18, 622, 662, 668, 674, 680, 686 | interventionsauto workflow/states/transitions markers found |
+| module-expected-action | OK | MEDIUM | `src/runtime/modules/generated/interventionsauto/interventionsauto.module.ts` | 653 | interventionsauto expected action marker "demarrer" found |
 | module-expected-action | OK | MEDIUM | `src/runtime/modules/generated/interventionsauto/interventionsauto.module.ts` |  | interventionsauto expected action marker "terminer" found |
-| module-expected-action | OK | MEDIUM | `src/runtime/modules/generated/interventionsauto/interventionsauto.module.ts` | 135, 288, 584, 585, 588, 589, 631, 639 | interventionsauto expected action marker "facture" found |
+| module-expected-action | OK | MEDIUM | `src/runtime/modules/generated/interventionsauto/interventionsauto.module.ts` | 137, 290, 586, 587, 590, 591, 633, 641, 678 | interventionsauto expected action marker "facture" found |
 | module-expected-action | OK | MEDIUM | `src/runtime/modules/generated/interventionsauto/interventionsauto.module.ts` |  | interventionsauto expected action marker "annuler" found |
 | business-effect-marker | OK | MEDIUM | `src/runtime/modules/generated/interventionsauto/interventionsauto.module.ts` |  | interventionsauto expected effect marker "terminee" found in module/rules/action engine |
 | business-effect-marker | OK | MEDIUM | `src/runtime/modules/generated/interventionsauto/interventionsauto.module.ts` |  | interventionsauto expected effect marker "facture" found in module/rules/action engine |
@@ -81,18 +81,18 @@ Objectif : vérifier que les workflows/actions métier prioritaires peuvent êtr
 | business-effect-marker | WARN | MEDIUM | `src/runtime/modules/generated/lignesinterventionauto/lignesinterventionauto.module.ts` |  | lignesinterventionauto expected effect marker "totaux" not found in module/rules/action engine |
 | module-file | OK | HIGH | `src/runtime/modules/generated/facturesauto/facturesauto.module.ts` |  | facturesauto module definition found |
 | module-actions | OK | HIGH | `src/runtime/modules/generated/facturesauto/facturesauto.module.ts` | 5, 621 | facturesauto actions declaration found |
-| module-workflow | OK | MEDIUM | `src/runtime/modules/generated/facturesauto/facturesauto.module.ts` | 17, 623 | facturesauto workflow/states/transitions markers found |
+| module-workflow | OK | MEDIUM | `src/runtime/modules/generated/facturesauto/facturesauto.module.ts` | 17, 623, 670, 676, 682, 688, 694, 700 | facturesauto workflow/states/transitions markers found |
 | module-expected-action | WARN | MEDIUM | `src/runtime/modules/generated/facturesauto/facturesauto.module.ts` |  | facturesauto expected action marker "envoyer" not found |
-| module-expected-action | OK | MEDIUM | `src/runtime/modules/generated/facturesauto/facturesauto.module.ts` | 63, 151, 393, 587, 589, 590 | facturesauto expected action marker "paiement" found |
+| module-expected-action | OK | MEDIUM | `src/runtime/modules/generated/facturesauto/facturesauto.module.ts` | 63, 151, 393, 587, 589, 590, 679, 680 | facturesauto expected action marker "paiement" found |
 | module-expected-action | OK | MEDIUM | `src/runtime/modules/generated/facturesauto/facturesauto.module.ts` | 553, 554, 562, 563 | facturesauto expected action marker "encaissement" found |
-| module-expected-action | WARN | MEDIUM | `src/runtime/modules/generated/facturesauto/facturesauto.module.ts` |  | facturesauto expected action marker "annuler" not found |
+| module-expected-action | OK | MEDIUM | `src/runtime/modules/generated/facturesauto/facturesauto.module.ts` |  | facturesauto expected action marker "annuler" found |
 | business-effect-marker | OK | MEDIUM | `src/runtime/modules/generated/facturesauto/facturesauto.module.ts` |  | facturesauto expected effect marker "encaissementsauto" found in module/rules/action engine |
 | business-effect-marker | OK | MEDIUM | `src/runtime/modules/generated/facturesauto/facturesauto.module.ts` |  | facturesauto expected effect marker "resteAPayer" found in module/rules/action engine |
 | business-effect-marker | OK | MEDIUM | `src/runtime/modules/generated/facturesauto/facturesauto.module.ts` |  | facturesauto expected effect marker "montantPaye" found in module/rules/action engine |
 | business-effect-marker | OK | MEDIUM | `src/runtime/modules/generated/facturesauto/facturesauto.module.ts` |  | facturesauto expected effect marker "statutFacture" found in module/rules/action engine |
 | module-file | OK | HIGH | `src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts` |  | encaissementsauto module definition found |
 | module-actions | OK | HIGH | `src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts` | 5, 338 | encaissementsauto actions declaration found |
-| module-workflow | OK | MEDIUM | `src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts` | 19, 340 | encaissementsauto workflow/states/transitions markers found |
+| module-workflow | OK | MEDIUM | `src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts` | 19, 340, 399, 405, 411 | encaissementsauto workflow/states/transitions markers found |
 | module-expected-action | OK | MEDIUM | `src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts` |  | encaissementsauto expected action marker "valider" found |
 | module-expected-action | OK | MEDIUM | `src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts` |  | encaissementsauto expected action marker "annuler" found |
 | business-effect-marker | OK | MEDIUM | `src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts` |  | encaissementsauto expected effect marker "factureId" found in module/rules/action engine |
@@ -100,18 +100,18 @@ Objectif : vérifier que les workflows/actions métier prioritaires peuvent êtr
 | business-effect-marker | OK | MEDIUM | `src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts` |  | encaissementsauto expected effect marker "resteAPayer" found in module/rules/action engine |
 | business-effect-marker | WARN | MEDIUM | `src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts` |  | encaissementsauto expected effect marker "historique" not found in module/rules/action engine |
 | module-file | OK | HIGH | `src/runtime/modules/generated/commandesstockauto/commandesstockauto.module.ts` |  | commandesstockauto module definition found |
-| module-actions | WARN | MEDIUM | `src/runtime/modules/generated/commandesstockauto/commandesstockauto.module.ts` |  | commandesstockauto actions declaration not clearly found |
-| module-workflow | OK | MEDIUM | `src/runtime/modules/generated/commandesstockauto/commandesstockauto.module.ts` | 13 | commandesstockauto workflow/states/transitions markers found |
-| module-expected-action | WARN | MEDIUM | `src/runtime/modules/generated/commandesstockauto/commandesstockauto.module.ts` |  | commandesstockauto expected action marker "envoyer" not found |
-| module-expected-action | OK | MEDIUM | `src/runtime/modules/generated/commandesstockauto/commandesstockauto.module.ts` | 137, 162, 163 | commandesstockauto expected action marker "reception" found |
-| module-expected-action | WARN | MEDIUM | `src/runtime/modules/generated/commandesstockauto/commandesstockauto.module.ts` |  | commandesstockauto expected action marker "annuler" not found |
+| module-actions | OK | HIGH | `src/runtime/modules/generated/commandesstockauto/commandesstockauto.module.ts` | 24 | commandesstockauto actions declaration found |
+| module-workflow | OK | MEDIUM | `src/runtime/modules/generated/commandesstockauto/commandesstockauto.module.ts` | 15 | commandesstockauto workflow/states/transitions markers found |
+| module-expected-action | OK | MEDIUM | `src/runtime/modules/generated/commandesstockauto/commandesstockauto.module.ts` | 26 | commandesstockauto expected action marker "envoyer" found |
+| module-expected-action | OK | MEDIUM | `src/runtime/modules/generated/commandesstockauto/commandesstockauto.module.ts` | 156, 181, 182 | commandesstockauto expected action marker "reception" found |
+| module-expected-action | OK | MEDIUM | `src/runtime/modules/generated/commandesstockauto/commandesstockauto.module.ts` | 32 | commandesstockauto expected action marker "annuler" found |
 | business-effect-marker | OK | MEDIUM | `src/runtime/modules/generated/commandesstockauto/commandesstockauto.module.ts` |  | commandesstockauto expected effect marker "lignescommandestockauto" found in module/rules/action engine |
 | business-effect-marker | OK | MEDIUM | `src/runtime/modules/generated/commandesstockauto/commandesstockauto.module.ts` |  | commandesstockauto expected effect marker "receptionsstockauto" found in module/rules/action engine |
 | business-effect-marker | OK | MEDIUM | `src/runtime/modules/generated/commandesstockauto/commandesstockauto.module.ts` |  | commandesstockauto expected effect marker "fournisseurId" found in module/rules/action engine |
 | module-file | OK | HIGH | `src/runtime/modules/generated/receptionsstockauto/receptionsstockauto.module.ts` |  | receptionsstockauto module definition found |
-| module-actions | WARN | MEDIUM | `src/runtime/modules/generated/receptionsstockauto/receptionsstockauto.module.ts` |  | receptionsstockauto actions declaration not clearly found |
-| module-workflow | OK | MEDIUM | `src/runtime/modules/generated/receptionsstockauto/receptionsstockauto.module.ts` | 13 | receptionsstockauto workflow/states/transitions markers found |
-| module-expected-action | WARN | MEDIUM | `src/runtime/modules/generated/receptionsstockauto/receptionsstockauto.module.ts` |  | receptionsstockauto expected action marker "valider" not found |
+| module-actions | OK | HIGH | `src/runtime/modules/generated/receptionsstockauto/receptionsstockauto.module.ts` | 24 | receptionsstockauto actions declaration found |
+| module-workflow | OK | MEDIUM | `src/runtime/modules/generated/receptionsstockauto/receptionsstockauto.module.ts` | 15 | receptionsstockauto workflow/states/transitions markers found |
+| module-expected-action | OK | MEDIUM | `src/runtime/modules/generated/receptionsstockauto/receptionsstockauto.module.ts` | 26 | receptionsstockauto expected action marker "valider" found |
 | business-effect-marker | OK | MEDIUM | `src/runtime/modules/generated/receptionsstockauto/receptionsstockauto.module.ts` |  | receptionsstockauto expected effect marker "mouvementsstockauto" found in module/rules/action engine |
 | business-effect-marker | OK | MEDIUM | `src/runtime/modules/generated/receptionsstockauto/receptionsstockauto.module.ts` |  | receptionsstockauto expected effect marker "stock" found in module/rules/action engine |
 | business-effect-marker | OK | MEDIUM | `src/runtime/modules/generated/receptionsstockauto/receptionsstockauto.module.ts` |  | receptionsstockauto expected effect marker "mouvementStockId" found in module/rules/action engine |
@@ -541,26 +541,26 @@ Objectif : vérifier que les workflows/actions métier prioritaires peuvent êtr
    15:       required: true,
 ```
 
-### src/runtime/modules/generated/rendezvous/rendezvous.module.ts :: actions :: line 228
+### src/runtime/modules/generated/rendezvous/rendezvous.module.ts :: actions :: line 230
 
 ```tsx
-  222:           },
-  223:         ],
-  224:       },
-  225:     ],
-  226:   },
-  227: 
-  228:   actions: rendezvousActions,
+  224:           },
+  225:         ],
+  226:       },
+  227:     ],
+  228:   },
   229: 
-  230:   operational: {
-  231:     enabled: true,
-  232:     title: "Rendez-vous",
-  233:     subtitle: "Vue opérationnelle des rendez-vous atelier.",
-  234:     branding: {
-  235:       brandName: "AMARKHYS",
-  236:       runtimeLabel: "Runtime ERP",
-  237:       eyebrow: "AMARKHYS · Runtime ERP",
-  238:     },
+  230:   actions: rendezvousActions,
+  231: 
+  232:   operational: {
+  233:     enabled: true,
+  234:     title: "Rendez-vous",
+  235:     subtitle: "Vue opérationnelle des rendez-vous atelier.",
+  236:     branding: {
+  237:       brandName: "AMARKHYS",
+  238:       runtimeLabel: "Runtime ERP",
+  239:       eyebrow: "AMARKHYS · Runtime ERP",
+  240:     },
 ```
 
 ### src/runtime/modules/generated/rendezvous/rendezvous.module.ts :: workflow :: line 26
@@ -581,74 +581,96 @@ Objectif : vérifier que les workflows/actions métier prioritaires peuvent êtr
    32:     },
    33:   },
    34: 
-   35:   schema: {
-   36:     collection: "rendezvous",
+   35: 
+   36: 
 ```
 
-### src/runtime/modules/generated/rendezvous/rendezvous.module.ts :: workflow :: line 458
+### src/runtime/modules/generated/rendezvous/rendezvous.module.ts :: workflow :: line 460
 
 ```tsx
-  452:         ],
-  453:       },
-  454:     ],
-  455:   },
-  456: 
-  457: 
-  458:   workflows: [
-  459:     {
-  460:       key: "rendezvous",
-  461:       label: "Cycle rendez-vous",
-  462:       initialState: "planifie",
-  463: 
-  464:       states: [
-  465:         { key: "planifie", label: "Planifié", color: "default" },
-  466:         { key: "confirme", label: "Confirmé", color: "success" },
-  467:         { key: "en_cours", label: "En cours", color: "warning" },
-  468:         { key: "termine", label: "Terminé", color: "success" },
+  454:         ],
+  455:       },
+  456:     ],
+  457:   },
+  458: 
+  459: 
+  460:   workflows: [
+  461:     {
+  462:       key: "rendezvous",
+  463:       label: "Cycle rendez-vous",
+  464:       initialState: "planifie",
+  465: 
+  466:       states: [
+  467:         { key: "planifie", label: "Planifié", color: "default" },
+  468:         { key: "confirme", label: "Confirmé", color: "success" },
+  469:         { key: "en_cours", label: "En cours", color: "warning" },
+  470:         { key: "termine", label: "Terminé", color: "success" },
 ```
 
-### src/runtime/modules/generated/rendezvous/rendezvous.module.ts :: intervention :: line 118
+### src/runtime/modules/generated/rendezvous/rendezvous.module.ts :: reporter :: line 491
 
 ```tsx
-  112:         grid: { cols: 4 },
-  113:       },
-  114: {
-  115:         key: "consumedByInterventionId",
-  116:         label: "Intervention liée",
-  117:         type: "relation",
-  118:         relation: { module: "interventionsauto" },
-  119:         searchable: true,
-  120:         list: { visible: false },
-  121:         grid: { cols: 4 },
-  122:       },
-  123: {
-  124:         key: "typeService",
-  125:         label: "Type service",
-  126:       required: true,
-  127:         type: "select",
-  128:         options: [
+  485: import type {
+  486:   ERPModuleAction,
+  487: } from "@/runtime/modules/ERPModule";
+  488: 
+  489: export const rendezvousActions: ERPModuleAction[] = [
+  490: {
+  491:     key: "reporter-rdv",
+  492:     label: "Reporter RDV",
+  493:     type: "secondary",
+  494:     runtimeOnly: true,
+  495:   },
+  496:   {
+  497:     key: "Confirmer",
+  498:     label: "Confirmer le RDV",
+  499:     type: "primary",
+  500:     permission: "rendezvous.workflow",
+  501:   },
 ```
 
-### src/runtime/modules/generated/rendezvous/rendezvous.module.ts :: intervention :: line 398
+### src/runtime/modules/generated/rendezvous/rendezvous.module.ts :: intervention :: line 120
 
 ```tsx
-  392:       // Exemple générique désactivé : à remplacer plus tard par une configuration tenant/workspace.
-  393:       // { date: "2026-01-01", isClosed: true, reason: "Jour fermé" },
-  394:     ],
-  395:   },
-  396:   composition: {
-  397:     // Q21E_D_APPOINTMENT_RELATIONSHIP_COMPOSITION
-  398:     // Rendez-vous knows its client, vehicle and generated intervention.
-  399:     labelFields: ["clientId", "vehiculeId", "dateRendezVous", "heureRendezVous", "typeService", "statut"],
-  400: 
-  401:     contextBanner: {
-  402:       title: "Contexte rendez-vous",
-  403:       items: [
-  404:         {
-  405:           relationField: "clientId",
-  406:           moduleKey: "clientsauto",
-  407:           labelFields: ["prenom", "nom", "telephone"],
-  408:           tone: "client",
+  114:         grid: { cols: 4 },
+  115:       },
+  116: {
+  117:         key: "consumedByInterventionId",
+  118:         label: "Intervention liée",
+  119:         type: "relation",
+  120:         relation: { module: "interventionsauto" },
+  121:         searchable: true,
+  122:         list: { visible: false },
+  123:         grid: { cols: 4 },
+  124:       },
+  125: {
+  126:         key: "typeService",
+  127:         label: "Type service",
+  128:       required: true,
+  129:         type: "select",
+  130:         options: [
+```
+
+### src/runtime/modules/generated/rendezvous/rendezvous.module.ts :: intervention :: line 400
+
+```tsx
+  394:       // Exemple générique désactivé : à remplacer plus tard par une configuration tenant/workspace.
+  395:       // { date: "2026-01-01", isClosed: true, reason: "Jour fermé" },
+  396:     ],
+  397:   },
+  398:   composition: {
+  399:     // Q21E_D_APPOINTMENT_RELATIONSHIP_COMPOSITION
+  400:     // Rendez-vous knows its client, vehicle and generated intervention.
+  401:     labelFields: ["clientId", "vehiculeId", "dateRendezVous", "heureRendezVous", "typeService", "statut"],
+  402: 
+  403:     contextBanner: {
+  404:       title: "Contexte rendez-vous",
+  405:       items: [
+  406:         {
+  407:           relationField: "clientId",
+  408:           moduleKey: "clientsauto",
+  409:           labelFields: ["prenom", "nom", "telephone"],
+  410:           tone: "client",
 ```
 
 ### src/runtime/modules/generated/interventionsauto/interventionsauto.module.ts :: actions :: line 5
@@ -671,26 +693,26 @@ Objectif : vérifier que les workflows/actions métier prioritaires peuvent êtr
    15:     features: {
 ```
 
-### src/runtime/modules/generated/interventionsauto/interventionsauto.module.ts :: actions :: line 618
+### src/runtime/modules/generated/interventionsauto/interventionsauto.module.ts :: actions :: line 620
 
 ```tsx
-  612:             labelFields: ["marque", "modele", "immatriculation"],
-  613:           },
-  614:         ],
-  615:       }],
-  616:   },
-  617: 
-  618:   actions: interventionsautoActions,
+  614:             labelFields: ["marque", "modele", "immatriculation"],
+  615:           },
+  616:         ],
+  617:       }],
+  618:   },
   619: 
-  620:   workflows: [
-  621:     {
-  622:       key: "intervention",
-  623:       label: "Cycle intervention",
-  624:       initialState: "ouverte",
-  625: 
-  626:       states: [
-  627:         { key: "ouverte", label: "Ouverte", color: "default" },
-  628:         { key: "diagnostic", label: "Diagnostic", color: "warning" },
+  620:   actions: interventionsautoActions,
+  621: 
+  622:   workflows: [
+  623:     {
+  624:       key: "intervention",
+  625:       label: "Cycle intervention",
+  626:       initialState: "ouverte",
+  627: 
+  628:       states: [
+  629:         { key: "ouverte", label: "Ouverte", color: "default" },
+  630:         { key: "diagnostic", label: "Diagnostic", color: "warning" },
 ```
 
 ### src/runtime/modules/generated/interventionsauto/interventionsauto.module.ts :: workflow :: line 18
@@ -711,74 +733,96 @@ Objectif : vérifier que les workflows/actions métier prioritaires peuvent êtr
    24:     },
    25:   },
    26: 
-   27:   schema: {
-   28:     collection: "interventionsauto",
+   27: 
+   28: 
 ```
 
-### src/runtime/modules/generated/interventionsauto/interventionsauto.module.ts :: workflow :: line 620
+### src/runtime/modules/generated/interventionsauto/interventionsauto.module.ts :: workflow :: line 622
 
 ```tsx
-  614:         ],
-  615:       }],
-  616:   },
-  617: 
-  618:   actions: interventionsautoActions,
+  616:         ],
+  617:       }],
+  618:   },
   619: 
-  620:   workflows: [
-  621:     {
-  622:       key: "intervention",
-  623:       label: "Cycle intervention",
-  624:       initialState: "ouverte",
-  625: 
-  626:       states: [
-  627:         { key: "ouverte", label: "Ouverte", color: "default" },
-  628:         { key: "diagnostic", label: "Diagnostic", color: "warning" },
-  629:         { key: "en_cours", label: "En cours", color: "warning" },
-  630:         { key: "terminee", label: "Terminée", color: "success" },
+  620:   actions: interventionsautoActions,
+  621: 
+  622:   workflows: [
+  623:     {
+  624:       key: "intervention",
+  625:       label: "Cycle intervention",
+  626:       initialState: "ouverte",
+  627: 
+  628:       states: [
+  629:         { key: "ouverte", label: "Ouverte", color: "default" },
+  630:         { key: "diagnostic", label: "Diagnostic", color: "warning" },
+  631:         { key: "en_cours", label: "En cours", color: "warning" },
+  632:         { key: "terminee", label: "Terminée", color: "success" },
 ```
 
-### src/runtime/modules/generated/interventionsauto/interventionsauto.module.ts :: facture :: line 135
+### src/runtime/modules/generated/interventionsauto/interventionsauto.module.ts :: demarrer :: line 653
 
 ```tsx
-  129:         defaultValue: "ouverte",
-  130:         options: [
-  131:           { label: "Ouverte", value: "ouverte" },
-  132:           { label: "Diagnostic", value: "diagnostic" },
-  133:           { label: "En cours", value: "en_cours" },
-  134:           { label: "Terminée", value: "terminee" },
-  135:           { label: "Facturée", value: "facturee" },
-  136:           { label: "Annulée", value: "annulee" },
-  137:         ],
-  138:         list: { visible: true, order: 5 },
-  139:         grid: { cols: 6 },
-  140:       }
-  141:     ],
-  142:   },
-  143: 
-  144:   form: {
-  145:     layout: "tabs",
+  647: import type {
+  648:   ERPModuleAction,
+  649: } from "@/runtime/modules/ERPModule";
+  650: 
+  651: export const interventionsautoActions: ERPModuleAction[] = [
+  652: {
+  653:     key: "demarrer-intervention",
+  654:     label: "Demarrer intervention",
+  655:     type: "primary",
+  656:     runtimeOnly: true,
+  657:   },
+  658:   {
+  659:     key: "Démarrer",
+  660:     label: "Démarrer l'intervention",
+  661:     type: "primary",
+  662:     permission: "interventionsauto.workflow",
+  663:   },
 ```
 
-### src/runtime/modules/generated/interventionsauto/interventionsauto.module.ts :: facture :: line 288
+### src/runtime/modules/generated/interventionsauto/interventionsauto.module.ts :: facture :: line 137
 
 ```tsx
-  282:         type: "select",
-  283:         options: [
-  284:           { label: "Ouverte", value: "ouverte" },
-  285:           { label: "Diagnostic", value: "diagnostic" },
-  286:           { label: "En cours", value: "en_cours" },
-  287:           { label: "Terminée", value: "terminee" },
-  288:           { label: "Facturée", value: "facturee" },
-  289:           { label: "Annulée", value: "annulee" },
-  290:         ],
-  291:       },
-  292:       {
-  293:         key: "typeIntervention",
-  294:         label: "Type intervention",
-  295:         field: "typeIntervention",
-  296:         type: "select",
-  297:         options: [
-  298:           { label: "Vidange", value: "vidange" },
+  131:         defaultValue: "ouverte",
+  132:         options: [
+  133:           { label: "Ouverte", value: "ouverte" },
+  134:           { label: "Diagnostic", value: "diagnostic" },
+  135:           { label: "En cours", value: "en_cours" },
+  136:           { label: "Terminée", value: "terminee" },
+  137:           { label: "Facturée", value: "facturee" },
+  138:           { label: "Annulée", value: "annulee" },
+  139:         ],
+  140:         list: { visible: true, order: 5 },
+  141:         grid: { cols: 6 },
+  142:       }
+  143:     ],
+  144:   },
+  145: 
+  146:   form: {
+  147:     layout: "tabs",
+```
+
+### src/runtime/modules/generated/interventionsauto/interventionsauto.module.ts :: facture :: line 290
+
+```tsx
+  284:         type: "select",
+  285:         options: [
+  286:           { label: "Ouverte", value: "ouverte" },
+  287:           { label: "Diagnostic", value: "diagnostic" },
+  288:           { label: "En cours", value: "en_cours" },
+  289:           { label: "Terminée", value: "terminee" },
+  290:           { label: "Facturée", value: "facturee" },
+  291:           { label: "Annulée", value: "annulee" },
+  292:         ],
+  293:       },
+  294:       {
+  295:         key: "typeIntervention",
+  296:         label: "Type intervention",
+  297:         field: "typeIntervention",
+  298:         type: "select",
+  299:         options: [
+  300:           { label: "Vidange", value: "vidange" },
 ```
 
 ### src/runtime/modules/generated/lignesinterventionauto/lignesinterventionauto.module.ts :: actions :: line 186
@@ -1151,92 +1195,202 @@ Objectif : vérifier que les workflows/actions métier prioritaires peuvent êtr
   350:           color: "warning",
 ```
 
-### src/runtime/modules/generated/commandesstockauto/commandesstockauto.module.ts :: workflow :: line 13
+### src/runtime/modules/generated/commandesstockauto/commandesstockauto.module.ts :: actions :: line 24
 
 ```tsx
-    7:     description: "Commandes fournisseurs pour pieces et consommables AMARKHYS",
-    8:     icon: "shopping-cart",
+   18:       observability: true,
+   19:       audit: true,
+   20:       realtime: true,
+   21:     },
+   22:   },
+   23: 
+   24:   actions: [
+   25:     {
+   26:       key: "envoyer-commande",
+   27:       label: "Envoyer commande",
+   28:       type: "primary",
+   29:       runtimeOnly: true,
+   30:     },
+   31:     {
+   32:       key: "annuler-commande",
+   33:       label: "Annuler commande",
+   34:       type: "danger",
+```
+
+### src/runtime/modules/generated/commandesstockauto/commandesstockauto.module.ts :: workflow :: line 15
+
+```tsx
     9:     category: "amarkhys",
-   10:     features: {
-   11:       dashboard: true,
-   12:       analytics: true,
-   13:       workflows: true,
-   14:       automation: true,
-   15:       notifications: true,
-   16:       observability: true,
-   17:       audit: true,
-   18:       realtime: true,
-   19:     },
-   20:   },
-   21: 
-   22:   schema: {
-   23:     collection: "commandesstockauto",
+   10:     
+   11: 
+   12:   features: {
+   13:       dashboard: true,
+   14:       analytics: true,
+   15:       workflows: true,
+   16:       automation: true,
+   17:       notifications: true,
+   18:       observability: true,
+   19:       audit: true,
+   20:       realtime: true,
+   21:     },
+   22:   },
+   23: 
+   24:   actions: [
+   25:     {
 ```
 
-### src/runtime/modules/generated/commandesstockauto/commandesstockauto.module.ts :: reception :: line 137
+### src/runtime/modules/generated/commandesstockauto/commandesstockauto.module.ts :: envoyer :: line 26
 
 ```tsx
-  131:       },
-  132:     ],
-  133:   },
-  134: 
-  135:   composition: {
-  136:     // Q21E_B_STOCK_ORDER_RELATIONSHIP_COMPOSITION
-  137:     // Commande stock knows its lines and receptions.
-  138:     labelFields: ["numeroCommande", "fournisseurId", "statut"],
-  139: 
-  140:     children: [
-  141:       {
-  142:         key: "lignes-commandestock",
-  143:         moduleKey: "lignescommandestockauto",
-  144:         foreignKey: "commandeId",
-  145:         title: "Lignes de commande",
-  146:         displayIn: ["detail", "edit"],
-  147:         lazy: true,
+   20:       realtime: true,
+   21:     },
+   22:   },
+   23: 
+   24:   actions: [
+   25:     {
+   26:       key: "envoyer-commande",
+   27:       label: "Envoyer commande",
+   28:       type: "primary",
+   29:       runtimeOnly: true,
+   30:     },
+   31:     {
+   32:       key: "annuler-commande",
+   33:       label: "Annuler commande",
+   34:       type: "danger",
+   35:       runtimeOnly: true,
+   36:     },
 ```
 
-### src/runtime/modules/generated/commandesstockauto/commandesstockauto.module.ts :: reception :: line 162
+### src/runtime/modules/generated/commandesstockauto/commandesstockauto.module.ts :: reception :: line 156
 
 ```tsx
-  156:             moduleKey: "produitsauto",
-  157:             labelFields: ["reference", "nom", "designation", "marque"],
-  158:           },
-  159:         ],
-  160:       },
-  161:       {
-  162:         key: "receptions-stock",
-  163:         moduleKey: "receptionsstockauto",
-  164:         foreignKey: "commandeId",
-  165:         title: "Réceptions",
-  166:         displayIn: ["detail", "edit"],
-  167:         lazy: true,
-  168:         position: "after",
-  169:         allowCreate: true,
-  170:         labelFields: ["ligneCommandeId", "produitId", "quantiteRecue", "dateReception", "statut"],
-  171:         subtitleFields: ["stockId", "mouvementStockId"],
-  172:         relations: [
+  150:       },
+  151:     ],
+  152:   },
+  153: 
+  154:   composition: {
+  155:     // Q21E_B_STOCK_ORDER_RELATIONSHIP_COMPOSITION
+  156:     // Commande stock knows its lines and receptions.
+  157:     labelFields: ["numeroCommande", "fournisseurId", "statut"],
+  158: 
+  159:     children: [
+  160:       {
+  161:         key: "lignes-commandestock",
+  162:         moduleKey: "lignescommandestockauto",
+  163:         foreignKey: "commandeId",
+  164:         title: "Lignes de commande",
+  165:         displayIn: ["detail", "edit"],
+  166:         lazy: true,
 ```
 
-### src/runtime/modules/generated/receptionsstockauto/receptionsstockauto.module.ts :: workflow :: line 13
+### src/runtime/modules/generated/commandesstockauto/commandesstockauto.module.ts :: reception :: line 181
 
 ```tsx
-    7:     description: "Receptions fournisseurs et entrees stock AMARKHYS",
-    8:     icon: "inbox",
+  175:             moduleKey: "produitsauto",
+  176:             labelFields: ["reference", "nom", "designation", "marque"],
+  177:           },
+  178:         ],
+  179:       },
+  180:       {
+  181:         key: "receptions-stock",
+  182:         moduleKey: "receptionsstockauto",
+  183:         foreignKey: "commandeId",
+  184:         title: "Réceptions",
+  185:         displayIn: ["detail", "edit"],
+  186:         lazy: true,
+  187:         position: "after",
+  188:         allowCreate: true,
+  189:         labelFields: ["ligneCommandeId", "produitId", "quantiteRecue", "dateReception", "statut"],
+  190:         subtitleFields: ["stockId", "mouvementStockId"],
+  191:         relations: [
+```
+
+### src/runtime/modules/generated/commandesstockauto/commandesstockauto.module.ts :: annuler :: line 32
+
+```tsx
+   26:       key: "envoyer-commande",
+   27:       label: "Envoyer commande",
+   28:       type: "primary",
+   29:       runtimeOnly: true,
+   30:     },
+   31:     {
+   32:       key: "annuler-commande",
+   33:       label: "Annuler commande",
+   34:       type: "danger",
+   35:       runtimeOnly: true,
+   36:     },
+   37:   ],
+   38: 
+   39: 
+   40: 
+   41:   schema: {
+   42:     collection: "commandesstockauto",
+```
+
+### src/runtime/modules/generated/receptionsstockauto/receptionsstockauto.module.ts :: actions :: line 24
+
+```tsx
+   18:       observability: true,
+   19:       audit: true,
+   20:       realtime: true,
+   21:     },
+   22:   },
+   23: 
+   24:   actions: [
+   25:     {
+   26:       key: "valider-reception",
+   27:       label: "Valider reception",
+   28:       type: "primary",
+   29:       runtimeOnly: true,
+   30:     },
+   31:   ],
+   32: 
+   33: 
+   34: 
+```
+
+### src/runtime/modules/generated/receptionsstockauto/receptionsstockauto.module.ts :: workflow :: line 15
+
+```tsx
     9:     category: "amarkhys",
-   10:     features: {
-   11:       dashboard: true,
-   12:       analytics: true,
-   13:       workflows: true,
-   14:       automation: true,
-   15:       notifications: true,
-   16:       observability: true,
-   17:       audit: true,
-   18:       realtime: true,
-   19:     },
-   20:   },
-   21: 
-   22:   schema: {
-   23:     collection: "receptionsstockauto",
+   10:     
+   11: 
+   12:   features: {
+   13:       dashboard: true,
+   14:       analytics: true,
+   15:       workflows: true,
+   16:       automation: true,
+   17:       notifications: true,
+   18:       observability: true,
+   19:       audit: true,
+   20:       realtime: true,
+   21:     },
+   22:   },
+   23: 
+   24:   actions: [
+   25:     {
+```
+
+### src/runtime/modules/generated/receptionsstockauto/receptionsstockauto.module.ts :: valider :: line 26
+
+```tsx
+   20:       realtime: true,
+   21:     },
+   22:   },
+   23: 
+   24:   actions: [
+   25:     {
+   26:       key: "valider-reception",
+   27:       label: "Valider reception",
+   28:       type: "primary",
+   29:       runtimeOnly: true,
+   30:     },
+   31:   ],
+   32: 
+   33: 
+   34: 
+   35:   schema: {
+   36:     collection: "receptionsstockauto",
 ```
 
 ### src/runtime/actions/RuntimeActionEngine.ts :: getAvailableActions :: line 43

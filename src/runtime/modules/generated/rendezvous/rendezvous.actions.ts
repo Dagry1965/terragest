@@ -3,6 +3,12 @@ import type {
 } from "@/runtime/modules/ERPModule";
 
 export const rendezvousActions: ERPModuleAction[] = [
+{
+    key: "reporter-rdv",
+    label: "Reporter RDV",
+    type: "secondary",
+    runtimeOnly: true,
+  },
   {
     key: "Confirmer",
     label: "Confirmer le RDV",

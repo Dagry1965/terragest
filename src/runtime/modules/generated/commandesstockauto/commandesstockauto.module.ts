@@ -7,7 +7,9 @@ export const commandesstockautoModule: ERPModule = {
     description: "Commandes fournisseurs pour pieces et consommables AMARKHYS",
     icon: "shopping-cart",
     category: "amarkhys",
-    features: {
+    
+
+  features: {
       dashboard: true,
       analytics: true,
       workflows: true,
@@ -18,6 +20,23 @@ export const commandesstockautoModule: ERPModule = {
       realtime: true,
     },
   },
+
+  actions: [
+    {
+      key: "envoyer-commande",
+      label: "Envoyer commande",
+      type: "primary",
+      runtimeOnly: true,
+    },
+    {
+      key: "annuler-commande",
+      label: "Annuler commande",
+      type: "danger",
+      runtimeOnly: true,
+    },
+  ],
+
+
 
   schema: {
     collection: "commandesstockauto",

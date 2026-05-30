@@ -32,6 +32,8 @@ export const rendezvousModule: ERPModule = {
     },
   },
 
+
+
   schema: {
     collection: "rendezvous",
 

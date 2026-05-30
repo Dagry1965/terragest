@@ -293,7 +293,17 @@ for (const mod of priorityModules) {
     continue;
   }
 
-  const source = moduleSource || coreModules;
+  // Q2OP_I16C5_ACTION_FILE_AWARE_AUDIT
+  // Some generated modules delegate their actions to a sibling *.actions.ts file.
+  // The audit must inspect both the module definition and its action file,
+  // otherwise it reports false missing actions for modules using actions: xxxActions.
+  const actionFilePath = `src/runtime/modules/generated/${mod.key}/${mod.key}.actions.ts`;
+  const actionFileSource = read(actionFilePath);
+
+  const source = [moduleSource || coreModules, actionFileSource]
+    .filter(Boolean)
+    .join("\n");
+
   const sourceFile = moduleSource ? modulePath : files.coreModules;
 
   add(
