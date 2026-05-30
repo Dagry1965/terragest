@@ -404,7 +404,7 @@ export function ERPClientOperationalSheet({
 
           <div className="grid gap-8 2xl:grid-cols-[minmax(0,1fr)_460px]">
             <div className="space-y-8">
-              <section className="rounded-[2.25rem] bg-white p-8 shadow-sm ring-1 ring-slate-200">
+              <section className="rounded-[2.25rem] bg-white p-6 shadow-sm ring-1 ring-slate-200 lg:p-8">
                 <div className="flex flex-col gap-6 xl:flex-row xl:items-center">
                   <div className="flex h-28 w-28 items-center justify-center rounded-[2rem] bg-emerald-100 text-4xl font-black text-emerald-800">
                     {clientName.slice(0, 2).toUpperCase()}
@@ -431,7 +431,7 @@ export function ERPClientOperationalSheet({
                 </div>
               </section>
 
-              <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-6">
+              <section className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-5">
                 {[
                   ["Interventions actives", text(rootRecord, ["activeInterventionsCount", "interventionsActives"], "0")],
                   ["Factures impayées", `${text(rootRecord, ["unpaidInvoicesCount", "facturesImpayees"], "0")} impayée(s) · ${money(unpaidAmount)}`],
@@ -441,15 +441,15 @@ export function ERPClientOperationalSheet({
                 ].map(([label, value]) => (
                   <article
                     key={label}
-                    className="rounded-[1.75rem] bg-white px-5 py-5 shadow-sm ring-1 ring-slate-200"
+                    className="min-h-[128px] rounded-[1.75rem] bg-white px-6 py-6 shadow-sm ring-1 ring-slate-200"
                   >
-                    <p className="text-xs font-bold uppercase tracking-wide text-slate-500">{label}</p>
-                    <p className="mt-2 text-2xl font-extrabold leading-tight text-slate-950">{value}</p>
+                    <p className="text-[11px] font-black uppercase tracking-[0.16em] text-slate-500">{label}</p>
+                    <p className="mt-3 text-2xl font-black leading-tight text-slate-950 md:text-3xl">{value}</p>
                   </article>
                 ))}
               </section>
 
-              <section className="rounded-[2.25rem] bg-white p-8 shadow-sm ring-1 ring-slate-200">
+              <section className="rounded-[2.25rem] bg-white p-6 shadow-sm ring-1 ring-slate-200 lg:p-8">
                 <SectionTitle
                   title="🚗 VÉHICULES DU CLIENT"
                   action={
@@ -462,6 +462,10 @@ export function ERPClientOperationalSheet({
                   }
                 />
 
+                <p className="mb-5 text-sm font-medium text-slate-500">
+                  Selectionnez un vehicule pour afficher ses rendez-vous, interventions, lignes, factures et encaissements.
+                </p>
+
                 {vehicles.length === 0 ? (
                   <EmptyCard>Aucun véhicule lié à ce client.</EmptyCard>
                 ) : isCardMode ? (
@@ -472,13 +476,13 @@ export function ERPClientOperationalSheet({
                         type="button"
                         onClick={() => setLocalSelectedVehicleId(recordId(vehicle))}
                         className={[
-                          "rounded-[1.75rem] border p-5 text-left shadow-sm transition",
+                          "cursor-pointer rounded-[1.75rem] border p-5 text-left shadow-sm transition focus:outline-none focus:ring-4 focus:ring-emerald-100",
                           recordId(vehicle) === recordId(selectedVehicle)
                             ? "border-emerald-400 bg-emerald-50"
                             : "border-slate-200 bg-white hover:border-emerald-200",
                         ].join(" ")}
                       >
-                        <div className="mb-5 h-44 rounded-[1.5rem] bg-gradient-to-br from-slate-200 to-slate-100" />
+                        <div className="mb-4 flex h-28 items-center justify-center rounded-[1.5rem] bg-gradient-to-br from-slate-200 to-slate-100 text-xs font-black uppercase tracking-[0.18em] text-slate-500">Vehicule</div>
 
                         <div className="flex items-start justify-between gap-3">
                           <div>
@@ -500,14 +504,14 @@ export function ERPClientOperationalSheet({
                           </span>
                         </div>
 
-                        <div className="mt-5 grid gap-2 text-sm text-slate-600">
+                        <div className="mt-4 grid gap-2 text-sm text-slate-600">
                           <p>🚘 <span className="font-medium text-slate-900">Immatriculation :</span> {text(vehicle, ["immatriculation"])}</p>
                           <p>📅 <span className="font-medium text-slate-900">Année :</span> {text(vehicle, ["annee", "année"])}</p>
                           <p>⛽ <span className="font-medium text-slate-900">Carburant :</span> {text(vehicle, ["carburant"])}</p>
                           <p>🛞 <span className="font-medium text-slate-900">Kilométrage :</span> {text(vehicle, ["kilometrage", "kilométrage"])}</p>
                         </div>
 
-                        <span className="mt-5 inline-flex rounded-full bg-white px-4 py-2 text-sm font-bold text-slate-900 ring-1 ring-slate-200">
+                        <span className="mt-4 inline-flex rounded-full bg-white px-4 py-2 text-sm font-bold text-slate-900 ring-1 ring-slate-200">
                           Voir la fiche véhicule
                         </span>
                       </button>
@@ -603,7 +607,14 @@ export function ERPClientOperationalSheet({
                                 return (
                                   <tr
                                     key={recordId(appointment)}
-                                    className={isSelected ? "bg-emerald-50" : "hover:bg-slate-50"}
+                                    onClick={() => {
+                                      setSelectedRendezvousId(recordId(appointment));
+                                      setSelectedInterventionId(null);
+                                    }}
+                                    className={[
+                                      "cursor-pointer transition",
+                                      isSelected ? "bg-emerald-50" : "hover:bg-slate-50",
+                                    ].join(" ")}
                                   >
                                     <td className="px-4 py-3 font-semibold text-slate-950">
                                       {text(appointment, ["dateRendezVous", "date", "activityDate"])}
