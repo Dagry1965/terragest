@@ -84,7 +84,7 @@ Objectif : vérifier précisément les actions runtime `envoyer-facture` et `ann
    53:     type: "danger",
    54:     runtimeOnly: true,
    55:   }
-   56: ];
+   56: ].filter(Boolean) as ERPModuleAction[];
 ```
 
 ### src/runtime/modules/generated/facturesauto/facturesauto.actions.ts :: Envoyer facture :: line 45
@@ -107,7 +107,7 @@ Objectif : vérifier précisément les actions runtime `envoyer-facture` et `ann
    53:     type: "danger",
    54:     runtimeOnly: true,
    55:   }
-   56: ];
+   56: ].filter(Boolean) as ERPModuleAction[];
 ```
 
 ### src/runtime/modules/generated/facturesauto/facturesauto.actions.ts :: annuler-facture :: line 51
@@ -124,7 +124,7 @@ Objectif : vérifier précisément les actions runtime `envoyer-facture` et `ann
    53:     type: "danger",
    54:     runtimeOnly: true,
    55:   }
-   56: ];
+   56: ].filter(Boolean) as ERPModuleAction[];
 ```
 
 ### src/runtime/modules/generated/facturesauto/facturesauto.actions.ts :: Annuler facture :: line 52
@@ -140,7 +140,7 @@ Objectif : vérifier précisément les actions runtime `envoyer-facture` et `ann
    53:     type: "danger",
    54:     runtimeOnly: true,
    55:   }
-   56: ];
+   56: ].filter(Boolean) as ERPModuleAction[];
 ```
 
 ### src/runtime/modules/generated/facturesauto/facturesauto.actions.ts :: runtimeOnly: true :: line 47
@@ -161,7 +161,7 @@ Objectif : vérifier précisément les actions runtime `envoyer-facture` et `ann
    53:     type: "danger",
    54:     runtimeOnly: true,
    55:   }
-   56: ];
+   56: ].filter(Boolean) as ERPModuleAction[];
 ```
 
 ### src/runtime/modules/generated/facturesauto/facturesauto.actions.ts :: runtimeOnly: true :: line 54
@@ -175,7 +175,7 @@ Objectif : vérifier précisément les actions runtime `envoyer-facture` et `ann
    53:     type: "danger",
    54:     runtimeOnly: true,
    55:   }
-   56: ];
+   56: ].filter(Boolean) as ERPModuleAction[];
 ```
 
 ### src/runtime/modules/generated/facturesauto/facturesauto.module.ts :: brouillon :: line 54

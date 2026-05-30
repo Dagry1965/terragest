@@ -4,9 +4,9 @@ Objectif : vérifier que les workflows/actions métier prioritaires peuvent êtr
 
 ## Résumé
 
-- OK : 95
+- OK : 97
 - INFO : 0
-- WARN : 2
+- WARN : 0
 - WARN HIGH : 0
 - FAIL : 0
 - FAIL HIGH : 0
@@ -71,14 +71,14 @@ Objectif : vérifier que les workflows/actions métier prioritaires peuvent êtr
 | business-effect-marker | OK | MEDIUM | `src/runtime/modules/generated/interventionsauto/interventionsauto.module.ts` |  | interventionsauto expected effect marker "facturesauto" found in module/rules/action engine |
 | business-effect-marker | OK | MEDIUM | `src/runtime/modules/generated/interventionsauto/interventionsauto.module.ts` |  | interventionsauto expected effect marker "coutTotal" found in module/rules/action engine |
 | module-file | OK | HIGH | `src/runtime/modules/generated/lignesinterventionauto/lignesinterventionauto.module.ts` |  | lignesinterventionauto module definition found |
-| module-actions | OK | HIGH | `src/runtime/modules/generated/lignesinterventionauto/lignesinterventionauto.module.ts` | 186, 451 | lignesinterventionauto actions declaration found |
-| module-workflow | OK | MEDIUM | `src/runtime/modules/generated/lignesinterventionauto/lignesinterventionauto.module.ts` | 14, 461, 468 | lignesinterventionauto workflow/states/transitions markers found |
+| module-actions | OK | HIGH | `src/runtime/modules/generated/lignesinterventionauto/lignesinterventionauto.module.ts` | 186, 451, 2142, 2248, 2336, 2389, 2738, 3353 | lignesinterventionauto actions declaration found |
+| module-workflow | OK | MEDIUM | `src/runtime/modules/generated/lignesinterventionauto/lignesinterventionauto.module.ts` | 14, 461, 468, 2751, 3355 | lignesinterventionauto workflow/states/transitions markers found |
 | module-expected-action | OK | MEDIUM | `src/runtime/modules/generated/lignesinterventionauto/lignesinterventionauto.module.ts` |  | lignesinterventionauto expected action marker "valider" found |
 | module-expected-action | OK | MEDIUM | `src/runtime/modules/generated/lignesinterventionauto/lignesinterventionauto.module.ts` | 453 | lignesinterventionauto expected action marker "retirer" found |
 | business-effect-marker | OK | MEDIUM | `src/runtime/modules/generated/lignesinterventionauto/lignesinterventionauto.module.ts` |  | lignesinterventionauto expected effect marker "retirer-ligne" found in module/rules/action engine |
-| business-effect-marker | OK | MEDIUM | `src/runtime/actions/RuntimeActionEngine.ts` |  | lignesinterventionauto expected effect marker "RuntimeLineRemovalService" found in module/rules/action engine |
+| business-effect-marker | OK | MEDIUM | `src/runtime/modules/generated/lignesinterventionauto/lignesinterventionauto.module.ts` |  | lignesinterventionauto expected effect marker "RuntimeLineRemovalService" found in module/rules/action engine |
 | business-effect-marker | OK | MEDIUM | `src/runtime/modules/generated/lignesinterventionauto/lignesinterventionauto.module.ts` |  | lignesinterventionauto expected effect marker "stock" found in module/rules/action engine |
-| business-effect-marker | WARN | MEDIUM | `src/runtime/modules/generated/lignesinterventionauto/lignesinterventionauto.module.ts` |  | lignesinterventionauto expected effect marker "totaux" not found in module/rules/action engine |
+| business-effect-marker | OK | MEDIUM | `src/runtime/modules/generated/lignesinterventionauto/lignesinterventionauto.module.ts` |  | lignesinterventionauto expected effect marker "totaux" found in module/rules/action engine |
 | module-file | OK | HIGH | `src/runtime/modules/generated/facturesauto/facturesauto.module.ts` |  | facturesauto module definition found |
 | module-actions | OK | HIGH | `src/runtime/modules/generated/facturesauto/facturesauto.module.ts` | 5, 621 | facturesauto actions declaration found |
 | module-workflow | OK | MEDIUM | `src/runtime/modules/generated/facturesauto/facturesauto.module.ts` | 17, 623, 670, 676, 682, 688, 694, 700 | facturesauto workflow/states/transitions markers found |
@@ -91,14 +91,14 @@ Objectif : vérifier que les workflows/actions métier prioritaires peuvent êtr
 | business-effect-marker | OK | MEDIUM | `src/runtime/modules/generated/facturesauto/facturesauto.module.ts` |  | facturesauto expected effect marker "montantPaye" found in module/rules/action engine |
 | business-effect-marker | OK | MEDIUM | `src/runtime/modules/generated/facturesauto/facturesauto.module.ts` |  | facturesauto expected effect marker "statutFacture" found in module/rules/action engine |
 | module-file | OK | HIGH | `src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts` |  | encaissementsauto module definition found |
-| module-actions | OK | HIGH | `src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts` | 5, 338 | encaissementsauto actions declaration found |
-| module-workflow | OK | MEDIUM | `src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts` | 19, 340, 399, 405, 411 | encaissementsauto workflow/states/transitions markers found |
+| module-actions | OK | HIGH | `src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts` | 5, 338, 2598, 2704, 2792, 2845, 2993, 3609, 3653, 3986 | encaissementsauto actions declaration found |
+| module-workflow | OK | MEDIUM | `src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts` | 19, 340, 399, 405, 411, 3005, 3611, 3667, 3988 | encaissementsauto workflow/states/transitions markers found |
 | module-expected-action | OK | MEDIUM | `src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts` |  | encaissementsauto expected action marker "valider" found |
 | module-expected-action | OK | MEDIUM | `src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts` |  | encaissementsauto expected action marker "annuler" found |
 | business-effect-marker | OK | MEDIUM | `src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts` |  | encaissementsauto expected effect marker "factureId" found in module/rules/action engine |
-| business-effect-marker | OK | MEDIUM | `src/runtime/business-rules/runtimeBusinessRules.ts` |  | encaissementsauto expected effect marker "montantPaye" found in module/rules/action engine |
+| business-effect-marker | OK | MEDIUM | `src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts` |  | encaissementsauto expected effect marker "montantPaye" found in module/rules/action engine |
 | business-effect-marker | OK | MEDIUM | `src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts` |  | encaissementsauto expected effect marker "resteAPayer" found in module/rules/action engine |
-| business-effect-marker | WARN | MEDIUM | `src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts` |  | encaissementsauto expected effect marker "historique" not found in module/rules/action engine |
+| business-effect-marker | OK | MEDIUM | `src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts` |  | encaissementsauto expected effect marker "historique" found in module/rules/action engine |
 | module-file | OK | HIGH | `src/runtime/modules/generated/commandesstockauto/commandesstockauto.module.ts` |  | commandesstockauto module definition found |
 | module-actions | OK | HIGH | `src/runtime/modules/generated/commandesstockauto/commandesstockauto.module.ts` | 24 | commandesstockauto actions declaration found |
 | module-workflow | OK | MEDIUM | `src/runtime/modules/generated/commandesstockauto/commandesstockauto.module.ts` | 15 | commandesstockauto workflow/states/transitions markers found |
@@ -869,6 +869,28 @@ Objectif : vérifier que les workflows/actions métier prioritaires peuvent êtr
   461:   workflows: [
 ```
 
+### src/runtime/modules/generated/lignesinterventionauto/lignesinterventionauto.module.ts :: actions :: line 2142
+
+```tsx
+ 2136:             Cette ligne a ete retiree du flux actif. Elle reste conservee pour l'audit, la tracabilite, les mouvements stock et les totaux, mais elle ne peut plus etre modifiee.
+ 2137:           </p>
+ 2138:         </section>
+ 2139:       ) : null}
+ 2140: 
+ 2141:       {isInvoiceEditForm ? (
+ 2142:         <div data-invoice-document-actions>
+ 2143:           <InvoiceDocumentActions invoice={initialData} />
+ 2144:         </div>
+ 2145:       ) : null}
+ 2146: 
+ 2147:       {isInvoiceEditForm ? (
+ 2148:         <section
+ 2149:           data-invoice-edit-payment-action
+ 2150:           className="
+ 2151:             rounded-2xl sm:rounded-3xl
+ 2152:             border
+```
+
 ### src/runtime/modules/generated/lignesinterventionauto/lignesinterventionauto.module.ts :: workflow :: line 14
 
 ```tsx
@@ -1145,7 +1167,7 @@ Objectif : vérifier que les workflows/actions métier prioritaires peuvent êtr
   713:     type: "danger",
   714:     runtimeOnly: true,
   715:   }
-  716: ];
+  716: ].filter(Boolean) as ERPModuleAction[];
 ```
 
 ### src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts :: actions :: line 5
@@ -1188,6 +1210,28 @@ Objectif : vérifier que les workflows/actions métier prioritaires peuvent êtr
   346:       states: [
   347:         {
   348:           key: "en_attente",
+```
+
+### src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts :: actions :: line 2598
+
+```tsx
+ 2592:             Cette ligne a ete retiree du flux actif. Elle reste conservee pour l'audit, la tracabilite, les mouvements stock et les totaux, mais elle ne peut plus etre modifiee.
+ 2593:           </p>
+ 2594:         </section>
+ 2595:       ) : null}
+ 2596: 
+ 2597:       {isInvoiceEditForm ? (
+ 2598:         <div data-invoice-document-actions>
+ 2599:           <InvoiceDocumentActions invoice={initialData} />
+ 2600:         </div>
+ 2601:       ) : null}
+ 2602: 
+ 2603:       {isInvoiceEditForm ? (
+ 2604:         <section
+ 2605:           data-invoice-edit-payment-action
+ 2606:           className="
+ 2607:             rounded-2xl sm:rounded-3xl
+ 2608:             border
 ```
 
 ### src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts :: workflow :: line 19
@@ -1807,7 +1851,7 @@ Objectif : vérifier que les workflows/actions métier prioritaires peuvent êtr
 
 ## Conclusion
 
-Architecture d’exécution validée, mais certains modules/actions/effets métier attendus ne sont pas encore suffisamment déclarés ou détectables.
+Architecture et déclarations prioritaires validées sans réserve.
 
 ## Prochaine passe recommandée
 

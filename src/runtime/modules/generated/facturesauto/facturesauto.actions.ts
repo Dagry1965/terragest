@@ -2,7 +2,7 @@ import type {
   ERPModuleAction,
 } from "@/runtime/modules/ERPModule";
 
-export const facturesautoActions: ERPModuleAction[] = [
+export const facturesautoActions = [
   {
     key: "Valider",
     label: "Valider la facture",
@@ -53,4 +53,4 @@ export const facturesautoActions: ERPModuleAction[] = [
     type: "danger",
     runtimeOnly: true,
   }
-];
+].filter(Boolean) as ERPModuleAction[];

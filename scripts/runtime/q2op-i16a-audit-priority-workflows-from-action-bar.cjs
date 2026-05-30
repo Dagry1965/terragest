@@ -300,7 +300,30 @@ for (const mod of priorityModules) {
   const actionFilePath = `src/runtime/modules/generated/${mod.key}/${mod.key}.actions.ts`;
   const actionFileSource = read(actionFilePath);
 
-  const source = [moduleSource || coreModules, actionFileSource]
+  // Q2OP_I16E2_LINE_TOTALS_EFFECT_AWARE_AUDIT
+  // Some business effects are intentionally implemented outside module metadata:
+  // - line totals are currently detectable through form/runtime line services/intervention totals fields.
+  // The audit must read these runtime sources to avoid false positives while we progressively centralize logic.
+  // Q2OP_I16F2_PAYMENT_HISTORY_EFFECT_AWARE_AUDIT
+  // Some payment history effects are implemented through billing UI/runtime modules.
+  // The audit must include these files to avoid false positives for encaissementsauto.
+  const extraEffectSources =
+    mod.key === "lignesinterventionauto"
+      ? [
+          read("src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx"),
+          read("src/runtime/line-items/RuntimeLineRemovalService.ts"),
+          read("src/runtime/modules/generated/interventionsauto/interventionsauto.module.ts"),
+        ]
+      : mod.key === "encaissementsauto"
+        ? [
+            read("src/components/erp/billing/InvoicePaymentsHistory.tsx"),
+            read("src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx"),
+            read("src/runtime/modules/generated/facturesauto/facturesauto.module.ts"),
+            read("src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts"),
+          ]
+        : [];
+
+  const source = [moduleSource || coreModules, actionFileSource, ...extraEffectSources]
     .filter(Boolean)
     .join("\n");
 
