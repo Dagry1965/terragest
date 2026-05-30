@@ -43,31 +43,33 @@ function mapRuntimeActionsToActionBarActions(
 ): ERPRuntimeActionBarAction[] {
   return runtimeActions
     .map((action) => {
-      const key = String(action.key ?? action.label ?? "");
-      const label = String(action.label ?? key);
+      const runtimeAction = action as ERPRuntimePageActionSource;
+
+      const key = String(runtimeAction.key ?? runtimeAction.label ?? "");
+      const label = String(runtimeAction.label ?? key);
 
       if (!key || !label) {
         return null;
       }
 
       const href =
-        typeof action.href === "string"
-          ? action.href
+        typeof runtimeAction.href === "string"
+          ? runtimeAction.href
           : undefined;
 
       const disabled =
-        typeof action.disabled === "boolean"
-          ? action.disabled
+        typeof runtimeAction.disabled === "boolean"
+          ? runtimeAction.disabled
           : false;
 
       const tone =
-        action.variant === "danger"
+        runtimeAction.variant === "danger"
           ? "danger"
-          : action.variant === "success"
+          : runtimeAction.variant === "success"
             ? "success"
-            : action.variant === "warning"
+            : runtimeAction.variant === "warning"
               ? "warning"
-              : action.variant === "primary"
+              : runtimeAction.variant === "primary"
                 ? "primary"
                 : "default";
 
@@ -78,8 +80,8 @@ function mapRuntimeActionsToActionBarActions(
         disabled,
         tone,
         description:
-          typeof action.description === "string"
-            ? action.description
+          typeof runtimeAction.description === "string"
+            ? runtimeAction.description
             : undefined,
       };
     })
