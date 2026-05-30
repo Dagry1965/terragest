@@ -36,12 +36,12 @@ Objectif : identifier précisément si le formulaire enterprise porte encore des
 | ui-buttons | WARN | MEDIUM | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` | 22, 2093, 2100, 2102, 2115, 2129, 2136 | ERPEnterpriseForm renders ERPButton. Count=7. |
 | submit | INFO | LOW | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` | 2094 | ERPEnterpriseForm renders submit button. Count=1. |
 | ui-buttons | WARN | MEDIUM | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` | 1836, 2060, 2104, 2130 | ERPEnterpriseForm renders non-submit buttons. Count=4. |
-| runtime-page-pass | WARN | HIGH | `src/components/erp/runtime/ERPRuntimePage.tsx` | 425 | ERPRuntimePage passes workflowActions into ERPEnterpriseForm. Count=1. |
-| runtime-page-pass | WARN | HIGH | `src/components/erp/runtime/ERPRuntimePage.tsx` | 425 | ERPRuntimePage passes workflowActions prop. Count=1. |
-| runtime-page-form | WARN | HIGH | `src/components/erp/runtime/ERPRuntimePage.tsx` | 414, 421 | ERPRuntimePage renders ERPEnterpriseForm. Count=2. |
-| runtime-page-actions | WARN | HIGH | `src/components/erp/runtime/ERPRuntimePage.tsx` | 20, 21, 147, 211 | ERPRuntimePage uses RuntimeActionEngine. Count=4. |
-| runtime-page-actions | WARN | HIGH | `src/components/erp/runtime/ERPRuntimePage.tsx` | 205, 355, 357, 425 | ERPRuntimePage has runtimeActions. Count=4. |
-| runtime-page-payment | WARN | MEDIUM | `src/components/erp/runtime/ERPRuntimePage.tsx` | 29, 261 | ERPRuntimePage still has invoice payment action helper. Count=2. |
+| runtime-page-pass | WARN | HIGH | `src/components/erp/runtime/ERPRuntimePage.tsx` | 485 | ERPRuntimePage passes workflowActions into ERPEnterpriseForm. Count=1. |
+| runtime-page-pass | WARN | HIGH | `src/components/erp/runtime/ERPRuntimePage.tsx` | 485 | ERPRuntimePage passes workflowActions prop. Count=1. |
+| runtime-page-form | WARN | HIGH | `src/components/erp/runtime/ERPRuntimePage.tsx` | 474, 481 | ERPRuntimePage renders ERPEnterpriseForm. Count=2. |
+| runtime-page-actions | WARN | HIGH | `src/components/erp/runtime/ERPRuntimePage.tsx` | 20, 21, 196, 260 | ERPRuntimePage uses RuntimeActionEngine. Count=4. |
+| runtime-page-actions | WARN | HIGH | `src/components/erp/runtime/ERPRuntimePage.tsx` | 31, 33, 254, 318, 406, 408, 485 | ERPRuntimePage has runtimeActions. Count=7. |
+| runtime-page-payment | WARN | MEDIUM | `src/components/erp/runtime/ERPRuntimePage.tsx` | 78, 310 | ERPRuntimePage still has invoice payment action helper. Count=2. |
 | suspicious-rendering | WARN | HIGH | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` | 1833 | Suspicious form workflow/action rendering marker: workflow map rendering. Count=1. |
 | suspicious-rendering | OK | HIGH | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` |  | No suspicious form workflow/action rendering marker: runtime action map rendering. |
 | suspicious-rendering | WARN | HIGH | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` | 223, 273, 405, 1181, 1405, 1409, 1415, 1416, 1418, 1420, 1425, 1427, 1428, 1429, 1431, 1439, 1441, 1443, 1529, 1532, 1562, 1566, 1572, 1575, 1579, 1581, 1584, 1647, 1739, 1743, 1790, 1793, 1821, 1828, 1833, 1847, 2069, 2114, 2124 | Suspicious form workflow/action rendering marker: workflow/action button labels. Count=39. |
@@ -464,76 +464,76 @@ Objectif : identifier précisément si le formulaire enterprise porte encore des
 2138:           </div>
 ```
 
-### src/components/erp/runtime/ERPRuntimePage.tsx :: workflowActions={ :: line 425
+### src/components/erp/runtime/ERPRuntimePage.tsx :: workflowActions={ :: line 485
 
 ```tsx
- 421:           <ERPEnterpriseForm
- 422:             module={module}
- 423:             mode="edit"
- 424:             initialData={currentRecord}
- 425:             workflowActions={isRemovedRecord ? [] : runtimeActions}
- 426:             forceReadOnlyBecauseRemoved={isRemovedRecord}
- 427:           />
- 428:         )}
- 429: 
- 430:         {type === "detail" && module && currentRecord && (
- 431:           <ERPRuntimeDetails
- 432:             module={module}
- 433:             data={currentRecord}
+ 481:           <ERPEnterpriseForm
+ 482:             module={module}
+ 483:             mode="edit"
+ 484:             initialData={currentRecord}
+ 485:             workflowActions={isRemovedRecord ? [] : runtimeActions}
+ 486:             forceReadOnlyBecauseRemoved={isRemovedRecord}
+ 487:           />
+ 488:         )}
+ 489: 
+ 490:         {type === "detail" && module && currentRecord && (
+ 491:           <ERPRuntimeDetails
+ 492:             module={module}
+ 493:             data={currentRecord}
 ```
 
-### src/components/erp/runtime/ERPRuntimePage.tsx :: workflowActions= :: line 425
+### src/components/erp/runtime/ERPRuntimePage.tsx :: workflowActions= :: line 485
 
 ```tsx
- 421:           <ERPEnterpriseForm
- 422:             module={module}
- 423:             mode="edit"
- 424:             initialData={currentRecord}
- 425:             workflowActions={isRemovedRecord ? [] : runtimeActions}
- 426:             forceReadOnlyBecauseRemoved={isRemovedRecord}
- 427:           />
- 428:         )}
- 429: 
- 430:         {type === "detail" && module && currentRecord && (
- 431:           <ERPRuntimeDetails
- 432:             module={module}
- 433:             data={currentRecord}
+ 481:           <ERPEnterpriseForm
+ 482:             module={module}
+ 483:             mode="edit"
+ 484:             initialData={currentRecord}
+ 485:             workflowActions={isRemovedRecord ? [] : runtimeActions}
+ 486:             forceReadOnlyBecauseRemoved={isRemovedRecord}
+ 487:           />
+ 488:         )}
+ 489: 
+ 490:         {type === "detail" && module && currentRecord && (
+ 491:           <ERPRuntimeDetails
+ 492:             module={module}
+ 493:             data={currentRecord}
 ```
 
-### src/components/erp/runtime/ERPRuntimePage.tsx :: <ERPEnterpriseForm :: line 414
+### src/components/erp/runtime/ERPRuntimePage.tsx :: <ERPEnterpriseForm :: line 474
 
 ```tsx
- 410:         </div>
- 411: 
- 412: 
- 413:         {type === "create" && module && (
- 414:           <ERPEnterpriseForm
- 415:             module={module}
- 416:             mode="create"
- 417:           />
- 418:         )}
- 419: 
- 420:         {type === "edit" && module && currentRecord && (
- 421:           <ERPEnterpriseForm
- 422:             module={module}
+ 470:                 compact
+ 471:               />
+ 472:             </div>
+ 473: 
+ 474:             <ERPEnterpriseForm
+ 475:             module={module}
+ 476:             mode="create"
+ 477:           />
+ 478:         )}
+ 479: 
+ 480:         {type === "edit" && module && currentRecord && (
+ 481:           <ERPEnterpriseForm
+ 482:             module={module}
 ```
 
-### src/components/erp/runtime/ERPRuntimePage.tsx :: <ERPEnterpriseForm :: line 421
+### src/components/erp/runtime/ERPRuntimePage.tsx :: <ERPEnterpriseForm :: line 481
 
 ```tsx
- 417:           />
- 418:         )}
- 419: 
- 420:         {type === "edit" && module && currentRecord && (
- 421:           <ERPEnterpriseForm
- 422:             module={module}
- 423:             mode="edit"
- 424:             initialData={currentRecord}
- 425:             workflowActions={isRemovedRecord ? [] : runtimeActions}
- 426:             forceReadOnlyBecauseRemoved={isRemovedRecord}
- 427:           />
- 428:         )}
- 429: 
+ 477:           />
+ 478:         )}
+ 479: 
+ 480:         {type === "edit" && module && currentRecord && (
+ 481:           <ERPEnterpriseForm
+ 482:             module={module}
+ 483:             mode="edit"
+ 484:             initialData={currentRecord}
+ 485:             workflowActions={isRemovedRecord ? [] : runtimeActions}
+ 486:             forceReadOnlyBecauseRemoved={isRemovedRecord}
+ 487:           />
+ 488:         )}
+ 489: 
 ```
 
 ### src/components/erp/runtime/ERPRuntimePage.tsx :: RuntimeActionEngine :: line 20
@@ -569,151 +569,187 @@ Objectif : identifier précisément si le formulaire enterprise porte encore des
   26: 
   27: import { ERPOperationalModulePage } from "@/components/erp/operational";
   28: import { buildRuntimeFactureEncaissementCreateHref } from "@/runtime/navigation/RuntimeChildCreateHrefBuilder";
-  29: function buildInvoicePaymentHref(
+  29: 
 ```
 
-### src/components/erp/runtime/ERPRuntimePage.tsx :: RuntimeActionEngine :: line 147
+### src/components/erp/runtime/ERPRuntimePage.tsx :: RuntimeActionEngine :: line 196
 
 ```tsx
- 143:       return;
- 144:     }
- 145: 
- 146:     const actionResult =
- 147:       await RuntimeActionEngine.execute({
- 148:         module,
- 149:         action,
- 150:         record: currentRecord,
- 151:       });
- 152: 
- 153:     const recordId =
- 154:       String(
- 155:         currentRecord.id ??
+ 192:       return;
+ 193:     }
+ 194: 
+ 195:     const actionResult =
+ 196:       await RuntimeActionEngine.execute({
+ 197:         module,
+ 198:         action,
+ 199:         record: currentRecord,
+ 200:       });
+ 201: 
+ 202:     const recordId =
+ 203:       String(
+ 204:         currentRecord.id ??
 ```
 
-### src/components/erp/runtime/ERPRuntimePage.tsx :: RuntimeActionEngine :: line 211
+### src/components/erp/runtime/ERPRuntimePage.tsx :: RuntimeActionEngine :: line 260
 
 ```tsx
- 207: 
- 208:     (type === "detail" || type === "edit") && !isRemovedRecord
- 209: 
- 210: 
- 211:       ? RuntimeActionEngine.getAvailableActions({
- 212:           actions: module?.actions ?? [],
- 213:           workflow: module?.workflows?.[0],
- 214:           record: currentRecord,
- 215:           })
- 216:         : [];
- 217: 
- 218:   const moduleHrefActions =
- 219:     // Q22E4B_LIST_NAVIGATION_ACTIONS
+ 256: 
+ 257:     (type === "detail" || type === "edit") && !isRemovedRecord
+ 258: 
+ 259: 
+ 260:       ? RuntimeActionEngine.getAvailableActions({
+ 261:           actions: module?.actions ?? [],
+ 262:           workflow: module?.workflows?.[0],
+ 263:           record: currentRecord,
+ 264:           })
+ 265:         : [];
+ 266: 
+ 267:   const moduleHrefActions =
+ 268:     // Q22E4B_LIST_NAVIGATION_ACTIONS
 ```
 
-### src/components/erp/runtime/ERPRuntimePage.tsx :: runtimeActions :: line 205
+### src/components/erp/runtime/ERPRuntimePage.tsx :: runtimeActions :: line 31
 
 ```tsx
- 201:   const isRemovedRecord = Boolean(currentRecord?.removedAt);
- 202: 
- 203: 
- 204: 
- 205:   const runtimeActions =
- 206: 
- 207: 
- 208:     (type === "detail" || type === "edit") && !isRemovedRecord
- 209: 
- 210: 
- 211:       ? RuntimeActionEngine.getAvailableActions({
- 212:           actions: module?.actions ?? [],
- 213:           workflow: module?.workflows?.[0],
-```
-
-### src/components/erp/runtime/ERPRuntimePage.tsx :: runtimeActions :: line 355
-
-```tsx
- 351:             </Link>
- 352:           </div>
- 353:         )}
- 354: 
- 355:         {type === "detail" && runtimeActions.length > 0 && (
- 356:           <div className="flex flex-wrap gap-3">
- 357:             {runtimeActions.map((action) => (
- 358:               <button
- 359:                 key={action.key}
- 360:                 type="button"
- 361:                 onClick={() => {
- 362:                     void handleRuntimeAction(action);
- 363:                   }}
-```
-
-### src/components/erp/runtime/ERPRuntimePage.tsx :: runtimeActions :: line 357
-
-```tsx
- 353:         )}
- 354: 
- 355:         {type === "detail" && runtimeActions.length > 0 && (
- 356:           <div className="flex flex-wrap gap-3">
- 357:             {runtimeActions.map((action) => (
- 358:               <button
- 359:                 key={action.key}
- 360:                 type="button"
- 361:                 onClick={() => {
- 362:                     void handleRuntimeAction(action);
- 363:                   }}
- 364:                 className={`
- 365:                   rounded-2xl
-```
-
-### src/components/erp/runtime/ERPRuntimePage.tsx :: runtimeActions :: line 425
-
-```tsx
- 421:           <ERPEnterpriseForm
- 422:             module={module}
- 423:             mode="edit"
- 424:             initialData={currentRecord}
- 425:             workflowActions={isRemovedRecord ? [] : runtimeActions}
- 426:             forceReadOnlyBecauseRemoved={isRemovedRecord}
- 427:           />
- 428:         )}
- 429: 
- 430:         {type === "detail" && module && currentRecord && (
- 431:           <ERPRuntimeDetails
- 432:             module={module}
- 433:             data={currentRecord}
-```
-
-### src/components/erp/runtime/ERPRuntimePage.tsx :: buildInvoicePaymentHref :: line 29
-
-```tsx
-  25: } from "@/runtime/data-binding/RuntimeDataBinding";
-  26: 
   27: import { ERPOperationalModulePage } from "@/components/erp/operational";
   28: import { buildRuntimeFactureEncaissementCreateHref } from "@/runtime/navigation/RuntimeChildCreateHrefBuilder";
-  29: function buildInvoicePaymentHref(
-  30:   record: Record<string, unknown>
-  31: ): string {
-  32:   const factureId =
-  33:     String(record.id ?? record._id ?? "");
-  34: 
-  35:   const montantTTC =
-  36:     Number(record.montantTTC ?? 0);
+  29: 
+  30: function mapRuntimeActionsToActionBarActions(
+  31:   runtimeActions: Array<Record<string, unknown>> = []
+  32: ): ERPRuntimeActionBarAction[] {
+  33:   return runtimeActions
+  34:     .map((action) => {
+  35:       const key = String(action.key ?? action.id ?? action.label ?? "");
+  36:       const label = String(action.label ?? action.title ?? key);
   37: 
+  38:       if (!key || !label) {
+  39:         return null;
 ```
 
-### src/components/erp/runtime/ERPRuntimePage.tsx :: buildInvoicePaymentHref :: line 261
+### src/components/erp/runtime/ERPRuntimePage.tsx :: runtimeActions :: line 33
 
 ```tsx
- 257:     Boolean(currentRecord?.id ?? currentRecord?._id);
+  29: 
+  30: function mapRuntimeActionsToActionBarActions(
+  31:   runtimeActions: Array<Record<string, unknown>> = []
+  32: ): ERPRuntimeActionBarAction[] {
+  33:   return runtimeActions
+  34:     .map((action) => {
+  35:       const key = String(action.key ?? action.id ?? action.label ?? "");
+  36:       const label = String(action.label ?? action.title ?? key);
+  37: 
+  38:       if (!key || !label) {
+  39:         return null;
+  40:       }
+  41: 
+```
+
+### src/components/erp/runtime/ERPRuntimePage.tsx :: runtimeActions :: line 254
+
+```tsx
+ 250:   const isRemovedRecord = Boolean(currentRecord?.removedAt);
+ 251: 
+ 252: 
+ 253: 
+ 254:   const runtimeActions =
+ 255: 
+ 256: 
+ 257:     (type === "detail" || type === "edit") && !isRemovedRecord
  258: 
- 259:   const invoicePaymentHref =
- 260:     isInvoiceDetailPage && currentRecord
- 261:       ? buildInvoicePaymentHref(currentRecord)
- 262:       : "#";
- 263: 
- 264:   const relatedChildren =
- 265:     module?.composition?.children?.filter((child) => {
- 266:       if (!currentRecord) {
- 267:           return false;
- 268:         }
- 269: 
+ 259: 
+ 260:       ? RuntimeActionEngine.getAvailableActions({
+ 261:           actions: module?.actions ?? [],
+ 262:           workflow: module?.workflows?.[0],
+```
+
+### src/components/erp/runtime/ERPRuntimePage.tsx :: runtimeActions :: line 318
+
+```tsx
+ 314:     module?.composition?.children?.filter((child) => {
+ 315:       if (!currentRecord) {
+ 316:           return false;
+ 317: 
+ 318:   const runtimeActionBarActions = mapRuntimeActionsToActionBarActions(runtimeActions);
+ 319:         }
+ 320: 
+ 321:       if (type !== "detail" && type !== "edit") {
+ 322:         return false;
+ 323:       }
+ 324: 
+ 325:       return (child.displayIn ?? ["detail"]).includes(
+ 326:         type as "detail" | "edit"
+```
+
+### src/components/erp/runtime/ERPRuntimePage.tsx :: runtimeActions :: line 406
+
+```tsx
+ 402:             </Link>
+ 403:           </div>
+ 404:         )}
+ 405: 
+ 406:         {type === "detail" && runtimeActions.length > 0 && (
+ 407:           <div className="flex flex-wrap gap-3">
+ 408:             {runtimeActions.map((action) => (
+ 409:               <button
+ 410:                 key={action.key}
+ 411:                 type="button"
+ 412:                 onClick={() => {
+ 413:                     void handleRuntimeAction(action);
+ 414:                   }}
+```
+
+### src/components/erp/runtime/ERPRuntimePage.tsx :: runtimeActions :: line 408
+
+```tsx
+ 404:         )}
+ 405: 
+ 406:         {type === "detail" && runtimeActions.length > 0 && (
+ 407:           <div className="flex flex-wrap gap-3">
+ 408:             {runtimeActions.map((action) => (
+ 409:               <button
+ 410:                 key={action.key}
+ 411:                 type="button"
+ 412:                 onClick={() => {
+ 413:                     void handleRuntimeAction(action);
+ 414:                   }}
+ 415:                 className={`
+ 416:                   rounded-2xl
+```
+
+### src/components/erp/runtime/ERPRuntimePage.tsx :: buildInvoicePaymentHref :: line 78
+
+```tsx
+  74:     })
+  75:     .filter(Boolean) as ERPRuntimeActionBarAction[];
+  76: }
+  77: 
+  78: function buildInvoicePaymentHref(
+  79:   record: Record<string, unknown>
+  80: ): string {
+  81:   const factureId =
+  82:     String(record.id ?? record._id ?? "");
+  83: 
+  84:   const montantTTC =
+  85:     Number(record.montantTTC ?? 0);
+  86: 
+```
+
+### src/components/erp/runtime/ERPRuntimePage.tsx :: buildInvoicePaymentHref :: line 310
+
+```tsx
+ 306:     Boolean(currentRecord?.id ?? currentRecord?._id);
+ 307: 
+ 308:   const invoicePaymentHref =
+ 309:     isInvoiceDetailPage && currentRecord
+ 310:       ? buildInvoicePaymentHref(currentRecord)
+ 311:       : "#";
+ 312: 
+ 313:   const relatedChildren =
+ 314:     module?.composition?.children?.filter((child) => {
+ 315:       if (!currentRecord) {
+ 316:           return false;
+ 317: 
+ 318:   const runtimeActionBarActions = mapRuntimeActionsToActionBarActions(runtimeActions);
 ```
 
 ### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: workflow map rendering :: line 1833

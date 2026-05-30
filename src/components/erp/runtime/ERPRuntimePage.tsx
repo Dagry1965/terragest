@@ -10,11 +10,22 @@ import {
 
 import { ERPEnterpriseForm } from "@/components/erp/forms/enterprise/ERPEnterpriseForm";
 import { ERPRuntimeDetails } from "./ERPRuntimeDetails";
+import {
+  ERPRuntimeActionBar,
+  type ERPRuntimeActionBarAction,
+} from "@/components/erp/runtime/ERPRuntimeActionBar";
+
+type ERPRuntimePageActionSource = ERPModuleAction & {
+  href?: string;
+  disabled?: boolean;
+  variant?: string;
+  description?: string;
+};
 import { ERPRuntimeTable } from "./ERPRuntimeTable";
 import { ERPRelatedRecordsPanel } from "./ERPRelatedRecordsPanel";
 import { ERPContextBanner } from "@/components/erp/context/ERPContextBanner";
 
-import type { ERPModule } from "@/runtime/modules/ERPModule";
+import type { ERPModule, ERPModuleAction } from "@/runtime/modules/ERPModule";
 
 import {
   RuntimeActionEngine,
@@ -26,6 +37,55 @@ import {
 
 import { ERPOperationalModulePage } from "@/components/erp/operational";
 import { buildRuntimeFactureEncaissementCreateHref } from "@/runtime/navigation/RuntimeChildCreateHrefBuilder";
+
+function mapRuntimeActionsToActionBarActions(
+  runtimeActions: ERPRuntimePageActionSource[] = []
+): ERPRuntimeActionBarAction[] {
+  return runtimeActions
+    .map((action) => {
+      const key = String(action.key ?? action.label ?? "");
+      const label = String(action.label ?? key);
+
+      if (!key || !label) {
+        return null;
+      }
+
+      const href =
+        typeof action.href === "string"
+          ? action.href
+          : undefined;
+
+      const disabled =
+        typeof action.disabled === "boolean"
+          ? action.disabled
+          : false;
+
+      const tone =
+        action.variant === "danger"
+          ? "danger"
+          : action.variant === "success"
+            ? "success"
+            : action.variant === "warning"
+              ? "warning"
+              : action.variant === "primary"
+                ? "primary"
+                : "default";
+
+      return {
+        key,
+        label,
+        href,
+        disabled,
+        tone,
+        description:
+          typeof action.description === "string"
+            ? action.description
+            : undefined,
+      };
+    })
+    .filter(Boolean) as ERPRuntimeActionBarAction[];
+}
+
 function buildInvoicePaymentHref(
   record: Record<string, unknown>
 ): string {
@@ -411,10 +471,21 @@ return (
 
 
         {type === "create" && module && (
-          <ERPEnterpriseForm
-            module={module}
-            mode="create"
-          />
+          <>
+            <div data-runtime-action-bar-placement="runtime-page">
+              <ERPRuntimeActionBar
+                title="Actions métier"
+                description="Actions runtime disponibles pour cet enregistrement. Les formulaires resteront progressivement limités aux champs."
+                actions={mapRuntimeActionsToActionBarActions(runtimeActions as ERPRuntimePageActionSource[])}
+                compact
+              />
+            </div>
+
+            <ERPEnterpriseForm
+              module={module}
+              mode="create"
+            />
+          </>
         )}
 
         {type === "edit" && module && currentRecord && (
