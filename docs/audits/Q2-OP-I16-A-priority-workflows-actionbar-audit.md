@@ -4,9 +4,9 @@ Objectif : vérifier que les workflows/actions métier prioritaires peuvent êtr
 
 ## Résumé
 
-- OK : 94
+- OK : 95
 - INFO : 0
-- WARN : 3
+- WARN : 2
 - WARN HIGH : 0
 - FAIL : 0
 - FAIL HIGH : 0
@@ -82,10 +82,10 @@ Objectif : vérifier que les workflows/actions métier prioritaires peuvent êtr
 | module-file | OK | HIGH | `src/runtime/modules/generated/facturesauto/facturesauto.module.ts` |  | facturesauto module definition found |
 | module-actions | OK | HIGH | `src/runtime/modules/generated/facturesauto/facturesauto.module.ts` | 5, 621 | facturesauto actions declaration found |
 | module-workflow | OK | MEDIUM | `src/runtime/modules/generated/facturesauto/facturesauto.module.ts` | 17, 623, 670, 676, 682, 688, 694, 700 | facturesauto workflow/states/transitions markers found |
-| module-expected-action | WARN | MEDIUM | `src/runtime/modules/generated/facturesauto/facturesauto.module.ts` |  | facturesauto expected action marker "envoyer" not found |
+| module-expected-action | OK | MEDIUM | `src/runtime/modules/generated/facturesauto/facturesauto.module.ts` | 704 | facturesauto expected action marker "envoyer" found |
 | module-expected-action | OK | MEDIUM | `src/runtime/modules/generated/facturesauto/facturesauto.module.ts` | 63, 151, 393, 587, 589, 590, 679, 680 | facturesauto expected action marker "paiement" found |
 | module-expected-action | OK | MEDIUM | `src/runtime/modules/generated/facturesauto/facturesauto.module.ts` | 553, 554, 562, 563 | facturesauto expected action marker "encaissement" found |
-| module-expected-action | OK | MEDIUM | `src/runtime/modules/generated/facturesauto/facturesauto.module.ts` |  | facturesauto expected action marker "annuler" found |
+| module-expected-action | OK | MEDIUM | `src/runtime/modules/generated/facturesauto/facturesauto.module.ts` | 711 | facturesauto expected action marker "annuler" found |
 | business-effect-marker | OK | MEDIUM | `src/runtime/modules/generated/facturesauto/facturesauto.module.ts` |  | facturesauto expected effect marker "encaissementsauto" found in module/rules/action engine |
 | business-effect-marker | OK | MEDIUM | `src/runtime/modules/generated/facturesauto/facturesauto.module.ts` |  | facturesauto expected effect marker "resteAPayer" found in module/rules/action engine |
 | business-effect-marker | OK | MEDIUM | `src/runtime/modules/generated/facturesauto/facturesauto.module.ts` |  | facturesauto expected effect marker "montantPaye" found in module/rules/action engine |
@@ -1021,6 +1021,28 @@ Objectif : vérifier que les workflows/actions métier prioritaires peuvent êtr
   633:         },
 ```
 
+### src/runtime/modules/generated/facturesauto/facturesauto.module.ts :: envoyer :: line 704
+
+```tsx
+  698:     label: "Annuler",
+  699:     type: "danger",
+  700:     permission: "facturesauto.workflow",
+  701:   },
+  702: ,
+  703:   {
+  704:     key: "envoyer-facture",
+  705:     label: "Envoyer facture",
+  706:     type: "primary",
+  707:     runtimeOnly: true,
+  708:   }
+  709: ,
+  710:   {
+  711:     key: "annuler-facture",
+  712:     label: "Annuler facture",
+  713:     type: "danger",
+  714:     runtimeOnly: true,
+```
+
 ### src/runtime/modules/generated/facturesauto/facturesauto.module.ts :: paiement :: line 63
 
 ```tsx
@@ -1107,6 +1129,23 @@ Objectif : vérifier que les workflows/actions métier prioritaires peuvent êtr
   562:         createLabel: "Ajouter un encaissement",
   563:         openLabel: "Ouvrir encaissement",
   564:         labelFields: ["numeroRecu", "montant", "datePaiement", "statut"],
+```
+
+### src/runtime/modules/generated/facturesauto/facturesauto.module.ts :: annuler :: line 711
+
+```tsx
+  705:     label: "Envoyer facture",
+  706:     type: "primary",
+  707:     runtimeOnly: true,
+  708:   }
+  709: ,
+  710:   {
+  711:     key: "annuler-facture",
+  712:     label: "Annuler facture",
+  713:     type: "danger",
+  714:     runtimeOnly: true,
+  715:   }
+  716: ];
 ```
 
 ### src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts :: actions :: line 5

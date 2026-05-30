@@ -39,4 +39,18 @@ export const facturesautoActions: ERPModuleAction[] = [
     type: "danger",
     permission: "facturesauto.workflow",
   },
+,
+  {
+    key: "envoyer-facture",
+    label: "Envoyer facture",
+    type: "primary",
+    runtimeOnly: true,
+  }
+,
+  {
+    key: "annuler-facture",
+    label: "Annuler facture",
+    type: "danger",
+    runtimeOnly: true,
+  }
 ];
