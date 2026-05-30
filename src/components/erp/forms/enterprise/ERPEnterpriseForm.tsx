@@ -7,18 +7,12 @@ import {
 } from "next/navigation";
 
 import type { ERPModule } from "@/runtime/modules";
-import type { ERPModuleAction } from "@/runtime/modules/ERPModule";
 import { ERPModuleBuilder } from "@/runtime/modules";
 import { RuntimeDataBinding } from "@/runtime/data-binding";
 import { RuntimeStatusGovernanceEngine } from "@/runtime/status";
 import { RuntimeComputedFieldsEngine } from "@/runtime/computed";
 import { RuntimeAutoFillEngine } from "@/runtime/autofill";
-import { RuntimeActionEngine } from "@/runtime/actions/RuntimeActionEngine";
 import { buildRuntimeFactureEncaissementCreateHref } from "@/runtime/navigation/RuntimeChildCreateHrefBuilder";
-import {
-  RuntimeNotificationCenter,
-} from "@/runtime/notifications/RuntimeNotificationCenter";
-
 import { ERPButton } from "@/components/erp/ui";
 
 import { ERPFormField } from "./ERPFormField";
@@ -220,7 +214,6 @@ interface ERPEnterpriseFormProps {
   module: ERPModule;
   mode?: "create" | "edit";
   initialData?: Record<string, unknown>;
-  workflowActions?: ERPModuleAction[];
   forceReadOnlyBecauseRemoved?: boolean;
 }
 
@@ -402,7 +395,6 @@ export function ERPEnterpriseForm({
   module,
   mode = "create",
   initialData = {},
-  workflowActions = [],
   forceReadOnlyBecauseRemoved = false,
 }: ERPEnterpriseFormProps) {
   const router = useRouter();
@@ -410,8 +402,6 @@ export function ERPEnterpriseForm({
   const formRef =
     useRef<HTMLFormElement | null>(null);
 
-  const pendingWorkflowActionRef =
-    useRef<ERPModuleAction | null>(null);
   const searchParams = useSearchParams();
 
   const queryInitialValuesAppliedRef =
@@ -1178,9 +1168,7 @@ export function ERPEnterpriseForm({
 
     
 
-    const workflowAction =
-      pendingWorkflowActionRef.current;
-const formData =
+    const formData =
       new FormData(event.currentTarget);
 
     const payload: Record<string, unknown> = {
@@ -1270,7 +1258,6 @@ const formData =
     setErrors(allValidationErrors);
 
     if (allValidationErrors.length > 0) {
-      pendingWorkflowActionRef.current = null;
       setSaving(false);
       return;
     }
@@ -1402,48 +1389,6 @@ preparedPayload.terrainId
 
       }
 
-      if (workflowAction && savedRecord) {
-        const workflowResult =
-          await RuntimeActionEngine.execute({
-            module,
-            action: workflowAction,
-            record: savedRecord,
-          });
-
-        pendingWorkflowActionRef.current = null;
-
-        if (!workflowResult?.success) {
-          RuntimeNotificationCenter.workflowError({
-            module,
-            action: workflowAction,
-            record: savedRecord,
-            result: workflowResult,
-          });
-
-          setErrors([
-            {
-              field: "workflow",
-              message:
-                workflowResult && "message" in workflowResult
-                  ? String(workflowResult.message)
-                  : workflowResult && "error" in workflowResult
-                    ? String(workflowResult.error)
-                    : "Action workflow impossible.",
-            },
-          ]);
-
-          setSaving(false);
-          return;
-        }
-
-        RuntimeNotificationCenter.workflowSuccess({
-          module,
-          action: workflowAction,
-          record: savedRecord,
-          result: workflowResult,
-        });
-      }
-
       router.push(
         returnTo ??
           module.metadata.routes?.list ??
@@ -1452,7 +1397,6 @@ preparedPayload.terrainId
 
       router.refresh();
     } catch (error) {
-      pendingWorkflowActionRef.current = null;
 
       const message =
         toFriendlyRuntimeErrorMessage(
@@ -1818,48 +1762,7 @@ preparedPayload.terrainId
         </div>
       ) : null}
 
-      {mode === "edit" && !isRemovedRecord && workflowActions.length > 0 && (
-        <section className="rounded-2xl sm:rounded-3xl border border-[#D5E4E8] bg-[#F8FAFC] p-4 shadow-[0_8px_24px_rgba(15,23,42,0.06)]">
-          <div className="mb-3">
-            <p className="text-xs font-black uppercase tracking-wide text-[#334155]">
-              Workflow
-            </p>
-            <p className="text-sm text-[#111827]">
-              Ces actions enregistrent d'abord le formulaire, puis executent le workflow.low.
-            </p>
-          </div>
-
-          <div className="flex flex-wrap gap-3">
-            {workflowActions.map((action) => (
-              <button
-                key={action.key}
-                type="button"
-                onClick={() => {
-                  pendingWorkflowActionRef.current = action;
-                  formRef.current?.requestSubmit();
-                }}
-                className={`
-                  rounded-2xl
-                  px-4
-                  py-2
-                  text-sm
-                  font-bold
-                  transition
-                  ${
-                    action.type === "danger"
-                      ? "bg-red-600 text-[var(--erp-text)] hover:bg-red-700"
-                      : action.type === "secondary"
-                        ? "bg-slate-200 text-[var(--erp-text)] hover:bg-slate-300"
-                        : "bg-[var(--erp-surface)] text-[var(--erp-text)] hover:bg-[#1F2937] hover:border-[#00A68A]"
-                  }
-                `}
-              >
-                {action.label}
-              </button>
-            ))}
-          </div>
-        </section>
-      )}
+      {/* Workflow actions are rendered by ERPRuntimeActionBar in ERPRuntimePage. */}
       <section className="overflow-hidden rounded-2xl sm:rounded-3xl border border-[var(--erp-border)] bg-[var(--erp-surface)] shadow-sm">
         <div className="bg-gradient-to-r from-white via-white to-[var(--erp-primary-soft)] px-8 py-8 text-[var(--erp-text)]">
           <p className="text-sm font-bold uppercase tracking-wide text-[#475569]">

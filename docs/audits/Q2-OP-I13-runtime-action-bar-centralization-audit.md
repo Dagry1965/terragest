@@ -4,12 +4,12 @@ Objectif : vérifier que les boutons workflow/actions métier ne sont plus rendu
 
 ## Résumé
 
-- OK : 22
+- OK : 27
 - INFO : 7
 - WARN : 4
 - WARN HIGH : 1
-- FAIL : 5
-- FAIL HIGH : 5
+- FAIL : 0
+- FAIL HIGH : 0
 
 ## Doctrine cible
 
@@ -28,17 +28,17 @@ Objectif : vérifier que les boutons workflow/actions métier ne sont plus rendu
 | file | OK | HIGH | `src/components/erp/runtime/ERPRuntimeActionBar.tsx` |  | src/components/erp/runtime/ERPRuntimeActionBar.tsx found |
 | file | OK | HIGH | `src/components/erp/runtime/ERPRuntimeDetails.tsx` |  | src/components/erp/runtime/ERPRuntimeDetails.tsx found |
 | file | OK | HIGH | `src/components/erp/runtime/ERPRelatedRecordsPanel.tsx` |  | src/components/erp/runtime/ERPRelatedRecordsPanel.tsx found |
-| form-forbidden | FAIL | HIGH | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` | 223, 405, 1821, 1833 | workflowActions still exists in ERPEnterpriseForm |
-| form-forbidden | FAIL | HIGH | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` | 1833 | workflowActions.map still exists in ERPEnterpriseForm |
-| form-forbidden | FAIL | HIGH | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` | 16, 16, 1407 | RuntimeActionEngine still exists in ERPEnterpriseForm |
-| form-forbidden | FAIL | HIGH | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` | 1407 | RuntimeActionEngine.execute still exists in ERPEnterpriseForm |
-| form-forbidden | FAIL | HIGH | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` | 413, 1182, 1273, 1413, 1455, 1838 | pendingWorkflowActionRef still exists in ERPEnterpriseForm |
+| form-forbidden | OK | HIGH | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` |  | workflowActions absent from ERPEnterpriseForm |
+| form-forbidden | OK | HIGH | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` |  | workflowActions.map absent from ERPEnterpriseForm |
+| form-forbidden | OK | HIGH | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` |  | RuntimeActionEngine absent from ERPEnterpriseForm |
+| form-forbidden | OK | HIGH | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` |  | RuntimeActionEngine.execute absent from ERPEnterpriseForm |
+| form-forbidden | OK | HIGH | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` |  | pendingWorkflowActionRef absent from ERPEnterpriseForm |
 | form-forbidden | OK | HIGH | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` |  | handleRuntimeAction absent from ERPEnterpriseForm |
-| form-allowed-ui | INFO | LOW | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` | 2094 | type="submit" present in ERPEnterpriseForm |
-| form-allowed-ui | INFO | LOW | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` | 1478, 2133 | handleDeleteRecord present in ERPEnterpriseForm |
-| form-allowed-ui | INFO | LOW | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` | 1591, 2066 | handleBusinessStatusAction present in ERPEnterpriseForm |
-| form-allowed-ui | INFO | LOW | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` | 1447, 1493, 2107 | router.push( present in ERPEnterpriseForm |
-| form-allowed-ui | INFO | LOW | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` | 22, 2093, 2100, 2102, 2115, 2129, 2136 | ERPButton present in ERPEnterpriseForm |
+| form-allowed-ui | INFO | LOW | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` | 1997 | type="submit" present in ERPEnterpriseForm |
+| form-allowed-ui | INFO | LOW | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` | 1422, 2036 | handleDeleteRecord present in ERPEnterpriseForm |
+| form-allowed-ui | INFO | LOW | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` | 1535, 1969 | handleBusinessStatusAction present in ERPEnterpriseForm |
+| form-allowed-ui | INFO | LOW | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` | 1392, 1437, 2010 | router.push( present in ERPEnterpriseForm |
+| form-allowed-ui | INFO | LOW | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` | 16, 1996, 2003, 2005, 2018, 2032, 2039 | ERPButton present in ERPEnterpriseForm |
 | runtime-page-required | OK | HIGH | `src/components/erp/runtime/ERPRuntimePage.tsx` | 31, 32, 209, 273 | RuntimeActionEngine present in ERPRuntimePage |
 | runtime-page-required | OK | HIGH | `src/components/erp/runtime/ERPRuntimePage.tsx` | 273 | RuntimeActionEngine.getAvailableActions present in ERPRuntimePage |
 | runtime-page-required | OK | HIGH | `src/components/erp/runtime/ERPRuntimePage.tsx` | 209 | RuntimeActionEngine.execute present in ERPRuntimePage |
@@ -64,554 +64,268 @@ Objectif : vérifier que les boutons workflow/actions métier ne sont plus rendu
 
 ## Contextes utiles
 
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: workflowActions :: line 223
+### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: type="submit" :: line 1997
 
 ```tsx
- 217: }
- 218: 
- 219: interface ERPEnterpriseFormProps {
- 220:   module: ERPModule;
- 221:   mode?: "create" | "edit";
- 222:   initialData?: Record<string, unknown>;
- 223:   workflowActions?: ERPModuleAction[];
- 224:   forceReadOnlyBecauseRemoved?: boolean;
- 225: }
- 226: 
- 227: interface ERPFormRelationChangeContext {
- 228:   field?: {
- 229:     key: string;
- 230:     relation?: unknown;
- 231:     autoFill?: RuntimeRelationAutoFillConfig;
- 232:   };
- 233:   selectedOption?: {
+1991: 
+1992: 
+1993: 
+1994:             {!isRemovedRecord ? (
+1995:               <>
+1996:                 <ERPButton
+1997:                   type="submit"
+1998:                   disabled={saving}
+1999:                 >
+2000:                   {saving
+2001:                     ? "Enregistrement..."
+2002:                     : "Enregistrer"}
+2003:                 </ERPButton>
+2004: 
+2005:                 <ERPButton
+2006:                   variant="secondary"
+2007:                   type="button"
 ```
 
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: workflowActions :: line 405
+### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: handleDeleteRecord :: line 1422
 
 ```tsx
- 399: }
- 400: 
- 401: export function ERPEnterpriseForm({
- 402:   module,
- 403:   mode = "create",
- 404:   initialData = {},
- 405:   workflowActions = [],
- 406:   forceReadOnlyBecauseRemoved = false,
- 407: }: ERPEnterpriseFormProps) {
- 408:   const router = useRouter();
- 409: 
- 410:   const formRef =
- 411:     useRef<HTMLFormElement | null>(null);
- 412: 
- 413:   const pendingWorkflowActionRef =
- 414:     useRef<ERPModuleAction | null>(null);
- 415:   const searchParams = useSearchParams();
+1416:       ]);
+1417:     } finally {
+1418:       setSaving(false);
+1419:     }
+1420:   }
+1421: 
+1422:   async function handleDeleteRecord() {
+1423:     const confirmed = window.confirm(
+1424:       "Supprimer cet element ?"
+1425:     );
+1426: 
+1427:     if (!confirmed) {
+1428:       return;
+1429:     }
+1430: 
+1431:     try {
+1432:       await RuntimeDataBinding.delete(
 ```
 
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: workflowActions :: line 1821
+### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: handleDeleteRecord :: line 2036
 
 ```tsx
-1815:             montantPaye={Number(initialData.montantPaye ?? 0)}
-1816:             resteAPayer={Number(initialData.resteAPayer ?? 0)}
-1817:           />
-1818:         </div>
-1819:       ) : null}
-1820: 
-1821:       {mode === "edit" && !isRemovedRecord && workflowActions.length > 0 && (
-1822:         <section className="rounded-2xl sm:rounded-3xl border border-[#D5E4E8] bg-[#F8FAFC] p-4 shadow-[0_8px_24px_rgba(15,23,42,0.06)]">
-1823:           <div className="mb-3">
-1824:             <p className="text-xs font-black uppercase tracking-wide text-[#334155]">
-1825:               Workflow
-1826:             </p>
-1827:             <p className="text-sm text-[#111827]">
-1828:               Ces actions enregistrent d'abord le formulaire, puis executent le workflow.low.
-1829:             </p>
-1830:           </div>
-1831: 
+2030: 
+2031: {mode === "edit" && Boolean(initialData?.id) && !sensitiveBusinessModule ? (
+2032:               <ERPButton
+2033:                 type="button"
+2034:                 variant="danger"
+2035:                 disabled={saving || isRemovedRecord}
+2036:                 onClick={handleDeleteRecord}
+2037:               >
+2038:                 Supprimer
+2039:               </ERPButton>
+2040:             ) : null}
+2041:           </div>
+2042:         </div>
+2043: 
+2044:         <ERPFormSummaryPanel module={module} />
+2045:       </section>
+2046:     </form>
 ```
 
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: workflowActions :: line 1833
+### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: handleBusinessStatusAction :: line 1535
 
 ```tsx
-1827:             <p className="text-sm text-[#111827]">
-1828:               Ces actions enregistrent d'abord le formulaire, puis executent le workflow.low.
-1829:             </p>
-1830:           </div>
-1831: 
-1832:           <div className="flex flex-wrap gap-3">
-1833:             {workflowActions.map((action) => (
-1834:               <button
-1835:                 key={action.key}
-1836:                 type="button"
-1837:                 onClick={() => {
-1838:                   pendingWorkflowActionRef.current = action;
-1839:                   formRef.current?.requestSubmit();
-1840:                 }}
-1841:                 className={`
-1842:                   rounded-2xl
-1843:                   px-4
+1529:       };
+1530:     }
+1531: 
+1532:     return null;
+1533:   }
+1534: 
+1535:   async function handleBusinessStatusAction() {
+1536:     const action = getBusinessStatusAction();
+1537: 
+1538:     if (!action || !initialData?.id) {
+1539:       return;
+1540:     }
+1541: 
+1542:     const confirmed = window.confirm(action.confirmMessage);
+1543: 
+1544:     if (!confirmed) {
+1545:       return;
 ```
 
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: workflowActions.map :: line 1833
+### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: handleBusinessStatusAction :: line 1969
 
 ```tsx
-1827:             <p className="text-sm text-[#111827]">
-1828:               Ces actions enregistrent d'abord le formulaire, puis executent le workflow.low.
-1829:             </p>
-1830:           </div>
-1831: 
-1832:           <div className="flex flex-wrap gap-3">
-1833:             {workflowActions.map((action) => (
-1834:               <button
-1835:                 key={action.key}
-1836:                 type="button"
-1837:                 onClick={() => {
-1838:                   pendingWorkflowActionRef.current = action;
-1839:                   formRef.current?.requestSubmit();
-1840:                 }}
-1841:                 className={`
-1842:                   rounded-2xl
-1843:                   px-4
+1963:                     type="button"
+1964: 
+1965: 
+1966:                     disabled={saving}
+1967: 
+1968: 
+1969:                     onClick={handleBusinessStatusAction}
+1970: 
+1971: 
+1972:                     className="inline-flex items-center justify-center rounded-2xl bg-amber-600 px-5 py-3 text-sm font-black text-[var(--erp-text)] shadow-sm transition hover:bg-amber-500 disabled:cursor-not-allowed disabled:opacity-60"
+1973: 
+1974: 
+1975:                   >
+1976: 
+1977: 
+1978:                     {businessStatusAction.label}
+1979: 
 ```
 
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: RuntimeActionEngine :: line 16
+### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: router.push( :: line 1392
 
 ```tsx
-  10: import type { ERPModuleAction } from "@/runtime/modules/ERPModule";
-  11: import { ERPModuleBuilder } from "@/runtime/modules";
-  12: import { RuntimeDataBinding } from "@/runtime/data-binding";
-  13: import { RuntimeStatusGovernanceEngine } from "@/runtime/status";
-  14: import { RuntimeComputedFieldsEngine } from "@/runtime/computed";
-  15: import { RuntimeAutoFillEngine } from "@/runtime/autofill";
-  16: import { RuntimeActionEngine } from "@/runtime/actions/RuntimeActionEngine";
-  17: import { buildRuntimeFactureEncaissementCreateHref } from "@/runtime/navigation/RuntimeChildCreateHrefBuilder";
-  18: import {
-  19:   RuntimeNotificationCenter,
-  20: } from "@/runtime/notifications/RuntimeNotificationCenter";
-  21: 
-  22: import { ERPButton } from "@/components/erp/ui";
-  23: 
-  24: import { ERPFormField } from "./ERPFormField";
-  25: import { ERPFormSection } from "./ERPFormSection";
-  26: import { ERPFormSummaryPanel } from "./ERPFormSummaryPanel";
+1386:         if (interventionId) {
+1387:           await syncInterventionTotalsFromLines(interventionId);
+1388:         }
+1389: 
+1390:       }
+1391: 
+1392:       router.push(
+1393:         returnTo ??
+1394:           module.metadata.routes?.list ??
+1395:           `/${module.metadata.key}`
+1396:       );
+1397: 
+1398:       router.refresh();
+1399:     } catch (error) {
+1400: 
+1401:       const message =
+1402:         toFriendlyRuntimeErrorMessage(
 ```
 
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: RuntimeActionEngine :: line 16
+### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: router.push( :: line 1437
 
 ```tsx
-  10: import type { ERPModuleAction } from "@/runtime/modules/ERPModule";
-  11: import { ERPModuleBuilder } from "@/runtime/modules";
-  12: import { RuntimeDataBinding } from "@/runtime/data-binding";
-  13: import { RuntimeStatusGovernanceEngine } from "@/runtime/status";
-  14: import { RuntimeComputedFieldsEngine } from "@/runtime/computed";
-  15: import { RuntimeAutoFillEngine } from "@/runtime/autofill";
-  16: import { RuntimeActionEngine } from "@/runtime/actions/RuntimeActionEngine";
-  17: import { buildRuntimeFactureEncaissementCreateHref } from "@/runtime/navigation/RuntimeChildCreateHrefBuilder";
-  18: import {
-  19:   RuntimeNotificationCenter,
-  20: } from "@/runtime/notifications/RuntimeNotificationCenter";
-  21: 
-  22: import { ERPButton } from "@/components/erp/ui";
-  23: 
-  24: import { ERPFormField } from "./ERPFormField";
-  25: import { ERPFormSection } from "./ERPFormSection";
-  26: import { ERPFormSummaryPanel } from "./ERPFormSummaryPanel";
-```
-
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: RuntimeActionEngine :: line 1407
-
-```tsx
-1401:         }
-1402: 
-1403:       }
-1404: 
-1405:       if (workflowAction && savedRecord) {
-1406:         const workflowResult =
-1407:           await RuntimeActionEngine.execute({
-1408:             module,
-1409:             action: workflowAction,
-1410:             record: savedRecord,
-1411:           });
-1412: 
-1413:         pendingWorkflowActionRef.current = null;
-1414: 
-1415:         if (!workflowResult?.success) {
-1416:           RuntimeNotificationCenter.workflowError({
-1417:             module,
-```
-
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: RuntimeActionEngine.execute :: line 1407
-
-```tsx
-1401:         }
-1402: 
-1403:       }
-1404: 
-1405:       if (workflowAction && savedRecord) {
-1406:         const workflowResult =
-1407:           await RuntimeActionEngine.execute({
-1408:             module,
-1409:             action: workflowAction,
-1410:             record: savedRecord,
-1411:           });
-1412: 
-1413:         pendingWorkflowActionRef.current = null;
-1414: 
-1415:         if (!workflowResult?.success) {
-1416:           RuntimeNotificationCenter.workflowError({
-1417:             module,
-```
-
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: pendingWorkflowActionRef :: line 413
-
-```tsx
- 407: }: ERPEnterpriseFormProps) {
- 408:   const router = useRouter();
- 409: 
- 410:   const formRef =
- 411:     useRef<HTMLFormElement | null>(null);
- 412: 
- 413:   const pendingWorkflowActionRef =
- 414:     useRef<ERPModuleAction | null>(null);
- 415:   const searchParams = useSearchParams();
- 416: 
- 417:   const queryInitialValuesAppliedRef =
- 418:     useRef(false);
- 419: 
- 420:   const queryValues =
- 421:     Object.fromEntries(
- 422:       Array.from(searchParams.entries()).filter(
- 423:         ([key]) =>
-```
-
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: pendingWorkflowActionRef :: line 1182
-
-```tsx
-1176:     event.preventDefault();
-1177:     setSaving(true);
-1178: 
-1179:     
-1180: 
-1181:     const workflowAction =
-1182:       pendingWorkflowActionRef.current;
-1183: const formData =
-1184:       new FormData(event.currentTarget);
-1185: 
-1186:     const payload: Record<string, unknown> = {
-1187:       ...formValues,
-1188:     };
-1189: 
-1190:     form.fields
-1191:       .filter(
-1192:         (field) =>
-```
-
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: pendingWorkflowActionRef :: line 1273
-
-```tsx
-1267:       ...uniqueConstraintErrors,
-1268:     ];
-1269: 
-1270:     setErrors(allValidationErrors);
-1271: 
-1272:     if (allValidationErrors.length > 0) {
-1273:       pendingWorkflowActionRef.current = null;
-1274:       setSaving(false);
-1275:       return;
-1276:     }
-1277: 
-1278:     const businessRulesValid =
-1279:       erpRuntimeValidationBridge.validate(
-1280:         module.metadata.key,
-1281:         preparedPayload
-1282:       );
-1283: 
-```
-
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: pendingWorkflowActionRef :: line 1413
-
-```tsx
-1407:           await RuntimeActionEngine.execute({
-1408:             module,
-1409:             action: workflowAction,
-1410:             record: savedRecord,
-1411:           });
-1412: 
-1413:         pendingWorkflowActionRef.current = null;
-1414: 
-1415:         if (!workflowResult?.success) {
-1416:           RuntimeNotificationCenter.workflowError({
-1417:             module,
-1418:             action: workflowAction,
-1419:             record: savedRecord,
-1420:             result: workflowResult,
-1421:           });
-1422: 
-1423:           setErrors([
-```
-
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: type="submit" :: line 2094
-
-```tsx
-2088: 
-2089: 
-2090: 
-2091:             {!isRemovedRecord ? (
-2092:               <>
-2093:                 <ERPButton
-2094:                   type="submit"
-2095:                   disabled={saving}
-2096:                 >
-2097:                   {saving
-2098:                     ? "Enregistrement..."
-2099:                     : "Enregistrer"}
-2100:                 </ERPButton>
-2101: 
-2102:                 <ERPButton
-2103:                   variant="secondary"
-2104:                   type="button"
-```
-
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: handleDeleteRecord :: line 1478
-
-```tsx
-1472:       ]);
-1473:     } finally {
-1474:       setSaving(false);
-1475:     }
-1476:   }
-1477: 
-1478:   async function handleDeleteRecord() {
-1479:     const confirmed = window.confirm(
-1480:       "Supprimer cet element ?"
-1481:     );
-1482: 
-1483:     if (!confirmed) {
-1484:       return;
-1485:     }
-1486: 
-1487:     try {
-1488:       await RuntimeDataBinding.delete(
-```
-
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: handleDeleteRecord :: line 2133
-
-```tsx
-2127: 
-2128: {mode === "edit" && Boolean(initialData?.id) && !sensitiveBusinessModule ? (
-2129:               <ERPButton
-2130:                 type="button"
-2131:                 variant="danger"
-2132:                 disabled={saving || isRemovedRecord}
-2133:                 onClick={handleDeleteRecord}
-2134:               >
-2135:                 Supprimer
-2136:               </ERPButton>
-2137:             ) : null}
-2138:           </div>
-2139:         </div>
-2140: 
-2141:         <ERPFormSummaryPanel module={module} />
-2142:       </section>
-2143:     </form>
-```
-
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: handleBusinessStatusAction :: line 1591
-
-```tsx
-1585:       };
-1586:     }
-1587: 
-1588:     return null;
-1589:   }
-1590: 
-1591:   async function handleBusinessStatusAction() {
-1592:     const action = getBusinessStatusAction();
-1593: 
-1594:     if (!action || !initialData?.id) {
-1595:       return;
-1596:     }
-1597: 
-1598:     const confirmed = window.confirm(action.confirmMessage);
-1599: 
-1600:     if (!confirmed) {
-1601:       return;
-```
-
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: handleBusinessStatusAction :: line 2066
-
-```tsx
-2060:                     type="button"
-2061: 
-2062: 
-2063:                     disabled={saving}
-2064: 
-2065: 
-2066:                     onClick={handleBusinessStatusAction}
-2067: 
-2068: 
-2069:                     className="inline-flex items-center justify-center rounded-2xl bg-amber-600 px-5 py-3 text-sm font-black text-[var(--erp-text)] shadow-sm transition hover:bg-amber-500 disabled:cursor-not-allowed disabled:opacity-60"
-2070: 
-2071: 
-2072:                   >
-2073: 
-2074: 
-2075:                     {businessStatusAction.label}
-2076: 
-```
-
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: router.push( :: line 1447
-
-```tsx
-1441:           action: workflowAction,
-1442:           record: savedRecord,
-1443:           result: workflowResult,
-1444:         });
-1445:       }
+1431:     try {
+1432:       await RuntimeDataBinding.delete(
+1433:         module,
+1434:         String(initialData.id)
+1435:       );
+1436: 
+1437:       router.push(
+1438:         module.metadata.routes?.list ??
+1439:           `/${module.metadata.key}`
+1440:       );
+1441:     } catch (error) {
+1442:       const message =
+1443:         error instanceof Error
+1444:           ? error.message
+1445:           : "Suppression impossible.";
 1446: 
-1447:       router.push(
-1448:         returnTo ??
-1449:           module.metadata.routes?.list ??
-1450:           `/${module.metadata.key}`
-1451:       );
-1452: 
-1453:       router.refresh();
-1454:     } catch (error) {
-1455:       pendingWorkflowActionRef.current = null;
-1456: 
-1457:       const message =
+1447:       setErrors([
 ```
 
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: router.push( :: line 1493
+### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: router.push( :: line 2010
 
 ```tsx
-1487:     try {
-1488:       await RuntimeDataBinding.delete(
-1489:         module,
-1490:         String(initialData.id)
-1491:       );
-1492: 
-1493:       router.push(
-1494:         module.metadata.routes?.list ??
-1495:           `/${module.metadata.key}`
-1496:       );
-1497:     } catch (error) {
-1498:       const message =
-1499:         error instanceof Error
-1500:           ? error.message
-1501:           : "Suppression impossible.";
-1502: 
-1503:       setErrors([
+2004: 
+2005:                 <ERPButton
+2006:                   variant="secondary"
+2007:                   type="button"
+2008:                   disabled={saving}
+2009:                   onClick={() =>
+2010:                     router.push(
+2011:                       returnTo ??
+2012:                         module.metadata.routes?.list ??
+2013:                         `/${module.metadata.key}`
+2014:                     )
+2015:                   }
+2016:                 >
+2017:                   Annuler
+2018:                 </ERPButton>
+2019:               </>
+2020:             ) : null}
 ```
 
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: router.push( :: line 2107
+### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: ERPButton :: line 16
 
 ```tsx
-2101: 
-2102:                 <ERPButton
-2103:                   variant="secondary"
-2104:                   type="button"
-2105:                   disabled={saving}
-2106:                   onClick={() =>
-2107:                     router.push(
-2108:                       returnTo ??
-2109:                         module.metadata.routes?.list ??
-2110:                         `/${module.metadata.key}`
-2111:                     )
-2112:                   }
-2113:                 >
-2114:                   Annuler
-2115:                 </ERPButton>
-2116:               </>
-2117:             ) : null}
+  10: import { ERPModuleBuilder } from "@/runtime/modules";
+  11: import { RuntimeDataBinding } from "@/runtime/data-binding";
+  12: import { RuntimeStatusGovernanceEngine } from "@/runtime/status";
+  13: import { RuntimeComputedFieldsEngine } from "@/runtime/computed";
+  14: import { RuntimeAutoFillEngine } from "@/runtime/autofill";
+  15: import { buildRuntimeFactureEncaissementCreateHref } from "@/runtime/navigation/RuntimeChildCreateHrefBuilder";
+  16: import { ERPButton } from "@/components/erp/ui";
+  17: 
+  18: import { ERPFormField } from "./ERPFormField";
+  19: import { ERPFormSection } from "./ERPFormSection";
+  20: import { ERPFormSummaryPanel } from "./ERPFormSummaryPanel";
+  21: import { ERPFormTabs } from "./ERPFormTabs";
+  22: 
+  23: import {
+  24:   RuntimePermissionEngine,
+  25: } from "@/runtime/permissions/RuntimePermissionEngine";
+  26: 
 ```
 
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: ERPButton :: line 22
+### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: ERPButton :: line 1996
 
 ```tsx
-  16: import { RuntimeActionEngine } from "@/runtime/actions/RuntimeActionEngine";
-  17: import { buildRuntimeFactureEncaissementCreateHref } from "@/runtime/navigation/RuntimeChildCreateHrefBuilder";
-  18: import {
-  19:   RuntimeNotificationCenter,
-  20: } from "@/runtime/notifications/RuntimeNotificationCenter";
-  21: 
-  22: import { ERPButton } from "@/components/erp/ui";
-  23: 
-  24: import { ERPFormField } from "./ERPFormField";
-  25: import { ERPFormSection } from "./ERPFormSection";
-  26: import { ERPFormSummaryPanel } from "./ERPFormSummaryPanel";
-  27: import { ERPFormTabs } from "./ERPFormTabs";
-  28: 
-  29: import {
-  30:   RuntimePermissionEngine,
-  31: } from "@/runtime/permissions/RuntimePermissionEngine";
-  32: 
+1990:             ) : null}
+1991: 
+1992: 
+1993: 
+1994:             {!isRemovedRecord ? (
+1995:               <>
+1996:                 <ERPButton
+1997:                   type="submit"
+1998:                   disabled={saving}
+1999:                 >
+2000:                   {saving
+2001:                     ? "Enregistrement..."
+2002:                     : "Enregistrer"}
+2003:                 </ERPButton>
+2004: 
+2005:                 <ERPButton
+2006:                   variant="secondary"
 ```
 
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: ERPButton :: line 2093
+### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: ERPButton :: line 2003
 
 ```tsx
-2087:             ) : null}
-2088: 
-2089: 
-2090: 
-2091:             {!isRemovedRecord ? (
-2092:               <>
-2093:                 <ERPButton
-2094:                   type="submit"
-2095:                   disabled={saving}
-2096:                 >
-2097:                   {saving
-2098:                     ? "Enregistrement..."
-2099:                     : "Enregistrer"}
-2100:                 </ERPButton>
-2101: 
-2102:                 <ERPButton
-2103:                   variant="secondary"
+1997:                   type="submit"
+1998:                   disabled={saving}
+1999:                 >
+2000:                   {saving
+2001:                     ? "Enregistrement..."
+2002:                     : "Enregistrer"}
+2003:                 </ERPButton>
+2004: 
+2005:                 <ERPButton
+2006:                   variant="secondary"
+2007:                   type="button"
+2008:                   disabled={saving}
+2009:                   onClick={() =>
+2010:                     router.push(
+2011:                       returnTo ??
+2012:                         module.metadata.routes?.list ??
+2013:                         `/${module.metadata.key}`
 ```
 
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: ERPButton :: line 2100
+### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: ERPButton :: line 2005
 
 ```tsx
-2094:                   type="submit"
-2095:                   disabled={saving}
-2096:                 >
-2097:                   {saving
-2098:                     ? "Enregistrement..."
-2099:                     : "Enregistrer"}
-2100:                 </ERPButton>
-2101: 
-2102:                 <ERPButton
-2103:                   variant="secondary"
-2104:                   type="button"
-2105:                   disabled={saving}
-2106:                   onClick={() =>
-2107:                     router.push(
-2108:                       returnTo ??
-2109:                         module.metadata.routes?.list ??
-2110:                         `/${module.metadata.key}`
-```
-
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: ERPButton :: line 2102
-
-```tsx
-2096:                 >
-2097:                   {saving
-2098:                     ? "Enregistrement..."
-2099:                     : "Enregistrer"}
-2100:                 </ERPButton>
-2101: 
-2102:                 <ERPButton
-2103:                   variant="secondary"
-2104:                   type="button"
-2105:                   disabled={saving}
-2106:                   onClick={() =>
-2107:                     router.push(
-2108:                       returnTo ??
-2109:                         module.metadata.routes?.list ??
-2110:                         `/${module.metadata.key}`
-2111:                     )
-2112:                   }
+1999:                 >
+2000:                   {saving
+2001:                     ? "Enregistrement..."
+2002:                     : "Enregistrer"}
+2003:                 </ERPButton>
+2004: 
+2005:                 <ERPButton
+2006:                   variant="secondary"
+2007:                   type="button"
+2008:                   disabled={saving}
+2009:                   onClick={() =>
+2010:                     router.push(
+2011:                       returnTo ??
+2012:                         module.metadata.routes?.list ??
+2013:                         `/${module.metadata.key}`
+2014:                     )
+2015:                   }
 ```
 
 ### src/components/erp/runtime/ERPRuntimePage.tsx :: RuntimeActionEngine :: line 31
@@ -1602,7 +1316,7 @@ Objectif : vérifier que les boutons workflow/actions métier ne sont plus rendu
 
 ## Conclusion
 
-La centralisation n’est pas encore validée : il reste des responsabilités workflow/action dans le formulaire ou des props workflowActions passées au formulaire.
+La séparation formulaire/runtime est globalement en place, mais il reste un risque de doublon ou une dette de migration côté `ERPRuntimePage`.
 
 ## Prochaine passe recommandée
 

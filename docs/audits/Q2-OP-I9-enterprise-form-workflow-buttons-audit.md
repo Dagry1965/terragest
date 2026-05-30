@@ -4,10 +4,10 @@ Objectif : identifier précisément si le formulaire enterprise porte encore des
 
 ## Résumé
 
-- OK : 11
+- OK : 15
 - INFO : 1
-- WARN : 13
-- WARN HIGH : 8
+- WARN : 9
+- WARN HIGH : 4
 - FAIL : 0
 - FAIL HIGH : 0
 
@@ -24,444 +24,282 @@ Objectif : identifier précisément si le formulaire enterprise porte encore des
 |---|---:|---:|---|---|---|
 | file | OK | HIGH | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` |  | ERPEnterpriseForm file found. |
 | file | OK | HIGH | `src/components/erp/runtime/ERPRuntimePage.tsx` |  | ERPRuntimePage file found. |
-| form-props | WARN | HIGH | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` | 223, 405, 1821, 1833 | ERPEnterpriseForm references workflowActions. Count=4. |
-| runtime-engine | WARN | HIGH | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` | 16, 1407 | ERPEnterpriseForm imports or calls RuntimeActionEngine. Count=3. |
+| form-props | OK | HIGH | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` |  | ERPEnterpriseForm references workflowActions. Not found. |
+| runtime-engine | OK | HIGH | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` |  | ERPEnterpriseForm imports or calls RuntimeActionEngine. Not found. |
 | runtime-engine | OK | HIGH | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` |  | ERPEnterpriseForm imports or calls RuntimeWorkflowEngine. Not found. |
 | runtime-workflow | OK | HIGH | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` |  | ERPEnterpriseForm may execute workflow transitions. Not found. |
 | runtime-action | OK | HIGH | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` |  | ERPEnterpriseForm may execute runtime actions. Not found. |
 | handler | OK | HIGH | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` |  | ERPEnterpriseForm contains a workflow handler. Not found. |
 | handler | OK | HIGH | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` |  | ERPEnterpriseForm contains a runtime action handler. Not found. |
-| ui-buttons | WARN | MEDIUM | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` | 1837, 2066, 2106, 2133 | ERPEnterpriseForm contains clickable handlers. Count=4. |
-| ui-buttons | WARN | MEDIUM | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` | 1834, 2057 | ERPEnterpriseForm renders native buttons. Count=2. |
-| ui-buttons | WARN | MEDIUM | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` | 22, 2093, 2100, 2102, 2115, 2129, 2136 | ERPEnterpriseForm renders ERPButton. Count=7. |
-| submit | INFO | LOW | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` | 2094 | ERPEnterpriseForm renders submit button. Count=1. |
-| ui-buttons | WARN | MEDIUM | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` | 1836, 2060, 2104, 2130 | ERPEnterpriseForm renders non-submit buttons. Count=4. |
+| ui-buttons | WARN | MEDIUM | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` | 1969, 2009, 2036 | ERPEnterpriseForm contains clickable handlers. Count=3. |
+| ui-buttons | WARN | MEDIUM | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` | 1960 | ERPEnterpriseForm renders native buttons. Count=1. |
+| ui-buttons | WARN | MEDIUM | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` | 16, 1996, 2003, 2005, 2018, 2032, 2039 | ERPEnterpriseForm renders ERPButton. Count=7. |
+| submit | INFO | LOW | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` | 1997 | ERPEnterpriseForm renders submit button. Count=1. |
+| ui-buttons | WARN | MEDIUM | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` | 1963, 2007, 2033 | ERPEnterpriseForm renders non-submit buttons. Count=3. |
 | runtime-page-pass | OK | HIGH | `src/components/erp/runtime/ERPRuntimePage.tsx` |  | ERPRuntimePage passes workflowActions into ERPEnterpriseForm. Not found. |
 | runtime-page-pass | OK | HIGH | `src/components/erp/runtime/ERPRuntimePage.tsx` |  | ERPRuntimePage passes workflowActions prop. Not found. |
 | runtime-page-form | WARN | HIGH | `src/components/erp/runtime/ERPRuntimePage.tsx` | 486, 494 | ERPRuntimePage renders ERPEnterpriseForm. Count=2. |
 | runtime-page-actions | WARN | HIGH | `src/components/erp/runtime/ERPRuntimePage.tsx` | 31, 32, 209, 273 | ERPRuntimePage uses RuntimeActionEngine. Count=4. |
 | runtime-page-actions | WARN | HIGH | `src/components/erp/runtime/ERPRuntimePage.tsx` | 42, 44, 267, 417, 419, 481 | ERPRuntimePage has runtimeActions. Count=6. |
 | runtime-page-payment | WARN | MEDIUM | `src/components/erp/runtime/ERPRuntimePage.tsx` | 91, 323 | ERPRuntimePage still has invoice payment action helper. Count=2. |
-| suspicious-rendering | WARN | HIGH | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` | 1833 | Suspicious form workflow/action rendering marker: workflow map rendering. Count=1. |
+| suspicious-rendering | OK | HIGH | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` |  | No suspicious form workflow/action rendering marker: workflow map rendering. |
 | suspicious-rendering | OK | HIGH | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` |  | No suspicious form workflow/action rendering marker: runtime action map rendering. |
-| suspicious-rendering | WARN | HIGH | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` | 223, 273, 405, 1181, 1405, 1409, 1415, 1416, 1418, 1420, 1425, 1427, 1428, 1429, 1431, 1439, 1441, 1443, 1529, 1532, 1562, 1566, 1572, 1575, 1579, 1581, 1584, 1647, 1739, 1743, 1790, 1793, 1821, 1828, 1833, 1847, 2069, 2114, 2124 | Suspicious form workflow/action rendering marker: workflow/action button labels. Count=39. |
-| target-architecture | WARN | HIGH | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` |  | ERPEnterpriseForm violates target architecture. Forbidden markers: RuntimeActionEngine, workflowActions.map |
+| suspicious-rendering | WARN | HIGH | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` | 266, 1473, 1476, 1506, 1510, 1516, 1519, 1523, 1525, 1528, 1591, 1683, 1687, 1734, 1737, 1972, 2017, 2027 | Suspicious form workflow/action rendering marker: workflow/action button labels. Count=18. |
+| target-architecture | OK | HIGH | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` |  | ERPEnterpriseForm has no high-level forbidden workflow/action markers. |
 | target-architecture | OK | HIGH | `src/components/erp/runtime/ERPRuntimePage.tsx` |  | ERPRuntimePage does not pass workflowActions into ERPEnterpriseForm. |
 
 ## Contextes importants
 
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: workflowActions :: line 223
+### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: onClick :: line 1969
 
 ```tsx
- 219: interface ERPEnterpriseFormProps {
- 220:   module: ERPModule;
- 221:   mode?: "create" | "edit";
- 222:   initialData?: Record<string, unknown>;
- 223:   workflowActions?: ERPModuleAction[];
- 224:   forceReadOnlyBecauseRemoved?: boolean;
- 225: }
- 226: 
- 227: interface ERPFormRelationChangeContext {
- 228:   field?: {
- 229:     key: string;
- 230:     relation?: unknown;
- 231:     autoFill?: RuntimeRelationAutoFillConfig;
+1965: 
+1966:                     disabled={saving}
+1967: 
+1968: 
+1969:                     onClick={handleBusinessStatusAction}
+1970: 
+1971: 
+1972:                     className="inline-flex items-center justify-center rounded-2xl bg-amber-600 px-5 py-3 text-sm font-black text-[var(--erp-text)] shadow-sm transition hover:bg-amber-500 disabled:cursor-not-allowed disabled:opacity-60"
+1973: 
+1974: 
+1975:                   >
+1976: 
+1977: 
 ```
 
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: workflowActions :: line 405
+### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: onClick :: line 2009
 
 ```tsx
- 401: export function ERPEnterpriseForm({
- 402:   module,
- 403:   mode = "create",
- 404:   initialData = {},
- 405:   workflowActions = [],
- 406:   forceReadOnlyBecauseRemoved = false,
- 407: }: ERPEnterpriseFormProps) {
- 408:   const router = useRouter();
- 409: 
- 410:   const formRef =
- 411:     useRef<HTMLFormElement | null>(null);
- 412: 
- 413:   const pendingWorkflowActionRef =
+2005:                 <ERPButton
+2006:                   variant="secondary"
+2007:                   type="button"
+2008:                   disabled={saving}
+2009:                   onClick={() =>
+2010:                     router.push(
+2011:                       returnTo ??
+2012:                         module.metadata.routes?.list ??
+2013:                         `/${module.metadata.key}`
+2014:                     )
+2015:                   }
+2016:                 >
+2017:                   Annuler
 ```
 
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: workflowActions :: line 1821
+### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: onClick :: line 2036
 
 ```tsx
-1817:           />
-1818:         </div>
-1819:       ) : null}
-1820: 
-1821:       {mode === "edit" && !isRemovedRecord && workflowActions.length > 0 && (
-1822:         <section className="rounded-2xl sm:rounded-3xl border border-[#D5E4E8] bg-[#F8FAFC] p-4 shadow-[0_8px_24px_rgba(15,23,42,0.06)]">
-1823:           <div className="mb-3">
-1824:             <p className="text-xs font-black uppercase tracking-wide text-[#334155]">
-1825:               Workflow
-1826:             </p>
-1827:             <p className="text-sm text-[#111827]">
-1828:               Ces actions enregistrent d'abord le formulaire, puis executent le workflow.low.
-1829:             </p>
+2032:               <ERPButton
+2033:                 type="button"
+2034:                 variant="danger"
+2035:                 disabled={saving || isRemovedRecord}
+2036:                 onClick={handleDeleteRecord}
+2037:               >
+2038:                 Supprimer
+2039:               </ERPButton>
+2040:             ) : null}
+2041:           </div>
+2042:         </div>
+2043: 
+2044:         <ERPFormSummaryPanel module={module} />
 ```
 
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: workflowActions :: line 1833
+### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: <button :: line 1960
 
 ```tsx
-1829:             </p>
-1830:           </div>
-1831: 
-1832:           <div className="flex flex-wrap gap-3">
-1833:             {workflowActions.map((action) => (
-1834:               <button
-1835:                 key={action.key}
-1836:                 type="button"
-1837:                 onClick={() => {
-1838:                   pendingWorkflowActionRef.current = action;
-1839:                   formRef.current?.requestSubmit();
-1840:                 }}
-1841:                 className={`
+1956: 
+1957:             
+1958: 
+1959: 
+1960:                   <button
+1961: 
+1962: 
+1963:                     type="button"
+1964: 
+1965: 
+1966:                     disabled={saving}
+1967: 
+1968: 
 ```
 
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: RuntimeActionEngine :: line 16
+### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: ERPButton :: line 16
 
 ```tsx
-  12: import { RuntimeDataBinding } from "@/runtime/data-binding";
-  13: import { RuntimeStatusGovernanceEngine } from "@/runtime/status";
-  14: import { RuntimeComputedFieldsEngine } from "@/runtime/computed";
-  15: import { RuntimeAutoFillEngine } from "@/runtime/autofill";
-  16: import { RuntimeActionEngine } from "@/runtime/actions/RuntimeActionEngine";
-  17: import { buildRuntimeFactureEncaissementCreateHref } from "@/runtime/navigation/RuntimeChildCreateHrefBuilder";
-  18: import {
-  19:   RuntimeNotificationCenter,
-  20: } from "@/runtime/notifications/RuntimeNotificationCenter";
-  21: 
-  22: import { ERPButton } from "@/components/erp/ui";
-  23: 
-  24: import { ERPFormField } from "./ERPFormField";
+  12: import { RuntimeStatusGovernanceEngine } from "@/runtime/status";
+  13: import { RuntimeComputedFieldsEngine } from "@/runtime/computed";
+  14: import { RuntimeAutoFillEngine } from "@/runtime/autofill";
+  15: import { buildRuntimeFactureEncaissementCreateHref } from "@/runtime/navigation/RuntimeChildCreateHrefBuilder";
+  16: import { ERPButton } from "@/components/erp/ui";
+  17: 
+  18: import { ERPFormField } from "./ERPFormField";
+  19: import { ERPFormSection } from "./ERPFormSection";
+  20: import { ERPFormSummaryPanel } from "./ERPFormSummaryPanel";
+  21: import { ERPFormTabs } from "./ERPFormTabs";
+  22: 
+  23: import {
+  24:   RuntimePermissionEngine,
 ```
 
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: RuntimeActionEngine :: line 1407
+### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: ERPButton :: line 1996
 
 ```tsx
-1403:       }
-1404: 
-1405:       if (workflowAction && savedRecord) {
-1406:         const workflowResult =
-1407:           await RuntimeActionEngine.execute({
-1408:             module,
-1409:             action: workflowAction,
-1410:             record: savedRecord,
-1411:           });
-1412: 
-1413:         pendingWorkflowActionRef.current = null;
-1414: 
-1415:         if (!workflowResult?.success) {
+1992: 
+1993: 
+1994:             {!isRemovedRecord ? (
+1995:               <>
+1996:                 <ERPButton
+1997:                   type="submit"
+1998:                   disabled={saving}
+1999:                 >
+2000:                   {saving
+2001:                     ? "Enregistrement..."
+2002:                     : "Enregistrer"}
+2003:                 </ERPButton>
+2004: 
 ```
 
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: onClick :: line 1837
+### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: ERPButton :: line 2003
 
 ```tsx
-1833:             {workflowActions.map((action) => (
-1834:               <button
-1835:                 key={action.key}
-1836:                 type="button"
-1837:                 onClick={() => {
-1838:                   pendingWorkflowActionRef.current = action;
-1839:                   formRef.current?.requestSubmit();
-1840:                 }}
-1841:                 className={`
-1842:                   rounded-2xl
-1843:                   px-4
-1844:                   py-2
-1845:                   text-sm
+1999:                 >
+2000:                   {saving
+2001:                     ? "Enregistrement..."
+2002:                     : "Enregistrer"}
+2003:                 </ERPButton>
+2004: 
+2005:                 <ERPButton
+2006:                   variant="secondary"
+2007:                   type="button"
+2008:                   disabled={saving}
+2009:                   onClick={() =>
+2010:                     router.push(
+2011:                       returnTo ??
 ```
 
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: onClick :: line 2066
+### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: ERPButton :: line 2005
 
 ```tsx
-2062: 
-2063:                     disabled={saving}
-2064: 
-2065: 
-2066:                     onClick={handleBusinessStatusAction}
-2067: 
-2068: 
-2069:                     className="inline-flex items-center justify-center rounded-2xl bg-amber-600 px-5 py-3 text-sm font-black text-[var(--erp-text)] shadow-sm transition hover:bg-amber-500 disabled:cursor-not-allowed disabled:opacity-60"
-2070: 
-2071: 
-2072:                   >
-2073: 
-2074: 
+2001:                     ? "Enregistrement..."
+2002:                     : "Enregistrer"}
+2003:                 </ERPButton>
+2004: 
+2005:                 <ERPButton
+2006:                   variant="secondary"
+2007:                   type="button"
+2008:                   disabled={saving}
+2009:                   onClick={() =>
+2010:                     router.push(
+2011:                       returnTo ??
+2012:                         module.metadata.routes?.list ??
+2013:                         `/${module.metadata.key}`
 ```
 
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: onClick :: line 2106
+### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: ERPButton :: line 2018
 
 ```tsx
-2102:                 <ERPButton
-2103:                   variant="secondary"
-2104:                   type="button"
-2105:                   disabled={saving}
-2106:                   onClick={() =>
-2107:                     router.push(
-2108:                       returnTo ??
-2109:                         module.metadata.routes?.list ??
-2110:                         `/${module.metadata.key}`
-2111:                     )
-2112:                   }
-2113:                 >
-2114:                   Annuler
+2014:                     )
+2015:                   }
+2016:                 >
+2017:                   Annuler
+2018:                 </ERPButton>
+2019:               </>
+2020:             ) : null}
+2021: 
+2022:                         {mode === "edit" && Boolean(initialData?.id) && sensitiveBusinessModule ? (
+2023:               <div
+2024:                 data-sensitive-delete-hidden-notice
+2025:                 className="w-full rounded-2xl border border-[var(--erp-border-strong)] bg-[var(--erp-primary-soft)] px-4 py-3 text-sm text-[var(--erp-text-muted)]"
+2026:               >
 ```
 
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: onClick :: line 2133
+### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: ERPButton :: line 2032
 
 ```tsx
-2129:               <ERPButton
-2130:                 type="button"
-2131:                 variant="danger"
-2132:                 disabled={saving || isRemovedRecord}
-2133:                 onClick={handleDeleteRecord}
-2134:               >
-2135:                 Supprimer
-2136:               </ERPButton>
-2137:             ) : null}
-2138:           </div>
-2139:         </div>
-2140: 
-2141:         <ERPFormSummaryPanel module={module} />
+2028:               </div>
+2029:             ) : null}
+2030: 
+2031: {mode === "edit" && Boolean(initialData?.id) && !sensitiveBusinessModule ? (
+2032:               <ERPButton
+2033:                 type="button"
+2034:                 variant="danger"
+2035:                 disabled={saving || isRemovedRecord}
+2036:                 onClick={handleDeleteRecord}
+2037:               >
+2038:                 Supprimer
+2039:               </ERPButton>
+2040:             ) : null}
 ```
 
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: <button :: line 1834
+### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: type="submit" :: line 1997
 
 ```tsx
-1830:           </div>
-1831: 
-1832:           <div className="flex flex-wrap gap-3">
-1833:             {workflowActions.map((action) => (
-1834:               <button
-1835:                 key={action.key}
-1836:                 type="button"
-1837:                 onClick={() => {
-1838:                   pendingWorkflowActionRef.current = action;
-1839:                   formRef.current?.requestSubmit();
-1840:                 }}
-1841:                 className={`
-1842:                   rounded-2xl
+1993: 
+1994:             {!isRemovedRecord ? (
+1995:               <>
+1996:                 <ERPButton
+1997:                   type="submit"
+1998:                   disabled={saving}
+1999:                 >
+2000:                   {saving
+2001:                     ? "Enregistrement..."
+2002:                     : "Enregistrer"}
+2003:                 </ERPButton>
+2004: 
+2005:                 <ERPButton
 ```
 
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: <button :: line 2057
+### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: type="button" :: line 1963
 
 ```tsx
-2053: 
-2054:             
-2055: 
-2056: 
-2057:                   <button
-2058: 
-2059: 
-2060:                     type="button"
-2061: 
-2062: 
-2063:                     disabled={saving}
-2064: 
-2065: 
+1959: 
+1960:                   <button
+1961: 
+1962: 
+1963:                     type="button"
+1964: 
+1965: 
+1966:                     disabled={saving}
+1967: 
+1968: 
+1969:                     onClick={handleBusinessStatusAction}
+1970: 
+1971: 
 ```
 
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: ERPButton :: line 22
+### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: type="button" :: line 2007
 
 ```tsx
-  18: import {
-  19:   RuntimeNotificationCenter,
-  20: } from "@/runtime/notifications/RuntimeNotificationCenter";
-  21: 
-  22: import { ERPButton } from "@/components/erp/ui";
-  23: 
-  24: import { ERPFormField } from "./ERPFormField";
-  25: import { ERPFormSection } from "./ERPFormSection";
-  26: import { ERPFormSummaryPanel } from "./ERPFormSummaryPanel";
-  27: import { ERPFormTabs } from "./ERPFormTabs";
-  28: 
-  29: import {
-  30:   RuntimePermissionEngine,
+2003:                 </ERPButton>
+2004: 
+2005:                 <ERPButton
+2006:                   variant="secondary"
+2007:                   type="button"
+2008:                   disabled={saving}
+2009:                   onClick={() =>
+2010:                     router.push(
+2011:                       returnTo ??
+2012:                         module.metadata.routes?.list ??
+2013:                         `/${module.metadata.key}`
+2014:                     )
+2015:                   }
 ```
 
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: ERPButton :: line 2093
+### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: type="button" :: line 2033
 
 ```tsx
-2089: 
-2090: 
-2091:             {!isRemovedRecord ? (
-2092:               <>
-2093:                 <ERPButton
-2094:                   type="submit"
-2095:                   disabled={saving}
-2096:                 >
-2097:                   {saving
-2098:                     ? "Enregistrement..."
-2099:                     : "Enregistrer"}
-2100:                 </ERPButton>
-2101: 
-```
-
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: ERPButton :: line 2100
-
-```tsx
-2096:                 >
-2097:                   {saving
-2098:                     ? "Enregistrement..."
-2099:                     : "Enregistrer"}
-2100:                 </ERPButton>
-2101: 
-2102:                 <ERPButton
-2103:                   variant="secondary"
-2104:                   type="button"
-2105:                   disabled={saving}
-2106:                   onClick={() =>
-2107:                     router.push(
-2108:                       returnTo ??
-```
-
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: ERPButton :: line 2102
-
-```tsx
-2098:                     ? "Enregistrement..."
-2099:                     : "Enregistrer"}
-2100:                 </ERPButton>
-2101: 
-2102:                 <ERPButton
-2103:                   variant="secondary"
-2104:                   type="button"
-2105:                   disabled={saving}
-2106:                   onClick={() =>
-2107:                     router.push(
-2108:                       returnTo ??
-2109:                         module.metadata.routes?.list ??
-2110:                         `/${module.metadata.key}`
-```
-
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: ERPButton :: line 2115
-
-```tsx
-2111:                     )
-2112:                   }
-2113:                 >
-2114:                   Annuler
-2115:                 </ERPButton>
-2116:               </>
-2117:             ) : null}
-2118: 
-2119:                         {mode === "edit" && Boolean(initialData?.id) && sensitiveBusinessModule ? (
-2120:               <div
-2121:                 data-sensitive-delete-hidden-notice
-2122:                 className="w-full rounded-2xl border border-[var(--erp-border-strong)] bg-[var(--erp-primary-soft)] px-4 py-3 text-sm text-[var(--erp-text-muted)]"
-2123:               >
-```
-
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: ERPButton :: line 2129
-
-```tsx
-2125:               </div>
-2126:             ) : null}
-2127: 
-2128: {mode === "edit" && Boolean(initialData?.id) && !sensitiveBusinessModule ? (
-2129:               <ERPButton
-2130:                 type="button"
-2131:                 variant="danger"
-2132:                 disabled={saving || isRemovedRecord}
-2133:                 onClick={handleDeleteRecord}
-2134:               >
-2135:                 Supprimer
-2136:               </ERPButton>
-2137:             ) : null}
-```
-
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: type="submit" :: line 2094
-
-```tsx
-2090: 
-2091:             {!isRemovedRecord ? (
-2092:               <>
-2093:                 <ERPButton
-2094:                   type="submit"
-2095:                   disabled={saving}
-2096:                 >
-2097:                   {saving
-2098:                     ? "Enregistrement..."
-2099:                     : "Enregistrer"}
-2100:                 </ERPButton>
-2101: 
-2102:                 <ERPButton
-```
-
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: type="button" :: line 1836
-
-```tsx
-1832:           <div className="flex flex-wrap gap-3">
-1833:             {workflowActions.map((action) => (
-1834:               <button
-1835:                 key={action.key}
-1836:                 type="button"
-1837:                 onClick={() => {
-1838:                   pendingWorkflowActionRef.current = action;
-1839:                   formRef.current?.requestSubmit();
-1840:                 }}
-1841:                 className={`
-1842:                   rounded-2xl
-1843:                   px-4
-1844:                   py-2
-```
-
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: type="button" :: line 2060
-
-```tsx
-2056: 
-2057:                   <button
-2058: 
-2059: 
-2060:                     type="button"
-2061: 
-2062: 
-2063:                     disabled={saving}
-2064: 
-2065: 
-2066:                     onClick={handleBusinessStatusAction}
-2067: 
-2068: 
-```
-
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: type="button" :: line 2104
-
-```tsx
-2100:                 </ERPButton>
-2101: 
-2102:                 <ERPButton
-2103:                   variant="secondary"
-2104:                   type="button"
-2105:                   disabled={saving}
-2106:                   onClick={() =>
-2107:                     router.push(
-2108:                       returnTo ??
-2109:                         module.metadata.routes?.list ??
-2110:                         `/${module.metadata.key}`
-2111:                     )
-2112:                   }
-```
-
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: type="button" :: line 2130
-
-```tsx
-2126:             ) : null}
-2127: 
-2128: {mode === "edit" && Boolean(initialData?.id) && !sensitiveBusinessModule ? (
-2129:               <ERPButton
-2130:                 type="button"
-2131:                 variant="danger"
-2132:                 disabled={saving || isRemovedRecord}
-2133:                 onClick={handleDeleteRecord}
-2134:               >
-2135:                 Supprimer
-2136:               </ERPButton>
-2137:             ) : null}
-2138:           </div>
+2029:             ) : null}
+2030: 
+2031: {mode === "edit" && Boolean(initialData?.id) && !sensitiveBusinessModule ? (
+2032:               <ERPButton
+2033:                 type="button"
+2034:                 variant="danger"
+2035:                 disabled={saving || isRemovedRecord}
+2036:                 onClick={handleDeleteRecord}
+2037:               >
+2038:                 Supprimer
+2039:               </ERPButton>
+2040:             ) : null}
+2041:           </div>
 ```
 
 ### src/components/erp/runtime/ERPRuntimePage.tsx :: <ERPEnterpriseForm :: line 486
@@ -716,193 +554,172 @@ Objectif : identifier précisément si le formulaire enterprise porte encore des
  331: 
 ```
 
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: workflow map rendering :: line 1833
+### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: workflow/action button labels :: line 266
 
 ```tsx
-1828:               Ces actions enregistrent d'abord le formulaire, puis executent le workflow.low.
-1829:             </p>
-1830:           </div>
-1831: 
-1832:           <div className="flex flex-wrap gap-3">
-1833:             {workflowActions.map((action) => (
-1834:               <button
-1835:                 key={action.key}
-1836:                 type="button"
-1837:                 onClick={() => {
-1838:                   pendingWorkflowActionRef.current = action;
-1839:                   formRef.current?.requestSubmit();
-1840:                 }}
-1841:                 className={`
-1842:                   rounded-2xl
-1843:                   px-4
+ 261:   return buildRuntimeFactureEncaissementCreateHref({
+ 262:     factureId,
+ 263:     clientId: invoice.clientId ? String(invoice.clientId) : undefined,
+ 264:     vehiculeId: invoice.vehiculeId ? String(invoice.vehiculeId) : undefined,
+ 265:     montant: montant > 0 ? montant : undefined,
+ 266:     datePaiement: new Date()
+ 267:       .toISOString()
+ 268:       .split("T")[0],
+ 269:     statut: "valide",
+ 270:     returnTo: "/facturesauto/" + factureId + "/edit",
+ 271:   });
+ 272: }
+ 273: 
+ 274: async function syncInterventionTotalsFromLines(
+ 275:   interventionId: string
+ 276: ) {
 ```
 
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: workflow/action button labels :: line 223
+### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: workflow/action button labels :: line 1473
 
 ```tsx
- 218: 
- 219: interface ERPEnterpriseFormProps {
- 220:   module: ERPModule;
- 221:   mode?: "create" | "edit";
- 222:   initialData?: Record<string, unknown>;
- 223:   workflowActions?: ERPModuleAction[];
- 224:   forceReadOnlyBecauseRemoved?: boolean;
- 225: }
- 226: 
- 227: interface ERPFormRelationChangeContext {
- 228:   field?: {
- 229:     key: string;
- 230:     relation?: unknown;
- 231:     autoFill?: RuntimeRelationAutoFillConfig;
- 232:   };
- 233:   selectedOption?: {
+1468:     const currentStatus = String(formValues.statut ?? "");
+1469: 
+1470:     if (moduleKey === "receptionsstockauto" && currentStatus === "brouillon") {
+1471:       return {
+1472:         // Q21D1C_VALIDATE_RECEPTION_ACTION
+1473:         label: "Valider reception",
+1474:         nextStatus: "validee",
+1475:         confirmMessage:
+1476:           "Valider cette reception ? Une entree stock sera creee automatiquement et les champs critiques seront verrouilles.",
+1477:       };
+1478:     }
+1479: 
+1480:     if (moduleKey === "clientsauto" && currentStatus !== "archive") {
+1481:       return {
+1482:         label: "Archiver client",
+1483:         nextStatus: "archive",
 ```
 
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: workflow/action button labels :: line 273
+### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: workflow/action button labels :: line 1476
 
 ```tsx
- 268:   return buildRuntimeFactureEncaissementCreateHref({
- 269:     factureId,
- 270:     clientId: invoice.clientId ? String(invoice.clientId) : undefined,
- 271:     vehiculeId: invoice.vehiculeId ? String(invoice.vehiculeId) : undefined,
- 272:     montant: montant > 0 ? montant : undefined,
- 273:     datePaiement: new Date()
- 274:       .toISOString()
- 275:       .split("T")[0],
- 276:     statut: "valide",
- 277:     returnTo: "/facturesauto/" + factureId + "/edit",
- 278:   });
- 279: }
- 280: 
- 281: async function syncInterventionTotalsFromLines(
- 282:   interventionId: string
- 283: ) {
+1471:       return {
+1472:         // Q21D1C_VALIDATE_RECEPTION_ACTION
+1473:         label: "Valider reception",
+1474:         nextStatus: "validee",
+1475:         confirmMessage:
+1476:           "Valider cette reception ? Une entree stock sera creee automatiquement et les champs critiques seront verrouilles.",
+1477:       };
+1478:     }
+1479: 
+1480:     if (moduleKey === "clientsauto" && currentStatus !== "archive") {
+1481:       return {
+1482:         label: "Archiver client",
+1483:         nextStatus: "archive",
+1484:         confirmMessage:
+1485:           "Archiver ce client ? Il ne sera pas supprime et son historique sera conserve.",
+1486:       };
 ```
 
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: workflow/action button labels :: line 405
+### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: workflow/action button labels :: line 1506
 
 ```tsx
- 400: 
- 401: export function ERPEnterpriseForm({
- 402:   module,
- 403:   mode = "create",
- 404:   initialData = {},
- 405:   workflowActions = [],
- 406:   forceReadOnlyBecauseRemoved = false,
- 407: }: ERPEnterpriseFormProps) {
- 408:   const router = useRouter();
- 409: 
- 410:   const formRef =
- 411:     useRef<HTMLFormElement | null>(null);
- 412: 
- 413:   const pendingWorkflowActionRef =
- 414:     useRef<ERPModuleAction | null>(null);
- 415:   const searchParams = useSearchParams();
+1501:     if (
+1502:       moduleKey === "facturesauto" &&
+1503:       currentInvoiceStatus !== "annulee"
+1504:     ) {
+1505:       return {
+1506:         label: "Annuler facture",
+1507:         nextStatus: "annulee",
+1508:         statusField: "statutFacture",
+1509:         confirmMessage:
+1510:           "Annuler cette facture ? Les paiements, echeances et historiques seront conserves.",
+1511:       };
+1512:     }
+1513: 
+1514:     if (moduleKey === "encaissementsauto" && currentStatus !== "annule") {
+1515:       return {
+1516:         label: "Annuler encaissement",
 ```
 
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: workflow/action button labels :: line 1181
+### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: workflow/action button labels :: line 1510
 
 ```tsx
-1176:     event.preventDefault();
-1177:     setSaving(true);
-1178: 
-1179:     
-1180: 
-1181:     const workflowAction =
-1182:       pendingWorkflowActionRef.current;
-1183: const formData =
-1184:       new FormData(event.currentTarget);
-1185: 
-1186:     const payload: Record<string, unknown> = {
-1187:       ...formValues,
-1188:     };
-1189: 
-1190:     form.fields
-1191:       .filter(
+1505:       return {
+1506:         label: "Annuler facture",
+1507:         nextStatus: "annulee",
+1508:         statusField: "statutFacture",
+1509:         confirmMessage:
+1510:           "Annuler cette facture ? Les paiements, echeances et historiques seront conserves.",
+1511:       };
+1512:     }
+1513: 
+1514:     if (moduleKey === "encaissementsauto" && currentStatus !== "annule") {
+1515:       return {
+1516:         label: "Annuler encaissement",
+1517:         nextStatus: "annule",
+1518:         confirmMessage:
+1519:           "Annuler cet encaissement ? Le paiement restera conserve dans l'historique.",
+1520:       };
 ```
 
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: workflow/action button labels :: line 1405
+### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: workflow/action button labels :: line 1516
 
 ```tsx
-1400:           await syncInterventionTotalsFromLines(interventionId);
-1401:         }
-1402: 
-1403:       }
-1404: 
-1405:       if (workflowAction && savedRecord) {
-1406:         const workflowResult =
-1407:           await RuntimeActionEngine.execute({
-1408:             module,
-1409:             action: workflowAction,
-1410:             record: savedRecord,
-1411:           });
-1412: 
-1413:         pendingWorkflowActionRef.current = null;
-1414: 
-1415:         if (!workflowResult?.success) {
+1511:       };
+1512:     }
+1513: 
+1514:     if (moduleKey === "encaissementsauto" && currentStatus !== "annule") {
+1515:       return {
+1516:         label: "Annuler encaissement",
+1517:         nextStatus: "annule",
+1518:         confirmMessage:
+1519:           "Annuler cet encaissement ? Le paiement restera conserve dans l'historique.",
+1520:       };
+1521:     }
+1522: 
+1523:     if (moduleKey === "echeancespaiementauto" && currentStatus !== "annulee") {
+1524:       return {
+1525:         label: "Annuler echeance",
+1526:         nextStatus: "annulee",
 ```
 
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: workflow/action button labels :: line 1409
+### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: workflow/action button labels :: line 1519
 
 ```tsx
-1404: 
-1405:       if (workflowAction && savedRecord) {
-1406:         const workflowResult =
-1407:           await RuntimeActionEngine.execute({
-1408:             module,
-1409:             action: workflowAction,
-1410:             record: savedRecord,
-1411:           });
-1412: 
-1413:         pendingWorkflowActionRef.current = null;
-1414: 
-1415:         if (!workflowResult?.success) {
-1416:           RuntimeNotificationCenter.workflowError({
-1417:             module,
-1418:             action: workflowAction,
-1419:             record: savedRecord,
+1514:     if (moduleKey === "encaissementsauto" && currentStatus !== "annule") {
+1515:       return {
+1516:         label: "Annuler encaissement",
+1517:         nextStatus: "annule",
+1518:         confirmMessage:
+1519:           "Annuler cet encaissement ? Le paiement restera conserve dans l'historique.",
+1520:       };
+1521:     }
+1522: 
+1523:     if (moduleKey === "echeancespaiementauto" && currentStatus !== "annulee") {
+1524:       return {
+1525:         label: "Annuler echeance",
+1526:         nextStatus: "annulee",
+1527:         confirmMessage:
+1528:           "Annuler cette echeance ? Elle restera conservee dans l'historique.",
+1529:       };
 ```
 
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: workflow/action button labels :: line 1415
+### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: workflow/action button labels :: line 1523
 
 ```tsx
-1410:             record: savedRecord,
-1411:           });
-1412: 
-1413:         pendingWorkflowActionRef.current = null;
-1414: 
-1415:         if (!workflowResult?.success) {
-1416:           RuntimeNotificationCenter.workflowError({
-1417:             module,
-1418:             action: workflowAction,
-1419:             record: savedRecord,
-1420:             result: workflowResult,
-1421:           });
-1422: 
-1423:           setErrors([
-1424:             {
-1425:               field: "workflow",
-```
-
-### src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx :: workflow/action button labels :: line 1416
-
-```tsx
-1411:           });
-1412: 
-1413:         pendingWorkflowActionRef.current = null;
-1414: 
-1415:         if (!workflowResult?.success) {
-1416:           RuntimeNotificationCenter.workflowError({
-1417:             module,
-1418:             action: workflowAction,
-1419:             record: savedRecord,
-1420:             result: workflowResult,
-1421:           });
-1422: 
-1423:           setErrors([
-1424:             {
-1425:               field: "workflow",
-1426:               message:
+1518:         confirmMessage:
+1519:           "Annuler cet encaissement ? Le paiement restera conserve dans l'historique.",
+1520:       };
+1521:     }
+1522: 
+1523:     if (moduleKey === "echeancespaiementauto" && currentStatus !== "annulee") {
+1524:       return {
+1525:         label: "Annuler echeance",
+1526:         nextStatus: "annulee",
+1527:         confirmMessage:
+1528:           "Annuler cette echeance ? Elle restera conservee dans l'historique.",
+1529:       };
+1530:     }
+1531: 
+1532:     return null;
+1533:   }
 ```
 
 ## Conclusion
