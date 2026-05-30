@@ -674,32 +674,48 @@ export function ERPClientOperationalSheet({
                               recordId(intervention) === recordId(selectedIntervention);
 
                             return (
-                              <button
+                              <div
                                 key={recordId(intervention)}
-                                type="button"
-                                onClick={() => setSelectedInterventionId(recordId(intervention))}
+                                data-q2-hub-client-final-c2="Q2_HUB_CLIENT_FINAL_C2_EXPAND_INTERVENTION_LINES"
                                 className={[
-                                  "rounded-[1.5rem] border p-4 text-left transition",
+                                  "rounded-[1.5rem] border transition",
                                   isSelected
                                     ? "border-emerald-400 bg-emerald-50"
-                                    : "border-slate-200 bg-slate-50 hover:border-emerald-200",
+                                    : "border-slate-200 bg-slate-50",
                                 ].join(" ")}
                               >
-                                <div className="flex flex-wrap items-start justify-between gap-3">
-                                  <div>
-                                    <p className="font-extrabold text-slate-950">
-                                      {text(intervention, ["displayLabel", "dateIntervention", "titre", "numeroIntervention"])}
-                                    </p>
-                                    <p className="mt-1 text-sm text-slate-500">
-                                      {text(intervention, ["statut", "status"], "suivi")} · {text(intervention, ["montantTTC", "montantHT"], "0")}
-                                    </p>
-                                  </div>
+                                <button
+                                  type="button"
+                                  onClick={() => setSelectedInterventionId(recordId(intervention))}
+                                  className="w-full cursor-pointer p-4 text-left focus:outline-none focus:ring-4 focus:ring-emerald-100"
+                                >
+                                  <div className="flex flex-wrap items-start justify-between gap-3">
+                                    <div>
+                                      <p className="font-extrabold text-slate-950">
+                                        {text(intervention, ["displayLabel", "dateIntervention", "titre", "numeroIntervention"])}
+                                      </p>
+                                      <p className="mt-1 text-sm text-slate-500">
+                                        {text(intervention, ["statut", "status"], "suivi")} · {text(intervention, ["montantTTC", "montantHT"], "0")}
+                                      </p>
+                                    </div>
 
-                                  <span className="rounded-full bg-white px-3 py-1 text-xs font-bold text-slate-900 ring-1 ring-slate-200">
-                                    {isSelected ? "Ouverte" : "Ouvrir"}
-                                  </span>
-                                </div>
-                              </button>
+                                    <span className="rounded-full bg-white px-3 py-1 text-xs font-bold text-slate-900 ring-1 ring-slate-200">
+                                      {isSelected ? "Masquer les lignes" : "Voir les lignes"}
+                                    </span>
+                                  </div>
+                                </button>
+
+                                {isSelected ? (
+                                  <div className="border-t border-emerald-100 bg-white/80 p-4">
+                                    <ERPRelatedRecordsPanel
+                                      parentModule={interventionsautoModule}
+                                      parentRecord={intervention}
+                                      child={lignesInterventionChild}
+                                      mode="detail"
+                                    />
+                                  </div>
+                                ) : null}
+                              </div>
                             );
                           })}
                         </div>
@@ -707,15 +723,6 @@ export function ERPClientOperationalSheet({
                         <EmptyCard>Aucune intervention liée au rendez-vous sélectionné.</EmptyCard>
                       )}
                     </section>
-
-                    {selectedIntervention ? (
-                      <ERPRelatedRecordsPanel
-                        parentModule={interventionsautoModule}
-                        parentRecord={selectedIntervention}
-                        child={lignesInterventionChild}
-                        mode="detail"
-                      />
-                    ) : null}
 
                     {selectedIntervention ? (
                       <ERPRelatedRecordsPanel
