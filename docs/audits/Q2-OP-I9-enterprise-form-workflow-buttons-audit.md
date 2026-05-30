@@ -4,10 +4,10 @@ Objectif : identifier précisément si le formulaire enterprise porte encore des
 
 ## Résumé
 
-- OK : 8
+- OK : 11
 - INFO : 1
-- WARN : 16
-- WARN HIGH : 11
+- WARN : 13
+- WARN HIGH : 8
 - FAIL : 0
 - FAIL HIGH : 0
 
@@ -36,17 +36,17 @@ Objectif : identifier précisément si le formulaire enterprise porte encore des
 | ui-buttons | WARN | MEDIUM | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` | 22, 2093, 2100, 2102, 2115, 2129, 2136 | ERPEnterpriseForm renders ERPButton. Count=7. |
 | submit | INFO | LOW | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` | 2094 | ERPEnterpriseForm renders submit button. Count=1. |
 | ui-buttons | WARN | MEDIUM | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` | 1836, 2060, 2104, 2130 | ERPEnterpriseForm renders non-submit buttons. Count=4. |
-| runtime-page-pass | WARN | HIGH | `src/components/erp/runtime/ERPRuntimePage.tsx` | 498 | ERPRuntimePage passes workflowActions into ERPEnterpriseForm. Count=1. |
-| runtime-page-pass | WARN | HIGH | `src/components/erp/runtime/ERPRuntimePage.tsx` | 498 | ERPRuntimePage passes workflowActions prop. Count=1. |
+| runtime-page-pass | OK | HIGH | `src/components/erp/runtime/ERPRuntimePage.tsx` |  | ERPRuntimePage passes workflowActions into ERPEnterpriseForm. Not found. |
+| runtime-page-pass | OK | HIGH | `src/components/erp/runtime/ERPRuntimePage.tsx` |  | ERPRuntimePage passes workflowActions prop. Not found. |
 | runtime-page-form | WARN | HIGH | `src/components/erp/runtime/ERPRuntimePage.tsx` | 486, 494 | ERPRuntimePage renders ERPEnterpriseForm. Count=2. |
 | runtime-page-actions | WARN | HIGH | `src/components/erp/runtime/ERPRuntimePage.tsx` | 31, 32, 209, 273 | ERPRuntimePage uses RuntimeActionEngine. Count=4. |
-| runtime-page-actions | WARN | HIGH | `src/components/erp/runtime/ERPRuntimePage.tsx` | 42, 44, 267, 417, 419, 481, 498 | ERPRuntimePage has runtimeActions. Count=7. |
+| runtime-page-actions | WARN | HIGH | `src/components/erp/runtime/ERPRuntimePage.tsx` | 42, 44, 267, 417, 419, 481 | ERPRuntimePage has runtimeActions. Count=6. |
 | runtime-page-payment | WARN | MEDIUM | `src/components/erp/runtime/ERPRuntimePage.tsx` | 91, 323 | ERPRuntimePage still has invoice payment action helper. Count=2. |
 | suspicious-rendering | WARN | HIGH | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` | 1833 | Suspicious form workflow/action rendering marker: workflow map rendering. Count=1. |
 | suspicious-rendering | OK | HIGH | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` |  | No suspicious form workflow/action rendering marker: runtime action map rendering. |
 | suspicious-rendering | WARN | HIGH | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` | 223, 273, 405, 1181, 1405, 1409, 1415, 1416, 1418, 1420, 1425, 1427, 1428, 1429, 1431, 1439, 1441, 1443, 1529, 1532, 1562, 1566, 1572, 1575, 1579, 1581, 1584, 1647, 1739, 1743, 1790, 1793, 1821, 1828, 1833, 1847, 2069, 2114, 2124 | Suspicious form workflow/action rendering marker: workflow/action button labels. Count=39. |
 | target-architecture | WARN | HIGH | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` |  | ERPEnterpriseForm violates target architecture. Forbidden markers: RuntimeActionEngine, workflowActions.map |
-| target-architecture | WARN | HIGH | `src/components/erp/runtime/ERPRuntimePage.tsx` |  | ERPRuntimePage still passes workflowActions into ERPEnterpriseForm. Target is ERPRuntimeActionBar outside form. |
+| target-architecture | OK | HIGH | `src/components/erp/runtime/ERPRuntimePage.tsx` |  | ERPRuntimePage does not pass workflowActions into ERPEnterpriseForm. |
 
 ## Contextes importants
 
@@ -464,42 +464,6 @@ Objectif : identifier précisément si le formulaire enterprise porte encore des
 2138:           </div>
 ```
 
-### src/components/erp/runtime/ERPRuntimePage.tsx :: workflowActions={ :: line 498
-
-```tsx
- 494:           <ERPEnterpriseForm
- 495:             module={module}
- 496:             mode="edit"
- 497:             initialData={currentRecord}
- 498:             workflowActions={isRemovedRecord ? [] : runtimeActions}
- 499:             forceReadOnlyBecauseRemoved={isRemovedRecord}
- 500:           />
- 501:         )}
- 502: 
- 503:         {type === "detail" && module && currentRecord && (
- 504:           <ERPRuntimeDetails
- 505:             module={module}
- 506:             data={currentRecord}
-```
-
-### src/components/erp/runtime/ERPRuntimePage.tsx :: workflowActions= :: line 498
-
-```tsx
- 494:           <ERPEnterpriseForm
- 495:             module={module}
- 496:             mode="edit"
- 497:             initialData={currentRecord}
- 498:             workflowActions={isRemovedRecord ? [] : runtimeActions}
- 499:             forceReadOnlyBecauseRemoved={isRemovedRecord}
- 500:           />
- 501:         )}
- 502: 
- 503:         {type === "detail" && module && currentRecord && (
- 504:           <ERPRuntimeDetails
- 505:             module={module}
- 506:             data={currentRecord}
-```
-
 ### src/components/erp/runtime/ERPRuntimePage.tsx :: <ERPEnterpriseForm :: line 486
 
 ```tsx
@@ -529,11 +493,11 @@ Objectif : identifier précisément si le formulaire enterprise porte encore des
  495:             module={module}
  496:             mode="edit"
  497:             initialData={currentRecord}
- 498:             workflowActions={isRemovedRecord ? [] : runtimeActions}
- 499:             forceReadOnlyBecauseRemoved={isRemovedRecord}
- 500:           />
- 501:         )}
- 502: 
+ 498:             forceReadOnlyBecauseRemoved={isRemovedRecord}
+ 499:           />
+ 500:         )}
+ 501: 
+ 502:         {type === "detail" && module && currentRecord && (
 ```
 
 ### src/components/erp/runtime/ERPRuntimePage.tsx :: RuntimeActionEngine :: line 31

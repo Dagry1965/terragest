@@ -495,7 +495,6 @@ return (
             module={module}
             mode="edit"
             initialData={currentRecord}
-            workflowActions={isRemovedRecord ? [] : runtimeActions}
             forceReadOnlyBecauseRemoved={isRemovedRecord}
           />
         )}
