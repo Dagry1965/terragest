@@ -4,10 +4,10 @@ Objectif : vérifier que les boutons workflow/actions métier ne sont plus rendu
 
 ## Résumé
 
-- OK : 27
+- OK : 31
 - INFO : 7
-- WARN : 4
-- WARN HIGH : 1
+- WARN : 0
+- WARN HIGH : 0
 - FAIL : 0
 - FAIL HIGH : 0
 
@@ -39,13 +39,13 @@ Objectif : vérifier que les boutons workflow/actions métier ne sont plus rendu
 | form-allowed-ui | INFO | LOW | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` | 1535, 1969 | handleBusinessStatusAction present in ERPEnterpriseForm |
 | form-allowed-ui | INFO | LOW | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` | 1392, 1437, 2010 | router.push( present in ERPEnterpriseForm |
 | form-allowed-ui | INFO | LOW | `src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx` | 16, 1996, 2003, 2005, 2018, 2032, 2039 | ERPButton present in ERPEnterpriseForm |
-| runtime-page-required | OK | HIGH | `src/components/erp/runtime/ERPRuntimePage.tsx` | 31, 32, 209, 273 | RuntimeActionEngine present in ERPRuntimePage |
-| runtime-page-required | OK | HIGH | `src/components/erp/runtime/ERPRuntimePage.tsx` | 273 | RuntimeActionEngine.getAvailableActions present in ERPRuntimePage |
-| runtime-page-required | OK | HIGH | `src/components/erp/runtime/ERPRuntimePage.tsx` | 209 | RuntimeActionEngine.execute present in ERPRuntimePage |
-| runtime-page-required | OK | HIGH | `src/components/erp/runtime/ERPRuntimePage.tsx` | 42, 44, 267, 417, 419, 481 | runtimeActions present in ERPRuntimePage |
-| runtime-page-required | OK | HIGH | `src/components/erp/runtime/ERPRuntimePage.tsx` | 203, 424 | handleRuntimeAction present in ERPRuntimePage |
-| runtime-page-required | OK | HIGH | `src/components/erp/runtime/ERPRuntimePage.tsx` | 14, 15, 16, 43, 88, 478 | ERPRuntimeActionBar present in ERPRuntimePage |
-| runtime-page-required | OK | HIGH | `src/components/erp/runtime/ERPRuntimePage.tsx` | 41, 481 | mapRuntimeActionsToActionBarActions present in ERPRuntimePage |
+| runtime-page-required | OK | HIGH | `src/components/erp/runtime/ERPRuntimePage.tsx` | 31, 32, 214, 278 | RuntimeActionEngine present in ERPRuntimePage |
+| runtime-page-required | OK | HIGH | `src/components/erp/runtime/ERPRuntimePage.tsx` | 278 | RuntimeActionEngine.getAvailableActions present in ERPRuntimePage |
+| runtime-page-required | OK | HIGH | `src/components/erp/runtime/ERPRuntimePage.tsx` | 214 | RuntimeActionEngine.execute present in ERPRuntimePage |
+| runtime-page-required | OK | HIGH | `src/components/erp/runtime/ERPRuntimePage.tsx` | 42, 45, 272, 449, 455 | runtimeActions present in ERPRuntimePage |
+| runtime-page-required | OK | HIGH | `src/components/erp/runtime/ERPRuntimePage.tsx` | 208, 457 | handleRuntimeAction present in ERPRuntimePage |
+| runtime-page-required | OK | HIGH | `src/components/erp/runtime/ERPRuntimePage.tsx` | 14, 15, 16, 44, 93, 451 | ERPRuntimeActionBar present in ERPRuntimePage |
+| runtime-page-required | OK | HIGH | `src/components/erp/runtime/ERPRuntimePage.tsx` | 41, 454 | mapRuntimeActionsToActionBarActions present in ERPRuntimePage |
 | runtime-page-forbidden | OK | HIGH | `src/components/erp/runtime/ERPRuntimePage.tsx` |  | workflowActions={ absent from ERPRuntimePage |
 | runtime-page-forbidden | OK | HIGH | `src/components/erp/runtime/ERPRuntimePage.tsx` |  | workflowActions= absent from ERPRuntimePage |
 | action-bar-required | OK | HIGH | `src/components/erp/runtime/ERPRuntimeActionBar.tsx` | 6, 14, 22, 27, 30, 36, 42, 67, 102, 108 | ERPRuntimeActionBar present in ERPRuntimeActionBar |
@@ -54,10 +54,10 @@ Objectif : vérifier que les boutons workflow/actions métier ne sont plus rendu
 | action-bar-required | OK | HIGH | `src/components/erp/runtime/ERPRuntimeActionBar.tsx` | 81, 83 | action.href present in ERPRuntimeActionBar |
 | action-bar-required | OK | HIGH | `src/components/erp/runtime/ERPRuntimeActionBar.tsx` | 95 | action.onClick present in ERPRuntimeActionBar |
 | action-bar-required | OK | HIGH | `src/components/erp/runtime/ERPRuntimeActionBar.tsx` | 64, 139 | RuntimeActionButton present in ERPRuntimeActionBar |
-| runtime-page-legacy | WARN | MEDIUM | `src/components/erp/runtime/ERPRuntimePage.tsx` | 419 | runtimeActions.map still present in ERPRuntimePage |
-| runtime-page-legacy | WARN | MEDIUM | `src/components/erp/runtime/ERPRuntimePage.tsx` | 420 | <button still present in ERPRuntimePage |
-| runtime-page-legacy | WARN | MEDIUM | `src/components/erp/runtime/ERPRuntimePage.tsx` | 424 | handleRuntimeAction(action) still present in ERPRuntimePage |
-| duplicate-risk | WARN | HIGH | `src/components/erp/runtime/ERPRuntimePage.tsx` |  | ERPRuntimePage has both ERPRuntimeActionBar and legacy runtimeActions.map. Possible duplicate action buttons. |
+| runtime-page-legacy | OK | LOW | `src/components/erp/runtime/ERPRuntimePage.tsx` |  | runtimeActions.map absent in ERPRuntimePage |
+| runtime-page-legacy | OK | LOW | `src/components/erp/runtime/ERPRuntimePage.tsx` |  | <button absent in ERPRuntimePage |
+| runtime-page-legacy | OK | LOW | `src/components/erp/runtime/ERPRuntimePage.tsx` |  | handleRuntimeAction(action) absent in ERPRuntimePage |
+| duplicate-risk | OK | HIGH | `src/components/erp/runtime/ERPRuntimePage.tsx` |  | Runtime action rendering appears centralized through ERPRuntimeActionBar. |
 | payment-related-buttons | INFO | MEDIUM | `src/components/erp/runtime/ERPRuntimeDetails.tsx / src/components/erp/runtime/ERPRelatedRecordsPanel.tsx` | 140, 174, 177, 169 | encaissement occurrences in details/panels: 4 |
 | payment-related-buttons | INFO | MEDIUM | `src/components/erp/runtime/ERPRuntimeDetails.tsx / src/components/erp/runtime/ERPRelatedRecordsPanel.tsx` | 136, 140, 179 | paiement occurrences in details/panels: 3 |
 | payment-related-buttons | OK | MEDIUM | `src/components/erp/runtime/ERPRuntimeDetails.tsx / src/components/erp/runtime/ERPRelatedRecordsPanel.tsx` |  | buildRuntimeFactureEncaissementCreateHref occurrences in details/panels: 0 |
@@ -369,95 +369,95 @@ Objectif : vérifier que les boutons workflow/actions métier ne sont plus rendu
   39: import { buildRuntimeFactureEncaissementCreateHref } from "@/runtime/navigation/RuntimeChildCreateHrefBuilder";
   40: 
   41: function mapRuntimeActionsToActionBarActions(
-  42:   runtimeActions: ERPRuntimePageActionSource[] = []
+  42:   runtimeActions: ERPRuntimePageActionSource[] = [],
 ```
 
-### src/components/erp/runtime/ERPRuntimePage.tsx :: RuntimeActionEngine :: line 209
+### src/components/erp/runtime/ERPRuntimePage.tsx :: RuntimeActionEngine :: line 214
 
 ```tsx
- 203:   async function handleRuntimeAction(action: NonNullable<ERPModule["actions"]>[number]) {
- 204:     if (!module || !currentRecord) {
- 205:       return;
- 206:     }
- 207: 
- 208:     const actionResult =
- 209:       await RuntimeActionEngine.execute({
- 210:         module,
- 211:         action,
- 212:         record: currentRecord,
- 213:       });
- 214: 
- 215:     const recordId =
- 216:       String(
- 217:         currentRecord.id ??
- 218:         currentRecord._id ??
- 219:         currentRecord.uid ??
+ 208:   async function handleRuntimeAction(action: NonNullable<ERPModule["actions"]>[number]) {
+ 209:     if (!module || !currentRecord) {
+ 210:       return;
+ 211:     }
+ 212: 
+ 213:     const actionResult =
+ 214:       await RuntimeActionEngine.execute({
+ 215:         module,
+ 216:         action,
+ 217:         record: currentRecord,
+ 218:       });
+ 219: 
+ 220:     const recordId =
+ 221:       String(
+ 222:         currentRecord.id ??
+ 223:         currentRecord._id ??
+ 224:         currentRecord.uid ??
 ```
 
-### src/components/erp/runtime/ERPRuntimePage.tsx :: RuntimeActionEngine :: line 273
+### src/components/erp/runtime/ERPRuntimePage.tsx :: RuntimeActionEngine :: line 278
 
 ```tsx
- 267:   const runtimeActions =
- 268: 
- 269: 
- 270:     (type === "detail" || type === "edit") && !isRemovedRecord
- 271: 
- 272: 
- 273:       ? RuntimeActionEngine.getAvailableActions({
- 274:           actions: module?.actions ?? [],
- 275:           workflow: module?.workflows?.[0],
- 276:           record: currentRecord,
- 277:           })
- 278:         : [];
- 279: 
- 280:   const moduleHrefActions =
- 281:     // Q22E4B_LIST_NAVIGATION_ACTIONS
- 282:     // Generic runtime: list pages may expose module actions with href.
- 283:     type === "list"
+ 272:   const runtimeActions =
+ 273: 
+ 274: 
+ 275:     (type === "detail" || type === "edit") && !isRemovedRecord
+ 276: 
+ 277: 
+ 278:       ? RuntimeActionEngine.getAvailableActions({
+ 279:           actions: module?.actions ?? [],
+ 280:           workflow: module?.workflows?.[0],
+ 281:           record: currentRecord,
+ 282:           })
+ 283:         : [];
+ 284: 
+ 285:   const moduleHrefActions =
+ 286:     // Q22E4B_LIST_NAVIGATION_ACTIONS
+ 287:     // Generic runtime: list pages may expose module actions with href.
+ 288:     type === "list"
 ```
 
-### src/components/erp/runtime/ERPRuntimePage.tsx :: RuntimeActionEngine.getAvailableActions :: line 273
+### src/components/erp/runtime/ERPRuntimePage.tsx :: RuntimeActionEngine.getAvailableActions :: line 278
 
 ```tsx
- 267:   const runtimeActions =
- 268: 
- 269: 
- 270:     (type === "detail" || type === "edit") && !isRemovedRecord
- 271: 
- 272: 
- 273:       ? RuntimeActionEngine.getAvailableActions({
- 274:           actions: module?.actions ?? [],
- 275:           workflow: module?.workflows?.[0],
- 276:           record: currentRecord,
- 277:           })
- 278:         : [];
- 279: 
- 280:   const moduleHrefActions =
- 281:     // Q22E4B_LIST_NAVIGATION_ACTIONS
- 282:     // Generic runtime: list pages may expose module actions with href.
- 283:     type === "list"
+ 272:   const runtimeActions =
+ 273: 
+ 274: 
+ 275:     (type === "detail" || type === "edit") && !isRemovedRecord
+ 276: 
+ 277: 
+ 278:       ? RuntimeActionEngine.getAvailableActions({
+ 279:           actions: module?.actions ?? [],
+ 280:           workflow: module?.workflows?.[0],
+ 281:           record: currentRecord,
+ 282:           })
+ 283:         : [];
+ 284: 
+ 285:   const moduleHrefActions =
+ 286:     // Q22E4B_LIST_NAVIGATION_ACTIONS
+ 287:     // Generic runtime: list pages may expose module actions with href.
+ 288:     type === "list"
 ```
 
-### src/components/erp/runtime/ERPRuntimePage.tsx :: RuntimeActionEngine.execute :: line 209
+### src/components/erp/runtime/ERPRuntimePage.tsx :: RuntimeActionEngine.execute :: line 214
 
 ```tsx
- 203:   async function handleRuntimeAction(action: NonNullable<ERPModule["actions"]>[number]) {
- 204:     if (!module || !currentRecord) {
- 205:       return;
- 206:     }
- 207: 
- 208:     const actionResult =
- 209:       await RuntimeActionEngine.execute({
- 210:         module,
- 211:         action,
- 212:         record: currentRecord,
- 213:       });
- 214: 
- 215:     const recordId =
- 216:       String(
- 217:         currentRecord.id ??
- 218:         currentRecord._id ??
- 219:         currentRecord.uid ??
+ 208:   async function handleRuntimeAction(action: NonNullable<ERPModule["actions"]>[number]) {
+ 209:     if (!module || !currentRecord) {
+ 210:       return;
+ 211:     }
+ 212: 
+ 213:     const actionResult =
+ 214:       await RuntimeActionEngine.execute({
+ 215:         module,
+ 216:         action,
+ 217:         record: currentRecord,
+ 218:       });
+ 219: 
+ 220:     const recordId =
+ 221:       String(
+ 222:         currentRecord.id ??
+ 223:         currentRecord._id ??
+ 224:         currentRecord.uid ??
 ```
 
 ### src/components/erp/runtime/ERPRuntimePage.tsx :: runtimeActions :: line 42
@@ -469,171 +469,149 @@ Objectif : vérifier que les boutons workflow/actions métier ne sont plus rendu
   39: import { buildRuntimeFactureEncaissementCreateHref } from "@/runtime/navigation/RuntimeChildCreateHrefBuilder";
   40: 
   41: function mapRuntimeActionsToActionBarActions(
-  42:   runtimeActions: ERPRuntimePageActionSource[] = []
-  43: ): ERPRuntimeActionBarAction[] {
-  44:   return runtimeActions
-  45:     .map((action) => {
-  46:       const runtimeAction = action as ERPRuntimePageActionSource;
-  47: 
-  48:       const key = String(runtimeAction.key ?? runtimeAction.label ?? "");
-  49:       const label = String(runtimeAction.label ?? key);
-  50: 
-  51:       if (!key || !label) {
-  52:         return null;
+  42:   runtimeActions: ERPRuntimePageActionSource[] = [],
+  43:   onAction?: (action: ERPRuntimePageActionSource) => void
+  44: ): ERPRuntimeActionBarAction[] {
+  45:   return runtimeActions
+  46:     .map((action) => {
+  47:       const runtimeAction = action as ERPRuntimePageActionSource;
+  48: 
+  49:       const key = String(runtimeAction.key ?? runtimeAction.label ?? "");
+  50:       const label = String(runtimeAction.label ?? key);
+  51: 
+  52:       if (!key || !label) {
 ```
 
-### src/components/erp/runtime/ERPRuntimePage.tsx :: runtimeActions :: line 44
+### src/components/erp/runtime/ERPRuntimePage.tsx :: runtimeActions :: line 45
 
 ```tsx
-  38: import { ERPOperationalModulePage } from "@/components/erp/operational";
   39: import { buildRuntimeFactureEncaissementCreateHref } from "@/runtime/navigation/RuntimeChildCreateHrefBuilder";
   40: 
   41: function mapRuntimeActionsToActionBarActions(
-  42:   runtimeActions: ERPRuntimePageActionSource[] = []
-  43: ): ERPRuntimeActionBarAction[] {
-  44:   return runtimeActions
-  45:     .map((action) => {
-  46:       const runtimeAction = action as ERPRuntimePageActionSource;
-  47: 
-  48:       const key = String(runtimeAction.key ?? runtimeAction.label ?? "");
-  49:       const label = String(runtimeAction.label ?? key);
-  50: 
-  51:       if (!key || !label) {
-  52:         return null;
-  53:       }
-  54: 
+  42:   runtimeActions: ERPRuntimePageActionSource[] = [],
+  43:   onAction?: (action: ERPRuntimePageActionSource) => void
+  44: ): ERPRuntimeActionBarAction[] {
+  45:   return runtimeActions
+  46:     .map((action) => {
+  47:       const runtimeAction = action as ERPRuntimePageActionSource;
+  48: 
+  49:       const key = String(runtimeAction.key ?? runtimeAction.label ?? "");
+  50:       const label = String(runtimeAction.label ?? key);
+  51: 
+  52:       if (!key || !label) {
+  53:         return null;
+  54:       }
+  55: 
 ```
 
-### src/components/erp/runtime/ERPRuntimePage.tsx :: runtimeActions :: line 267
+### src/components/erp/runtime/ERPRuntimePage.tsx :: runtimeActions :: line 272
 
 ```tsx
- 261:       : "#";
- 262: 
- 263:   const isRemovedRecord = Boolean(currentRecord?.removedAt);
- 264: 
- 265: 
- 266: 
- 267:   const runtimeActions =
- 268: 
+ 266:       : "#";
+ 267: 
+ 268:   const isRemovedRecord = Boolean(currentRecord?.removedAt);
  269: 
- 270:     (type === "detail" || type === "edit") && !isRemovedRecord
+ 270: 
  271: 
- 272: 
- 273:       ? RuntimeActionEngine.getAvailableActions({
- 274:           actions: module?.actions ?? [],
- 275:           workflow: module?.workflows?.[0],
- 276:           record: currentRecord,
- 277:           })
+ 272:   const runtimeActions =
+ 273: 
+ 274: 
+ 275:     (type === "detail" || type === "edit") && !isRemovedRecord
+ 276: 
+ 277: 
+ 278:       ? RuntimeActionEngine.getAvailableActions({
+ 279:           actions: module?.actions ?? [],
+ 280:           workflow: module?.workflows?.[0],
+ 281:           record: currentRecord,
+ 282:           })
 ```
 
-### src/components/erp/runtime/ERPRuntimePage.tsx :: runtimeActions :: line 417
+### src/components/erp/runtime/ERPRuntimePage.tsx :: runtimeActions :: line 449
 
 ```tsx
- 411:             >
- 412:               {createActionLabel}
- 413:             </Link>
- 414:           </div>
- 415:         )}
- 416: 
- 417:         {type === "detail" && runtimeActions.length > 0 && (
- 418:           <div className="flex flex-wrap gap-3">
- 419:             {runtimeActions.map((action) => (
- 420:               <button
- 421:                 key={action.key}
- 422:                 type="button"
- 423:                 onClick={() => {
- 424:                     void handleRuntimeAction(action);
- 425:                   }}
- 426:                 className={`
- 427:                   rounded-2xl
+ 443:               mode={type as "detail" | "edit"}
+ 444:             />
+ 445:           ))}
+ 446:         </div>
+ 447: 
+ 448: 
+ 449:         {(type === "detail" || type === "edit") && runtimeActions.length > 0 ? (
+ 450:           <div data-runtime-action-bar-placement="runtime-page">
+ 451:             <ERPRuntimeActionBar
+ 452:               title="Actions métier"
+ 453:               description="Actions runtime disponibles pour cet enregistrement."
+ 454:               actions={mapRuntimeActionsToActionBarActions(
+ 455:                 runtimeActions as ERPRuntimePageActionSource[],
+ 456:                 (runtimeAction) => {
+ 457:                   void handleRuntimeAction(runtimeAction);
+ 458:                 }
+ 459:               )}
 ```
 
-### src/components/erp/runtime/ERPRuntimePage.tsx :: runtimeActions :: line 419
+### src/components/erp/runtime/ERPRuntimePage.tsx :: runtimeActions :: line 455
 
 ```tsx
- 413:             </Link>
- 414:           </div>
- 415:         )}
- 416: 
- 417:         {type === "detail" && runtimeActions.length > 0 && (
- 418:           <div className="flex flex-wrap gap-3">
- 419:             {runtimeActions.map((action) => (
- 420:               <button
- 421:                 key={action.key}
- 422:                 type="button"
- 423:                 onClick={() => {
- 424:                     void handleRuntimeAction(action);
- 425:                   }}
- 426:                 className={`
- 427:                   rounded-2xl
- 428:                   px-4
- 429:                   py-2
+ 449:         {(type === "detail" || type === "edit") && runtimeActions.length > 0 ? (
+ 450:           <div data-runtime-action-bar-placement="runtime-page">
+ 451:             <ERPRuntimeActionBar
+ 452:               title="Actions métier"
+ 453:               description="Actions runtime disponibles pour cet enregistrement."
+ 454:               actions={mapRuntimeActionsToActionBarActions(
+ 455:                 runtimeActions as ERPRuntimePageActionSource[],
+ 456:                 (runtimeAction) => {
+ 457:                   void handleRuntimeAction(runtimeAction);
+ 458:                 }
+ 459:               )}
+ 460:               compact
+ 461:             />
+ 462:           </div>
+ 463:         ) : null}
+ 464: 
+ 465:         {type === "create" && module && (
 ```
 
-### src/components/erp/runtime/ERPRuntimePage.tsx :: runtimeActions :: line 481
+### src/components/erp/runtime/ERPRuntimePage.tsx :: handleRuntimeAction :: line 208
 
 ```tsx
- 475:         {type === "create" && module && (
- 476:           <>
- 477:             <div data-runtime-action-bar-placement="runtime-page">
- 478:               <ERPRuntimeActionBar
- 479:                 title="Actions métier"
- 480:                 description="Actions runtime disponibles pour cet enregistrement. Les formulaires resteront progressivement limités aux champs."
- 481:                 actions={mapRuntimeActionsToActionBarActions(runtimeActions as ERPRuntimePageActionSource[])}
- 482:                 compact
- 483:               />
- 484:             </div>
- 485: 
- 486:             <ERPEnterpriseForm
- 487:               module={module}
- 488:               mode="create"
- 489:             />
- 490:           </>
- 491:         )}
-```
-
-### src/components/erp/runtime/ERPRuntimePage.tsx :: handleRuntimeAction :: line 203
-
-```tsx
- 197:     }
- 198: 
- 199:     loadData();
- 200:   }, [module, type]);
- 201: 
- 202: 
- 203:   async function handleRuntimeAction(action: NonNullable<ERPModule["actions"]>[number]) {
- 204:     if (!module || !currentRecord) {
- 205:       return;
- 206:     }
+ 202:     }
+ 203: 
+ 204:     loadData();
+ 205:   }, [module, type]);
+ 206: 
  207: 
- 208:     const actionResult =
- 209:       await RuntimeActionEngine.execute({
- 210:         module,
- 211:         action,
- 212:         record: currentRecord,
- 213:       });
+ 208:   async function handleRuntimeAction(action: NonNullable<ERPModule["actions"]>[number]) {
+ 209:     if (!module || !currentRecord) {
+ 210:       return;
+ 211:     }
+ 212: 
+ 213:     const actionResult =
+ 214:       await RuntimeActionEngine.execute({
+ 215:         module,
+ 216:         action,
+ 217:         record: currentRecord,
+ 218:       });
 ```
 
-### src/components/erp/runtime/ERPRuntimePage.tsx :: handleRuntimeAction :: line 424
+### src/components/erp/runtime/ERPRuntimePage.tsx :: handleRuntimeAction :: line 457
 
 ```tsx
- 418:           <div className="flex flex-wrap gap-3">
- 419:             {runtimeActions.map((action) => (
- 420:               <button
- 421:                 key={action.key}
- 422:                 type="button"
- 423:                 onClick={() => {
- 424:                     void handleRuntimeAction(action);
- 425:                   }}
- 426:                 className={`
- 427:                   rounded-2xl
- 428:                   px-4
- 429:                   py-2
- 430:                   text-sm
- 431:                   font-bold
- 432:                   transition
- 433:                   ${
- 434:                     action.type === "danger"
+ 451:             <ERPRuntimeActionBar
+ 452:               title="Actions métier"
+ 453:               description="Actions runtime disponibles pour cet enregistrement."
+ 454:               actions={mapRuntimeActionsToActionBarActions(
+ 455:                 runtimeActions as ERPRuntimePageActionSource[],
+ 456:                 (runtimeAction) => {
+ 457:                   void handleRuntimeAction(runtimeAction);
+ 458:                 }
+ 459:               )}
+ 460:               compact
+ 461:             />
+ 462:           </div>
+ 463:         ) : null}
+ 464: 
+ 465:         {type === "create" && module && (
+ 466:           <ERPEnterpriseForm
+ 467:             module={module}
 ```
 
 ### src/components/erp/runtime/ERPRuntimePage.tsx :: ERPRuntimeActionBar :: line 14
@@ -702,70 +680,70 @@ Objectif : vérifier que les boutons workflow/actions métier ne sont plus rendu
   26: import { ERPContextBanner } from "@/components/erp/context/ERPContextBanner";
 ```
 
-### src/components/erp/runtime/ERPRuntimePage.tsx :: ERPRuntimeActionBar :: line 43
+### src/components/erp/runtime/ERPRuntimePage.tsx :: ERPRuntimeActionBar :: line 44
 
 ```tsx
-  37: 
   38: import { ERPOperationalModulePage } from "@/components/erp/operational";
   39: import { buildRuntimeFactureEncaissementCreateHref } from "@/runtime/navigation/RuntimeChildCreateHrefBuilder";
   40: 
   41: function mapRuntimeActionsToActionBarActions(
-  42:   runtimeActions: ERPRuntimePageActionSource[] = []
-  43: ): ERPRuntimeActionBarAction[] {
-  44:   return runtimeActions
-  45:     .map((action) => {
-  46:       const runtimeAction = action as ERPRuntimePageActionSource;
-  47: 
-  48:       const key = String(runtimeAction.key ?? runtimeAction.label ?? "");
-  49:       const label = String(runtimeAction.label ?? key);
-  50: 
-  51:       if (!key || !label) {
-  52:         return null;
-  53:       }
+  42:   runtimeActions: ERPRuntimePageActionSource[] = [],
+  43:   onAction?: (action: ERPRuntimePageActionSource) => void
+  44: ): ERPRuntimeActionBarAction[] {
+  45:   return runtimeActions
+  46:     .map((action) => {
+  47:       const runtimeAction = action as ERPRuntimePageActionSource;
+  48: 
+  49:       const key = String(runtimeAction.key ?? runtimeAction.label ?? "");
+  50:       const label = String(runtimeAction.label ?? key);
+  51: 
+  52:       if (!key || !label) {
+  53:         return null;
+  54:       }
 ```
 
-### src/components/erp/runtime/ERPRuntimePage.tsx :: ERPRuntimeActionBar :: line 88
+### src/components/erp/runtime/ERPRuntimePage.tsx :: ERPRuntimeActionBar :: line 93
 
 ```tsx
-  82:         description:
-  83:           typeof runtimeAction.description === "string"
-  84:             ? runtimeAction.description
-  85:             : undefined,
-  86:       };
-  87:     })
-  88:     .filter(Boolean) as ERPRuntimeActionBarAction[];
-  89: }
-  90: 
-  91: function buildInvoicePaymentHref(
-  92:   record: Record<string, unknown>
-  93: ): string {
-  94:   const factureId =
-  95:     String(record.id ?? record._id ?? "");
-  96: 
-  97:   const montantTTC =
-  98:     Number(record.montantTTC ?? 0);
+  87:         description:
+  88:           typeof runtimeAction.description === "string"
+  89:             ? runtimeAction.description
+  90:             : undefined,
+  91:       };
+  92:     })
+  93:     .filter(Boolean) as ERPRuntimeActionBarAction[];
+  94: }
+  95: 
+  96: function buildInvoicePaymentHref(
+  97:   record: Record<string, unknown>
+  98: ): string {
+  99:   const factureId =
+ 100:     String(record.id ?? record._id ?? "");
+ 101: 
+ 102:   const montantTTC =
+ 103:     Number(record.montantTTC ?? 0);
 ```
 
-### src/components/erp/runtime/ERPRuntimePage.tsx :: ERPRuntimeActionBar :: line 478
+### src/components/erp/runtime/ERPRuntimePage.tsx :: ERPRuntimeActionBar :: line 451
 
 ```tsx
- 472:         </div>
- 473: 
- 474: 
- 475:         {type === "create" && module && (
- 476:           <>
- 477:             <div data-runtime-action-bar-placement="runtime-page">
- 478:               <ERPRuntimeActionBar
- 479:                 title="Actions métier"
- 480:                 description="Actions runtime disponibles pour cet enregistrement. Les formulaires resteront progressivement limités aux champs."
- 481:                 actions={mapRuntimeActionsToActionBarActions(runtimeActions as ERPRuntimePageActionSource[])}
- 482:                 compact
- 483:               />
- 484:             </div>
- 485: 
- 486:             <ERPEnterpriseForm
- 487:               module={module}
- 488:               mode="create"
+ 445:           ))}
+ 446:         </div>
+ 447: 
+ 448: 
+ 449:         {(type === "detail" || type === "edit") && runtimeActions.length > 0 ? (
+ 450:           <div data-runtime-action-bar-placement="runtime-page">
+ 451:             <ERPRuntimeActionBar
+ 452:               title="Actions métier"
+ 453:               description="Actions runtime disponibles pour cet enregistrement."
+ 454:               actions={mapRuntimeActionsToActionBarActions(
+ 455:                 runtimeActions as ERPRuntimePageActionSource[],
+ 456:                 (runtimeAction) => {
+ 457:                   void handleRuntimeAction(runtimeAction);
+ 458:                 }
+ 459:               )}
+ 460:               compact
+ 461:             />
 ```
 
 ### src/components/erp/runtime/ERPRuntimePage.tsx :: mapRuntimeActionsToActionBarActions :: line 41
@@ -778,38 +756,38 @@ Objectif : vérifier que les boutons workflow/actions métier ne sont plus rendu
   39: import { buildRuntimeFactureEncaissementCreateHref } from "@/runtime/navigation/RuntimeChildCreateHrefBuilder";
   40: 
   41: function mapRuntimeActionsToActionBarActions(
-  42:   runtimeActions: ERPRuntimePageActionSource[] = []
-  43: ): ERPRuntimeActionBarAction[] {
-  44:   return runtimeActions
-  45:     .map((action) => {
-  46:       const runtimeAction = action as ERPRuntimePageActionSource;
-  47: 
-  48:       const key = String(runtimeAction.key ?? runtimeAction.label ?? "");
-  49:       const label = String(runtimeAction.label ?? key);
-  50: 
-  51:       if (!key || !label) {
+  42:   runtimeActions: ERPRuntimePageActionSource[] = [],
+  43:   onAction?: (action: ERPRuntimePageActionSource) => void
+  44: ): ERPRuntimeActionBarAction[] {
+  45:   return runtimeActions
+  46:     .map((action) => {
+  47:       const runtimeAction = action as ERPRuntimePageActionSource;
+  48: 
+  49:       const key = String(runtimeAction.key ?? runtimeAction.label ?? "");
+  50:       const label = String(runtimeAction.label ?? key);
+  51: 
 ```
 
-### src/components/erp/runtime/ERPRuntimePage.tsx :: mapRuntimeActionsToActionBarActions :: line 481
+### src/components/erp/runtime/ERPRuntimePage.tsx :: mapRuntimeActionsToActionBarActions :: line 454
 
 ```tsx
- 475:         {type === "create" && module && (
- 476:           <>
- 477:             <div data-runtime-action-bar-placement="runtime-page">
- 478:               <ERPRuntimeActionBar
- 479:                 title="Actions métier"
- 480:                 description="Actions runtime disponibles pour cet enregistrement. Les formulaires resteront progressivement limités aux champs."
- 481:                 actions={mapRuntimeActionsToActionBarActions(runtimeActions as ERPRuntimePageActionSource[])}
- 482:                 compact
- 483:               />
- 484:             </div>
- 485: 
- 486:             <ERPEnterpriseForm
- 487:               module={module}
- 488:               mode="create"
- 489:             />
- 490:           </>
- 491:         )}
+ 448: 
+ 449:         {(type === "detail" || type === "edit") && runtimeActions.length > 0 ? (
+ 450:           <div data-runtime-action-bar-placement="runtime-page">
+ 451:             <ERPRuntimeActionBar
+ 452:               title="Actions métier"
+ 453:               description="Actions runtime disponibles pour cet enregistrement."
+ 454:               actions={mapRuntimeActionsToActionBarActions(
+ 455:                 runtimeActions as ERPRuntimePageActionSource[],
+ 456:                 (runtimeAction) => {
+ 457:                   void handleRuntimeAction(runtimeAction);
+ 458:                 }
+ 459:               )}
+ 460:               compact
+ 461:             />
+ 462:           </div>
+ 463:         ) : null}
+ 464: 
 ```
 
 ### src/components/erp/runtime/ERPRuntimeActionBar.tsx :: ERPRuntimeActionBar :: line 6
@@ -1094,72 +1072,6 @@ Objectif : vérifier que les boutons workflow/actions métier ne sont plus rendu
  146: 
 ```
 
-### src/components/erp/runtime/ERPRuntimePage.tsx :: runtimeActions.map :: line 419
-
-```tsx
- 413:             </Link>
- 414:           </div>
- 415:         )}
- 416: 
- 417:         {type === "detail" && runtimeActions.length > 0 && (
- 418:           <div className="flex flex-wrap gap-3">
- 419:             {runtimeActions.map((action) => (
- 420:               <button
- 421:                 key={action.key}
- 422:                 type="button"
- 423:                 onClick={() => {
- 424:                     void handleRuntimeAction(action);
- 425:                   }}
- 426:                 className={`
- 427:                   rounded-2xl
- 428:                   px-4
- 429:                   py-2
-```
-
-### src/components/erp/runtime/ERPRuntimePage.tsx :: <button :: line 420
-
-```tsx
- 414:           </div>
- 415:         )}
- 416: 
- 417:         {type === "detail" && runtimeActions.length > 0 && (
- 418:           <div className="flex flex-wrap gap-3">
- 419:             {runtimeActions.map((action) => (
- 420:               <button
- 421:                 key={action.key}
- 422:                 type="button"
- 423:                 onClick={() => {
- 424:                     void handleRuntimeAction(action);
- 425:                   }}
- 426:                 className={`
- 427:                   rounded-2xl
- 428:                   px-4
- 429:                   py-2
- 430:                   text-sm
-```
-
-### src/components/erp/runtime/ERPRuntimePage.tsx :: handleRuntimeAction(action) :: line 424
-
-```tsx
- 418:           <div className="flex flex-wrap gap-3">
- 419:             {runtimeActions.map((action) => (
- 420:               <button
- 421:                 key={action.key}
- 422:                 type="button"
- 423:                 onClick={() => {
- 424:                     void handleRuntimeAction(action);
- 425:                   }}
- 426:                 className={`
- 427:                   rounded-2xl
- 428:                   px-4
- 429:                   py-2
- 430:                   text-sm
- 431:                   font-bold
- 432:                   transition
- 433:                   ${
- 434:                     action.type === "danger"
-```
-
 ### src/components/erp/runtime/ERPRuntimeDetails.tsx :: encaissement :: line 140
 
 ```tsx
@@ -1316,7 +1228,7 @@ Objectif : vérifier que les boutons workflow/actions métier ne sont plus rendu
 
 ## Conclusion
 
-La séparation formulaire/runtime est globalement en place, mais il reste un risque de doublon ou une dette de migration côté `ERPRuntimePage`.
+La centralisation des boutons métier côté runtime action bar est validée.
 
 ## Prochaine passe recommandée
 

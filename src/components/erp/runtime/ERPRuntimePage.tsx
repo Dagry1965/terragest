@@ -39,7 +39,8 @@ import { ERPOperationalModulePage } from "@/components/erp/operational";
 import { buildRuntimeFactureEncaissementCreateHref } from "@/runtime/navigation/RuntimeChildCreateHrefBuilder";
 
 function mapRuntimeActionsToActionBarActions(
-  runtimeActions: ERPRuntimePageActionSource[] = []
+  runtimeActions: ERPRuntimePageActionSource[] = [],
+  onAction?: (action: ERPRuntimePageActionSource) => void
 ): ERPRuntimeActionBarAction[] {
   return runtimeActions
     .map((action) => {
@@ -79,6 +80,10 @@ function mapRuntimeActionsToActionBarActions(
         href,
         disabled,
         tone,
+        onClick:
+          !href && onAction
+            ? () => onAction(runtimeAction)
+            : undefined,
         description:
           typeof runtimeAction.description === "string"
             ? runtimeAction.description
@@ -414,37 +419,6 @@ return (
           </div>
         )}
 
-        {type === "detail" && runtimeActions.length > 0 && (
-          <div className="flex flex-wrap gap-3">
-            {runtimeActions.map((action) => (
-              <button
-                key={action.key}
-                type="button"
-                onClick={() => {
-                    void handleRuntimeAction(action);
-                  }}
-                className={`
-                  rounded-2xl
-                  px-4
-                  py-2
-                  text-sm
-                  font-bold
-                  transition
-                  ${
-                    action.type === "danger"
-                      ? "bg-red-600 text-[var(--erp-table-head-text)] hover:bg-red-700"
-                      : action.type === "secondary"
-                        ? "bg-slate-200 text-[var(--erp-text)] hover:bg-slate-300"
-                        : "bg-[var(--erp-table-head)] text-[var(--erp-table-head-text)] hover:bg-[#007F6D]"
-                  }
-                `}
-              >
-                {action.label}
-              </button>
-            ))}
-          </div>
-        )}
-
         {loading && type === "list" ? (
           <div className="rounded-2xl border border-[var(--erp-border)] bg-[var(--erp-surface)] p-4 text-sm text-[var(--erp-text-muted)]">
             Chargement des données...
@@ -472,22 +446,27 @@ return (
         </div>
 
 
-        {type === "create" && module && (
-          <>
-            <div data-runtime-action-bar-placement="runtime-page">
-              <ERPRuntimeActionBar
-                title="Actions métier"
-                description="Actions runtime disponibles pour cet enregistrement. Les formulaires resteront progressivement limités aux champs."
-                actions={mapRuntimeActionsToActionBarActions(runtimeActions as ERPRuntimePageActionSource[])}
-                compact
-              />
-            </div>
-
-            <ERPEnterpriseForm
-              module={module}
-              mode="create"
+        {(type === "detail" || type === "edit") && runtimeActions.length > 0 ? (
+          <div data-runtime-action-bar-placement="runtime-page">
+            <ERPRuntimeActionBar
+              title="Actions métier"
+              description="Actions runtime disponibles pour cet enregistrement."
+              actions={mapRuntimeActionsToActionBarActions(
+                runtimeActions as ERPRuntimePageActionSource[],
+                (runtimeAction) => {
+                  void handleRuntimeAction(runtimeAction);
+                }
+              )}
+              compact
             />
-          </>
+          </div>
+        ) : null}
+
+        {type === "create" && module && (
+          <ERPEnterpriseForm
+            module={module}
+            mode="create"
+          />
         )}
 
         {type === "edit" && module && currentRecord && (
