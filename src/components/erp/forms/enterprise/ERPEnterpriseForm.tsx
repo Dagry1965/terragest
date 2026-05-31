@@ -1479,16 +1479,9 @@ preparedPayload.terrainId
 
         // clientsauto status actions are declared in clientsauto.actions.ts and rendered by the runtime action bar.
 
-if (moduleKey === "vehicules" && currentStatus !== "archive") {
-      return {
-        label: "Archiver vehicule",
-        nextStatus: "archive",
-        confirmMessage:
-          "Archiver ce vehicule ? Il ne sera pas supprime et son historique sera conserve.",
-      };
-    }
+    // vehicules status actions are declared in vehicules.actions.ts and rendered by the runtime action bar.
 
-    const currentInvoiceStatus =
+const currentInvoiceStatus =
       String(formValues.statutFacture ?? "");
 
     if (

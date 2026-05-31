@@ -1,6 +1,8 @@
 import type { ERPModule } from "@/runtime/modules/ERPModule";
+import { vehiculesActions } from "./vehicules.actions";
 
 export const vehiculesModule: ERPModule = {
+  actions: vehiculesActions,
 
   metadata: {
     businessCode: {
@@ -184,8 +186,32 @@ export const vehiculesModule: ERPModule = {
         list: { visible: true, order: 7 },
 
         grid:{ cols:6 }
-      }
-    ]
+      },
+    
+    {
+      key: "energie",
+      label: "Énergie",
+      type: "select",
+      required: false,
+      options: [
+        { label: "Essence", value: "essence" },
+        { label: "Diesel", value: "diesel" },
+        { label: "GPL", value: "gpl" },
+        { label: "GNV", value: "gnv" },
+        { label: "Bioéthanol", value: "bioethanol" },
+        { label: "Électrique", value: "electrique" },
+        { label: "Hybride", value: "hybride" },
+        { label: "Hydrogène", value: "hydrogene" },
+      ],
+    },
+
+    {
+      key: "dateFinGarantie",
+      label: "Date fin garantie",
+      type: "date",
+      required: false,
+    },
+]
 
   },
 
