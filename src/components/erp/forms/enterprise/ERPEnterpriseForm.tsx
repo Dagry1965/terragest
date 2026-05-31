@@ -1477,16 +1477,9 @@ preparedPayload.terrainId
       };
     }
 
-    if (moduleKey === "clientsauto" && currentStatus !== "archive") {
-      return {
-        label: "Archiver client",
-        nextStatus: "archive",
-        confirmMessage:
-          "Archiver ce client ? Il ne sera pas supprime et son historique sera conserve.",
-      };
-    }
+        // clientsauto status actions are declared in clientsauto.actions.ts and rendered by the runtime action bar.
 
-    if (moduleKey === "vehicules" && currentStatus !== "archive") {
+if (moduleKey === "vehicules" && currentStatus !== "archive") {
       return {
         label: "Archiver vehicule",
         nextStatus: "archive",
