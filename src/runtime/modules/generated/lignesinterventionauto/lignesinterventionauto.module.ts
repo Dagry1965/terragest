@@ -61,8 +61,10 @@ export const lignesinterventionautoModule: ERPModule = {
         label: "Stock source",
         type: "relation",
         relation: { module: "stocksauto" },
+        dependsOn: "produitId",
         searchable: true,
         grid: { cols: 6 },
+        helperText: "Stock source filtré selon le produit sélectionné.",
       },
       {
         key: "produitCode",
@@ -198,6 +200,27 @@ export const lignesinterventionautoModule: ERPModule = {
         relation: { module: "mouvementsstockauto" },
         searchable: true,
         grid: { cols: 4 },
+      },
+      {
+        key: "removedAt",
+        label: "Retirée le",
+        type: "datetime",
+        list: { visible: false },
+        grid: { cols: 6 },
+      },
+      {
+        key: "removedBy",
+        label: "Retirée par",
+        type: "text",
+        list: { visible: false },
+        grid: { cols: 6 },
+      },
+      {
+        key: "removedReason",
+        label: "Motif du retrait",
+        type: "textarea",
+        list: { visible: false },
+        grid: { cols: 12 },
       },
       {
         key: "stockProcessedAt",
@@ -445,7 +468,10 @@ export const lignesinterventionautoModule: ERPModule = {
       "stockMovementId",
       "stockProcessedAt",
       "stockProcessedQuantity",
-    ],
+          "removedAt",
+      "removedBy",
+      "removedReason",
+],
   },
 
   actions: [
