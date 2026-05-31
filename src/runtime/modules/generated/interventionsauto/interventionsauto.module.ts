@@ -67,6 +67,7 @@ export const interventionsautoModule: ERPModule = {
         searchable: true,
         list: { visible: true, order: 5 },
         grid: { cols: 6 },
+        helperText: "Mécanicien responsable réel de l’intervention.",
       },
 {
         key: "dateIntervention",
@@ -146,8 +147,8 @@ export const interventionsautoModule: ERPModule = {
         label: "Statut",
         readonlyIf: {
           field: "statut",
-          operator: "in",
-          values: ["ouverte", "diagnostic", "en_cours", "terminee", "facturee", "annulee"],
+          operator: "notEquals",
+          value: "__never_editable__",
         },
         helperText: "Statut piloté par les actions. Utilisez les boutons d’action pour changer l’état de l’intervention.",
         type: "select",
@@ -178,10 +179,9 @@ export const interventionsautoModule: ERPModule = {
           "clientId",
           "vehiculeId",
           "rendezVousId",
+              "mecanicienId",
           "dateIntervention",
-          "typeIntervention",
-          "kilometrage",
-          "statut",
+          "typeIntervention",          "statut",
         ],
 
         sections: [
@@ -192,10 +192,9 @@ export const interventionsautoModule: ERPModule = {
               "clientId",
               "vehiculeId",
               "rendezVousId",
+              "mecanicienId",
               "dateIntervention",
-              "typeIntervention",
-              "kilometrage",
-              "statut",
+              "typeIntervention",              "statut",
             ],
           },
         ],
@@ -344,11 +343,11 @@ export const interventionsautoModule: ERPModule = {
         "vehiculeId",
         "dateIntervention",
         "typeIntervention",
-        "kilometrage",
         "coutTotal",
         "statut",
       ],
       relationLabelFields: {
+        mecanicienId: ["prenom", "nom", "fonction", "telephone"],
         clientId: [
           "nom",
           "prenom",
@@ -547,7 +546,6 @@ export const interventionsautoModule: ERPModule = {
     ],
 
     readOnlyFields: [
-      "dateIntervention",
           "clientId",
       "vehiculeId",
       "rendezVousId",
@@ -566,10 +564,7 @@ export const interventionsautoModule: ERPModule = {
         title: "Lignes de l’intervention",
         createLabel: "Ajouter une ligne",
         openLabel: "Ouvrir ligne",
-        displayIn: [
-          "detail",
-          "edit",
-        ],
+        displayIn: ["detail", "edit"],
         position: "after",
         lazy: true,
 
@@ -618,12 +613,12 @@ export const interventionsautoModule: ERPModule = {
         moduleKey: "facturesauto",
         foreignKey: "interventionId",
         title: "Factures de l'intervention",
-        createLabel: "Ajouter une facture",
         openLabel: "Ouvrir facture",
-        displayIn: ["detail", "edit"],
+        displayIn: ["detail"],
         lazy: true,
         position: "after",
-        allowCreate: true,
+        allowCreate: false,
+        mode: "readonly",
         prefillFromParent: {
           interventionId: "id",
           clientId: "clientId",

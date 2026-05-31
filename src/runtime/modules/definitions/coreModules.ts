@@ -1,4 +1,5 @@
 import { receptionsstockautoModule } from "@/runtime/modules/generated/receptionsstockauto";
+import { employesModule } from "../generated/employes";
 import { lignescommandestockautoModule } from "@/runtime/modules/generated/lignescommandestockauto";
 import { commandesstockautoModule } from "@/runtime/modules/generated/commandesstockauto";
 import { fournisseursautoModule } from "@/runtime/modules/generated/fournisseursauto";
