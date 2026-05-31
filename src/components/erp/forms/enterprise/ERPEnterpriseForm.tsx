@@ -1460,113 +1460,20 @@ preparedPayload.terrainId
 
 
   function getBusinessStatusAction() {
-    if (mode !== "edit") {
-      return null;
-    }
-
-    const moduleKey = module.metadata.key;
-    const currentStatus = String(formValues.statut ?? "");
-
-    if (moduleKey === "receptionsstockauto" && currentStatus === "brouillon") {
-      return {
-        // Q21D1C_VALIDATE_RECEPTION_ACTION
-        label: "Valider reception",
-        nextStatus: "validee",
-        confirmMessage:
-          "Valider cette reception ? Une entree stock sera creee automatiquement et les champs critiques seront verrouilles.",
-      };
-    }
-
-        // clientsauto status actions are declared in clientsauto.actions.ts and rendered by the runtime action bar.
-
-    // vehicules status actions are declared in vehicules.actions.ts and rendered by the runtime action bar.
-
-const currentInvoiceStatus =
-      String(formValues.statutFacture ?? "");
-
-    if (
-      moduleKey === "facturesauto" &&
-      currentInvoiceStatus !== "annulee"
-    ) {
-      return {
-        label: "Annuler facture",
-        nextStatus: "annulee",
-        statusField: "statutFacture",
-        confirmMessage:
-          "Annuler cette facture ? Les paiements, echeances et historiques seront conserves.",
-      };
-    }
-
-    if (moduleKey === "encaissementsauto" && currentStatus !== "annule") {
-      return {
-        label: "Annuler encaissement",
-        nextStatus: "annule",
-        confirmMessage:
-          "Annuler cet encaissement ? Le paiement restera conserve dans l'historique.",
-      };
-    }
-
-    if (moduleKey === "echeancespaiementauto" && currentStatus !== "annulee") {
-      return {
-        label: "Annuler echeance",
-        nextStatus: "annulee",
-        confirmMessage:
-          "Annuler cette echeance ? Elle restera conservee dans l'historique.",
-      };
-    }
-
+    // AMARKHYS-REBUILD-05C
+    // Workflow/status/business actions must be rendered by ERPRuntimePage / ERPRuntimeActionBar.
+    // ERPEnterpriseForm must remain a form-only component and must not expose record-level actions.
     return null;
   }
 
   async function handleBusinessStatusAction() {
-    const action = getBusinessStatusAction();
-
-    if (!action || !initialData?.id) {
-      return;
-    }
-
-    const confirmed = window.confirm(action.confirmMessage);
-
-    if (!confirmed) {
-      return;
-    }
-
-    setSaving(true);
-
-    try {
-      await RuntimeDataBinding.update(
-        module,
-        String(initialData.id),
-        {
-          [action.statusField ?? "statut"]: action.nextStatus,
-        }
-      );
-
-      setFormValues((currentValues) => ({
-        ...currentValues,
-        [action.statusField ?? "statut"]: action.nextStatus,
-      }));
-
-      setErrors([]);
-      router.refresh();
-    } catch (error) {
-      const message =
-        error instanceof Error
-          ? error.message
-          : "Action metier impossible.";
-
-      setErrors([
-        {
-          field: "businessAction",
-          message,
-        },
-      ]);
-    } finally {
-      setSaving(false);
-    }
+    // AMARKHYS-REBUILD-05C-FIX1
+    // Form-level business/status actions are disabled.
+    // Runtime actions must be executed from ERPRuntimePage / ERPRuntimeActionBar.
+    return;
   }
 
-  const businessStatusAction = isRemovedRecord ? null : getBusinessStatusAction();
+  const businessStatusAction = mode === "create" || isRemovedRecord ? null : getBusinessStatusAction();
 
   function isSensitiveBusinessModule() {
     return [
@@ -1883,97 +1790,7 @@ const currentInvoiceStatus =
               </div>
             )}
 
-            {businessStatusAction ? (
-
-
-              <div
-
-
-                data-business-status-actions
-
-
-                className="w-full rounded-2xl sm:rounded-3xl border border-amber-200 bg-amber-50 p-5"
-
-
-              >
-
-
-                <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-
-
-                  <div>
-
-
-                    <p className="text-xs font-black uppercase tracking-wide text-amber-700">
-
-
-                      Action metier
-
-
-                    </p>
-
-
-            
-
-
-                    <h3 className="mt-1 text-xl font-black text-[var(--erp-text)]">
-
-
-                      {businessStatusAction.label}
-
-
-                    </h3>
-
-
-            
-
-
-                    <p className="mt-2 text-sm leading-6 text-[var(--erp-text-muted)]">
-
-
-                      Cette action conserve l'historique et evite une suppression brutale.
-
-
-                    </p>
-
-
-                  </div>
-
-
-            
-
-
-                  <button
-
-
-                    type="button"
-
-
-                    disabled={saving}
-
-
-                    onClick={handleBusinessStatusAction}
-
-
-                    className="inline-flex items-center justify-center rounded-2xl bg-amber-600 px-5 py-3 text-sm font-black text-[var(--erp-text)] shadow-sm transition hover:bg-amber-500 disabled:cursor-not-allowed disabled:opacity-60"
-
-
-                  >
-
-
-                    {businessStatusAction.label}
-
-
-                  </button>
-
-
-                </div>
-
-
-              </div>
-
-
-            ) : null}
+            {/* AMARKHYS-REBUILD-05C-FIX3: form-level business/status action render removed. Runtime actions are rendered by ERPRuntimePage / ERPRuntimeActionBar. */}
 
 
 
