@@ -425,10 +425,10 @@ export const rendezvousModule: ERPModule = {
         foreignKey: "rendezVousId",
         title: "Intervention générée",
         description: "Intervention créée ou liée à ce rendez-vous.",
-        displayIn: ["detail", "edit"],
+        displayIn: ["detail"],
         lazy: true,
         position: "after",
-        allowCreate: true,
+        allowCreate: false,
         createLabel: "Créer une intervention",
         openLabel: "Ouvrir intervention",
         prefillFromParent: {
