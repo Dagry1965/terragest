@@ -59,6 +59,15 @@ export const interventionsautoModule: ERPModule = {
         list: { visible: false },
         grid: { cols: 6 },
       },
+      {
+        key: "mecanicienId",
+        label: "Mécanicien responsable",
+        type: "relation",
+        relation: { module: "employes" },
+        searchable: true,
+        list: { visible: true, order: 5 },
+        grid: { cols: 6 },
+      },
 {
         key: "dateIntervention",
         label: "Date intervention",
@@ -124,9 +133,23 @@ export const interventionsautoModule: ERPModule = {
         list: { visible: true, order: 6 },
         grid: { cols: 4 },
       },
+      {
+        key: "montantHT",
+        label: "Montant HT",
+        type: "number",
+        list: { visible: true, order: 7 },
+        grid: { cols: 4 },
+        helperText: "Montant calculé depuis les lignes validées. Ancien équivalent legacy : coutTotal.",
+      },
 {
         key: "statut",
         label: "Statut",
+        readonlyIf: {
+          field: "statut",
+          operator: "in",
+          values: ["ouverte", "diagnostic", "en_cours", "terminee", "facturee", "annulee"],
+        },
+        helperText: "Statut piloté par les actions. Utilisez les boutons d’action pour changer l’état de l’intervention.",
         type: "select",
         defaultValue: "ouverte",
         options: [
@@ -525,7 +548,15 @@ export const interventionsautoModule: ERPModule = {
 
     readOnlyFields: [
       "dateIntervention",
-    ],
+          "clientId",
+      "vehiculeId",
+      "rendezVousId",
+      "coutPieces",
+      "coutMainOeuvre",
+      "coutTotal",
+      "montantHT",
+      "montantTTC",
+],
 
     children: [
       {
