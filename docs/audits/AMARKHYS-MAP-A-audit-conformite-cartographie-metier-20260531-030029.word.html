@@ -1,0 +1,1200 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Audit conformitÃ© runtime â€” Cartographie mÃ©tier AMARKHYS</title>
+<style>
+  body {
+    font-family: Calibri, Arial, sans-serif;
+    color: #111827;
+    line-height: 1.35;
+    margin: 42px;
+  }
+  h1 {
+    color: #064e3b;
+    font-size: 26px;
+    border-bottom: 3px solid #10b981;
+    padding-bottom: 8px;
+    margin-top: 0;
+  }
+  h2 {
+    color: #065f46;
+    font-size: 20px;
+    margin-top: 26px;
+    border-bottom: 1px solid #d1fae5;
+    padding-bottom: 4px;
+  }
+  h3 {
+    color: #111827;
+    font-size: 16px;
+    margin-top: 18px;
+  }
+  p {
+    font-size: 11.5pt;
+    margin: 5px 0;
+  }
+  .bullet {
+    margin-left: 18px;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 10px 0 18px 0;
+    font-size: 10.5pt;
+  }
+  td {
+    border: 1px solid #d1d5db;
+    padding: 6px 8px;
+    vertical-align: top;
+  }
+  tr:first-child td {
+    background: #ecfdf5;
+    font-weight: bold;
+    color: #064e3b;
+  }
+</style>
+</head>
+<body>
+<h1>Audit conformit&#233; runtime — Cartographie m&#233;tier AMARKHYS</h1>
+<p></p>
+<p>Document g&#233;n&#233;r&#233; par audit automatique du code Terragest_V2 contre la cartographie m&#233;tier AMARKHYS.</p>
+<p></p>
+<h2>Principe directeur audit&#233;</h2>
+<p></p>
+<p class='bullet'>â€¢ Aucun bouton workflow dans ERPEnterpriseForm.</p>
+<p class='bullet'>â€¢ Aucune transition statut libre dans le formulaire.</p>
+<p class='bullet'>â€¢ Aucune creation enfant sans contexte parent.</p>
+<p class='bullet'>â€¢ Aucune modification stock sans mouvement.</p>
+<p class='bullet'>â€¢ Aucun paiement sans facture parent.</p>
+<p class='bullet'>â€¢ Les boutons metier doivent etre rendus par ERPRuntimePage / ERPRuntimeActionBar.</p>
+<p class='bullet'>â€¢ L&#39;execution doit passer par RuntimeActionEngine, RuntimeWorkflowEngine, Business Rules, guards et services runtime.</p>
+<p></p>
+<h2>Synth&#232;se transversale</h2>
+<p></p>
+<p class='bullet'>â€¢ Doctrine runtime conforme : 8/8</p>
+<p class='bullet'>â€¢ Modules audit&#233;s : 15</p>
+<p></p>
+<table>
+<tr><td>Check</td><td>R&#233;sultat</td></tr>
+<tr><td>ERPEnterpriseForm ne doit pas importer RuntimeActionEngine</td><td>OK</td></tr>
+<tr><td>ERPEnterpriseForm ne doit pas contenir workflowActions.map</td><td>OK</td></tr>
+<tr><td>ERPRuntimePage utilise ERPRuntimeActionBar</td><td>OK</td></tr>
+<tr><td>ERPRuntimePage utilise RuntimeActionEngine.execute</td><td>OK</td></tr>
+<tr><td>RuntimeActionEngine existe</td><td>OK</td></tr>
+<tr><td>RuntimeWorkflowEngine existe</td><td>OK</td></tr>
+<tr><td>Business Rules existent</td><td>OK</td></tr>
+<tr><td>Guards runtime existent</td><td>OK</td></tr>
+</table>
+<p></p>
+<h2>Synth&#232;se par module</h2>
+<p></p>
+<table>
+<tr><td>Module</td><td>Fichier module</td><td>Actions</td><td>Statuts</td><td>Boutons</td><td>Workflows</td><td>R&#232;gles</td><td>Couverture</td><td>Priorit&#233;</td></tr>
+<tr><td>Clients `clientsauto`</td><td>OK</td><td>OK</td><td>100%</td><td>0%</td><td>0%</td><td>100%</td><td>50%</td><td>MEDIUM</td></tr>
+<tr><td>Vehicules `vehicules`</td><td>OK</td><td>OK</td><td>100%</td><td>0%</td><td>0%</td><td>100%</td><td>50%</td><td>MEDIUM</td></tr>
+<tr><td>Rendez-vous `rendezvous`</td><td>OK</td><td>OK</td><td>100%</td><td>20%</td><td>20%</td><td>100%</td><td>60%</td><td>MEDIUM</td></tr>
+<tr><td>Interventions `interventionsauto`</td><td>OK</td><td>OK</td><td>100%</td><td>40%</td><td>40%</td><td>100%</td><td>70%</td><td>LOW</td></tr>
+<tr><td>Lignes intervention `lignesinterventionauto`</td><td>OK</td><td>OK</td><td>67%</td><td>50%</td><td>0%</td><td>100%</td><td>54%</td><td>MEDIUM</td></tr>
+<tr><td>Factures `facturesauto`</td><td>OK</td><td>OK</td><td>100%</td><td>40%</td><td>50%</td><td>100%</td><td>73%</td><td>LOW</td></tr>
+<tr><td>Encaissements `encaissementsauto`</td><td>OK</td><td>OK</td><td>100%</td><td>0%</td><td>0%</td><td>100%</td><td>50%</td><td>MEDIUM</td></tr>
+<tr><td>Echeances paiement `echeancespaiementauto`</td><td>OK</td><td>OK</td><td>100%</td><td>33%</td><td>50%</td><td>100%</td><td>71%</td><td>LOW</td></tr>
+<tr><td>Produits `produitsauto`</td><td>OK</td><td>OK</td><td>100%</td><td>0%</td><td>0%</td><td>100%</td><td>50%</td><td>MEDIUM</td></tr>
+<tr><td>Stocks `stocksauto`</td><td>OK</td><td>OK</td><td>100%</td><td>0%</td><td>33%</td><td>100%</td><td>58%</td><td>MEDIUM</td></tr>
+<tr><td>Mouvements stock `mouvementsstockauto`</td><td>OK</td><td>KO</td><td>100%</td><td>0%</td><td>0%</td><td>100%</td><td>50%</td><td>MEDIUM</td></tr>
+<tr><td>Fournisseurs `fournisseursauto`</td><td>OK</td><td>KO</td><td>100%</td><td>0%</td><td>0%</td><td>100%</td><td>50%</td><td>MEDIUM</td></tr>
+<tr><td>Commandes stock `commandesstockauto`</td><td>OK</td><td>KO</td><td>100%</td><td>67%</td><td>50%</td><td>100%</td><td>79%</td><td>LOW</td></tr>
+<tr><td>Lignes commande stock `lignescommandestockauto`</td><td>OK</td><td>KO</td><td>100%</td><td>0%</td><td>0%</td><td>100%</td><td>50%</td><td>MEDIUM</td></tr>
+<tr><td>Receptions stock `receptionsstockauto`</td><td>OK</td><td>KO</td><td>100%</td><td>50%</td><td>100%</td><td>100%</td><td>88%</td><td>LOW</td></tr>
+</table>
+<p></p>
+<h2>Clients — `clientsauto`</h2>
+<p></p>
+<h3>1. Ce que le module g&#232;re</h3>
+<p></p>
+<p>Dossier client automobile et point d&#39;entree de la relation client.</p>
+<p></p>
+<h3>2. Statuts attendus vs d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>Statut attendu</td><td>D&#233;tect&#233; dans code</td></tr>
+<tr><td>prospect</td><td>OK</td></tr>
+<tr><td>actif</td><td>OK</td></tr>
+<tr><td>inactif</td><td>OK</td></tr>
+<tr><td>archive</td><td>OK</td></tr>
+</table>
+<p></p>
+<p>Couverture statuts : 100%</p>
+<p></p>
+<h3>3. Workflows attendus vs d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>D&#233;part</td><td>Bouton attendu</td><td>Arriv&#233;e</td><td>D&#233;tect&#233;</td></tr>
+<tr><td>prospect</td><td>Activer client</td><td>actif</td><td>KO</td></tr>
+<tr><td>actif</td><td>Desactiver client</td><td>inactif</td><td>KO</td></tr>
+<tr><td>inactif</td><td>Reactiver client</td><td>actif</td><td>KO</td></tr>
+<tr><td>prospect/actif/inactif</td><td>Archiver client</td><td>archive</td><td>KO</td></tr>
+</table>
+<p></p>
+<p>Couverture workflows : 0%</p>
+<p></p>
+<h3>4. Boutons attendus vs d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>Bouton attendu</td><td>D&#233;tect&#233; dans actions/workflows</td></tr>
+<tr><td>Activer client</td><td>KO</td></tr>
+<tr><td>Desactiver client</td><td>KO</td></tr>
+<tr><td>Reactiver client</td><td>KO</td></tr>
+<tr><td>Archiver client</td><td>KO</td></tr>
+<tr><td>Ajouter vehicule</td><td>KO</td></tr>
+<tr><td>Ouvrir fiche operationnelle</td><td>KO</td></tr>
+</table>
+<p></p>
+<p>Couverture boutons : 0%</p>
+<p></p>
+<h3>5. R&#232;gles m&#233;tier attendues vs indices d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>R&#232;gle attendue</td><td>Indice d&#233;tect&#233;</td></tr>
+<tr><td>R-CLI-01 client actif peut avoir vehicules RDV interventions factures encaissements</td><td>OK</td></tr>
+<tr><td>R-CLI-02 client archive reste consultable pour historique</td><td>OK</td></tr>
+<tr><td>R-CLI-03 type client pilote affichage vehicules cartes/tableau compact</td><td>OK</td></tr>
+<tr><td>R-CLI-04 recherche client par vehicule ou immatriculation</td><td>OK</td></tr>
+<tr><td>R-CLI-05 creation vehicule depuis client pre-remplit clientId</td><td>OK</td></tr>
+<tr><td>R-CLI-06 boutons activation/desactivation/archivage via runtime</td><td>OK</td></tr>
+</table>
+<p></p>
+<p>Couverture r&#232;gles : 100%</p>
+<p></p>
+<h3>6. Routes et fichiers</h3>
+<p></p>
+<p class='bullet'>â€¢ Module : `src/runtime/modules/generated/clientsauto/clientsauto.module.ts` → OK</p>
+<p class='bullet'>â€¢ Actions : `src/runtime/modules/generated/clientsauto/clientsauto.actions.ts` → OK</p>
+<p class='bullet'>â€¢ Route : `src/app/(private)/clientsauto/page.tsx` → OK</p>
+<p class='bullet'>â€¢ Route : `src/app/(private)/clientsauto/[id]/page.tsx` → OK</p>
+<p class='bullet'>â€¢ Route : `src/app/(private)/clientsauto/[id]/edit/page.tsx` → OK</p>
+<p></p>
+<h3>7. Diagnostic</h3>
+<p></p>
+<p>Couverture partielle. Des actions, workflows ou r&#232;gles doivent &#234;tre compl&#233;t&#233;s.</p>
+<p></p>
+<h3>8. Emplacement cible des boutons</h3>
+<p></p>
+<p>ERPRuntimePage → ERPRuntimeActionBar → hors ERPEnterpriseForm.</p>
+<p></p>
+<h2>Vehicules — `vehicules`</h2>
+<p></p>
+<h3>1. Ce que le module g&#232;re</h3>
+<p></p>
+<p>Fiche vehicule rattachee a un client, pivot operationnel entre client et atelier.</p>
+<p></p>
+<h3>2. Statuts attendus vs d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>Statut attendu</td><td>D&#233;tect&#233; dans code</td></tr>
+<tr><td>actif</td><td>OK</td></tr>
+<tr><td>entretien</td><td>OK</td></tr>
+<tr><td>immobilise</td><td>OK</td></tr>
+<tr><td>archive</td><td>OK</td></tr>
+</table>
+<p></p>
+<p>Couverture statuts : 100%</p>
+<p></p>
+<h3>3. Workflows attendus vs d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>D&#233;part</td><td>Bouton attendu</td><td>Arriv&#233;e</td><td>D&#233;tect&#233;</td></tr>
+<tr><td>actif</td><td>Marquer entretien requis</td><td>entretien</td><td>KO</td></tr>
+<tr><td>entretien</td><td>Immobiliser vehicule</td><td>immobilise</td><td>KO</td></tr>
+<tr><td>entretien/immobilise</td><td>Remettre en service</td><td>actif</td><td>KO</td></tr>
+<tr><td>actif/entretien/immobilise</td><td>Archiver vehicule</td><td>archive</td><td>KO</td></tr>
+</table>
+<p></p>
+<p>Couverture workflows : 0%</p>
+<p></p>
+<h3>4. Boutons attendus vs d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>Bouton attendu</td><td>D&#233;tect&#233; dans actions/workflows</td></tr>
+<tr><td>Creer rendez-vous</td><td>KO</td></tr>
+<tr><td>Voir fiche vehicule</td><td>KO</td></tr>
+<tr><td>Marquer entretien requis</td><td>KO</td></tr>
+<tr><td>Immobiliser vehicule</td><td>KO</td></tr>
+<tr><td>Remettre en service</td><td>KO</td></tr>
+<tr><td>Archiver vehicule</td><td>KO</td></tr>
+</table>
+<p></p>
+<p>Couverture boutons : 0%</p>
+<p></p>
+<h3>5. R&#232;gles m&#233;tier attendues vs indices d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>R&#232;gle attendue</td><td>Indice d&#233;tect&#233;</td></tr>
+<tr><td>R-VEH-01 vehicule appartient a un client</td><td>OK</td></tr>
+<tr><td>R-VEH-02 vehicule selectionne filtre les RDV</td><td>OK</td></tr>
+<tr><td>R-VEH-03 RDV selectionne filtre les interventions</td><td>OK</td></tr>
+<tr><td>R-VEH-04 creation RDV depuis vehicule pre-remplit clientId vehiculeId</td><td>OK</td></tr>
+<tr><td>R-VEH-05 archivage vehicule conserve historique</td><td>OK</td></tr>
+</table>
+<p></p>
+<p>Couverture r&#232;gles : 100%</p>
+<p></p>
+<h3>6. Routes et fichiers</h3>
+<p></p>
+<p class='bullet'>â€¢ Module : `src/runtime/modules/generated/vehicules/vehicules.module.ts` → OK</p>
+<p class='bullet'>â€¢ Actions : `src/runtime/modules/generated/vehicules/vehicules.actions.ts` → OK</p>
+<p class='bullet'>â€¢ Route : `src/app/(private)/vehicules/page.tsx` → OK</p>
+<p class='bullet'>â€¢ Route : `src/app/(private)/vehicules/[id]/page.tsx` → OK</p>
+<p class='bullet'>â€¢ Route : `src/app/(private)/vehicules/[id]/edit/page.tsx` → OK</p>
+<p></p>
+<h3>7. Diagnostic</h3>
+<p></p>
+<p>Couverture partielle. Des actions, workflows ou r&#232;gles doivent &#234;tre compl&#233;t&#233;s.</p>
+<p></p>
+<h3>8. Emplacement cible des boutons</h3>
+<p></p>
+<p>ERPRuntimePage → ERPRuntimeActionBar → hors ERPEnterpriseForm.</p>
+<p></p>
+<h2>Rendez-vous — `rendezvous`</h2>
+<p></p>
+<h3>1. Ce que le module g&#232;re</h3>
+<p></p>
+<p>Planification atelier avant intervention.</p>
+<p></p>
+<h3>2. Statuts attendus vs d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>Statut attendu</td><td>D&#233;tect&#233; dans code</td></tr>
+<tr><td>planifie</td><td>OK</td></tr>
+<tr><td>confirme</td><td>OK</td></tr>
+<tr><td>en_cours</td><td>OK</td></tr>
+<tr><td>termine</td><td>OK</td></tr>
+<tr><td>annule</td><td>OK</td></tr>
+</table>
+<p></p>
+<p>Couverture statuts : 100%</p>
+<p></p>
+<h3>3. Workflows attendus vs d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>D&#233;part</td><td>Bouton attendu</td><td>Arriv&#233;e</td><td>D&#233;tect&#233;</td></tr>
+<tr><td>planifie</td><td>Confirmer RDV</td><td>confirme</td><td>KO</td></tr>
+<tr><td>confirme</td><td>Demarrer RDV</td><td>en_cours</td><td>KO</td></tr>
+<tr><td>en_cours</td><td>Terminer RDV</td><td>termine</td><td>KO</td></tr>
+<tr><td>planifie/confirme/en_cours</td><td>Annuler RDV</td><td>annule</td><td>KO</td></tr>
+<tr><td>planifie/confirme</td><td>Reporter RDV</td><td>planifie</td><td>OK</td></tr>
+</table>
+<p></p>
+<p>Couverture workflows : 20%</p>
+<p></p>
+<h3>4. Boutons attendus vs d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>Bouton attendu</td><td>D&#233;tect&#233; dans actions/workflows</td></tr>
+<tr><td>Confirmer RDV</td><td>KO</td></tr>
+<tr><td>Demarrer RDV</td><td>KO</td></tr>
+<tr><td>Terminer RDV</td><td>KO</td></tr>
+<tr><td>Annuler RDV</td><td>KO</td></tr>
+<tr><td>Reporter RDV</td><td>OK</td></tr>
+</table>
+<p></p>
+<p>Couverture boutons : 20%</p>
+<p></p>
+<h3>5. R&#232;gles m&#233;tier attendues vs indices d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>R&#232;gle attendue</td><td>Indice d&#233;tect&#233;</td></tr>
+<tr><td>R-RDV-01 RDV confirme peut creer intervention</td><td>OK</td></tr>
+<tr><td>R-RDV-02 RDV consomme ne cree jamais deuxieme intervention</td><td>OK</td></tr>
+<tr><td>R-RDV-03 RDV conserve typeService durationMinutes</td><td>OK</td></tr>
+<tr><td>R-RDV-04 creneau occupe non disponible</td><td>OK</td></tr>
+<tr><td>R-RDV-05 creation RDV depuis vehicule pre-remplit clientId vehiculeId</td><td>OK</td></tr>
+<tr><td>R-RDV-06 statut RDV via runtime pas formulaire</td><td>OK</td></tr>
+<tr><td>R-RDV-07 hub client vehicule RDV intervention</td><td>OK</td></tr>
+</table>
+<p></p>
+<p>Couverture r&#232;gles : 100%</p>
+<p></p>
+<h3>6. Routes et fichiers</h3>
+<p></p>
+<p class='bullet'>â€¢ Module : `src/runtime/modules/generated/rendezvous/rendezvous.module.ts` → OK</p>
+<p class='bullet'>â€¢ Actions : `src/runtime/modules/generated/rendezvous/rendezvous.actions.ts` → OK</p>
+<p class='bullet'>â€¢ Route : `src/app/(private)/rendezvous/page.tsx` → OK</p>
+<p class='bullet'>â€¢ Route : `src/app/(private)/rendezvous/[id]/page.tsx` → OK</p>
+<p class='bullet'>â€¢ Route : `src/app/(private)/rendezvous/[id]/edit/page.tsx` → OK</p>
+<p></p>
+<h3>7. Diagnostic</h3>
+<p></p>
+<p>Couverture partielle. Des actions, workflows ou r&#232;gles doivent &#234;tre compl&#233;t&#233;s.</p>
+<p></p>
+<h3>8. Emplacement cible des boutons</h3>
+<p></p>
+<p>ERPRuntimePage → ERPRuntimeActionBar → hors ERPEnterpriseForm.</p>
+<p></p>
+<h2>Interventions — `interventionsauto`</h2>
+<p></p>
+<h3>1. Ce que le module g&#232;re</h3>
+<p></p>
+<p>Execution atelier et cycle central travaux.</p>
+<p></p>
+<h3>2. Statuts attendus vs d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>Statut attendu</td><td>D&#233;tect&#233; dans code</td></tr>
+<tr><td>ouverte</td><td>OK</td></tr>
+<tr><td>diagnostic</td><td>OK</td></tr>
+<tr><td>en_cours</td><td>OK</td></tr>
+<tr><td>terminee</td><td>OK</td></tr>
+<tr><td>facturee</td><td>OK</td></tr>
+<tr><td>annulee</td><td>OK</td></tr>
+</table>
+<p></p>
+<p>Couverture statuts : 100%</p>
+<p></p>
+<h3>3. Workflows attendus vs d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>D&#233;part</td><td>Bouton attendu</td><td>Arriv&#233;e</td><td>D&#233;tect&#233;</td></tr>
+<tr><td>ouverte</td><td>Passer en diagnostic</td><td>diagnostic</td><td>OK</td></tr>
+<tr><td>ouverte/diagnostic</td><td>Demarrer intervention</td><td>en_cours</td><td>OK</td></tr>
+<tr><td>diagnostic/en_cours</td><td>Terminer intervention</td><td>terminee</td><td>KO</td></tr>
+<tr><td>terminee</td><td>Generer facture</td><td>facturee</td><td>KO</td></tr>
+<tr><td>ouverte/diagnostic/en_cours</td><td>Annuler intervention</td><td>annulee</td><td>KO</td></tr>
+</table>
+<p></p>
+<p>Couverture workflows : 40%</p>
+<p></p>
+<h3>4. Boutons attendus vs d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>Bouton attendu</td><td>D&#233;tect&#233; dans actions/workflows</td></tr>
+<tr><td>Passer en diagnostic</td><td>OK</td></tr>
+<tr><td>Demarrer intervention</td><td>OK</td></tr>
+<tr><td>Terminer intervention</td><td>KO</td></tr>
+<tr><td>Generer facture</td><td>KO</td></tr>
+<tr><td>Annuler intervention</td><td>KO</td></tr>
+</table>
+<p></p>
+<p>Couverture boutons : 40%</p>
+<p></p>
+<h3>5. R&#232;gles m&#233;tier attendues vs indices d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>R&#232;gle attendue</td><td>Indice d&#233;tect&#233;</td></tr>
+<tr><td>R-INT-01 intervention creee depuis RDV confirme</td><td>OK</td></tr>
+<tr><td>R-INT-02 intervention terminee peut generer facture</td><td>OK</td></tr>
+<tr><td>R-INT-03 intervention ne genere pas deux factures</td><td>OK</td></tr>
+<tr><td>R-INT-04 champs herites RDV client vehicule verrouilles</td><td>OK</td></tr>
+<tr><td>R-INT-05 lignes brouillon exclues des totaux</td><td>OK</td></tr>
+<tr><td>R-INT-06 lignes retirees exclues des totaux</td><td>OK</td></tr>
+<tr><td>R-INT-07 intervention facturee protegee</td><td>OK</td></tr>
+</table>
+<p></p>
+<p>Couverture r&#232;gles : 100%</p>
+<p></p>
+<h3>6. Routes et fichiers</h3>
+<p></p>
+<p class='bullet'>â€¢ Module : `src/runtime/modules/generated/interventionsauto/interventionsauto.module.ts` → OK</p>
+<p class='bullet'>â€¢ Actions : `src/runtime/modules/generated/interventionsauto/interventionsauto.actions.ts` → OK</p>
+<p class='bullet'>â€¢ Route : `src/app/(private)/interventionsauto/page.tsx` → OK</p>
+<p class='bullet'>â€¢ Route : `src/app/(private)/interventionsauto/[id]/page.tsx` → OK</p>
+<p class='bullet'>â€¢ Route : `src/app/(private)/interventionsauto/[id]/edit/page.tsx` → OK</p>
+<p></p>
+<h3>7. Diagnostic</h3>
+<p></p>
+<p>Couverture globalement correcte. &#192; consolider par tests fonctionnels.</p>
+<p></p>
+<h3>8. Emplacement cible des boutons</h3>
+<p></p>
+<p>ERPRuntimePage → ERPRuntimeActionBar → hors ERPEnterpriseForm.</p>
+<p></p>
+<h2>Lignes intervention — `lignesinterventionauto`</h2>
+<p></p>
+<h3>1. Ce que le module g&#232;re</h3>
+<p></p>
+<p>Detail d&#39;une intervention, totaux et impact stock eventuel.</p>
+<p></p>
+<h3>2. Statuts attendus vs d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>Statut attendu</td><td>D&#233;tect&#233; dans code</td></tr>
+<tr><td>brouillon</td><td>OK</td></tr>
+<tr><td>validee</td><td>OK</td></tr>
+<tr><td>retiree</td><td>KO</td></tr>
+</table>
+<p></p>
+<p>Couverture statuts : 67%</p>
+<p></p>
+<h3>3. Workflows attendus vs d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>D&#233;part</td><td>Bouton attendu</td><td>Arriv&#233;e</td><td>D&#233;tect&#233;</td></tr>
+<tr><td>brouillon</td><td>Valider la ligne</td><td>validee</td><td>KO</td></tr>
+<tr><td>brouillon/validee</td><td>Retirer la ligne</td><td>retiree</td><td>KO</td></tr>
+</table>
+<p></p>
+<p>Couverture workflows : 0%</p>
+<p></p>
+<h3>4. Boutons attendus vs d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>Bouton attendu</td><td>D&#233;tect&#233; dans actions/workflows</td></tr>
+<tr><td>Valider la ligne</td><td>KO</td></tr>
+<tr><td>Retirer la ligne</td><td>OK</td></tr>
+</table>
+<p></p>
+<p>Couverture boutons : 50%</p>
+<p></p>
+<h3>5. R&#232;gles m&#233;tier attendues vs indices d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>R&#232;gle attendue</td><td>Indice d&#233;tect&#233;</td></tr>
+<tr><td>R-LIG-01 ligne creee depuis intervention parent</td><td>OK</td></tr>
+<tr><td>R-LIG-02 ligne brouillon ne compte pas</td><td>OK</td></tr>
+<tr><td>R-LIG-03 ligne validee compte</td><td>OK</td></tr>
+<tr><td>R-LIG-04 ligne retiree ne compte plus mais reste auditee</td><td>OK</td></tr>
+<tr><td>R-LIG-05 ligne piece validee peut declencher sortie stock</td><td>OK</td></tr>
+<tr><td>R-LIG-06 type article vient du produit</td><td>OK</td></tr>
+<tr><td>R-LIG-07 stock auto si un seul stock disponible</td><td>OK</td></tr>
+<tr><td>R-LIG-08 stock insuffisant bloque ou alerte</td><td>OK</td></tr>
+</table>
+<p></p>
+<p>Couverture r&#232;gles : 100%</p>
+<p></p>
+<h3>6. Routes et fichiers</h3>
+<p></p>
+<p class='bullet'>â€¢ Module : `src/runtime/modules/generated/lignesinterventionauto/lignesinterventionauto.module.ts` → OK</p>
+<p class='bullet'>â€¢ Actions : `src/runtime/modules/generated/lignesinterventionauto/lignesinterventionauto.actions.ts` → OK</p>
+<p class='bullet'>â€¢ Route : `src/app/(private)/lignesinterventionauto/page.tsx` → OK</p>
+<p class='bullet'>â€¢ Route : `src/app/(private)/lignesinterventionauto/[id]/page.tsx` → OK</p>
+<p class='bullet'>â€¢ Route : `src/app/(private)/lignesinterventionauto/[id]/edit/page.tsx` → OK</p>
+<p></p>
+<h3>7. Diagnostic</h3>
+<p></p>
+<p>Couverture partielle. Des actions, workflows ou r&#232;gles doivent &#234;tre compl&#233;t&#233;s.</p>
+<p></p>
+<h3>8. Emplacement cible des boutons</h3>
+<p></p>
+<p>ERPRuntimePage → ERPRuntimeActionBar → hors ERPEnterpriseForm.</p>
+<p></p>
+<h2>Factures — `facturesauto`</h2>
+<p></p>
+<h3>1. Ce que le module g&#232;re</h3>
+<p></p>
+<p>Preuve commerciale et suivi financier.</p>
+<p></p>
+<h3>2. Statuts attendus vs d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>Statut attendu</td><td>D&#233;tect&#233; dans code</td></tr>
+<tr><td>brouillon</td><td>OK</td></tr>
+<tr><td>emise</td><td>OK</td></tr>
+<tr><td>annulee</td><td>OK</td></tr>
+<tr><td>en_attente</td><td>OK</td></tr>
+<tr><td>partiel</td><td>OK</td></tr>
+<tr><td>paye</td><td>OK</td></tr>
+<tr><td>non_envoyee</td><td>OK</td></tr>
+<tr><td>envoyee</td><td>OK</td></tr>
+<tr><td>echec</td><td>OK</td></tr>
+</table>
+<p></p>
+<p>Couverture statuts : 100%</p>
+<p></p>
+<h3>3. Workflows attendus vs d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>D&#233;part</td><td>Bouton attendu</td><td>Arriv&#233;e</td><td>D&#233;tect&#233;</td></tr>
+<tr><td>brouillon</td><td>Valider facture</td><td>emise</td><td>KO</td></tr>
+<tr><td>emise</td><td>Annuler facture</td><td>annulee</td><td>OK</td></tr>
+<tr><td>non_envoyee/echec</td><td>Marquer comme envoyee</td><td>envoyee</td><td>OK</td></tr>
+<tr><td>en_attente/partiel</td><td>Ajouter paiement</td><td>partiel/paye</td><td>KO</td></tr>
+</table>
+<p></p>
+<p>Couverture workflows : 50%</p>
+<p></p>
+<h3>4. Boutons attendus vs d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>Bouton attendu</td><td>D&#233;tect&#233; dans actions/workflows</td></tr>
+<tr><td>Valider facture</td><td>KO</td></tr>
+<tr><td>Annuler facture</td><td>OK</td></tr>
+<tr><td>Marquer comme envoyee</td><td>OK</td></tr>
+<tr><td>Voir historique encaissements</td><td>KO</td></tr>
+<tr><td>Ajouter paiement</td><td>KO</td></tr>
+</table>
+<p></p>
+<p>Couverture boutons : 40%</p>
+<p></p>
+<h3>5. R&#232;gles m&#233;tier attendues vs indices d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>R&#232;gle attendue</td><td>Indice d&#233;tect&#233;</td></tr>
+<tr><td>R-FAC-01 facture creee depuis intervention terminee</td><td>OK</td></tr>
+<tr><td>R-FAC-02 montants facture viennent des lignes validees</td><td>OK</td></tr>
+<tr><td>R-FAC-03 montant paye somme encaissements valides</td><td>OK</td></tr>
+<tr><td>R-FAC-04 reste a payer = montantTTC - montantPaye</td><td>OK</td></tr>
+<tr><td>R-FAC-05 reste a payer zero donne statut paye</td><td>OK</td></tr>
+<tr><td>R-FAC-06 paiement partiel donne statut partiel</td><td>OK</td></tr>
+<tr><td>R-FAC-07 aucun paiement donne en_attente</td><td>OK</td></tr>
+<tr><td>R-FAC-08 encaissement cree avec contexte facture</td><td>OK</td></tr>
+<tr><td>R-FAC-09 pas deux boutons concurrents ajouter paiement</td><td>OK</td></tr>
+</table>
+<p></p>
+<p>Couverture r&#232;gles : 100%</p>
+<p></p>
+<h3>6. Routes et fichiers</h3>
+<p></p>
+<p class='bullet'>â€¢ Module : `src/runtime/modules/generated/facturesauto/facturesauto.module.ts` → OK</p>
+<p class='bullet'>â€¢ Actions : `src/runtime/modules/generated/facturesauto/facturesauto.actions.ts` → OK</p>
+<p class='bullet'>â€¢ Route : `src/app/(private)/facturesauto/page.tsx` → OK</p>
+<p class='bullet'>â€¢ Route : `src/app/(private)/facturesauto/[id]/page.tsx` → OK</p>
+<p class='bullet'>â€¢ Route : `src/app/(private)/facturesauto/[id]/edit/page.tsx` → OK</p>
+<p></p>
+<h3>7. Diagnostic</h3>
+<p></p>
+<p>Couverture globalement correcte. &#192; consolider par tests fonctionnels.</p>
+<p></p>
+<h3>8. Emplacement cible des boutons</h3>
+<p></p>
+<p>ERPRuntimePage → ERPRuntimeActionBar → hors ERPEnterpriseForm.</p>
+<p></p>
+<h2>Encaissements — `encaissementsauto`</h2>
+<p></p>
+<h3>1. Ce que le module g&#232;re</h3>
+<p></p>
+<p>Paiement recu, preuve et comptabilisation.</p>
+<p></p>
+<h3>2. Statuts attendus vs d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>Statut attendu</td><td>D&#233;tect&#233; dans code</td></tr>
+<tr><td>en_attente</td><td>OK</td></tr>
+<tr><td>valide</td><td>OK</td></tr>
+<tr><td>rejete</td><td>OK</td></tr>
+<tr><td>annule</td><td>OK</td></tr>
+<tr><td>non_envoye</td><td>OK</td></tr>
+<tr><td>envoye</td><td>OK</td></tr>
+<tr><td>echec</td><td>OK</td></tr>
+</table>
+<p></p>
+<p>Couverture statuts : 100%</p>
+<p></p>
+<h3>3. Workflows attendus vs d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>D&#233;part</td><td>Bouton attendu</td><td>Arriv&#233;e</td><td>D&#233;tect&#233;</td></tr>
+<tr><td>en_attente</td><td>Valider encaissement</td><td>valide</td><td>KO</td></tr>
+<tr><td>en_attente</td><td>Rejeter encaissement</td><td>rejete</td><td>KO</td></tr>
+<tr><td>en_attente/valide</td><td>Annuler encaissement</td><td>annule</td><td>KO</td></tr>
+<tr><td>non_envoye/echec</td><td>Envoyer recu</td><td>envoye</td><td>KO</td></tr>
+</table>
+<p></p>
+<p>Couverture workflows : 0%</p>
+<p></p>
+<h3>4. Boutons attendus vs d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>Bouton attendu</td><td>D&#233;tect&#233; dans actions/workflows</td></tr>
+<tr><td>Valider encaissement</td><td>KO</td></tr>
+<tr><td>Rejeter encaissement</td><td>KO</td></tr>
+<tr><td>Annuler encaissement</td><td>KO</td></tr>
+<tr><td>Envoyer recu</td><td>KO</td></tr>
+</table>
+<p></p>
+<p>Couverture boutons : 0%</p>
+<p></p>
+<h3>5. R&#232;gles m&#233;tier attendues vs indices d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>R&#232;gle attendue</td><td>Indice d&#233;tect&#233;</td></tr>
+<tr><td>R-ENC-01 encaissement cree depuis facture parent</td><td>OK</td></tr>
+<tr><td>R-ENC-02 lien transporte parentModuleKey parentRecordId parentForeignKey</td><td>OK</td></tr>
+<tr><td>R-ENC-03 factureId clientId vehiculeId pre-remplis et verrouilles</td><td>OK</td></tr>
+<tr><td>R-ENC-04 encaissement valide met a jour facture</td><td>OK</td></tr>
+<tr><td>R-ENC-05 encaissement annule recalcule facture</td><td>OK</td></tr>
+<tr><td>R-ENC-06 encaissement ne modifie pas facture hors contexte</td><td>OK</td></tr>
+</table>
+<p></p>
+<p>Couverture r&#232;gles : 100%</p>
+<p></p>
+<h3>6. Routes et fichiers</h3>
+<p></p>
+<p class='bullet'>â€¢ Module : `src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts` → OK</p>
+<p class='bullet'>â€¢ Actions : `src/runtime/modules/generated/encaissementsauto/encaissementsauto.actions.ts` → OK</p>
+<p class='bullet'>â€¢ Route : `src/app/(private)/encaissementsauto/page.tsx` → OK</p>
+<p class='bullet'>â€¢ Route : `src/app/(private)/encaissementsauto/[id]/page.tsx` → OK</p>
+<p class='bullet'>â€¢ Route : `src/app/(private)/encaissementsauto/[id]/edit/page.tsx` → OK</p>
+<p></p>
+<h3>7. Diagnostic</h3>
+<p></p>
+<p>Couverture partielle. Des actions, workflows ou r&#232;gles doivent &#234;tre compl&#233;t&#233;s.</p>
+<p></p>
+<h3>8. Emplacement cible des boutons</h3>
+<p></p>
+<p>ERPRuntimePage → ERPRuntimeActionBar → hors ERPEnterpriseForm.</p>
+<p></p>
+<h2>Echeances paiement — `echeancespaiementauto`</h2>
+<p></p>
+<h3>1. Ce que le module g&#232;re</h3>
+<p></p>
+<p>Paiements prevus ou fractionnes.</p>
+<p></p>
+<h3>2. Statuts attendus vs d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>Statut attendu</td><td>D&#233;tect&#233; dans code</td></tr>
+<tr><td>a_venir</td><td>OK</td></tr>
+<tr><td>en_retard</td><td>OK</td></tr>
+<tr><td>partiellement_payee</td><td>OK</td></tr>
+<tr><td>payee</td><td>OK</td></tr>
+<tr><td>annulee</td><td>OK</td></tr>
+</table>
+<p></p>
+<p>Couverture statuts : 100%</p>
+<p></p>
+<h3>3. Workflows attendus vs d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>D&#233;part</td><td>Bouton attendu</td><td>Arriv&#233;e</td><td>D&#233;tect&#233;</td></tr>
+<tr><td>a_venir</td><td>Marquer en retard</td><td>en_retard</td><td>OK</td></tr>
+<tr><td>a_venir/en_retard/partiellement_payee</td><td>Marquer payee</td><td>payee</td><td>OK</td></tr>
+<tr><td>a_venir/en_retard/partiellement_payee</td><td>Annuler echeance</td><td>annulee</td><td>KO</td></tr>
+<tr><td>en_retard</td><td>Relancer client</td><td>en_retard</td><td>KO</td></tr>
+</table>
+<p></p>
+<p>Couverture workflows : 50%</p>
+<p></p>
+<h3>4. Boutons attendus vs d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>Bouton attendu</td><td>D&#233;tect&#233; dans actions/workflows</td></tr>
+<tr><td>Marquer payee</td><td>OK</td></tr>
+<tr><td>Relancer client</td><td>KO</td></tr>
+<tr><td>Annuler echeance</td><td>KO</td></tr>
+</table>
+<p></p>
+<p>Couverture boutons : 33%</p>
+<p></p>
+<h3>5. R&#232;gles m&#233;tier attendues vs indices d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>R&#232;gle attendue</td><td>Indice d&#233;tect&#233;</td></tr>
+<tr><td>R-ECH-01 echeance liee a facture</td><td>OK</td></tr>
+<tr><td>R-ECH-02 echeance payee contribue suivi financier</td><td>OK</td></tr>
+<tr><td>R-ECH-03 relance auditee</td><td>OK</td></tr>
+<tr><td>R-ECH-04 statut en_retard calcule par job runtime</td><td>OK</td></tr>
+<tr><td>R-ECH-05 echeance ne modifie pas facture sans regle claire</td><td>OK</td></tr>
+</table>
+<p></p>
+<p>Couverture r&#232;gles : 100%</p>
+<p></p>
+<h3>6. Routes et fichiers</h3>
+<p></p>
+<p class='bullet'>â€¢ Module : `src/runtime/modules/generated/echeancespaiementauto/echeancespaiementauto.module.ts` → OK</p>
+<p class='bullet'>â€¢ Actions : `src/runtime/modules/generated/echeancespaiementauto/echeancespaiementauto.actions.ts` → OK</p>
+<p class='bullet'>â€¢ Route : `src/app/(private)/echeancespaiementauto/page.tsx` → OK</p>
+<p class='bullet'>â€¢ Route : `src/app/(private)/echeancespaiementauto/[id]/page.tsx` → OK</p>
+<p class='bullet'>â€¢ Route : `src/app/(private)/echeancespaiementauto/[id]/edit/page.tsx` → OK</p>
+<p></p>
+<h3>7. Diagnostic</h3>
+<p></p>
+<p>Couverture globalement correcte. &#192; consolider par tests fonctionnels.</p>
+<p></p>
+<h3>8. Emplacement cible des boutons</h3>
+<p></p>
+<p>ERPRuntimePage → ERPRuntimeActionBar → hors ERPEnterpriseForm.</p>
+<p></p>
+<h2>Produits — `produitsauto`</h2>
+<p></p>
+<h3>1. Ce que le module g&#232;re</h3>
+<p></p>
+<p>Catalogue pieces/services.</p>
+<p></p>
+<h3>2. Statuts attendus vs d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>Statut attendu</td><td>D&#233;tect&#233; dans code</td></tr>
+<tr><td>actif</td><td>OK</td></tr>
+<tr><td>rupture</td><td>OK</td></tr>
+<tr><td>inactif</td><td>OK</td></tr>
+<tr><td>archive</td><td>OK</td></tr>
+</table>
+<p></p>
+<p>Couverture statuts : 100%</p>
+<p></p>
+<h3>3. Workflows attendus vs d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>D&#233;part</td><td>Bouton attendu</td><td>Arriv&#233;e</td><td>D&#233;tect&#233;</td></tr>
+<tr><td>actif</td><td>Marquer rupture</td><td>rupture</td><td>KO</td></tr>
+<tr><td>rupture/inactif</td><td>Reactiver produit</td><td>actif</td><td>KO</td></tr>
+<tr><td>actif/rupture/inactif</td><td>Archiver produit</td><td>archive</td><td>KO</td></tr>
+</table>
+<p></p>
+<p>Couverture workflows : 0%</p>
+<p></p>
+<h3>4. Boutons attendus vs d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>Bouton attendu</td><td>D&#233;tect&#233; dans actions/workflows</td></tr>
+<tr><td>Creer stock associe</td><td>KO</td></tr>
+<tr><td>Voir hub produit/stock</td><td>KO</td></tr>
+<tr><td>Marquer rupture</td><td>KO</td></tr>
+<tr><td>Reactiver produit</td><td>KO</td></tr>
+<tr><td>Archiver produit</td><td>KO</td></tr>
+</table>
+<p></p>
+<p>Couverture boutons : 0%</p>
+<p></p>
+<h3>5. R&#232;gles m&#233;tier attendues vs indices d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>R&#232;gle attendue</td><td>Indice d&#233;tect&#233;</td></tr>
+<tr><td>R-PROD-01 produit porte type article</td><td>OK</td></tr>
+<tr><td>R-PROD-02 ligne intervention ne choisit pas librement typeLigne si produit impose typeArticle</td><td>OK</td></tr>
+<tr><td>R-PROD-03 produit stockable rattache a stock</td><td>OK</td></tr>
+<tr><td>R-PROD-04 produit non stockable pas mouvement obligatoire</td><td>OK</td></tr>
+<tr><td>R-PROD-05 choix produit auto-remplit designation type article prix snapshot</td><td>OK</td></tr>
+<tr><td>R-PROD-06 archiver produit ne casse pas historique</td><td>OK</td></tr>
+</table>
+<p></p>
+<p>Couverture r&#232;gles : 100%</p>
+<p></p>
+<h3>6. Routes et fichiers</h3>
+<p></p>
+<p class='bullet'>â€¢ Module : `src/runtime/modules/generated/produitsauto/produitsauto.module.ts` → OK</p>
+<p class='bullet'>â€¢ Actions : `src/runtime/modules/generated/produitsauto/produitsauto.actions.ts` → OK</p>
+<p class='bullet'>â€¢ Route : `src/app/(private)/produitsauto/page.tsx` → OK</p>
+<p class='bullet'>â€¢ Route : `src/app/(private)/produitsauto/[id]/page.tsx` → OK</p>
+<p class='bullet'>â€¢ Route : `src/app/(private)/produitsauto/[id]/edit/page.tsx` → OK</p>
+<p></p>
+<h3>7. Diagnostic</h3>
+<p></p>
+<p>Couverture partielle. Des actions, workflows ou r&#232;gles doivent &#234;tre compl&#233;t&#233;s.</p>
+<p></p>
+<h3>8. Emplacement cible des boutons</h3>
+<p></p>
+<p>ERPRuntimePage → ERPRuntimeActionBar → hors ERPEnterpriseForm.</p>
+<p></p>
+<h2>Stocks — `stocksauto`</h2>
+<p></p>
+<h3>1. Ce que le module g&#232;re</h3>
+<p></p>
+<p>Etat courant du stock.</p>
+<p></p>
+<h3>2. Statuts attendus vs d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>Statut attendu</td><td>D&#233;tect&#233; dans code</td></tr>
+<tr><td>disponible</td><td>OK</td></tr>
+<tr><td>stock_faible</td><td>OK</td></tr>
+<tr><td>rupture</td><td>OK</td></tr>
+<tr><td>archive</td><td>OK</td></tr>
+</table>
+<p></p>
+<p>Couverture statuts : 100%</p>
+<p></p>
+<h3>3. Workflows attendus vs d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>D&#233;part</td><td>Bouton attendu</td><td>Arriv&#233;e</td><td>D&#233;tect&#233;</td></tr>
+<tr><td>disponible</td><td>Detecter stock faible</td><td>stock_faible</td><td>KO</td></tr>
+<tr><td>stock_faible</td><td>Detecter rupture</td><td>rupture</td><td>KO</td></tr>
+<tr><td>stock_faible/rupture</td><td>Reapprovisionner</td><td>disponible</td><td>OK</td></tr>
+</table>
+<p></p>
+<p>Couverture workflows : 33%</p>
+<p></p>
+<h3>4. Boutons attendus vs d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>Bouton attendu</td><td>D&#233;tect&#233; dans actions/workflows</td></tr>
+<tr><td>Voir mouvements</td><td>KO</td></tr>
+<tr><td>Creer correction stock controlee</td><td>KO</td></tr>
+</table>
+<p></p>
+<p>Couverture boutons : 0%</p>
+<p></p>
+<h3>5. R&#232;gles m&#233;tier attendues vs indices d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>R&#232;gle attendue</td><td>Indice d&#233;tect&#233;</td></tr>
+<tr><td>R-STK-01 stock est etat resultant</td><td>OK</td></tr>
+<tr><td>R-STK-02 aucune modification quantite sans mouvement</td><td>OK</td></tr>
+<tr><td>R-STK-03 entree augmente quantite</td><td>OK</td></tr>
+<tr><td>R-STK-04 sortie diminue quantite</td><td>OK</td></tr>
+<tr><td>R-STK-05 stock_faible rupture calcules quantite seuil</td><td>OK</td></tr>
+<tr><td>R-STK-06 formulaire ne modifie pas quantite librement</td><td>OK</td></tr>
+</table>
+<p></p>
+<p>Couverture r&#232;gles : 100%</p>
+<p></p>
+<h3>6. Routes et fichiers</h3>
+<p></p>
+<p class='bullet'>â€¢ Module : `src/runtime/modules/generated/stocksauto/stocksauto.module.ts` → OK</p>
+<p class='bullet'>â€¢ Actions : `src/runtime/modules/generated/stocksauto/stocksauto.actions.ts` → OK</p>
+<p class='bullet'>â€¢ Route : `src/app/(private)/stocksauto/page.tsx` → OK</p>
+<p class='bullet'>â€¢ Route : `src/app/(private)/stocksauto/[id]/page.tsx` → OK</p>
+<p class='bullet'>â€¢ Route : `src/app/(private)/stocksauto/[id]/edit/page.tsx` → OK</p>
+<p></p>
+<h3>7. Diagnostic</h3>
+<p></p>
+<p>Couverture partielle. Des actions, workflows ou r&#232;gles doivent &#234;tre compl&#233;t&#233;s.</p>
+<p></p>
+<h3>8. Emplacement cible des boutons</h3>
+<p></p>
+<p>ERPRuntimePage → ERPRuntimeActionBar → hors ERPEnterpriseForm.</p>
+<p></p>
+<h2>Mouvements stock — `mouvementsstockauto`</h2>
+<p></p>
+<h3>1. Ce que le module g&#232;re</h3>
+<p></p>
+<p>Preuve de variation stock.</p>
+<p></p>
+<h3>2. Statuts attendus vs d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>Statut attendu</td><td>D&#233;tect&#233; dans code</td></tr>
+<tr><td>brouillon</td><td>OK</td></tr>
+<tr><td>valide</td><td>OK</td></tr>
+<tr><td>annule</td><td>OK</td></tr>
+</table>
+<p></p>
+<p>Couverture statuts : 100%</p>
+<p></p>
+<h3>3. Workflows attendus vs d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>D&#233;part</td><td>Bouton attendu</td><td>Arriv&#233;e</td><td>D&#233;tect&#233;</td></tr>
+<tr><td>brouillon</td><td>Valider mouvement</td><td>valide</td><td>KO</td></tr>
+<tr><td>valide</td><td>Annuler mouvement</td><td>annule</td><td>KO</td></tr>
+</table>
+<p></p>
+<p>Couverture workflows : 0%</p>
+<p></p>
+<h3>4. Boutons attendus vs d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>Bouton attendu</td><td>D&#233;tect&#233; dans actions/workflows</td></tr>
+<tr><td>Valider mouvement</td><td>KO</td></tr>
+<tr><td>Annuler mouvement</td><td>KO</td></tr>
+</table>
+<p></p>
+<p>Couverture boutons : 0%</p>
+<p></p>
+<h3>5. R&#232;gles m&#233;tier attendues vs indices d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>R&#232;gle attendue</td><td>Indice d&#233;tect&#233;</td></tr>
+<tr><td>R-MVT-01 mouvement porte sourceModule sourceId</td><td>OK</td></tr>
+<tr><td>R-MVT-02 mouvement conserve quantiteAvant quantiteApres</td><td>OK</td></tr>
+<tr><td>R-MVT-03 mouvement est seule preuve modification stock</td><td>OK</td></tr>
+<tr><td>R-MVT-04 mouvement valide non modifiable pour maquiller historique</td><td>OK</td></tr>
+<tr><td>R-MVT-05 annulation via mouvement inverse idealement</td><td>OK</td></tr>
+</table>
+<p></p>
+<p>Couverture r&#232;gles : 100%</p>
+<p></p>
+<h3>6. Routes et fichiers</h3>
+<p></p>
+<p class='bullet'>â€¢ Module : `src/runtime/modules/generated/mouvementsstockauto/mouvementsstockauto.module.ts` → OK</p>
+<p class='bullet'>â€¢ Actions : `src/runtime/modules/generated/mouvementsstockauto/mouvementsstockauto.actions.ts` → KO</p>
+<p class='bullet'>â€¢ Route : `src/app/(private)/mouvementsstockauto/page.tsx` → OK</p>
+<p class='bullet'>â€¢ Route : `src/app/(private)/mouvementsstockauto/[id]/page.tsx` → OK</p>
+<p class='bullet'>â€¢ Route : `src/app/(private)/mouvementsstockauto/[id]/edit/page.tsx` → OK</p>
+<p></p>
+<h3>7. Diagnostic</h3>
+<p></p>
+<p>Couverture partielle. Des actions, workflows ou r&#232;gles doivent &#234;tre compl&#233;t&#233;s.</p>
+<p></p>
+<h3>8. Emplacement cible des boutons</h3>
+<p></p>
+<p>ERPRuntimePage → ERPRuntimeActionBar → hors ERPEnterpriseForm.</p>
+<p></p>
+<h2>Fournisseurs — `fournisseursauto`</h2>
+<p></p>
+<h3>1. Ce que le module g&#232;re</h3>
+<p></p>
+<p>Referentiel fournisseur.</p>
+<p></p>
+<h3>2. Statuts attendus vs d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>Statut attendu</td><td>D&#233;tect&#233; dans code</td></tr>
+<tr><td>actif</td><td>OK</td></tr>
+<tr><td>suspendu</td><td>OK</td></tr>
+<tr><td>archive</td><td>OK</td></tr>
+</table>
+<p></p>
+<p>Couverture statuts : 100%</p>
+<p></p>
+<h3>3. Workflows attendus vs d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>D&#233;part</td><td>Bouton attendu</td><td>Arriv&#233;e</td><td>D&#233;tect&#233;</td></tr>
+<tr><td>actif</td><td>Suspendre fournisseur</td><td>suspendu</td><td>KO</td></tr>
+<tr><td>suspendu</td><td>Reactiver fournisseur</td><td>actif</td><td>KO</td></tr>
+<tr><td>actif/suspendu</td><td>Archiver fournisseur</td><td>archive</td><td>KO</td></tr>
+</table>
+<p></p>
+<p>Couverture workflows : 0%</p>
+<p></p>
+<h3>4. Boutons attendus vs d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>Bouton attendu</td><td>D&#233;tect&#233; dans actions/workflows</td></tr>
+<tr><td>Creer commande fournisseur</td><td>KO</td></tr>
+<tr><td>Voir commandes fournisseur</td><td>KO</td></tr>
+<tr><td>Suspendre fournisseur</td><td>KO</td></tr>
+<tr><td>Reactiver fournisseur</td><td>KO</td></tr>
+<tr><td>Archiver fournisseur</td><td>KO</td></tr>
+</table>
+<p></p>
+<p>Couverture boutons : 0%</p>
+<p></p>
+<h3>5. R&#232;gles m&#233;tier attendues vs indices d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>R&#232;gle attendue</td><td>Indice d&#233;tect&#233;</td></tr>
+<tr><td>R-FOU-01 commande stock rattachee a fournisseur</td><td>OK</td></tr>
+<tr><td>R-FOU-02 fournisseur archive non propose dans nouvelles commandes</td><td>OK</td></tr>
+<tr><td>R-FOU-03 archiver fournisseur conserve historique</td><td>OK</td></tr>
+<tr><td>R-FOU-04 creer commande depuis fournisseur pre-remplit fournisseurId</td><td>OK</td></tr>
+</table>
+<p></p>
+<p>Couverture r&#232;gles : 100%</p>
+<p></p>
+<h3>6. Routes et fichiers</h3>
+<p></p>
+<p class='bullet'>â€¢ Module : `src/runtime/modules/generated/fournisseursauto/fournisseursauto.module.ts` → OK</p>
+<p class='bullet'>â€¢ Actions : `src/runtime/modules/generated/fournisseursauto/fournisseursauto.actions.ts` → KO</p>
+<p class='bullet'>â€¢ Route : `src/app/(private)/fournisseursauto/page.tsx` → OK</p>
+<p class='bullet'>â€¢ Route : `src/app/(private)/fournisseursauto/[id]/page.tsx` → OK</p>
+<p class='bullet'>â€¢ Route : `src/app/(private)/fournisseursauto/[id]/edit/page.tsx` → OK</p>
+<p></p>
+<h3>7. Diagnostic</h3>
+<p></p>
+<p>Couverture partielle. Des actions, workflows ou r&#232;gles doivent &#234;tre compl&#233;t&#233;s.</p>
+<p></p>
+<h3>8. Emplacement cible des boutons</h3>
+<p></p>
+<p>ERPRuntimePage → ERPRuntimeActionBar → hors ERPEnterpriseForm.</p>
+<p></p>
+<h2>Commandes stock — `commandesstockauto`</h2>
+<p></p>
+<h3>1. Ce que le module g&#232;re</h3>
+<p></p>
+<p>Intention d&#39;achat fournisseur.</p>
+<p></p>
+<h3>2. Statuts attendus vs d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>Statut attendu</td><td>D&#233;tect&#233; dans code</td></tr>
+<tr><td>brouillon</td><td>OK</td></tr>
+<tr><td>envoyee</td><td>OK</td></tr>
+<tr><td>partiellement_recue</td><td>OK</td></tr>
+<tr><td>recue</td><td>OK</td></tr>
+<tr><td>annulee</td><td>OK</td></tr>
+</table>
+<p></p>
+<p>Couverture statuts : 100%</p>
+<p></p>
+<h3>3. Workflows attendus vs d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>D&#233;part</td><td>Bouton attendu</td><td>Arriv&#233;e</td><td>D&#233;tect&#233;</td></tr>
+<tr><td>brouillon</td><td>Envoyer commande</td><td>envoyee</td><td>OK</td></tr>
+<tr><td>envoyee</td><td>Reception partielle detectee</td><td>partiellement_recue</td><td>KO</td></tr>
+<tr><td>envoyee/partiellement_recue</td><td>Reception complete detectee</td><td>recue</td><td>KO</td></tr>
+<tr><td>brouillon/envoyee</td><td>Annuler commande</td><td>annulee</td><td>OK</td></tr>
+</table>
+<p></p>
+<p>Couverture workflows : 50%</p>
+<p></p>
+<h3>4. Boutons attendus vs d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>Bouton attendu</td><td>D&#233;tect&#233; dans actions/workflows</td></tr>
+<tr><td>Envoyer commande</td><td>OK</td></tr>
+<tr><td>Creer reception</td><td>KO</td></tr>
+<tr><td>Annuler commande</td><td>OK</td></tr>
+</table>
+<p></p>
+<p>Couverture boutons : 67%</p>
+<p></p>
+<h3>5. R&#232;gles m&#233;tier attendues vs indices d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>R&#232;gle attendue</td><td>Indice d&#233;tect&#233;</td></tr>
+<tr><td>R-CMD-01 envoyer commande ne modifie pas stock</td><td>OK</td></tr>
+<tr><td>R-CMD-02 montants commande viennent des lignes</td><td>OK</td></tr>
+<tr><td>R-CMD-03 reception modifie stock pas commande</td><td>OK</td></tr>
+<tr><td>R-CMD-04 statuts reception calcules depuis receptions</td><td>OK</td></tr>
+<tr><td>R-CMD-05 annuler commande receptionnee bloque ou compense</td><td>OK</td></tr>
+</table>
+<p></p>
+<p>Couverture r&#232;gles : 100%</p>
+<p></p>
+<h3>6. Routes et fichiers</h3>
+<p></p>
+<p class='bullet'>â€¢ Module : `src/runtime/modules/generated/commandesstockauto/commandesstockauto.module.ts` → OK</p>
+<p class='bullet'>â€¢ Actions : `src/runtime/modules/generated/commandesstockauto/commandesstockauto.actions.ts` → KO</p>
+<p class='bullet'>â€¢ Route : `src/app/(private)/commandesstockauto/page.tsx` → OK</p>
+<p class='bullet'>â€¢ Route : `src/app/(private)/commandesstockauto/[id]/page.tsx` → OK</p>
+<p class='bullet'>â€¢ Route : `src/app/(private)/commandesstockauto/[id]/edit/page.tsx` → OK</p>
+<p></p>
+<h3>7. Diagnostic</h3>
+<p></p>
+<p>Couverture globalement correcte. &#192; consolider par tests fonctionnels.</p>
+<p></p>
+<h3>8. Emplacement cible des boutons</h3>
+<p></p>
+<p>ERPRuntimePage → ERPRuntimeActionBar → hors ERPEnterpriseForm.</p>
+<p></p>
+<h2>Lignes commande stock — `lignescommandestockauto`</h2>
+<p></p>
+<h3>1. Ce que le module g&#232;re</h3>
+<p></p>
+<p>Produits commandes.</p>
+<p></p>
+<h3>2. Statuts attendus vs d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>Statut attendu</td><td>D&#233;tect&#233; dans code</td></tr>
+<tr><td>brouillon</td><td>OK</td></tr>
+<tr><td>validee</td><td>OK</td></tr>
+</table>
+<p></p>
+<p>Couverture statuts : 100%</p>
+<p></p>
+<h3>3. Workflows attendus vs d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>D&#233;part</td><td>Bouton attendu</td><td>Arriv&#233;e</td><td>D&#233;tect&#233;</td></tr>
+<tr><td>brouillon</td><td>Valider ligne commande</td><td>validee</td><td>KO</td></tr>
+</table>
+<p></p>
+<p>Couverture workflows : 0%</p>
+<p></p>
+<h3>4. Boutons attendus vs d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>Bouton attendu</td><td>D&#233;tect&#233; dans actions/workflows</td></tr>
+<tr><td>Valider ligne commande</td><td>KO</td></tr>
+<tr><td>Annuler ligne commande</td><td>KO</td></tr>
+</table>
+<p></p>
+<p>Couverture boutons : 0%</p>
+<p></p>
+<h3>5. R&#232;gles m&#233;tier attendues vs indices d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>R&#232;gle attendue</td><td>Indice d&#233;tect&#233;</td></tr>
+<tr><td>R-LCMD-01 ligne commande appartient a commande parent</td><td>OK</td></tr>
+<tr><td>R-LCMD-02 produit auto-remplit designation prix achat snapshot</td><td>OK</td></tr>
+<tr><td>R-LCMD-03 ligne commande ne choisit pas stock destination</td><td>OK</td></tr>
+<tr><td>R-LCMD-04 stock destination se choisit a reception</td><td>OK</td></tr>
+<tr><td>R-LCMD-05 ligne deja receptionnee non reproposee sauf partiel</td><td>OK</td></tr>
+</table>
+<p></p>
+<p>Couverture r&#232;gles : 100%</p>
+<p></p>
+<h3>6. Routes et fichiers</h3>
+<p></p>
+<p class='bullet'>â€¢ Module : `src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module.ts` → OK</p>
+<p class='bullet'>â€¢ Actions : `src/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.actions.ts` → KO</p>
+<p class='bullet'>â€¢ Route : `src/app/(private)/lignescommandestockauto/page.tsx` → OK</p>
+<p class='bullet'>â€¢ Route : `src/app/(private)/lignescommandestockauto/[id]/page.tsx` → OK</p>
+<p class='bullet'>â€¢ Route : `src/app/(private)/lignescommandestockauto/[id]/edit/page.tsx` → OK</p>
+<p></p>
+<h3>7. Diagnostic</h3>
+<p></p>
+<p>Couverture partielle. Des actions, workflows ou r&#232;gles doivent &#234;tre compl&#233;t&#233;s.</p>
+<p></p>
+<h3>8. Emplacement cible des boutons</h3>
+<p></p>
+<p>ERPRuntimePage → ERPRuntimeActionBar → hors ERPEnterpriseForm.</p>
+<p></p>
+<h2>Receptions stock — `receptionsstockauto`</h2>
+<p></p>
+<h3>1. Ce que le module g&#232;re</h3>
+<p></p>
+<p>Entree reelle de stock.</p>
+<p></p>
+<h3>2. Statuts attendus vs d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>Statut attendu</td><td>D&#233;tect&#233; dans code</td></tr>
+<tr><td>brouillon</td><td>OK</td></tr>
+<tr><td>validee</td><td>OK</td></tr>
+</table>
+<p></p>
+<p>Couverture statuts : 100%</p>
+<p></p>
+<h3>3. Workflows attendus vs d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>D&#233;part</td><td>Bouton attendu</td><td>Arriv&#233;e</td><td>D&#233;tect&#233;</td></tr>
+<tr><td>brouillon</td><td>Valider reception</td><td>validee</td><td>OK</td></tr>
+</table>
+<p></p>
+<p>Couverture workflows : 100%</p>
+<p></p>
+<h3>4. Boutons attendus vs d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>Bouton attendu</td><td>D&#233;tect&#233; dans actions/workflows</td></tr>
+<tr><td>Valider reception</td><td>OK</td></tr>
+<tr><td>Annuler reception</td><td>KO</td></tr>
+</table>
+<p></p>
+<p>Couverture boutons : 50%</p>
+<p></p>
+<h3>5. R&#232;gles m&#233;tier attendues vs indices d&#233;tect&#233;s</h3>
+<p></p>
+<table>
+<tr><td>R&#232;gle attendue</td><td>Indice d&#233;tect&#233;</td></tr>
+<tr><td>R-REC-01 reception liee a commande</td><td>OK</td></tr>
+<tr><td>R-REC-02 reception liee a ligne commande</td><td>OK</td></tr>
+<tr><td>R-REC-03 reception validee cree mouvement entree</td><td>OK</td></tr>
+<tr><td>R-REC-04 mouvement augmente stock</td><td>OK</td></tr>
+<tr><td>R-REC-05 mouvementStockId empeche double traitement</td><td>OK</td></tr>
+<tr><td>R-REC-06 ligne deja receptionnee non reproposee sauf partiel</td><td>OK</td></tr>
+<tr><td>R-REC-07 stock destination depend produit</td><td>OK</td></tr>
+</table>
+<p></p>
+<p>Couverture r&#232;gles : 100%</p>
+<p></p>
+<h3>6. Routes et fichiers</h3>
+<p></p>
+<p class='bullet'>â€¢ Module : `src/runtime/modules/generated/receptionsstockauto/receptionsstockauto.module.ts` → OK</p>
+<p class='bullet'>â€¢ Actions : `src/runtime/modules/generated/receptionsstockauto/receptionsstockauto.actions.ts` → KO</p>
+<p class='bullet'>â€¢ Route : `src/app/(private)/receptionsstockauto/page.tsx` → OK</p>
+<p class='bullet'>â€¢ Route : `src/app/(private)/receptionsstockauto/[id]/page.tsx` → OK</p>
+<p class='bullet'>â€¢ Route : `src/app/(private)/receptionsstockauto/[id]/edit/page.tsx` → OK</p>
+<p></p>
+<h3>7. Diagnostic</h3>
+<p></p>
+<p>Couverture globalement correcte. &#192; consolider par tests fonctionnels.</p>
+<p></p>
+<h3>8. Emplacement cible des boutons</h3>
+<p></p>
+<p>ERPRuntimePage → ERPRuntimeActionBar → hors ERPEnterpriseForm.</p>
+<p></p>
+<h2>Priorit&#233;s recommand&#233;es</h2>
+<p></p>
+<p class='bullet'>â€¢ MEDIUM — Clients `clientsauto` : couverture 50%</p>
+<p class='bullet'>â€¢ MEDIUM — Vehicules `vehicules` : couverture 50%</p>
+<p class='bullet'>â€¢ MEDIUM — Rendez-vous `rendezvous` : couverture 60%</p>
+<p class='bullet'>â€¢ MEDIUM — Lignes intervention `lignesinterventionauto` : couverture 54%</p>
+<p class='bullet'>â€¢ MEDIUM — Encaissements `encaissementsauto` : couverture 50%</p>
+<p class='bullet'>â€¢ MEDIUM — Produits `produitsauto` : couverture 50%</p>
+<p class='bullet'>â€¢ MEDIUM — Stocks `stocksauto` : couverture 58%</p>
+<p class='bullet'>â€¢ MEDIUM — Mouvements stock `mouvementsstockauto` : couverture 50%</p>
+<p class='bullet'>â€¢ MEDIUM — Fournisseurs `fournisseursauto` : couverture 50%</p>
+<p class='bullet'>â€¢ MEDIUM — Lignes commande stock `lignescommandestockauto` : couverture 50%</p>
+<p></p>
+<h2>Conclusion</h2>
+<p></p>
+<p>Ce rapport ne remplace pas la cartographie m&#233;tier source. Il mesure la conformit&#233; du code actuel avec cette cartographie et sert de base aux prochaines passes runtime.</p>
+</body>
+</html>
