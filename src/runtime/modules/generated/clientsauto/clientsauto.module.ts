@@ -1,3 +1,4 @@
+import { clientsautoActions } from "./clientsauto.actions";
 ﻿import type { ERPModule } from "@/runtime/modules/ERPModule";
 
 export const clientsautoModule: ERPModule = {
@@ -486,20 +487,7 @@ export const clientsautoModule: ERPModule = {
   },
 
 
-  actions: [
-    {
-      key: "nouveau-rdv-client",
-      label: "Nouveau RDV",
-      type: "primary",
-      href: "/rendezvous/nouveau",
-    },
-      {
-      key: "client360-demo",
-      label: "Fiche 360 demo",
-      type: "secondary",
-      href: "/client360-demo",
-    },
-],
+  actions: clientsautoActions,
 workflows:[
     {
       key:"client",
