@@ -154,6 +154,12 @@ export const rendezvousModule: ERPModule = {
 {
         key: "statut",
         label: "Statut",
+        readonlyIf: {
+          field: "statut",
+          operator: "in",
+          values: ["planifie", "confirme", "en_cours", "termine", "annule"],
+        },
+        helperText: "Statut piloté par les actions. Utilisez les boutons d’action pour changer l’état du rendez-vous.",
         type: "select",
         defaultValue: "planifie",
         options: [

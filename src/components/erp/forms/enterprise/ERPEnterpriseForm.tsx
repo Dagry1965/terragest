@@ -391,6 +391,42 @@ function getInvoiceAmountSummary(
   };
 }
 
+
+function evaluateERPConditionalRule(
+  rule:
+    | {
+        field: string;
+        operator: "equals" | "notEquals" | "in" | "notIn";
+        value?: unknown;
+        values?: unknown[];
+      }
+    | undefined,
+  values: Record<string, unknown>
+): boolean {
+  if (!rule || !rule.field || !rule.operator) {
+    return false;
+  }
+
+  const currentValue = values[rule.field];
+
+  switch (rule.operator) {
+    case "equals":
+      return currentValue === rule.value;
+
+    case "notEquals":
+      return currentValue !== rule.value;
+
+    case "in":
+      return Array.isArray(rule.values) && rule.values.includes(currentValue);
+
+    case "notIn":
+      return Array.isArray(rule.values) && !rule.values.includes(currentValue);
+
+    default:
+      return false;
+  }
+}
+
 export function ERPEnterpriseForm({
   module,
   mode = "create",
@@ -487,6 +523,20 @@ export function ERPEnterpriseForm({
         ]
       : [];
 
+  const readonlyIfFields =
+    mode === "create"
+      ? []
+      : (module.schema.fields ?? [])
+          .filter((field) =>
+            evaluateERPConditionalRule(
+              field.readonlyIf,
+              {
+                ...(initialData ?? {}),
+              }
+            )
+          )
+          .map((field) => field.key);
+
   const readOnlyFields =
     isRemovedRecord
       ? module.schema.fields.map((field) => field.key)
@@ -494,6 +544,7 @@ export function ERPEnterpriseForm({
         ? []
         : Array.from(
             new Set([
+            ...readonlyIfFields,
               ...compositionReadOnlyFields,
               ...validatedReceptionReadOnlyFields,
             ])

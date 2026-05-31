@@ -1,0 +1,802 @@
+# AMARKHYS-REBUILD-05E-C — Audit readonlyIf rendering
+
+Date: 2026-05-31T20:06:44.193Z
+
+## Objectif
+
+Vérifier pourquoi readonlyIf est valide dans la metadata mais n'est pas appliqué visuellement dans le formulaire.
+
+## Checks
+
+- OK — rendezvous statut contient readonlyIf
+- OK — readonlyIf utilise operator in
+- OK — ERPEnterpriseForm lit readonlyIf
+- OK — ERPFormField reçoit readOnly/disabled
+- OK — ERPEnterpriseForm sait évaluer operator in/notIn
+
+## Synthèse
+
+- OK: 5
+- FAIL: 0
+
+## form — src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx
+
+- in — L11: import { RuntimeDataBinding } from "@/runtime/data-binding";
+- in — L12: import { RuntimeStatusGovernanceEngine } from "@/runtime/status";
+- in — L13: import { RuntimeComputedFieldsEngine } from "@/runtime/computed";
+- in — L14: import { RuntimeAutoFillEngine } from "@/runtime/autofill";
+- in — L24: RuntimePermissionEngine,
+- in — L25: } from "@/runtime/permissions/RuntimePermissionEngine";
+- in — L28: RuntimeValidationEngine,
+- in — L29: } from "@/runtime/validation/RuntimeValidationEngine";
+- in — L32: RuntimeVisibilityEngine,
+- in — L33: } from "@/runtime/visibility/RuntimeVisibilityEngine";
+- in — L44: generateTerrainCode,
+- in — L45: } from "@/runtime/business/terrains/generateTerrainCode";
+- in — L49: } from "@/runtime/business/contrats/generateContratCode";
+- in — L52: attachContratToTerrain,
+- in — L53: } from "@/runtime/business/contrats/attachContratToTerrain";
+- in — L55: recomputeTerrainSurfaceDisponible,
+- in — L57: from "@/runtime/business/exploitations/recomputeTerrainSurfaceDisponible";
+- in — L61: } from "@/components/erp/billing/InvoicePaymentsHistory";
+- in — L65: } from "@/components/erp/billing/InvoicePaymentSchedule";
+- in — L69: } from "@/components/erp/billing/InvoiceDocumentActions";
+- in — L72: RuntimeUniqueConstraintEngine,
+- in — L73: } from "@/runtime/validation/RuntimeUniqueConstraintEngine";
+- in — L83: moduleKey: string,
+- in — L93: RuntimeStatusGovernanceEngine.getVisibleStatusKeys(moduleKey);
+- in — L102: visibleStatusKeys.includes(String(option.value))
+- in — L109: value === undefined ||
+- in — L111: String(value).trim() === ""
+- in — L116: if (typeof value !== "string") {
+- in — L134: if (typeof value !== "string") {
+- in — L151: function applySchedulingInitialValues(
+- in — L153: values: Record<string, unknown>
+- in — L155: const schedulingConfig =
+- in — L156: module.scheduling;
+- in — L158: if (!schedulingConfig?.enabled) {
+- in — L163: schedulingConfig.startField ?? "startAt";
+- in — L166: schedulingConfig.dateField;
+- in — L169: schedulingConfig.timeField;
+- in — L213: interface ERPEnterpriseFormProps {
+- in — L216: initialData?: Record<string, unknown>;
+- in — L220: interface ERPFormRelationChangeContext {
+- in — L222: key: string;
+- in — L227: id: string;
+- in — L228: label: string;
+- in — L229: record?: Record<string, unknown>;
+- in — L233: interface RuntimeRelationAutoFillConfig {
+- in — L234: map?: Record<string, string[] | string>;
+- in — L239: invoice: Record<string, unknown>
+- in — L240: ): string {
+- in — L242: String(invoice.id ?? invoice._id ?? "");
+- in — L245: Number(invoice.montantTTC ?? 0);
+- in — L248: Number(invoice.montantPaye ?? 0);
+- in — L251: Number(invoice.resteAPayer ?? 0);
+- in — L263: clientId: invoice.clientId ? String(invoice.clientId) : undefined,
+- in — L264: vehiculeId: invoice.vehiculeId ? String(invoice.vehiculeId) : undefined,
+- in — L265: montant: montant > 0 ? montant : undefined,
+- in — L267: .toISOString()
+- in — L274: async function syncInterventionTotalsFromLines(
+- in — L275: interventionId: string
+- in — L277: if (!interventionId) {
+- in — L283: await import("@/runtime/modules/definitions/coreModules");
+- in — L285: const linesModule =
+- in — L286: allERPModules.find(
+- in — L287: (item) => item.metadata.key === "lignesinterventionauto"
+- in — L290: const interventionModule =
+- in — L291: allERPModules.find(
+- in — L292: (item) => item.metadata.key === "interventionsauto"
+- in — L295: if (!linesModule || !interventionModule) {
+- in — L299: const lines =
+- in — L300: await RuntimeDataBinding.list(linesModule);
+- in — L302: const relatedLines =
+- in — L303: lines.filter(
+- in — L304: (line) =>
+- in — L305: String(line.interventionId ?? "") === interventionId &&
+- in — L306: String(line.statut ?? "") !== "annulee"
+- in — L310: relatedLines.reduce(
+- in — L311: (acc, line) => {
+- in — L312: const quantity = Number(line.quantite ?? 0);
+- in — L313: const unitPrice = Number(line.prixUnitaire ?? 0);
+- in — L316: Number(line.montantTotal ?? quantity * unitPrice) || 0;
+- in — L319: String(line.typeLigne ?? "piece");
+- in — L324: type === "main_oeuvre" ||
+- in — L327: acc.mainOeuvre += amount;
+- in — L338: mainOeuvre: 0,
+- in — L346: totals.mainOeuvre +
+- in — L350: await RuntimeDataBinding.update(
+- in — L351: interventionModule,
+- in — L352: interventionId,
+- in — L355: coutMainOeuvre: totals.mainOeuvre + totals.autres,
+- in — L368: invoice: Record<string, unknown>
+- in — L371: Number(invoice.montantTTC ?? 0);
+- in — L374: Number(invoice.montantPaye ?? 0);
+- in — L377: Number(invoice.resteAPayer ?? 0);
+- in — L398: field: string;
+- operator — L399: operator: "equals" | "notEquals" | "in" | "notIn";
+- equals — L399: operator: "equals" | "notEquals" | "in" | "notIn";
+- notEquals — L399: operator: "equals" | "notEquals" | "in" | "notIn";
+- in — L399: operator: "equals" | "notEquals" | "in" | "notIn";
+- notIn — L399: operator: "equals" | "notEquals" | "in" | "notIn";
+- in — L403: | undefined,
+- in — L404: values: Record<string, unknown>
+- operator — L406: if (!rule || !rule.field || !rule.operator) {
+- operator — L412: switch (rule.operator) {
+- equals — L413: case "equals":
+- notEquals — L416: case "notEquals":
+- in — L419: case "in":
+- in — L420: return Array.isArray(rule.values) && rule.values.includes(currentValue);
+- notIn — L422: case "notIn":
+- in — L423: return Array.isArray(rule.values) && !rule.values.includes(currentValue);
+- in — L433: initialData = {},
+- in — L462: const compositionLocking =
+- lockedFields — L465: lockedFields?: string[];
+- in — L465: lockedFields?: string[];
+- readOnly — L466: readOnlyFields?: string[];
+- readOnlyFields — L466: readOnlyFields?: string[];
+- in — L466: readOnlyFields?: string[];
+- in — L467: allowOverride?: string[];
+- in — L469: | undefined;
+- lockedFields — L479: compositionLocking?.lockedFields ?? [];
+- in — L479: compositionLocking?.lockedFields ?? [];
+- readOnly — L482: compositionLocking?.readOnlyFields ?? [];
+- readOnlyFields — L482: compositionLocking?.readOnlyFields ?? [];
+- in — L482: compositionLocking?.readOnlyFields ?? [];
+- readonlyIf — L484: const readonlyIfFields =
+- readonly — L484: const readonlyIfFields =
+- readonlyIf — L490: field.readonlyIf,
+- readonly — L490: field.readonlyIf,
+- in — L492: ...(initialData ?? {}),
+- lockedFields — L499: const lockedFields =
+- in — L515: Boolean(initialData?.removedAt) ||
+- in — L516: Boolean(initialData?.removedFromStatus) ||
+- in — L517: Boolean(initialData?.removedReason) ||
+- in — L518: Boolean(initialData?.stockReversalMovementId);
+- in — L527: String(initialData?.statut ?? "") === "validee" ||
+- in — L528: Boolean(initialData?.mouvementStockId)
+- readOnly — L541: const readOnlyFields =
+- readOnlyFields — L541: const readOnlyFields =
+- readonlyIf — L548: ...readonlyIfFields,
+- readonly — L548: ...readonlyIfFields,
+- lockedFields — L555: // Creation directe : aucun champ composition.lockedFields n'est bloque.
+- in — L559: const [saving, setSaving] = useState(false);
+- in — L573: field.defaultValue !== undefined
+- in — L582: return applySchedulingInitialValues(
+- in — L586: ...initialData,
+- in — L592: return applySchedulingInitialValues(
+- in — L595: ...initialData,
+- in — L602: useState<Record<string, unknown>>(
+- in — L607: JSON.stringify(queryValues);
+- in — L611: // Generic create forms must be able to receive initial values from URL.
+- in — L612: // This is used by runtime planning, parent/child creation links,
+- in — L613: // contextual creation buttons, and any future metadata-driven entry point.
+- in — L614: // Applied once only to avoid overwriting user input while editing the form.
+- in — L626: value !== undefined &&
+- in — L628: String(value).trim() !== ""
+- in — L656: RuntimeComputedFieldsEngine.apply({
+- in — L669: const currentUserRole = "admin";
+- in — L675: RuntimeVisibilityEngine.isVisible(
+- in — L679: RuntimePermissionEngine.canAccessField(
+- in — L691: const mainFields =
+- in — L702: RuntimeStatusGovernanceEngine.resolve({
+- in — L705: ...initialData,
+- in — L723: : statusGuidance?.tone === "warning"
+- in — L727: : statusGuidance?.tone === "info"
+- in — L736: : statusGuidance?.tone === "info"
+- in — L746: ) as Record<string, string>;
+- in — L750: ): string {
+- in — L752: error instanceof Error
+- in — L757: message.includes(
+- in — L758: "Conflit de planning"
+- in — L760: message.includes(
+- in — L768: message.includes(
+- in — L771: message.includes(
+- in — L774: message.includes(
+- in — L782: message.includes(
+- in — L790: message.includes(
+- in — L798: message.includes(
+- in — L802: return "Ce rendez-vous a dej  genere une intervention. Aucune nouvelle intervention ne sera creee.";
+- in — L815: Boolean(initialData.id ?? initialData._id);
+- in — L817: const invoicePaymentHref =
+- in — L819: ? buildInvoicePaymentHref(initialData)
+- in — L822: const invoiceAmountSummary =
+- in — L823: getInvoiceAmountSummary(initialData);
+- in — L831: Number.isFinite(value)
+- in — L836: if (typeof value === "string") {
+- in — L844: if (Number.isFinite(parsed)) {
+- in — L873: : undefined
+- in — L880: record: Record<string, unknown> | undefined,
+- in — L881: candidates: string[] | string
+- in — L884: return undefined;
+- in — L897: value !== undefined &&
+- in — L899: String(value).trim() !== ""
+- in — L905: return undefined;
+- in — L909: currentValues: Record<string, unknown>,
+- in — L911: ): Record<string, unknown> {
+- in — L927: // The form extracts the relation context; RuntimeAutoFillEngine applies the mapping.
+- in — L929: RuntimeAutoFillEngine.apply({
+- in — L936: ? applyLineItemFormCalculations(autoFillResult.values)
+- in — L940: function applyLineItemFormCalculations(
+- in — L941: values: Record<string, unknown>
+- in — L942: ): Record<string, unknown> {
+- in — L943: if (module.metadata.key !== "lignesinterventionauto") {
+- in — L983: changedFieldKey: string
+- in — L984: ): string[] {
+- in — L985: const dependentKeys = new Set<string>();
+- in — L990: typeof field.relation === "string"
+- in — L992: continue;
+- in — L997: sourceField?: string;
+- in — L1010: key: string,
+- in — L1037: // The form updates values; RuntimeComputedFieldsEngine applies module.composition.computedFields.
+- in — L1039: RuntimeComputedFieldsEngine.apply({
+- in — L1048: module.metadata.key === "lignesinterventionauto" &&
+- in — L1055: ].includes(key)
+- in — L1057: return applyLineItemFormCalculations(computedValues);
+- in — L1087: async function prepareTerrainPayloadBeforeCreate(
+- in — L1088: payload: Record<string, unknown>
+- in — L1090: if (module.metadata.key !== "terrains") {
+- in — L1094: const existingTerrains =
+- in — L1095: await RuntimeDataBinding.list(module);
+- in — L1098: await generateTerrainCode(
+- in — L1100: existingTerrains
+- in — L1107: statut: payload.statut || "inactif",
+- in — L1115: async function prepareTerrainPayloadBeforeUpdate(
+- in — L1116: payload: Record<string, unknown>
+- in — L1118: if (module.metadata.key !== "terrains") {
+- in — L1122: const existingTerrains =
+- in — L1123: await RuntimeDataBinding.list(module);
+- in — L1126: String(initialData.nom ?? "").trim() !==
+- in — L1127: String(payload.nom ?? "").trim();
+- in — L1130: String(initialData.ville ?? "").trim() !==
+- in — L1131: String(payload.ville ?? "").trim();
+- in — L1140: ? await generateTerrainCode(
+- in — L1142: existingTerrains
+- in — L1144: : String(payload.code);
+- in — L1158: payload: Record<string, unknown>
+- in — L1164: const existingContrats =
+- in — L1165: await RuntimeDataBinding.list(module);
+- in — L1170: existingContrats
+- in — L1181: payload: Record<string, unknown>
+- in — L1187: const existingContrats =
+- in — L1188: await RuntimeDataBinding.list(module);
+- in — L1191: String(initialData.typeContrat ?? "").trim() !==
+- in — L1192: String(payload.typeContrat ?? "").trim();
+- in — L1195: String(initialData.objetContrat ?? "").trim() !==
+- in — L1196: String(payload.objetContrat ?? "").trim();
+- in — L1205: existingContrats
+- in — L1207: : String(payload.code);
+- in — L1219: setSaving(true);
+- in — L1226: const payload: Record<string, unknown> = {
+- in — L1233: RuntimeVisibilityEngine.isVisible(
+- in — L1267: if (module.metadata.key === "terrains") {
+- in — L1270: ? await prepareTerrainPayloadBeforeCreate(payload)
+- in — L1271: : await prepareTerrainPayloadBeforeUpdate(payload);
+- in — L1282: RuntimeValidationEngine.validate(
+- in — L1289: ? String(
+- in — L1290: initialData.id ??
+- in — L1291: initialData._id ??
+- in — L1298: const uniqueConstraintErrors =
+- in — L1299: await RuntimeUniqueConstraintEngine.validate(
+- in — L1307: ...uniqueConstraintErrors,
+- in — L1313: setSaving(false);
+- in — L1317: const businessRulesValid =
+- in — L1323: if (!businessRulesValid) {
+- in — L1326: field: "businessRules",
+- in — L1332: setSaving(false);
+- in — L1337: let savedRecord: Record<string, unknown> | null = null;
+- in — L1341: await RuntimeDataBinding.create(
+- in — L1359: recomputeTerrainSurfaceDisponible(
+- in — L1361: String(
+- in — L1362: preparedPayload.terrainId
+- in — L1370: await attachContratToTerrain({
+- in — L1377: initialData.id ??
+- in — L1378: initialData._id ??
+- in — L1384: "ERP UPDATE ERROR: missing record id"
+- in — L1389: await RuntimeDataBinding.update(
+- in — L1391: String(recordId),
+- in — L1396: ...initialData,
+- in — L1398: id: String(recordId),
+- in — L1410: recomputeTerrainSurfaceDisponible(
+- in — L1412: String(
+- in — L1413: preparedPayload.terrainId
+- in — L1421: await attachContratToTerrain({
+- in — L1429: if (module.metadata.key === "lignesinterventionauto") {
+- in — L1430: const interventionId =
+- in — L1431: String(
+- in — L1432: preparedPayload.interventionId ??
+- in — L1433: savedRecord?.interventionId ??
+- in — L1434: formValues.interventionId ??
+- in — L1438: if (interventionId) {
+- in — L1439: await syncInterventionTotalsFromLines(interventionId);
+- in — L1469: } finally {
+- in — L1470: setSaving(false);
+- in — L1475: const confirmed = window.confirm(
+- in — L1484: await RuntimeDataBinding.delete(
+- in — L1486: String(initialData.id)
+- in — L1495: error instanceof Error
+- in — L1506: window.scrollTo({
+- in — L1514: function getBusinessStatusAction() {
+- in — L1516: // Workflow/status/business actions must be rendered by ERPRuntimePage / ERPRuntimeActionBar.
+- in — L1517: // ERPEnterpriseForm must remain a form-only component and must not expose record-level actions.
+- in — L1521: async function handleBusinessStatusAction() {
+- disabled — L1523: // Form-level business/status actions are disabled.
+- in — L1523: // Form-level business/status actions are disabled.
+- in — L1528: const businessStatusAction = mode === "create" || isRemovedRecord ? null : getBusinessStatusAction();
+- in — L1530: function isSensitiveBusinessModule() {
+- in — L1537: "lignesinterventionauto",
+- in — L1539: ].includes(module.metadata.key);
+- in — L1542: const sensitiveBusinessModule =
+- in — L1543: isSensitiveBusinessModule();
+- readonly — L1583: data-removed-record-readonly-banner
+- in — L1604: <div data-invoice-document-actions>
+- in — L1605: <InvoiceDocumentActions invoice={initialData} />
+- in — L1611: data-invoice-edit-payment-action
+- in — L1623: <p className="text-xs font-black uppercase tracking-wide text-[var(--erp-secondary)]">
+- in — L1627: <h2 className="mt-2 text-2xl font-black text-[var(--erp-text)] min-w-[220px] justify-center self-end mt-auto mb-0 lg:self-end shadow-[0_12px_30px_rgba(0,166,138,0.22)]">
+- in — L1631: <p className="mt-2 max-w-3xl text-sm leading-6 text-[var(--erp-text-muted)]">
+- in — L1637: <p className="text-xs font-bold uppercase tracking-wide text-[var(--erp-text-muted)]">
+- in — L1641: {invoiceAmountSummary.montantTTC.toLocaleString("fr-FR")} FCFA
+- in — L1646: <p className="text-xs font-bold uppercase tracking-wide text-[var(--erp-text-muted)]">
+- in — L1650: {invoiceAmountSummary.montantPaye.toLocaleString("fr-FR")} FCFA
+- in — L1655: <p className="text-xs font-bold uppercase tracking-wide text-[var(--erp-text-muted)]">
+- in — L1659: {invoiceAmountSummary.resteAPayer.toLocaleString("fr-FR")} FCFA
+- in — L1666: href={invoicePaymentHref}
+- in — L1668: inline-flex
+- in — L1681: min-w-[220px] self-end lg:self-end shadow-[0_12px_30px_rgba(0,166,138,0.22)] mt-auto mb-0">
+- in — L1689: <div data-invoice-payments-history>
+- in — L1691: factureId={String(initialData.id ?? initialData._id ?? "")}
+- in — L1692: montantTTC={Number(initialData.montantTTC ?? 0)}
+- in — L1698: <div data-invoice-payment-schedule>
+- in — L1700: factureId={String(initialData.id ?? initialData._id ?? "")}
+- in — L1701: clientId={initialData.clientId ? String(initialData.clientId) : undefined}
+- in — L1702: vehiculeId={initialData.vehiculeId ? String(initialData.vehiculeId) : undefined}
+- in — L1703: montantTTC={Number(initialData.montantTTC ?? 0)}
+- in — L1704: montantPaye={Number(initialData.montantPaye ?? 0)}
+- in — L1705: resteAPayer={Number(initialData.resteAPayer ?? 0)}
+- in — L1710: {/* Workflow actions are rendered by ERPRuntimeActionBar in ERPRuntimePage. */}
+- in — L1713: <p className="text-sm font-bold uppercase tracking-wide text-[#475569]">
+- in — L1719: <h1 className="mt-3 text-4xl font-black tracking-tight">
+- in — L1723: <p className="mt-3 max-w-3xl text-base leading-7 text-slate-300">
+- in — L1724: Formulaire metier connecte au binding runtime.
+- in — L1734: initialData={formValues}
+- lockedFields — L1738: lockedFields={lockedFields}
+- readOnly — L1739: readOnlyFields={readOnlyFields}
+- readOnlyFields — L1739: readOnlyFields={readOnlyFields}
+- in — L1744: title="Informations principales"
+- in — L1745: description="Renseigne les champs principaux du module."
+- in — L1747: {mainFields.map((field) => (
+- lockedFields — L1755: lockedFields={lockedFields}
+- readOnly — L1756: readOnlyFields={readOnlyFields}
+- readOnlyFields — L1756: readOnlyFields={readOnlyFields}
+- lockedFields — L1774: lockedFields={lockedFields}
+- readOnly — L1775: readOnlyFields={readOnlyFields}
+- readOnlyFields — L1775: readOnlyFields={readOnlyFields}
+- in — L1800: Le statut indique l'etat metier de la fiche. Pour changer cet etat,
+- in — L1810: ].join(" ")}
+- in — L1817: "mt-1 leading-6",
+- in — L1819: ].join(" ")}
+- in — L1833: {errors.map((error, index) => (
+- in — L1835: key={index}
+- in — L1845: {/* AMARKHYS-REBUILD-05C-FIX3: form-level business/status action render removed. Runtime actions are rendered by ERPRuntimePage / ERPRuntimeActionBar. */}
+- disabled — L1853: disabled={saving}
+- in — L1853: disabled={saving}
+- in — L1855: {saving
+- disabled — L1863: disabled={saving}
+- in — L1863: disabled={saving}
+- in — L1877: {mode === "edit" && Boolean(initialData?.id) && sensitiveBusinessModule ? (
+- in — L1882: Suppression masquee pour preserver l'historique. Utilisez l'action metier adaptee, comme "Retirer la ligne", afin que le stock, les totaux et la tracabilite soient corriges proprement.
+- in — L1886: {mode === "edit" && Boolean(initialData?.id) && !sensitiveBusinessModule ? (
+- disabled — L1890: disabled={saving || isRemovedRecord}
+- in — L1890: disabled={saving || isRemovedRecord}
+
+## field — src/components/erp/forms/enterprise/ERPFormField.tsx
+
+- in — L7: import { coreERPModules } from "@/runtime/modules/definitions/coreModules";
+- in — L9: import { RuntimeRelationFilterEngine } from "@/runtime/relations";
+- in — L10: import { RuntimeDataBinding } from "@/runtime/data-binding/RuntimeDataBinding";
+- in — L11: import { RuntimeSchedulingEngine } from "@/runtime/scheduling";
+- in — L17: id: string;
+- in — L18: label: string;
+- in — L19: record?: Record<string, unknown>;
+- in — L22: interface ERPFormRelationChangeContext {
+- in — L27: interface ERPFormFieldProps {
+- in — L31: formValues?: Record<string, unknown>;
+- in — L33: key: string,
+- in — L37: error?: string;
+- lockedFields — L38: lockedFields?: string[];
+- in — L38: lockedFields?: string[];
+- readOnly — L39: readOnlyFields?: string[];
+- readOnlyFields — L39: readOnlyFields?: string[];
+- in — L39: readOnlyFields?: string[];
+- in — L42: const gridClassMap: Record<number, string> = {
+- in — L62: targetModule: string;
+- in — L63: fieldKey: string;
+- in — L64: prefill?: Record<string, unknown>;
+- in — L72: value !== undefined &&
+- in — L75: params.set(key, String(value));
+- in — L80: if (typeof window !== "undefined") {
+- in — L83: window.location.pathname
+- in — L87: window.location.pathname
+- in — L104: .toISOString()
+- in — L111: parentModule === "terrains" &&
+- in — L114: params.set("typeContrat", "terrain");
+- in — L115: params.set("terrainId", parentId);
+- in — L119: "typeContrat,terrainId,exploitationId"
+- in — L130: params.set("terrainId", "");
+- in — L133: "typeContrat,terrainId,exploitationId"
+- in — L139: params.toString();
+- in — L149: ): string {
+- in — L152: value === undefined
+- in — L164: "seconds" in value
+- in — L179: return date.toISOString().slice(0, 16);
+- in — L182: return date.toISOString().slice(0, 10);
+- in — L185: if (value instanceof Date) {
+- in — L187: return value.toISOString().slice(0, 16);
+- in — L190: return value.toISOString().slice(0, 10);
+- in — L194: new Date(String(value));
+- in — L198: return date.toISOString().slice(0, 16);
+- in — L201: return date.toISOString().slice(0, 10);
+- in — L204: return String(value);
+- in — L211: return String(value);
+- in — L216: ): string {
+- in — L219: (typeof field.relation === "string"
+- in — L226: function resolveRuntimeModuleByKey(moduleKey?: string) {
+- in — L232: coreERPModules.find((runtimeModule) => {
+- in — L235: key?: string;
+- in — L236: collection?: string;
+- in — L238: key?: string;
+- in — L239: collection?: string;
+- in — L256: sourceField?: string;
+- in — L257: targetField?: string;
+- in — L258: includeEmptyTarget?: boolean;
+- in — L262: typeof field.relation === "string"
+- in — L270: sourceField?: string;
+- in — L271: targetField?: string;
+- in — L272: includeEmptyTarget?: boolean;
+- in — L282: module?: string;
+- in — L283: field?: string;
+- in — L287: typeof field.relation === "string"
+- in — L295: module?: string;
+- in — L296: field?: string;
+- in — L304: fieldKey: string
+- in — L305: ): string {
+- in — L306: if (typeof document === "undefined") {
+- in — L315: return String(element?.value ?? "");
+- in — L322: value === undefined ||
+- in — L324: String(value).trim() === ""
+- in — L329: label: string
+- in — L330: ): string {
+- in — L332: String(label || "").trim();
+- in — L350: error?: string;
+- in — L386: function normalizeRuntimeSchedulingTimeValue(value: unknown): string {
+- in — L387: const text = String(value ?? "").trim();
+- lockedFields — L409: lockedFields = [],
+- readOnly — L410: readOnlyFields = [],
+- readOnlyFields — L410: readOnlyFields = [],
+- in — L415: loading: authLoading,
+- in — L420: const [relationUsedRecords, setRelationUsedRecords] = useState<Record<string, unknown>[]>([]);
+- in — L424: const [schedulingSlots, setSchedulingSlots] = useState<
+- in — L426: start: string;
+- in — L427: end: string;
+- in — L428: label: string;
+- in — L432: remainingCapacity?: number;
+- in — L433: reason?: string;
+- in — L436: const [schedulingSlotsLoading, setSchedulingSlotsLoading] = useState(false);
+- in — L440: // Scheduling UI will consume module.scheduling in the next pass.
+- in — L441: const schedulingConfig = module?.scheduling;
+- in — L445: const isSchedulingTimeField =
+- in — L447: schedulingConfig?.enabled &&
+- in — L448: schedulingConfig.timeField === field.key
+- in — L451: const schedulingDateValue =
+- in — L452: schedulingConfig?.dateField
+- in — L453: ? formValues[schedulingConfig.dateField]
+- in — L456: const schedulingDurationValue =
+- in — L457: schedulingConfig?.durationField
+- in — L458: ? formValues[schedulingConfig.durationField]
+- in — L459: : undefined;
+- lockedFields — L462: lockedFields.includes(field.key);
+- in — L462: lockedFields.includes(field.key);
+- readOnly — L465: readOnlyFields.includes(field.key);
+- readOnlyFields — L465: readOnlyFields.includes(field.key);
+- in — L465: readOnlyFields.includes(field.key);
+- in — L503: if (authLoading) {
+- in — L526: authLoading,
+- in — L546: sourceValue === undefined || sourceValue === null
+- in — L548: : String(sourceValue)
+- in — L559: if (authLoading) {
+- in — L581: await RuntimeDataBinding.list(excludeUsedByModule);
+- in — L585: ? usedRecords as Record<string, unknown>[]
+- in — L597: authLoading,
+- in — L602: async function loadSchedulingSlots() {
+- in — L604: // Generic ERP scheduling UI: any module declaring scheduling metadata
+- in — L608: !schedulingConfig?.enabled ||
+- in — L609: !isSchedulingTimeField ||
+- in — L610: !schedulingDateValue
+- in — L612: setSchedulingSlots([]);
+- in — L616: setSchedulingSlotsLoading(true);
+- in — L619: const existingRecords =
+- in — L620: await RuntimeDataBinding.list(module);
+- in — L623: schedulingConfig.startField ?? "startAt";
+- in — L626: schedulingConfig.endField ?? "endAt";
+- in — L629: schedulingConfig.resourceField;
+- in — L633: ? String(formValues[resourceField] ?? "").trim()
+- in — L636: const blockingStatuses =
+- in — L637: schedulingConfig.blockingStatuses ?? [];
+- in — L639: const bookings =
+- in — L640: Array.isArray(existingRecords)
+- in — L641: ? existingRecords
+- in — L643: // Generic ERP scheduling: only records sharing the configured resourceField
+- in — L654: return String(record[resourceField] ?? "").trim() === resourceValue;
+- in — L657: if (blockingStatuses.length === 0 || !schedulingConfig.statusField) {
+- in — L661: return blockingStatuses.includes(
+- in — L662: String(record[schedulingConfig.statusField] ?? "")
+- in — L666: id: String(record.id ?? record._id ?? ""),
+- in — L667: startAt: String(record[startField] ?? ""),
+- in — L668: endAt: String(record[endField] ?? ""),
+- in — L669: status: schedulingConfig.statusField
+- in — L670: ? String(record[schedulingConfig.statusField] ?? "")
+- in — L671: : undefined,
+- in — L673: .filter((booking) =>
+- in — L674: Boolean(booking.startAt && booking.endAt)
+- in — L678: const durationMinutes =
+- in — L679: Number(schedulingDurationValue ?? 0) ||
+- in — L680: undefined;
+- in — L683: RuntimeSchedulingEngine.getAvailableSlotsWithBookings({
+- in — L685: // Generic ERP scheduling: form passes metadata buffer to the runtime availability engine.
+- in — L686: date: String(schedulingDateValue),
+- in — L687: durationMinutes,
+- in — L688: bookings,
+- in — L689: bufferMinutes:
+- in — L690: schedulingConfig.bufferMinutes,
+- in — L692: // Generic ERP scheduling: calendar exceptions can close or override a specific date.
+- in — L694: schedulingConfig.calendarExceptions,
+- in — L696: // Generic ERP scheduling: capacity controls how many bookings can share a slot.
+- in — L698: schedulingConfig.capacity,
+- in — L701: setSchedulingSlots(slots);
+- in — L707: setSchedulingSlots([]);
+- in — L708: } finally {
+- in — L709: setSchedulingSlotsLoading(false);
+- in — L713: loadSchedulingSlots();
+- in — L716: schedulingConfig,
+- in — L717: isSchedulingTimeField,
+- in — L718: schedulingDateValue,
+- in — L719: schedulingDurationValue,
+- in — L730: "w-full rounded-xl border border-[var(--erp-border)] bg-[var(--erp-input-bg)] px-3 sm:px-4 py-2.5 sm:py-3 text-sm text-[var(--erp-text)] placeholder:text-slate-400 outline-none transition focus:shadow-[0_0_0_4px_rgba(0,169,157,0.12)] focus:border-[#64748B]";
+- in — L735: if (isSchedulingTimeField) {
+- in — L737: // Generic ERP scheduling UX: explain date/resource prerequisites and slot availability.
+- in — L739: Boolean(String(schedulingDateValue ?? "").trim());
+- in — L741: const schedulingResourceField =
+- in — L742: schedulingConfig?.resourceField;
+- in — L744: const schedulingResourceValue =
+- in — L745: schedulingResourceField
+- in — L746: ? String(formValues[schedulingResourceField] ?? "").trim()
+- in — L750: Boolean(schedulingResourceField);
+- in — L753: !requiresResource || Boolean(schedulingResourceValue);
+- disabled — L755: const disabledReason =
+- in — L760: : schedulingSlotsLoading
+- in — L765: schedulingSlots.filter((slot) => slot.available).length;
+- in — L768: schedulingSlots.length - availableSlotsCount;
+- in — L770: const currentSchedulingValue =
+- in — L771: normalizeRuntimeSchedulingTimeValue(currentValue);
+- in — L773: const currentValueInSchedulingSlots =
+- in — L774: schedulingSlots.some((slot) =>
+- in — L775: String(slot.start) === currentSchedulingValue
+- in — L778: const safeSchedulingSlots =
+- in — L779: currentSchedulingValue && !currentValueInSchedulingSlots
+- in — L782: start: currentSchedulingValue,
+- in — L783: end: currentSchedulingValue,
+- in — L784: label: currentSchedulingValue,
+- in — L786: remainingCapacity: undefined,
+- in — L787: capacity: undefined,
+- in — L788: usedCapacity: undefined,
+- in — L789: reason: undefined,
+- in — L791: ...schedulingSlots,
+- in — L793: : schedulingSlots;
+- disabled — L804: disabled={
+- in — L808: schedulingSlotsLoading
+- in — L813: normalizeRuntimeSchedulingTimeValue(event.target.value)
+- disabled — L822: {disabledReason}
+- in — L825: {safeSchedulingSlots.map((slot) => (
+- disabled — L829: disabled={!slot.available}
+- in — L850: {hasDate && hasRequiredResource && schedulingSlots.length === 0 ? (
+- in — L856: {hasDate && hasRequiredResource && schedulingSlots.length > 0 ? (
+- in — L862: {schedulingConfig?.capacity && schedulingConfig.capacity > 1
+- in — L863: ? " · capacité " + schedulingConfig.capacity + " par créneau"
+- in — L865: . Calcul ERP Scheduling Runtime.
+- in — L875: typeof field.relation === "string"
+- in — L884: relationOptions.find((option) =>
+- in — L885: String(option.id) === String(currentValue)
+- in — L902: // Generic metadata-driven relation filtering.
+- in — L903: // ERPFormField provides UI context; RuntimeRelationFilterEngine applies filterBy/excludeUsedBy.
+- in — L905: RuntimeRelationFilterEngine.apply({
+- in — L918: .includes(relationSearch.toLowerCase())
+- in — L929: String(option.id) === String(currentValue)
+- in — L938: id: String(currentValue),
+- in — L962: <input
+- in — L969: <p className="text-xs font-black uppercase tracking-wide text-[var(--erp-primary)]">
+- in — L978: Cette relation vient du contexte d’origine et ne peut pas être modifiée ici.
+- in — L991: <input
+- in — L1009: relationOptions.find((option) =>
+- in — L1010: String(option.id) === String(nextValue)
+- in — L1057: inline-flex
+- disabled — L1090: disabled={isProtected}
+- in — L1102: {(field.options ?? []).map((option, index) => (
+- in — L1104: key={option.value ?? option.label ?? index}
+- in — L1112: {typeof field.relation !== "string" &&
+- in — L1118: typeof field.relation === "string"
+- in — L1131: typeof field.relation === "string"
+- in — L1139: inline-flex
+- disabled — L1172: disabled={isProtected}
+- in — L1187: {typeof field.relation !== "string" &&
+- in — L1193: typeof field.relation === "string"
+- in — L1206: typeof field.relation === "string"
+- in — L1214: inline-flex
+- readOnly — L1247: readOnly={isReadOnly}
+- disabled — L1248: disabled={isLocked}
+- in — L1252: min-h-32
+- in — L1257: bg-[var(--erp-input-bg)]
+- in — L1263: outline-none
+- in — L1293: <input
+- disabled — L1298: disabled={isLocked}
+- readOnly — L1299: readOnly={isReadOnly}
+
+## tabs — src/components/erp/forms/enterprise/ERPFormTabs.tsx
+
+- in — L11: RuntimeVisibilityEngine,
+- in — L12: } from "@/runtime/visibility/RuntimeVisibilityEngine";
+- in — L18: interface ERPFormTabsProps {
+- in — L20: initialData?: Record<string, unknown>;
+- in — L21: formValues?: Record<string, unknown>;
+- in — L22: onFieldChange?: (key: string, value: unknown) => void;
+- in — L23: fieldErrors?: Record<string, string>;
+- lockedFields — L24: lockedFields?: string[];
+- in — L24: lockedFields?: string[];
+- readOnly — L25: readOnlyFields?: string[];
+- readOnlyFields — L25: readOnlyFields?: string[];
+- in — L25: readOnlyFields?: string[];
+- in — L30: initialData = {},
+- lockedFields — L34: lockedFields = [],
+- readOnly — L35: readOnlyFields = [],
+- readOnlyFields — L35: readOnlyFields = [],
+- in — L49: tabs.find(
+- in — L64: activeTabFieldKeys.includes(field.key) &&
+- in — L65: RuntimeVisibilityEngine.isVisible(
+- equals — L117: section.visibility.equals !== undefined
+- in — L117: section.visibility.equals !== undefined
+- equals — L120: ] === section.visibility.equals
+- notEquals — L124: section.visibility.notEquals !== undefined
+- in — L124: section.visibility.notEquals !== undefined
+- notEquals — L127: ] !== section.visibility.notEquals
+- in — L138: section.fields.includes(field.key)
+- lockedFields — L184: lockedFields={lockedFields}
+- readOnly — L185: readOnlyFields={readOnlyFields}
+- readOnlyFields — L185: readOnlyFields={readOnlyFields}
+- lockedFields — L204: lockedFields={lockedFields}
+- readOnly — L205: readOnlyFields={readOnlyFields}
+- readOnlyFields — L205: readOnlyFields={readOnlyFields}
+
+## schema — src/runtime/modules/schemas/ERPModuleSchema.ts
+
+- in — L1: export interface RuntimeRelationAutoFillConfig {
+- in — L2: map?: Record<string, string | string[]>;
+- in — L6: export interface ERPModuleFieldOption {
+- in — L7: label: string;
+- in — L8: value: string;
+- in — L11: export interface ERPConditionalRule {
+- in — L12: field: string;
+- operator — L13: operator: "equals" | "notEquals" | "in" | "notIn";
+- equals — L13: operator: "equals" | "notEquals" | "in" | "notIn";
+- notEquals — L13: operator: "equals" | "notEquals" | "in" | "notIn";
+- in — L13: operator: "equals" | "notEquals" | "in" | "notIn";
+- notIn — L13: operator: "equals" | "notEquals" | "in" | "notIn";
+- in — L32: export interface ERPModuleFieldReference {
+- in — L33: module?: string;
+- in — L34: field?: string;
+- in — L43: export interface ERPFieldValidator {
+- in — L44: type: "min" | "max" | "regex" | "email" | "phone" | "custom";
+- in — L46: message?: string;
+- in — L49: export interface ERPFieldValidation {
+- in — L51: min?: number;
+- in — L53: minLength?: number;
+- in — L57: regex?: string;
+- in — L60: message?: string;
+- in — L63: export interface ERPModuleFieldVisibility {
+- in — L64: field: string;
+- equals — L65: equals?: string | number | boolean;
+- in — L65: equals?: string | number | boolean;
+- notEquals — L66: notEquals?: string | number | boolean;
+- in — L66: notEquals?: string | number | boolean;
+- in — L67: in?: Array<string | number | boolean>;
+- in — L68: notIn?: Array<string | number | boolean>;
+- notIn — L68: notIn?: Array<string | number | boolean>;
+- in — L71: export interface ERPModuleField {
+- in — L73: key: string;
+- in — L74: label: string;
+- in — L75: type: ERPModuleFieldType | string;
+- in — L90: field: string;
+- equals — L91: equals?: unknown;
+- notEquals — L92: notEquals?: unknown;
+- in — L93: in?: unknown[];
+- notIn — L94: notIn?: unknown[];
+- in — L102: field: string;
+- equals — L103: equals?: unknown;
+- notEquals — L104: notEquals?: unknown;
+- in — L109: placeholder?: string;
+- in — L110: icon?: string;
+- in — L111: variant?: string;
+- in — L112: help?: string;
+- in — L120: roles?: string[];
+- in — L127: | string
+- in — L129: module: string;
+- in — L130: collection?: string;
+- in — L131: labelField?: string;
+- in — L135: * Declarative relation autofill executed by RuntimeAutoFillEngine.
+- in — L140: sourceField: string;
+- in — L141: targetField: string;
+- in — L142: includeEmptyTarget?: boolean;
+- in — L148: * Example: receptionsstockauto.ligneCommandeId excludes lines already used by receptionsstockauto.
+- in — L151: module: string;
+- in — L152: field: string;
+- in — L161: string,
+- in — L172: title?: string;
+- in — L173: subtitle?: string;
+- in — L174: badge?: string;
+- in — L181: dependsOn?: string;
+- in — L182: optionsByValue?: Record<string, ERPModuleFieldOption[]>;
+- in — L188: placeholder?: string;
+- in — L189: helperText?: string;
+- readonlyIf — L196: readonlyIf?: ERPConditionalRule;
+- readonly — L196: readonlyIf?: ERPConditionalRule;
+- in — L211: indexed?: boolean;
+- in — L218: formula: string;
+- in — L219: dependsOn: string[];
+- in — L223: * GRID LAYOUT (FormEngine)
+- in — L230: export interface ERPModuleSchema {
+- in — L231: module?: string;
+- in — L232: collection: string;
+- in — L236: primaryKey?: string;
+
+## rdvModule — src/runtime/modules/generated/rendezvous/rendezvous.module.ts
+
+- in — L9: businessCode: {
+- readonly — L14: readonly: true,
+- in — L70: includeEmptyTarget: true,
+- in — L95: key: "durationMinutes",
+- in — L111: label: "Fin créneau",
+- in — L120: relation: { module: "interventionsauto" },
+- readonlyIf — L157: readonlyIf: {
+- readonly — L157: readonlyIf: {
+- operator — L159: operator: "in",
+- in — L159: operator: "in",
+- in — L160: values: ["planifie", "confirme", "en_cours", "termine", "annule"],
+- in — L169: { label: "Terminé", value: "termine" },
+- in — L191: "durationMinutes",
+- in — L205: "durationMinutes",
+- in — L242: branding: {
+- equals — L260: equals: "confirme",
+- equals — L268: equals: "en_cours",
+- equals — L276: equals: "annule",
+- in — L291: { label: "Terminé", value: "termine" },
+- in — L354: title: "Planning du jour",
+- in — L355: type: "planning",
+- equals — L368: equals: "confirme",
+- equals — L376: equals: "en_cours",
+- in — L383: scheduling: {
+- in — L385: // First consumer of the generic ERP Scheduling Runtime.
+- in — L389: durationField: "durationMinutes",
+- in — L394: blockingStatuses: ["planifie", "confirme", "en_cours"],
+- in — L395: bufferMinutes: 15,
+- in — L406: // Rendez-vous knows its client, vehicle and generated intervention.
+- in — L429: key: "interventions-rendezvous",
+- in — L430: moduleKey: "interventionsauto",
+- in — L438: createLabel: "Créer une intervention",
+- in — L439: openLabel: "Ouvrir intervention",
+- in — L470: initialState: "planifie",
+- in — L475: { key: "en_cours", label: "En cours", color: "warning" },
+- in — L476: { key: "termine", label: "Terminé", color: "success" },
+- in — L483: { from: "en_cours", to: "termine", action: "Terminer" },
+
+## Lecture recommandée
+
+Si ERPEnterpriseForm ne lit pas readonlyIf, ajouter une évaluation générique ERPConditionalRule et injecter le résultat dans le readOnly/disabled du champ.
