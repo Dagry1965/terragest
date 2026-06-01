@@ -21,11 +21,16 @@ type LoadState = {
 };
 
 export function ClientOperationalSheetClient({
-  config,
+config,
   clientId,
   selectedVehicleId = null,
 }: ClientOperationalSheetClientProps) {
-  const [state, setState] = useState<LoadState | null>(null);
+  
+  // AMARKHYS_HUB_SCROLL_TOP
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  }, []);
+const [state, setState] = useState<LoadState | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {

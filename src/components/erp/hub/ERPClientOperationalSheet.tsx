@@ -9,6 +9,7 @@ import type {
 import { ClientOperationalSearchBox } from "./ClientOperationalSearchBox";
 import { ERPRelatedRecordsPanel } from "@/components/erp/runtime/ERPRelatedRecordsPanel";
 import { InvoicePaymentsHistory } from "@/components/erp/billing/InvoicePaymentsHistory";
+import { ERPOperationalTable } from "@/components/erp/operational/ERPOperationalTable";
 import { rendezvousModule } from "@/runtime/modules/generated/rendezvous/rendezvous.module";
 import { vehiculesModule } from "@/runtime/modules/generated/vehicules/vehicules.module";
 import { interventionsautoModule } from "@/runtime/modules/generated/interventionsauto/interventionsauto.module";
@@ -65,9 +66,9 @@ function numberValue(
 }
 
 function money(value: number): string {
-  return new Intl.NumberFormat("fr-FR", {
+  return `${new Intl.NumberFormat("fr-FR", {
     maximumFractionDigits: 0,
-  }).format(value);
+  }).format(value)} FCFA`;
 }
 
 function recordId(record: ERPRecordHubRecord | null | undefined): string {
@@ -323,7 +324,36 @@ export function ERPClientOperationalSheet({
   ]);
 
   const interventions = relatedRecordsBySection.interventions ?? [];
-  const rendezvous = relatedRecordsBySection.rendezvous ?? [];
+  const rendezvous = useMemo(() => {
+    const records = relatedRecordsBySection.rendezvous ?? [];
+
+    const getRendezvousTime = (record: ERPRecordHubRecord) => {
+      const raw =
+        record.dateRendezVous ??
+        record.date ??
+        record.activityDate ??
+        record.startAt ??
+        record.createdAt;
+
+      if (typeof raw === "object" && raw !== null && "seconds" in raw) {
+        const seconds = Number((raw as { seconds?: unknown }).seconds);
+        return Number.isFinite(seconds) ? seconds * 1000 : 0;
+      }
+
+      if (typeof raw === "number") {
+        return raw;
+      }
+
+      if (typeof raw === "string") {
+        const parsed = Date.parse(raw);
+        return Number.isFinite(parsed) ? parsed : 0;
+      }
+
+      return 0;
+    };
+
+    return [...records].sort((a, b) => getRendezvousTime(b) - getRendezvousTime(a));
+  }, [relatedRecordsBySection.rendezvous]);
   const lignes = relatedRecordsBySection.lignes ?? [];
   const factures = relatedRecordsBySection.factures ?? [];
   const encaissements = relatedRecordsBySection.encaissements ?? [];
@@ -394,6 +424,33 @@ export function ERPClientOperationalSheet({
 
   const selectedInvoice = facturesForSelectedIntervention[0] ?? null;
 
+  const interventionsHubModule = useMemo(() => {
+    const operational = interventionsautoModule.operational as
+      | {
+          table?: {
+            fields?: string[];
+            [key: string]: unknown;
+          };
+          [key: string]: unknown;
+        }
+      | undefined;
+
+    const table = operational?.table;
+
+    return {
+      ...interventionsautoModule,
+      operational: {
+        ...operational,
+        table: {
+          ...table,
+          fields: (table?.fields ?? []).filter(
+            (field) => !["clientId", "vehiculeId"].includes(field)
+          ),
+        },
+      },
+    };
+  }, []);
+
   const isCardMode = !["flotte", "entreprise"].includes(clientType.toLowerCase());
 
   return (
@@ -446,22 +503,43 @@ export function ERPClientOperationalSheet({
                 </div>
               </section>
 
-              <section className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-5">
+              <section className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
                 {[
-                  ["Interventions actives", text(rootRecord, ["activeInterventionsCount", "interventionsActives"], "0")],
-                  ["Factures impayées", `${text(rootRecord, ["unpaidInvoicesCount", "facturesImpayees"], "0")} impayée(s) · ${money(unpaidAmount)}`],
+                  ["Interventions en cours", text(rootRecord, ["activeInterventionsCount", "interventionsActives"], "0")],
+                  ["Impayés client", money(unpaidAmount)],
                   ["CA cumulé", money(revenueTotal)],
-                  ["Dernière visite", text(rootRecord, ["lastVisit", "derniereVisite"])],
                   ["Prochain RDV", text(rootRecord, ["nextAppointment", "prochainRendezVous"])],
                 ].map(([label, value]) => (
                   <article
                     key={label}
-                    className="min-h-[128px] rounded-[1.75rem] bg-white px-6 py-6 shadow-sm ring-1 ring-slate-200"
+                    className="min-h-[112px] rounded-[1.75rem] bg-white px-5 py-5 shadow-sm ring-1 ring-slate-200"
                   >
-                    <p className="text-[11px] font-black uppercase tracking-[0.16em] text-slate-500">{label}</p>
-                    <p className="mt-3 text-2xl font-black leading-tight text-slate-950 md:text-3xl">{value}</p>
+                    <p className="text-[10px] font-black uppercase tracking-[0.14em] text-slate-500">{label}</p>
+                    <p className="mt-3 text-xl font-black leading-tight text-slate-950 md:text-2xl">{value}</p>
                   </article>
                 ))}
+              </section>
+
+              <section className="rounded-[1.75rem] bg-white px-6 py-5 shadow-sm ring-1 ring-slate-200">
+                <div className="flex flex-wrap items-center justify-between gap-4">
+                  <div>
+                    <p className="text-[10px] font-black uppercase tracking-[0.16em] text-emerald-700">
+                      Situation client
+                    </p>
+                    <p className="mt-2 text-sm font-semibold text-slate-800">
+                      Client actif · Suivi atelier en cours · {money(unpaidAmount)} d'impayés client
+                    </p>
+                  </div>
+
+                  <span className={[
+                    "rounded-full px-4 py-2 text-xs font-bold ring-1",
+                    unpaidAmount > 0
+                      ? "bg-orange-50 text-orange-700 ring-orange-200"
+                      : "bg-emerald-50 text-emerald-700 ring-emerald-200",
+                  ].join(" ")}>
+                    {unpaidAmount > 0 ? "À relancer" : "Situation saine"}
+                  </span>
+                </div>
               </section>
 
               <section className="rounded-[2.25rem] bg-white p-6 shadow-sm ring-1 ring-slate-200 lg:p-8">
@@ -669,148 +747,16 @@ export function ERPClientOperationalSheet({
                       ) : null}
 
                       {interventionsForSelectedRendezvous.length > 0 ? (
-                        <div className="mt-4 overflow-hidden rounded-[1.5rem] border border-slate-200 bg-white">
-                          <table className="min-w-full text-left text-sm">
-                            <thead className="bg-slate-950 text-xs uppercase tracking-wide text-white">
-                              <tr>
-                                <th className="w-12 px-4 py-3">#</th>
-                                <th className="px-4 py-3">Intervention</th>
-                                <th className="px-4 py-3">Date</th>
-                                <th className="px-4 py-3">Statut</th>
-                                <th className="px-4 py-3 text-right">Montant</th>
-                                <th className="px-4 py-3">Action</th>
-                              </tr>
-                            </thead>
-                            <tbody className="divide-y divide-slate-100 bg-white">
-                              {interventionsForSelectedRendezvous.map((intervention, index) => {
-                                const isSelected =
-                                  recordId(intervention) === recordId(selectedIntervention);
-
-                                return (
-                                  <Fragment key={recordId(intervention) || String(index)}>
-                                  <tr
-                                    key={recordId(intervention)}
-                                    data-amarkhys-hub-flow-d2-refocus-c2b="INTERVENTION_COMPACT_ROW"
-                                    onClick={() => setSelectedInterventionId(recordId(intervention))}
-                                    className={[
-                                      "cursor-pointer transition",
-                                      isSelected ? "bg-emerald-50" : "hover:bg-slate-50",
-                                    ].join(" ")}
-                                  >
-                                    <td className="px-4 py-3 text-slate-400">
-                                      {index + 1}
-                                    </td>
-                                    <td className="px-4 py-3">
-                                      <p className="font-extrabold text-slate-950">
-                                        {text(intervention, ["displayLabel", "numeroIntervention", "titre", "dateIntervention"])}
-                                      </p>
-                                      <p className="mt-1 text-xs text-slate-500">
-                                        {text(intervention, ["typeIntervention", "natureIntervention", "description"], "Intervention atelier")}
-                                      </p>
-                                    </td>
-                                    <td className="px-4 py-3 text-slate-600">
-                                      {text(intervention, ["dateIntervention", "dateDebut", "createdAt"])}
-                                    </td>
-                                    <td className="px-4 py-3">
-                                      <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-bold text-slate-700">
-                                        {text(intervention, ["statut", "status"], "suivi")}
-                                      </span>
-                                    </td>
-                                    <td className="px-4 py-3 text-right font-bold text-slate-950">
-                                      {text(intervention, ["montantTTC", "totalTTC", "montantHT", "montantTotal"], "0")}
-                                    </td>
-                                    <td className="px-4 py-3">
-                                      <button
-                                        type="button"
-                                        onClick={(event) => {
-                                          event.stopPropagation();
-                                          setSelectedInterventionId(recordId(intervention));
-                                        }}
-                                        className={[
-                                          "rounded-full px-3 py-1.5 text-xs font-bold",
-                                          isSelected
-                                            ? "bg-emerald-700 text-white"
-                                            : "bg-slate-100 text-slate-900",
-                                        ].join(" ")}
-                                      >
-                                        {isSelected ? "Sélectionnée" : "Sélectionner"}
-                                      </button>
-                                    </td>
-                                  </tr>
-                                  {isSelected ? (
-                                    <tr data-amarkhys-hub-flow-d2-refocus-c3="INTERVENTION_LINES_DETAIL_ROW">
-                                      <td colSpan={6} className="bg-emerald-50/40 px-4 py-4">
-                                        <div className="rounded-[1.5rem] border border-emerald-100 bg-white p-4 shadow-sm">
-                                          <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
-                                            <div>
-                                              <p className="text-xs font-bold uppercase tracking-wide text-emerald-700">
-                                                Lignes de l'intervention sélectionnée
-                                              </p>
-                                              <p className="mt-1 text-sm text-slate-500">
-                                                Détail opérationnel rattaché uniquement à cette intervention.
-                                              </p>
-                                            </div>
-                                          </div>
-
-                                          <ERPRelatedRecordsPanel
-                                            parentModule={interventionsautoModule}
-                                            parentRecord={intervention}
-                                            child={lignesInterventionChild}
-                                            mode="detail"
-                                          />
-
-                                          <div
-                                            data-amarkhys-hub-flow-d2-refocus-c4="INTERVENTION_INVOICES_DETAIL_BLOCK"
-                                            className="mt-5 border-t border-slate-200 pt-4"
-                                          >
-                                            <div className="mb-3">
-                                              <p className="text-xs font-bold uppercase tracking-wide text-slate-700">
-                                                Factures de l'intervention sélectionnée
-                                              </p>
-                                              <p className="mt-1 text-sm text-slate-500">
-                                                Documents de facturation rattachés uniquement à cette intervention.
-                                              </p>
-                                            </div>
-
-                                            <ERPRelatedRecordsPanel
-                                              parentModule={interventionsautoModule}
-                                              parentRecord={intervention}
-                                              child={facturesChild}
-                                              mode="detail"
-                                            />
-                                          </div>
-                                        </div>
-                                      </td>
-                                    </tr>
-                                  ) : null}
-                                  </Fragment>
-                                );
-                              })}
-                            </tbody>
-                          </table>
-
+                        <div className="mt-4 rounded-[1.5rem] border border-slate-200 bg-white p-3">
+                          <ERPOperationalTable
+                            module={interventionsHubModule}
+                            data={interventionsForSelectedRendezvous as Record<string, unknown>[]}
+                          />
                         </div>
                       ) : (
                         <EmptyCard>Aucune intervention n’est encore liée à ce rendez-vous. Sélectionnez un autre rendez-vous ou créez une intervention depuis le parcours atelier.</EmptyCard>
                       )}
                     </section>
-
-                    {selectedInvoice ? (
-                      <section className="rounded-[1.75rem] border border-slate-200 bg-white p-5">
-                        <p className="text-xs font-bold uppercase tracking-wide text-slate-500">
-                          5. Encaissements de la facture sélectionnée
-                        </p>
-
-                        <InvoicePaymentsHistory
-                          factureId={recordId(selectedInvoice)}
-                          montantTTC={numberValue(selectedInvoice, ["montantTTC", "totalTTC", "montantTotal", "total", "montant"])}
-                          clientId={clientId}
-                          vehiculeId={selectedVehicleRecordId}
-                        />
-                      </section>
-                    ) : (
-                      <EmptyCard>Aucune facture sélectionnée pour afficher les encaissements.</EmptyCard>
-                    )}
               </section>
 
               <section id="parcours-detaille" className="rounded-[2.25rem] bg-white p-8 shadow-sm ring-1 ring-slate-200">
