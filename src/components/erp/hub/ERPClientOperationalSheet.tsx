@@ -592,10 +592,10 @@ export function ERPClientOperationalSheet({
                     <section className="overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white">
                       <div className="border-b border-slate-100 bg-slate-50 px-5 py-4">
                         <p className="text-xs font-bold uppercase tracking-wide text-slate-500">
-                          1. Rendez-vous du véhicule
+                          1. Choisir un rendez-vous
                         </p>
                         <h3 className="mt-1 text-lg font-extrabold text-slate-950">
-                          Sélectionnez un rendez-vous
+                          Rendez-vous du véhicule
                         </h3>
                       </div>
 
@@ -664,18 +664,21 @@ export function ERPClientOperationalSheet({
                           </table>
                         </div>
                       ) : (
-                        <EmptyCard>Aucun rendez-vous lié au véhicule sélectionné.</EmptyCard>
+                        <EmptyCard>Aucun rendez-vous trouvé pour ce véhicule.</EmptyCard>
                       )}
                     </section>
 
                     <section className="rounded-[1.75rem] border border-slate-200 bg-white p-5">
                       <p className="text-xs font-bold uppercase tracking-wide text-slate-500">
-                        2. Interventions du rendez-vous sélectionné
+                        2. Interventions liées au rendez-vous
+                      </p>
+                      <p className="mt-1 text-xs font-medium text-slate-500">
+                        Les interventions ci-dessous sont filtrées par le rendez-vous sélectionné.
                       </p>
 
                       {selectedRendezvous ? (
                         <p className="mt-1 text-sm text-slate-500">
-                          Rendez-vous sélectionné : {text(selectedRendezvous, ["dateRendezVous", "date"])} · {text(selectedRendezvous, ["typeService", "service"])}
+                          Filtre actif : {text(selectedRendezvous, ["dateRendezVous", "date"])} · {text(selectedRendezvous, ["typeService", "service"])}
                         </p>
                       ) : null}
 
@@ -732,7 +735,7 @@ export function ERPClientOperationalSheet({
                           })}
                         </div>
                       ) : (
-                        <EmptyCard>Aucune intervention liée au rendez-vous sélectionné.</EmptyCard>
+                        <EmptyCard>Aucune intervention n’est encore liée à ce rendez-vous. Sélectionnez un autre rendez-vous ou créez une intervention depuis le parcours atelier.</EmptyCard>
                       )}
                     </section>
 
