@@ -669,56 +669,78 @@ export function ERPClientOperationalSheet({
                       ) : null}
 
                       {interventionsForSelectedRendezvous.length > 0 ? (
-                        <div className="mt-4 grid gap-3">
-                          {interventionsForSelectedRendezvous.map((intervention) => {
-                            const isSelected =
-                              recordId(intervention) === recordId(selectedIntervention);
+                        <div className="mt-4 overflow-hidden rounded-[1.5rem] border border-slate-200 bg-white">
+                          <table className="min-w-full text-left text-sm">
+                            <thead className="bg-slate-950 text-xs uppercase tracking-wide text-white">
+                              <tr>
+                                <th className="w-12 px-4 py-3">#</th>
+                                <th className="px-4 py-3">Intervention</th>
+                                <th className="px-4 py-3">Date</th>
+                                <th className="px-4 py-3">Statut</th>
+                                <th className="px-4 py-3 text-right">Montant</th>
+                                <th className="px-4 py-3">Action</th>
+                              </tr>
+                            </thead>
+                            <tbody className="divide-y divide-slate-100 bg-white">
+                              {interventionsForSelectedRendezvous.map((intervention, index) => {
+                                const isSelected =
+                                  recordId(intervention) === recordId(selectedIntervention);
 
-                            return (
-                              <div
-                                key={recordId(intervention)}
-                                data-q2-hub-client-final-c2="Q2_HUB_CLIENT_FINAL_C2_EXPAND_INTERVENTION_LINES"
-                                className={[
-                                  "rounded-[1.5rem] border transition",
-                                  isSelected
-                                    ? "border-emerald-400 bg-emerald-50"
-                                    : "border-slate-200 bg-slate-50",
-                                ].join(" ")}
-                              >
-                                <button
-                                  type="button"
-                                  onClick={() => setSelectedInterventionId(recordId(intervention))}
-                                  className="w-full cursor-pointer p-4 text-left focus:outline-none focus:ring-4 focus:ring-emerald-100"
-                                >
-                                  <div className="flex flex-wrap items-start justify-between gap-3">
-                                    <div>
+                                return (
+                                  <tr
+                                    key={recordId(intervention)}
+                                    data-amarkhys-hub-flow-d2-refocus-c2b="INTERVENTION_COMPACT_ROW"
+                                    onClick={() => setSelectedInterventionId(recordId(intervention))}
+                                    className={[
+                                      "cursor-pointer transition",
+                                      isSelected ? "bg-emerald-50" : "hover:bg-slate-50",
+                                    ].join(" ")}
+                                  >
+                                    <td className="px-4 py-3 text-slate-400">
+                                      {index + 1}
+                                    </td>
+                                    <td className="px-4 py-3">
                                       <p className="font-extrabold text-slate-950">
-                                        {text(intervention, ["displayLabel", "dateIntervention", "titre", "numeroIntervention"])}
+                                        {text(intervention, ["displayLabel", "numeroIntervention", "titre", "dateIntervention"])}
                                       </p>
-                                      <p className="mt-1 text-sm text-slate-500">
-                                        {text(intervention, ["statut", "status"], "suivi")} · {text(intervention, ["montantTTC", "montantHT"], "0")}
+                                      <p className="mt-1 text-xs text-slate-500">
+                                        {text(intervention, ["typeIntervention", "natureIntervention", "description"], "Intervention atelier")}
                                       </p>
-                                    </div>
+                                    </td>
+                                    <td className="px-4 py-3 text-slate-600">
+                                      {text(intervention, ["dateIntervention", "dateDebut", "createdAt"])}
+                                    </td>
+                                    <td className="px-4 py-3">
+                                      <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-bold text-slate-700">
+                                        {text(intervention, ["statut", "status"], "suivi")}
+                                      </span>
+                                    </td>
+                                    <td className="px-4 py-3 text-right font-bold text-slate-950">
+                                      {text(intervention, ["montantTTC", "totalTTC", "montantHT", "montantTotal"], "0")}
+                                    </td>
+                                    <td className="px-4 py-3">
+                                      <button
+                                        type="button"
+                                        onClick={(event) => {
+                                          event.stopPropagation();
+                                          setSelectedInterventionId(recordId(intervention));
+                                        }}
+                                        className={[
+                                          "rounded-full px-3 py-1.5 text-xs font-bold",
+                                          isSelected
+                                            ? "bg-emerald-700 text-white"
+                                            : "bg-slate-100 text-slate-900",
+                                        ].join(" ")}
+                                      >
+                                        {isSelected ? "Sélectionnée" : "Sélectionner"}
+                                      </button>
+                                    </td>
+                                  </tr>
+                                );
+                              })}
+                            </tbody>
+                          </table>
 
-                                    <span className="rounded-full bg-white px-3 py-1 text-xs font-bold text-slate-900 ring-1 ring-slate-200">
-                                      {isSelected ? "Masquer les lignes" : "Voir les lignes"}
-                                    </span>
-                                  </div>
-                                </button>
-
-                                {isSelected ? (
-                                  <div className="border-t border-emerald-100 bg-white/80 p-4">
-                                    <ERPRelatedRecordsPanel
-                                      parentModule={interventionsautoModule}
-                                      parentRecord={intervention}
-                                      child={lignesInterventionChild}
-                                      mode="detail"
-                                    />
-                                  </div>
-                                ) : null}
-                              </div>
-                            );
-                          })}
                         </div>
                       ) : (
                         <EmptyCard>Aucune intervention n’est encore liée à ce rendez-vous. Sélectionnez un autre rendez-vous ou créez une intervention depuis le parcours atelier.</EmptyCard>
