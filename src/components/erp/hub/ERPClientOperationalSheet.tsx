@@ -15,6 +15,7 @@ import { rendezvousModule } from "@/runtime/modules/generated/rendezvous/rendezv
 import { vehiculesModule } from "@/runtime/modules/generated/vehicules/vehicules.module";
 import { interventionsautoModule } from "@/runtime/modules/generated/interventionsauto/interventionsauto.module";
 import type { ERPCompositionChild } from "@/runtime/modules/ERPModule";
+import { useAuth } from "@/providers/AuthProvider";
 
 type ERPClientOperationalSheetProps = {
   config: ERPRecordHubConfig;
@@ -70,6 +71,31 @@ function money(value: number): string {
   return `${new Intl.NumberFormat("fr-FR", {
     maximumFractionDigits: 0,
   }).format(value)} FCFA`;
+}
+
+function formatTodayLabel(): string {
+  return new Intl.DateTimeFormat("fr-FR", {
+    weekday: "long",
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  }).format(new Date());
+}
+
+function getUserLabel(user: unknown): string {
+  const candidate = user as
+    | {
+        displayName?: string | null;
+        email?: string | null;
+      }
+    | null
+    | undefined;
+
+  return (
+    candidate?.displayName?.trim() ||
+    candidate?.email?.trim() ||
+    "Utilisateur connecté"
+  );
 }
 
 function recordId(record: ERPRecordHubRecord | null | undefined): string {
@@ -310,7 +336,9 @@ export function ERPClientOperationalSheet({
   relatedRecordsBySection,
   selectedVehicleId = null,
 }: ERPClientOperationalSheetProps) {
-  const [localSelectedVehicleId, setLocalSelectedVehicleId] = useState<string | null>(
+  
+  const { user } = useAuth();
+const [localSelectedVehicleId, setLocalSelectedVehicleId] = useState<string | null>(
     selectedVehicleId ?? recordId(vehicles[0]) ?? null
   );
 
@@ -821,27 +849,56 @@ export function ERPClientOperationalSheet({
     selectedVehicle,
   ]);
 
+  const headerContext = useMemo(() => {
+    return {
+      today: formatTodayLabel(),
+      userLabel: getUserLabel(user),
+    };
+  }, [user]);
+
   const isCardMode = !["flotte", "entreprise"].includes(clientType.toLowerCase());
 
   return (
     <main className="min-h-screen bg-slate-100">
       <div className="mx-auto max-w-[2040px] px-8 py-10 xl:px-12 2xl:px-16">
         <section className="space-y-8">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">
-              Clients / Fiche client
-            </p>
+          <div className="flex flex-col gap-6 xl:flex-row xl:items-start xl:justify-between">
+            <div className="min-w-0">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">
+                Clients / Fiche client
+              </p>
 
-            <h1 className="mt-3 text-3xl font-extrabold tracking-tight text-slate-950 xl:text-4xl">
-              FICHE CLIENT OPÉRATIONNELLE
-            </h1>
+              <h1 className="mt-3 text-3xl font-extrabold tracking-tight text-slate-950 xl:text-4xl">
+                FICHE CLIENT OPÉRATIONNELLE
+              </h1>
 
-            <p className="mt-3 max-w-5xl text-base leading-7 text-slate-600">
-              Vue 360° du client depuis ses véhicules jusqu’aux factures et encaissements.
-              Une interface adaptative selon le type de client (Particulier, Flotte, Entreprise).
-            </p>
+              <p className="mt-3 max-w-5xl text-base leading-7 text-slate-600">
+                Vue 360° du client depuis ses véhicules jusqu’aux factures et encaissements.
+                Une interface adaptative selon le type de client (Particulier, Flotte, Entreprise).
+              </p>
 
-            <ClientOperationalSearchBox className="mt-6 max-w-5xl" />
+              <ClientOperationalSearchBox className="mt-6 max-w-5xl" />
+            </div>
+
+            <div
+              data-amarkhys-hub-header-context="USER_DATE"
+              className="min-w-[290px] rounded-[1.75rem] border border-white/70 bg-white/75 p-4 shadow-sm ring-1 ring-slate-100 backdrop-blur-xl"
+            >
+              <div className="flex items-center gap-3">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-emerald-50 to-sky-50 text-2xl ring-1 ring-emerald-100">
+                  👤
+                </div>
+
+                <div className="min-w-0">
+                  <p className="truncate text-sm font-black text-slate-900">
+                    {headerContext.userLabel}
+                  </p>
+                  <p className="mt-1 text-xs font-semibold capitalize text-slate-500">
+                    {headerContext.today}
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div className="grid gap-8 2xl:grid-cols-[minmax(0,1fr)_380px]">
