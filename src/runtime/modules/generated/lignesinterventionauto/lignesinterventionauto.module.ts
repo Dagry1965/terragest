@@ -38,7 +38,14 @@ export const lignesinterventionautoModule: ERPModule = {
         key: "produitId",
         label: "Produit / pièce",
         type: "relation",
-        relation: { module: "produitsauto" },
+        relation: {
+    module: "produitsauto",
+    filterBy: {
+      sourceField: "typeArticle",
+      targetField: "typeArticle",
+    },
+  },
+        dependsOn: "typeArticle",
         autoFill: {
           map: {
             produitCode: ["code", "reference"],
@@ -53,6 +60,7 @@ export const lignesinterventionautoModule: ERPModule = {
           recalculate: true,
         },
         searchable: true,
+  helperText: "Produit filtré selon le type d’article sélectionné.",
         list: { order: 2 },
         grid: { cols: 6 },
       },
@@ -60,7 +68,13 @@ export const lignesinterventionautoModule: ERPModule = {
         key: "stockId",
         label: "Stock source",
         type: "relation",
-        relation: { module: "stocksauto" },
+        relation: {
+    module: "stocksauto",
+    filterBy: {
+      sourceField: "produitId",
+      targetField: "produitId",
+    },
+  },
         dependsOn: "produitId",
         searchable: true,
         grid: { cols: 6 },
