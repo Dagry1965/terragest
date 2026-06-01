@@ -575,21 +575,7 @@ export function ERPClientOperationalSheet({
               >
                 <SectionTitle title="PARCOURS OPÉRATIONNEL : CLIENT → VÉHICULE → RENDEZ-VOUS → INTERVENTION → FACTURE" />
 
-                {selectedVehicle ? (
-                  <div className="space-y-6">
-                    <div className="rounded-[1.5rem] bg-emerald-50 p-5 ring-1 ring-emerald-100">
-                      <p className="text-xs font-bold uppercase tracking-wide text-emerald-700">
-                        Véhicule sélectionné
-                      </p>
-                      <p className="mt-2 text-lg font-extrabold text-slate-950">
-                        {text(selectedVehicle, ["displayLabel", "immatriculation", "marque"])}
-                      </p>
-                      <p className="mt-1 text-sm text-slate-600">
-                        {text(selectedVehicle, ["marque"])} · {text(selectedVehicle, ["modele", "modèle"])}
-                      </p>
-                    </div>
-
-                    <section className="overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white">
+                <section className="overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white">
                       <div className="border-b border-slate-100 bg-slate-50 px-5 py-4">
                         <p className="text-xs font-bold uppercase tracking-wide text-slate-500">
                           1. Choisir un rendez-vous
@@ -764,12 +750,6 @@ export function ERPClientOperationalSheet({
                     ) : (
                       <EmptyCard>Aucune facture sélectionnée pour afficher les encaissements.</EmptyCard>
                     )}
-                  </div>
-                ) : (
-                  <EmptyCard>
-                    Sélectionnez un véhicule pour afficher le parcours opérationnel complet.
-                  </EmptyCard>
-                )}
               </section>
 
               <section id="parcours-detaille" className="rounded-[2.25rem] bg-white p-8 shadow-sm ring-1 ring-slate-200">
