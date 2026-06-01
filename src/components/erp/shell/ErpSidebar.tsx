@@ -40,6 +40,11 @@ const amarkhysModules: SidebarModule[] = [
     href: "/clientsauto",
   },
   {
+    key: "clientsauto-hub",
+    label: "Fiche client opérationnelle",
+    href: "/clientsauto/hub",
+  },
+  {
     key: "vehicules",
     label: "Vehicules",
     href: "/vehicules",
