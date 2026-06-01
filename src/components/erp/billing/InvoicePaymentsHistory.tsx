@@ -397,12 +397,7 @@ export function InvoicePaymentsHistory({
         </div>
 
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
-          <Link
-            href={createPaymentHref}
-            className="inline-flex items-center justify-center rounded-2xl bg-[#009B7D] px-5 py-3 text-sm font-black text-white shadow-[0_10px_22px_rgba(0,155,125,0.24)] transition hover:-translate-y-0.5 hover:bg-[#007F6D]"
-          >
-            Ajouter un paiement
-          </Link>
+          
 
           <label className="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-xs font-black text-slate-600">
             Trier les paiements

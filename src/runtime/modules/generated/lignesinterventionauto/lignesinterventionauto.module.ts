@@ -98,6 +98,7 @@ export const lignesinterventionautoModule: ERPModule = {
       {
         key: "typeArticle",
         label: "Type article",
+        required: true,
         type: "select",
         defaultValue: "piece",
         options: [
@@ -112,7 +113,7 @@ export const lignesinterventionautoModule: ERPModule = {
         key: "designation",
         label: "Désignation",
         type: "text",
-        required: true,
+        required: false,
         searchable: true,
         list: { order: 3 },
         grid: { cols: 6 },
@@ -268,12 +269,11 @@ export const lignesinterventionautoModule: ERPModule = {
         fields: [
           "interventionId",
           "designation",
-          "typeLigne",
+          "typeArticle",
           "produitId",
           "stockId",
           "produitCode",
           "produitNom",
-          "typeArticle",
           "quantite",
           "prixUnitaire",
           "prixUnitaireHT",
@@ -292,7 +292,7 @@ export const lignesinterventionautoModule: ERPModule = {
             fields: [
               "interventionId",
               "designation",
-              "typeLigne",
+              "typeArticle",
               "statut",
             ],
           },
@@ -396,7 +396,7 @@ export const lignesinterventionautoModule: ERPModule = {
 
     labelFields: [
       "designation",
-      "typeLigne",
+      "typeArticle",
       "statut",
     ],
 
@@ -472,7 +472,6 @@ export const lignesinterventionautoModule: ERPModule = {
     readOnlyFields: [
       "produitCode",
       "produitNom",
-      "typeArticle",
       "prixUnitaireHT",
       "tauxTVA",
       "montantHT",
@@ -485,6 +484,7 @@ export const lignesinterventionautoModule: ERPModule = {
           "removedAt",
       "removedBy",
       "removedReason",
+      "designation",
 ],
   },
 

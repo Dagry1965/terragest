@@ -1,0 +1,308 @@
+# AMARKHYS-REBUILD-08C-A — Audit payment add button
+
+Date: 2026-06-01T01:43:56.651Z
+
+## Objectif
+
+Localiser le bouton Ajouter un paiement du bloc Paiements enregistrés afin de le masquer sans casser l'action métier Enregistrer un paiement.
+
+## Règle cible
+
+- Garder le bouton Enregistrer un paiement dans le bloc d'encaissement facture.
+- Masquer Ajouter un paiement dans le bloc Paiements enregistrés.
+- Garder la liste des paiements et les actions Reçu / PDF / WhatsApp / SMS / Modifier.
+
+## Synthèse
+
+- OK: 2
+- FAIL: 1
+
+## Checks
+
+- FAIL — bouton Ajouter un paiement localisé
+- OK — bloc Paiements enregistrés localisé
+- OK — action Enregistrer un paiement localisée
+
+## Strong hits
+
+- src/runtime/modules/generated/facturesauto/facturesauto.module.ts:557 — Paiements enregistrés — description: "Paiements enregistrés pour cette facture.",
+- src/components/erp/billing/InvoicePaymentsHistory.tsx:391 — Paiements enregistrés — Paiements enregistrés
+- src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1627 — Enregistrer un paiement — Enregistrer un paiement
+- src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1681 — Enregistrer un paiement — Enregistrer un paiement
+- src/runtime/modules/generated/facturesauto/facturesauto.actions.ts:20 — Enregistrer un paiement — label: "Enregistrer un paiement",
+
+## All hits
+
+- src/runtime/modules/generated/facturesauto/facturesauto.module.ts:63 — paiement — label: "Statut paiement",
+- src/runtime/modules/generated/facturesauto/facturesauto.module.ts:151 — paiement — label: "Mode paiement",
+- src/runtime/modules/generated/facturesauto/facturesauto.module.ts:393 — paiement — label: "Statut paiement",
+- src/runtime/modules/generated/facturesauto/facturesauto.module.ts:494 — payment — // Facture knows its payments and payment schedules.
+- src/runtime/modules/generated/facturesauto/facturesauto.module.ts:553 — encaissement — key: "encaissements-facture",
+- src/runtime/modules/generated/facturesauto/facturesauto.module.ts:553 — encaissements — key: "encaissements-facture",
+- src/runtime/modules/generated/facturesauto/facturesauto.module.ts:554 — encaissement — moduleKey: "encaissementsauto",
+- src/runtime/modules/generated/facturesauto/facturesauto.module.ts:554 — encaissements — moduleKey: "encaissementsauto",
+- src/runtime/modules/generated/facturesauto/facturesauto.module.ts:554 — encaissementsauto — moduleKey: "encaissementsauto",
+- src/runtime/modules/generated/facturesauto/facturesauto.module.ts:557 — Paiements enregistrés — description: "Paiements enregistrés pour cette facture.",
+- src/runtime/modules/generated/facturesauto/facturesauto.module.ts:561 — allowCreate — allowCreate: false,
+- src/runtime/modules/generated/facturesauto/facturesauto.module.ts:562 — encaissement — createLabel: "Ajouter un encaissement",
+- src/runtime/modules/generated/facturesauto/facturesauto.module.ts:562 — createLabel — createLabel: "Ajouter un encaissement",
+- src/runtime/modules/generated/facturesauto/facturesauto.module.ts:563 — encaissement — openLabel: "Ouvrir encaissement",
+- src/runtime/modules/generated/facturesauto/facturesauto.module.ts:587 — paiement — moduleKey: "echeancespaiementauto",
+- src/runtime/modules/generated/facturesauto/facturesauto.module.ts:589 — paiement — title: "Échéances de paiement",
+- src/runtime/modules/generated/facturesauto/facturesauto.module.ts:590 — paiement — description: "Plan de paiement et relances liées à cette facture.",
+- src/runtime/modules/generated/facturesauto/facturesauto.module.ts:594 — allowCreate — allowCreate: false,
+- src/runtime/modules/generated/facturesauto/facturesauto.module.ts:595 — createLabel — createLabel: "Ajouter une échéance",
+- src/components/erp/runtime/ERPRelatedRecordsPanel.tsx:169 — encaissement — if (childModuleKey === "encaissementsauto") {
+- src/components/erp/runtime/ERPRelatedRecordsPanel.tsx:169 — encaissements — if (childModuleKey === "encaissementsauto") {
+- src/components/erp/runtime/ERPRelatedRecordsPanel.tsx:169 — encaissementsauto — if (childModuleKey === "encaissementsauto") {
+- src/components/erp/runtime/ERPRelatedRecordsPanel.tsx:179 — paiement — childModuleKey === "echeancespaiementauto" ||
+- src/components/erp/runtime/ERPRelatedRecordsPanel.tsx:790 — allowCreate — {(child.allowCreate ?? child.mode !== "readonly") ? (
+- src/components/erp/runtime/ERPRelatedRecordsPanel.tsx:795 — createLabel — {child.createLabel ?? "Ajouter"}
+- src/components/erp/billing/InvoiceDocumentActions.tsx:377 — paiement — "Statut paiement : " + statut,
+- src/components/erp/billing/InvoiceDocumentActions.tsx:382 — paiement — : "Lien facture / paiement : " + url
+- src/components/erp/billing/InvoiceDocumentActions.tsx:469 — paiement — "Document conservé pour historique. Aucune nouvelle opération de paiement n’est autorisée.",
+- src/components/erp/billing/InvoiceDocumentActions.tsx:520 — paiement — "Statut paiement",
+- src/components/erp/billing/InvoiceDocumentActions.tsx:553 — paiement — "Lien facture / paiement : " + publicUrl,
+- src/components/erp/billing/InvoicePaymentSchedule.tsx:11 — paiement — echeancespaiementautoModule,
+- src/components/erp/billing/InvoicePaymentSchedule.tsx:12 — paiement — } from "@/runtime/modules/generated/echeancespaiementauto";
+- src/components/erp/billing/InvoicePaymentSchedule.tsx:165 — paiement — return "/echeancespaiementauto/nouveau?" + params.toString();
+- src/components/erp/billing/InvoicePaymentSchedule.tsx:191 — paiement — echeancespaiementautoModule
+- src/components/erp/billing/InvoicePaymentSchedule.tsx:274 — paiement — Échéancier de paiement
+- src/components/erp/billing/InvoicePaymentSchedule.tsx:282 — paiement — Planifie les échéances, suit les paiements attendus et prépare les relances.
+- src/components/erp/billing/InvoicePaymentsHistory.tsx:11 — encaissement — encaissementsautoModule,
+- src/components/erp/billing/InvoicePaymentsHistory.tsx:11 — encaissements — encaissementsautoModule,
+- src/components/erp/billing/InvoicePaymentsHistory.tsx:11 — encaissementsauto — encaissementsautoModule,
+- src/components/erp/billing/InvoicePaymentsHistory.tsx:12 — encaissement — } from "@/runtime/modules/generated/encaissementsauto";
+- src/components/erp/billing/InvoicePaymentsHistory.tsx:12 — encaissements — } from "@/runtime/modules/generated/encaissementsauto";
+- src/components/erp/billing/InvoicePaymentsHistory.tsx:12 — encaissementsauto — } from "@/runtime/modules/generated/encaissementsauto";
+- src/components/erp/billing/InvoicePaymentsHistory.tsx:121 — payment — paymentId: string | undefined,
+- src/components/erp/billing/InvoicePaymentsHistory.tsx:124 — payment — if (!paymentId) {
+- src/components/erp/billing/InvoicePaymentsHistory.tsx:134 — encaissement — "/encaissementsauto/" +
+- src/components/erp/billing/InvoicePaymentsHistory.tsx:134 — encaissements — "/encaissementsauto/" +
+- src/components/erp/billing/InvoicePaymentsHistory.tsx:134 — encaissementsauto — "/encaissementsauto/" +
+- src/components/erp/billing/InvoicePaymentsHistory.tsx:135 — payment — encodeURIComponent(paymentId) +
+- src/components/erp/billing/InvoicePaymentsHistory.tsx:282 — paiement — Modifier ce paiement
+- src/components/erp/billing/InvoicePaymentsHistory.tsx:286 — payment — payment={item as Record<string, unknown>}
+- src/components/erp/billing/InvoicePaymentsHistory.tsx:318 — encaissement — encaissementsautoModule
+- src/components/erp/billing/InvoicePaymentsHistory.tsx:318 — encaissements — encaissementsautoModule
+- src/components/erp/billing/InvoicePaymentsHistory.tsx:318 — encaissementsauto — encaissementsautoModule
+- src/components/erp/billing/InvoicePaymentsHistory.tsx:387 — encaissement — Historique des encaissements
+- src/components/erp/billing/InvoicePaymentsHistory.tsx:387 — encaissements — Historique des encaissements
+- src/components/erp/billing/InvoicePaymentsHistory.tsx:391 — Paiements enregistrés — Paiements enregistrés
+- src/components/erp/billing/InvoicePaymentsHistory.tsx:395 — paiement — Liste des paiements liés à cette facture.
+- src/components/erp/billing/InvoicePaymentsHistory.tsx:403 — paiement — Trier les paiements
+- src/components/erp/billing/InvoicePaymentsHistory.tsx:442 — encaissement — Chargement des encaissements...
+- src/components/erp/billing/InvoicePaymentsHistory.tsx:442 — encaissements — Chargement des encaissements...
+- src/components/erp/billing/InvoicePaymentsHistory.tsx:446 — paiement — Aucun paiement enregistré pour cette facture.
+- src/components/erp/billing/InvoicePaymentsHistory.tsx:506 — payment — payment={item as Record<string, unknown>}
+- src/components/erp/billing/PaymentReceiptActions.tsx:23 — encaissement — encaissementsautoModule,
+- src/components/erp/billing/PaymentReceiptActions.tsx:23 — encaissements — encaissementsautoModule,
+- src/components/erp/billing/PaymentReceiptActions.tsx:23 — encaissementsauto — encaissementsautoModule,
+- src/components/erp/billing/PaymentReceiptActions.tsx:24 — encaissement — } from "@/runtime/modules/generated/encaissementsauto";
+- src/components/erp/billing/PaymentReceiptActions.tsx:24 — encaissements — } from "@/runtime/modules/generated/encaissementsauto";
+- src/components/erp/billing/PaymentReceiptActions.tsx:24 — encaissementsauto — } from "@/runtime/modules/generated/encaissementsauto";
+- src/components/erp/billing/PaymentReceiptActions.tsx:35 — payment — payment: RecordData;
+- src/components/erp/billing/PaymentReceiptActions.tsx:122 — payment — payment: RecordData
+- src/components/erp/billing/PaymentReceiptActions.tsx:125 — payment — payment,
+- src/components/erp/billing/PaymentReceiptActions.tsx:127 — payment — value(payment, "_id")
+- src/components/erp/billing/PaymentReceiptActions.tsx:142 — payment — payment: RecordData,
+- src/components/erp/billing/PaymentReceiptActions.tsx:146 — payment — const paymentId =
+- src/components/erp/billing/PaymentReceiptActions.tsx:147 — payment — getPaymentId(payment);
+- src/components/erp/billing/PaymentReceiptActions.tsx:149 — payment — if (!paymentId) {
+- src/components/erp/billing/PaymentReceiptActions.tsx:154 — payment — Number(payment.nombreEnvoisRecu ?? 0);
+- src/components/erp/billing/PaymentReceiptActions.tsx:157 — encaissement — encaissementsautoModule,
+- src/components/erp/billing/PaymentReceiptActions.tsx:157 — encaissements — encaissementsautoModule,
+- src/components/erp/billing/PaymentReceiptActions.tsx:157 — encaissementsauto — encaissementsautoModule,
+- src/components/erp/billing/PaymentReceiptActions.tsx:158 — payment — paymentId,
+- src/components/erp/billing/PaymentReceiptActions.tsx:178 — payment — payment: RecordData
+- src/components/erp/billing/PaymentReceiptActions.tsx:181 — payment — payment,
+- src/components/erp/billing/PaymentReceiptActions.tsx:184 — payment — payment,
+- src/components/erp/billing/PaymentReceiptActions.tsx:186 — payment — value(payment, "_id", Date.now().toString())
+- src/components/erp/billing/PaymentReceiptActions.tsx:273 — payment — payment: RecordData,
+- src/components/erp/billing/PaymentReceiptActions.tsx:277 — payment — value(payment, "factureId", factureId);
+- src/components/erp/billing/PaymentReceiptActions.tsx:295 — payment — value(payment, "clientId", value(invoice, "clientId"));
+- src/components/erp/billing/PaymentReceiptActions.tsx:298 — payment — value(payment, "vehiculeId", value(invoice, "vehiculeId"));
+- src/components/erp/billing/PaymentReceiptActions.tsx:328 — payment — payment: RecordData,
+- src/components/erp/billing/PaymentReceiptActions.tsx:335 — payment — value(payment, "factureId", factureId)
+- src/components/erp/billing/PaymentReceiptActions.tsx:344 — paiement — "Votre reçu de paiement " + AMARKHYS_BUSINESS_IDENTITY.displayName + " est disponible.",
+- src/components/erp/billing/PaymentReceiptActions.tsx:346 — payment — "Reçu : " + buildReceiptNumber(payment),
+- src/components/erp/billing/PaymentReceiptActions.tsx:351 — payment — "Montant encaissé : " + formatMoney(amount(payment, "montant")),
+- src/components/erp/billing/PaymentReceiptActions.tsx:352 — payment — "Date paiement : " + formatDate(value(payment, "datePaiement")),
+- src/components/erp/billing/PaymentReceiptActions.tsx:352 — paiement — "Date paiement : " + formatDate(value(payment, "datePaiement")),
+- src/components/erp/billing/PaymentReceiptActions.tsx:353 — payment — "Mode paiement : " + formatMode(value(payment, "modePaiement")),
+- src/components/erp/billing/PaymentReceiptActions.tsx:353 — paiement — "Mode paiement : " + formatMode(value(payment, "modePaiement")),
+- src/components/erp/billing/PaymentReceiptActions.tsx:354 — payment — "Référence : " + (value(payment, "referenceTransaction") || "-"),
+- src/components/erp/billing/PaymentReceiptActions.tsx:355 — payment — "Statut : " + formatStatus(value(payment, "statut")),
+- src/components/erp/billing/PaymentReceiptActions.tsx:366 — payment — payment: RecordData,
+- src/components/erp/billing/PaymentReceiptActions.tsx:374 — payment — buildReceiptNumber(payment);
+- src/components/erp/billing/PaymentReceiptActions.tsx:379 — payment — value(payment, "factureId", factureId)
+- src/components/erp/billing/PaymentReceiptActions.tsx:383 — payment — formatDate(value(payment, "datePaiement"));
+- src/components/erp/billing/PaymentReceiptActions.tsx:386 — payment — amount(payment, "montant");
+- src/components/erp/billing/PaymentReceiptActions.tsx:419 — paiement — doc.text("Date paiement : " + datePaiement, 14, 98);
+- src/components/erp/billing/PaymentReceiptActions.tsx:420 — payment — doc.text("Mode paiement : " + formatMode(value(payment, "modePaiement")), 14, 106);
+- src/components/erp/billing/PaymentReceiptActions.tsx:420 — paiement — doc.text("Mode paiement : " + formatMode(value(payment, "modePaiement")), 14, 106);
+- src/components/erp/billing/PaymentReceiptActions.tsx:421 — payment — doc.text("Référence : " + (value(payment, "referenceTransaction") || "-"), 14, 114);
+- src/components/erp/billing/PaymentReceiptActions.tsx:422 — payment — doc.text("Statut : " + formatStatus(value(payment, "statut")), 14, 122);
+- src/components/erp/billing/PaymentReceiptActions.tsx:435 — paiement — "Ce reçu atteste l’enregistrement du paiement indiqué ci-dessus.",
+- src/components/erp/billing/PaymentReceiptActions.tsx:450 — payment — payment: RecordData,
+- src/components/erp/billing/PaymentReceiptActions.tsx:455 — payment — createReceiptPdf(payment, factureId, context);
+- src/components/erp/billing/PaymentReceiptActions.tsx:458 — payment — buildReceiptNumber(payment) + ".pdf"
+- src/components/erp/billing/PaymentReceiptActions.tsx:463 — payment — payment: RecordData,
+- src/components/erp/billing/PaymentReceiptActions.tsx:468 — payment — createReceiptPdf(payment, factureId, context);
+- src/components/erp/billing/PaymentReceiptActions.tsx:484 — payment — payment,
+- src/components/erp/billing/PaymentReceiptActions.tsx:495 — payment — await loadReceiptContext(payment, factureId);
+- src/components/erp/billing/PaymentReceiptActions.tsx:511 — payment — }, [payment, factureId]);
+- src/components/erp/billing/PaymentReceiptActions.tsx:515 — payment — () => buildReceiptText(payment, factureId, context),
+- src/components/erp/billing/PaymentReceiptActions.tsx:516 — payment — [payment, factureId, context]
+- src/components/erp/billing/PaymentReceiptActions.tsx:526 — payment — payment,
+- src/components/erp/billing/PaymentReceiptActions.tsx:536 — payment — onClick={() => previewReceipt(payment, factureId, context)}
+- src/components/erp/billing/PaymentReceiptActions.tsx:544 — payment — onClick={() => downloadReceipt(payment, factureId, context)}
+- src/components/amarkhys/dashboard/AmarkhysPremiumCockpit.tsx:228 — encaissement — const encaissements =
+- src/components/amarkhys/dashboard/AmarkhysPremiumCockpit.tsx:228 — encaissements — const encaissements =
+- src/components/amarkhys/dashboard/AmarkhysPremiumCockpit.tsx:231 — encaissement — const items = encaissements?.items ?? [];
+- src/components/amarkhys/dashboard/AmarkhysPremiumCockpit.tsx:231 — encaissements — const items = encaissements?.items ?? [];
+- src/components/amarkhys/dashboard/AmarkhysPremiumCockpit.tsx:356 — paiement — trigger: "Déclenché par une facture avec un reste à payer ou un paiement non soldé.",
+- src/components/amarkhys/dashboard/AmarkhysPremiumCockpit.tsx:389 — paiement — fallbackHref: "/echeancespaiementauto",
+- src/components/amarkhys/dashboard/AmarkhysPremiumCockpit.tsx:963 — encaissement — href="/encaissementsauto"
+- src/components/amarkhys/dashboard/AmarkhysPremiumCockpit.tsx:963 — encaissements — href="/encaissementsauto"
+- src/components/amarkhys/dashboard/AmarkhysPremiumCockpit.tsx:963 — encaissementsauto — href="/encaissementsauto"
+- src/components/amarkhys/dashboard/AmarkhysPremiumCockpit.tsx:967 — encaissement — Voir les encaissements
+- src/components/amarkhys/dashboard/AmarkhysPremiumCockpit.tsx:967 — encaissements — Voir les encaissements
+- src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1534 — encaissement — "encaissementsauto",
+- src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1534 — encaissements — "encaissementsauto",
+- src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1534 — encaissementsauto — "encaissementsauto",
+- src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1535 — paiement — "echeancespaiementauto",
+- src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1610 — payment — data-invoice-edit-payment-action
+- src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1627 — Enregistrer un paiement — Enregistrer un paiement
+- src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1627 — paiement — Enregistrer un paiement
+- src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1631 — encaissement — Cree un encaissement lie   cette facture. Le montant paye, le reste   payer et l'historique de paiement seront mis   jour proprement.
+- src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1631 — paiement — Cree un encaissement lie   cette facture. Le montant paye, le reste   payer et l'historique de paiement seront mis   jour proprement.
+- src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1681 — Enregistrer un paiement — Enregistrer un paiement
+- src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1681 — paiement — Enregistrer un paiement
+- src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1688 — payment — <div data-invoice-payments-history>
+- src/components/erp/forms/enterprise/ERPEnterpriseForm.tsx:1697 — payment — <div data-invoice-payment-schedule>
+- src/components/erp/hub/ERPClientOperationalSheet.tsx:156 — allowCreate — allowCreate: child.allowCreate ?? false,
+- src/components/erp/hub/ERPClientOperationalSheet.tsx:168 — allowCreate — allowCreate: false,
+- src/components/erp/hub/ERPClientOperationalSheet.tsx:182 — allowCreate — allowCreate: false,
+- src/components/erp/hub/ERPClientOperationalSheet.tsx:196 — allowCreate — allowCreate: false,
+- src/components/erp/hub/ERPClientOperationalSheet.tsx:211 — allowCreate — allowCreate: false,
+- src/components/erp/hub/ERPClientOperationalSheet.tsx:286 — encaissement — const paymentsHref = queryHref("/encaissementsauto", {
+- src/components/erp/hub/ERPClientOperationalSheet.tsx:286 — encaissements — const paymentsHref = queryHref("/encaissementsauto", {
+- src/components/erp/hub/ERPClientOperationalSheet.tsx:286 — encaissementsauto — const paymentsHref = queryHref("/encaissementsauto", {
+- src/components/erp/hub/ERPClientOperationalSheet.tsx:286 — payment — const paymentsHref = queryHref("/encaissementsauto", {
+- src/components/erp/hub/ERPClientOperationalSheet.tsx:306 — encaissement — const paymentDetailHref = queryHref("/encaissementsauto", {
+- src/components/erp/hub/ERPClientOperationalSheet.tsx:306 — encaissements — const paymentDetailHref = queryHref("/encaissementsauto", {
+- src/components/erp/hub/ERPClientOperationalSheet.tsx:306 — encaissementsauto — const paymentDetailHref = queryHref("/encaissementsauto", {
+- src/components/erp/hub/ERPClientOperationalSheet.tsx:306 — payment — const paymentDetailHref = queryHref("/encaissementsauto", {
+- src/components/erp/hub/ERPClientOperationalSheet.tsx:326 — encaissement — const encaissements = relatedRecordsBySection.encaissements ?? [];
+- src/components/erp/hub/ERPClientOperationalSheet.tsx:326 — encaissements — const encaissements = relatedRecordsBySection.encaissements ?? [];
+- src/components/erp/hub/ERPClientOperationalSheet.tsx:398 — encaissement — Vue 360° du client depuis ses véhicules jusqu’aux factures et encaissements.
+- src/components/erp/hub/ERPClientOperationalSheet.tsx:398 — encaissements — Vue 360° du client depuis ses véhicules jusqu’aux factures et encaissements.
+- src/components/erp/hub/ERPClientOperationalSheet.tsx:466 — encaissement — Selectionnez un vehicule pour afficher ses rendez-vous, interventions, lignes, factures et encaissements.
+- src/components/erp/hub/ERPClientOperationalSheet.tsx:466 — encaissements — Selectionnez un vehicule pour afficher ses rendez-vous, interventions, lignes, factures et encaissements.
+- src/components/erp/hub/ERPClientOperationalSheet.tsx:750 — encaissement — <EmptyCard>Aucune facture sélectionnée pour afficher les encaissements.</EmptyCard>
+- src/components/erp/hub/ERPClientOperationalSheet.tsx:750 — encaissements — <EmptyCard>Aucune facture sélectionnée pour afficher les encaissements.</EmptyCard>
+- src/components/erp/hub/ERPClientOperationalSheet.tsx:774 — encaissement — ["5. Encaissements", `${encaissements.length} encaissement(s)`],
+- src/components/erp/hub/ERPClientOperationalSheet.tsx:774 — encaissements — ["5. Encaissements", `${encaissements.length} encaissement(s)`],
+- src/components/erp/hub/ERPClientOperationalSheet.tsx:839 — payment — href={paymentDetailHref}
+- src/components/erp/hub/ERPClientOperationalSheet.tsx:842 — encaissement — 💳 Historique encaissements
+- src/components/erp/hub/ERPClientOperationalSheet.tsx:842 — encaissements — 💳 Historique encaissements
+- src/components/erp/hub/ERPClientOperationalSheet.tsx:882 — encaissement — <EmptyCard>Encaissements liés : {encaissements.length}</EmptyCard>
+- src/components/erp/hub/ERPClientOperationalSheet.tsx:882 — encaissements — <EmptyCard>Encaissements liés : {encaissements.length}</EmptyCard>
+- src/components/erp/runtime/ERPRuntimeDetails.tsx:136 — paiement — Synthèse paiement facture
+- src/components/erp/runtime/ERPRuntimeDetails.tsx:140 — encaissement — Crée un encaissement lié à cette facture. Le montant payé, le reste à payer et le statut de paiement seront recalculés automatiquement.
+- src/components/erp/runtime/ERPRuntimeDetails.tsx:140 — paiement — Crée un encaissement lié à cette facture. Le montant payé, le reste à payer et le statut de paiement seront recalculés automatiquement.
+- src/components/erp/runtime/ERPRuntimeDetails.tsx:174 — encaissement — href="#historique-encaissements"
+- src/components/erp/runtime/ERPRuntimeDetails.tsx:174 — encaissements — href="#historique-encaissements"
+- src/components/erp/runtime/ERPRuntimeDetails.tsx:177 — encaissement — Voir l'historique des encaissements
+- src/components/erp/runtime/ERPRuntimeDetails.tsx:177 — encaissements — Voir l'historique des encaissements
+- src/components/erp/runtime/ERPRuntimeOverviewPage.tsx:103 — paiement — module: "paiements",
+- src/runtime/modules/generated/facturesauto/facturesauto.actions.ts:19 — paiement — key: "Enregistrer paiement",
+- src/runtime/modules/generated/facturesauto/facturesauto.actions.ts:20 — Enregistrer un paiement — label: "Enregistrer un paiement",
+- src/runtime/modules/generated/facturesauto/facturesauto.actions.ts:20 — paiement — label: "Enregistrer un paiement",
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.actions.ts:5 — encaissement — export const encaissementsautoActions: ERPModuleAction[] = [
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.actions.ts:5 — encaissements — export const encaissementsautoActions: ERPModuleAction[] = [
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.actions.ts:5 — encaissementsauto — export const encaissementsautoActions: ERPModuleAction[] = [
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.actions.ts:8 — encaissement — label: "Valider l’encaissement",
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.actions.ts:10 — encaissement — permission: "encaissementsauto.workflow",
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.actions.ts:10 — encaissements — permission: "encaissementsauto.workflow",
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.actions.ts:10 — encaissementsauto — permission: "encaissementsauto.workflow",
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.actions.ts:16 — encaissement — permission: "encaissementsauto.workflow",
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.actions.ts:16 — encaissements — permission: "encaissementsauto.workflow",
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.actions.ts:16 — encaissementsauto — permission: "encaissementsauto.workflow",
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.actions.ts:22 — encaissement — permission: "encaissementsauto.workflow",
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.actions.ts:22 — encaissements — permission: "encaissementsauto.workflow",
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.actions.ts:22 — encaissementsauto — permission: "encaissementsauto.workflow",
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.automation.ts:1 — encaissement — export const encaissementsautoAutomation = [];
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.automation.ts:1 — encaissements — export const encaissementsautoAutomation = [];
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.automation.ts:1 — encaissementsauto — export const encaissementsautoAutomation = [];
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.dashboard.ts:1 — encaissement — export const encaissementsautoDashboard = {};
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.dashboard.ts:1 — encaissements — export const encaissementsautoDashboard = {};
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.dashboard.ts:1 — encaissementsauto — export const encaissementsautoDashboard = {};
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts:4 — encaissement — encaissementsautoActions,
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts:4 — encaissements — encaissementsautoActions,
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts:4 — encaissementsauto — encaissementsautoActions,
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts:5 — encaissement — } from "./encaissementsauto.actions";
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts:5 — encaissements — } from "./encaissementsauto.actions";
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts:5 — encaissementsauto — } from "./encaissementsauto.actions";
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts:7 — encaissement — export const encaissementsautoModule: ERPModule = {
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts:7 — encaissements — export const encaissementsautoModule: ERPModule = {
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts:7 — encaissementsauto — export const encaissementsautoModule: ERPModule = {
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts:9 — encaissement — key: "encaissementsauto",
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts:9 — encaissements — key: "encaissementsauto",
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts:9 — encaissementsauto — key: "encaissementsauto",
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts:12 — encaissement — "Suivi des paiements clients, paiements partiels et encaissements AMARKHYS.",
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts:12 — encaissements — "Suivi des paiements clients, paiements partiels et encaissements AMARKHYS.",
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts:12 — paiement — "Suivi des paiements clients, paiements partiels et encaissements AMARKHYS.",
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts:29 — encaissement — collection: "encaissementsauto",
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts:29 — encaissements — collection: "encaissementsauto",
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts:29 — encaissementsauto — collection: "encaissementsauto",
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts:76 — paiement — label: "Date paiement",
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts:84 — paiement — label: "Mode paiement",
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts:191 — paiement — key: "paiement",
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts:204 — paiement — title: "Informations paiement",
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts:293 — encaissement — title: "Contexte encaissement",
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts:338 — encaissement — actions: encaissementsautoActions,
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts:338 — encaissements — actions: encaissementsautoActions,
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts:338 — encaissementsauto — actions: encaissementsautoActions,
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts:342 — encaissement — key: "encaissement",
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.module.ts:343 — encaissement — label: "Cycle encaissement",
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.permissions.ts:1 — encaissement — export const encaissementsautoPermissions = {
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.permissions.ts:1 — encaissements — export const encaissementsautoPermissions = {
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.permissions.ts:1 — encaissementsauto — export const encaissementsautoPermissions = {
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.permissions.ts:2 — encaissement — read: "encaissementsauto.read",
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.permissions.ts:2 — encaissements — read: "encaissementsauto.read",
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.permissions.ts:2 — encaissementsauto — read: "encaissementsauto.read",
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.permissions.ts:3 — encaissement — create: "encaissementsauto.create",
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.permissions.ts:3 — encaissements — create: "encaissementsauto.create",
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.permissions.ts:3 — encaissementsauto — create: "encaissementsauto.create",
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.permissions.ts:4 — encaissement — update: "encaissementsauto.update",
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.permissions.ts:4 — encaissements — update: "encaissementsauto.update",
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.permissions.ts:4 — encaissementsauto — update: "encaissementsauto.update",
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.permissions.ts:5 — encaissement — delete: "encaissementsauto.delete",
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.permissions.ts:5 — encaissements — delete: "encaissementsauto.delete",
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.permissions.ts:5 — encaissementsauto — delete: "encaissementsauto.delete",
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.permissions.ts:6 — encaissement — workflow: "encaissementsauto.workflow",
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.permissions.ts:6 — encaissements — workflow: "encaissementsauto.workflow",
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.permissions.ts:6 — encaissementsauto — workflow: "encaissementsauto.workflow",
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.workflows.ts:1 — encaissement — export const encaissementsautoWorkflows = [];
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.workflows.ts:1 — encaissements — export const encaissementsautoWorkflows = [];
+- src/runtime/modules/generated/encaissementsauto/encaissementsauto.workflows.ts:1 — encaissementsauto — export const encaissementsautoWorkflows = [];
+- src/runtime/modules/generated/encaissementsauto/index.ts:1 — encaissement — export * from "./encaissementsauto.module";
+- src/runtime/modules/generated/encaissementsauto/index.ts:1 — encaissements — export * from "./encaissementsauto.module";
+- src/runtime/modules/generated/encaissementsauto/index.ts:1 — encaissementsauto — export * from "./encaissementsauto.module";
+- src/runtime/modules/generated/encaissementsauto/index.ts:2 — encaissement — export * from "./encaissementsauto.actions";
+- src/runtime/modules/generated/encaissementsauto/index.ts:2 — encaissements — export * from "./encaissementsauto.actions";
+- src/runtime/modules/generated/encaissementsauto/index.ts:2 — encaissementsauto — export * from "./encaissementsauto.actions";
+- src/runtime/modules/generated/encaissementsauto/index.ts:3 — encaissement — export * from "./encaissementsauto.workflows";
+- src/runtime/modules/generated/encaissementsauto/index.ts:3 — encaissements — export * from "./encaissementsauto.workflows";
+- src/runtime/modules/generated/encaissementsauto/index.ts:3 — encaissementsauto — export * from "./encaissementsauto.workflows";
+- src/runtime/modules/generated/encaissementsauto/index.ts:4 — encaissement — export * from "./encaissementsauto.permissions";
+- src/runtime/modules/generated/encaissementsauto/index.ts:4 — encaissements — export * from "./encaissementsauto.permissions";
+- src/runtime/modules/generated/encaissementsauto/index.ts:4 — encaissementsauto — export * from "./encaissementsauto.permissions";
+- src/runtime/modules/generated/encaissementsauto/index.ts:5 — encaissement — export * from "./encaissementsauto.automation";
+- src/runtime/modules/generated/encaissementsauto/index.ts:5 — encaissements — export * from "./encaissementsauto.automation";
+- src/runtime/modules/generated/encaissementsauto/index.ts:5 — encaissementsauto — export * from "./encaissementsauto.automation";
+- src/runtime/modules/generated/encaissementsauto/index.ts:6 — encaissement — export * from "./encaissementsauto.dashboard";
+- src/runtime/modules/generated/encaissementsauto/index.ts:6 — encaissements — export * from "./encaissementsauto.dashboard";
+- src/runtime/modules/generated/encaissementsauto/index.ts:6 — encaissementsauto — export * from "./encaissementsauto.dashboard";
