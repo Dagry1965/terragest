@@ -687,6 +687,7 @@ export function ERPClientOperationalSheet({
                                   recordId(intervention) === recordId(selectedIntervention);
 
                                 return (
+                                  <>
                                   <tr
                                     key={recordId(intervention)}
                                     data-amarkhys-hub-flow-d2-refocus-c2b="INTERVENTION_COMPACT_ROW"
@@ -736,6 +737,32 @@ export function ERPClientOperationalSheet({
                                       </button>
                                     </td>
                                   </tr>
+                                  {isSelected ? (
+                                    <tr data-amarkhys-hub-flow-d2-refocus-c3="INTERVENTION_LINES_DETAIL_ROW">
+                                      <td colSpan={6} className="bg-emerald-50/40 px-4 py-4">
+                                        <div className="rounded-[1.5rem] border border-emerald-100 bg-white p-4 shadow-sm">
+                                          <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
+                                            <div>
+                                              <p className="text-xs font-bold uppercase tracking-wide text-emerald-700">
+                                                Lignes de l'intervention sélectionnée
+                                              </p>
+                                              <p className="mt-1 text-sm text-slate-500">
+                                                Détail opérationnel rattaché uniquement à cette intervention.
+                                              </p>
+                                            </div>
+                                          </div>
+
+                                          <ERPRelatedRecordsPanel
+                                            parentModule={interventionsautoModule}
+                                            parentRecord={intervention}
+                                            child={lignesInterventionChild}
+                                            mode="detail"
+                                          />
+                                        </div>
+                                      </td>
+                                    </tr>
+                                  ) : null}
+                                  </>
                                 );
                               })}
                             </tbody>
