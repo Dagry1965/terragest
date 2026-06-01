@@ -10,7 +10,6 @@ import { ClientOperationalSearchBox } from "./ClientOperationalSearchBox";
 import { ERPRelatedRecordsPanel } from "@/components/erp/runtime/ERPRelatedRecordsPanel";
 import { InvoicePaymentsHistory } from "@/components/erp/billing/InvoicePaymentsHistory";
 import { ERPOperationalTable } from "@/components/erp/operational/ERPOperationalTable";
-import { ERPRuntimeActionBar } from "@/components/erp/runtime/ERPRuntimeActionBar";
 import { RuntimeHubActionContextAdapter } from "@/runtime/hub/RuntimeHubActionContextAdapter";
 import { rendezvousModule } from "@/runtime/modules/generated/rendezvous/rendezvous.module";
 import { vehiculesModule } from "@/runtime/modules/generated/vehicules/vehicules.module";
@@ -150,6 +149,53 @@ function EmptyCard({ children }: { children: React.ReactNode }) {
   );
 }
 
+function hubActionIcon(actionKey: string): string {
+  if (actionKey.includes("relancer-client")) return "☎";
+  if (actionKey.includes("relancer-facture")) return "▤";
+  if (actionKey.includes("enregistrer-paiement")) return "$";
+  if (actionKey.includes("ouvrir-intervention")) return "⚒";
+  if (actionKey.includes("ouvrir-facture")) return "▣";
+  if (actionKey.includes("voir-encaissements")) return "☷";
+
+  return "•";
+}
+
+function hubActionClassName(actionKey: string): string {
+  const base =
+    "group flex w-full items-center gap-4 rounded-[1.35rem] px-4 py-4 text-left text-sm font-black shadow-sm transition hover:-translate-y-0.5 hover:shadow-md";
+
+  if (
+    actionKey.includes("relancer-client") ||
+    actionKey.includes("relancer-facture")
+  ) {
+    return [
+      base,
+      "bg-gradient-to-r from-orange-500 to-orange-400 text-white ring-1 ring-orange-300",
+    ].join(" ");
+  }
+
+  if (actionKey.includes("enregistrer-paiement")) {
+    return [
+      base,
+      "bg-gradient-to-r from-emerald-700 to-teal-600 text-white ring-1 ring-emerald-300",
+    ].join(" ");
+  }
+
+  if (
+    actionKey.includes("ouvrir-intervention") ||
+    actionKey.includes("ouvrir-facture")
+  ) {
+    return [
+      base,
+      "bg-gradient-to-r from-slate-600 to-slate-500 text-white ring-1 ring-slate-300",
+    ].join(" ");
+  }
+
+  return [
+    base,
+    "bg-slate-100 text-slate-950 ring-1 ring-slate-200 hover:bg-slate-200",
+  ].join(" ");
+}
 function buildOperationalChild(
   child: ERPCompositionChild
 ): ERPCompositionChild {
@@ -747,15 +793,7 @@ export function ERPClientOperationalSheet({
                 </div>
               </section>
 
-              <div data-amarkhys-hub-actions="CLIENT_CONTEXT_ACTIONS">
-                <ERPRuntimeActionBar
-                  title="Actions client"
-                  description="Actions disponibles selon le client, le véhicule, le parcours atelier, la facture et les impayés."
-                  actions={hubActions}
-                  compact
-                  className="border-orange-200 bg-orange-50/40"
-                />
-              </div>
+              
 
               <section className="rounded-[2.25rem] bg-white p-6 shadow-sm ring-1 ring-slate-200 lg:p-8">
                 <SectionTitle
@@ -1207,21 +1245,54 @@ export function ERPClientOperationalSheet({
                 </div>
               </section>
 
-              <section className="rounded-[2.25rem] bg-white p-6 shadow-sm ring-1 ring-slate-200">
-                <SectionTitle title="BÉNÉFICES MÉTIER" />
-                <ul className="space-y-3 text-sm text-slate-700">
-                  {[
-                    "Vue 360° du client en un coup d’œil",
-                    "Meilleure relation client et réactivité",
-                    "Suivi clair des impayés et du CA",
-                    "Gain de temps pour vos équipes",
-                    "Décisions basées sur des données réelles",
-                  ].map((benefit) => (
-                    <li key={benefit} className="rounded-[1.25rem] bg-slate-50 p-4 font-medium">
-                      {benefit}
-                    </li>
-                  ))}
-                </ul>
+                            <section className="rounded-[2.25rem] bg-white p-6 shadow-sm ring-1 ring-slate-200">
+                <SectionTitle title="ACTIONS CLIENT" />
+
+                <div data-amarkhys-hub-actions="CLIENT_CONTEXT_ACTIONS">
+                                <div className="space-y-3">
+                  {hubActions.map((action) => {
+                    const content = (
+                      <>
+                        <span className="flex h-10 w-10 shrink-0 items-center justify-center text-2xl font-black text-current">
+                          {hubActionIcon(action.key)}
+                        </span>
+
+                        <span className="min-w-0 flex-1">
+                          {action.label}
+                        </span>
+                      </>
+                    );
+
+                    if (action.href && !action.disabled) {
+                      return (
+                        <Link
+                          key={action.key}
+                          href={action.href}
+                          className={hubActionClassName(action.key)}
+                          title={action.description}
+                        >
+                          {content}
+                        </Link>
+                      );
+                    }
+
+                    return (
+                      <button
+                        key={action.key}
+                        type="button"
+                        disabled={action.disabled}
+                        className={[
+                          hubActionClassName(action.key),
+                          action.disabled ? "cursor-not-allowed opacity-50" : "",
+                        ].join(" ")}
+                        title={action.description}
+                      >
+                        {content}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
               </section>
 
               <section className="rounded-[2.25rem] bg-white p-6 shadow-sm ring-1 ring-slate-200">
