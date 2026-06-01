@@ -149,8 +149,36 @@ function EmptyCard({ children }: { children: React.ReactNode }) {
   );
 }
 
+function normalizeRelancePhone(value: string): string {
+  return value.replace(/[^0-9]/g, "");
+}
+
+function buildRelanceWhatsAppHref(phone: string, message: string): string {
+  const normalizedPhone = normalizeRelancePhone(phone);
+
+  return normalizedPhone
+    ? `https://wa.me/${normalizedPhone}?text=${encodeURIComponent(message)}`
+    : "";
+}
+
+function buildRelanceSmsHref(phone: string, message: string): string {
+  const normalizedPhone = normalizeRelancePhone(phone);
+
+  return normalizedPhone
+    ? `sms:${normalizedPhone}?body=${encodeURIComponent(message)}`
+    : "";
+}
+
+function buildRelanceMailHref(email: string, subject: string, message: string): string {
+  const cleanEmail = email.trim();
+
+  return cleanEmail
+    ? `mailto:${cleanEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`
+    : "";
+}
+
 function hubActionIcon(actionKey: string): string {
-  if (actionKey.includes("relancer-client")) return "☎";
+  if (actionKey.includes("relancer-client")) return "📱";
   if (actionKey.includes("relancer-facture")) return "▤";
   if (actionKey.includes("enregistrer-paiement")) return "$";
   if (actionKey.includes("ouvrir-intervention")) return "⚒";
@@ -277,6 +305,7 @@ export function ERPClientOperationalSheet({
 
   const [selectedRendezvousId, setSelectedRendezvousId] = useState<string | null>(null);
   const [openedRendezvousDetailId, setOpenedRendezvousDetailId] = useState<string | null>(null);
+  const [openedRelanceActionKey, setOpenedRelanceActionKey] = useState<string | null>(null);
   const [expandedInterventionId, setExpandedInterventionId] = useState<string | null>(null);
   const [expandedFactureId, setExpandedFactureId] = useState<string | null>(null);
   const [expandedEncaissementId, setExpandedEncaissementId] = useState<string | null>(null);
@@ -700,6 +729,74 @@ export function ERPClientOperationalSheet({
     unpaidAmount,
     parcoursAtelierStatus.remainingAmount,
     hubReturnTo,
+  ]);
+
+  const openedRelanceAction = useMemo(() => {
+    if (!openedRelanceActionKey) {
+      return null;
+    }
+
+    return hubActions.find((action) => action.key === openedRelanceActionKey) ?? null;
+  }, [hubActions, openedRelanceActionKey]);
+
+  const relanceModalContext = useMemo(() => {
+    const isFactureRelance =
+      openedRelanceAction?.key.includes("relancer-facture") ?? false;
+
+    const selectedFacture = facturesForSelectedIntervention[0] ?? null;
+    const amount = isFactureRelance
+      ? parcoursAtelierStatus.remainingAmount
+      : unpaidAmount;
+
+    const clientLabel = text(
+      rootRecord,
+      ["displayLabel", "raisonSociale", "nomComplet", "nom", "prenom"],
+      "Client"
+    );
+
+    const phone = text(rootRecord, ["telephone", "phone", "mobile", "whatsapp"], "");
+    const email = text(rootRecord, ["email"], "");
+    const factureLabel = text(selectedFacture, ["numero", "numeroFacture", "code"], "-");
+    const vehiculeLabel = text(selectedVehicle, ["displayLabel", "immatriculation", "marque"], "-");
+
+    const message = isFactureRelance
+      ? [
+          "Bonjour " + clientLabel + ",",
+          "AMARKHYS Garage vous informe qu'un solde de " + money(amount) + " reste à régler sur votre facture " + factureLabel + ".",
+          "Merci de bien vouloir procéder au règlement ou nous contacter pour toute précision.",
+        ].join(" ")
+      : [
+          "Bonjour " + clientLabel + ",",
+          "AMARKHYS Garage vous informe que votre compte présente un impayé de " + money(amount) + ".",
+          "Merci de bien vouloir procéder au règlement ou nous contacter pour régulariser la situation.",
+        ].join(" ");
+
+    const subject = isFactureRelance
+      ? "Relance facture AMARKHYS Garage"
+      : "Relance compte client AMARKHYS Garage";
+
+    return {
+      isFactureRelance,
+      amount,
+      clientLabel,
+      phone,
+      email,
+      factureLabel,
+      vehiculeLabel,
+      message,
+      subject,
+      whatsappHref: buildRelanceWhatsAppHref(phone, message),
+      smsHref: buildRelanceSmsHref(phone, message),
+      mailHref: buildRelanceMailHref(email, subject, message),
+      telHref: normalizeRelancePhone(phone) ? "tel:" + normalizeRelancePhone(phone) : "",
+    };
+  }, [
+    openedRelanceAction,
+    facturesForSelectedIntervention,
+    parcoursAtelierStatus.remainingAmount,
+    unpaidAmount,
+    rootRecord,
+    selectedVehicle,
   ]);
 
   const isCardMode = !["flotte", "entreprise"].includes(clientType.toLowerCase());
@@ -1251,6 +1348,8 @@ export function ERPClientOperationalSheet({
                 <div data-amarkhys-hub-actions="CLIENT_CONTEXT_ACTIONS">
                                 <div className="space-y-3">
                   {hubActions.map((action) => {
+                    const isRelanceAction = action.key.includes("relancer-client") || action.key.includes("relancer-facture");
+
                     const content = (
                       <>
                         <span className="flex h-10 w-10 shrink-0 items-center justify-center text-2xl font-black text-current">
@@ -1262,6 +1361,24 @@ export function ERPClientOperationalSheet({
                         </span>
                       </>
                     );
+
+                    if (isRelanceAction) {
+                      return (
+                        <button
+                          key={action.key}
+                          type="button"
+                          disabled={action.disabled}
+                          className={[
+                            hubActionClassName(action.key),
+                            action.disabled ? "cursor-not-allowed opacity-50" : "",
+                          ].join(" ")}
+                          title={action.description}
+                          onClick={() => setOpenedRelanceActionKey(action.key)}
+                        >
+                          {content}
+                        </button>
+                      );
+                    }
 
                     if (action.href && !action.disabled) {
                       return (
@@ -1324,6 +1441,152 @@ export function ERPClientOperationalSheet({
           </div>
         </section>
       </div>
+
+      {openedRelanceAction ? (
+        <div
+          data-amarkhys-relance-modal="CLIENT_RELANCE_MODAL"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/45 px-4 py-6 backdrop-blur-sm"
+          role="dialog"
+          aria-modal="true"
+        >
+          <div className="w-full max-w-3xl overflow-hidden rounded-[2rem] bg-white shadow-2xl ring-1 ring-slate-200">
+            <div className="border-b border-orange-100 bg-gradient-to-r from-orange-50 to-white px-6 py-5">
+              <div className="flex flex-wrap items-start justify-between gap-4">
+                <div>
+                  <p className="text-xs font-black uppercase tracking-[0.18em] text-orange-700">
+                    Relance AMARKHYS
+                  </p>
+                  <h3 className="mt-2 text-2xl font-black text-slate-950">
+                    {openedRelanceAction.label}
+                  </h3>
+                  <p className="mt-1 text-sm text-slate-500">
+                    Choisissez le canal de relance et gardez le contexte client.
+                  </p>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => setOpenedRelanceActionKey(null)}
+                  className="rounded-full bg-white px-4 py-2 text-sm font-bold text-slate-700 shadow-sm ring-1 ring-slate-200 hover:bg-slate-50"
+                >
+                  Fermer
+                </button>
+              </div>
+            </div>
+
+            <div className="grid gap-4 p-6 sm:grid-cols-2">
+              <div className="rounded-2xl bg-slate-50 p-4 ring-1 ring-slate-100">
+                <p className="text-xs font-bold uppercase text-slate-400">Client</p>
+                <p className="mt-2 font-semibold text-slate-950">
+                  {relanceModalContext.clientLabel}
+                </p>
+              </div>
+
+              <div className="rounded-2xl bg-slate-50 p-4 ring-1 ring-slate-100">
+                <p className="text-xs font-bold uppercase text-slate-400">Téléphone</p>
+                <p className="mt-2 font-semibold text-slate-950">
+                  {relanceModalContext.phone || "Non renseigné"}
+                </p>
+              </div>
+
+              <div className="rounded-2xl bg-slate-50 p-4 ring-1 ring-slate-100">
+                <p className="text-xs font-bold uppercase text-slate-400">Véhicule</p>
+                <p className="mt-2 font-semibold text-slate-950">
+                  {relanceModalContext.vehiculeLabel}
+                </p>
+              </div>
+
+              <div className="rounded-2xl bg-orange-50 p-4 ring-1 ring-orange-200">
+                <p className="text-xs font-bold uppercase text-orange-500">
+                  {relanceModalContext.isFactureRelance ? "Reste à encaisser" : "Impayés client"}
+                </p>
+                <p className="mt-2 text-xl font-black text-orange-800">
+                  {money(relanceModalContext.amount)}
+                </p>
+              </div>
+            </div>
+
+            <div className="px-6 pb-6">
+              <div className="rounded-2xl bg-white p-4 ring-1 ring-slate-200">
+                <p className="text-xs font-black uppercase tracking-wide text-slate-500">
+                  Message proposé
+                </p>
+                <p className="mt-3 text-sm leading-6 text-slate-700">
+                  {relanceModalContext.message}
+                </p>
+              </div>
+
+              <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                <a
+                  href={relanceModalContext.whatsappHref || undefined}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={[
+                    "rounded-2xl px-4 py-3 text-center text-sm font-semibold ring-1",
+                    relanceModalContext.whatsappHref
+                      ? "bg-white text-emerald-600 ring-emerald-100 hover:bg-emerald-50/40"
+                      : "pointer-events-none bg-white text-slate-300 ring-slate-100",
+                  ].join(" ")}
+                >
+                  💬 WhatsApp
+                </a>
+
+                <a
+                  href={relanceModalContext.smsHref || undefined}
+                  className={[
+                    "rounded-2xl px-4 py-3 text-center text-sm font-semibold ring-1",
+                    relanceModalContext.smsHref
+                      ? "bg-white text-sky-600 ring-sky-100 hover:bg-sky-50/40"
+                      : "pointer-events-none bg-white text-slate-300 ring-slate-100",
+                  ].join(" ")}
+                >
+                  📱 SMS
+                </a>
+
+                <a
+                  href={relanceModalContext.telHref || undefined}
+                  className={[
+                    "rounded-2xl px-4 py-3 text-center text-sm font-semibold ring-1",
+                    relanceModalContext.telHref
+                      ? "bg-white text-slate-600 ring-slate-100 hover:bg-slate-50/50"
+                      : "pointer-events-none bg-white text-slate-300 ring-slate-100",
+                  ].join(" ")}
+                >
+                  📱 Appel
+                </a>
+
+                <a
+                  href={relanceModalContext.mailHref || undefined}
+                  className={[
+                    "rounded-2xl px-4 py-3 text-center text-sm font-semibold ring-1",
+                    relanceModalContext.mailHref
+                      ? "bg-white text-slate-600 ring-slate-100 hover:bg-slate-50/50"
+                      : "pointer-events-none bg-white text-slate-300 ring-slate-100",
+                  ].join(" ")}
+                >
+                  ✉ Email
+                </a>
+
+                <button
+                  type="button"
+                  onClick={() => navigator.clipboard?.writeText(relanceModalContext.message)}
+                  className="rounded-2xl bg-white px-4 py-3 text-center text-sm font-semibold text-slate-600 ring-1 ring-slate-100 hover:bg-slate-50/50"
+                >
+                  ⧉ Copier message
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setOpenedRelanceActionKey(null)}
+                  className="rounded-2xl bg-white px-4 py-3 text-center text-sm font-semibold text-slate-600 ring-1 ring-slate-100 hover:bg-slate-50/50"
+                >
+                  ✓ Terminer
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </main>
   );
 }
