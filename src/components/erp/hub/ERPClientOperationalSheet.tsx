@@ -227,6 +227,9 @@ export function ERPClientOperationalSheet({
   );
 
   const [selectedRendezvousId, setSelectedRendezvousId] = useState<string | null>(null);
+  const [expandedInterventionId, setExpandedInterventionId] = useState<string | null>(null);
+  const [expandedFactureId, setExpandedFactureId] = useState<string | null>(null);
+  const [expandedEncaissementId, setExpandedEncaissementId] = useState<string | null>(null);
   const [selectedInterventionId, setSelectedInterventionId] = useState<string | null>(null);
 
   const selectedVehicle = useMemo(() => {
@@ -326,6 +329,18 @@ export function ERPClientOperationalSheet({
   const encaissements = relatedRecordsBySection.encaissements ?? [];
   const recentActivity = relatedRecordsBySection.recentActivity ?? [];
   const upcomingAppointments = relatedRecordsBySection.upcomingAppointments ?? [];
+
+  const toggleExpandedIntervention = (id: string) => {
+    setExpandedInterventionId((current) => (current === id ? null : id));
+  };
+
+  const toggleExpandedFacture = (id: string) => {
+    setExpandedFactureId((current) => (current === id ? null : id));
+  };
+
+  const toggleExpandedEncaissement = (id: string) => {
+    setExpandedEncaissementId((current) => (current === id ? null : id));
+  };
 
   const selectedRendezvous = useMemo(() => {
     return (
@@ -482,7 +497,6 @@ export function ERPClientOperationalSheet({
                             : "border-slate-200 bg-white hover:border-emerald-200",
                         ].join(" ")}
                       >
-                        <div className="mb-4 flex h-28 items-center justify-center rounded-[1.5rem] bg-gradient-to-br from-slate-200 to-slate-100 text-xs font-black uppercase tracking-[0.18em] text-slate-500">Vehicule</div>
 
                         <div className="flex items-start justify-between gap-3">
                           <div>
@@ -506,8 +520,6 @@ export function ERPClientOperationalSheet({
 
                         <div className="mt-4 grid gap-2 text-sm text-slate-600">
                           <p>🚘 <span className="font-medium text-slate-900">Immatriculation :</span> {text(vehicle, ["immatriculation"])}</p>
-                          <p>📅 <span className="font-medium text-slate-900">Année :</span> {text(vehicle, ["annee", "année"])}</p>
-                          <p>⛽ <span className="font-medium text-slate-900">Carburant :</span> {text(vehicle, ["carburant"])}</p>
                           <p>🛞 <span className="font-medium text-slate-900">Kilométrage :</span> {text(vehicle, ["kilometrage", "kilométrage"])}</p>
                         </div>
 
