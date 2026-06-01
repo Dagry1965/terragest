@@ -10,6 +10,8 @@ import { ClientOperationalSearchBox } from "./ClientOperationalSearchBox";
 import { ERPRelatedRecordsPanel } from "@/components/erp/runtime/ERPRelatedRecordsPanel";
 import { InvoicePaymentsHistory } from "@/components/erp/billing/InvoicePaymentsHistory";
 import { ERPOperationalTable } from "@/components/erp/operational/ERPOperationalTable";
+import { ERPRuntimeActionBar } from "@/components/erp/runtime/ERPRuntimeActionBar";
+import { RuntimeHubActionContextAdapter } from "@/runtime/hub/RuntimeHubActionContextAdapter";
 import { rendezvousModule } from "@/runtime/modules/generated/rendezvous/rendezvous.module";
 import { vehiculesModule } from "@/runtime/modules/generated/vehicules/vehicules.module";
 import { interventionsautoModule } from "@/runtime/modules/generated/interventionsauto/interventionsauto.module";
@@ -620,6 +622,40 @@ export function ERPClientOperationalSheet({
     encaissements,
   ]);
 
+  const hubReturnTo = useMemo(() => {
+    return queryHref("/clientsauto/hub", {
+      clientId: recordId(rootRecord),
+      selectedVehicleId: recordId(selectedVehicle),
+    });
+  }, [rootRecord, selectedVehicle]);
+
+  const hubActions = useMemo(() => {
+    const selectedFacture = facturesForSelectedIntervention[0] ?? null;
+
+    return RuntimeHubActionContextAdapter.resolve({
+      clientId: recordId(rootRecord),
+      clientLabel: text(rootRecord, ["displayLabel", "raisonSociale", "nomComplet", "nom", "prenom"], "Client"),
+      clientPhone: text(rootRecord, ["telephone", "phone", "mobile", "whatsapp"], ""),
+      clientEmail: text(rootRecord, ["email"], ""),
+      vehiculeId: recordId(selectedVehicle),
+      rendezvousId: recordId(selectedRendezvous),
+      interventionId: recordId(selectedIntervention),
+      factureId: recordId(selectedFacture),
+      unpaidAmount,
+      remainingAmount: parcoursAtelierStatus.remainingAmount,
+      returnTo: hubReturnTo,
+    });
+  }, [
+    rootRecord,
+    selectedVehicle,
+    selectedRendezvous,
+    selectedIntervention,
+    facturesForSelectedIntervention,
+    unpaidAmount,
+    parcoursAtelierStatus.remainingAmount,
+    hubReturnTo,
+  ]);
+
   const isCardMode = !["flotte", "entreprise"].includes(clientType.toLowerCase());
 
   return (
@@ -710,6 +746,16 @@ export function ERPClientOperationalSheet({
                   </span>
                 </div>
               </section>
+
+              <div data-amarkhys-hub-actions="CLIENT_CONTEXT_ACTIONS">
+                <ERPRuntimeActionBar
+                  title="Actions client"
+                  description="Actions disponibles selon le client, le véhicule, le parcours atelier, la facture et les impayés."
+                  actions={hubActions}
+                  compact
+                  className="border-orange-200 bg-orange-50/40"
+                />
+              </div>
 
               <section className="rounded-[2.25rem] bg-white p-6 shadow-sm ring-1 ring-slate-200 lg:p-8">
                 <SectionTitle
