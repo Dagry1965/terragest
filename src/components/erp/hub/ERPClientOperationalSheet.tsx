@@ -463,6 +463,163 @@ export function ERPClientOperationalSheet({
     };
   }, []);
 
+  const parcoursAtelierStatus = useMemo(() => {
+    const normalize = (value: string) =>
+      value
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+
+    const rdvStatus = normalize(text(selectedRendezvous, ["statut", "status"], ""));
+    const interventionStatus = normalize(text(selectedIntervention, ["statut", "status"], ""));
+    const invoiceIds = new Set(facturesForSelectedIntervention.map((facture) => recordId(facture)));
+
+    const paymentsForSelectedIntervention = encaissements.filter((encaissement) => {
+      const factureId = String(
+        encaissement.factureId ??
+          encaissement.invoiceId ??
+          encaissement.factureAutoId ??
+          ""
+      );
+
+      return (
+        invoiceIds.has(factureId) ||
+        String(encaissement.interventionId ?? "") === recordId(selectedIntervention)
+      );
+    });
+
+    const invoiceTotal = facturesForSelectedIntervention.reduce((total, facture) => {
+      return total + numberValue(facture, ["montantTTC", "totalTTC", "montantTotal", "total", "montant"]);
+    }, 0);
+
+    const explicitRemaining = facturesForSelectedIntervention.reduce((total, facture) => {
+      return total + numberValue(facture, ["resteAPayer", "solde", "montantRestant"]);
+    }, 0);
+
+    const paidTotal = paymentsForSelectedIntervention.reduce((total, encaissement) => {
+      return total + numberValue(encaissement, ["montantEncaisse", "montant", "amount"]);
+    }, 0);
+
+    const remainingAmount =
+      explicitRemaining > 0
+        ? explicitRemaining
+        : Math.max(invoiceTotal - paidTotal, 0);
+
+    const hasRdv = Boolean(selectedRendezvous);
+    const hasIntervention = Boolean(selectedIntervention);
+    const hasInvoice = facturesForSelectedIntervention.length > 0;
+    const hasPayment = paymentsForSelectedIntervention.length > 0;
+
+    let label = "Aucun parcours sélectionné";
+    let description = "Sélectionnez un rendez-vous pour lire le parcours atelier.";
+    let tone = "slate";
+    let nextAction = "Choisir un rendez-vous";
+
+    if (hasRdv) {
+      label = "RDV planifié";
+      description = "Le rendez-vous est identifié. L'intervention reste à suivre.";
+      tone = "blue";
+      nextAction = "Suivre l'intervention";
+    }
+
+    if (rdvStatus.includes("annul")) {
+      label = "Parcours annulé";
+      description = "Le rendez-vous est annulé. Aucune suite atelier active n'est attendue.";
+      tone = "rose";
+      nextAction = "Replanifier si nécessaire";
+    } else if (hasRdv && hasIntervention) {
+      label = "Intervention en cours";
+      description = "Une intervention est rattachée au rendez-vous sélectionné.";
+      tone = "amber";
+      nextAction = "Suivre les travaux";
+
+      if (
+        interventionStatus.includes("terminee") ||
+        interventionStatus.includes("facturee") ||
+        interventionStatus.includes("termin")
+      ) {
+        label = "Intervention terminée";
+        description = "Les travaux sont terminés. La facturation ou le paiement doit être vérifié.";
+        tone = "emerald";
+        nextAction = "Vérifier la facture";
+      }
+    }
+
+    if (hasInvoice) {
+      label = "Facturé à encaisser";
+      description = "Une facture est rattachée à l'intervention. Le règlement reste à contrôler.";
+      tone = "orange";
+      nextAction = "Suivre le paiement";
+
+      if (hasPayment && remainingAmount > 0) {
+        label = "Paiement partiel";
+        description = `${money(remainingAmount)} restent à encaisser sur ce parcours.`;
+        tone = "orange";
+        nextAction = "Relancer ou encaisser le solde";
+      }
+
+      if (remainingAmount <= 0 && invoiceTotal > 0) {
+        label = "Parcours soldé";
+        description = "Le parcours atelier est facturé et soldé.";
+        tone = "emerald";
+        nextAction = "Dossier clôturé";
+      }
+    }
+
+    const toneClass =
+      tone === "emerald"
+        ? "bg-emerald-50 text-emerald-800 ring-emerald-200"
+        : tone === "orange"
+          ? "bg-orange-50 text-orange-800 ring-orange-200"
+          : tone === "amber"
+            ? "bg-amber-50 text-amber-800 ring-amber-200"
+            : tone === "rose"
+              ? "bg-rose-50 text-rose-800 ring-rose-200"
+              : tone === "blue"
+                ? "bg-blue-50 text-blue-800 ring-blue-200"
+                : "bg-slate-50 text-slate-700 ring-slate-200";
+
+    return {
+      label,
+      description,
+      nextAction,
+      toneClass,
+      remainingAmount,
+      steps: [
+        {
+          label: "RDV",
+          done: hasRdv,
+          value: text(selectedRendezvous, ["statut", "status"], hasRdv ? "suivi" : "à sélectionner"),
+        },
+        {
+          label: "Intervention",
+          done: hasIntervention,
+          value: text(selectedIntervention, ["statut", "status"], hasIntervention ? "suivi" : "non créée"),
+        },
+        {
+          label: "Facture",
+          done: hasInvoice,
+          value: hasInvoice ? `${facturesForSelectedIntervention.length} facture(s)` : "non émise",
+        },
+        {
+          label: "Paiement",
+          done: hasPayment || (hasInvoice && remainingAmount <= 0 && invoiceTotal > 0),
+          value:
+            hasInvoice && remainingAmount <= 0 && invoiceTotal > 0
+              ? "soldé"
+              : hasPayment
+                ? `${money(paidTotal)} encaissé(s)`
+                : "à encaisser",
+        },
+      ],
+    };
+  }, [
+    selectedRendezvous,
+    selectedIntervention,
+    facturesForSelectedIntervention,
+    encaissements,
+  ]);
+
   const isCardMode = !["flotte", "entreprise"].includes(clientType.toLowerCase());
 
   return (
@@ -486,7 +643,7 @@ export function ERPClientOperationalSheet({
             <ClientOperationalSearchBox className="mt-6 max-w-5xl" />
           </div>
 
-          <div className="grid gap-8 2xl:grid-cols-[minmax(0,1fr)_460px]">
+          <div className="grid gap-8 2xl:grid-cols-[minmax(0,1fr)_380px]">
             <div className="space-y-8">
               <section className="rounded-[2.25rem] bg-white p-6 shadow-sm ring-1 ring-slate-200 lg:p-8">
                 <div className="flex flex-col gap-6 xl:flex-row xl:items-center">
@@ -661,9 +818,62 @@ export function ERPClientOperationalSheet({
 
               <section
                 id="parcours-operationnel"
-                className="rounded-[2.25rem] bg-white p-8 shadow-sm ring-1 ring-slate-200"
+                className="rounded-[2.25rem] bg-white p-6 shadow-sm ring-1 ring-slate-200 xl:p-8"
               >
                 <SectionTitle title="PARCOURS OPÉRATIONNEL : CLIENT → VÉHICULE → RENDEZ-VOUS → INTERVENTION → FACTURE" />
+
+                <div
+                  data-amarkhys-parcours-atelier-status="SUMMARY"
+                  className="mb-6 rounded-[1.75rem] bg-white p-5 shadow-sm ring-1 ring-slate-200"
+                >
+                  <div className="flex flex-wrap items-start justify-between gap-4">
+                    <div>
+                      <p className="text-[10px] font-black uppercase tracking-[0.18em] text-slate-500">
+                        Statut synthétique du parcours atelier
+                      </p>
+
+                      <div className="mt-3 flex flex-wrap items-center gap-3">
+                        <span
+                          className={[
+                            "rounded-full px-4 py-2 text-sm font-black ring-1",
+                            parcoursAtelierStatus.toneClass,
+                          ].join(" ")}
+                        >
+                          {parcoursAtelierStatus.label}
+                        </span>
+
+                        <span className="text-sm font-semibold text-slate-600">
+                          {parcoursAtelierStatus.nextAction}
+                        </span>
+                      </div>
+
+                      <p className="mt-3 max-w-4xl text-sm leading-6 text-slate-600">
+                        {parcoursAtelierStatus.description}
+                      </p>
+                    </div>
+
+                    <div className="grid min-w-[360px] flex-1 gap-3 sm:grid-cols-4">
+                      {parcoursAtelierStatus.steps.map((step) => (
+                        <div
+                          key={step.label}
+                          className={[
+                            "rounded-2xl p-4 ring-1",
+                            step.done
+                              ? "bg-emerald-50 text-emerald-800 ring-emerald-200"
+                              : "bg-slate-50 text-slate-500 ring-slate-200",
+                          ].join(" ")}
+                        >
+                          <p className="text-[10px] font-black uppercase tracking-wide">
+                            {step.label}
+                          </p>
+                          <p className="mt-2 text-sm font-bold">
+                            {step.value}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
 
                 <section className="overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white">
                       <div className="border-b border-slate-100 bg-slate-50 px-5 py-4">
@@ -864,7 +1074,7 @@ export function ERPClientOperationalSheet({
                     </section>
               </section>
 
-              <section id="parcours-detaille" className="rounded-[2.25rem] bg-white p-8 shadow-sm ring-1 ring-slate-200">
+              <section id="parcours-detaille" className="rounded-[2.25rem] bg-white p-6 shadow-sm ring-1 ring-slate-200 xl:p-8">
                 <SectionTitle title="SYNTHÈSE DU PARCOURS" />
 
                 <div className="grid gap-4 xl:grid-cols-5">
