@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 import Link from "next/link";
 import type {
   ERPRecordHubConfig,
@@ -687,7 +687,7 @@ export function ERPClientOperationalSheet({
                                   recordId(intervention) === recordId(selectedIntervention);
 
                                 return (
-                                  <>
+                                  <Fragment key={recordId(intervention) || String(index)}>
                                   <tr
                                     key={recordId(intervention)}
                                     data-amarkhys-hub-flow-d2-refocus-c2b="INTERVENTION_COMPACT_ROW"
@@ -758,11 +758,32 @@ export function ERPClientOperationalSheet({
                                             child={lignesInterventionChild}
                                             mode="detail"
                                           />
+
+                                          <div
+                                            data-amarkhys-hub-flow-d2-refocus-c4="INTERVENTION_INVOICES_DETAIL_BLOCK"
+                                            className="mt-5 border-t border-slate-200 pt-4"
+                                          >
+                                            <div className="mb-3">
+                                              <p className="text-xs font-bold uppercase tracking-wide text-slate-700">
+                                                Factures de l'intervention sélectionnée
+                                              </p>
+                                              <p className="mt-1 text-sm text-slate-500">
+                                                Documents de facturation rattachés uniquement à cette intervention.
+                                              </p>
+                                            </div>
+
+                                            <ERPRelatedRecordsPanel
+                                              parentModule={interventionsautoModule}
+                                              parentRecord={intervention}
+                                              child={facturesChild}
+                                              mode="detail"
+                                            />
+                                          </div>
                                         </div>
                                       </td>
                                     </tr>
                                   ) : null}
-                                  </>
+                                  </Fragment>
                                 );
                               })}
                             </tbody>
@@ -773,15 +794,6 @@ export function ERPClientOperationalSheet({
                         <EmptyCard>Aucune intervention n’est encore liée à ce rendez-vous. Sélectionnez un autre rendez-vous ou créez une intervention depuis le parcours atelier.</EmptyCard>
                       )}
                     </section>
-
-                    {selectedIntervention ? (
-                      <ERPRelatedRecordsPanel
-                        parentModule={interventionsautoModule}
-                        parentRecord={selectedIntervention}
-                        child={facturesChild}
-                        mode="detail"
-                      />
-                    ) : null}
 
                     {selectedInvoice ? (
                       <section className="rounded-[1.75rem] border border-slate-200 bg-white p-5">
