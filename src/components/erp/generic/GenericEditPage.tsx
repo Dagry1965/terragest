@@ -5,6 +5,7 @@ import type { ERPModule } from "@/runtime/modules";
 import { allERPModules } from "@/runtime/modules/definitions/coreModules";
 import { RuntimeDataBinding } from "@/runtime/data-binding";
 import { ERPRuntimePage } from "@/components/erp/runtime/ERPRuntimePage";
+import { ERPHubReturnBanner } from "@/components/erp/runtime/ERPHubReturnBanner";
 
 interface GenericEditPageProps {
   module?: ERPModule;
@@ -61,10 +62,13 @@ export function GenericEditPage({
   }
 
   return (
-    <ERPRuntimePage
+    <>
+      <ERPHubReturnBanner />
+      <ERPRuntimePage
       module={runtimeModule}
       type="edit"
       record={runtimeRecord ?? undefined}
     />
+    </>
   );
 }

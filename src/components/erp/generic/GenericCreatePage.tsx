@@ -1,6 +1,7 @@
 import type { ERPModule } from "@/runtime/modules";
 import { allERPModules } from "@/runtime/modules/definitions/coreModules";
 import { ERPRuntimePage } from "@/components/erp/runtime/ERPRuntimePage";
+import { ERPHubReturnBanner } from "@/components/erp/runtime/ERPHubReturnBanner";
 
 interface GenericCreatePageProps {
   module?: ERPModule;
