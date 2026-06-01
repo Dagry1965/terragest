@@ -97,6 +97,17 @@ function queryHref(
   return query ? `${pathname}?${query}` : pathname;
 }
 
+function withReturnTo(
+  pathname: string,
+  returnTo: string,
+  params: Record<string, string | null | undefined> = {}
+): string {
+  return queryHref(pathname, {
+    ...params,
+    returnTo,
+  });
+}
+
 function badgeTone(value: string): string {
   const normalized = value.toLowerCase();
 
@@ -698,11 +709,22 @@ export function ERPClientOperationalSheet({
   ]);
 
   const hubReturnTo = useMemo(() => {
+    const selectedFacture = facturesForSelectedIntervention[0] ?? null;
+
     return queryHref("/clientsauto/hub", {
       clientId: recordId(rootRecord),
       selectedVehicleId: recordId(selectedVehicle),
+      selectedRendezvousId: recordId(selectedRendezvous),
+      selectedInterventionId: recordId(selectedIntervention),
+      selectedFactureId: recordId(selectedFacture),
     });
-  }, [rootRecord, selectedVehicle]);
+  }, [
+    rootRecord,
+    selectedVehicle,
+    selectedRendezvous,
+    selectedIntervention,
+    facturesForSelectedIntervention,
+  ]);
 
   const hubActions = useMemo(() => {
     const selectedFacture = facturesForSelectedIntervention[0] ?? null;
@@ -1211,14 +1233,22 @@ export function ERPClientOperationalSheet({
 
                           <div className="flex flex-wrap items-center justify-end gap-3 border-t border-slate-100 bg-slate-50 px-6 py-4">
                             <Link
-                              href={"/rendezvous/" + recordId(openedRendezvousDetail)}
+                              href={withReturnTo("/rendezvous/" + recordId(openedRendezvousDetail), hubReturnTo, {
+                                clientId: recordId(rootRecord),
+                                selectedVehicleId: recordId(selectedVehicle),
+                                selectedRendezvousId: recordId(openedRendezvousDetail),
+                              })}
                               className="rounded-full bg-white px-5 py-2.5 text-sm font-bold text-slate-900 ring-1 ring-slate-200 hover:bg-slate-100"
                             >
                               Ouvrir la fiche
                             </Link>
 
                             <Link
-                              href={"/rendezvous/" + recordId(openedRendezvousDetail) + "/edit"}
+                              href={withReturnTo("/rendezvous/" + recordId(openedRendezvousDetail) + "/edit", hubReturnTo, {
+                                clientId: recordId(rootRecord),
+                                selectedVehicleId: recordId(selectedVehicle),
+                                selectedRendezvousId: recordId(openedRendezvousDetail),
+                              })}
                               className="rounded-full bg-emerald-700 px-5 py-2.5 text-sm font-bold text-white hover:bg-emerald-800"
                             >
                               Modifier le RDV
