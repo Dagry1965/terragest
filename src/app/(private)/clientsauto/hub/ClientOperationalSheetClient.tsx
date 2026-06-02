@@ -12,6 +12,9 @@ type ClientOperationalSheetClientProps = {
   config: ERPRecordHubConfig;
   clientId: string;
   selectedVehicleId?: string | null;
+  selectedRendezvousId?: string | null;
+  selectedInterventionId?: string | null;
+  selectedFactureId?: string | null;
 };
 
 type LoadState = {
@@ -24,6 +27,9 @@ export function ClientOperationalSheetClient({
 config,
   clientId,
   selectedVehicleId = null,
+  selectedRendezvousId = null,
+  selectedInterventionId = null,
+  selectedFactureId = null,
 }: ClientOperationalSheetClientProps) {
   
   // AMARKHYS_HUB_SCROLL_TOP
@@ -100,6 +106,9 @@ const [state, setState] = useState<LoadState | null>(null);
       vehicles={state.primaryRecords}
       relatedRecordsBySection={state.relatedRecordsBySection}
       selectedVehicleId={selectedVehicleId}
+      selectedRendezvousId={selectedRendezvousId}
+      selectedInterventionId={selectedInterventionId}
+      selectedFactureId={selectedFactureId}
     />
   );
 }

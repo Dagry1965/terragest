@@ -7,6 +7,9 @@ type ClientOperationalHubPageProps = {
   searchParams?: Promise<{
     clientId?: string;
     selectedVehicleId?: string;
+    selectedRendezvousId?: string;
+    selectedInterventionId?: string;
+    selectedFactureId?: string;
   }>;
 };
 
@@ -206,6 +209,9 @@ export default async function ClientOperationalHubPage({
   const params = searchParams ? await searchParams : {};
   const clientId = params.clientId ?? null;
   const selectedVehicleId = params.selectedVehicleId ?? null;
+  const selectedRendezvousId = params.selectedRendezvousId ?? null;
+  const selectedInterventionId = params.selectedInterventionId ?? null;
+  const selectedFactureId = params.selectedFactureId ?? null;
 
   if (!clientId) {
     return (
@@ -290,6 +296,9 @@ export default async function ClientOperationalHubPage({
       config={clientOperationalSheetConfig}
       clientId={clientId}
       selectedVehicleId={selectedVehicleId}
+      selectedRendezvousId={selectedRendezvousId}
+      selectedInterventionId={selectedInterventionId}
+      selectedFactureId={selectedFactureId}
     />
   );
 }

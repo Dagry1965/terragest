@@ -94,6 +94,9 @@ type ERPClientOperationalSheetProps = {
   vehicles: ERPRecordHubRecord[];
   relatedRecordsBySection: Record<string, ERPRecordHubRecord[]>;
   selectedVehicleId?: string | null;
+  selectedRendezvousId?: string | null;
+  selectedInterventionId?: string | null;
+  selectedFactureId?: string | null;
 };
 
 function text(
@@ -203,6 +206,18 @@ function withReturnTo(
     ...params,
     returnTo,
   });
+}
+
+function withHubReturnContext(
+  hrefValue: string | null | undefined,
+  returnTo: string,
+  params: Record<string, string | null | undefined> = {}
+): string {
+  if (!hrefValue) return "#";
+  if (!hrefValue.startsWith("/")) return hrefValue;
+  if (hrefValue.includes("returnTo=")) return hrefValue;
+
+  return withReturnTo(hrefValue, returnTo, params);
 }
 
 function badgeTone(value: string): string {
@@ -406,6 +421,9 @@ export function ERPClientOperationalSheet({
   vehicles,
   relatedRecordsBySection,
   selectedVehicleId = null,
+  selectedRendezvousId: initialSelectedRendezvousId = null,
+  selectedInterventionId: initialSelectedInterventionId = null,
+  selectedFactureId: initialSelectedFactureId = null,
 }: ERPClientOperationalSheetProps) {
   
   const { user } = useAuth();
@@ -413,13 +431,19 @@ const [localSelectedVehicleId, setLocalSelectedVehicleId] = useState<string | nu
     selectedVehicleId ?? recordId(vehicles[0]) ?? null
   );
 
-  const [selectedRendezvousId, setSelectedRendezvousId] = useState<string | null>(null);
+  const [selectedRendezvousId, setSelectedRendezvousId] = useState<string | null>(
+    initialSelectedRendezvousId
+  );
   const [openedRendezvousDetailId, setOpenedRendezvousDetailId] = useState<string | null>(null);
   const [openedRelanceActionKey, setOpenedRelanceActionKey] = useState<string | null>(null);
   const [expandedInterventionId, setExpandedInterventionId] = useState<string | null>(null);
-  const [expandedFactureId, setExpandedFactureId] = useState<string | null>(null);
+  const [expandedFactureId, setExpandedFactureId] = useState<string | null>(
+    initialSelectedFactureId
+  );
   const [expandedEncaissementId, setExpandedEncaissementId] = useState<string | null>(null);
-  const [selectedInterventionId, setSelectedInterventionId] = useState<string | null>(null);
+  const [selectedInterventionId, setSelectedInterventionId] = useState<string | null>(
+    initialSelectedInterventionId
+  );
 
   const selectedVehicle = useMemo(() => {
     return (
@@ -621,7 +645,16 @@ const [localSelectedVehicleId, setLocalSelectedVehicleId] = useState<string | nu
     return filtered.length > 0 ? filtered : factures;
   }, [factures, selectedIntervention]);
 
-  const selectedInvoice = facturesForSelectedIntervention[0] ?? null;
+  const selectedInvoice =
+    facturesForSelectedIntervention.find((facture) => {
+      const factureId = recordId(facture);
+      return (
+        factureId === expandedFactureId ||
+        factureId === initialSelectedFactureId
+      );
+    }) ??
+    facturesForSelectedIntervention[0] ??
+    null;
 
   const interventionsHubModule = useMemo(() => {
     const operational = interventionsautoModule.operational as
@@ -824,6 +857,55 @@ const [localSelectedVehicleId, setLocalSelectedVehicleId] = useState<string | nu
     selectedIntervention,
     facturesForSelectedIntervention,
   ]);
+
+  const selectedPaymentForReturn = useMemo(() => {
+    const selectedInvoiceId = recordId(selectedInvoice);
+    const selectedInterventionRecordId = recordId(selectedIntervention);
+
+    return (
+      encaissements.find((encaissement) => {
+        const factureId = String(
+          encaissement.factureId ??
+            encaissement.invoiceId ??
+            encaissement.factureAutoId ??
+            ""
+        );
+
+        return selectedInvoiceId ? factureId === selectedInvoiceId : false;
+      }) ??
+      encaissements.find((encaissement) => {
+        return selectedInterventionRecordId
+          ? String(encaissement.interventionId ?? "") === selectedInterventionRecordId
+          : false;
+      }) ??
+      encaissements[0] ??
+      null
+    );
+  }, [encaissements, selectedInvoice, selectedIntervention]);
+
+  const hubActionReturnParams = {
+    clientId: recordId(rootRecord),
+    selectedVehicleId: recordId(selectedVehicle),
+    selectedRendezvousId: recordId(selectedRendezvous),
+    selectedInterventionId: recordId(selectedIntervention),
+    selectedFactureId: recordId(selectedInvoice),
+  };
+
+  const contextualVehicleDetailHref = selectedVehicle
+    ? withReturnTo(href("/vehicules", selectedVehicle) + "/edit", hubReturnTo, hubActionReturnParams)
+    : withHubReturnContext(vehicleDetailHref, hubReturnTo, hubActionReturnParams);
+
+  const contextualInterventionDetailHref = selectedIntervention
+    ? withReturnTo("/interventionsauto/" + recordId(selectedIntervention), hubReturnTo, hubActionReturnParams)
+    : withHubReturnContext(interventionDetailHref, hubReturnTo, hubActionReturnParams);
+
+  const contextualInvoiceDetailHref = selectedInvoice
+    ? withReturnTo("/facturesauto/" + recordId(selectedInvoice), hubReturnTo, hubActionReturnParams)
+    : withHubReturnContext(invoiceDetailHref, hubReturnTo, hubActionReturnParams);
+
+  const contextualPaymentDetailHref = selectedPaymentForReturn
+    ? withReturnTo("/encaissementsauto/" + recordId(selectedPaymentForReturn), hubReturnTo, hubActionReturnParams)
+    : withHubReturnContext(paymentDetailHref, hubReturnTo, hubActionReturnParams);
 
   const hubActions = useMemo(() => {
     const selectedFacture = facturesForSelectedIntervention[0] ?? null;
@@ -1561,28 +1643,28 @@ const [localSelectedVehicleId, setLocalSelectedVehicleId] = useState<string | nu
                 <SectionTitle title="NAVIGATION RAPIDE" />
                 <div className="grid gap-3">
                   <Link
-                    href={vehicleDetailHref}
+                    href={contextualVehicleDetailHref}
                     className="rounded-[1.25rem] bg-slate-950 px-4 py-3 text-sm font-bold text-white"
                   >
                     🚗 Fiche véhicule complète
                   </Link>
 
                   <Link
-                    href={interventionDetailHref}
+                    href={contextualInterventionDetailHref}
                     className="rounded-[1.25rem] bg-slate-100 px-4 py-3 text-sm font-bold text-slate-900"
                   >
                     🔧 Fiche intervention
                   </Link>
 
                   <Link
-                    href={invoiceDetailHref}
+                    href={contextualInvoiceDetailHref}
                     className="rounded-[1.25rem] bg-slate-100 px-4 py-3 text-sm font-bold text-slate-900"
                   >
                     🧾 Facture complète
                   </Link>
 
                   <Link
-                    href={paymentDetailHref}
+                    href={contextualPaymentDetailHref}
                     className="rounded-[1.25rem] bg-slate-100 px-4 py-3 text-sm font-bold text-slate-900"
                   >
                     💳 Historique encaissements
@@ -1632,7 +1714,7 @@ const [localSelectedVehicleId, setLocalSelectedVehicleId] = useState<string | nu
                       return (
                         <Link
                           key={action.key}
-                          href={action.href}
+                          href={withHubReturnContext(action.href, hubReturnTo, hubActionReturnParams)}
                           className={hubActionClassName(action.key)}
                           title={action.description}
                         >
