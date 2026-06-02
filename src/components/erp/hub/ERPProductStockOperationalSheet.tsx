@@ -212,18 +212,66 @@ function movementIcon(record: ERPRecordHubRecord): string {
 
 function sourceLabel(record: ERPRecordHubRecord): string {
   const sourceModule = text(record, ["sourceModule"], "");
+  const type = movementType(record);
 
   if (sourceModule === "lignesinterventionauto") {
-    return "Sortie intervention";
+    if (type === "entree") {
+      return "Réintégration intervention";
+    }
+
+    if (type === "sortie") {
+      return "Sortie intervention";
+    }
+
+    return "Mouvement intervention";
   }
 
   if (sourceModule === "receptionsstockauto") {
     return "Réception fournisseur";
   }
 
-  return text(record, ["motif", "description", "sourceModule"], "Mouvement stock");
+  if (sourceModule === "mouvementsstockauto") {
+    return "Mouvement stock";
+  }
+
+  return text(record, ["motif", "description"], "Mouvement stock");
 }
 
+function movementOriginLabel(record: ERPRecordHubRecord): string {
+  const sourceModule = text(record, ["sourceModule"], "");
+
+  if (sourceModule === "lignesinterventionauto") {
+    return "Ligne intervention";
+  }
+
+  if (sourceModule === "receptionsstockauto") {
+    return "Réception stock";
+  }
+
+  if (sourceModule === "commandesstockauto") {
+    return "Commande fournisseur";
+  }
+
+  if (sourceModule === "stocksauto") {
+    return "Stock";
+  }
+
+  return "Origine stock";
+}
+
+function movementSubtitle(record: ERPRecordHubRecord): string {
+  const movementDate = formatDate(
+    text(record, ["dateMouvement", "createdAt", "updatedAt", "date"], "-")
+  );
+
+  const origin = movementOriginLabel(record);
+
+  if (movementDate === "-") {
+    return origin;
+  }
+
+  return movementDate + " · " + origin;
+}
 function quantitySigned(record: ERPRecordHubRecord): string {
   const quantity = numberValue(record, ["quantite", "quantity"]);
   const type = movementType(record);
@@ -582,8 +630,7 @@ function MovementRow({
             {sourceLabel(movement)}
           </p>
           <p className="mt-0.5 truncate text-xs font-semibold text-slate-400">
-            {text(movement, ["numero", "code", "sourceId"], "Mouvement")} ·{" "}
-            {formatDate(text(movement, ["dateMouvement", "createdAt", "date"], "-"))}
+            {movementSubtitle(movement)}
           </p>
         </div>
       </div>
