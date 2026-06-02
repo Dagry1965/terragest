@@ -65,6 +65,11 @@ const amarkhysModules: SidebarModule[] = [
     href: "/facturesauto",
   },
   {
+    key: "encaissementsauto",
+    label: "Encaissements",
+    href: "/encaissementsauto",
+  },
+  {
     key: "rappelsauto",
     label: "Rappels",
     href: "/rappelsauto",
@@ -108,40 +113,32 @@ const amarkhysWorkspace: SidebarWorkspace = {
   modules: amarkhysModules,
 };
 
-function isAmarkhysPath(
-  pathname: string
-): boolean {
-  return (
-    pathname === "/dashboard/amarkhys" ||
-    pathname.startsWith("/dashboard/amarkhys/") ||
-    pathname === "/clientsauto" ||
-    pathname.startsWith("/clientsauto/") ||
-    pathname === "/vehicules" ||
-    pathname.startsWith("/vehicules/") ||
-    pathname === "/rendezvous" ||
-    pathname.startsWith("/rendezvous/") ||
-    pathname === "/interventionsauto" ||
-    pathname.startsWith("/interventionsauto/") ||
-    pathname === "/facturesauto" ||
-    pathname.startsWith("/facturesauto/") ||
-    pathname === "/rappelsauto" ||
-    pathname.startsWith("/rappelsauto/") ||
-    pathname === "/produitsauto" ||
-    pathname.startsWith("/produitsauto/") ||
-    pathname === "/stocksauto" ||
-    pathname.startsWith("/stocksauto/") ||
-    pathname === "/mouvementsstockauto" ||
-    pathname.startsWith("/mouvementsstockauto/") ||
-    pathname === "/fournisseursauto" ||
-    pathname.startsWith("/fournisseursauto/") ||
-    pathname === "/commandesstockauto" ||
-    pathname.startsWith("/commandesstockauto/") ||
-    pathname === "/lignescommandestockauto" ||
-    pathname.startsWith("/lignescommandestockauto/") ||
-    pathname === "/receptionsstockauto" ||
-    pathname.startsWith("/receptionsstockauto/")
-  );
+const AMARKHYS_ROUTE_PREFIXES = [
+  "/dashboard/amarkhys",
+  "/clientsauto",
+  "/vehicules",
+  "/rendezvous",
+  "/interventionsauto",
+  "/lignesinterventionauto",
+  "/facturesauto",
+  "/encaissementsauto",
+  "/echeancespaiementauto",
+  "/rappelsauto",
+  "/produitsauto",
+  "/stocksauto",
+  "/mouvementsstockauto",
+  "/fournisseursauto",
+  "/commandesstockauto",
+  "/lignescommandestockauto",
+  "/receptionsstockauto",
+] as const;
+
+function isAmarkhysPath(pathname: string): boolean {
+  return AMARKHYS_ROUTE_PREFIXES.some((prefix) => {
+    return pathname === prefix || pathname.startsWith(prefix + "/");
+  });
 }
+
 
 function getSidebarNavigation(
   pathname: string
