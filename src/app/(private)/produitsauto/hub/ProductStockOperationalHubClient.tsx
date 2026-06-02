@@ -1,7 +1,7 @@
 "use client";
 
+import { ERPProductStockOperationalSheet } from "@/components/erp/hub/ERPProductStockOperationalSheet";
 import { useEffect, useState } from "react";
-import { ERPRecordHubPage } from "@/components/erp/hub";
 import type {
   ERPRecordHubConfig,
   ERPRecordHubRecord,
@@ -130,7 +130,7 @@ export function ProductStockOperationalHubClient({
   }
 
   return (
-    <ERPRecordHubPage
+    <ERPProductStockOperationalSheet
       config={config}
       rootRecord={data.rootRecord}
       primaryRecords={data.primaryRecords}
