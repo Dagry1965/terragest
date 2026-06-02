@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import type { ReactNode } from "react";
 
 import type {
   ERPRecordHubConfig,
@@ -13,6 +14,8 @@ type ERPProductStockOperationalSheetProps = {
   primaryRecords: ERPRecordHubRecord[];
   relatedRecordsBySection: Record<string, ERPRecordHubRecord[]>;
 };
+
+type ReturnParams = Record<string, string | null | undefined>;
 
 function recordId(record: ERPRecordHubRecord | null | undefined): string {
   return String(record?.id ?? record?._id ?? "");
@@ -54,16 +57,22 @@ function numberValue(
   return fallback;
 }
 
+function safeNumber(value: number): number {
+  return Number.isFinite(value) ? value : 0;
+}
+
 function formatNumber(value: number): string {
   return new Intl.NumberFormat("fr-FR", {
     maximumFractionDigits: 0,
-  }).format(value);
+  }).format(safeNumber(value));
 }
 
 function money(value: number): string {
-  return new Intl.NumberFormat("fr-FR", {
-    maximumFractionDigits: 0,
-  }).format(value) + " FCFA";
+  return (
+    new Intl.NumberFormat("fr-FR", {
+      maximumFractionDigits: 0,
+    }).format(safeNumber(value)) + " FCFA"
+  );
 }
 
 function formatDate(value: string): string {
@@ -76,6 +85,15 @@ function formatDate(value: string): string {
   }
 
   return new Intl.DateTimeFormat("fr-FR").format(date);
+}
+
+function href(
+  moduleKey: string,
+  record: ERPRecordHubRecord | null | undefined
+): string {
+  const id = recordId(record);
+
+  return id ? "/" + moduleKey + "/" + id : "/" + moduleKey;
 }
 
 function queryHref(
@@ -98,7 +116,7 @@ function queryHref(
 function withReturnTo(
   pathname: string,
   returnTo: string,
-  params: Record<string, string | null | undefined> = {}
+  params: ReturnParams = {}
 ): string {
   return queryHref(pathname, {
     ...params,
@@ -106,47 +124,98 @@ function withReturnTo(
   });
 }
 
-function href(moduleKey: string, record: ERPRecordHubRecord | null | undefined): string {
-  const id = recordId(record);
+function movementType(record: ERPRecordHubRecord): "entree" | "sortie" | "autre" {
+  const type = text(record, ["typeMouvement", "type", "sens"], "").toLowerCase();
 
-  return id ? "/" + moduleKey + "/" + id : "/" + moduleKey;
+  if (type.includes("entree") || type.includes("entrée")) return "entree";
+  if (type.includes("sortie")) return "sortie";
+
+  return "autre";
+}
+
+function movementLabel(record: ERPRecordHubRecord): string {
+  const type = movementType(record);
+
+  if (type === "entree") return "Entrée";
+  if (type === "sortie") return "Sortie";
+
+  return text(record, ["typeMouvement", "type", "sens"], "Mouvement");
 }
 
 function movementTone(record: ERPRecordHubRecord): string {
-  const type = text(record, ["typeMouvement", "type", "sens"], "").toLowerCase();
+  const type = movementType(record);
 
-  if (type.includes("entree") || type.includes("entrée")) {
-    return "bg-emerald-50 text-emerald-800 ring-emerald-200";
+  if (type === "entree") {
+    return "bg-emerald-50 text-emerald-700 ring-emerald-200";
   }
 
-  if (type.includes("sortie")) {
-    return "bg-orange-50 text-orange-800 ring-orange-200";
+  if (type === "sortie") {
+    return "bg-orange-50 text-orange-700 ring-orange-200";
   }
 
   return "bg-slate-50 text-slate-700 ring-slate-200";
 }
 
-function movementLabel(record: ERPRecordHubRecord): string {
-  const type = text(record, ["typeMouvement", "type", "sens"], "mouvement");
+function movementIcon(record: ERPRecordHubRecord): string {
+  const type = movementType(record);
 
-  if (type === "entree") return "Entrée";
-  if (type === "sortie") return "Sortie";
+  if (type === "entree") return "↘";
+  if (type === "sortie") return "↗";
 
-  return type;
+  return "↕";
 }
 
 function sourceLabel(record: ERPRecordHubRecord): string {
   const sourceModule = text(record, ["sourceModule"], "");
 
   if (sourceModule === "lignesinterventionauto") {
-    return "Sortie liée à une intervention";
+    return "Sortie intervention";
   }
 
   if (sourceModule === "receptionsstockauto") {
-    return "Entrée liée à une réception";
+    return "Réception fournisseur";
   }
 
   return text(record, ["motif", "description", "sourceModule"], "Mouvement stock");
+}
+
+function quantitySigned(record: ERPRecordHubRecord): string {
+  const quantity = numberValue(record, ["quantite", "quantity"]);
+  const type = movementType(record);
+
+  if (quantity <= 0) return "-";
+
+  if (type === "entree") return "+" + formatNumber(quantity);
+  if (type === "sortie") return "-" + formatNumber(quantity);
+
+  return formatNumber(quantity);
+}
+
+function statusPillClass(status: string): string {
+  const normalized = status.toLowerCase();
+
+  if (
+    normalized.includes("valide") ||
+    normalized.includes("validée") ||
+    normalized.includes("actif") ||
+    normalized.includes("confirm")
+  ) {
+    return "bg-emerald-50 text-emerald-700 ring-emerald-200";
+  }
+
+  if (
+    normalized.includes("brouillon") ||
+    normalized.includes("cours") ||
+    normalized.includes("partiel")
+  ) {
+    return "bg-orange-50 text-orange-700 ring-orange-200";
+  }
+
+  if (normalized.includes("annul")) {
+    return "bg-red-50 text-red-700 ring-red-200";
+  }
+
+  return "bg-slate-50 text-slate-700 ring-slate-200";
 }
 
 function stockStatusClass(status: string): string {
@@ -174,7 +243,7 @@ function SectionTitle({
 }: {
   title: string;
   subtitle?: string;
-  action?: React.ReactNode;
+  action?: ReactNode;
 }) {
   return (
     <div className="mb-5 flex items-start justify-between gap-4">
@@ -193,145 +262,361 @@ function SectionTitle({
   );
 }
 
-function EmptyCard({ children }: { children: React.ReactNode }) {
+function EmptyPanel({ icon, text }: { icon: string; text: string }) {
   return (
-    <div className="rounded-[1.5rem] border border-dashed border-slate-200 bg-slate-50/70 px-5 py-4 text-sm font-semibold text-slate-500">
-      {children}
+    <div className="flex min-h-[205px] flex-col items-center justify-center rounded-[1.6rem] border border-dashed border-slate-200 bg-slate-50/70 px-5 py-8 text-center">
+      <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-2xl shadow-sm ring-1 ring-slate-100">
+        {icon}
+      </div>
+      <p className="mt-4 max-w-[240px] text-sm font-semibold text-slate-500">
+        {text}
+      </p>
     </div>
   );
 }
 
-function MiniFact({
+function KpiCard({
   label,
   value,
-  tone = "slate",
+  sublabel,
+  icon,
+  tone = "white",
 }: {
   label: string;
   value: string;
-  tone?: "slate" | "emerald" | "orange" | "sky";
+  sublabel?: string;
+  icon?: string;
+  tone?: "green" | "white" | "orange";
 }) {
-  const toneClass =
-    tone === "emerald"
-      ? "bg-emerald-50 text-emerald-800 ring-emerald-200"
-      : tone === "orange"
-        ? "bg-orange-50 text-orange-800 ring-orange-200"
-        : tone === "sky"
-          ? "bg-sky-50 text-sky-800 ring-sky-200"
-          : "bg-slate-50 text-slate-800 ring-slate-200";
+  const isGreen = tone === "green";
+  const isOrange = tone === "orange";
 
   return (
-    <div className={["rounded-2xl px-4 py-3 ring-1", toneClass].join(" ")}>
-      <p className="text-[10px] font-black uppercase tracking-[0.16em] opacity-70">
-        {label}
-      </p>
-      <p className="mt-1 text-lg font-black">{value}</p>
+    <article
+      className={[
+        "min-h-[132px] rounded-[1.75rem] px-5 py-5 shadow-sm ring-1 transition",
+        isGreen
+          ? "bg-emerald-600 text-white ring-emerald-500"
+          : "bg-white text-slate-950 ring-slate-200",
+      ].join(" ")}
+    >
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <p
+            className={[
+              "text-[10px] font-black uppercase tracking-[0.16em]",
+              isGreen ? "text-emerald-50" : "text-slate-500",
+            ].join(" ")}
+          >
+            {label}
+          </p>
+
+          <p
+            className={[
+              "mt-4 text-3xl font-black tracking-tight",
+              isOrange ? "text-orange-500" : "",
+            ].join(" ")}
+          >
+            {value}
+          </p>
+
+          {sublabel ? (
+            <p
+              className={[
+                "mt-1 text-xs font-bold",
+                isGreen ? "text-emerald-50/90" : "text-slate-400",
+              ].join(" ")}
+            >
+              {sublabel}
+            </p>
+          ) : null}
+        </div>
+
+        {icon ? (
+          <div
+            className={[
+              "flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl text-xl",
+              isGreen
+                ? "bg-white/15 text-white"
+                : isOrange
+                  ? "bg-orange-50 text-orange-500"
+                  : "bg-emerald-50 text-emerald-700",
+            ].join(" ")}
+          >
+            {icon}
+          </div>
+        ) : null}
+      </div>
+    </article>
+  );
+}
+
+function FlowNode({
+  icon,
+  title,
+  subtitle,
+  faded = false,
+  tone = "green",
+}: {
+  icon: string;
+  title: string;
+  subtitle?: string;
+  faded?: boolean;
+  tone?: "green" | "orange" | "slate";
+}) {
+  const toneClass =
+    tone === "orange"
+      ? "text-orange-600 ring-orange-100"
+      : tone === "slate"
+        ? "text-slate-500 ring-slate-100"
+        : "text-emerald-700 ring-emerald-100";
+
+  return (
+    <div
+      className={[
+        "flex min-h-[64px] items-center gap-3 rounded-2xl bg-white px-4 py-3 shadow-sm ring-1",
+        toneClass,
+        faded ? "opacity-55" : "",
+      ].join(" ")}
+    >
+      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-50 text-lg">
+        {icon}
+      </span>
+
+      <div>
+        <p className="text-sm font-black text-slate-900">{title}</p>
+        {subtitle ? (
+          <p className="mt-0.5 text-xs font-semibold text-slate-400">
+            {subtitle}
+          </p>
+        ) : null}
+      </div>
     </div>
   );
 }
 
-function MovementCard({
+function ProductFlowDiagram() {
+  return (
+    <section className="rounded-[2rem] bg-white p-6 shadow-sm ring-1 ring-slate-200 lg:p-7">
+      <SectionTitle
+        title="Parcours produit / flux stock"
+        subtitle="Lecture visuelle du cycle produit : entrée, stock, sortie, intervention et vente future."
+      />
+
+      <div className="relative rounded-[1.8rem] bg-slate-50/70 p-5 ring-1 ring-slate-100">
+        <div className="mx-auto flex max-w-[1120px] flex-col items-center">
+          <div className="z-10 flex items-center gap-3 rounded-2xl bg-white px-5 py-3 text-sm font-black text-slate-900 shadow-sm ring-1 ring-emerald-100">
+            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-50 text-lg text-emerald-700">
+              📦
+            </span>
+            Produit
+          </div>
+
+          <div className="h-8 w-px bg-emerald-200" />
+
+          <div className="h-px w-full max-w-[760px] bg-emerald-200" />
+
+          <div className="grid w-full max-w-[1040px] gap-8 pt-7 md:grid-cols-2">
+            <div className="flex flex-col items-center">
+              <div className="mb-5 inline-flex items-center gap-2 rounded-full bg-emerald-50 px-4 py-2 text-xs font-black uppercase tracking-[0.16em] text-emerald-700 ring-1 ring-emerald-200">
+                <span>↘</span>
+                Entrée
+              </div>
+
+              <div className="grid w-full gap-3">
+                <FlowNode icon="🚚" title="Commande" />
+                <FlowNode icon="📄" title="Ligne de commande" />
+                <FlowNode icon="📥" title="Ligne de réception" tone="orange" />
+              </div>
+            </div>
+
+            <div className="flex flex-col items-center">
+              <div className="mb-5 inline-flex items-center gap-2 rounded-full bg-emerald-50 px-4 py-2 text-xs font-black uppercase tracking-[0.16em] text-emerald-700 ring-1 ring-emerald-200">
+                <span>📦</span>
+                Stock
+              </div>
+
+              <div className="grid w-full gap-3">
+                <FlowNode icon="↗" title="Sortie" />
+                <FlowNode
+                  icon="🔧"
+                  title="Intervention"
+                  subtitle="Ligne d’intervention"
+                />
+                <FlowNode
+                  icon="🛒"
+                  title="Vente"
+                  subtitle="Boutique"
+                  faded
+                  tone="slate"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function MovementRow({
   movement,
   returnTo,
   returnParams,
 }: {
   movement: ERPRecordHubRecord;
   returnTo: string;
-  returnParams: Record<string, string | null | undefined>;
+  returnParams: ReturnParams;
 }) {
-  const quantity = numberValue(movement, ["quantite", "quantity"]);
-  const before = numberValue(movement, ["quantiteAvant", "stockAvant"], Number.NaN);
-  const after = numberValue(movement, ["quantiteApres", "stockApres"], Number.NaN);
+  const type = movementType(movement);
+  const quantity = quantitySigned(movement);
+  const movementHref = withReturnTo(
+    href("mouvementsstockauto", movement),
+    returnTo,
+    {
+      ...returnParams,
+      selectedMovementId: recordId(movement),
+    }
+  );
 
   return (
-    <article className="rounded-[1.35rem] border border-slate-200 bg-white p-4 shadow-sm">
-      <div className="flex items-start justify-between gap-3">
-        <div>
-          <span
-            className={[
-              "inline-flex rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-[0.14em] ring-1",
-              movementTone(movement),
-            ].join(" ")}
-          >
-            {movementLabel(movement)}
-          </span>
+    <Link
+      href={movementHref}
+      className="group flex items-center justify-between gap-4 rounded-2xl bg-slate-50 px-4 py-3 ring-1 ring-slate-100 transition hover:bg-white hover:shadow-sm"
+    >
+      <div className="flex min-w-0 items-center gap-3">
+        <span
+          className={[
+            "flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-lg ring-1",
+            movementTone(movement),
+          ].join(" ")}
+        >
+          {movementIcon(movement)}
+        </span>
 
-          <h4 className="mt-3 text-sm font-black text-slate-950">
+        <div className="min-w-0">
+          <p className="truncate text-sm font-black text-slate-900">
             {sourceLabel(movement)}
-          </h4>
-
-          <p className="mt-1 text-xs font-semibold text-slate-500">
+          </p>
+          <p className="mt-0.5 truncate text-xs font-semibold text-slate-400">
+            {text(movement, ["numero", "code", "sourceId"], "Mouvement")} ·{" "}
             {formatDate(text(movement, ["dateMouvement", "createdAt", "date"], "-"))}
           </p>
         </div>
+      </div>
 
-        <p className="text-right text-lg font-black text-slate-950">
-          {quantity > 0 ? formatNumber(quantity) : "-"}
+      <div className="text-right">
+        <p
+          className={[
+            "text-sm font-black",
+            type === "entree"
+              ? "text-emerald-600"
+              : type === "sortie"
+                ? "text-orange-600"
+                : "text-slate-700",
+          ].join(" ")}
+        >
+          {quantity}
+        </p>
+        <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">
+          unités
         </p>
       </div>
-
-      <div className="mt-4 grid gap-3 sm:grid-cols-2">
-        <MiniFact
-          label="Avant"
-          value={Number.isFinite(before) ? formatNumber(before) : "-"}
-        />
-        <MiniFact
-          label="Après"
-          value={Number.isFinite(after) ? formatNumber(after) : "-"}
-          tone="emerald"
-        />
-      </div>
-
-      <Link
-        href={withReturnTo(href("mouvementsstockauto", movement), returnTo, { ...returnParams, selectedMovementId: recordId(movement) })}
-        className="mt-4 inline-flex rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-black text-slate-700 transition hover:bg-white"
-      >
-        Voir mouvement
-      </Link>
-    </article>
+    </Link>
   );
 }
 
-function RelatedCard({
+function CompactRelatedRow({
   record,
   moduleKey,
   title,
-  fields,
-  actionLabel,
+  subtitle,
+  quantity,
+  status,
   returnTo,
   returnParams,
 }: {
   record: ERPRecordHubRecord;
   moduleKey: string;
   title: string;
-  fields: Array<[string, string[]]>;
-  actionLabel: string;
+  subtitle: string;
+  quantity?: string;
+  status?: string;
   returnTo: string;
-  returnParams: Record<string, string | null | undefined>;
+  returnParams: ReturnParams;
 }) {
-  return (
-    <article className="rounded-[1.35rem] border border-slate-200 bg-white p-4 shadow-sm">
-      <h4 className="text-sm font-black text-slate-950">{title}</h4>
+  const link = withReturnTo(href(moduleKey, record), returnTo, returnParams);
 
-      <div className="mt-4 grid gap-3">
-        {fields.map(([label, fieldList]) => (
-          <div key={label}>
-            <p className="text-[10px] font-black uppercase tracking-[0.14em] text-slate-400">
-              {label}
-            </p>
-            <p className="mt-1 text-sm font-bold text-slate-800">
-              {text(record, fieldList)}
-            </p>
-          </div>
-        ))}
+  return (
+    <Link
+      href={link}
+      className="block rounded-2xl bg-slate-50 px-4 py-3 ring-1 ring-slate-100 transition hover:bg-white hover:shadow-sm"
+    >
+      <div className="flex items-start justify-between gap-3">
+        <div className="min-w-0">
+          <p className="truncate text-sm font-black text-slate-900">{title}</p>
+          <p className="mt-1 truncate text-xs font-semibold text-slate-400">
+            {subtitle}
+          </p>
+        </div>
+
+        {status ? (
+          <span
+            className={[
+              "shrink-0 rounded-full px-2.5 py-1 text-[10px] font-black ring-1",
+              statusPillClass(status),
+            ].join(" ")}
+          >
+            {status}
+          </span>
+        ) : null}
       </div>
 
+      {quantity ? (
+        <p className="mt-3 text-sm font-black text-slate-700">{quantity}</p>
+      ) : null}
+    </Link>
+  );
+}
+
+function DashboardPanel({
+  title,
+  icon,
+  children,
+  footerHref,
+  footerLabel,
+}: {
+  title: string;
+  icon: string;
+  children: ReactNode;
+  footerHref: string;
+  footerLabel: string;
+}) {
+  return (
+    <section className="flex min-h-[360px] flex-col rounded-[1.9rem] bg-white p-5 shadow-sm ring-1 ring-slate-200">
+      <div className="mb-5 flex items-center justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-50 text-lg text-emerald-700 ring-1 ring-emerald-100">
+            {icon}
+          </span>
+          <h3 className="text-[11px] font-black uppercase tracking-[0.16em] text-slate-900">
+            {title}
+          </h3>
+        </div>
+
+        <span className="text-xl font-black text-slate-300">⋮</span>
+      </div>
+
+      <div className="flex-1 space-y-3">{children}</div>
+
       <Link
-        href={withReturnTo(href(moduleKey, record), returnTo, returnParams)}
-        className="mt-4 inline-flex rounded-full border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-black text-emerald-700 transition hover:bg-white"
+        href={footerHref}
+        className="mt-5 inline-flex items-center justify-between rounded-2xl bg-emerald-50 px-4 py-3 text-xs font-black text-emerald-700 ring-1 ring-emerald-100 transition hover:bg-white"
       >
-        {actionLabel}
+        {footerLabel}
+        <span>→</span>
       </Link>
-    </article>
+    </section>
   );
 }
 
@@ -342,21 +627,23 @@ export function ERPProductStockOperationalSheet({
   relatedRecordsBySection,
 }: ERPProductStockOperationalSheetProps) {
   const selectedStock = primaryRecords[0] ?? null;
-  const productHubReturnTo = queryHref("/produitsauto/hub", {
-    productId: recordId(rootRecord),
-    selectedStockId: recordId(selectedStock),
-  });
-  const productHubReturnParams = {
-    productId: recordId(rootRecord),
-    selectedStockId: recordId(selectedStock),
-  };
   const movements = relatedRecordsBySection.mouvements ?? [];
   const commandes = relatedRecordsBySection.commandes ?? [];
   const receptions = relatedRecordsBySection.receptions ?? [];
 
+  const productHubReturnTo = queryHref("/produitsauto/hub", {
+    productId: recordId(rootRecord),
+    selectedStockId: recordId(selectedStock),
+  });
+
+  const productHubReturnParams = {
+    productId: recordId(rootRecord),
+    selectedStockId: recordId(selectedStock),
+  };
+
   const productName = text(
     rootRecord,
-    ["displayLabel", "nom", "designation", "libelle", "référence"],
+    ["displayLabel", "nom", "designation", "libelle", "reference", "code"],
     "Produit"
   );
 
@@ -364,398 +651,321 @@ export function ERPProductStockOperationalSheet({
   const productType = text(rootRecord, ["typeArticle", "typeProduit", "categorie"], "Article");
   const productStatus = text(rootRecord, ["statut", "status"], "actif");
 
-  const stockTotal =
-    numberValue(rootRecord, ["stockTotal", "quantiteTotale", "currentStock"], Number.NaN);
+  const rootStockTotal = numberValue(
+    rootRecord,
+    ["stockTotal", "quantiteTotale", "currentStock"],
+    Number.NaN
+  );
 
   const computedStockTotal = primaryRecords.reduce((total, stock) => {
     return total + numberValue(stock, ["quantite", "quantiteDisponible", "currentStock"]);
   }, 0);
 
-  const displayedStockTotal = Number.isFinite(stockTotal)
-    ? stockTotal
+  const displayedStockTotal = Number.isFinite(rootStockTotal)
+    ? rootStockTotal
     : computedStockTotal;
+
+  const unitSalePrice = numberValue(rootRecord, ["prixVente", "prixVenteHT", "prixUnitaire"]);
+  const estimatedValue = displayedStockTotal * unitSalePrice;
+
+  const entryMovements = movements.filter((movement) => movementType(movement) === "entree");
+  const exitMovements = movements.filter((movement) => movementType(movement) === "sortie");
 
   const selectedQuantity = numberValue(
     selectedStock,
     ["quantite", "quantiteDisponible", "currentStock"]
   );
   const selectedThreshold = numberValue(selectedStock, ["seuilAlerte", "alertThreshold"]);
-  const selectedStatus = text(selectedStock, ["statut", "status"], "disponible");
-  const unitSalePrice = numberValue(rootRecord, ["prixVente", "prixVenteHT", "prixUnitaire"]);
-  const estimatedValue = displayedStockTotal * unitSalePrice;
-
-  const kpis = [
-    {
-      label: "Stock disponible",
-      value: formatNumber(displayedStockTotal),
-      alert: selectedThreshold > 0 && displayedStockTotal <= selectedThreshold,
-    },
-    {
-      label: "Stocks / emplacements",
-      value: String(primaryRecords.length),
-      alert: false,
-    },
-    {
-      label: "Commandes ouvertes",
-      value: String(commandes.length),
-      alert: commandes.length > 0,
-    },
-    {
-      label: "Mouvements récents",
-      value: String(movements.length),
-      alert: false,
-    },
-  ];
+  const selectedStatus = text(selectedStock, ["statut", "status"], "actif");
 
   return (
-    <section className="min-h-screen bg-slate-50 px-4 py-6 sm:px-6 lg:px-8">
-      <div className="mx-auto w-full max-w-[1680px] space-y-8">
-        <header className="rounded-[2.25rem] bg-white p-6 shadow-sm ring-1 ring-slate-200 lg:p-8">
-          <div className="flex flex-col gap-6 xl:flex-row xl:items-center xl:justify-between">
-            <div className="flex flex-col gap-5 md:flex-row md:items-center">
-              <div className="flex h-28 w-28 items-center justify-center rounded-[2rem] bg-gradient-to-br from-emerald-50 to-sky-50 text-5xl ring-1 ring-emerald-100">
-                📦
-              </div>
+    <section className="min-h-screen bg-slate-50 px-4 py-5 text-slate-900 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-[1920px] space-y-6">
+        <header className="flex flex-col gap-4 rounded-[2rem] bg-white px-6 py-5 shadow-sm ring-1 ring-slate-200 xl:flex-row xl:items-center xl:justify-between">
+          <div>
+            <p className="text-[11px] font-black uppercase tracking-[0.22em] text-emerald-700">
+              Fiche produit / stock opérationnelle
+            </p>
 
-              <div>
-                <p className="text-[11px] font-black uppercase tracking-[0.24em] text-emerald-700">
-                  Fiche produit / stock opérationnelle
-                </p>
+            <h1 className="mt-2 text-3xl font-black tracking-tight text-slate-950">
+              {productName}
+            </h1>
 
-                <h1 className="mt-2 text-3xl font-black text-slate-950">
-                  {productName}
-                </h1>
-
-                <div className="mt-4 flex flex-wrap gap-2">
-                  <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-black text-slate-700 ring-1 ring-slate-200">
-                    Réf. {productCode}
-                  </span>
-                  <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-black text-emerald-700 ring-1 ring-emerald-200">
-                    {productType}
-                  </span>
-                  <span className="rounded-full bg-sky-50 px-3 py-1 text-xs font-black text-sky-700 ring-1 ring-sky-200">
-                    {productStatus}
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            <div className="flex flex-wrap gap-3">
-              <Link
-                href={withReturnTo(href("produitsauto", rootRecord) + "/edit", productHubReturnTo, productHubReturnParams)}
-                className="rounded-full bg-slate-950 px-5 py-3 text-sm font-black text-white transition hover:bg-slate-800"
+            <div className="mt-3 flex flex-wrap gap-2">
+              <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-black text-slate-700 ring-1 ring-slate-200">
+                Réf. {productCode}
+              </span>
+              <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-black text-emerald-700 ring-1 ring-emerald-200">
+                {productType}
+              </span>
+              <span
+                className={[
+                  "rounded-full px-3 py-1 text-xs font-black ring-1",
+                  statusPillClass(productStatus),
+                ].join(" ")}
               >
-                Ouvrir produit
-              </Link>
-
-              <Link
-                href="/produitsauto"
-                className="rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-black text-slate-700 transition hover:bg-slate-50"
-              >
-                Liste produits
-              </Link>
+                {productStatus}
+              </span>
             </div>
+          </div>
+
+          <div className="flex flex-wrap gap-3">
+            <Link
+              href={withReturnTo(
+                href("produitsauto", rootRecord),
+                productHubReturnTo,
+                productHubReturnParams
+              )}
+              className="rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-black text-slate-700 transition hover:bg-slate-50"
+            >
+              Ouvrir fiche
+            </Link>
+
+            <Link
+              href={withReturnTo(
+                href("produitsauto", rootRecord) + "/edit",
+                productHubReturnTo,
+                productHubReturnParams
+              )}
+              className="rounded-full bg-emerald-600 px-5 py-3 text-sm font-black text-white transition hover:bg-emerald-700"
+            >
+              Éditer
+            </Link>
           </div>
         </header>
 
-        <section className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
-          {kpis.map((item) => (
-            <article
-              key={item.label}
-              className={[
-                "min-h-[112px] rounded-[1.75rem] px-5 py-5 shadow-sm ring-1 transition",
-                item.alert ? "bg-orange-50/70 ring-orange-200" : "bg-white ring-slate-200",
-              ].join(" ")}
-            >
-              <p
-                className={[
-                  "text-[10px] font-black uppercase tracking-[0.14em]",
-                  item.alert ? "text-orange-700" : "text-slate-500",
-                ].join(" ")}
-              >
-                {item.label}
-              </p>
-              <p className="mt-4 text-2xl font-black text-slate-950">{item.value}</p>
-            </article>
-          ))}
+        <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
+          <KpiCard
+            label="Stock actuel"
+            value={formatNumber(displayedStockTotal)}
+            sublabel="unités"
+            icon="📦"
+            tone="green"
+          />
+          <KpiCard
+            label="Valeur stock"
+            value={estimatedValue > 0 ? money(estimatedValue).replace(" FCFA", "") : "-"}
+            sublabel="FCFA"
+            icon="💰"
+          />
+          <KpiCard
+            label="Entrées récentes"
+            value={String(entryMovements.length)}
+            sublabel="entrées"
+            icon="↘"
+          />
+          <KpiCard
+            label="Sorties récentes"
+            value={String(exitMovements.length)}
+            sublabel="sorties"
+            icon="↗"
+          />
+          <KpiCard
+            label="Commandes en cours"
+            value={String(commandes.length)}
+            icon="🛒"
+            tone="orange"
+          />
         </section>
 
-        <div className="grid gap-8 2xl:grid-cols-[minmax(0,1fr)_390px]">
-          <main className="space-y-8">
-            <section className="rounded-[2.25rem] bg-white p-6 shadow-sm ring-1 ring-slate-200 lg:p-8">
-              <SectionTitle
-                title="Stock sélectionné"
-                subtitle="Lecture opérationnelle du stock principal lié au produit."
-              />
+        <div className="grid gap-6 2xl:grid-cols-[minmax(0,1fr)_360px]">
+          <main className="space-y-6">
+            <ProductFlowDiagram />
 
-              {selectedStock ? (
-                <div className="grid gap-5 lg:grid-cols-[1fr_1fr]">
-                  <article className="rounded-[1.75rem] border border-emerald-200 bg-gradient-to-br from-emerald-50 via-white to-sky-50 p-6">
-                    <div className="flex items-start justify-between gap-4">
-                      <div>
-                        <p className="text-[10px] font-black uppercase tracking-[0.18em] text-emerald-700">
-                          Emplacement
-                        </p>
-                        <h3 className="mt-2 text-2xl font-black text-slate-950">
-                          {text(selectedStock, ["emplacement", "nom", "displayLabel"], "Stock")}
-                        </h3>
-                        <p className="mt-2 text-sm font-semibold text-slate-500">
-                          {text(selectedStock, ["typeStock", "type"], "Stock opérationnel")}
-                        </p>
-                      </div>
-
-                      <span
-                        className={[
-                          "rounded-full px-3 py-1 text-xs font-black ring-1",
-                          stockStatusClass(selectedStatus),
-                        ].join(" ")}
-                      >
-                        {selectedStatus}
-                      </span>
-                    </div>
-
-                    <div className="mt-6 grid gap-4 sm:grid-cols-2">
-                      <MiniFact
-                        label="Disponible"
-                        value={formatNumber(selectedQuantity)}
-                        tone="emerald"
-                      />
-                      <MiniFact
-                        label="Seuil alerte"
-                        value={selectedThreshold > 0 ? formatNumber(selectedThreshold) : "-"}
-                        tone="orange"
-                      />
-                      <MiniFact
-                        label="Valeur estimée"
-                        value={estimatedValue > 0 ? money(estimatedValue) : "-"}
-                        tone="sky"
-                      />
-                      <MiniFact
-                        label="Produit"
-                        value={productCode}
-                      />
-                    </div>
-                  </article>
-
-                  <article className="rounded-[1.75rem] border border-slate-200 bg-white p-6">
-                    <SectionTitle
-                      title="Parcours produit"
-                      subtitle="Ce produit peut être consommé par une intervention puis réapprovisionné par réception."
+            <section className="grid gap-5 xl:grid-cols-2 2xl:grid-cols-4">
+              <DashboardPanel
+                title="Mouvements de stock"
+                icon="↕"
+                footerHref={withReturnTo(
+                  "/mouvementsstockauto",
+                  productHubReturnTo,
+                  productHubReturnParams
+                )}
+                footerLabel="Voir tous les mouvements"
+              >
+                {movements.length === 0 ? (
+                  <EmptyPanel icon="↕" text="Aucun mouvement lié à ce produit." />
+                ) : (
+                  movements.slice(0, 4).map((movement) => (
+                    <MovementRow
+                      key={recordId(movement)}
+                      movement={movement}
+                      returnTo={productHubReturnTo}
+                      returnParams={productHubReturnParams}
                     />
+                  ))
+                )}
+              </DashboardPanel>
 
-                    <div className="grid gap-3">
-                      {[
-                        ["Produit", productName],
-                        ["Stock", formatNumber(displayedStockTotal) + " disponible"],
-                        ["Sorties", movements.filter((movement) => movementLabel(movement).toLowerCase().includes("sortie")).length + " mouvement(s)"],
-                        ["Entrées", movements.filter((movement) => movementLabel(movement).toLowerCase().includes("entrée") || movementLabel(movement).toLowerCase().includes("entree")).length + " mouvement(s)"],
-                        ["Réceptions", receptions.length + " réception(s)"],
-                      ].map(([label, value]) => (
-                        <div
-                          key={label}
-                          className="rounded-2xl bg-slate-50 px-4 py-3 ring-1 ring-slate-100"
-                        >
-                          <p className="text-[10px] font-black uppercase tracking-[0.14em] text-slate-400">
-                            {label}
-                          </p>
-                          <p className="mt-1 text-sm font-black text-slate-900">{value}</p>
-                        </div>
-                      ))}
-                    </div>
-                  </article>
-                </div>
-              ) : (
-                <EmptyCard>Aucun stock lié à ce produit.</EmptyCard>
-              )}
-            </section>
-
-            <section className="rounded-[2.25rem] bg-white p-6 shadow-sm ring-1 ring-slate-200 lg:p-8">
-              <SectionTitle
-                title="Parcours opérationnel produit — stock — mouvements — achats"
-                subtitle="Lecture des entrées, sorties, commandes et réceptions associées au produit."
-              />
-
-              <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_minmax(320px,0.72fr)]">
-                <div>
-                  <SectionTitle
-                    title="Mouvements du stock"
-                    subtitle="Sorties intervention, entrées réception et réintégrations."
-                  />
-
-                  {movements.length === 0 ? (
-                    <EmptyCard>Aucun mouvement stock lié à ce produit.</EmptyCard>
-                  ) : (
-                    <div className="grid gap-4">
-                      {movements.slice(0, 8).map((movement) => (
-                        <MovementCard
-                          key={recordId(movement)}
-                          movement={movement}
-                          returnTo={productHubReturnTo}
-                          returnParams={productHubReturnParams}
-                        />
-                      ))}
-                    </div>
-                  )}
-                </div>
-
-                <div className="space-y-6">
-                  <div>
-                    <SectionTitle
-                      title="Commandes fournisseur"
-                      subtitle="Une commande est une intention d’achat : elle ne modifie pas le stock."
+              <DashboardPanel
+                title="Commandes fournisseurs"
+                icon="🧾"
+                footerHref={withReturnTo(
+                  "/commandesstockauto",
+                  productHubReturnTo,
+                  productHubReturnParams
+                )}
+                footerLabel="Voir toutes les commandes"
+              >
+                {commandes.length === 0 ? (
+                  <EmptyPanel icon="🧾" text="Aucune commande fournisseur liée à ce produit." />
+                ) : (
+                  commandes.slice(0, 3).map((commande) => (
+                    <CompactRelatedRow
+                      key={recordId(commande)}
+                      record={commande}
+                      moduleKey="commandesstockauto"
+                      title={text(commande, ["numeroCommande", "numero", "code", "displayLabel"], "Commande fournisseur")}
+                      subtitle={text(commande, ["fournisseurLabel", "fournisseurId"], "Fournisseur")}
+                      quantity={text(commande, ["montantTTC", "montantHT", "total"], "")}
+                      status={text(commande, ["statut", "status"], "")}
+                      returnTo={productHubReturnTo}
+                      returnParams={productHubReturnParams}
                     />
+                  ))
+                )}
+              </DashboardPanel>
 
-                    {commandes.length === 0 ? (
-                      <EmptyCard>Aucune commande ouverte pour ce produit.</EmptyCard>
-                    ) : (
-                      <div className="grid gap-4">
-                        {commandes.slice(0, 4).map((commande) => (
-                          <RelatedCard
-                            key={recordId(commande)}
-                            record={commande}
-                            moduleKey="commandesstockauto"
-                            title={text(commande, ["numeroCommande", "code", "displayLabel"], "Commande fournisseur")}
-                            fields={[
-                              ["Statut", ["statut", "status"]],
-                              ["Fournisseur", ["fournisseurLabel", "fournisseurId"]],
-                              ["Montant", ["montantTTC", "montantHT", "total"]],
-                            ]}
-                            actionLabel="Ouvrir commande"
-                            returnTo={productHubReturnTo}
-                            returnParams={productHubReturnParams}
-                          />
-                        ))}
-                      </div>
-                    )}
-                  </div>
-
-                  <div>
-                    <SectionTitle
-                      title="Réceptions stock"
-                      subtitle="Une réception validée crée une entrée stock et met à jour le stock."
+              <DashboardPanel
+                title="Réceptions stock"
+                icon="📥"
+                footerHref={withReturnTo(
+                  "/receptionsstockauto",
+                  productHubReturnTo,
+                  productHubReturnParams
+                )}
+                footerLabel="Voir toutes les réceptions"
+              >
+                {receptions.length === 0 ? (
+                  <EmptyPanel icon="📥" text="Aucune réception liée à ce produit." />
+                ) : (
+                  receptions.slice(0, 3).map((reception) => (
+                    <CompactRelatedRow
+                      key={recordId(reception)}
+                      record={reception}
+                      moduleKey="receptionsstockauto"
+                      title={text(reception, ["numeroReception", "numero", "code", "displayLabel"], "Réception stock")}
+                      subtitle={formatDate(text(reception, ["dateReception", "createdAt"], "-"))}
+                      quantity={text(reception, ["quantiteRecue", "quantite", "quantity"], "") + " unités"}
+                      status={text(reception, ["statut", "status"], "")}
+                      returnTo={productHubReturnTo}
+                      returnParams={productHubReturnParams}
                     />
+                  ))
+                )}
+              </DashboardPanel>
 
-                    {receptions.length === 0 ? (
-                      <EmptyCard>Aucune réception liée à ce produit.</EmptyCard>
-                    ) : (
-                      <div className="grid gap-4">
-                        {receptions.slice(0, 4).map((reception) => (
-                          <RelatedCard
-                            key={recordId(reception)}
-                            record={reception}
-                            moduleKey="receptionsstockauto"
-                            title={text(reception, ["numeroReception", "code", "displayLabel"], "Réception stock")}
-                            fields={[
-                              ["Statut", ["statut", "status"]],
-                              ["Quantité reçue", ["quantiteRecue", "quantite", "quantity"]],
-                              ["Date réception", ["dateReception", "createdAt"]],
-                              ["Mouvement", ["mouvementStockId", "stockMovementId"]],
-                            ]}
-                            actionLabel="Ouvrir réception"
-                            returnTo={productHubReturnTo}
-                            returnParams={productHubReturnParams}
-                          />
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
+              <DashboardPanel
+                title="Sorties vers interventions / ventes"
+                icon="🔧"
+                footerHref={withReturnTo(
+                  "/lignesinterventionauto",
+                  productHubReturnTo,
+                  productHubReturnParams
+                )}
+                footerLabel="Voir toutes les sorties"
+              >
+                {exitMovements.length === 0 ? (
+                  <EmptyPanel icon="🔧" text="Aucune sortie intervention ou vente liée à ce produit." />
+                ) : (
+                  exitMovements.slice(0, 3).map((movement) => (
+                    <MovementRow
+                      key={recordId(movement)}
+                      movement={movement}
+                      returnTo={productHubReturnTo}
+                      returnParams={productHubReturnParams}
+                    />
+                  ))
+                )}
+              </DashboardPanel>
             </section>
           </main>
 
-          <aside className="space-y-6">
-            <section className="rounded-[2rem] bg-white p-5 shadow-sm ring-1 ring-slate-200">
-              <SectionTitle title="Navigation rapide" />
+          <aside className="space-y-5">
+            <section className="rounded-[1.9rem] bg-white p-5 shadow-sm ring-1 ring-slate-200">
+              <SectionTitle title="Dossier sélectionné" />
+
+              {selectedStock ? (
+                <div>
+                  <div className="mb-5 flex items-start justify-between gap-3">
+                    <div>
+                      <p className="text-xs font-black uppercase tracking-[0.16em] text-emerald-700">
+                        Stock
+                      </p>
+                      <h3 className="mt-2 text-lg font-black text-slate-950">
+                        {text(selectedStock, ["emplacement", "nom", "displayLabel"], "Stock")}
+                      </h3>
+                      <p className="mt-1 text-sm font-semibold text-slate-500">
+                        {text(selectedStock, ["typeStock", "type"], "Stock opérationnel")}
+                      </p>
+                    </div>
+
+                    <span
+                      className={[
+                        "rounded-full px-3 py-1 text-xs font-black ring-1",
+                        stockStatusClass(selectedStatus),
+                      ].join(" ")}
+                    >
+                      {selectedStatus}
+                    </span>
+                  </div>
+
+                  <div className="grid gap-3">
+                    {[
+                      ["Emplacement", text(selectedStock, ["emplacement", "nom"], "-")],
+                      ["Stock disponible", formatNumber(selectedQuantity) + " unités"],
+                      ["Stock réservé", text(selectedStock, ["stockReserve", "reservedStock"], "0 unité")],
+                      ["Stock en transit", text(selectedStock, ["stockTransit", "transitStock"], "0 unité")],
+                      ["Stock minimum", selectedThreshold > 0 ? formatNumber(selectedThreshold) + " unités" : "-"],
+                      ["Dernière MAJ", formatDate(text(selectedStock, ["updatedAt", "lastUpdate"], "-"))],
+                    ].map(([label, value]) => (
+                      <div
+                        key={label}
+                        className="flex items-center justify-between gap-4 rounded-2xl bg-slate-50 px-4 py-3 ring-1 ring-slate-100"
+                      >
+                        <p className="text-xs font-black text-slate-500">{label}</p>
+                        <p className="text-right text-xs font-black text-slate-900">{value}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <EmptyPanel icon="📦" text="Aucun stock sélectionné." />
+              )}
+            </section>
+
+            <section className="rounded-[1.9rem] bg-white p-5 shadow-sm ring-1 ring-slate-200">
+              <SectionTitle title="Liens rapides" />
 
               <div className="grid gap-3">
                 {[
-                  ["📦 Fiche produit complète", withReturnTo(href("produitsauto", rootRecord) + "/edit", productHubReturnTo, productHubReturnParams)],
-                  ["🏬 Stock sélectionné", withReturnTo(href("stocksauto", selectedStock), productHubReturnTo, productHubReturnParams)],
-                  ["↕️ Mouvements stock", "/mouvementsstockauto"],
-                  ["🧾 Commandes fournisseur", "/commandesstockauto"],
-                  ["✅ Réceptions stock", "/receptionsstockauto"],
-                ].map(([label, link], index) => (
+                  ["Mouvements de stock", String(movements.length), "/mouvementsstockauto"],
+                  ["Commandes fournisseurs", String(commandes.length), "/commandesstockauto"],
+                  ["Réceptions stock", String(receptions.length), "/receptionsstockauto"],
+                  ["Sorties interventions / ventes", String(exitMovements.length), "/lignesinterventionauto"],
+                ].map(([label, count, link]) => (
                   <Link
                     key={label}
-                    href={link}
-                    className={[
-                      "rounded-2xl px-4 py-3 text-sm font-black transition",
-                      index === 0
-                        ? "bg-slate-950 text-white hover:bg-slate-800"
-                        : "bg-slate-100 text-slate-700 hover:bg-white hover:ring-1 hover:ring-slate-200",
-                    ].join(" ")}
+                    href={withReturnTo(link, productHubReturnTo, productHubReturnParams)}
+                    className="flex items-center justify-between rounded-2xl bg-slate-50 px-4 py-3 text-sm font-black text-slate-700 ring-1 ring-slate-100 transition hover:bg-white hover:shadow-sm"
                   >
-                    {label}
+                    <span>{label}</span>
+                    <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs text-emerald-700 ring-1 ring-emerald-100">
+                      {count}
+                    </span>
                   </Link>
                 ))}
               </div>
             </section>
-
-            <section className="rounded-[2rem] bg-white p-5 shadow-sm ring-1 ring-slate-200">
-              <SectionTitle title="Dossier stock sélectionné" />
-
-              {selectedStock ? (
-                <div className="grid gap-3">
-                  <MiniFact
-                    label="Emplacement"
-                    value={text(selectedStock, ["emplacement", "nom"], "Stock")}
-                  />
-                  <MiniFact
-                    label="Disponible"
-                    value={formatNumber(selectedQuantity)}
-                    tone="emerald"
-                  />
-                  <MiniFact
-                    label="Seuil"
-                    value={selectedThreshold > 0 ? formatNumber(selectedThreshold) : "-"}
-                    tone="orange"
-                  />
-                  <MiniFact
-                    label="Mouvements"
-                    value={String(movements.length)}
-                    tone="sky"
-                  />
-                </div>
-              ) : (
-                <EmptyCard>Aucun stock sélectionné.</EmptyCard>
-              )}
-            </section>
-
-            <section className="rounded-[2rem] bg-white p-5 shadow-sm ring-1 ring-slate-200">
-              <SectionTitle title="Bénéfices métier" />
-
-              <div className="grid gap-3">
-                {[
-                  "Stock produit lisible en un coup d’œil",
-                  "Sorties intervention et entrées réception traçables",
-                  "Mouvements stock comme preuve d’audit",
-                  "Commandes sans impact stock avant réception",
-                  "Vision produit exploitable en démonstration",
-                ].map((item) => (
-                  <div
-                    key={item}
-                    className="rounded-2xl bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-600 ring-1 ring-slate-100"
-                  >
-                    {item}
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            <section className="rounded-[2rem] bg-white p-5 shadow-sm ring-1 ring-slate-200">
-              <p className="text-[10px] font-black uppercase tracking-[0.22em] text-slate-400">
-                Runtime
-              </p>
-              <p className="mt-2 text-sm font-semibold text-slate-600">
-                Les données proviennent du loader produit/stock existant. Les moteurs stock ne sont pas modifiés.
-              </p>
-              <p className="mt-3 text-xs font-bold text-slate-400">
-                Config : {String(config?.key ?? "product-stock-hub")}
-              </p>
-            </section>
           </aside>
         </div>
+
+        <footer className="flex items-center justify-center gap-2 pb-3 text-xs font-black uppercase tracking-[0.18em] text-slate-400">
+          <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-white text-emerald-700 shadow-sm ring-1 ring-slate-200">
+            A
+          </span>
+          AMARKHYS ERP · Gestion intelligente des opérations
+        </footer>
       </div>
     </section>
   );
