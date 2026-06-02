@@ -24,6 +24,7 @@ type ERPRuntimePageActionSource = ERPModuleAction & {
 import { ERPRuntimeTable } from "./ERPRuntimeTable";
 import { ERPRelatedRecordsPanel } from "./ERPRelatedRecordsPanel";
 import { ERPContextBanner } from "@/components/erp/context/ERPContextBanner";
+import { ERPHubReturnBanner } from "@/components/erp/runtime/ERPHubReturnBanner";
 
 import type { ERPModule, ERPModuleAction } from "@/runtime/modules/ERPModule";
 
@@ -380,6 +381,8 @@ return (
       }
     >
       <div className="space-y-6">
+        {type === "list" && module && <ERPHubReturnBanner />}
+
         {type === "list" && module && (
           <div className="flex flex-wrap items-center justify-end gap-3">
             {listNavigationActions.map((action) => (
