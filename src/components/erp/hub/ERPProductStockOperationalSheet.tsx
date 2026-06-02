@@ -78,13 +78,58 @@ function money(value: number): string {
 function formatDate(value: string): string {
   if (!value || value === "-") return "-";
 
-  const date = new Date(value);
+  const raw = String(value).trim();
 
-  if (Number.isNaN(date.getTime())) {
-    return value;
+  if (!raw || raw.toLowerCase() === "undefined" || raw.toLowerCase() === "null") {
+    return "-";
   }
 
-  return new Intl.DateTimeFormat("fr-FR").format(date);
+  const numeric = Number(raw);
+
+  if (Number.isFinite(numeric)) {
+    const milliseconds = numeric > 100000000000 ? numeric : numeric * 1000;
+    const date = new Date(milliseconds);
+
+    if (!Number.isNaN(date.getTime())) {
+      return new Intl.DateTimeFormat("fr-FR", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      }).format(date);
+    }
+  }
+
+  const firestoreSecondsMatch = raw.match(/seconds[=:]\s*(\d+)/i);
+
+  if (firestoreSecondsMatch) {
+    const date = new Date(Number(firestoreSecondsMatch[1]) * 1000);
+
+    if (!Number.isNaN(date.getTime())) {
+      return new Intl.DateTimeFormat("fr-FR", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      }).format(date);
+    }
+  }
+
+  const date = new Date(raw);
+
+  if (Number.isNaN(date.getTime())) {
+    return "-";
+  }
+
+  return new Intl.DateTimeFormat("fr-FR", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(date);
 }
 
 function href(
@@ -191,6 +236,44 @@ function quantitySigned(record: ERPRecordHubRecord): string {
   return formatNumber(quantity);
 }
 
+function humanStatusLabel(value: string): string {
+  const normalized = String(value ?? "").trim();
+
+  if (!normalized) {
+    return "-";
+  }
+
+  const lower = normalized.toLowerCase();
+
+  const labels: Record<string, string> = {
+    actif: "Actif",
+    active: "Actif",
+    disponible: "Disponible",
+    stock_faible: "Stock faible",
+    faible: "Stock faible",
+    alerte: "Alerte stock",
+    rupture: "Rupture stock",
+    brouillon: "Brouillon",
+    validee: "Validée",
+    validée: "Validée",
+    envoyee: "Envoyée",
+    envoyée: "Envoyée",
+    partielle: "Partielle",
+    receptionnee: "Réceptionnée",
+    réceptionnée: "Réceptionnée",
+    annulee: "Annulée",
+    annulée: "Annulée",
+  };
+
+  if (labels[lower]) {
+    return labels[lower];
+  }
+
+  return normalized
+    .replace(/_/g, " ")
+    .replace(/\s+/g, " ")
+    .replace(/^./, (letter) => letter.toUpperCase());
+}
 function statusPillClass(status: string): string {
   const normalized = status.toLowerCase();
 
@@ -906,7 +989,7 @@ export function ERPProductStockOperationalSheet({
                         stockStatusClass(selectedStatus),
                       ].join(" ")}
                     >
-                      {selectedStatus}
+                      {humanStatusLabel(selectedStatus)}
                     </span>
                   </div>
 
@@ -917,7 +1000,7 @@ export function ERPProductStockOperationalSheet({
                       ["Stock réservé", text(selectedStock, ["stockReserve", "reservedStock"], "0 unité")],
                       ["Stock en transit", text(selectedStock, ["stockTransit", "transitStock"], "0 unité")],
                       ["Stock minimum", selectedThreshold > 0 ? formatNumber(selectedThreshold) + " unités" : "-"],
-                      ["Dernière MAJ", formatDate(text(selectedStock, ["updatedAt", "lastUpdate"], "-"))],
+                      ["Dernière MAJ", formatDate(text(selectedStock, ["updatedAt", "updated_at", "modifiedAt", "lastUpdate", "dateMiseAJour", "createdAt"], "-"))],
                     ].map(([label, value]) => (
                       <div
                         key={label}
