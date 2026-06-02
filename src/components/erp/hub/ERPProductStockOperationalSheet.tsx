@@ -78,6 +78,34 @@ function formatDate(value: string): string {
   return new Intl.DateTimeFormat("fr-FR").format(date);
 }
 
+function queryHref(
+  pathname: string,
+  params: Record<string, string | null | undefined>
+): string {
+  const search = new URLSearchParams();
+
+  Object.entries(params).forEach(([key, value]) => {
+    if (value !== null && value !== undefined && String(value).trim() !== "") {
+      search.set(key, String(value));
+    }
+  });
+
+  const query = search.toString();
+
+  return query ? pathname + "?" + query : pathname;
+}
+
+function withReturnTo(
+  pathname: string,
+  returnTo: string,
+  params: Record<string, string | null | undefined> = {}
+): string {
+  return queryHref(pathname, {
+    ...params,
+    returnTo,
+  });
+}
+
 function href(moduleKey: string, record: ERPRecordHubRecord | null | undefined): string {
   const id = recordId(record);
 
@@ -201,7 +229,15 @@ function MiniFact({
   );
 }
 
-function MovementCard({ movement }: { movement: ERPRecordHubRecord }) {
+function MovementCard({
+  movement,
+  returnTo,
+  returnParams,
+}: {
+  movement: ERPRecordHubRecord;
+  returnTo: string;
+  returnParams: Record<string, string | null | undefined>;
+}) {
   const quantity = numberValue(movement, ["quantite", "quantity"]);
   const before = numberValue(movement, ["quantiteAvant", "stockAvant"], Number.NaN);
   const after = numberValue(movement, ["quantiteApres", "stockApres"], Number.NaN);
@@ -246,7 +282,7 @@ function MovementCard({ movement }: { movement: ERPRecordHubRecord }) {
       </div>
 
       <Link
-        href={href("mouvementsstockauto", movement)}
+        href={withReturnTo(href("mouvementsstockauto", movement), returnTo, { ...returnParams, selectedMovementId: recordId(movement) })}
         className="mt-4 inline-flex rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-black text-slate-700 transition hover:bg-white"
       >
         Voir mouvement
@@ -261,12 +297,16 @@ function RelatedCard({
   title,
   fields,
   actionLabel,
+  returnTo,
+  returnParams,
 }: {
   record: ERPRecordHubRecord;
   moduleKey: string;
   title: string;
   fields: Array<[string, string[]]>;
   actionLabel: string;
+  returnTo: string;
+  returnParams: Record<string, string | null | undefined>;
 }) {
   return (
     <article className="rounded-[1.35rem] border border-slate-200 bg-white p-4 shadow-sm">
@@ -286,7 +326,7 @@ function RelatedCard({
       </div>
 
       <Link
-        href={href(moduleKey, record)}
+        href={withReturnTo(href(moduleKey, record), returnTo, returnParams)}
         className="mt-4 inline-flex rounded-full border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-black text-emerald-700 transition hover:bg-white"
       >
         {actionLabel}
@@ -302,6 +342,14 @@ export function ERPProductStockOperationalSheet({
   relatedRecordsBySection,
 }: ERPProductStockOperationalSheetProps) {
   const selectedStock = primaryRecords[0] ?? null;
+  const productHubReturnTo = queryHref("/produitsauto/hub", {
+    productId: recordId(rootRecord),
+    selectedStockId: recordId(selectedStock),
+  });
+  const productHubReturnParams = {
+    productId: recordId(rootRecord),
+    selectedStockId: recordId(selectedStock),
+  };
   const movements = relatedRecordsBySection.mouvements ?? [];
   const commandes = relatedRecordsBySection.commandes ?? [];
   const receptions = relatedRecordsBySection.receptions ?? [];
@@ -394,7 +442,7 @@ export function ERPProductStockOperationalSheet({
 
             <div className="flex flex-wrap gap-3">
               <Link
-                href={href("produitsauto", rootRecord) + "/edit"}
+                href={withReturnTo(href("produitsauto", rootRecord) + "/edit", productHubReturnTo, productHubReturnParams)}
                 className="rounded-full bg-slate-950 px-5 py-3 text-sm font-black text-white transition hover:bg-slate-800"
               >
                 Ouvrir produit
@@ -539,7 +587,12 @@ export function ERPProductStockOperationalSheet({
                   ) : (
                     <div className="grid gap-4">
                       {movements.slice(0, 8).map((movement) => (
-                        <MovementCard key={recordId(movement)} movement={movement} />
+                        <MovementCard
+                          key={recordId(movement)}
+                          movement={movement}
+                          returnTo={productHubReturnTo}
+                          returnParams={productHubReturnParams}
+                        />
                       ))}
                     </div>
                   )}
@@ -568,6 +621,8 @@ export function ERPProductStockOperationalSheet({
                               ["Montant", ["montantTTC", "montantHT", "total"]],
                             ]}
                             actionLabel="Ouvrir commande"
+                            returnTo={productHubReturnTo}
+                            returnParams={productHubReturnParams}
                           />
                         ))}
                       </div>
@@ -597,6 +652,8 @@ export function ERPProductStockOperationalSheet({
                               ["Mouvement", ["mouvementStockId", "stockMovementId"]],
                             ]}
                             actionLabel="Ouvrir réception"
+                            returnTo={productHubReturnTo}
+                            returnParams={productHubReturnParams}
                           />
                         ))}
                       </div>
@@ -613,8 +670,8 @@ export function ERPProductStockOperationalSheet({
 
               <div className="grid gap-3">
                 {[
-                  ["📦 Fiche produit complète", href("produitsauto", rootRecord) + "/edit"],
-                  ["🏬 Stock sélectionné", href("stocksauto", selectedStock)],
+                  ["📦 Fiche produit complète", withReturnTo(href("produitsauto", rootRecord) + "/edit", productHubReturnTo, productHubReturnParams)],
+                  ["🏬 Stock sélectionné", withReturnTo(href("stocksauto", selectedStock), productHubReturnTo, productHubReturnParams)],
                   ["↕️ Mouvements stock", "/mouvementsstockauto"],
                   ["🧾 Commandes fournisseur", "/commandesstockauto"],
                   ["✅ Réceptions stock", "/receptionsstockauto"],
