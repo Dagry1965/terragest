@@ -270,6 +270,134 @@ function isPaidInvoice(record: ERPRecordHubRecord): boolean {
   ].includes(status);
 }
 
+
+function normalizeFinancialStatus(record: ERPRecordHubRecord): string {
+  return String(record.statut ?? record.status ?? record.etat ?? "")
+    .trim()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+}
+
+function isCancelledFinancialRecord(record: ERPRecordHubRecord): boolean {
+  const status = normalizeFinancialStatus(record);
+
+  return [
+    "annulee",
+    "annule",
+    "cancelled",
+    "canceled",
+    "supprimee",
+    "removed",
+  ].includes(status);
+}
+
+function isDraftFinancialRecord(record: ERPRecordHubRecord): boolean {
+  const status = normalizeFinancialStatus(record);
+
+  return [
+    "brouillon",
+    "draft",
+  ].includes(status);
+}
+
+function invoiceTotalAmount(invoice: ERPRecordHubRecord): number {
+  return readNumber(invoice, [
+    "montantTTC",
+    "totalTTC",
+    "montantTotal",
+    "total",
+    "montant",
+    "amount",
+  ]);
+}
+
+function invoiceExplicitRemainingAmount(invoice: ERPRecordHubRecord): number {
+  return readNumber(invoice, [
+    "resteAPayer",
+    "reste\u00c0Payer",
+    "resteARegler",
+    "solde",
+    "montantRestant",
+    "balanceDue",
+  ]);
+}
+
+function paymentAmount(payment: ERPRecordHubRecord): number {
+  return readNumber(payment, [
+    "montantEncaisse",
+    "montantEncaiss\u00e9",
+    "montantPaye",
+    "montantPay\u00e9",
+    "montant",
+    "amount",
+    "total",
+  ]);
+}
+
+function invoiceLinkedPayments(
+  invoice: ERPRecordHubRecord,
+  payments: ERPRecordHubRecord[]
+): ERPRecordHubRecord[] {
+  const invoiceId = String(invoice.id ?? "");
+
+  if (!invoiceId) {
+    return [];
+  }
+
+  return payments.filter((payment) => {
+    if (isCancelledFinancialRecord(payment)) {
+      return false;
+    }
+
+    return [
+      "factureId",
+      "invoiceId",
+      "factureAutoId",
+      "facturesautoId",
+    ].some((key) => String(payment[key] ?? "") === invoiceId);
+  });
+}
+
+function invoicePaidAmount(
+  invoice: ERPRecordHubRecord,
+  payments: ERPRecordHubRecord[]
+): number {
+  return sumRecords(invoiceLinkedPayments(invoice, payments), [
+    "montantEncaisse",
+    "montantEncaiss\u00e9",
+    "montantPaye",
+    "montantPay\u00e9",
+    "montant",
+    "amount",
+    "total",
+  ]);
+}
+
+function invoiceRemainingAmount(
+  invoice: ERPRecordHubRecord,
+  payments: ERPRecordHubRecord[]
+): number {
+  if (isCancelledFinancialRecord(invoice)) {
+    return 0;
+  }
+
+  if (isPaidInvoice(invoice)) {
+    return 0;
+  }
+
+  const total = invoiceTotalAmount(invoice);
+  const explicitRemaining = invoiceExplicitRemainingAmount(invoice);
+
+  if (explicitRemaining > 0) {
+    return Math.max(explicitRemaining, 0);
+  }
+
+  const paid = invoicePaidAmount(invoice, payments);
+
+  return Math.max(total - paid, 0);
+}
+
 function buildClientLabel(client: ERPRecordHubRecord): string {
   const company = readFirstString(client, ["raisonSociale", "societe", "soci\u00e9t\u00e9"]);
   if (company) {
@@ -341,25 +469,30 @@ function enrichClientRoot(
   const now = Date.now();
 
   const activeInterventions = interventions.filter((record) => !isClosedStatus(record));
-  const unpaidInvoices = invoices.filter((record) => !isPaidInvoice(record));
 
-  const revenueTotal = sumRecords(invoices, [
-    "montantTTC",
-    "totalTTC",
-    "montantTotal",
-    "total",
-    "montant",
-  ]);
+  const validInvoices = invoices.filter((record) => {
+    return !isCancelledFinancialRecord(record) && !isDraftFinancialRecord(record);
+  });
 
-  const unpaidInvoicesAmount = sumRecords(unpaidInvoices, [
-    "montantTTC",
-    "totalTTC",
-    "montantTotal",
-    "total",
-    "montant",
-    "resteAPayer",
-    "reste\u00c0Payer",
-  ]);
+  const validPayments = payments.filter((record) => {
+    return !isCancelledFinancialRecord(record);
+  });
+
+  const unpaidInvoices = validInvoices.filter((record) => {
+    return invoiceRemainingAmount(record, validPayments) > 0;
+  });
+
+  const revenueTotal = validInvoices.reduce((total, invoice) => {
+    return total + invoiceTotalAmount(invoice);
+  }, 0);
+
+  const paidTotal = validPayments.reduce((total, payment) => {
+    return total + paymentAmount(payment);
+  }, 0);
+
+  const unpaidInvoicesAmount = validInvoices.reduce((total, invoice) => {
+    return total + invoiceRemainingAmount(invoice, validPayments);
+  }, 0);
 
   const visitDates = [
     ...interventions.map(vehicleDate),
@@ -411,6 +544,14 @@ function enrichClientRoot(
     revenueTotal,
     chiffreAffaires: revenueTotal,
     caCumule: revenueTotal,
+
+    paidTotal,
+    montantEncaisse: paidTotal,
+    montantEncaiss\u00e9: paidTotal,
+
+    remainingAmount: unpaidInvoicesAmount,
+    resteAEncaisser: unpaidInvoicesAmount,
+    reste\u00c0Encaisser: unpaidInvoicesAmount,
 
     lastVisit: formatDate(lastVisitTimestamp),
     derniereVisite: formatDate(lastVisitTimestamp),

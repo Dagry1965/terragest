@@ -17,6 +17,77 @@ import { interventionsautoModule } from "@/runtime/modules/generated/interventio
 import type { ERPCompositionChild } from "@/runtime/modules/ERPModule";
 import { useAuth } from "@/providers/AuthProvider";
 
+const VEHICLE_SEDAN_VISUAL_PRESETS = [
+  {
+    name: "gris-argent",
+    label: "Berline gris argent",
+    kickerClass: "text-slate-700",
+    sedanClass: "text-slate-400/45",
+    selectedCardClass: "border-slate-300 bg-gradient-to-br from-white via-slate-50 to-slate-200/70 ring-2 ring-slate-100",
+    idleCardClass: "border-slate-200 bg-gradient-to-br from-white via-slate-50/80 to-slate-100/70 hover:border-slate-300 hover:shadow-md",
+  },
+  {
+    name: "blanc-nacre",
+    label: "Berline blanc nacré",
+    kickerClass: "text-zinc-700",
+    sedanClass: "text-zinc-300/55",
+    selectedCardClass: "border-zinc-200 bg-gradient-to-br from-white via-zinc-50 to-stone-100/75 ring-2 ring-zinc-100",
+    idleCardClass: "border-zinc-100 bg-gradient-to-br from-white via-zinc-50/70 to-stone-50/80 hover:border-zinc-200 hover:shadow-md",
+  },
+  {
+    name: "noir-graphite",
+    label: "Berline noir graphite",
+    kickerClass: "text-slate-900",
+    sedanClass: "text-slate-900/24",
+    selectedCardClass: "border-slate-500 bg-gradient-to-br from-slate-50 via-slate-100 to-slate-300/70 ring-2 ring-slate-200",
+    idleCardClass: "border-slate-200 bg-gradient-to-br from-white via-slate-50 to-slate-200/60 hover:border-slate-400 hover:shadow-md",
+  },
+  {
+    name: "rouge-bordeaux",
+    label: "Berline rouge bordeaux",
+    kickerClass: "text-red-800",
+    sedanClass: "text-red-800/28",
+    selectedCardClass: "border-red-300 bg-gradient-to-br from-white via-red-50 to-rose-100/75 ring-2 ring-red-100",
+    idleCardClass: "border-red-100 bg-gradient-to-br from-white via-red-50/55 to-rose-50/75 hover:border-red-200 hover:shadow-md",
+  },
+  {
+    name: "vert-profond",
+    label: "Berline vert profond",
+    kickerClass: "text-emerald-800",
+    sedanClass: "text-emerald-800/28",
+    selectedCardClass: "border-emerald-300 bg-gradient-to-br from-white via-emerald-50 to-green-100/75 ring-2 ring-emerald-100",
+    idleCardClass: "border-emerald-100 bg-gradient-to-br from-white via-emerald-50/55 to-green-50/75 hover:border-emerald-200 hover:shadow-md",
+  },
+] as const;
+
+function pickVehicleSedanVisual(recordKey: string, fallbackIndex = 0) {
+  const key = String(recordKey || fallbackIndex || "0");
+  let hash = 0;
+
+  for (let index = 0; index < key.length; index += 1) {
+    hash = (hash * 31 + key.charCodeAt(index)) >>> 0;
+  }
+
+  return VEHICLE_SEDAN_VISUAL_PRESETS[hash % VEHICLE_SEDAN_VISUAL_PRESETS.length];
+}
+
+function VehicleSedanIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 260 120" aria-hidden="true" className={className} fill="none">
+      <path d="M42 74h176c10 0 18 8 18 18v6H24v-6c0-10 8-18 18-18Z" fill="currentColor" />
+      <path d="M74 74c13-24 31-36 57-36h16c24 0 42 12 58 36H74Z" fill="currentColor" opacity="0.86" />
+      <path d="M91 67c10-15 22-22 40-22h10v22H91Z" fill="white" opacity="0.62" />
+      <path d="M150 45h2c16 0 28 7 39 22h-41V45Z" fill="white" opacity="0.48" />
+      <circle cx="72" cy="98" r="14" fill="white" opacity="0.82" />
+      <circle cx="72" cy="98" r="7" fill="currentColor" opacity="0.65" />
+      <circle cx="192" cy="98" r="14" fill="white" opacity="0.82" />
+      <circle cx="192" cy="98" r="7" fill="currentColor" opacity="0.65" />
+      <path d="M40 74c7-10 17-15 30-15h16l-12 15H40Z" fill="currentColor" opacity="0.72" />
+      <path d="M218 74c-8-10-18-15-31-15h-17l13 15h35Z" fill="currentColor" opacity="0.72" />
+    </svg>
+  );
+}
+
 type ERPClientOperationalSheetProps = {
   config: ERPRecordHubConfig;
   rootRecord: ERPRecordHubRecord | null;
@@ -932,46 +1003,58 @@ const [localSelectedVehicleId, setLocalSelectedVehicleId] = useState<string | nu
 
               <section className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
                 {[
-                  ["Interventions en cours", text(rootRecord, ["activeInterventionsCount", "interventionsActives"], "0")],
-                  ["Impayés client", money(unpaidAmount)],
-                  ["CA cumulé", money(revenueTotal)],
-                  ["Prochain RDV", text(rootRecord, ["nextAppointment", "prochainRendezVous"])],
-                ].map(([label, value]) => (
+                  {
+                    label: "Interventions en cours",
+                    value: text(rootRecord, ["activeInterventionsCount", "interventionsActives"], "0"),
+                    alert: false,
+                  },
+                  {
+                    label: "Impayés client",
+                    value: money(unpaidAmount),
+                    alert: unpaidAmount > 0,
+                  },
+                  {
+                    label: "CA cumulé",
+                    value: money(revenueTotal),
+                    alert: false,
+                  },
+                  {
+                    label: "Prochain RDV",
+                    value: text(rootRecord, ["nextAppointment", "prochainRendezVous"]),
+                    alert: false,
+                  },
+                ].map((item) => (
                   <article
-                    key={label}
-                    className="min-h-[112px] rounded-[1.75rem] bg-white px-5 py-5 shadow-sm ring-1 ring-slate-200"
+                    key={item.label}
+                    data-amarkhys-kpi={item.label}
+                    className={[
+                      "min-h-[112px] rounded-[1.75rem] px-5 py-5 shadow-sm ring-1 transition",
+                      item.alert
+                        ? "bg-orange-50/70 ring-orange-200"
+                        : "bg-white ring-slate-200",
+                    ].join(" ")}
                   >
-                    <p className="text-[10px] font-black uppercase tracking-[0.14em] text-slate-500">{label}</p>
-                    <p className="mt-3 text-xl font-black leading-tight text-slate-950 md:text-2xl">{value}</p>
+                    <p
+                      className={[
+                        "text-[10px] font-black uppercase tracking-[0.14em]",
+                        item.alert ? "text-orange-600" : "text-slate-500",
+                      ].join(" ")}
+                    >
+                      {item.label}
+                    </p>
+                    <p
+                      className={[
+                        "mt-3 text-xl font-black leading-tight md:text-2xl",
+                        item.alert ? "text-orange-800" : "text-slate-950",
+                      ].join(" ")}
+                    >
+                      {item.value}
+                    </p>
                   </article>
                 ))}
               </section>
 
-              <section className="rounded-[1.75rem] bg-white px-6 py-5 shadow-sm ring-1 ring-slate-200">
-                <div className="flex flex-wrap items-center justify-between gap-4">
-                  <div>
-                    <p className="text-[10px] font-black uppercase tracking-[0.16em] text-emerald-700">
-                      Situation client
-                    </p>
-                    <p className="mt-2 text-sm font-semibold text-slate-800">
-                      Client actif · Suivi atelier en cours · {money(unpaidAmount)} d'impayés client
-                    </p>
-                  </div>
-
-                  <span className={[
-                    "rounded-full px-4 py-2 text-xs font-bold ring-1",
-                    unpaidAmount > 0
-                      ? "bg-orange-50 text-orange-700 ring-orange-200"
-                      : "bg-emerald-50 text-emerald-700 ring-emerald-200",
-                  ].join(" ")}>
-                    {unpaidAmount > 0 ? "À relancer" : "Situation saine"}
-                  </span>
-                </div>
-              </section>
-
-              
-
-              <section className="rounded-[2.25rem] bg-white p-6 shadow-sm ring-1 ring-slate-200 lg:p-8">
+<section className="rounded-[2.25rem] bg-white p-6 shadow-sm ring-1 ring-slate-200 lg:p-8">
                 <SectionTitle
                   title="🚗 VÉHICULES DU CLIENT"
                   action={
@@ -992,49 +1075,127 @@ const [localSelectedVehicleId, setLocalSelectedVehicleId] = useState<string | nu
                   <EmptyCard>Aucun véhicule lié à ce client.</EmptyCard>
                 ) : isCardMode ? (
                   <div className="grid gap-6 lg:grid-cols-2 2xl:grid-cols-3">
-                    {vehicles.map((vehicle) => (
-                      <button
+                    {vehicles.map((vehicle, vehicleIndex) => {
+                    const isSelectedVehicle =
+                      recordId(vehicle) === recordId(selectedVehicle);
+
+                    const vehicleEditHref = queryHref(
+                      href("/vehicules", vehicle) + "/edit",
+                      {
+                        clientId,
+                        selectedVehicleId: recordId(vehicle),
+                        returnTo: clientReturnTo,
+                      }
+                    );
+
+                    const vehicleVisual = pickVehicleSedanVisual(
+                      recordId(vehicle),
+                      vehicleIndex
+                    );
+
+                    const vehicleBrand = text(vehicle, ["marque"], "Marque");
+                    const vehicleModel = text(vehicle, ["modele", "modèle"], "Modèle");
+                    const vehiclePlate = text(
+                      vehicle,
+                      [
+                        "immatriculation",
+                        "plaqueImmatriculation",
+                        "numeroImmatriculation",
+                        "numeroPlaque",
+                      ],
+                      "Non renseignée"
+                    );
+
+                    const vehicleMileageRaw = text(
+                      vehicle,
+                      ["kilometrage", "kilométrage"],
+                      "Non renseigné"
+                    );
+
+                    const vehicleMileage =
+                      vehicleMileageRaw !== "Non renseigné" &&
+                      !/km/i.test(vehicleMileageRaw)
+                        ? vehicleMileageRaw + " km"
+                        : vehicleMileageRaw;
+
+                    return (
+                      <article
                         key={recordId(vehicle)}
-                        type="button"
-                        onClick={() => setLocalSelectedVehicleId(recordId(vehicle))}
+                        data-amarkhys-vehicle-card="sedan-premium"
                         className={[
-                          "cursor-pointer rounded-[1.75rem] border p-5 text-left shadow-sm transition focus:outline-none focus:ring-4 focus:ring-emerald-100",
-                          recordId(vehicle) === recordId(selectedVehicle)
-                            ? "border-emerald-400 bg-emerald-50"
-                            : "border-slate-200 bg-white hover:border-emerald-200",
+                          "relative min-h-[238px] overflow-hidden rounded-[1.9rem] border p-5 text-left shadow-sm transition",
+                          isSelectedVehicle
+                            ? vehicleVisual.selectedCardClass
+                            : vehicleVisual.idleCardClass,
                         ].join(" ")}
                       >
+                        <button
+                          type="button"
+                          onClick={() => setLocalSelectedVehicleId(recordId(vehicle))}
+                          className="absolute inset-0 z-0 cursor-pointer"
+                          aria-label="Sélectionner ce véhicule"
+                        />
 
-                        <div className="flex items-start justify-between gap-3">
-                          <div>
-                            <p className="text-lg font-extrabold text-slate-950">
-                              {text(vehicle, ["displayLabel", "immatriculation", "marque"])}
+                        <Link
+                          href={vehicleEditHref}
+                          onClick={(event) => event.stopPropagation()}
+                          aria-label="Modifier le véhicule"
+                          title="Modifier le véhicule"
+                          className="pointer-events-auto absolute -right-7 -top-2 z-20 inline-flex w-[190px] transition hover:scale-105"
+                        >
+                          <VehicleSedanIcon
+                            className={[
+                              "h-auto w-full drop-shadow-sm",
+                              vehicleVisual.sedanClass,
+                            ].join(" ")}
+                          />
+                        </Link>
+
+                        <div className="relative z-10 pr-24">
+                          <p
+                            className={[
+                              "text-[10px] font-black uppercase tracking-[0.22em]",
+                              vehicleVisual.kickerClass,
+                            ].join(" ")}
+                          >
+                            {vehicleVisual.label}
+                          </p>
+
+                          <p className="mt-2 text-lg font-extrabold text-slate-950">
+                            {vehicleBrand} {vehicleModel}
+                          </p>
+
+                          <p className="mt-1 text-sm font-semibold text-slate-500">
+                            {text(
+                              vehicle,
+                              ["typeVehicule", "type", "categorie", "genre"],
+                              "Berline"
+                            )}
+                          </p>
+                        </div>
+
+                        <div className="relative z-10 mt-8 grid gap-3 sm:grid-cols-2">
+                          <div className="rounded-2xl bg-white/65 px-4 py-3 ring-1 ring-white/80">
+                            <p className="text-[10px] font-black uppercase tracking-[0.16em] text-slate-500">
+                              Immatriculation
                             </p>
-                            <p className="mt-1 text-sm text-slate-500">
-                              {text(vehicle, ["marque"])} · {text(vehicle, ["modele", "modèle"])}
+                            <p className="mt-1 text-base font-black tracking-[0.08em] text-slate-900">
+                              {vehiclePlate}
                             </p>
                           </div>
 
-                          <span
-                            className={[
-                              "rounded-full px-2 py-1 text-[10px] font-bold ring-1",
-                              badgeTone(text(vehicle, ["statut"], "actif")),
-                            ].join(" ")}
-                          >
-                            {text(vehicle, ["statut"], "actif")}
-                          </span>
+                          <div className="rounded-2xl bg-white/65 px-4 py-3 ring-1 ring-white/80">
+                            <p className="text-[10px] font-black uppercase tracking-[0.16em] text-slate-500">
+                              Kilométrage
+                            </p>
+                            <p className="mt-1 text-base font-black text-slate-900">
+                              {vehicleMileage}
+                            </p>
+                          </div>
                         </div>
-
-                        <div className="mt-4 grid gap-2 text-sm text-slate-600">
-                          <p>🚘 <span className="font-medium text-slate-900">Immatriculation :</span> {text(vehicle, ["immatriculation"])}</p>
-                          <p>🛞 <span className="font-medium text-slate-900">Kilométrage :</span> {text(vehicle, ["kilometrage", "kilométrage"])}</p>
-                        </div>
-
-                        <span className="mt-4 inline-flex rounded-full bg-white px-4 py-2 text-sm font-bold text-slate-900 ring-1 ring-slate-200">
-                          Voir la fiche véhicule
-                        </span>
-                      </button>
-                    ))}
+                      </article>
+                    );
+                  })}
                   </div>
                 ) : (
                   <div className="overflow-hidden rounded-[1.75rem] border border-slate-200">
