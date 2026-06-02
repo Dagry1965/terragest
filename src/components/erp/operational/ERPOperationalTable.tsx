@@ -1,7 +1,7 @@
 "use client";
 
 import { Fragment, useEffect, useMemo, useState } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import type {
   ERPModule,
@@ -33,6 +33,26 @@ type ERPOperationalTableProps = {
   module: ERPModule;
   data: Record<string, unknown>[];
 };
+
+function buildOperationalReturnTo(
+  pathname: string | null,
+  searchParams: { toString(): string } | null
+): string {
+  const path = pathname ?? "";
+  const query = searchParams?.toString() ?? "";
+
+  return query ? path + "?" + query : path;
+}
+
+function appendOperationalReturnTo(hrefValue: string, returnTo: string): string {
+  if (!hrefValue.startsWith("/") || !returnTo || hrefValue.includes("returnTo=")) {
+    return hrefValue;
+  }
+
+  const separator = hrefValue.includes("?") ? "&" : "?";
+
+  return hrefValue + separator + "returnTo=" + encodeURIComponent(returnTo);
+}
 
 function getRecordId(record: Record<string, unknown>): string {
   return String(record.id ?? record._id ?? record.uid ?? "").trim();
@@ -176,6 +196,9 @@ export function ERPOperationalTable({
   data,
 }: ERPOperationalTableProps) {
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const operationalReturnTo = buildOperationalReturnTo(pathname, searchParams);
   const [expandedRows, setExpandedRows] = useState<Record<string, boolean>>({});
   const [relationLabels, setRelationLabels] = useState<Record<string, Record<string, string>>>({});
   const [childTotals, setChildTotals] = useState<Record<string, Record<string, number>>>({});
@@ -289,7 +312,12 @@ export function ERPOperationalTable({
       return;
     }
 
-    router.push("/" + module.metadata.key + "/" + id + "/edit");
+    router.push(
+      appendOperationalReturnTo(
+        "/" + module.metadata.key + "/" + id + "/edit",
+        operationalReturnTo
+      )
+    );
   }
 
   function toggleExpanded(record: Record<string, unknown>) {

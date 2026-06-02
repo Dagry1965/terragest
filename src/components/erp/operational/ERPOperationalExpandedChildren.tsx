@@ -62,6 +62,7 @@ const expandedChildrenTokens = {
 };
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import { usePathname, useSearchParams } from "next/navigation";
 
 import type {
   ERPCompositionChild,
@@ -85,6 +86,26 @@ type ERPOperationalExpandedChildrenProps = {
 
 function getRecordId(record: Record<string, unknown>): string {
   return String(record.id ?? record._id ?? record.uid ?? "").trim();
+}
+
+function buildExpandedReturnTo(
+  pathname: string | null,
+  searchParams: { toString(): string } | null
+): string {
+  const path = pathname ?? "";
+  const query = searchParams?.toString() ?? "";
+
+  return query ? path + "?" + query : path;
+}
+
+function appendExpandedReturnTo(hrefValue: string, returnTo: string): string {
+  if (!hrefValue.startsWith("/") || !returnTo || hrefValue.includes("returnTo=")) {
+    return hrefValue;
+  }
+
+  const separator = hrefValue.includes("?") ? "&" : "?";
+
+  return hrefValue + separator + "returnTo=" + encodeURIComponent(returnTo);
 }
 
 function buildRecordHref(moduleKey: string, record: Record<string, unknown>): string {
@@ -203,7 +224,11 @@ export function ERPOperationalExpandedChildren({
   parentModule,
   parentRecord,
 }: ERPOperationalExpandedChildrenProps) {
-  const parentRecordId = getRecordId(parentRecord);
+  
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const expandedReturnTo = buildExpandedReturnTo(pathname, searchParams);
+const parentRecordId = getRecordId(parentRecord);
   const children = useMemo(
     () => parentModule.composition?.children ?? [],
     [parentModule]
@@ -294,7 +319,10 @@ export function ERPOperationalExpandedChildren({
                     >
                       <div className="mb-3 flex justify-end">
                         <Link
-                          href={buildRecordHref(group.module.metadata.key, record)}
+                          href={appendExpandedReturnTo(
+                            buildRecordHref(group.module.metadata.key, record),
+                            expandedReturnTo
+                          )}
                           className="rounded-2xl border border-emerald-200 bg-white px-3 py-2 text-xs font-black text-emerald-700 transition hover:bg-emerald-50"
                         >
                           {getOpenLabel(group.child)}
@@ -393,10 +421,13 @@ export function ERPOperationalExpandedChildren({
 
                                           <td className="px-3 py-2 text-right">
                                             <Link
-                                              href={buildRecordHref(
-                                                grandchildGroup.module.metadata.key,
-                                                line
-                                              )}
+                                              href={appendExpandedReturnTo(
+                                  buildRecordHref(
+                                    grandchildGroup.module.metadata.key,
+                                    line
+                                  ),
+                                  expandedReturnTo
+                                )}
                                               className="rounded-xl border border-emerald-200 bg-white px-2.5 py-1.5 text-[11px] font-black text-emerald-700 transition hover:bg-emerald-50"
                                             >
                                               {getOpenLabel(grandchildGroup.child)}
