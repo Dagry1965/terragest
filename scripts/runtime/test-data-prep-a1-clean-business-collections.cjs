@@ -60,6 +60,7 @@ const TARGET_COLLECTIONS = [
   "lignescommandestockauto",
   "receptionsstockauto",
   "mouvementsstockauto",
+  "rappelsauto",
 ];
 
 const PROTECTED_COLLECTIONS = [
