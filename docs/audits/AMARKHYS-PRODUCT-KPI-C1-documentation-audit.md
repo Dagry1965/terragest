@@ -13,8 +13,8 @@ Verifier que la documentation et les points de branchement refletent correctemen
 
 ## Resultats
 
-- OK: 25
-- FAIL: 1
+- OK: 26
+- FAIL: 0
 
 | Scope | Check | Result | Details |
 | --- | --- | --- | --- |
@@ -25,7 +25,7 @@ Verifier que la documentation et les points de branchement refletent correctemen
 | documentation | B2 audit mentions RuntimeProductKpiEngine | OK | Documentation should state that KPI computation is delegated to the runtime engine. |
 | documentation | B2 audit mentions product operational summary | OK | Documentation should mention the visible operational summary. |
 | documentation | B2 audit mentions no visual regression | OK | Documentation should mention that visual rendering was preserved. |
-| documentation | B2 audit mentions validation/build | FAIL | Documentation should include the build validation. |
+| documentation | B2 audit mentions validation/build | OK | Documentation should include the build validation. |
 | runtime-kpi | RuntimeProductKpiEngine exposes orderedQuantity | OK | Expected KPI marker: orderedQuantity |
 | runtime-kpi | RuntimeProductKpiEngine exposes deliveredQuantity | OK | Expected KPI marker: deliveredQuantity |
 | runtime-kpi | RuntimeProductKpiEngine exposes remainingQuantity | OK | Expected KPI marker: remainingQuantity |
@@ -47,4 +47,4 @@ Verifier que la documentation et les points de branchement refletent correctemen
 
 ## Conclusion
 
-Audit documentaire incomplet. Corriger uniquement la documentation ou les traces d'audit manquantes, sans modifier le comportement runtime.
+Audit documentaire OK. La documentation et le branchement KPI produit sont coherents avec l'etat valide de AMARKHYS-PRODUCT-KPI-B2.
