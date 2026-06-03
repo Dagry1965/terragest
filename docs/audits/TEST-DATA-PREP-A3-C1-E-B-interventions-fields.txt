@@ -1,0 +1,223 @@
+﻿
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:34:        key: 
+"clientId",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:35:        label: 
+"Client",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:36:        type: 
+"relation",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:37:        relation: { 
+module: "clientsauto" },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:38:        required: 
+true,
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:39:        searchable: 
+true,
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:40:        list: { 
+visible: true, order: 1 },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:44:        key: 
+"vehiculeId",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:45:        label: 
+"Véhicule",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:46:        type: 
+"relation",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:47:        relation: { 
+module: "vehicules" },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:48:        required: 
+true,
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:49:        searchable: 
+true,
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:50:        list: { 
+visible: true, order: 2 },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:54:        key: 
+"rendezVousId",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:55:        label: 
+"Rendez-vous",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:56:        type: 
+"relation",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:57:        relation: { 
+module: "rendezvous" },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:58:        searchable: 
+true,
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:59:        list: { 
+visible: false },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:60:        grid: { 
+cols: 6 },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:73:        key: 
+"dateIntervention",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:74:        label: 
+"Date intervention",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:75:        type: 
+"date",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:76:        required: 
+true,
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:77:        list: { 
+visible: true, order: 3 },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:78:        grid: { 
+cols: 6 },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:79:      },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:81:        key: 
+"typeIntervention",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:82:        label: 
+"Type intervention",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:83:        type: 
+"select",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:84:        options: [
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:85:          { label: 
+"Vidange", value: "vidange" },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:86:          { label: 
+"Diagnostic", value: "diagnostic" },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:87:          { label: 
+"Réparation", value: "reparation" },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:88:          { label: 
+"Pneumatiques", value: "pneumatiques" },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:89:          { label: 
+"Contrôle", value: "controle" },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:90:          { label: 
+"Autre", value: "autre" },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:91:        ],
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:92:        list: { 
+visible: true, order: 4 },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:93:        grid: { 
+cols: 6 },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:94:      },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:95:{
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:96:        key: 
+"kilometrage",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:103:        key: 
+"diagnostic",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:104:        label: 
+"Diagnostic",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:105:        type: 
+"textarea",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:106:        list: { 
+visible: false },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:107:        grid: { 
+cols: 12 },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:108:      },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:109:{
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:138:        key: 
+"montantHT",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:139:        label: 
+"Montant HT",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:140:        type: 
+"number",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:141:        list: { 
+visible: true, order: 7 },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:142:        grid: { 
+cols: 4 },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:143:        
+helperText: "Montant calculé depuis les lignes validées. Ancien équivalent legacy : coutTotal.",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:144:      },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:146:        key: 
+"statut",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:147:        label: 
+"Statut",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:148:        
+readonlyIf: {
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:149:          field: 
+"statut",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:150:          
+operator: "notEquals",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:151:          value: 
+"__never_editable__",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:152:        },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:153:        
+helperText: "Statut piloté par les actions. Utilisez les boutons d’action pour changer l’état de 
+l’intervention.",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:154:        type: 
+"select",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:155:        
+defaultValue: "ouverte",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:156:        options: [
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:157:          { label: 
+"Ouverte", value: "ouverte" },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:158:          { label: 
+"Diagnostic", value: "diagnostic" },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:159:          { label: 
+"En cours", value: "en_cours" },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:160:          { label: 
+"Terminée", value: "terminee" },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:161:          { label: 
+"Facturée", value: "facturee" },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:162:          { label: 
+"Annulée", value: "annulee" },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:163:        ],
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:164:        list: { 
+visible: true, order: 5 },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:165:        grid: { 
+cols: 6 },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:166:      }
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:167:    ],
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:168:  },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:305:        key: 
+"statut",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:306:        label: 
+"Statut",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:307:        field: 
+"statut",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:308:        type: 
+"select",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:309:        options: [
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:310:          { label: 
+"Ouverte", value: "ouverte" },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:311:          { label: 
+"Diagnostic", value: "diagnostic" },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:312:          { label: 
+"En cours", value: "en_cours" },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:313:          { label: 
+"Terminée", value: "terminee" },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:314:          { label: 
+"Facturée", value: "facturee" },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:315:          { label: 
+"Annulée", value: "annulee" },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:316:        ],
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:317:      },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:318:      {
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:319:        key: 
+"typeIntervention",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:320:        label: 
+"Type intervention",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:321:        field: 
+"typeIntervention",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:322:        type: 
+"select",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:323:        options: [
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:324:          { label: 
+"Vidange", value: "vidange" },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:325:          { label: 
+"Diagnostic", value: "diagnostic" },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:326:          { label: 
+"Réparation", value: "reparation" },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:327:          { label: 
+"Pneumatiques", value: "pneumatiques" },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:328:          { label: 
+"Contrôle", value: "controle" },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:329:          { label: 
+"Autre", value: "autre" },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:330:        ],
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:331:      },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:332:      {
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:333:        key: 
+"clientId",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:334:        label: 
+"Client",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:335:        field: 
+"clientId",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:336:        type: 
+"relation",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:337:      },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:338:    ],
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:339:    table: {
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:658:        { key: 
+"diagnostic", label: "Diagnostic", color: "warning" },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:659:        { key: 
+"en_cours", label: "En cours", color: "warning" },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:660:        { key: 
+"terminee", label: "Terminée", color: "success" },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:661:        { key: 
+"facturee", label: "Facturée", color: "success" },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:662:        { key: 
+"annulee", label: "Annulée", color: "danger" },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:663:      ],
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:664:
+
+

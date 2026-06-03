@@ -1,0 +1,2592 @@
+﻿
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:15:      required: true,
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:16:    },
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:17:    key: "rendezvous",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:18:    label: "Rendez-vous",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:19:    description: "Gestion des 
+rendez-vous atelier AMARKHYS",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:20:    icon: "calendar",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:21:    category: "amarkhys",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:22:
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:23:    features: {
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:24:      dashboard: true,
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:42:        key: "codeRendezVous",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:43:          label: "Code 
+rendez-vous",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:44:        type: "text",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:45:        required: true,
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:46:        unique: true,
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:47:        searchable: true,
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:48:        list: { visible: true, 
+order: 1 },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:49:        grid: { cols: 4 },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:50:      },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:51:{
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:52:        key: "clientId",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:53:        label: "Client",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:54:        type: "relation",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:55:        relation: { module: 
+"clientsauto" },
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:56:        required: true,
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:57:        searchable: true,
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:58:        list: { visible: true, 
+order: 2 },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:59:        grid: { cols: 6 },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:60:      },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:61:{
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:62:        key: "vehiculeId",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:63:        label: "Véhicule",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:64:        type: "relation",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:65:        relation: {
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:66:          module: "vehicules",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:67:          filterBy: {
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:68:            sourceField: 
+"clientId",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:69:            targetField: 
+"clientId",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:70:            includeEmptyTarget: 
+true,
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:71:          },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:72:        },
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:73:        required: true,
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:74:        searchable: true,
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:75:        list: { visible: true, 
+order: 3 },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:76:        grid: { cols: 6 },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:77:      },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:78:{
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:79:        key: "dateRendezVous",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:80:        label: "Date rendez-vous",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:81:        type: "date",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:82:        required: true,
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:83:        list: { visible: true, 
+order: 4 },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:84:        grid: { cols: 4 },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:85:      },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:86:{
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:87:        key: "heureRendezVous",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:88:        label: "Heure",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:89:        type: "text",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:90:        required: true,
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:91:        list: { visible: true, 
+order: 5 },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:92:        grid: { cols: 4 },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:93:      },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:94:{
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:95:        key: "durationMinutes",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:96:        label: "Durée prévue",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:97:        type: "number",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:98:        defaultValue: 60,
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:99:        list: { visible: false },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:100:        grid: { cols: 4 },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:101:      },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:102:{
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:103:        key: "startAt",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:104:        label: "Début créneau",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:105:        type: "text",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:106:        list: { visible: false },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:107:        grid: { cols: 4 },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:108:      },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:109:{
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:110:        key: "endAt",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:111:        label: "Fin créneau",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:112:        type: "text",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:113:        list: { visible: false },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:114:        grid: { cols: 4 },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:115:      },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:116:{
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:117:        key: 
+"consumedByInterventionId",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:118:        label: "Intervention 
+liée",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:119:        type: "relation",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:120:        relation: { module: 
+"interventionsauto" },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:121:        searchable: true,
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:122:        list: { visible: false },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:123:        grid: { cols: 4 },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:124:      },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:125:{
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:126:        key: "typeService",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:127:        label: "Type service",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:128:      required: true,
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:129:        type: "select",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:130:        options: [
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:131:          { label: "Vidange", 
+value: "vidange" },
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:132:          { label: "Diagnostic", 
+value: "diagnostic" },
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:133:          { label: "Réparation", 
+value: "reparation" },
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:134:          { label: "Contrôle", 
+value: "controle" },
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:135:          { label: "Autre", 
+value: "autre" },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:136:        ],
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:137:        list: { visible: true, 
+order: 6 },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:138:        grid: { cols: 4 },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:139:      },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:140:{
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:141:        key: "motif",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:142:        label: "Motif",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:143:        type: "textarea",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:144:        list: { visible: false },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:145:        grid: { cols: 12 },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:146:      },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:147:{
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:148:        key: "commentaire",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:149:        label: "Commentaire",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:150:        type: "textarea",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:151:        list: { visible: false },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:152:        grid: { cols: 12 },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:153:      },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:154:{
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:155:        key: "statut",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:156:        label: "Statut",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:157:        readonlyIf: {
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:158:          field: "statut",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:159:          operator: "in",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:160:          values: ["planifie", 
+"confirme", "en_cours", "termine", "annule"],
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:161:        },
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:162:        helperText: "Statut 
+piloté par les actions. Utilisez les boutons d’action pour changer l’état du rendez-vous.",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:163:        type: "select",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:164:        defaultValue: "planifie",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:165:        options: [
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:166:          { label: "Planifié", 
+value: "planifie" },
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:167:          { label: "Confirmé", 
+value: "confirme" },
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:168:          { label: "En cours", 
+value: "en_cours" },
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:169:          { label: "Terminé", 
+value: "termine" },
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:170:          { label: "Annulé", 
+value: "annule" },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:171:        ],
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:172:        list: { visible: true, 
+order: 7 },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:173:        grid: { cols: 6 },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:174:      }
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:175:    ],
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:176:  },
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:183:        key: "planification",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:184:        label: "Planification",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:185:
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:186:        fields: [
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:187:          "clientId",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:188:          "vehiculeId",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:189:          "dateRendezVous",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:190:          "heureRendezVous",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:191:          "durationMinutes",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:192:          "typeService",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:193:          "statut",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:194:        ],
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:195:
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:196:        sections: [
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:197:          {
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:198:            key: "rdv",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:199:            title: "Rendez-vous",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:200:            fields: [
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:201:              "clientId",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:202:              "vehiculeId",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:203:              "dateRendezVous",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:204:              "heureRendezVous",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:205:              "durationMinutes",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:206:              "typeService",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:207:              "statut",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:208:            ],
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:209:          },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:210:        ],
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:211:      },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:212:
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:213:      {
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:214:        key: "details",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:215:        label: "Détails",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:216:
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:217:        fields: [
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:218:          "motif",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:219:          "commentaire",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:220:        ],
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:221:
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:224:            key: "description",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:225:            title: "Détails du 
+rendez-vous",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:226:            fields: [
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:227:              "motif",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:228:              "commentaire",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:229:            ],
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:230:          },
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:244:      runtimeLabel: "Runtime 
+ERP",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:245:      eyebrow: "AMARKHYS · 
+Runtime ERP",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:246:    },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:247:    kpis: [
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:248:      {
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:249:        key: "total",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:250:        label: "Total",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:251:        count: true,
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:252:        tone: "blue",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:253:        icon: "calendar",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:254:        description: "Nombre 
+total de rendez-vous affichés.",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:255:      },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:256:      {
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:257:        key: "confirmes",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:258:        label: "Confirmés",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:259:        field: "statut",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:260:        equals: "confirme",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:261:        tone: "green",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:262:        icon: "check",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:263:      },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:264:      {
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:265:        key: "en_cours",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:266:        label: "En cours",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:267:        field: "statut",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:268:        equals: "en_cours",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:269:        tone: "orange",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:270:        icon: "clock",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:271:      },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:272:      {
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:273:        key: "annules",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:274:        label: "Annulés",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:275:        field: "statut",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:276:        equals: "annule",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:277:        tone: "gray",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:278:        icon: "x",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:279:      },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:280:    ],
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:281:    filters: [
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:283:        key: "statut",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:284:        label: "Statut",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:285:        field: "statut",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:286:        type: "select",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:287:        options: [
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:288:          { label: "Planifié", 
+value: "planifie" },
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:289:          { label: "Confirmé", 
+value: "confirme" },
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:290:          { label: "En cours", 
+value: "en_cours" },
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:291:          { label: "Terminé", 
+value: "termine" },
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:292:          { label: "Annulé", 
+value: "annule" },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:293:        ],
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:294:      },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:295:      {
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:296:        key: "typeService",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:297:        label: "Type de service",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:298:        field: "typeService",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:299:        type: "select",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:300:        options: [
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:301:          { label: "Vidange", 
+value: "vidange" },
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:302:          { label: "Diagnostic", 
+value: "diagnostic" },
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:303:          { label: "Réparation", 
+value: "reparation" },
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:304:          { label: "Contrôle", 
+value: "controle" },
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:305:          { label: "Autre", 
+value: "autre" },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:306:        ],
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:307:      },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:308:      {
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:309:        key: "vehiculeId",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:310:        label: "Véhicule",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:311:        field: "vehiculeId",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:312:        type: "relation",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:313:      },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:314:    ],
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:315:    table: {
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:316:      enableSearch: true,
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:317:      enableSelection: true,
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:318:      enableDensityToggle: true,
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:321:        "dateRendezVous",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:322:        "heureRendezVous",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:323:        "clientId",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:324:        "vehiculeId",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:325:        "typeService",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:326:        "statut",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:327:      ],
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:328:      relationLabelFields: {
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:329:        clientId: [
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:330:          "nom",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:331:          "prenom",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:332:          "telephone",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:333:        ],
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:334:        vehiculeId: [
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:335:          "marque",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:336:          "modele",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:337:          "immatriculation",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:338:        ],
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:339:      },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:340:      hiddenFields: [
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:347:        "updatedAt",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:348:        "removedAt",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:349:        
+"consumedByInterventionId",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:350:      ],
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:351:    },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:352:    rightPanel: {
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:353:      enabled: true,
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:354:      title: "Planning du jour",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:355:      type: "planning",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:356:      metrics: [
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:357:        {
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:358:          key: "total",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:359:          label: "Rendez-vous 
+affichés",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:360:          type: "count",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:361:          format: "number",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:362:        },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:363:        {
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:364:          key: "confirmes",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:365:          label: "Confirmés",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:366:          type: "countWhere",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:367:          field: "statut",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:368:          equals: "confirme",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:369:          format: "number",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:370:        },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:371:        {
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:372:          key: "en_cours",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:373:          label: "En cours",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:374:          type: "countWhere",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:375:          field: "statut",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:376:          equals: "en_cours",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:377:          format: "number",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:378:        },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:379:      ],
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:380:    },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:381:  },
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:387:    dateField: "dateRendezVous",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:388:    timeField: "heureRendezVous",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:389:    durationField: 
+"durationMinutes",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:390:    startField: "startAt",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:391:    endField: "endAt",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:392:    statusField: "statut",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:393:    resourceField: "vehiculeId",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:394:    blockingStatuses: 
+["planifie", "confirme", "en_cours"],
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:395:    bufferMinutes: 15,
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:396:    capacity: 1,
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:397:
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:398:    calendarExceptions: [
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:399:      // 
+Q22F2A_RENDEZVOUS_CALENDAR_EXCEPTIONS_EXAMPLE
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:401:      // { date: "2026-01-01", 
+isClosed: true, reason: "Jour fermé" },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:402:    ],
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:403:  },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:404:  composition: {
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:405:    // 
+Q21E_D_APPOINTMENT_RELATIONSHIP_COMPOSITION
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:406:    // Rendez-vous knows its 
+client, vehicle and generated intervention.
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:407:    labelFields: ["clientId", 
+"vehiculeId", "dateRendezVous", "heureRendezVous", "typeService", "statut"],
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:408:
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:409:    contextBanner: {
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:410:      title: "Contexte 
+rendez-vous",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:411:      items: [
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:412:        {
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:413:          relationField: 
+"clientId",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:414:          moduleKey: 
+"clientsauto",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:415:          labelFields: 
+["prenom", "nom", "telephone"],
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:416:          tone: "client",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:417:        },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:418:        {
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:419:          relationField: 
+"vehiculeId",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:420:          moduleKey: "vehicules",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:421:          labelFields: 
+["marque", "modele", "immatriculation"],
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:422:          tone: "vehicle",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:423:        },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:424:      ],
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:425:    },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:426:
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:429:        key: 
+"interventions-rendezvous",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:430:        moduleKey: 
+"interventionsauto",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:431:        foreignKey: 
+"rendezVousId",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:432:        title: "Intervention 
+générée",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:433:        description: 
+"Intervention créée ou liée à ce rendez-vous.",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:434:        displayIn: ["detail"],
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:435:        lazy: true,
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:436:        position: "after",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:437:        allowCreate: false,
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:438:        createLabel: "Créer une 
+intervention",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:439:        openLabel: "Ouvrir 
+intervention",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:440:        prefillFromParent: {
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:441:          rendezVousId: "id",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:442:          clientId: "clientId",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:443:          vehiculeId: 
+"vehiculeId",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:444:        },
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:445:        lockFields: 
+["rendezVousId", "clientId", "vehiculeId"],
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:446:        labelFields: 
+["dateIntervention", "typeIntervention", "statut"],
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:447:        subtitleFields: 
+["clientId", "vehiculeId", "coutTotal"],
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:448:        totalField: "coutTotal",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:449:        relations: [
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:450:          {
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:451:            field: "clientId",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:452:            moduleKey: 
+"clientsauto",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:453:            labelFields: 
+["prenom", "nom", "telephone"],
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:454:          },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:455:          {
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:456:            field: "vehiculeId",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:457:            moduleKey: 
+"vehicules",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:458:            labelFields: 
+["marque", "modele", "immatriculation"],
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:459:          },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:460:        ],
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:461:      },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:462:    ],
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:463:  },
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:468:      key: "rendezvous",
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:469:      label: "Cycle rendez-vous",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:470:      initialState: "planifie",
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:471:
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:472:      states: [
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:473:        { key: "planifie", 
+label: "Planifié", color: "default" },
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:474:        { key: "confirme", 
+label: "Confirmé", color: "success" },
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:475:        { key: "en_cours", 
+label: "En cours", color: "warning" },
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:476:        { key: "termine", label: 
+"Terminé", color: "success" },
+> src\runtime\modules\generated\rendezvous\rendezvous.module.ts:477:        { key: "annule", label: 
+"Annulé", color: "danger" },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:478:      ],
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:479:
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:480:      transitions: [
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:481:        { from: "planifie", to: 
+"confirme", action: "Confirmer" },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:482:        { from: "confirme", to: 
+"en_cours", action: "Démarrer" },
+  src\runtime\modules\generated\rendezvous\rendezvous.module.ts:483:        { from: "en_cours", to: 
+"termine", action: "Terminer" },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:9:    key: 
+"interventionsauto",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:10:    label: 
+"Interventions",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:11:    description: 
+"Interventions atelier AMARKHYS",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:12:    icon: "wrench",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:13:    category: 
+"amarkhys",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:14:
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:15:    features: {
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:16:      dashboard: 
+true,
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:34:        key: 
+"clientId",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:35:        label: 
+"Client",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:36:        type: 
+"relation",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:37:        relation: { 
+module: "clientsauto" },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:38:        required: 
+true,
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:39:        searchable: 
+true,
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:40:        list: { 
+visible: true, order: 1 },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:41:        grid: { 
+cols: 6 },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:42:      },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:43:{
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:44:        key: 
+"vehiculeId",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:45:        label: 
+"Véhicule",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:46:        type: 
+"relation",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:47:        relation: { 
+module: "vehicules" },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:48:        required: 
+true,
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:49:        searchable: 
+true,
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:50:        list: { 
+visible: true, order: 2 },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:51:        grid: { 
+cols: 6 },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:52:      },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:53:{
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:54:        key: 
+"rendezVousId",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:55:        label: 
+"Rendez-vous",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:56:        type: 
+"relation",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:57:        relation: { 
+module: "rendezvous" },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:58:        searchable: 
+true,
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:59:        list: { 
+visible: false },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:60:        grid: { 
+cols: 6 },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:61:      },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:62:      {
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:63:        key: 
+"mecanicienId",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:64:        label: 
+"Mécanicien responsable",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:65:        type: 
+"relation",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:66:        relation: { 
+module: "employes" },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:67:        searchable: 
+true,
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:68:        list: { 
+visible: true, order: 5 },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:69:        grid: { 
+cols: 6 },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:70:        helperText: 
+"Mécanicien responsable réel de l’intervention.",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:71:      },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:72:{
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:73:        key: 
+"dateIntervention",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:74:        label: 
+"Date intervention",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:75:        type: 
+"date",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:76:        required: 
+true,
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:77:        list: { 
+visible: true, order: 3 },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:78:        grid: { 
+cols: 6 },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:79:      },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:80:{
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:81:        key: 
+"typeIntervention",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:82:        label: 
+"Type intervention",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:83:        type: 
+"select",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:84:        options: [
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:85:          { label: 
+"Vidange", value: "vidange" },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:86:          { label: 
+"Diagnostic", value: "diagnostic" },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:87:          { label: 
+"Réparation", value: "reparation" },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:88:          { label: 
+"Pneumatiques", value: "pneumatiques" },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:89:          { label: 
+"Contrôle", value: "controle" },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:90:          { label: 
+"Autre", value: "autre" },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:91:        ],
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:92:        list: { 
+visible: true, order: 4 },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:93:        grid: { 
+cols: 6 },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:94:      },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:95:{
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:96:        key: 
+"kilometrage",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:97:        label: 
+"Kilométrage",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:98:        type: 
+"number",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:99:        list: { 
+visible: false },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:100:        grid: { 
+cols: 6 },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:101:      },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:102:{
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:103:        key: 
+"diagnostic",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:104:        label: 
+"Diagnostic",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:105:        type: 
+"textarea",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:106:        list: { 
+visible: false },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:107:        grid: { 
+cols: 12 },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:108:      },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:109:{
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:110:        key: 
+"travauxEffectues",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:111:        label: 
+"Travaux effectués",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:112:        type: 
+"textarea",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:113:        list: { 
+visible: false },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:114:        grid: { 
+cols: 12 },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:115:      },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:116:{
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:117:        key: 
+"coutPieces",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:118:        label: 
+"Coût pièces",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:119:        type: 
+"number",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:120:        list: { 
+visible: false },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:121:        grid: { 
+cols: 4 },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:122:      },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:123:{
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:124:        key: 
+"coutMainOeuvre",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:125:        label: 
+"Coût main d'oeuvre",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:126:        type: 
+"number",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:127:        list: { 
+visible: false },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:128:        grid: { 
+cols: 4 },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:129:      },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:130:{
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:131:        key: 
+"coutTotal",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:132:        label: 
+"Coût total",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:133:        type: 
+"number",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:134:        list: { 
+visible: true, order: 6 },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:135:        grid: { 
+cols: 4 },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:136:      },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:137:      {
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:138:        key: 
+"montantHT",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:139:        label: 
+"Montant HT",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:140:        type: 
+"number",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:141:        list: { 
+visible: true, order: 7 },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:142:        grid: { 
+cols: 4 },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:143:        
+helperText: "Montant calculé depuis les lignes validées. Ancien équivalent legacy : coutTotal.",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:144:      },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:145:{
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:146:        key: 
+"statut",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:147:        label: 
+"Statut",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:148:        
+readonlyIf: {
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:149:          field: 
+"statut",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:150:          
+operator: "notEquals",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:151:          value: 
+"__never_editable__",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:152:        },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:153:        
+helperText: "Statut piloté par les actions. Utilisez les boutons d’action pour changer l’état de 
+l’intervention.",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:154:        type: 
+"select",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:155:        
+defaultValue: "ouverte",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:156:        options: [
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:157:          { label: 
+"Ouverte", value: "ouverte" },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:158:          { label: 
+"Diagnostic", value: "diagnostic" },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:159:          { label: 
+"En cours", value: "en_cours" },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:160:          { label: 
+"Terminée", value: "terminee" },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:161:          { label: 
+"Facturée", value: "facturee" },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:162:          { label: 
+"Annulée", value: "annulee" },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:163:        ],
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:164:        list: { 
+visible: true, order: 5 },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:165:        grid: { 
+cols: 6 },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:166:      }
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:167:    ],
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:168:  },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:175:        key: 
+"contexte",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:176:        label: 
+"Contexte",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:177:
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:178:        fields: [
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:179:          
+"clientId",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:180:          
+"vehiculeId",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:181:          
+"rendezVousId",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:182:              
+"mecanicienId",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:183:          
+"dateIntervention",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:184:          
+"typeIntervention",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:185:          "statut",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:186:        ],
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:187:
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:188:        sections: [
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:189:          {
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:190:            key: 
+"infos",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:191:            title: 
+"Informations intervention",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:192:            
+fields: [
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:193:              
+"clientId",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:194:              
+"vehiculeId",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:195:              
+"rendezVousId",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:196:              
+"mecanicienId",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:197:              
+"dateIntervention",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:198:              
+"typeIntervention",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:199:              
+"statut",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:200:            ],
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:201:          },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:202:        ],
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:203:      },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:204:
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:205:      {
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:206:        key: 
+"atelier",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:207:        label: 
+"Atelier",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:208:
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:209:        fields: [
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:210:          
+"diagnostic",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:211:          
+"travauxEffectues",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:212:        ],
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:213:
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:216:            key: 
+"travaux",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:217:            title: 
+"Diagnostic et travaux",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:218:            
+fields: [
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:219:              
+"diagnostic",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:220:              
+"travauxEffectues",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:221:            ],
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:222:          },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:227:        key: 
+"couts",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:228:        label: 
+"Coûts",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:229:
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:230:        fields: [
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:231:          
+"coutPieces",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:232:          
+"coutMainOeuvre",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:233:          
+"coutTotal",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:234:        ],
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:238:            key: 
+"financier",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:239:            title: 
+"Coûts intervention",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:240:            
+fields: [
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:241:              
+"coutPieces",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:242:              
+"coutMainOeuvre",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:243:              
+"coutTotal",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:244:            ],
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:258:      
+runtimeLabel: "Runtime ERP",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:259:      eyebrow: 
+"AMARKHYS · Runtime ERP",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:260:    },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:261:    kpis: [
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:262:      {
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:263:        key: 
+"total",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:264:        label: 
+"Total",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:265:        count: 
+true,
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:266:        tone: 
+"blue",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:267:        icon: 
+"activity",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:268:        
+description: "Nombre total d'interventions affichées.",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:269:      },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:270:      {
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:271:        key: 
+"ouvertes",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:272:        label: 
+"Ouvertes",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:273:        field: 
+"statut",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:274:        equals: 
+"ouverte",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:275:        tone: 
+"blue",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:276:        icon: 
+"calendar",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:277:      },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:278:      {
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:279:        key: 
+"en_cours",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:280:        label: "En 
+cours",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:281:        field: 
+"statut",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:282:        equals: 
+"en_cours",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:283:        tone: 
+"orange",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:284:        icon: 
+"clock",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:285:      },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:286:      {
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:287:        key: 
+"terminees",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:288:        label: 
+"Terminées",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:289:        field: 
+"statut",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:290:        equals: 
+"terminee",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:291:        tone: 
+"green",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:292:        icon: 
+"check",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:293:      },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:294:      {
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:295:        key: 
+"annulees",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:296:        label: 
+"Annulées",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:297:        field: 
+"statut",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:298:        equals: 
+"annulee",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:299:        tone: 
+"gray",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:300:        icon: "x",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:301:      },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:302:    ],
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:303:    filters: [
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:305:        key: 
+"statut",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:306:        label: 
+"Statut",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:307:        field: 
+"statut",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:308:        type: 
+"select",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:309:        options: [
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:310:          { label: 
+"Ouverte", value: "ouverte" },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:311:          { label: 
+"Diagnostic", value: "diagnostic" },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:312:          { label: 
+"En cours", value: "en_cours" },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:313:          { label: 
+"Terminée", value: "terminee" },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:314:          { label: 
+"Facturée", value: "facturee" },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:315:          { label: 
+"Annulée", value: "annulee" },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:316:        ],
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:317:      },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:318:      {
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:319:        key: 
+"typeIntervention",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:320:        label: 
+"Type intervention",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:321:        field: 
+"typeIntervention",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:322:        type: 
+"select",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:323:        options: [
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:324:          { label: 
+"Vidange", value: "vidange" },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:325:          { label: 
+"Diagnostic", value: "diagnostic" },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:326:          { label: 
+"Réparation", value: "reparation" },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:327:          { label: 
+"Pneumatiques", value: "pneumatiques" },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:328:          { label: 
+"Contrôle", value: "controle" },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:329:          { label: 
+"Autre", value: "autre" },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:330:        ],
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:331:      },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:332:      {
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:333:        key: 
+"clientId",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:334:        label: 
+"Client",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:335:        field: 
+"clientId",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:336:        type: 
+"relation",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:337:      },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:338:    ],
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:339:    table: {
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:340:      
+enableSearch: true,
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:341:      
+enableSelection: true,
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:342:      
+enableDensityToggle: true,
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:344:        "clientId",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:345:        
+"vehiculeId",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:346:        
+"dateIntervention",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:347:        
+"typeIntervention",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:348:        
+"coutTotal",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:349:        "statut",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:350:      ],
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:351:      
+relationLabelFields: {
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:352:        
+mecanicienId: ["prenom", "nom", "fonction", "telephone"],
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:353:        clientId: [
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:354:          "nom",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:355:          "prenom",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:356:          
+"telephone",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:357:        ],
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:358:        
+vehiculeId: [
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:359:          "marque",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:360:          "modele",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:361:          
+"immatriculation",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:362:        ],
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:363:        
+rendezVousId: [
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:364:          
+"dateRendezVous",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:365:          
+"heureRendezVous",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:366:          
+"typeService",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:367:        ],
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:368:      },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:369:      
+hiddenFields: [
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:370:        "id",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:371:        "_id",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:376:        
+"updatedAt",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:377:        
+"removedAt",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:378:      ],
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:379:    },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:380:    rightPanel: {
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:381:      enabled: 
+true,
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:382:      title: 
+"Atelier aujourd'hui",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:383:      type: 
+"summary",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:384:      metrics: [
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:385:        {
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:386:          key: 
+"total",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:387:          label: 
+"Interventions affichées",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:388:          type: 
+"count",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:389:          format: 
+"number",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:390:        },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:391:        {
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:392:          key: 
+"en_cours",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:393:          label: 
+"En cours",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:394:          type: 
+"countWhere",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:395:          field: 
+"statut",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:396:          equals: 
+"en_cours",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:397:          format: 
+"number",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:398:        },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:399:        {
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:400:          key: 
+"cout_total",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:401:          label: 
+"Coût total",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:402:          type: 
+"sum",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:403:          field: 
+"coutTotal",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:404:          format: 
+"currency",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:405:          
+currency: "FCFA",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:406:        },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:407:      ],
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:408:    },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:417:          
+relationField: "clientId",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:418:          
+moduleKey: "clientsauto",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:419:          
+labelFields: [
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:420:            
+"prenom",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:421:            "nom",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:422:            
+"telephone",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:423:          ],
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:424:          tone: 
+"client",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:427:          
+relationField: "vehiculeId",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:428:          
+moduleKey: "vehicules",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:429:          
+labelFields: [
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:430:            
+"marque",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:431:            
+"modele",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:432:            
+"immatriculation",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:433:          ],
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:434:          tone: 
+"vehicle",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:437:          
+relationField: "rendezVousId",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:438:          
+moduleKey: "rendezvous",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:439:          
+labelFields: [
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:440:            
+"dateRendezVous",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:441:            
+"heureRendezVous",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:442:            
+"typeService",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:443:            
+"statut",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:444:          ],
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:445:          tone: 
+"workshop",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:446:        },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:447:      ],
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:448:    },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:449:
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:451:      
+"dateIntervention",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:452:      
+"typeIntervention",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:453:      "statut",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:454:    ],
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:455:
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:456:    breadcrumbs: [
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:457:      {
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:458:        field: 
+"clientId",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:459:        moduleKey: 
+"clientsauto",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:460:        
+labelFields: [
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:461:          "nom",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:462:          
+"prenoms",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:463:          
+"telephone",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:464:        ],
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:465:      },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:467:        field: 
+"vehiculeId",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:468:        moduleKey: 
+"vehicules",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:469:        
+labelFields: [
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:470:          "marque",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:471:          "modele",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:472:          
+"immatriculation",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:473:        ],
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:474:      },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:476:        field: 
+"rendezVousId",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:477:        moduleKey: 
+"rendezvous",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:478:        
+labelFields: [
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:479:          
+"dateRendezVous",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:480:          
+"heureRendezVous",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:481:          "motif",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:482:        ],
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:483:      },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:484:    ],
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:485:
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:486:    relations: [
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:488:        field: 
+"clientId",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:489:        moduleKey: 
+"clientsauto",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:490:        
+labelFields: [
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:491:          "nom",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:492:          
+"prenoms",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:493:          
+"telephone",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:494:        ],
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:495:        
+snapshotFields: [
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:505:        field: 
+"vehiculeId",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:506:        moduleKey: 
+"vehicules",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:507:        
+labelFields: [
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:508:          "marque",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:509:          "modele",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:510:          
+"immatriculation",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:511:        ],
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:512:        
+snapshotFields: [
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:516:          
+"clientId",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:517:        ],
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:518:        displayAs: 
+"card",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:519:        
+lockDerivedFields: true,
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:520:      },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:521:      {
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:522:        field: 
+"rendezVousId",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:523:        moduleKey: 
+"rendezvous",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:524:        
+labelFields: [
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:525:          
+"dateRendezVous",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:526:          
+"heureRendezVous",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:527:          "motif",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:528:        ],
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:529:        
+snapshotFields: [
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:530:          
+"dateRendezVous",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:531:          
+"heureRendezVous",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:532:          "motif",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:533:          
+"clientId",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:534:          
+"vehiculeId",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:535:        ],
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:536:        displayAs: 
+"inline",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:537:        
+lockDerivedFields: true,
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:538:      },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:539:    ],
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:540:
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:542:      "clientId",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:543:      "vehiculeId",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:544:      
+"rendezVousId",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:545:      "coutPieces",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:546:      
+"coutMainOeuvre",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:547:      "coutTotal",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:548:    ],
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:549:
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:550:    
+readOnlyFields: [
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:551:          
+"clientId",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:552:      "vehiculeId",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:553:      
+"rendezVousId",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:554:      "coutPieces",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:555:      
+"coutMainOeuvre",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:556:      "coutTotal",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:557:      "montantHT",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:558:      "montantTTC",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:559:],
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:560:
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:561:    children: [
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:562:      {
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:563:        key: 
+"lignes",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:564:        moduleKey: 
+"lignesinterventionauto",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:565:        
+foreignKey: "interventionId",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:566:        title: 
+"Lignes de l’intervention",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:567:        
+createLabel: "Ajouter une ligne",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:568:        openLabel: 
+"Ouvrir ligne",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:569:        displayIn: 
+["detail", "edit"],
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:570:        position: 
+"after",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:571:        lazy: true,
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:572:
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:573:        // 
+Q20H5E_B1_CLEAN_LINE_PANEL_LABELS
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:574:        // 
+Affichage métier lisible des lignes liées :
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:575:        // titre 
+non dupliqué + statut/quantité/montant en informations secondaires.
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:576:        
+labelFields: [
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:577:          
+"designation",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:578:        ],
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:579:        
+subtitleFields: [
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:580:          "statut",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:581:          
+"quantite",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:582:          
+"typeLigne",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:583:          
+"montantTotal",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:584:          
+"stockId",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:585:        ],
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:586:
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:587:        
+totalField: "montantTotal",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:588:        relations: 
+[
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:589:          {
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:590:            field: 
+"produitId",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:591:            
+moduleKey: "produitsauto",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:592:            
+labelFields: [
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:593:              
+"nom",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:594:              
+"reference",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:595:              
+"code",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:596:            ],
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:597:            
+displayAs: "inline",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:600:            field: 
+"stockId",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:601:            
+moduleKey: "stocksauto",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:602:            
+labelFields: [
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:603:              
+"nom",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:604:              
+"emplacement",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:605:              
+"reference",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:606:            ],
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:607:            
+displayAs: "inline",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:614:        key: 
+"factures-intervention",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:615:        moduleKey: 
+"facturesauto",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:616:        
+foreignKey: "interventionId",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:617:        title: 
+"Factures de l'intervention",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:618:        openLabel: 
+"Ouvrir facture",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:619:        displayIn: 
+["detail"],
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:620:        lazy: true,
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:621:        position: 
+"after",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:622:        
+allowCreate: false,
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:623:        mode: 
+"readonly",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:624:        
+prefillFromParent: {
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:625:          
+interventionId: "id",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:626:          
+clientId: "clientId",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:627:          
+vehiculeId: "vehiculeId",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:628:        },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:629:        
+lockFields: ["interventionId", "clientId", "vehiculeId"],
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:630:        
+labelFields: ["numeroFacture", "montantTTC", "resteAPayer", "statutPaiement"],
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:631:        
+subtitleFields: ["clientId", "vehiculeId", "dateFacture"],
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:632:        
+totalField: "montantTTC",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:633:        relations: 
+[
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:634:          {
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:635:            field: 
+"clientId",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:636:            
+moduleKey: "clientsauto",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:637:            
+labelFields: ["prenom", "nom", "telephone"],
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:638:          },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:639:          {
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:640:            field: 
+"vehiculeId",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:641:            
+moduleKey: "vehicules",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:642:            
+labelFields: ["marque", "modele", "immatriculation"],
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:643:          },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:644:        ],
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:645:      }],
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:646:  },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:647:
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:652:      key: 
+"intervention",
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:653:      label: 
+"Cycle intervention",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:654:      
+initialState: "ouverte",
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:655:
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:656:      states: [
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:657:        { key: 
+"ouverte", label: "Ouverte", color: "default" },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:658:        { key: 
+"diagnostic", label: "Diagnostic", color: "warning" },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:659:        { key: 
+"en_cours", label: "En cours", color: "warning" },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:660:        { key: 
+"terminee", label: "Terminée", color: "success" },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:661:        { key: 
+"facturee", label: "Facturée", color: "success" },
+> src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:662:        { key: 
+"annulee", label: "Annulée", color: "danger" },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:663:      ],
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:664:
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:665:      transitions: 
+[
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:666:        { from: 
+"ouverte", to: "diagnostic", action: "Diagnostiquer" },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:667:        { from: 
+"diagnostic", to: "en_cours", action: "Démarrer" },
+  src\runtime\modules\generated\interventionsauto\interventionsauto.module.ts:668:        { from: 
+"en_cours", to: "terminee", action: "Terminer" },
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:5:    key: 
+"lignesinterventionauto",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:6:    label: 
+"Lignes intervention",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:7:    
+description: "Pièces, services et main d’œuvre consommés sur une intervention AMARKHYS",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:8:    icon: 
+"list-checks",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:9:    
+category: "amarkhys",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:10:
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:11:    
+features: {
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:12:      
+dashboard: true,
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:28:        
+key: "interventionId",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:29:        
+label: "Intervention",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:30:        
+type: "relation",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:31:        
+relation: { module: "interventionsauto" },
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:32:        
+required: true,
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:33:        
+searchable: true,
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:34:        
+list: { order: 1 },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:35:        
+grid: { cols: 6 },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:36:      },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:37:      {
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:38:        
+key: "produitId",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:39:        
+label: "Produit / pièce",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:40:        
+type: "relation",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:41:        
+relation: {
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:42:    
+module: "produitsauto",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:43:    
+filterBy: {
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:44:      
+sourceField: "typeArticle",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:45:      
+targetField: "typeArticle",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:46:    },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:47:  },
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:56:          
+  prixUnitaireHT: ["prixVente", "prixUnitaireHT", "prixUnitaire", "prixPromo"],
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:57:          
+  prixUnitaire: ["prixVente", "prixUnitaireHT", "prixUnitaire", "prixPromo"],
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:58:          
+  tauxTVA: ["tauxTVA"],
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:59:          
+},
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:60:          
+recalculate: true,
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:61:        },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:62:        
+searchable: true,
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:63:  
+helperText: "Produit filtré selon le type d’article sélectionné.",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:68:        
+key: "stockId",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:69:        
+label: "Stock source",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:70:        
+type: "relation",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:71:        
+relation: {
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:72:    
+module: "stocksauto",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:73:    
+filterBy: {
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:74:      
+sourceField: "produitId",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:75:      
+targetField: "produitId",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:76:    },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:77:  },
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:78:        
+dependsOn: "produitId",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:79:        
+searchable: true,
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:80:        
+grid: { cols: 6 },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:81:        
+helperText: "Stock source filtré selon le produit sélectionné.",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:82:      },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:83:      {
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:84:        
+key: "produitCode",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:85:        
+label: "Code produit",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:86:        
+type: "text",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:87:        
+list: { order: 3 },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:88:        
+grid: { cols: 4 },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:89:      },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:90:      {
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:91:        
+key: "produitNom",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:92:        
+label: "Nom produit",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:93:        
+type: "text",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:94:        
+searchable: true,
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:95:        
+list: { order: 4 },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:96:        
+grid: { cols: 8 },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:97:      },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:98:      {
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:99:        
+key: "typeArticle",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:100:        
+label: "Type article",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:101:        
+required: true,
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:102:        
+type: "select",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:103:        
+defaultValue: "piece",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:104:        
+options: [
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:105:         
+ { label: "Pièce", value: "piece" },
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:106:         
+ { label: "Main d’œuvre", value: "main_oeuvre" },
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:107:         
+ { label: "Service", value: "service" },
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:108:         
+ { label: "Remise", value: "remise" },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:109:        
+],
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:110:        
+grid: { cols: 4 },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:111:      },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:112:      {
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:113:        
+key: "designation",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:114:        
+label: "Désignation",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:115:        
+type: "text",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:116:        
+required: false,
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:117:        
+searchable: true,
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:118:        
+list: { order: 3 },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:119:        
+grid: { cols: 6 },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:120:      },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:121:      {
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:122:        
+key: "typeLigne",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:123:        
+label: "Type ligne",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:124:        
+type: "select",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:125:        
+defaultValue: "piece",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:126:        
+options: [
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:127:         
+ { label: "Pièce", value: "piece" },
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:128:         
+ { label: "Main d’œuvre", value: "main_oeuvre" },
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:129:         
+ { label: "Service", value: "service" },
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:130:         
+ { label: "Remise", value: "remise" },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:131:        
+],
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:132:        
+list: { order: 4 },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:133:        
+grid: { cols: 4 },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:134:      },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:135:      {
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:136:        
+key: "quantite",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:137:        
+label: "Quantité",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:138:        
+type: "number",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:139:        
+defaultValue: 1,
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:140:        
+required: true,
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:141:        
+list: { order: 5 },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:142:        
+grid: { cols: 4 },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:143:      },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:144:      {
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:145:        
+key: "prixUnitaire",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:146:        
+label: "Prix unitaire",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:147:        
+type: "number",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:148:        
+defaultValue: 0,
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:149:        
+required: true,
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:150:        
+list: { order: 6 },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:151:        
+grid: { cols: 4 },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:152:      },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:153:      {
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:154:        
+key: "prixUnitaireHT",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:155:        
+label: "Prix unitaire HT",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:156:        
+type: "number",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:157:        
+defaultValue: 0,
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:158:        
+grid: { cols: 4 },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:159:      },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:160:      {
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:161:        
+key: "tauxTVA",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:162:        
+label: "TVA (%)",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:163:        
+type: "number",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:164:        
+defaultValue: 18,
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:165:        
+grid: { cols: 4 },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:166:      },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:167:      {
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:168:        
+key: "montantHT",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:169:        
+label: "Montant HT",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:170:        
+type: "number",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:171:        
+grid: { cols: 4 },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:172:      },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:173:      {
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:174:        
+key: "montantTVA",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:175:        
+label: "Montant TVA",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:176:        
+type: "number",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:177:        
+grid: { cols: 4 },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:178:      },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:179:      {
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:180:        
+key: "montantTTC",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:181:        
+label: "Montant TTC",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:182:        
+type: "number",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:183:        
+grid: { cols: 4 },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:184:      },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:185:      {
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:186:        
+key: "montantTotal",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:187:        
+label: "Montant total",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:188:        
+type: "number",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:189:        
+computed: {
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:190:         
+ formula: "quantite * prixUnitaire",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:191:         
+ dependsOn: ["quantite", "prixUnitaire"],
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:192:        
+},
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:193:        
+list: { order: 7 },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:194:        
+grid: { cols: 4 },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:195:      },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:196:      {
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:197:        
+key: "statut",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:198:        
+label: "Statut",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:199:        
+type: "select",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:200:        
+defaultValue: "brouillon",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:201:        
+// Q20H3_SIMPLIFIED_LINE_STATUSES
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:202:        
+// Côté utilisateur, une ligne est seulement préparée ou confirmée.
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:203:        
+// Facturation/retrait sont gérés par relations/actions runtime, pas par statut manuel.
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:204:        
+options: [
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:205:         
+ { label: "Brouillon", value: "brouillon" },
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:206:         
+ { label: "Validée", value: "validee" },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:207:        
+],
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:208:        
+list: { order: 8 },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:209:        
+grid: { cols: 4 },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:210:      },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:211:      {
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:212:        
+key: "stockMovementId",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:213:        
+label: "Mouvement stock",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:214:        
+type: "relation",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:215:        
+relation: { module: "mouvementsstockauto" },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:216:        
+searchable: true,
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:217:        
+grid: { cols: 4 },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:218:      },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:219:      {
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:220:        
+key: "removedAt",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:221:        
+label: "Retirée le",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:222:        
+type: "datetime",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:223:        
+list: { visible: false },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:224:        
+grid: { cols: 6 },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:225:      },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:226:      {
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:227:        
+key: "removedBy",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:228:        
+label: "Retirée par",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:229:        
+type: "text",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:230:        
+list: { visible: false },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:231:        
+grid: { cols: 6 },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:232:      },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:233:      {
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:234:        
+key: "removedReason",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:235:        
+label: "Motif du retrait",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:236:        
+type: "textarea",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:237:        
+list: { visible: false },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:238:        
+grid: { cols: 12 },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:239:      },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:240:      {
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:241:        
+key: "stockProcessedAt",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:242:        
+label: "Stock traité le",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:243:        
+type: "date",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:244:        
+grid: { cols: 4 },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:245:      },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:246:      {
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:247:        
+key: "stockProcessedQuantity",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:248:        
+label: "Quantité traitée en stock",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:249:        
+type: "number",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:250:        
+grid: { cols: 4 },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:251:      },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:252:      {
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:253:        
+key: "observations",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:254:        
+label: "Observations",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:255:        
+type: "textarea",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:256:        
+grid: { cols: 12 },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:257:      },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:258:    ],
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:259:  },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:260:
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:261:  form: {
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:266:        
+key: "ligne",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:267:        
+label: "Ligne",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:268:
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:269:        
+fields: [
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:270:         
+ "interventionId",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:271:         
+ "designation",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:272:         
+ "typeArticle",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:273:         
+ "produitId",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:274:         
+ "stockId",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:275:         
+ "produitCode",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:276:         
+ "produitNom",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:277:         
+ "quantite",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:278:         
+ "prixUnitaire",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:279:         
+ "prixUnitaireHT",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:280:         
+ "tauxTVA",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:281:         
+ "montantHT",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:282:         
+ "montantTVA",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:283:         
+ "montantTTC",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:284:         
+ "montantTotal",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:285:         
+ "statut",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:286:        
+],
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:287:
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:288:        
+sections: [
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:289:         
+ {
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:290:         
+   key: "infos",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:291:         
+   title: "Informations ligne",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:292:         
+   fields: [
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:293:         
+     "interventionId",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:294:         
+     "designation",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:295:         
+     "typeArticle",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:296:         
+     "statut",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:297:         
+   ],
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:298:         
+ },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:299:         
+ {
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:300:         
+   key: "relations",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:301:         
+   title: "Produit et stock",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:302:         
+   fields: [
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:303:         
+     "produitId",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:304:         
+     "stockId",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:305:         
+     "produitCode",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:306:         
+     "produitNom",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:307:         
+     "typeArticle",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:308:         
+   ],
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:309:         
+ },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:310:         
+ {
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:311:         
+   key: "montants",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:312:         
+   title: "Quantité et montant",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:313:         
+   fields: [
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:314:         
+     "quantite",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:315:         
+     "prixUnitaire",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:316:         
+     "prixUnitaireHT",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:317:         
+     "tauxTVA",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:318:         
+     "montantHT",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:319:         
+     "montantTVA",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:320:         
+     "montantTTC",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:321:         
+     "montantTotal",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:322:         
+   ],
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:323:         
+ },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:324:        
+],
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:325:      },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:326:
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:327:      {
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:328:        
+key: "notes",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:329:        
+label: "Notes",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:330:
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:331:        
+fields: [
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:332:         
+ "observations",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:333:        
+],
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:334:
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:335:        
+sections: [
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:337:         
+   key: "observations",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:338:         
+   title: "Observations",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:339:         
+   fields: [
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:340:         
+     "observations",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:341:         
+   ],
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:342:         
+ },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:343:        
+],
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:355:         
+ relationField: "interventionId",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:356:         
+ moduleKey: "interventionsauto",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:357:         
+ labelFields: [
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:358:         
+   "typeIntervention",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:359:         
+   "dateIntervention",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:360:         
+   "statut",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:361:         
+ ],
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:362:         
+ tone: "workshop",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:363:        
+},
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:364:        {
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:365:         
+ relationField: "produitId",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:366:         
+ moduleKey: "produitsauto",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:367:         
+ labelFields: [
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:368:         
+   "reference",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:369:         
+   "nom",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:370:         
+   "categorie",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:371:         
+ ],
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:372:         
+ tone: "product",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:375:         
+ relationField: "stockId",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:376:         
+ moduleKey: "stocksauto",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:377:         
+ labelFields: [
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:378:         
+   "produitNom",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:379:         
+   "quantite",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:380:         
+   "seuilMinimum",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:381:         
+ ],
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:382:         
+ tone: "stock",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:383:        
+},
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:384:      ],
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:385:    },
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:392:        
+moduleKey: "interventionsauto",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:393:        
+foreignKey: "interventionId",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:394:      },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:395:    ],
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:396:
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:397:    
+labelFields: [
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:398:      
+"designation",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:399:      
+"typeArticle",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:400:      
+"statut",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:401:    ],
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:402:
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:403:    
+breadcrumbs: [
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:404:      {
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:405:        
+field: "interventionId",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:406:        
+moduleKey: "interventionsauto",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:407:        
+labelFields: [
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:408:         
+ "dateIntervention",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:409:         
+ "typeIntervention",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:410:         
+ "statut",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:411:        
+],
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:412:      },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:413:    ],
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:414:
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:415:    
+relations: [
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:416:      {
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:417:        
+field: "interventionId",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:418:        
+moduleKey: "interventionsauto",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:419:        
+labelFields: [
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:420:         
+ "dateIntervention",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:421:         
+ "typeIntervention",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:422:         
+ "statut",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:423:        
+],
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:424:        
+snapshotFields: [
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:425:         
+ "clientId",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:426:         
+ "vehiculeId",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:427:         
+ "rendezVousId",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:428:         
+ "dateIntervention",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:429:         
+ "typeIntervention",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:430:        
+],
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:431:        
+displayAs: "card",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:432:        
+lockDerivedFields: true,
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:433:      },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:434:      {
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:435:        
+field: "produitId",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:436:        
+moduleKey: "produitsauto",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:437:        
+labelFields: [
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:438:         
+ "nom",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:439:         
+ "reference",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:440:         
+ "code",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:441:        
+],
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:442:        
+displayAs: "inline",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:445:        
+field: "stockId",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:446:        
+moduleKey: "stocksauto",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:447:        
+labelFields: [
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:448:         
+ "nom",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:449:         
+ "emplacement",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:450:         
+ "reference",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:451:        
+],
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:452:        
+displayAs: "inline",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:457:      
+"interventionId",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:458:      
+"produitCode",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:459:      
+"produitNom",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:460:      
+"typeArticle",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:461:      
+"prixUnitaireHT",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:462:      
+"tauxTVA",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:463:      
+"montantHT",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:464:      
+"montantTVA",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:465:      
+"montantTTC",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:466:      
+"montantTotal",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:467:      
+"stockMovementId",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:468:      
+"stockProcessedAt",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:469:      
+"stockProcessedQuantity",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:470:    ],
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:471:
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:472:    
+readOnlyFields: [
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:475:      
+"prixUnitaireHT",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:476:      
+"tauxTVA",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:477:      
+"montantHT",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:478:      
+"montantTVA",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:479:      
+"montantTTC",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:480:      
+"montantTotal",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:481:      
+"stockMovementId",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:482:      
+"stockProcessedAt",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:483:      
+"stockProcessedQuantity",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:484:         
+ "removedAt",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:485:      
+"removedBy",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:486:      
+"removedReason",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:493:      
+key: "retirer-ligne",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:494:      
+label: "Retirer la ligne",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:495:      
+type: "danger",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:496:      
+runtimeOnly: true,
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:497:      
+permission: "lignesinterventionauto:update",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:498:    },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:499:  ],
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:500:
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:501:  
+workflows: [
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:502:    {
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:503:      
+key: "ligne-intervention",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:504:      
+label: "Cycle ligne intervention",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:505:      
+initialState: "brouillon",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:506:
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:507:      // 
+Q20H3_SIMPLIFIED_LINE_WORKFLOW
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:508:      // 
+Le workflow visible reste volontairement simple.
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:509:      // 
+Les états de facturation, retrait ou neutralisation sont techniques.
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:510:      
+states: [
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:511:        
+{ key: "brouillon", label: "Brouillon", color: "default" },
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:512:        
+{ key: "validee", label: "Validée", color: "success" },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:513:      ],
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:514:
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:515:      
+transitions: [
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:516:        
+{ from: "brouillon", to: "validee", action: "Valider" },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:517:      ],
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:518:    },
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:5:    key: 
+"mouvementsstockauto",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:6:    label: 
+"Mouvements stock",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:7:    description: 
+"Entrées, sorties et corrections de stock AMARKHYS",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:8:    icon: 
+"arrow-left-right",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:9:    category: 
+"amarkhys",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:10:
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:11:    features: {
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:12:      
+dashboard: true,
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:28:        key: 
+"typeMouvement",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:29:        label: 
+"Type mouvement",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:30:        type: 
+"select",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:31:        
+required: true,
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:32:        
+defaultValue: "sortie",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:33:        
+options: [
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:34:          { 
+label: "Entrée", value: "entree" },
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:35:          { 
+label: "Sortie", value: "sortie" },
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:36:          { 
+label: "Correction", value: "correction" },
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:37:          { 
+label: "Annulation", value: "annulation" },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:38:        ],
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:39:        list: { 
+order: 1 },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:40:        grid: { 
+cols: 4 },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:41:      },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:42:      {
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:43:        key: 
+"stockId",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:44:        label: 
+"Stock",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:45:        type: 
+"relation",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:46:        
+relation: { module: "stocksauto" },
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:47:        
+required: true,
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:48:        
+searchable: true,
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:49:        list: { 
+order: 2 },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:50:        grid: { 
+cols: 4 },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:51:      },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:52:      {
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:53:        key: 
+"produitId",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:54:        label: 
+"Produit",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:55:        type: 
+"relation",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:56:        
+relation: { module: "produitsauto" },
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:57:        
+required: true,
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:58:        
+searchable: true,
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:59:        list: { 
+order: 3 },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:60:        grid: { 
+cols: 4 },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:61:      },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:62:      {
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:63:        key: 
+"quantite",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:64:        label: 
+"Quantité",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:65:        type: 
+"number",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:66:        
+required: true,
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:67:        list: { 
+order: 4 },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:68:        grid: { 
+cols: 4 },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:69:      },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:70:      {
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:71:        key: 
+"quantiteAvant",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:72:        label: 
+"Quantité avant",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:73:        type: 
+"number",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:74:        grid: { 
+cols: 4 },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:75:      },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:76:      {
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:77:        key: 
+"quantiteApres",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:78:        label: 
+"Quantité après",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:79:        type: 
+"number",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:80:        grid: { 
+cols: 4 },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:81:      },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:82:      {
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:83:        key: 
+"sourceModule",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:84:        label: 
+"Module source",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:85:        type: 
+"text",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:86:        grid: { 
+cols: 4 },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:87:      },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:88:      {
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:89:        key: 
+"sourceId",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:90:        label: 
+"Source",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:91:        type: 
+"text",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:92:        grid: { 
+cols: 4 },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:93:      },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:94:      {
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:95:        key: 
+"interventionId",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:96:        label: 
+"Intervention",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:97:        type: 
+"relation",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:98:        
+relation: { module: "interventionsauto" },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:99:        
+searchable: true,
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:100:        grid: 
+{ cols: 4 },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:101:      },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:102:      {
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:103:        key: 
+"ligneInterventionId",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:104:        label: 
+"Ligne intervention",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:105:        type: 
+"relation",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:106:        
+relation: { module: "lignesinterventionauto" },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:107:        
+searchable: true,
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:108:        grid: 
+{ cols: 4 },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:109:      },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:110:      {
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:111:        key: 
+"motif",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:112:        label: 
+"Motif",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:113:        type: 
+"text",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:114:        grid: 
+{ cols: 8 },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:115:      },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:116:      {
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:117:        key: 
+"statut",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:118:        label: 
+"Statut",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:119:        type: 
+"select",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:120:        
+defaultValue: "valide",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:121:        
+options: [
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:122:          { 
+label: "Brouillon", value: "brouillon" },
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:123:          { 
+label: "Validé", value: "valide" },
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:124:          { 
+label: "Annulé", value: "annule" },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:125:        ],
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:126:        list: 
+{ order: 5 },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:127:        grid: 
+{ cols: 4 },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:128:      },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:129:      {
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:130:        key: 
+"dateMouvement",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:131:        label: 
+"Date mouvement",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:132:        type: 
+"date",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:133:        list: 
+{ order: 6 },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:134:        grid: 
+{ cols: 4 },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:135:      },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:136:      {
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:137:        key: 
+"observations",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:138:        label: 
+"Observations",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:139:        type: 
+"textarea",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:140:        grid: 
+{ cols: 12 },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:141:      },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:142:    ],
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:143:  },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:144:
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:145:  form: {
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:150:        key: 
+"mouvement",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:151:        label: 
+"Mouvement",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:152:        
+fields: [
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:153:          
+"typeMouvement",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:154:          
+"stockId",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:155:          
+"produitId",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:156:          
+"quantite",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:157:          
+"quantiteAvant",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:158:          
+"quantiteApres",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:159:          
+"dateMouvement",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:160:          
+"statut",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:161:        ],
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:162:        
+sections: [
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:163:          {
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:164:            
+key: "infos",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:165:            
+title: "Informations mouvement",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:166:            
+fields: [
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:167:              
+"typeMouvement",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:168:              
+"stockId",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:169:              
+"produitId",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:170:              
+"quantite",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:171:              
+"quantiteAvant",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:172:              
+"quantiteApres",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:173:              
+"dateMouvement",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:174:              
+"statut",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:175:            ],
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:176:          },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:177:        ],
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:178:      },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:179:      {
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:180:        key: 
+"source",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:181:        label: 
+"Source",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:182:        
+fields: [          "interventionId",          "motif",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:183:        ],
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:184:        
+sections: [
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:185:          {
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:186:            
+key: "source",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:187:            
+title: "Origine du mouvement",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:188:            
+fields: [              "interventionId",              "motif",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:189:            ],
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:190:          },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:191:        ],
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:192:      },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:193:      {
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:194:        key: 
+"notes",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:195:        label: 
+"Notes",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:196:        
+fields: [
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:197:          
+"observations",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:198:        ],
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:199:        
+sections: [
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:200:          {
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:201:            
+key: "observations",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:202:            
+title: "Observations",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:203:            
+fields: [
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:204:              
+"observations",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:205:            ],
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:206:          },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:207:        ],
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:214:    
+labelFields: ["typeMouvement", "produitId", "quantite", "stockId", "dateMouvement"],
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:215:  },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:216:
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:217:
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:218:  workflows: [
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:219:    {
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:220:      key: 
+"mouvement-stock",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:221:      label: 
+"Cycle mouvement stock",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:222:      
+initialState: "valide",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:223:      states: [
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:224:        { key: 
+"brouillon", label: "Brouillon", color: "default" },
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:225:        { key: 
+"valide", label: "Validé", color: "success" },
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:226:        { key: 
+"annule", label: "Annulé", color: "danger" },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:227:      ],
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:228:      
+transitions: [
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:229:        { 
+from: "brouillon", to: "valide", action: "Valider" },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:230:        { 
+from: "valide", to: "annule", action: "Annuler" },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:231:      ],
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:232:    },
+
+

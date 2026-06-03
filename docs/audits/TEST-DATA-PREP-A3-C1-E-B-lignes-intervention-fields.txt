@@ -1,0 +1,214 @@
+﻿
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:28:        
+key: "interventionId",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:29:        
+label: "Intervention",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:30:        
+type: "relation",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:31:        
+relation: { module: "interventionsauto" },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:32:        
+required: true,
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:33:        
+searchable: true,
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:34:        
+list: { order: 1 },
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:38:        
+key: "produitId",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:39:        
+label: "Produit / pièce",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:40:        
+type: "relation",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:41:        
+relation: {
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:42:    
+module: "produitsauto",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:43:    
+filterBy: {
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:44:      
+sourceField: "typeArticle",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:68:        
+key: "stockId",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:69:        
+label: "Stock source",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:70:        
+type: "relation",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:71:        
+relation: {
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:72:    
+module: "stocksauto",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:73:    
+filterBy: {
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:74:      
+sourceField: "produitId",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:103:        
+defaultValue: "piece",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:104:        
+options: [
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:105:         
+ { label: "Pièce", value: "piece" },
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:106:         
+ { label: "Main d’œuvre", value: "main_oeuvre" },
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:107:         
+ { label: "Service", value: "service" },
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:108:         
+ { label: "Remise", value: "remise" },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:109:        
+],
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:110:        
+grid: { cols: 4 },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:111:      },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:112:      {
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:113:        
+key: "designation",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:114:        
+label: "Désignation",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:115:        
+type: "text",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:116:        
+required: false,
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:117:        
+searchable: true,
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:118:        
+list: { order: 3 },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:119:        
+grid: { cols: 6 },
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:125:        
+defaultValue: "piece",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:126:        
+options: [
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:127:         
+ { label: "Pièce", value: "piece" },
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:128:         
+ { label: "Main d’œuvre", value: "main_oeuvre" },
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:129:         
+ { label: "Service", value: "service" },
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:130:         
+ { label: "Remise", value: "remise" },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:131:        
+],
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:132:        
+list: { order: 4 },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:133:        
+grid: { cols: 4 },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:134:      },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:135:      {
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:136:        
+key: "quantite",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:137:        
+label: "Quantité",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:138:        
+type: "number",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:139:        
+defaultValue: 1,
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:140:        
+required: true,
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:141:        
+list: { order: 5 },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:142:        
+grid: { cols: 4 },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:143:      },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:144:      {
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:145:        
+key: "prixUnitaire",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:148:        
+defaultValue: 0,
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:149:        
+required: true,
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:150:        
+list: { order: 6 },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:151:        
+grid: { cols: 4 },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:152:      },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:153:      {
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:154:        
+key: "prixUnitaireHT",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:155:        
+label: "Prix unitaire HT",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:156:        
+type: "number",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:157:        
+defaultValue: 0,
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:158:        
+grid: { cols: 4 },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:159:      },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:160:      {
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:161:        
+key: "tauxTVA",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:162:        
+label: "TVA (%)",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:163:        
+type: "number",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:164:        
+defaultValue: 18,
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:165:        
+grid: { cols: 4 },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:166:      },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:167:      {
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:168:        
+key: "montantHT",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:169:        
+label: "Montant HT",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:170:        
+type: "number",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:171:        
+grid: { cols: 4 },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:172:      },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:173:      {
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:174:        
+key: "montantTVA",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:180:        
+key: "montantTTC",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:181:        
+label: "Montant TTC",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:182:        
+type: "number",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:183:        
+grid: { cols: 4 },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:184:      },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:185:      {
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:186:        
+key: "montantTotal",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:197:        
+key: "statut",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:198:        
+label: "Statut",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:199:        
+type: "select",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:200:        
+defaultValue: "brouillon",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:201:        
+// Q20H3_SIMPLIFIED_LINE_STATUSES
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:202:        
+// Côté utilisateur, une ligne est seulement préparée ou confirmée.
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:203:        
+// Facturation/retrait sont gérés par relations/actions runtime, pas par statut manuel.
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:204:        
+options: [
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:205:         
+ { label: "Brouillon", value: "brouillon" },
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:206:         
+ { label: "Validée", value: "validee" },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:207:        
+],
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:208:        
+list: { order: 8 },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:209:        
+grid: { cols: 4 },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:210:      },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:211:      {
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:212:        
+key: "stockMovementId",
+> src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:393:        
+foreignKey: "interventionId",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:394:      },
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:395:    ],
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:396:
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:397:    
+labelFields: [
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:398:      
+"designation",
+  src\runtime\modules\generated\lignesinterventionauto\lignesinterventionauto.module.ts:399:      
+"typeArticle",
+
+
