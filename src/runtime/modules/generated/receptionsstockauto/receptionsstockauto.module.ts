@@ -228,7 +228,7 @@ export const receptionsstockautoModule: ERPModule = {
         foreignKey: "sourceId",
         title: "Mouvements stock générés",
         description: "Mouvements stock créés automatiquement depuis cette réception.",
-        displayIn: ["detail", "edit"],
+        displayIn: [],
         lazy: true,
         position: "after",
         allowCreate: false,

@@ -512,7 +512,6 @@ export const vehiculesModule: ERPModule = {
         createLabel: "Ajouter un rendez-vous pour ce véhicule",
         displayIn: [
           "detail",
-          "edit",
         ],
         position: "after",
         lazy: true,
@@ -557,7 +556,6 @@ export const vehiculesModule: ERPModule = {
         ],
         displayIn: [
           "detail",
-          "edit",
         ],
         position: "after",
         lazy: true,
@@ -583,7 +581,7 @@ export const vehiculesModule: ERPModule = {
         foreignKey: "vehiculeId",
         title: "Factures du véhicule",
         createLabel: "Ajouter une facture",
-        displayIn: ["detail", "edit"],
+        displayIn: ["detail"],
         lazy: true,
         position: "after",
         allowCreate: true,
