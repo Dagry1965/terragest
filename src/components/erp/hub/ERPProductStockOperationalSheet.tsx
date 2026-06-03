@@ -322,6 +322,154 @@ function humanStatusLabel(value: string): string {
     .replace(/\s+/g, " ")
     .replace(/^./, (letter) => letter.toUpperCase());
 }
+function isTechnicalId(value: string): boolean {
+  const raw = String(value ?? "").trim();
+
+  if (!raw) {
+    return false;
+  }
+
+  return /^[A-Za-z0-9_-]{16,}$/.test(raw);
+}
+
+function cleanBusinessText(value: string, fallback = "-"): string {
+  const raw = String(value ?? "").trim();
+
+  if (!raw || raw === "-") {
+    return fallback;
+  }
+
+  if (isTechnicalId(raw)) {
+    return fallback;
+  }
+
+  return raw;
+}
+
+function supplierLabel(record: ERPRecordHubRecord): string {
+  return cleanBusinessText(
+    text(
+      record,
+      [
+        "fournisseurLabel",
+        "fournisseurNom",
+        "nomFournisseur",
+        "supplierName",
+        "supplierLabel",
+        "fournisseur",
+      ],
+      ""
+    ),
+    "Fournisseur non renseigné"
+  );
+}
+
+function orderDateLabel(record: ERPRecordHubRecord): string {
+  const value = formatDate(
+    text(
+      record,
+      [
+        "dateCommande",
+        "dateEmission",
+        "dateDocument",
+        "createdAt",
+        "updatedAt",
+      ],
+      "-"
+    )
+  );
+
+  return value === "-" ? "Date non renseignée" : value;
+}
+
+function orderedQuantityLabel(record: ERPRecordHubRecord): string {
+  const quantity = numberValue(
+    record,
+    [
+      "quantiteCommandee",
+      "productLineQuantity",
+      "quantite",
+      "quantity",
+    ],
+    Number.NaN
+  );
+
+  if (!Number.isFinite(quantity) || quantity <= 0) {
+    return "Quantité non renseignée";
+  }
+
+  return formatNumber(quantity) + " unité" + (quantity > 1 ? "s" : "");
+}
+
+function amountLabel(record: ERPRecordHubRecord): string {
+  const amount = numberValue(
+    record,
+    [
+      "productLineAmountTTC",
+      "montantTTC",
+      "totalTTC",
+      "montantHT",
+      "productLineAmountHT",
+      "total",
+    ],
+    Number.NaN
+  );
+
+  if (!Number.isFinite(amount) || amount <= 0) {
+    return "";
+  }
+
+  return money(amount);
+}
+
+function orderSubtitle(record: ERPRecordHubRecord): string {
+  return supplierLabel(record) + " · " + orderDateLabel(record);
+}
+
+function orderQuantityOrAmount(record: ERPRecordHubRecord): string {
+  const quantity = orderedQuantityLabel(record);
+  const amount = amountLabel(record);
+
+  if (amount) {
+    return quantity + " · " + amount;
+  }
+
+  return quantity;
+}
+
+function receptionSubtitle(record: ERPRecordHubRecord): string {
+  const date = formatDate(
+    text(
+      record,
+      [
+        "dateReception",
+        "dateRéception",
+        "createdAt",
+        "updatedAt",
+      ],
+      "-"
+    )
+  );
+
+  const quantity = numberValue(
+    record,
+    [
+      "quantiteRecue",
+      "quantitéReçue",
+      "quantite",
+      "quantity",
+    ],
+    Number.NaN
+  );
+
+  const dateLabel = date === "-" ? "Date non renseignée" : date;
+  const quantityLabel =
+    Number.isFinite(quantity) && quantity > 0
+      ? formatNumber(quantity) + " unité" + (quantity > 1 ? "s" : "")
+      : "Quantité non renseignée";
+
+  return dateLabel + " · " + quantityLabel;
+}
 function statusPillClass(status: string): string {
   const normalized = status.toLowerCase();
 
@@ -898,6 +1046,17 @@ export function ERPProductStockOperationalSheet({
           />
         </section>
 
+        {rootRecord && "__supplyChainDebug" in rootRecord ? (
+          <section className="rounded-[1.6rem] border border-orange-200 bg-orange-50 p-5 text-xs text-orange-900 shadow-sm">
+            <p className="mb-3 font-black uppercase tracking-[0.18em]">
+              Diagnostic temporaire supply chain
+            </p>
+            <pre className="max-h-[420px] overflow-auto whitespace-pre-wrap rounded-2xl bg-white p-4 text-[11px] leading-relaxed text-slate-800 ring-1 ring-orange-100">
+              {JSON.stringify((rootRecord as Record<string, unknown>).__supplyChainDebug, null, 2)}
+            </pre>
+          </section>
+        ) : null}
+
         <div className="grid gap-6 2xl:grid-cols-[minmax(0,1fr)_360px]">
           <main className="space-y-6">
             <ProductFlowDiagram />
@@ -946,8 +1105,8 @@ export function ERPProductStockOperationalSheet({
                       record={commande}
                       moduleKey="commandesstockauto"
                       title={text(commande, ["numeroCommande", "numero", "code", "displayLabel"], "Commande fournisseur")}
-                      subtitle={text(commande, ["fournisseurLabel", "fournisseurId"], "Fournisseur")}
-                      quantity={text(commande, ["montantTTC", "montantHT", "total"], "")}
+                      subtitle={orderSubtitle(commande)}
+                      quantity={orderQuantityOrAmount(commande)}
                       status={text(commande, ["statut", "status"], "")}
                       returnTo={productHubReturnTo}
                       returnParams={productHubReturnParams}
@@ -975,8 +1134,8 @@ export function ERPProductStockOperationalSheet({
                       record={reception}
                       moduleKey="receptionsstockauto"
                       title={text(reception, ["numeroReception", "numero", "code", "displayLabel"], "Réception stock")}
-                      subtitle={formatDate(text(reception, ["dateReception", "createdAt"], "-"))}
-                      quantity={text(reception, ["quantiteRecue", "quantite", "quantity"], "") + " unités"}
+                      subtitle={receptionSubtitle(reception)}
+                      quantity={text(reception, ["numeroCommande", "commandeNumero", "commandeCode"], "")}
                       status={text(reception, ["statut", "status"], "")}
                       returnTo={productHubReturnTo}
                       returnParams={productHubReturnParams}
