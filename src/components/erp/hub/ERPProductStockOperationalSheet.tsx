@@ -1498,16 +1498,7 @@ export function ERPProductStockOperationalSheet({
           />
         </section>
 
-        {rootRecord && "__supplyChainDebug" in rootRecord ? (
-          <section className="rounded-[1.6rem] border border-orange-200 bg-orange-50 p-5 text-xs text-orange-900 shadow-sm">
-            <p className="mb-3 font-black uppercase tracking-[0.18em]">
-              Diagnostic temporaire supply chain
-            </p>
-            <pre className="max-h-[420px] overflow-auto whitespace-pre-wrap rounded-2xl bg-white p-4 text-[11px] leading-relaxed text-slate-800 ring-1 ring-orange-100">
-              {JSON.stringify((rootRecord as Record<string, unknown>).__supplyChainDebug, null, 2)}
-            </pre>
-          </section>
-        ) : null}
+
 
         <div className="grid gap-6 2xl:grid-cols-[minmax(0,1fr)_360px]">
           <main className="space-y-6">
