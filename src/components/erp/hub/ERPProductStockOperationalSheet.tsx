@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { RuntimeProductKpiEngine } from "@/runtime/kpi/RuntimeProductKpiEngine";
 
 import type {
   ERPRecordHubConfig,
@@ -951,84 +952,12 @@ function productOperationalSummary({
   stocks: ERPRecordHubRecord[];
   mouvements: ERPRecordHubRecord[];
 }) {
-  const orderLines = orderLineDeliveryItems(rootRecord);
-
-  const orderedQuantity = orderLines.reduce((sum, line) => {
-    return sum + orderLineDeliveryNumberValue(line, "quantityOrdered");
-  }, 0);
-
-  const deliveredQuantity = orderLines.reduce((sum, line) => {
-    return sum + orderLineDeliveryNumberValue(line, "quantityDelivered");
-  }, 0);
-
-  const remainingQuantity = Math.max(0, orderedQuantity - deliveredQuantity);
-
-  const stockQuantity = stocks.reduce((sum, stock) => {
-    return sum + numberValue(
-      stock,
-      ["stockQuantity", "quantite", "quantité", "currentStock", "stockActuel", "quantiteDisponible"],
-      0
-    );
-  }, 0);
-
-  const alertThreshold = numberValue(
-    rootRecord ?? {},
-    ["seuilAlerte", "stockMinimum", "minimumStock", "seuilStock"],
-    0
-  );
-
-  const exitMovements = mouvements.filter((movement) => {
-    const type = text(movement, ["typeMouvement", "type", "sens"], "").toLowerCase();
-    const source = text(movement, ["sourceModule", "source", "module"], "").toLowerCase();
-
-    return (
-      type.includes("sortie") ||
-      source.includes("intervention") ||
-      source.includes("vente")
-    );
+  return RuntimeProductKpiEngine.compute({
+    rootRecord,
+    stocks,
+    mouvements,
+    orderLineDeliveryItems: orderLineDeliveryItems(rootRecord),
   });
-
-  const workshopQuantity = exitMovements.reduce((sum, movement) => {
-    return sum + Math.abs(numberValue(movement, ["quantite", "quantity"], 0));
-  }, 0);
-
-  const lastExitDate = exitMovements
-    .map((movement) => text(movement, ["dateMouvement", "createdAt", "updatedAt"], ""))
-    .filter(Boolean)
-    .sort((a, b) => {
-      const da = new Date(a).getTime();
-      const db = new Date(b).getTime();
-
-      return (Number.isFinite(db) ? db : 0) - (Number.isFinite(da) ? da : 0);
-    })[0];
-
-  const stockState =
-    alertThreshold > 0 && stockQuantity <= alertThreshold
-      ? "Stock faible"
-      : stockQuantity <= 0
-        ? "Rupture"
-        : "OK";
-
-  const performanceScore = orderedQuantity + deliveredQuantity + workshopQuantity;
-
-  const performance =
-    performanceScore >= 500
-      ? "Produit phare"
-      : performanceScore >= 50
-        ? "Produit courant"
-        : "Produit dormant";
-
-  return {
-    orderedQuantity,
-    deliveredQuantity,
-    remainingQuantity,
-    stockQuantity,
-    alertThreshold,
-    stockState,
-    workshopQuantity,
-    lastExitDate,
-    performance,
-  };
 }
 
 function OperationalSummaryCard({
