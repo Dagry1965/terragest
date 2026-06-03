@@ -48,21 +48,30 @@ const CLIENTS_VEHICLES_COLLECTIONS = [
   "vehicules",
 ];
 
-const DOWNSTREAM_COLLECTIONS = [
+const SUPPLY_FLOW_COLLECTIONS = [
+  "commandesstockauto",
+  "lignescommandestockauto",
+  "receptionsstockauto",
+  "mouvementsstockauto",
+];
+
+const WORKSHOP_FLOW_COLLECTIONS = [
   "rendezvous",
   "interventionsauto",
   "lignesinterventionauto",
   "facturesauto",
   "encaissementsauto",
-  "commandesstockauto",
-  "lignescommandestockauto",
-  "receptionsstockauto",
-  "mouvementsstockauto",
   "rappelsauto",
+];
+
+const DOWNSTREAM_COLLECTIONS = [
+  ...SUPPLY_FLOW_COLLECTIONS,
+  ...WORKSHOP_FLOW_COLLECTIONS,
 ];
 const args = process.argv.slice(2);
 const writeEnabled = args.includes("--confirm-seed-foundation");
 const seedClientsVehiclesEnabled = args.includes("--confirm-seed-clients-vehicles");
+const seedSupplyFlowEnabled = args.includes("--confirm-seed-supply-flow");
 
 const NOW_ISO = new Date().toISOString();
 
@@ -99,14 +108,14 @@ const SUPPLIERS = [
       telephone: "+2250700000002",
       email: "contact@energyauto.example",
       adresse: "Cocody, Abidjan",
-      observations: "Fournisseur batteries et accessoires ÃƒÆ’Ã‚Â©lectriques.",
+      observations: "Fournisseur batteries et accessoires ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©lectriques.",
       statut: "actif",
     },
   },
 ];
 
 const PRODUCTS = [
-  product("demo-product-oil-5w30", "HUI-5W30-001", "Huile moteur 5W30 synthÃƒÆ’Ã‚Â¨se", {
+  product("demo-product-oil-5w30", "HUI-5W30-001", "Huile moteur 5W30 synthÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¨se", {
     marque: "PETRONAS",
     categorie: "huile_moteur",
     typeArticle: "piece",
@@ -130,7 +139,7 @@ const PRODUCTS = [
     seuilMinimum: 8,
     stock: 30,
   }),
-  product("demo-product-gear-oil-75w80", "HUI-BV-75W80", "Huile boÃƒÆ’Ã‚Â®te 75W80", {
+  product("demo-product-gear-oil-75w80", "HUI-BV-75W80", "Huile boÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â®te 75W80", {
     marque: "Motul",
     categorie: "huile_moteur",
     typeArticle: "piece",
@@ -142,21 +151,21 @@ const PRODUCTS = [
     seuilMinimum: 4,
     stock: 12,
   }),
-  product("demo-product-oil-filter", "FIL-HUI-001", "Filtre ÃƒÆ’Ã‚Â  huile", {
+  product("demo-product-oil-filter", "FIL-HUI-001", "Filtre ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â  huile", {
     marque: "Bosch",
     categorie: "filtre",
     typeArticle: "piece",
-    unite: "unitÃƒÆ’Ã‚Â©",
+    unite: "unitÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©",
     prixAchat: 3000,
     prixVente: 4500,
     seuilMinimum: 10,
     stock: 50,
   }),
-  product("demo-product-air-filter", "FIL-AIR-001", "Filtre ÃƒÆ’Ã‚Â  air", {
+  product("demo-product-air-filter", "FIL-AIR-001", "Filtre ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â  air", {
     marque: "Mann Filter",
     categorie: "filtre",
     typeArticle: "piece",
-    unite: "unitÃƒÆ’Ã‚Â©",
+    unite: "unitÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©",
     prixAchat: 3800,
     prixVente: 5500,
     seuilMinimum: 6,
@@ -166,7 +175,7 @@ const PRODUCTS = [
     marque: "Mann Filter",
     categorie: "filtre",
     typeArticle: "piece",
-    unite: "unitÃƒÆ’Ã‚Â©",
+    unite: "unitÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©",
     prixAchat: 4200,
     prixVente: 6000,
     seuilMinimum: 5,
@@ -176,7 +185,7 @@ const PRODUCTS = [
     marque: "AMARKHYS",
     categorie: "piece",
     typeArticle: "piece",
-    unite: "unitÃƒÆ’Ã‚Â©",
+    unite: "unitÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©",
     prixAchat: 200,
     prixVente: 500,
     seuilMinimum: 25,
@@ -204,7 +213,7 @@ const PRODUCTS = [
     seuilMinimum: 4,
     stock: 16,
   }),
-  product("demo-product-rear-brake-pads", "FRN-PLA-AR", "Plaquettes frein arriÃƒÆ’Ã‚Â¨re", {
+  product("demo-product-rear-brake-pads", "FRN-PLA-AR", "Plaquettes frein arriÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¨re", {
     marque: "Bosch",
     categorie: "piece",
     typeArticle: "piece",
@@ -228,7 +237,7 @@ const PRODUCTS = [
     marque: "Liqui Moly",
     categorie: "consommable",
     typeArticle: "piece",
-    unite: "aÃƒÆ’Ã‚Â©rosol",
+    unite: "aÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©rosol",
     prixAchat: 1500,
     prixVente: 2500,
     seuilMinimum: 8,
@@ -258,11 +267,11 @@ const PRODUCTS = [
     seuilMinimum: 10,
     stock: 40,
   }),
-  product("demo-product-penetrating-oil", "SPR-DEG-001", "Spray dÃƒÆ’Ã‚Â©grippant", {
+  product("demo-product-penetrating-oil", "SPR-DEG-001", "Spray dÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©grippant", {
     marque: "WD-40",
     categorie: "consommable",
     typeArticle: "piece",
-    unite: "aÃƒÆ’Ã‚Â©rosol",
+    unite: "aÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©rosol",
     prixAchat: 2000,
     prixVente: 3000,
     seuilMinimum: 5,
@@ -282,7 +291,7 @@ const PRODUCTS = [
     marque: "Philips",
     categorie: "piece",
     typeArticle: "piece",
-    unite: "unitÃƒÆ’Ã‚Â©",
+    unite: "unitÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©",
     prixAchat: 2300,
     prixVente: 3500,
     seuilMinimum: 6,
@@ -312,7 +321,7 @@ const PRODUCTS = [
     marque: "Varta",
     categorie: "piece",
     typeArticle: "piece",
-    unite: "unitÃƒÆ’Ã‚Â©",
+    unite: "unitÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©",
     prixAchat: 38000,
     prixVente: 48000,
     seuilMinimum: 2,
@@ -322,7 +331,7 @@ const PRODUCTS = [
     marque: "Varta",
     categorie: "piece",
     typeArticle: "piece",
-    unite: "unitÃƒÆ’Ã‚Â©",
+    unite: "unitÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©",
     prixAchat: 50000,
     prixVente: 62000,
     seuilMinimum: 2,
@@ -332,7 +341,7 @@ const PRODUCTS = [
     marque: "AMARKHYS",
     categorie: "piece",
     typeArticle: "piece",
-    unite: "unitÃƒÆ’Ã‚Â©",
+    unite: "unitÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©",
     prixAchat: 300,
     prixVente: 800,
     seuilMinimum: 20,
@@ -342,18 +351,18 @@ const PRODUCTS = [
     marque: "AMARKHYS",
     categorie: "piece",
     typeArticle: "piece",
-    unite: "unitÃƒÆ’Ã‚Â©",
+    unite: "unitÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©",
     prixAchat: 1500,
     prixVente: 2500,
     seuilMinimum: 6,
     stock: 25,
   }),
-  service("demo-service-diagnostic", "SRV-DIAG-001", "Diagnostic ÃƒÆ’Ã‚Â©lectronique", {
+  service("demo-service-diagnostic", "SRV-DIAG-001", "Diagnostic ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©lectronique", {
     prixAchat: 0,
     prixVente: 15000,
     typeArticle: "service",
   }),
-  service("demo-service-labor", "SRV-MO-001", "Main dÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢Ãƒâ€¦Ã¢â‚¬Å“uvre mÃƒÆ’Ã‚Â©canique", {
+  service("demo-service-labor", "SRV-MO-001", "Main dÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢ÃƒÆ’Ã¢â‚¬Â¦ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œuvre mÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©canique", {
     prixAchat: 0,
     prixVente: 12000,
     typeArticle: "main_oeuvre",
@@ -383,14 +392,14 @@ function product(id, reference, nom, options) {
       categorie: options.categorie,
       typeProduit: "stockable",
       stockable: true,
-      unite: options.unite || "unitÃƒÆ’Ã‚Â©",
+      unite: options.unite || "unitÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©",
       contenance: options.contenance || null,
       uniteContenance: options.uniteContenance || null,
       prixAchat: Number(options.prixAchat || 0),
       prixVente: Number(options.prixVente || 0),
       tauxTVA: 18,
       seuilMinimum,
-      description: `Produit de dÃƒÆ’Ã‚Â©monstration AMARKHYS ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â ${nom}.`,
+      description: `Produit de dÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©monstration AMARKHYS ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ${nom}.`,
       statut: stock <= 0 ? "rupture" : stock <= seuilMinimum ? "rupture" : "actif",
       createdAt: NOW_ISO,
       updatedAt: NOW_ISO,
@@ -419,7 +428,7 @@ function service(id, reference, nom, options) {
       prixVente: Number(options.prixVente || 0),
       tauxTVA: 18,
       seuilMinimum: 0,
-      description: `Prestation de dÃƒÆ’Ã‚Â©monstration AMARKHYS ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â ${nom}.`,
+      description: `Prestation de dÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©monstration AMARKHYS ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ${nom}.`,
       statut: "actif",
       createdAt: NOW_ISO,
       updatedAt: NOW_ISO,
@@ -447,7 +456,7 @@ function buildStockForProduct(item) {
             ? "stock_faible"
             : "disponible",
       observations:
-        "Stock de dÃƒÆ’Ã‚Â©monstration gÃƒÆ’Ã‚Â©nÃƒÆ’Ã‚Â©rÃƒÆ’Ã‚Â© pour AMARKHYS. Emplacement logique commun.",
+        "Stock de dÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©monstration gÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©nÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©rÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â© pour AMARKHYS. Emplacement logique commun.",
       createdAt: NOW_ISO,
       updatedAt: NOW_ISO,
       seedTag: "TEST-DATA-PREP-A3",
@@ -529,9 +538,9 @@ function oldClient(index, nom, prenom, typeClient, statut, days) {
       email: `client.old.${padded}@amarkhys.demo`,
       adresse: `Adresse ancienne ${index}, Abidjan`,
       ville: "Abidjan",
-      pays: "CÃ´te d'Ivoire",
+      pays: "CÃƒÂ´te d'Ivoire",
       dateInscription: daysFromNow(days),
-      observations: "Client ancien de dÃ©monstration avec historique atelier.",
+      observations: "Client ancien de dÃƒÂ©monstration avec historique atelier.",
       createdAt: isoDaysFromNow(days),
       updatedAt: NOW_ISO,
       seedTag: "TEST-DATA-PREP-A3",
@@ -552,11 +561,11 @@ function newClient(index, nom, prenom, typeClient, statut, days) {
       statut,
       telephone: `+22507020${padded}`,
       email: `client.new.${padded}@amarkhys.demo`,
-      adresse: `Adresse rÃ©cente ${index}, Abidjan`,
+      adresse: `Adresse rÃƒÂ©cente ${index}, Abidjan`,
       ville: "Abidjan",
-      pays: "CÃ´te d'Ivoire",
+      pays: "CÃƒÂ´te d'Ivoire",
       dateInscription: daysFromNow(days),
-      observations: "Client rÃ©cent de dÃ©monstration pour parcours en cours.",
+      observations: "Client rÃƒÂ©cent de dÃƒÂ©monstration pour parcours en cours.",
       createdAt: isoDaysFromNow(days),
       updatedAt: NOW_ISO,
       seedTag: "TEST-DATA-PREP-A3",
@@ -588,7 +597,7 @@ function vehicle(segment, index, marque, modele, energie, immatriculation, annee
       prochaineVidange: daysFromNow(segment === "old" ? 20 : 45),
       prochainControleTechnique: daysFromNow(segment === "old" ? 60 : 120),
       assuranceExpiration: daysFromNow(segment === "old" ? 90 : 150),
-      observations: "VÃ©hicule de dÃ©monstration liÃ© Ã  un client AMARKHYS.",
+      observations: "VÃƒÂ©hicule de dÃƒÂ©monstration liÃƒÂ© ÃƒÂ  un client AMARKHYS.",
       createdAt: NOW_ISO,
       updatedAt: NOW_ISO,
       seedTag: "TEST-DATA-PREP-A3",
@@ -724,7 +733,7 @@ async function assertBusinessCollectionsAreEmpty(db) {
     );
   }
 
-  console.log("[GUARD] OK ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â target business collections are empty.");
+  console.log("[GUARD] OK ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â target business collections are empty.");
 }
 
 async function writeDoc(db, collectionName, id, data) {
@@ -753,7 +762,7 @@ async function assertCollectionsEmpty(db, collectionNames, label) {
     throw new Error(`${label} collections are not empty: ${details}`);
   }
 
-  console.log(`[GUARD] OK Ã¢â‚¬â€ ${label} collections are empty.`);
+  console.log(`[GUARD] OK ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â ${label} collections are empty.`);
 }
 
 async function assertFoundationExists(db) {
@@ -784,7 +793,7 @@ async function assertFoundationExists(db) {
     );
   }
 
-  console.log("[GUARD] OK Ã¢â‚¬â€ foundation seed exists.");
+  console.log("[GUARD] OK ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â foundation seed exists.");
 }
 
 async function validateClientsVehiclesPhase(db) {
@@ -793,6 +802,61 @@ async function validateClientsVehiclesPhase(db) {
   await assertCollectionsEmpty(db, DOWNSTREAM_COLLECTIONS, "downstream business");
 }
 
+async function assertClientsVehiclesExist(db) {
+  console.log("[GUARD] Checking clients/vehicles seed exists.");
+
+  const expected = {
+    clientsauto: CLIENTS.length,
+    vehicules: VEHICLES.length,
+  };
+
+  const invalid = [];
+
+  for (const [collectionName, expectedCount] of Object.entries(expected)) {
+    const count = await countCollection(db, collectionName);
+    console.log(`- ${collectionName}: ${count} / expected ${expectedCount}`);
+
+    if (count !== expectedCount) {
+      invalid.push(`${collectionName}=${count}, expected ${expectedCount}`);
+    }
+  }
+
+  if (invalid.length > 0) {
+    throw new Error(
+      "Clients/vehicles seed is not ready. " +
+        invalid.join("; ") +
+        ". Run --confirm-seed-clients-vehicles first."
+    );
+  }
+
+  console.log("[GUARD] OK — clients/vehicles seed exists.");
+}
+
+async function validateSupplyFlowPhase(db) {
+  await assertFoundationExists(db);
+  await assertClientsVehiclesExist(db);
+  await assertCollectionsEmpty(db, SUPPLY_FLOW_COLLECTIONS, "supply flow");
+  await assertCollectionsEmpty(db, WORKSHOP_FLOW_COLLECTIONS, "workshop downstream");
+}
+
+async function seedSupplyFlow(db) {
+  console.log("");
+  console.log("[PLAN] Supply flow seed");
+  console.log("- commandesstockauto: 3");
+  console.log("- lignescommandestockauto: 8 to 12");
+  console.log("- receptionsstockauto: 2 to 4");
+  console.log("- mouvementsstockauto: entries only");
+  console.log("");
+
+  if (!seedSupplyFlowEnabled) {
+    console.log("[DRY-RUN] No supply flow document will be written.");
+    console.log("To write supply flow data, run with --confirm-seed-supply-flow");
+    return;
+  }
+
+  console.log("[WRITE SKIPPED]");
+  console.log("C1-D-A only validates phase guards. C1-D-B will add actual supply flow documents.");
+}
 async function seedClientsVehicles(db) {
   console.log("");
   console.log("[PLAN] Clients/Vehicles seed");
@@ -871,6 +935,17 @@ async function main() {
 
   const db = initFirebaseAdmin();
 
+  if (seedSupplyFlowEnabled) {
+    console.log("[PHASE] supply flow");
+    await validateSupplyFlowPhase(db);
+    await seedSupplyFlow(db);
+
+    console.log("");
+    console.log("[C1-D-A DONE]");
+    console.log("Supply flow phase guards are valid.");
+    console.log("No supply flow document was written in this guard-only pass.");
+    return;
+  }
   if (seedClientsVehiclesEnabled) {
     console.log("[PHASE] clients/vehicles");
     await validateClientsVehiclesPhase(db);
