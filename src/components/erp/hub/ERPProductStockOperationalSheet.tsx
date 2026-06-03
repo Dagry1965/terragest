@@ -8,11 +8,27 @@ import type {
   ERPRecordHubRecord,
 } from "@/runtime/hub";
 
+type ProductHubSearchSuggestion = {
+  id: string;
+  label: string;
+  code: string;
+  type: string;
+};
+
+type ProductHubSearchState = {
+  query: string;
+  suggestions: ProductHubSearchSuggestion[];
+  isLoading: boolean;
+  onQueryChange: (value: string) => void;
+  onSelectProduct: (productId: string) => void;
+};
+
 type ERPProductStockOperationalSheetProps = {
   config: ERPRecordHubConfig;
   rootRecord: ERPRecordHubRecord | null;
   primaryRecords: ERPRecordHubRecord[];
   relatedRecordsBySection: Record<string, ERPRecordHubRecord[]>;
+  productSearch?: ProductHubSearchState;
 };
 
 type ReturnParams = Record<string, string | null | undefined>;
@@ -1355,6 +1371,7 @@ export function ERPProductStockOperationalSheet({
   rootRecord,
   primaryRecords,
   relatedRecordsBySection,
+  productSearch,
 }: ERPProductStockOperationalSheetProps) {
   const selectedStock = primaryRecords[0] ?? null;
   const movements = relatedRecordsBySection.mouvements ?? [];
@@ -1438,6 +1455,58 @@ export function ERPProductStockOperationalSheet({
               </span>
             </div>
           </div>
+
+          {productSearch ? (
+            <div className="relative w-full xl:max-w-[460px]">
+              <label className="sr-only" htmlFor="product-hub-search">
+                Rechercher un produit
+              </label>
+              <div className="flex items-center gap-3 rounded-full border border-slate-200 bg-slate-50 px-4 py-3 ring-1 ring-transparent transition focus-within:border-emerald-200 focus-within:bg-white focus-within:ring-emerald-100">
+                <span className="text-lg">🔎</span>
+                <input
+                  id="product-hub-search"
+                  value={productSearch.query}
+                  onChange={(event) => productSearch.onQueryChange(event.target.value)}
+                  placeholder="Rechercher un produit..."
+                  className="min-w-0 flex-1 bg-transparent text-sm font-bold text-slate-900 outline-none placeholder:text-slate-400"
+                />
+                {productSearch.isLoading ? (
+                  <span className="text-xs font-black text-slate-400">...</span>
+                ) : null}
+              </div>
+
+              {productSearch.query.trim().length >= 2 ? (
+                <div className="absolute right-0 z-30 mt-2 w-full overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-xl">
+                  {productSearch.suggestions.length === 0 ? (
+                    <p className="px-4 py-4 text-sm font-bold text-slate-500">
+                      Aucun produit trouvé.
+                    </p>
+                  ) : (
+                    <div className="max-h-[320px] overflow-auto p-2">
+                      {productSearch.suggestions.map((item) => (
+                        <button
+                          key={item.id}
+                          type="button"
+                          onClick={() => productSearch.onSelectProduct(item.id)}
+                          className="flex w-full items-center justify-between gap-4 rounded-2xl px-4 py-3 text-left transition hover:bg-emerald-50"
+                        >
+                          <span className="min-w-0">
+                            <span className="block truncate text-sm font-black text-slate-900">
+                              {item.label}
+                            </span>
+                            <span className="mt-1 block truncate text-xs font-bold text-slate-500">
+                              Réf. {item.code} · {item.type}
+                            </span>
+                          </span>
+                          <span className="text-sm font-black text-emerald-700">Ouvrir</span>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ) : null}
+            </div>
+          ) : null}
 
           <div className="flex flex-wrap gap-3">
             <Link
