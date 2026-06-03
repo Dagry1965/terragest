@@ -3,6 +3,7 @@ import { produitsautoModule } from "@/runtime/modules/generated/produitsauto/pro
 import { stocksautoModule } from "@/runtime/modules/generated/stocksauto/stocksauto.module";
 import { mouvementsstockautoModule } from "@/runtime/modules/generated/mouvementsstockauto/mouvementsstockauto.module";
 import { commandesstockautoModule } from "@/runtime/modules/generated/commandesstockauto/commandesstockauto.module";
+import { lignescommandestockautoModule } from "@/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module";
 import { receptionsstockautoModule } from "@/runtime/modules/generated/receptionsstockauto/receptionsstockauto.module";
 import type { ERPModule } from "@/runtime/modules/ERPModule";
 import type {
@@ -76,6 +77,133 @@ async function safeList(module: ERPModule): Promise<ERPRecordHubRecord[]> {
     return [];
   }
 }
+
+
+function hubRelationIds(value: unknown): string[] {
+  if (value === null || value === undefined) {
+    return [];
+  }
+
+  if (typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
+    const raw = String(value).trim();
+
+    if (!raw) {
+      return [];
+    }
+
+    return Array.from(new Set([raw, ...raw.split(/[;,]/g).map((item) => item.trim()).filter(Boolean)]));
+  }
+
+  if (Array.isArray(value)) {
+    return Array.from(new Set(value.flatMap((item) => hubRelationIds(item))));
+  }
+
+  if (typeof value === "object") {
+    const record = value as Record<string, unknown>;
+
+    return Array.from(
+      new Set(
+        ["id", "_id", "value", "key", "recordId", "refId", "uid", "docId"].flatMap((key) =>
+          hubRelationIds(record[key])
+        )
+      )
+    );
+  }
+
+  return [];
+}
+
+function hubRelationMatches(value: unknown, expectedId: string): boolean {
+  const expected = String(expectedId ?? "").trim();
+
+  if (!expected) {
+    return false;
+  }
+
+  return hubRelationIds(value).some((id) => id === expected);
+}
+
+function hubRelationMatchesAny(value: unknown, expectedIds: Set<string>): boolean {
+  if (expectedIds.size === 0) {
+    return false;
+  }
+
+  return hubRelationIds(value).some((id) => expectedIds.has(id));
+}
+
+function getHubRecordId(record: ERPRecordHubRecord | null | undefined): string {
+  if (!record) {
+    return "";
+  }
+
+  return hubRelationIds(record.id ?? record._id)[0] ?? "";
+}
+
+function uniqueHubRecords(records: ERPRecordHubRecord[]): ERPRecordHubRecord[] {
+  const seen = new Set<string>();
+
+  return records.filter((record) => {
+    const id = getHubRecordId(record);
+
+    if (!id) {
+      return true;
+    }
+
+    if (seen.has(id)) {
+      return false;
+    }
+
+    seen.add(id);
+    return true;
+  });
+}
+
+function enrichOrderWithProductLine(
+  order: ERPRecordHubRecord,
+  line: ERPRecordHubRecord | null
+): ERPRecordHubRecord {
+  if (!line) {
+    return enrichRelatedRecord(order, "Commande");
+  }
+
+  return enrichRelatedRecord(
+    {
+      ...order,
+      produitId: line.produitId ?? order.produitId,
+      productLineId: getHubRecordId(line),
+      quantiteCommandee: line.quantiteCommandee ?? line.quantite,
+      productLineQuantity: line.quantiteCommandee ?? line.quantite,
+      productLineStatus: line.statut ?? line.status,
+      productLineAmountHT: line.montantHT,
+      productLineAmountTTC: line.montantTTC,
+    },
+    "Commande"
+  );
+}
+
+function enrichReceptionWithProductLine(
+  reception: ERPRecordHubRecord,
+  line: ERPRecordHubRecord | null
+): ERPRecordHubRecord {
+  if (!line) {
+    return enrichRelatedRecord(reception, "Réception");
+  }
+
+  return enrichRelatedRecord(
+    {
+      ...reception,
+      produitId: reception.produitId ?? line.produitId,
+      commandeId: reception.commandeId ?? line.commandeId,
+      productLineId: getHubRecordId(line),
+      quantiteCommandee: line.quantiteCommandee ?? line.quantite,
+      productLineQuantity: line.quantiteCommandee ?? line.quantite,
+      productLineStatus: line.statut ?? line.status,
+    },
+    "Réception"
+  );
+}
+
+
 
 function filterByAnyProductKey(
   records: ERPRecordHubRecord[],
@@ -356,15 +484,72 @@ export class RuntimeProductStockOperationalHubLoader {
       receptions: [],
     };
 
-    const [mouvements, commandes, receptions] = await Promise.all([
+    const [mouvements, commandes, lignesCommande, receptions] = await Promise.all([
       safeList(mouvementsstockautoModule),
       safeList(commandesstockautoModule),
+      safeList(lignescommandestockautoModule),
       safeList(receptionsstockautoModule),
     ]);
 
+
     const productMovements = filterByAnyProductKey(mouvements, productId);
-    const productOrders = filterByAnyProductKey(commandes, productId);
-    const productReceptions = filterByAnyProductKey(receptions, productId);
+
+    const productOrderLines = lignesCommande.filter((line) =>
+      hubRelationMatches(line.produitId ?? line.productId ?? line.articleId, productId)
+    );
+
+    const productOrderLineIds = new Set(
+      productOrderLines.map((line) => getHubRecordId(line)).filter(Boolean)
+    );
+
+    const productOrderIds = new Set(
+      productOrderLines.flatMap((line) => hubRelationIds(line.commandeId)).filter(Boolean)
+    );
+
+    const productOrdersDirect = filterByAnyProductKey(commandes, productId);
+
+    const productOrdersFromLines = commandes
+      .filter((order) => productOrderIds.has(getHubRecordId(order)))
+      .map((order) => {
+        const orderId = getHubRecordId(order);
+        const matchingLine =
+          productOrderLines.find((line) => hubRelationMatches(line.commandeId, orderId)) ?? null;
+
+        return enrichOrderWithProductLine(order, matchingLine);
+      });
+
+    const productOrders = uniqueHubRecords([
+      ...productOrdersFromLines,
+      ...productOrdersDirect.map((record) => enrichRelatedRecord(record, "Commande")),
+    ]);
+
+    const productReceptionsDirect = filterByAnyProductKey(receptions, productId);
+
+    const productReceptionsFromLines = receptions
+      .filter((reception) =>
+        hubRelationMatchesAny(reception.ligneCommandeId, productOrderLineIds) ||
+        hubRelationMatchesAny(reception.commandeId, productOrderIds)
+      )
+      .map((reception) => {
+        const matchingLine =
+          productOrderLines.find((line) =>
+            hubRelationMatches(reception.ligneCommandeId, getHubRecordId(line))
+          ) ?? null;
+
+        return enrichReceptionWithProductLine(reception, matchingLine);
+      });
+
+    const productReceptionsByStock = selectedStockId
+      ? filterByAnyStockKey(receptions, selectedStockId).map((record) =>
+          enrichRelatedRecord(record, "Réception")
+        )
+      : [];
+
+    const productReceptions = uniqueHubRecords([
+      ...productReceptionsFromLines,
+      ...productReceptionsDirect.map((record) => enrichRelatedRecord(record, "Réception")),
+      ...productReceptionsByStock,
+    ]);
 
     relatedRecordsBySection.mouvements = (
       selectedStockId
@@ -372,16 +557,9 @@ export class RuntimeProductStockOperationalHubLoader {
         : productMovements
     ).map((record) => enrichRelatedRecord(record, "Mouvement"));
 
-    relatedRecordsBySection.commandes = productOrders.map((record) =>
-      enrichRelatedRecord(record, "Commande")
-    );
+    relatedRecordsBySection.commandes = productOrders;
 
-    relatedRecordsBySection.receptions = (
-      selectedStockId
-        ? filterByAnyStockKey(receptions, selectedStockId)
-        : productReceptions
-    ).map((record) => enrichRelatedRecord(record, "R\u00e9ception"));
-
+    relatedRecordsBySection.receptions = productReceptions;
     const enrichedRootRecord = enrichRootRecord(
       rootRecord,
       primaryRecords,
