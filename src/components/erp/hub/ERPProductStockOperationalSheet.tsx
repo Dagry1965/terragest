@@ -925,6 +925,207 @@ function OrderLinesDeliveryPanel({ items }: { items: OrderLineDeliveryItem[] }) 
   );
 }
 
+
+function productOperationalSummary({
+  rootRecord,
+  stocks,
+  mouvements,
+}: {
+  rootRecord: ERPRecordHubRecord | null;
+  stocks: ERPRecordHubRecord[];
+  mouvements: ERPRecordHubRecord[];
+}) {
+  const orderLines = orderLineDeliveryItems(rootRecord);
+
+  const orderedQuantity = orderLines.reduce((sum, line) => {
+    return sum + orderLineDeliveryNumberValue(line, "quantityOrdered");
+  }, 0);
+
+  const deliveredQuantity = orderLines.reduce((sum, line) => {
+    return sum + orderLineDeliveryNumberValue(line, "quantityDelivered");
+  }, 0);
+
+  const remainingQuantity = Math.max(0, orderedQuantity - deliveredQuantity);
+
+  const stockQuantity = stocks.reduce((sum, stock) => {
+    return sum + numberValue(
+      stock,
+      ["stockQuantity", "quantite", "quantité", "currentStock", "stockActuel", "quantiteDisponible"],
+      0
+    );
+  }, 0);
+
+  const alertThreshold = numberValue(
+    rootRecord ?? {},
+    ["seuilAlerte", "stockMinimum", "minimumStock", "seuilStock"],
+    0
+  );
+
+  const exitMovements = mouvements.filter((movement) => {
+    const type = text(movement, ["typeMouvement", "type", "sens"], "").toLowerCase();
+    const source = text(movement, ["sourceModule", "source", "module"], "").toLowerCase();
+
+    return (
+      type.includes("sortie") ||
+      source.includes("intervention") ||
+      source.includes("vente")
+    );
+  });
+
+  const workshopQuantity = exitMovements.reduce((sum, movement) => {
+    return sum + Math.abs(numberValue(movement, ["quantite", "quantity"], 0));
+  }, 0);
+
+  const lastExitDate = exitMovements
+    .map((movement) => text(movement, ["dateMouvement", "createdAt", "updatedAt"], ""))
+    .filter(Boolean)
+    .sort((a, b) => {
+      const da = new Date(a).getTime();
+      const db = new Date(b).getTime();
+
+      return (Number.isFinite(db) ? db : 0) - (Number.isFinite(da) ? da : 0);
+    })[0];
+
+  const stockState =
+    alertThreshold > 0 && stockQuantity <= alertThreshold
+      ? "Stock faible"
+      : stockQuantity <= 0
+        ? "Rupture"
+        : "OK";
+
+  const performanceScore = orderedQuantity + deliveredQuantity + workshopQuantity;
+
+  const performance =
+    performanceScore >= 500
+      ? "Produit phare"
+      : performanceScore >= 50
+        ? "Produit courant"
+        : "Produit dormant";
+
+  return {
+    orderedQuantity,
+    deliveredQuantity,
+    remainingQuantity,
+    stockQuantity,
+    alertThreshold,
+    stockState,
+    workshopQuantity,
+    lastExitDate,
+    performance,
+  };
+}
+
+function OperationalSummaryCard({
+  title,
+  icon,
+  primary,
+  secondary,
+  tone = "slate",
+}: {
+  title: string;
+  icon: string;
+  primary: string;
+  secondary: string;
+  tone?: "emerald" | "blue" | "orange" | "slate";
+}) {
+  const toneClass =
+    tone === "emerald"
+      ? "bg-emerald-50 text-emerald-800 ring-emerald-100"
+      : tone === "blue"
+        ? "bg-blue-50 text-blue-800 ring-blue-100"
+        : tone === "orange"
+          ? "bg-orange-50 text-orange-800 ring-orange-100"
+          : "bg-slate-50 text-slate-800 ring-slate-100";
+
+  return (
+    <div className={"rounded-[1.5rem] p-5 ring-1 " + toneClass}>
+      <div className="mb-4 flex items-center justify-between gap-3">
+        <p className="text-xs font-black uppercase tracking-[0.16em] opacity-70">
+          {title}
+        </p>
+        <span className="text-2xl">{icon}</span>
+      </div>
+
+      <p className="text-2xl font-black tracking-tight">{primary}</p>
+      <p className="mt-2 text-xs font-bold opacity-75">{secondary}</p>
+    </div>
+  );
+}
+
+function ProductOperationalSummary({
+  rootRecord,
+  stocks,
+  mouvements,
+}: {
+  rootRecord: ERPRecordHubRecord | null;
+  stocks: ERPRecordHubRecord[];
+  mouvements: ERPRecordHubRecord[];
+}) {
+  const summary = productOperationalSummary({ rootRecord, stocks, mouvements });
+
+  return (
+    <section className="rounded-[2rem] bg-white p-6 shadow-sm ring-1 ring-slate-200 lg:p-7">
+      <SectionTitle
+        title="Synthèse opérationnelle du produit"
+        subtitle="Lecture métier immédiate : approvisionnement, stock, utilisation atelier et potentiel produit."
+      />
+
+      <div className="grid gap-4 xl:grid-cols-4">
+        <OperationalSummaryCard
+          title="Approvisionnement"
+          icon="🚚"
+          primary={orderLineQuantityLabel(summary.deliveredQuantity) + " livrées"}
+          secondary={
+            "Commandé " +
+            orderLineQuantityLabel(summary.orderedQuantity) +
+            " · Reste " +
+            orderLineQuantityLabel(summary.remainingQuantity)
+          }
+          tone={summary.remainingQuantity > 0 ? "orange" : "emerald"}
+        />
+
+        <OperationalSummaryCard
+          title="Stock"
+          icon="📦"
+          primary={orderLineQuantityLabel(summary.stockQuantity)}
+          secondary={
+            summary.alertThreshold > 0
+              ? "Seuil " + orderLineQuantityLabel(summary.alertThreshold) + " · " + summary.stockState
+              : summary.stockState
+          }
+          tone={summary.stockState === "OK" ? "emerald" : "orange"}
+        />
+
+        <OperationalSummaryCard
+          title="Atelier"
+          icon="🔧"
+          primary={orderLineQuantityLabel(summary.workshopQuantity)}
+          secondary={
+            summary.lastExitDate
+              ? "Dernière sortie " + formatDate(summary.lastExitDate)
+              : "Aucune sortie atelier récente"
+          }
+          tone="blue"
+        />
+
+        <OperationalSummaryCard
+          title="Performance"
+          icon="⭐"
+          primary={summary.performance}
+          secondary="Basé sur commandes, livraisons et sorties"
+          tone={
+            summary.performance === "Produit phare"
+              ? "emerald"
+              : summary.performance === "Produit courant"
+                ? "blue"
+                : "slate"
+          }
+        />
+      </div>
+    </section>
+  );
+}
+
 function ProductFlowDiagram() {
   return (
     <section className="rounded-[2rem] bg-white p-6 shadow-sm ring-1 ring-slate-200 lg:p-7">
@@ -1310,7 +1511,7 @@ export function ERPProductStockOperationalSheet({
 
         <div className="grid gap-6 2xl:grid-cols-[minmax(0,1fr)_360px]">
           <main className="space-y-6">
-            <ProductFlowDiagram />
+            <ProductOperationalSummary rootRecord={rootRecord} stocks={primaryRecords} mouvements={movements} />
 
             <OrderLinesDeliveryPanel items={orderLineDeliveryItems(rootRecord)} />
 
@@ -1424,85 +1625,6 @@ export function ERPProductStockOperationalSheet({
           </main>
 
           <aside className="space-y-5">
-            <section className="rounded-[1.9rem] bg-white p-5 shadow-sm ring-1 ring-slate-200">
-              <SectionTitle
-                title="Approvisionnement"
-                subtitle="Lecture fournisseur et réassort du produit."
-              />
-
-              <div className="grid gap-3">
-                {[
-                  ["Fournisseur principal", mainSupplierLabel(commandes)],
-                  ["Dernière commande", latestOrderLabel(commandes)],
-                  ["Dernière réception", latestReceptionLabel(receptions)],
-                  ["Quantité commandée", totalOrderedQuantity(commandes)],
-                  ["Quantité reçue", totalReceivedQuantity(receptions)],
-                ].map(([label, value]) => (
-                  <div
-                    key={label}
-                    className="flex items-center justify-between gap-4 rounded-2xl bg-slate-50 px-4 py-3 ring-1 ring-slate-100"
-                  >
-                    <p className="text-xs font-black text-slate-500">{label}</p>
-                    <p className="max-w-[160px] truncate text-right text-xs font-black text-slate-900">
-                      {value}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            <section className="rounded-[1.9rem] bg-white p-5 shadow-sm ring-1 ring-slate-200">
-              <SectionTitle title="Dossier sélectionné" />
-
-              {selectedStock ? (
-                <div>
-                  <div className="mb-5 flex items-start justify-between gap-3">
-                    <div>
-                      <p className="text-xs font-black uppercase tracking-[0.16em] text-emerald-700">
-                        Stock
-                      </p>
-                      <h3 className="mt-2 text-lg font-black text-slate-950">
-                        {text(selectedStock, ["emplacement", "nom", "displayLabel"], "Stock")}
-                      </h3>
-                      <p className="mt-1 text-sm font-semibold text-slate-500">
-                        {text(selectedStock, ["typeStock", "type"], "Stock opérationnel")}
-                      </p>
-                    </div>
-
-                    <span
-                      className={[
-                        "rounded-full px-3 py-1 text-xs font-black ring-1",
-                        stockStatusClass(selectedStatus),
-                      ].join(" ")}
-                    >
-                      {humanStatusLabel(selectedStatus)}
-                    </span>
-                  </div>
-
-                  <div className="grid gap-3">
-                    {[
-                      ["Emplacement", text(selectedStock, ["emplacement", "nom"], "-")],
-                      ["Stock disponible", formatNumber(selectedQuantity) + " unités"],
-                      ["Stock réservé", text(selectedStock, ["stockReserve", "reservedStock"], "0 unité")],
-                      ["Stock en transit", text(selectedStock, ["stockTransit", "transitStock"], "0 unité")],
-                      ["Stock minimum", selectedThreshold > 0 ? formatNumber(selectedThreshold) + " unités" : "-"],
-                      ["Dernière MAJ", formatDate(text(selectedStock, ["updatedAt", "updated_at", "modifiedAt", "lastUpdate", "dateMiseAJour", "createdAt"], "-"))],
-                    ].map(([label, value]) => (
-                      <div
-                        key={label}
-                        className="flex items-center justify-between gap-4 rounded-2xl bg-slate-50 px-4 py-3 ring-1 ring-slate-100"
-                      >
-                        <p className="text-xs font-black text-slate-500">{label}</p>
-                        <p className="text-right text-xs font-black text-slate-900">{value}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ) : (
-                <EmptyPanel icon="📦" text="Aucun stock sélectionné." />
-              )}
-            </section>
-
             <section className="rounded-[1.9rem] bg-white p-5 shadow-sm ring-1 ring-slate-200">
               <SectionTitle title="Liens rapides" />
 
