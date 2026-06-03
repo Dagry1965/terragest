@@ -1,0 +1,177 @@
+﻿
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:33:        key: 
+"factureId",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:34:        label: 
+"Facture",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:35:        type: 
+"relation",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:36:        relation: {
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:37:          module: 
+"facturesauto",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:38:        },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:39:        required: 
+true,
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:45:        key: 
+"clientId",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:46:        label: 
+"Client",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:47:        type: 
+"relation",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:48:        relation: {
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:49:          module: 
+"clientsauto",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:50:        },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:51:        searchable: 
+true,
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:56:        key: 
+"vehiculeId",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:57:        label: 
+"Véhicule",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:58:        type: 
+"relation",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:59:        relation: {
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:60:          module: 
+"vehicules",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:61:        },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:62:        searchable: 
+true,
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:67:        key: 
+"montant",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:68:        label: 
+"Montant encaissé",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:69:        type: 
+"number",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:70:        required: 
+true,
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:71:        list: { 
+visible: true, order: 3 },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:72:        grid: { 
+cols: 6 },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:73:      },
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:83:        key: 
+"modePaiement",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:84:        label: 
+"Mode paiement",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:85:        type: 
+"select",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:86:        
+defaultValue: "mobile_money",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:87:        options: [
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:88:          { label: 
+"Espèces", value: "especes" },
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:89:          { label: 
+"Mobile Money", value: "mobile_money" },
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:90:          { label: 
+"Carte", value: "carte" },
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:91:          { label: 
+"Virement", value: "virement" },
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:92:          { label: 
+"Chèque", value: "cheque" },
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:93:          { label: 
+"Autre", value: "autre" },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:94:        ],
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:95:        list: { 
+visible: true, order: 5 },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:96:        grid: { 
+cols: 6 },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:97:      },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:98:{
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:99:        key: 
+"referenceTransaction",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:107:        key: 
+"statut",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:108:        label: 
+"Statut",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:109:        type: 
+"select",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:110:        
+defaultValue: "valide",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:111:        options: [
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:112:          { label: 
+"En attente", value: "en_attente" },
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:113:          { label: 
+"Validé", value: "valide" },
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:114:          { label: 
+"Rejeté", value: "rejete" },
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:115:          { label: 
+"Annulé", value: "annule" },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:116:        ],
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:117:        list: { 
+visible: true, order: 6 },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:118:        grid: { 
+cols: 6 },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:119:      },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:120:{
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:121:        key: 
+"numeroRecu",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:132:        
+defaultValue: "non_envoye",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:133:        options: [
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:134:          { label: 
+"Non envoyé", value: "non_envoye" },
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:135:          { label: 
+"Envoyé", value: "envoye" },
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:136:          { label: 
+"Échec envoi", value: "echec" },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:137:        ],
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:138:        list: { 
+visible: false },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:139:        grid: { 
+cols: 6 },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:140:      },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:141:{
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:142:        key: 
+"dernierEnvoiRecuAt",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:153:          { label: 
+"WhatsApp", value: "whatsapp" },
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:154:          { label: 
+"SMS", value: "sms" },
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:155:          { label: 
+"Email", value: "email" },
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:156:          { label: 
+"Manuel", value: "manuel" },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:157:        ],
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:158:        list: { 
+visible: false },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:159:        grid: { 
+cols: 6 },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:160:      },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:161:{
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:162:        key: 
+"destinataireDernierEnvoiRecu",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:172:        
+defaultValue: 0,
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:173:        list: { 
+visible: false },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:174:        grid: { 
+cols: 6 },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:175:      },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:176:{
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:177:        key: 
+"notes",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:178:        label: 
+"Notes",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:268:            key: 
+"observations",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:269:            title: 
+"Observations",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:270:            
+fields: [
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:271:              
+"notes",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:272:            ],
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:273:          },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:274:        ],
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:286:        
+foreignKey: "factureId",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:287:      },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:288:    ],
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:289:    lockedFields: 
+["factureId", "clientId", "vehiculeId"],
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:290:    labelFields: 
+["factureId", "numeroRecu", "montant", "datePaiement", "statut"],
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:291:
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:292:    contextBanner: 
+{
+
+

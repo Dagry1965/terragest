@@ -1,0 +1,102 @@
+﻿
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:28:        key: "clientId",
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:29:        label: "Client",
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:30:        type: "relation",
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:31:        relation: { module: 
+"clientsauto" },
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:32:        required: true,
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:33:        searchable: true,
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:34:        list: { order: 1 },
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:38:        key: "vehiculeId",
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:39:        label: "Véhicule",
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:40:        type: "relation",
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:41:        relation: { module: 
+"vehicules" },
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:42:        searchable: true,
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:43:        list: { order: 2 },
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:44:        grid: { cols: 6 },
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:47:        key: "typeRappel",
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:48:        label: "Type rappel",
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:49:        type: "select",
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:50:        required: true,
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:51:        options: [
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:52:          { label: "Vidange", 
+value: "vidange" },
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:53:          { label: "Contrôle 
+technique", value: "controle_technique" },
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:54:          { label: "Assurance", 
+value: "assurance" },
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:55:          { label: 
+"Rendez-vous", value: "rendezvous" },
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:56:          { label: "Facture 
+impayée", value: "facture_impayee" },
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:57:          { label: "Marketing", 
+value: "marketing" },
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:58:          { label: "Autre", 
+value: "autre" },
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:59:        ],
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:60:        list: { order: 6 },
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:61:        grid: { cols: 6 },
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:62:      },
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:63:      {
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:64:        key: "dateRappel",
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:65:        label: "Date rappel",
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:66:        type: "date",
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:67:        required: true,
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:68:        list: { order: 6 },
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:69:        grid: { cols: 6 },
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:70:      },
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:72:        key: "canal",
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:73:        label: "Canal",
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:74:        type: "select",
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:75:        defaultValue: "sms",
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:76:        options: [
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:77:          { label: "SMS", 
+value: "sms" },
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:78:          { label: "Email", 
+value: "email" },
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:79:          { label: "Téléphone", 
+value: "telephone" },
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:80:          { label: "WhatsApp", 
+value: "whatsapp" },
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:81:          { label: 
+"Notification", value: "notification" },
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:82:        ],
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:83:        grid: { cols: 6 },
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:84:      },
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:85:      {
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:86:        key: "message",
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:87:        label: "Message",
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:88:        type: "textarea",
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:89:        grid: { cols: 12 },
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:90:      },
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:91:      {
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:92:        key: "statut",
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:93:        label: "Statut",
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:94:        type: "select",
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:95:        defaultValue: 
+"planifie",
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:96:        options: [
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:97:          { label: "Planifié", 
+value: "planifie" },
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:98:          { label: "Envoyé", 
+value: "envoye" },
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:99:          { label: "Échoué", 
+value: "echoue" },
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:100:          { label: "Annulé", 
+value: "annule" },
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:101:        ],
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:102:        list: { order: 6 },
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:103:        grid: { cols: 6 },
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:104:      },
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:105:    ],
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:106:  },
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:142:        key: "message",
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:143:        label: "Message",
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:144:
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:145:        fields: [
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:146:          "message",
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:147:        ],
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:148:
+
+

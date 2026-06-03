@@ -1,0 +1,1465 @@
+﻿
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:9:    key: "facturesauto",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:10:    label: "Factures",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:11:    description: "Facturation 
+atelier AMARKHYS",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:12:    icon: "receipt",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:13:    category: "amarkhys",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:14:    features: {
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:15:      dashboard: true,
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:16:      analytics: true,
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:30:        key: "numeroFacture",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:31:        label: "Numéro 
+facture",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:32:        type: "text",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:33:        required: true,
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:34:        unique: true,
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:35:        searchable: true,
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:36:        list: { visible: 
+true, order: 1 },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:37:        grid: { cols: 4 },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:38:      },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:39:{
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:40:        key: "dateFacture",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:41:        label: "Date facture",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:42:        type: "date",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:43:        required: true,
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:44:        unique: true,
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:45:        list: { visible: 
+true, order: 4 },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:46:        grid: { cols: 4 },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:47:      },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:48:{
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:49:        key: "statutFacture",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:50:        label: "Statut 
+facture",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:51:        type: "select",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:52:        defaultValue: "emise",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:53:        options: [
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:54:          { label: 
+"Brouillon", value: "brouillon" },
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:55:          { label: "Émise", 
+value: "emise" },
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:56:          { label: "Annulée", 
+value: "annulee" },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:57:        ],
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:58:        list: { visible: 
+false },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:59:        grid: { cols: 4 },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:60:      },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:61:{
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:62:        key: "statutPaiement",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:63:        label: "Statut 
+paiement",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:64:        type: "select",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:65:        defaultValue: 
+"en_attente",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:66:        options: [
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:67:          { label: "En 
+attente", value: "en_attente" },
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:68:          { label: "Partiel", 
+value: "partiel" },
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:69:          { label: "Payé", 
+value: "paye" },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:70:        ],
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:71:        list: { visible: 
+true, order: 7 },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:72:        grid: { cols: 4 },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:73:      },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:74:{
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:75:        key: "clientId",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:76:        label: "Client",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:77:        type: "relation",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:78:        relation: {
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:79:          module: 
+"clientsauto",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:80:        },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:81:        searchable: true,
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:82:        list: { visible: 
+true, order: 2 },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:83:        grid: { cols: 6 },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:84:      },
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:86:        key: "vehiculeId",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:87:        label: "Véhicule",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:88:        type: "relation",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:89:        relation: {
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:90:          module: "vehicules",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:91:        },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:92:        searchable: true,
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:93:        list: { visible: 
+true, order: 3 },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:94:        grid: { cols: 6 },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:95:      },
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:97:        key: "interventionId",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:98:        label: "Intervention",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:99:        type: "relation",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:100:        relation: {
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:101:          module: 
+"interventionsauto",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:102:        },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:103:        searchable: true,
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:104:        list: { visible: 
+false },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:105:        grid: { cols: 12 },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:106:      },
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:108:        key: "montantHT",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:109:        label: "Montant HT",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:110:        type: "number",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:111:        list: { visible: 
+false },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:112:        grid: { cols: 4 },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:113:      },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:114:{
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:115:        key: "tva",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:116:        label: "Taux TVA 
+(%)",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:117:        type: "number",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:118:        defaultValue: 18,
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:119:        list: { visible: 
+false },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:120:        grid: { cols: 4 },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:121:      },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:122:{
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:123:        key: "montantTTC",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:124:        label: "Montant TTC",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:125:        type: "number",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:126:        computed: {
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:127:          formula: 
+"montantHT + (montantHT * tva / 100)",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:128:          dependsOn: 
+["montantHT", "tva"],
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:129:        },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:130:        list: { visible: 
+true, order: 5 },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:131:        grid: { cols: 4 },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:132:      },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:133:{
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:134:        key: "montantPaye",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:135:        label: "Montant 
+payé",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:136:        type: "number",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:137:        defaultValue: 0,
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:138:        list: { visible: 
+false },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:139:        grid: { cols: 4 },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:140:      },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:141:{
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:142:        key: "resteAPayer",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:143:        label: "Reste à 
+payer",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:144:        type: "number",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:145:        defaultValue: 0,
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:146:        list: { visible: 
+true, order: 6 },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:147:        grid: { cols: 4 },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:148:      },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:149:{
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:150:        key: "modePaiement",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:151:        label: "Mode 
+paiement",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:152:        type: "select",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:153:        options: [
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:154:          { label: 
+"Espèces", value: "especes" },
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:155:          { label: "Carte", 
+value: "carte" },
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:156:          { label: 
+"Virement", value: "virement" },
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:157:          { label: "Mobile 
+Money", value: "mobile_money" },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:158:        ],
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:159:        list: { visible: 
+false },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:160:        grid: { cols: 6 },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:161:      },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:162:{
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:163:        key: 
+"statutEnvoiFacture",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:164:        label: "Statut envoi 
+facture",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:165:        type: "select",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:166:        defaultValue: 
+"non_envoyee",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:167:        options: [
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:168:          { label: "Non 
+envoyée", value: "non_envoyee" },
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:169:          { label: 
+"Envoyée", value: "envoyee" },
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:170:          { label: "Échec 
+envoi", value: "echec" },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:171:        ],
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:172:        list: { visible: 
+false },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:173:        grid: { cols: 4 },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:174:      },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:175:{
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:176:        key: 
+"dernierEnvoiFactureAt",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:177:        label: "Dernier 
+envoi facture",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:178:        type: "datetime",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:179:        list: { visible: 
+false },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:180:        grid: { cols: 4 },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:181:      },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:182:{
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:183:        key: 
+"canalDernierEnvoiFacture",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:184:        label: "Canal 
+dernier envoi",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:185:        type: "select",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:186:        options: [
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:187:          { label: 
+"WhatsApp", value: "whatsapp" },
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:188:          { label: "SMS", 
+value: "sms" },
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:189:          { label: "Email", 
+value: "email" },
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:190:          { label: "Lien", 
+value: "lien" },
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:191:          { label: "Manuel", 
+value: "manuel" },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:192:        ],
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:193:        list: { visible: 
+false },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:194:        grid: { cols: 4 },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:195:      },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:196:{
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:197:        key: 
+"destinataireDernierEnvoiFacture",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:198:        label: "Destinataire 
+dernier envoi",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:199:        type: "text",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:200:        list: { visible: 
+false },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:201:        grid: { cols: 6 },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:202:      },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:203:{
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:204:        key: 
+"nombreEnvoisFacture",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:205:        label: "Nombre 
+d'envois",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:206:        type: "number",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:207:        defaultValue: 0,
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:208:        list: { visible: 
+false },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:209:        grid: { cols: 6 },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:210:      },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:211:{
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:212:        key: "observations",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:213:        label: 
+"Observations",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:214:        type: "textarea",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:215:        list: { visible: 
+false },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:216:        grid: { cols: 12 },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:217:      }
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:218:    ],
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:219:  },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:220:
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:225:        key: "facture",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:226:        label: "Facture",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:227:        fields: [
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:228:          "numeroFacture",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:229:          "dateFacture",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:230:          "statutFacture",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:231:          "statutPaiement",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:232:          "modePaiement",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:233:        ],
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:234:        sections: [
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:235:          {
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:236:            key: "infos",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:237:            title: 
+"Informations facture",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:238:            fields: [
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:239:              
+"numeroFacture",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:240:              "dateFacture",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:241:              
+"statutFacture",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:242:              
+"statutPaiement",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:243:              "modePaiement",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:244:            ],
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:245:          },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:246:        ],
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:247:      },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:248:
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:249:      {
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:250:        key: "relations",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:251:        label: "Relations",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:252:        fields: [
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:253:          "clientId",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:254:          "vehiculeId",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:255:          "interventionId",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:256:        ],
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:257:        sections: [
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:258:          {
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:259:            key: "liens",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:260:            title: 
+"Relations métier",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:261:            fields: [
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:262:              "clientId",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:263:              "vehiculeId",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:264:              
+"interventionId",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:265:            ],
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:266:          },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:267:        ],
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:268:      },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:269:
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:270:      {
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:271:        key: "finance",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:272:        label: "Finance",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:273:        fields: [
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:274:          "montantHT",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:275:          "tva",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:276:          "montantTTC",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:277:          "montantPaye",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:278:          "resteAPayer",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:279:        ],
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:280:        sections: [
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:281:          {
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:282:            key: "couts",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:283:            title: 
+"Montants",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:284:            fields: [
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:285:              "montantHT",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:286:              "tva",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:287:              "montantTTC",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:288:              "montantPaye",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:289:              "resteAPayer",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:290:            ],
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:291:          },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:292:        ],
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:293:      },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:294:
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:295:      {
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:296:        key: "envoi",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:297:        label: "Envoi",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:298:        fields: [
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:299:          
+"statutEnvoiFacture",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:300:          
+"dernierEnvoiFactureAt",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:301:          
+"canalDernierEnvoiFacture",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:302:          
+"destinataireDernierEnvoiFacture",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:303:          
+"nombreEnvoisFacture",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:304:        ],
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:305:        sections: [
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:307:            key: 
+"suivi-envoi",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:308:            title: "Suivi 
+d'envoi facture",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:309:            fields: [
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:310:              
+"statutEnvoiFacture",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:311:              
+"dernierEnvoiFactureAt",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:312:              
+"canalDernierEnvoiFacture",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:313:              
+"destinataireDernierEnvoiFacture",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:314:              
+"nombreEnvoisFacture",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:315:            ],
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:316:          },
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:321:        key: "notes",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:322:        label: "Notes",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:323:        fields: [
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:324:          "observations",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:325:        ],
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:326:        sections: [
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:327:          {
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:328:            key: "obs",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:329:            title: 
+"Observations",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:330:            fields: [
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:331:              "observations",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:332:            ],
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:333:          },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:334:        ],
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:345:      runtimeLabel: "Runtime 
+ERP",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:346:      eyebrow: "AMARKHYS · 
+Runtime ERP",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:347:    },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:348:    kpis: [
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:349:      {
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:350:        key: "total",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:351:        label: "Total",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:352:        count: true,
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:353:        tone: "blue",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:354:        icon: "receipt",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:355:        description: "Nombre 
+total de factures affichées.",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:356:      },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:357:      {
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:358:        key: "en_attente",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:359:        label: "En attente",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:360:        field: 
+"statutPaiement",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:361:        equals: "en_attente",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:362:        tone: "orange",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:363:        icon: "clock",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:364:      },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:365:      {
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:366:        key: "partiel",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:367:        label: "Partielles",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:368:        field: 
+"statutPaiement",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:369:        equals: "partiel",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:370:        tone: "purple",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:371:        icon: "activity",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:372:      },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:373:      {
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:374:        key: "payees",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:375:        label: "Payées",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:376:        field: 
+"statutPaiement",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:377:        equals: "paye",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:378:        tone: "green",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:379:        icon: "check",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:380:      },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:381:      {
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:382:        key: "annulees",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:383:        label: "Annulées",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:384:        field: 
+"statutFacture",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:385:        equals: "annulee",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:386:        tone: "gray",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:387:        icon: "x",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:388:      },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:389:    ],
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:390:    filters: [
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:392:        key: 
+"statutPaiement",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:393:        label: "Statut 
+paiement",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:394:        field: 
+"statutPaiement",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:395:        type: "select",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:396:        options: [
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:397:          { label: "En 
+attente", value: "en_attente" },
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:398:          { label: 
+"Partiel", value: "partiel" },
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:399:          { label: "Payé", 
+value: "paye" },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:400:        ],
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:401:      },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:402:      {
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:403:        key: "statutFacture",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:404:        label: "Statut 
+facture",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:405:        field: 
+"statutFacture",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:406:        type: "select",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:407:        options: [
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:408:          { label: 
+"Brouillon", value: "brouillon" },
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:409:          { label: "Émise", 
+value: "emise" },
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:410:          { label: 
+"Annulée", value: "annulee" },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:411:        ],
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:412:      },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:413:      {
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:414:        key: "clientId",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:415:        label: "Client",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:416:        field: "clientId",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:417:        type: "relation",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:418:      },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:419:    ],
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:420:    table: {
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:421:      enableSearch: true,
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:422:      enableSelection: true,
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:423:      enableDensityToggle: 
+true,
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:426:        "dateFacture",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:427:        "clientId",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:428:        "vehiculeId",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:429:        "montantTTC",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:430:        "statut",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:431:      ],
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:432:      relationLabelFields: {
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:433:        clientId: [
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:434:          "nom",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:435:          "prenom",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:436:          "telephone",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:437:        ],
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:438:        vehiculeId: [
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:439:          "marque",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:440:          "modele",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:441:          "immatriculation",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:442:        ],
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:443:        interventionId: [
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:444:          "dateIntervention",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:445:          "typeIntervention",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:446:          "statut",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:447:        ],
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:448:      },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:449:      hiddenFields: [
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:450:        "id",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:451:        "_id",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:452:        "uid",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:456:        "updatedAt",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:457:        "removedAt",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:458:      ],
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:459:    },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:460:    rightPanel: {
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:461:      enabled: true,
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:462:      title: "Facturation 
+aujourd'hui",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:463:      type: "summary",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:464:      metrics: [
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:465:        {
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:466:          key: "total",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:467:          label: "Factures 
+affichées",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:468:          type: "count",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:469:          format: "number",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:470:        },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:471:        {
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:472:          key: "montant_ttc",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:473:          label: "Montant 
+TTC",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:474:          type: "sum",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:475:          field: 
+"montantTTC",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:476:          format: "currency",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:477:          currency: "FCFA",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:478:        },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:479:        {
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:480:          key: 
+"reste_a_payer",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:481:          label: "Reste à 
+payer",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:482:          type: "sum",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:483:          field: 
+"resteAPayer",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:484:          format: "currency",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:485:          currency: "FCFA",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:486:        },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:487:      ],
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:488:    },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:489:  },
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:495:    labelFields: 
+["numeroFacture", "clientId", "montantTTC", "resteAPayer", "statutPaiement"],
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:496:
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:497:    contextBanner: {
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:498:      title: "Contexte 
+facture",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:499:      items: [
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:500:        {
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:501:          relationField: 
+"clientId",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:502:          moduleKey: 
+"clientsauto",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:503:          labelFields: [
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:504:            "prenom",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:505:            "nom",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:506:            "telephone",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:507:          ],
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:508:          tone: "client",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:511:          relationField: 
+"vehiculeId",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:512:          moduleKey: 
+"vehicules",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:513:          labelFields: [
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:514:            "marque",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:515:            "modele",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:516:            
+"immatriculation",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:517:          ],
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:518:          tone: "vehicle",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:519:        },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:520:        {
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:521:          relationField: 
+"interventionId",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:522:          moduleKey: 
+"interventionsauto",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:523:          labelFields: [
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:524:            
+"typeIntervention",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:525:            
+"dateIntervention",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:526:            "statut",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:527:          ],
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:528:          tone: "workshop",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:529:        },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:530:      ],
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:531:    },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:532:
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:535:      "clientId",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:536:      "vehiculeId",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:537:      "interventionId",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:538:    ],
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:539:
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:540:    readOnlyFields: [
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:541:      "statutPaiement",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:542:      "montantTTC",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:543:      "montantPaye",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:544:      "resteAPayer",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:545:      
+"dernierEnvoiFactureAt",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:546:      
+"canalDernierEnvoiFacture",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:547:      
+"destinataireDernierEnvoiFacture",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:548:      "nombreEnvoisFacture",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:549:    ],
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:550:
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:553:        key: 
+"encaissements-facture",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:554:        moduleKey: 
+"encaissementsauto",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:555:        foreignKey: 
+"factureId",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:556:        title: 
+"Encaissements",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:557:        description: 
+"Paiements enregistrés pour cette facture.",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:558:        displayIn: [],
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:559:        lazy: true,
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:560:        position: "after",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:561:        allowCreate: false,
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:562:        createLabel: 
+"Ajouter un encaissement",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:563:        openLabel: "Ouvrir 
+encaissement",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:564:        labelFields: 
+["numeroRecu", "montant", "datePaiement", "statut"],
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:565:        subtitleFields: 
+["clientId", "vehiculeId", "modePaiement", "referenceTransaction"],
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:566:        totalField: 
+"montant",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:567:        prefillFromParent: {
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:568:          clientId: 
+"clientId",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:569:          vehiculeId: 
+"vehiculeId",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:570:        },
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:571:        lockFields: 
+["factureId", "clientId", "vehiculeId"],
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:572:        relations: [
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:573:          {
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:574:            field: 
+"clientId",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:575:            moduleKey: 
+"clientsauto",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:576:            labelFields: 
+["prenom", "nom", "telephone"],
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:577:          },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:578:          {
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:579:            field: 
+"vehiculeId",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:580:            moduleKey: 
+"vehicules",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:581:            labelFields: 
+["marque", "modele", "immatriculation"],
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:582:          },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:583:        ],
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:584:      },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:585:      {
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:586:        key: 
+"echeances-facture",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:587:        moduleKey: 
+"echeancespaiementauto",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:588:        foreignKey: 
+"factureId",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:589:        title: "Échéances de 
+paiement",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:590:        description: "Plan 
+de paiement et relances liées à cette facture.",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:591:        displayIn: [],
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:592:        lazy: true,
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:593:        position: "after",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:594:        allowCreate: false,
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:595:        createLabel: 
+"Ajouter une échéance",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:596:        openLabel: "Ouvrir 
+échéance",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:597:        labelFields: 
+["montantPrevu", "montantPaye", "dateEcheance", "statut"],
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:598:        subtitleFields: 
+["clientId", "vehiculeId", "canalRelance"],
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:599:        totalField: 
+"montantPrevu",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:600:        prefillFromParent: {
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:601:          clientId: 
+"clientId",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:602:          vehiculeId: 
+"vehiculeId",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:603:        },
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:604:        lockFields: 
+["factureId", "clientId", "vehiculeId"],
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:605:        relations: [
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:606:          {
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:607:            field: 
+"clientId",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:608:            moduleKey: 
+"clientsauto",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:609:            labelFields: 
+["prenom", "nom", "telephone"],
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:610:          },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:611:          {
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:612:            field: 
+"vehiculeId",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:613:            moduleKey: 
+"vehicules",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:614:            labelFields: 
+["marque", "modele", "immatriculation"],
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:615:          },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:616:        ],
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:617:      },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:618:    ],
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:619:  },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:620:
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:625:      key: "facture",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:626:      label: "Cycle facture",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:627:      initialState: 
+"en_attente",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:628:      states: [
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:629:        {
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:630:          key: "en_attente",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:631:          label: "En 
+attente",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:632:          color: "warning",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:633:        },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:634:        {
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:635:          key: "partiel",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:636:          label: "Paiement 
+partiel",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:637:          color: "default",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:638:        },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:639:        {
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:640:          key: "paye",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:641:          label: "Payé",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:642:          color: "success",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:643:        },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:644:      ],
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:645:      transitions: [
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:646:        {
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:647:          from: "en_attente",
+> src\runtime\modules\generated\facturesauto\facturesauto.module.ts:649:          action: "Paiement 
+partiel",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:650:        },
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:651:        {
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:652:          from: "partiel",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:653:          to: "paye",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:654:          action: 
+"Finaliser",
+  src\runtime\modules\generated\facturesauto\facturesauto.module.ts:655:        },
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:9:    key: 
+"encaissementsauto",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:10:    label: 
+"Encaissements",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:11:    description:
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:12:      "Suivi des 
+paiements clients, paiements partiels et encaissements AMARKHYS.",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:13:    icon: "wallet",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:14:    category: 
+"amarkhys",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:15:
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:16:    features: {
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:17:      dashboard: 
+true,
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:18:      analytics: 
+true,
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:33:        key: 
+"factureId",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:34:        label: 
+"Facture",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:35:        type: 
+"relation",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:36:        relation: {
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:37:          module: 
+"facturesauto",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:38:        },
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:39:        required: 
+true,
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:40:        searchable: 
+true,
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:41:        list: { 
+visible: true, order: 1 },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:42:        grid: { 
+cols: 6 },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:43:      },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:44:{
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:45:        key: 
+"clientId",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:46:        label: 
+"Client",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:47:        type: 
+"relation",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:48:        relation: {
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:49:          module: 
+"clientsauto",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:50:        },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:51:        searchable: 
+true,
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:52:        list: { 
+visible: true, order: 2 },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:53:        grid: { 
+cols: 6 },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:54:      },
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:56:        key: 
+"vehiculeId",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:57:        label: 
+"Véhicule",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:58:        type: 
+"relation",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:59:        relation: {
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:60:          module: 
+"vehicules",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:61:        },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:62:        searchable: 
+true,
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:63:        list: { 
+visible: false },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:64:        grid: { 
+cols: 6 },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:65:      },
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:67:        key: 
+"montant",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:68:        label: 
+"Montant encaissé",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:69:        type: 
+"number",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:70:        required: 
+true,
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:71:        list: { 
+visible: true, order: 3 },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:72:        grid: { 
+cols: 6 },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:73:      },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:74:{
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:75:        key: 
+"datePaiement",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:76:        label: 
+"Date paiement",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:77:        type: 
+"date",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:78:        required: 
+true,
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:79:        list: { 
+visible: true, order: 4 },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:80:        grid: { 
+cols: 6 },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:81:      },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:82:{
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:83:        key: 
+"modePaiement",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:84:        label: 
+"Mode paiement",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:85:        type: 
+"select",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:86:        
+defaultValue: "mobile_money",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:87:        options: [
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:88:          { label: 
+"Espèces", value: "especes" },
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:89:          { label: 
+"Mobile Money", value: "mobile_money" },
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:90:          { label: 
+"Carte", value: "carte" },
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:91:          { label: 
+"Virement", value: "virement" },
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:92:          { label: 
+"Chèque", value: "cheque" },
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:93:          { label: 
+"Autre", value: "autre" },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:94:        ],
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:95:        list: { 
+visible: true, order: 5 },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:96:        grid: { 
+cols: 6 },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:97:      },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:98:{
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:99:        key: 
+"referenceTransaction",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:100:        label: 
+"Référence transaction",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:101:        type: 
+"text",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:102:        
+searchable: true,
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:103:        list: { 
+visible: false },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:104:        grid: { 
+cols: 6 },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:105:      },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:106:{
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:107:        key: 
+"statut",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:108:        label: 
+"Statut",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:109:        type: 
+"select",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:110:        
+defaultValue: "valide",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:111:        options: [
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:112:          { label: 
+"En attente", value: "en_attente" },
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:113:          { label: 
+"Validé", value: "valide" },
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:114:          { label: 
+"Rejeté", value: "rejete" },
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:115:          { label: 
+"Annulé", value: "annule" },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:116:        ],
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:117:        list: { 
+visible: true, order: 6 },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:118:        grid: { 
+cols: 6 },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:119:      },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:120:{
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:121:        key: 
+"numeroRecu",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:122:        label: 
+"Numéro reçu",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:123:        type: 
+"text",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:124:        
+searchable: true,
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:125:        list: { 
+visible: false },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:126:        grid: { 
+cols: 6 },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:127:      },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:128:{
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:129:        key: 
+"statutEnvoiRecu",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:130:        label: 
+"Statut envoi reçu",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:131:        type: 
+"select",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:132:        
+defaultValue: "non_envoye",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:133:        options: [
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:134:          { label: 
+"Non envoyé", value: "non_envoye" },
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:135:          { label: 
+"Envoyé", value: "envoye" },
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:136:          { label: 
+"Échec envoi", value: "echec" },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:137:        ],
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:138:        list: { 
+visible: false },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:139:        grid: { 
+cols: 6 },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:140:      },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:141:{
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:142:        key: 
+"dernierEnvoiRecuAt",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:143:        label: 
+"Dernier envoi reçu",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:144:        type: 
+"datetime",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:145:        list: { 
+visible: false },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:146:        grid: { 
+cols: 6 },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:147:      },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:148:{
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:149:        key: 
+"canalDernierEnvoiRecu",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:150:        label: 
+"Canal dernier envoi reçu",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:151:        type: 
+"select",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:152:        options: [
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:153:          { label: 
+"WhatsApp", value: "whatsapp" },
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:154:          { label: 
+"SMS", value: "sms" },
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:155:          { label: 
+"Email", value: "email" },
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:156:          { label: 
+"Manuel", value: "manuel" },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:157:        ],
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:158:        list: { 
+visible: false },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:159:        grid: { 
+cols: 6 },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:160:      },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:161:{
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:162:        key: 
+"destinataireDernierEnvoiRecu",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:163:        label: 
+"Destinataire dernier envoi reçu",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:164:        type: 
+"text",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:165:        list: { 
+visible: false },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:166:        grid: { 
+cols: 6 },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:167:      },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:168:{
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:169:        key: 
+"nombreEnvoisRecu",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:170:        label: 
+"Nombre d'envois reçu",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:171:        type: 
+"number",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:172:        
+defaultValue: 0,
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:173:        list: { 
+visible: false },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:174:        grid: { 
+cols: 6 },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:175:      },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:176:{
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:177:        key: 
+"notes",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:178:        label: 
+"Notes",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:179:        type: 
+"textarea",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:180:        list: { 
+visible: false },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:181:        grid: { 
+cols: 12 },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:182:      }
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:183:    ],
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:184:  },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:185:
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:191:        key: 
+"paiement",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:192:        label: 
+"Paiement",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:193:        fields: [
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:194:          
+"factureId",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:195:          
+"montant",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:196:          
+"datePaiement",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:197:          
+"modePaiement",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:198:          
+"referenceTransaction",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:199:          "statut",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:200:        ],
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:201:        sections: [
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:202:          {
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:203:            key: 
+"infos",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:204:            title: 
+"Informations paiement",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:205:            
+fields: [
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:206:              
+"factureId",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:207:              
+"montant",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:208:              
+"datePaiement",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:209:              
+"modePaiement",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:210:              
+"referenceTransaction",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:211:              
+"statut",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:212:            ],
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:213:          },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:214:        ],
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:215:      },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:216:      {
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:217:        key: 
+"relations",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:218:        label: 
+"Relations",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:219:        fields: [
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:220:          
+"clientId",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:221:          
+"vehiculeId",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:222:        ],
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:223:        sections: [
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:224:          {
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:225:            key: 
+"liens",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:226:            title: 
+"Relations métier",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:227:            
+fields: [
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:228:              
+"clientId",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:229:              
+"vehiculeId",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:230:            ],
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:231:          },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:232:        ],
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:233:      },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:234:      {
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:235:        key: 
+"recu",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:236:        label: 
+"Reçu",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:237:        fields: [
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:238:          
+"numeroRecu",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:239:          
+"statutEnvoiRecu",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:240:          
+"dernierEnvoiRecuAt",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:241:          
+"canalDernierEnvoiRecu",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:242:          
+"destinataireDernierEnvoiRecu",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:243:          
+"nombreEnvoisRecu",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:244:        ],
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:245:        sections: [
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:247:            key: 
+"suivi-recu",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:248:            title: 
+"Suivi d'envoi du reçu",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:249:            
+fields: [
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:250:              
+"numeroRecu",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:251:              
+"statutEnvoiRecu",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:252:              
+"dernierEnvoiRecuAt",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:253:              
+"canalDernierEnvoiRecu",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:254:              
+"destinataireDernierEnvoiRecu",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:255:              
+"nombreEnvoisRecu",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:256:            ],
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:257:          },
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:261:        key: 
+"notes",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:262:        label: 
+"Notes",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:263:        fields: [
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:264:          "notes",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:265:        ],
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:266:        sections: [
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:267:          {
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:268:            key: 
+"observations",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:269:            title: 
+"Observations",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:270:            
+fields: [
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:271:              
+"notes",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:272:            ],
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:273:          },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:274:        ],
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:285:        moduleKey: 
+"facturesauto",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:286:        
+foreignKey: "factureId",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:287:      },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:288:    ],
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:289:    lockedFields: 
+["factureId", "clientId", "vehiculeId"],
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:290:    labelFields: 
+["factureId", "numeroRecu", "montant", "datePaiement", "statut"],
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:291:
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:292:    contextBanner: 
+{
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:293:      title: 
+"Contexte encaissement",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:294:      items: [
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:295:        {
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:296:          
+relationField: "factureId",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:297:          
+moduleKey: "facturesauto",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:298:          
+labelFields: [
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:299:            
+"numeroFacture",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:300:            
+"statutPaiement",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:301:            
+"resteAPayer",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:302:          ],
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:303:          tone: 
+"invoice",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:304:        },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:305:        {
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:306:          
+relationField: "clientId",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:307:          
+moduleKey: "clientsauto",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:308:          
+labelFields: [
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:309:            
+"prenom",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:310:            "nom",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:311:            
+"telephone",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:312:          ],
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:313:          tone: 
+"client",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:316:          
+relationField: "vehiculeId",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:317:          
+moduleKey: "vehicules",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:318:          
+labelFields: [
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:319:            
+"marque",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:320:            
+"modele",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:321:            
+"immatriculation",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:322:          ],
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:323:          tone: 
+"vehicle",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:324:        },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:325:      ],
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:326:    },
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:330:      
+"statutEnvoiRecu",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:331:      
+"dernierEnvoiRecuAt",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:332:      
+"canalDernierEnvoiRecu",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:333:      
+"destinataireDernierEnvoiRecu",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:334:      
+"nombreEnvoisRecu",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:335:    ],
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:336:  },
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:342:      key: 
+"encaissement",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:343:      label: 
+"Cycle encaissement",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:344:      
+initialState: "en_attente",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:345:
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:346:      states: [
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:347:        {
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:348:          key: 
+"en_attente",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:349:          label: 
+"En attente",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:350:          color: 
+"warning",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:351:        },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:352:        {
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:353:          key: 
+"valide",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:354:          label: 
+"Validé",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:355:          color: 
+"success",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:356:        },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:357:        {
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:358:          key: 
+"rejete",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:359:          label: 
+"Rejeté",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:360:          color: 
+"danger",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:361:        },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:362:        {
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:363:          key: 
+"annule",
+> src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:364:          label: 
+"Annulé",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:365:          color: 
+"default",
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:366:        },
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:367:      ],
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:368:
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:369:      transitions: 
+[
+  src\runtime\modules\generated\encaissementsauto\encaissementsauto.module.ts:370:        {
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:3:export const rappelsautoModule: 
+ERPModule = {
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:4:  metadata: {
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:5:    key: "rappelsauto",
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:6:    label: "Rappels",
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:7:    description: "Rappels 
+clients et véhicules AMARKHYS",
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:8:    icon: "bell",
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:9:    category: "amarkhys",
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:10:
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:11:    features: {
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:12:      dashboard: true,
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:13:      analytics: true,
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:24:    collection: "rappelsauto",
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:25:
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:26:    fields: [
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:27:      {
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:28:        key: "clientId",
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:29:        label: "Client",
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:30:        type: "relation",
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:31:        relation: { module: 
+"clientsauto" },
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:32:        required: true,
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:33:        searchable: true,
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:34:        list: { order: 1 },
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:35:        grid: { cols: 6 },
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:36:      },
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:37:      {
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:38:        key: "vehiculeId",
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:39:        label: "Véhicule",
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:40:        type: "relation",
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:41:        relation: { module: 
+"vehicules" },
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:42:        searchable: true,
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:43:        list: { order: 2 },
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:44:        grid: { cols: 6 },
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:45:      },
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:46:      {
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:47:        key: "typeRappel",
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:48:        label: "Type rappel",
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:49:        type: "select",
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:50:        required: true,
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:51:        options: [
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:52:          { label: "Vidange", 
+value: "vidange" },
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:53:          { label: "Contrôle 
+technique", value: "controle_technique" },
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:54:          { label: "Assurance", 
+value: "assurance" },
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:55:          { label: 
+"Rendez-vous", value: "rendezvous" },
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:56:          { label: "Facture 
+impayée", value: "facture_impayee" },
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:57:          { label: "Marketing", 
+value: "marketing" },
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:58:          { label: "Autre", 
+value: "autre" },
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:59:        ],
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:60:        list: { order: 6 },
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:61:        grid: { cols: 6 },
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:62:      },
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:63:      {
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:64:        key: "dateRappel",
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:65:        label: "Date rappel",
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:66:        type: "date",
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:67:        required: true,
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:68:        list: { order: 6 },
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:69:        grid: { cols: 6 },
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:70:      },
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:71:      {
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:72:        key: "canal",
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:73:        label: "Canal",
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:74:        type: "select",
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:75:        defaultValue: "sms",
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:76:        options: [
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:77:          { label: "SMS", 
+value: "sms" },
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:78:          { label: "Email", 
+value: "email" },
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:79:          { label: "Téléphone", 
+value: "telephone" },
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:80:          { label: "WhatsApp", 
+value: "whatsapp" },
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:81:          { label: 
+"Notification", value: "notification" },
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:82:        ],
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:83:        grid: { cols: 6 },
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:84:      },
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:85:      {
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:86:        key: "message",
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:87:        label: "Message",
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:88:        type: "textarea",
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:89:        grid: { cols: 12 },
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:90:      },
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:91:      {
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:92:        key: "statut",
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:93:        label: "Statut",
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:94:        type: "select",
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:95:        defaultValue: 
+"planifie",
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:96:        options: [
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:97:          { label: "Planifié", 
+value: "planifie" },
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:98:          { label: "Envoyé", 
+value: "envoye" },
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:99:          { label: "Échoué", 
+value: "echoue" },
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:100:          { label: "Annulé", 
+value: "annule" },
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:101:        ],
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:102:        list: { order: 6 },
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:103:        grid: { cols: 6 },
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:104:      },
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:105:    ],
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:106:  },
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:113:        key: "cible",
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:114:        label: "Cible",
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:115:
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:116:        fields: [
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:117:          "clientId",
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:118:          "vehiculeId",
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:119:          "typeRappel",
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:120:          "dateRappel",
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:121:          "canal",
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:122:          "statut",
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:123:        ],
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:124:
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:125:        sections: [
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:126:          {
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:127:            key: "infos",
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:128:            title: 
+"Informations rappel",
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:129:            fields: [
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:130:              "clientId",
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:131:              "vehiculeId",
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:132:              "typeRappel",
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:133:              "dateRappel",
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:134:              "canal",
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:135:              "statut",
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:136:            ],
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:137:          },
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:138:        ],
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:139:      },
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:140:
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:141:      {
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:142:        key: "message",
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:143:        label: "Message",
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:144:
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:145:        fields: [
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:146:          "message",
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:147:        ],
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:148:
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:149:        sections: [
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:151:            key: "contenu",
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:152:            title: "Message",
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:153:            fields: [
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:154:              "message",
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:155:            ],
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:156:          },
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:157:        ],
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:164:      key: "rappel",
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:165:      label: "Cycle rappel",
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:166:      initialState: "planifie",
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:167:
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:168:      states: [
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:169:        { key: "planifie", 
+label: "Planifié", color: "warning" },
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:170:        { key: "envoye", 
+label: "Envoyé", color: "success" },
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:171:        { key: "echoue", 
+label: "Échoué", color: "danger" },
+> src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:172:        { key: "annule", 
+label: "Annulé", color: "default" },
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:173:      ],
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:174:
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:175:      transitions: [
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:176:        { from: "planifie", 
+to: "envoye", action: "Marquer envoyé" },
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:177:        { from: "planifie", 
+to: "echoue", action: "Marquer échoué" },
+  src\runtime\modules\generated\rappelsauto\rappelsauto.module.ts:178:        { from: "planifie", 
+to: "annule", action: "Annuler" },
+
+
