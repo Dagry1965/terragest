@@ -1,0 +1,1468 @@
+﻿
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:5:    key: 
+"commandesstockauto",
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:6:    label: 
+"Commandes stock",
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:7:    description: 
+"Commandes fournisseurs pour pieces et consommables AMARKHYS",
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:8:    icon: 
+"shopping-cart",
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:9:    category: 
+"amarkhys",
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:10:    
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:11:
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:12:  features: {
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:13:      dashboard: 
+true,
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:14:      analytics: 
+true,
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:26:      key: 
+"envoyer-commande",
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:27:      label: 
+"Envoyer commande",
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:28:      type: 
+"primary",
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:29:      
+runtimeOnly: true,
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:30:    },
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:31:    {
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:32:      key: 
+"annuler-commande",
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:33:      label: 
+"Annuler commande",
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:34:      type: 
+"danger",
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:35:      
+runtimeOnly: true,
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:36:    },
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:37:  ],
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:38:
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:39:
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:40:
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:41:  schema: {
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:42:    collection: 
+"commandesstockauto",
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:45:        key: 
+"numeroCommande",
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:46:        label: 
+"Numero commande",
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:47:        type: 
+"text",
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:48:        
+searchable: true,
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:49:        list: { 
+visible: true, order: 1 },
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:50:        grid: { 
+cols: 4 },
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:51:      },
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:52:{
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:53:        key: 
+"fournisseurId",
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:54:        label: 
+"Fournisseur",
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:55:        type: 
+"relation",
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:56:        relation: 
+{ module: "fournisseursauto" },
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:57:        required: 
+true,
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:58:        
+searchable: true,
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:59:        list: { 
+visible: true, order: 2 },
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:60:        grid: { 
+cols: 4 },
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:61:      },
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:62:{
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:63:        key: 
+"dateCommande",
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:64:        label: 
+"Date commande",
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:65:        type: 
+"date",
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:66:        required: 
+true,
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:67:        list: { 
+visible: true, order: 3 },
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:68:        grid: { 
+cols: 4 },
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:69:      },
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:70:{
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:71:        key: 
+"dateLivraisonPrevue",
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:72:        label: 
+"Date livraison prevue",
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:73:        type: 
+"date",
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:74:        list: { 
+visible: false },
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:75:        grid: { 
+cols: 4 },
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:76:      },
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:77:{
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:78:        key: 
+"montantHT",
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:79:        label: 
+"Montant HT",
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:80:        type: 
+"number",
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:81:        
+defaultValue: 0,
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:82:        list: { 
+visible: false },
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:83:        grid: { 
+cols: 4 },
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:84:      },
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:85:{
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:86:        key: 
+"montantTTC",
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:87:        label: 
+"Montant TTC",
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:88:        type: 
+"number",
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:89:        
+defaultValue: 0,
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:90:        list: { 
+visible: true, order: 4 },
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:91:        grid: { 
+cols: 4 },
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:92:      },
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:93:{
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:94:        key: 
+"statut",
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:95:        label: 
+"Statut",
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:96:        type: 
+"select",
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:97:        
+defaultValue: "brouillon",
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:98:        options: [
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:99:          { 
+label: "Brouillon", value: "brouillon" },
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:100:          { 
+label: "Envoyee", value: "envoyee" },
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:101:          { 
+label: "Partiellement recue", value: "partiellement_recue" },
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:102:          { 
+label: "Recue", value: "recue" },
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:103:          { 
+label: "Annulee", value: "annulee" },
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:104:        ],
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:105:        list: { 
+visible: true, order: 5 },
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:106:        grid: { 
+cols: 4 },
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:107:      },
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:108:{
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:109:        key: 
+"notes",
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:110:        label: 
+"Notes",
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:111:        type: 
+"textarea",
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:112:        list: { 
+visible: false },
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:113:        grid: { 
+cols: 12 },
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:114:      }
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:115:    ],
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:116:  },
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:117:
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:118:  form: {
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:119:    layout: 
+"tabs",
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:122:        key: 
+"commande",
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:123:        label: 
+"Commande",
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:124:        fields: [
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:125:          
+"numeroCommande",
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:126:          
+"fournisseurId",
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:127:          
+"dateCommande",
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:128:          
+"dateLivraisonPrevue",
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:129:          
+"montantHT",
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:130:          
+"montantTTC",
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:131:          
+"statut",
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:132:          
+"notes",
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:133:        ],
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:134:        
+sections: [
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:135:          {
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:136:            key: 
+"general",
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:137:            
+title: "Commande fournisseur",
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:138:            
+fields: [
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:139:              
+"numeroCommande",
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:140:              
+"fournisseurId",
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:141:              
+"dateCommande",
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:142:              
+"dateLivraisonPrevue",
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:143:              
+"montantHT",
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:144:              
+"montantTTC",
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:145:              
+"statut",
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:146:              
+"notes",
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:147:            ],
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:148:          },
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:149:        ],
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:150:      },
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:151:    ],
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:152:  },
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:153:
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:157:    labelFields: 
+["numeroCommande", "fournisseurId", "statut"],
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:158:
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:159:    children: [
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:160:      {
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:161:        key: 
+"lignes-commandestock",
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:162:        
+moduleKey: "lignescommandestockauto",
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:163:        
+foreignKey: "commandeId",
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:164:        title: 
+"Lignes de commande",
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:165:        
+displayIn: ["detail", "edit"],
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:166:        lazy: 
+true,
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:167:        
+position: "after",
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:168:        
+allowCreate: true,
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:169:        
+labelFields: ["produitId", "quantiteCommandee", "prixUnitaireHT", "statut"],
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:170:        
+subtitleFields: ["designation", "montantHT", "montantTTC"],
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:171:        
+totalField: "montantTTC",
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:172:        
+relations: [
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:173:          {
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:174:            
+field: "produitId",
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:175:            
+moduleKey: "produitsauto",
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:176:            
+labelFields: ["reference", "nom", "designation", "marque"],
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:177:          },
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:178:        ],
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:179:      },
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:180:      {
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:181:        key: 
+"receptions-stock",
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:182:        
+moduleKey: "receptionsstockauto",
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:183:        
+foreignKey: "commandeId",
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:184:        title: 
+"Réceptions",
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:185:        
+displayIn: ["detail", "edit"],
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:186:        lazy: 
+true,
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:187:        
+position: "after",
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:188:        
+allowCreate: true,
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:189:        
+labelFields: ["ligneCommandeId", "produitId", "quantiteRecue", "dateReception", "statut"],
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:190:        
+subtitleFields: ["stockId", "mouvementStockId"],
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:191:        
+relations: [
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:192:          {
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:193:            
+field: "ligneCommandeId",
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:194:            
+moduleKey: "lignescommandestockauto",
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:195:            
+labelFields: ["produitId", "quantiteCommandee", "statut"],
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:196:          },
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:197:          {
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:198:            
+field: "produitId",
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:199:            
+moduleKey: "produitsauto",
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:200:            
+labelFields: ["reference", "nom", "designation", "marque"],
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:201:          },
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:202:          {
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:203:            
+field: "stockId",
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:204:            
+moduleKey: "stocksauto",
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:205:            
+labelFields: ["produitId", "emplacement", "typeStock", "quantite", "statut"],
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:206:          },
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:207:          {
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:208:            
+field: "mouvementStockId",
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:209:            
+moduleKey: "mouvementsstockauto",
+> src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:210:            
+labelFields: ["typeMouvement", "produitId", "quantite", "stockId"],
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:211:          },
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:212:        ],
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:213:      },
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:214:    ],
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:215:  },
+  src\runtime\modules\generated\commandesstockauto\commandesstockauto.module.ts:216:};
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:5:    key: 
+"lignescommandestockauto",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:6:    
+label: "Lignes commande stock",
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:7:    
+description: "Details produits des commandes fournisseurs AMARKHYS",
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:8:    
+icon: "list",
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:9:    
+category: "amarkhys",
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:10:    
+features: {
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:11:      
+dashboard: true,
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:12:      
+analytics: true,
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:13:      
+workflows: true,
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:14:      
+automation: true,
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:26:        
+key: "commandeId",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:27:        
+label: "Commande",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:28:        
+type: "relation",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:29:        
+relation: { module: "commandesstockauto" },
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:30:        
+required: true,
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:31:        
+searchable: true,
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:32:        
+list: { order: 1 },
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:33:        
+grid: { cols: 4 },
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:34:      },
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:35:      {
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:36:        
+key: "produitId",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:37:        
+label: "Produit",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:38:        
+type: "relation",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:39:        
+relation: {
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:40:        
+  module: "produitsauto",
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:41:        
+  // Q21D3B3_PRODUCT_AUTOFILL
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:42:        
+  // Product is the source of designation and purchase price.
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:43:        
+  autoFill: {
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:44:        
+    map: {
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:45:        
+      designation: ["nom", "designation", "reference", "code"],
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:46:        
+      prixUnitaireHT: ["prixAchat"],
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:47:        
+    },
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:48:        
+    recalculate: false,
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:49:        
+  },
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:50:        
+},
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:51:        
+required: true,
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:52:        
+searchable: true,
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:53:        
+list: { order: 2 },
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:54:        
+grid: { cols: 4 },
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:55:      },
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:56:      {
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:57:        
+key: "stockId",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:58:        
+label: "Stock destination",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:59:        
+type: "relation",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:60:        
+relation: {
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:61:        
+  module: "stocksauto",
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:62:        
+  filterBy: {
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:63:        
+    sourceField: "produitId",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:64:        
+    targetField: "produitId",
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:65:        
+    includeEmptyTarget: false,
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:66:        
+  },
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:67:        
+},
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:68:        
+searchable: true,
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:69:        
+list: { visible: false },
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:70:        
+grid: { cols: 4 },
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:71:      },
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:72:      {
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:73:        
+key: "designation",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:74:        
+label: "Designation",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:75:        
+type: "text",
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:76:        
+searchable: true,
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:77:        
+grid: { cols: 6 },
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:78:      },
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:79:      {
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:80:        
+key: "quantiteCommandee",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:81:        
+label: "Quantite commandee",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:82:        
+type: "number",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:83:        
+required: true,
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:84:        
+defaultValue: 1,
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:85:        
+list: { order: 4 },
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:86:        
+grid: { cols: 3 },
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:87:      },
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:88:      {
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:89:        
+key: "quantiteRecue",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:90:        
+label: "Quantite recue",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:91:        
+type: "number",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:92:        
+defaultValue: 0,
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:93:        
+list: { visible: false },
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:94:        
+grid: { cols: 3 },
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:95:      },
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:96:      {
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:97:        
+key: "prixUnitaireHT",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:98:        
+label: "Prix unitaire HT",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:99:        
+type: "number",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:100:       
+ defaultValue: 0,
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:101:       
+ grid: { cols: 4 },
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:102:      
+},
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:103:      {
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:104:       
+ key: "montantHT",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:105:       
+ label: "Montant HT",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:106:       
+ type: "number",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:107:       
+ defaultValue: 0,
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:108:       
+ list: { order: 6 },
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:109:       
+ grid: { cols: 4 },
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:110:      
+},
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:111:      {
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:112:       
+ key: "montantTTC",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:113:       
+ label: "Montant TTC",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:114:       
+ type: "number",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:115:       
+ defaultValue: 0,
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:116:       
+ list: { order: 7 },
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:117:       
+ grid: { cols: 4 },
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:118:      
+},
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:119:      {
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:120:       
+ key: "statut",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:121:       
+ label: "Statut",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:122:       
+ type: "select",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:123:       
+ defaultValue: "brouillon",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:124:       
+ options: [
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:125:   { 
+label: "Brouillon", value: "brouillon" },
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:126:   { 
+label: "Validee", value: "validee" },
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:127: ],
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:128:       
+ list: { order: 7 },
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:129:       
+ grid: { cols: 4 },
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:130:      
+},
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:131:    ],
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:132:  },
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:133:
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:134:  
+form: {
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:138:       
+ key: "ligne",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:139:       
+ label: "Ligne",
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:140:       
+ fields: [
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:141:       
+   "commandeId",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:142:       
+   "produitId",
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:143:       
+          "designation",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:144:       
+   "quantiteCommandee",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:145:       
+          "prixUnitaireHT",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:146:       
+   "montantHT",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:147:       
+"montantTTC",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:148:       
+   "statut",
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:149:       
+ ],
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:150:       
+ sections: [
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:151:       
+   {
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:152:       
+     key: "general",
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:153:       
+     title: "Ligne de commande",
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:154:       
+     fields: [
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:155:       
+       "commandeId",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:156:       
+       "produitId",
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:157:       
+                  "designation",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:158:       
+       "quantiteCommandee",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:159:       
+                  "prixUnitaireHT",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:160:       
+       "montantHT",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:161:       
+"montantTTC",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:162:       
+       "statut",
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:163:       
+     ],
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:164:       
+   },
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:165:       
+ ],
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:166:      
+},
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:167:    ],
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:168:  },
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:169:
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:170:  
+composition: {
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:174:    
+readOnlyFields: ["designation", "montantHT", "montantTTC"],
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:175:
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:176:    
+computedFields: [
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:177:      {
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:178:       
+ target: "montantHT",
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:179:       
+ formula: "multiply",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:180:       
+ sources: ["quantiteCommandee", "prixUnitaireHT"],
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:181:       
+ round: 2,
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:182:       
+ defaultValue: 0,
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:183:      
+},
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:184:      {
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:185:       
+ target: "montantTTC",
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:186:       
+ formula: "add",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:187:       
+ sources: ["montantHT"],
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:188:       
+ round: 2,
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:189:       
+ defaultValue: 0,
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:190:      
+},
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:191:    ],
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:192:
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:193:    
+requiresParentContext: true,
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:194:    
+allowedParents: [
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:195:      {
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:196:       
+ moduleKey: "commandesstockauto",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:197:       
+ foreignKey: "commandeId",
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:198:      
+},
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:199:    ],
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:200:    
+lockedFields: ["commandeId"],
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:201:    
+labelFields: ["produitId", "quantiteCommandee", "statut"],
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:202:
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:203:    // 
+Q21E_B_ORDER_LINE_RECEPTIONS_CHILDREN
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:204:    // 
+Ligne commande knows its receptions.
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:205:    
+children: [
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:206:      {
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:207:       
+ key: "receptions-ligne-commande",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:208:       
+ moduleKey: "receptionsstockauto",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:209:       
+ foreignKey: "ligneCommandeId",
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:210:       
+ title: "Réceptions de la ligne",
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:211:       
+ displayIn: ["detail", "edit"],
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:212:       
+ lazy: true,
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:213:       
+ position: "after",
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:214:       
+ allowCreate: true,
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:215:       
+ labelFields: ["produitId", "quantiteRecue", "dateReception", "statut"],
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:216:       
+ subtitleFields: ["stockId", "mouvementStockId"],
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:217:       
+ relations: [
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:218:       
+   {
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:219:       
+     field: "produitId",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:220:       
+     moduleKey: "produitsauto",
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:221:       
+     labelFields: ["reference", "nom", "designation", "marque"],
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:222:       
+   },
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:223:       
+   {
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:224:       
+     field: "stockId",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:225:       
+     moduleKey: "stocksauto",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:226:       
+     labelFields: ["produitId", "emplacement", "typeStock", "quantite", "statut"],
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:227:       
+   },
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:228:       
+   {
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:229:       
+     field: "mouvementStockId",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:230:       
+     moduleKey: "mouvementsstockauto",
+> src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:231:       
+     labelFields: ["typeMouvement", "produitId", "quantite", "stockId"],
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:232:       
+   },
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:233:       
+ ],
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:234:      
+},
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:235:    ],
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:236:  },
+  src\runtime\modules\generated\lignescommandestockauto\lignescommandestockauto.module.ts:237:};
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:5:    key: 
+"receptionsstockauto",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:6:    label: 
+"Receptions stock",
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:7:    description: 
+"Receptions fournisseurs et entrees stock AMARKHYS",
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:8:    icon: 
+"inbox",
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:9:    category: 
+"amarkhys",
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:10:    
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:11:
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:12:  features: {
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:13:      
+dashboard: true,
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:14:      
+analytics: true,
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:26:      key: 
+"valider-reception",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:27:      label: 
+"Valider reception",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:28:      type: 
+"primary",
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:29:      
+runtimeOnly: true,
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:30:    },
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:31:  ],
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:32:
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:33:
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:34:
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:35:  schema: {
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:36:    collection: 
+"receptionsstockauto",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:39:        key: 
+"commandeId",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:40:        label: 
+"Commande",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:41:        type: 
+"relation",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:42:        
+relation: { module: "commandesstockauto" },
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:43:        
+required: true,
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:44:        
+searchable: true,
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:45:        list: { 
+visible: true, order: 1 },
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:46:        grid: { 
+cols: 4 },
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:47:      },
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:48:{
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:49:        key: 
+"ligneCommandeId",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:50:        label: 
+"Ligne commande",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:51:        type: 
+"relation",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:52:        
+relation: {
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:53:          
+module: "lignescommandestockauto",
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:54:          
+filterBy: {
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:55:            
+sourceField: "commandeId",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:56:            
+targetField: "commandeId",
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:57:            
+includeEmptyTarget: false,
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:58:          },
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:59:          // 
+Q21D3C3A_EXCLUDE_USED_BY
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:60:          // 
+Exclude order lines already used in an existing reception.
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:61:          
+excludeUsedBy: {
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:62:            
+module: "receptionsstockauto",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:63:            
+field: "ligneCommandeId",
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:64:          },
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:65:
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:66:          // 
+Q21D3D_LINE_COMMAND_AUTOFILL_PRODUCT
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:67:          // 
+The selected order line carries the product and ordered quantity.
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:68:          // 
+RuntimeAutoFillEngine applies this generically from relation metadata.
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:69:          
+autoFill: {
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:70:            
+map: {
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:71:              
+produitId: ["produitId"],
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:72:              
+quantiteRecue: ["quantiteCommandee"],
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:73:            },
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:74:            
+recalculate: true,
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:75:          },
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:76:        },
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:77:        
+required: true,
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:78:        
+searchable: true,
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:79:        list: { 
+visible: true, order: 2 },
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:80:        grid: { 
+cols: 4 },
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:81:      },
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:82:{
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:83:        key: 
+"produitId",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:84:        label: 
+"Produit",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:85:        type: 
+"relation",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:86:        
+relation: { module: "produitsauto" },
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:87:        
+required: true,
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:88:        
+searchable: true,
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:89:        list: { 
+visible: true, order: 3 },
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:90:        grid: { 
+cols: 4 },
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:91:      },
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:92:{
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:93:        key: 
+"stockId",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:94:        label: 
+"Stock destination",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:95:        type: 
+"relation",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:96:        
+relation: {
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:97:          
+module: "stocksauto",
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:98:          
+filterBy: {
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:99:            
+sourceField: "produitId",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:100:            
+targetField: "produitId",
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:101:            
+includeEmptyTarget: false,
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:102:          },
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:103:        },
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:104:        
+required: true,
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:105:        
+searchable: true,
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:106:        list: 
+{ visible: true, order: 4 },
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:107:        grid: 
+{ cols: 4 },
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:108:      },
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:109:{
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:110:        key: 
+"quantiteRecue",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:111:        label: 
+"Quantite recue",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:112:        type: 
+"number",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:113:        
+required: true,
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:114:        
+defaultValue: 1,
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:115:        list: 
+{ visible: true, order: 5 },
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:116:        grid: 
+{ cols: 4 },
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:117:      },
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:118:{
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:119:        key: 
+"dateReception",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:120:        label: 
+"Date reception",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:121:        type: 
+"date",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:122:        
+required: true,
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:123:        list: 
+{ visible: true, order: 6 },
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:124:        grid: 
+{ cols: 4 },
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:125:      },
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:126:{
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:127:        key: 
+"mouvementStockId",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:128:        label: 
+"Mouvement stock",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:129:        type: 
+"relation",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:130:        
+relation: { module: "mouvementsstockauto" },
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:131:        grid: 
+{ cols: 4 },
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:132:        list: 
+{ visible: false },
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:133:      },
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:134:{
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:135:        key: 
+"stockProcessedAt",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:136:        label: 
+"Date traitement stock",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:137:        type: 
+"date",
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:138:        grid: 
+{ cols: 4 },
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:139:        list: 
+{ visible: false },
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:140:      },
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:141:{
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:142:        key: 
+"stockProcessedQuantity",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:143:        label: 
+"Quantite traitee stock",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:144:        type: 
+"number",
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:145:        grid: 
+{ cols: 4 },
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:146:        list: 
+{ visible: false },
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:147:      },
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:148:{
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:149:        key: 
+"statut",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:150:        label: 
+"Statut",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:151:        type: 
+"select",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:152:        
+defaultValue: "brouillon",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:153:        
+options: [
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:154:          { 
+label: "Brouillon", value: "brouillon" },
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:155:          { 
+label: "Validee", value: "validee" },
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:156:        ],
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:157:        list: 
+{ visible: true, order: 7 },
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:158:        grid: 
+{ cols: 4 },
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:159:        // 
+Q21D_RECEPTION_STATUS_RULE
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:160:        // 
+Statuts visibles volontairement limites :
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:161:        // 
+brouillon = preparation sans impact stock
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:162:        // 
+validee = entree stock traitee par runtime
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:163:        // 
+annulation = future action controlee avec mouvement inverse
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:164:      },
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:165:{
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:166:        key: 
+"notes",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:167:        label: 
+"Notes",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:168:        type: 
+"textarea",
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:169:        list: 
+{ visible: false },
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:170:        grid: 
+{ cols: 12 },
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:171:      }
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:172:    ],
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:173:  },
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:174:
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:175:  form: {
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:176:    layout: 
+"tabs",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:179:        key: 
+"reception",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:180:        label: 
+"Reception",
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:181:        
+fields: [
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:182:          
+"commandeId",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:183:          
+"ligneCommandeId",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:184:          
+"produitId",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:185:          
+"stockId",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:186:          
+"quantiteRecue",
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:187:          
+"dateReception",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:188:          
+"statut",
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:189:          
+"notes",
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:190:        ],
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:191:        
+sections: [
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:192:          {
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:193:            
+key: "general",
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:194:            
+title: "Reception stock",
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:195:            
+fields: [
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:196:              
+"commandeId",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:197:              
+"ligneCommandeId",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:198:              
+"produitId",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:199:              
+"stockId",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:200:              
+"quantiteRecue",
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:201:              
+"dateReception",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:202:               
+   "statut",
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:203:              
+"notes",
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:204:            ],
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:205:          },
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:206:        ],
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:207:      },
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:208:    ],
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:209:  },
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:210:
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:217:        
+moduleKey: "commandesstockauto",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:218:        
+foreignKey: "commandeId",
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:219:      },
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:220:    ],
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:221:    
+lockedFields: ["commandeId"],
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:222:    
+labelFields: ["ligneCommandeId", "produitId", "stockId", "quantiteRecue", "dateReception", "statut"],
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:223:
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:224:    children: [
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:225:      {
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:226:        key: 
+"mouvements-stock-reception",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:227:        
+moduleKey: "mouvementsstockauto",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:228:        
+foreignKey: "sourceId",
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:229:        title: 
+"Mouvements stock générés",
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:230:        
+description: "Mouvements stock créés automatiquement depuis cette réception.",
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:231:        
+displayIn: [],
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:232:        lazy: 
+true,
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:233:        
+position: "after",
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:234:        
+allowCreate: false,
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:235:        
+labelFields: ["typeMouvement", "produitId", "quantite", "stockId"],
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:236:        
+subtitleFields: ["dateMouvement", "sourceModule"],
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:237:        
+relations: [
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:238:          {
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:239:            
+field: "produitId",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:240:            
+moduleKey: "produitsauto",
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:241:            
+labelFields: ["reference", "nom", "designation", "marque"],
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:242:          },
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:243:          {
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:244:            
+field: "stockId",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:245:            
+moduleKey: "stocksauto",
+> src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:246:            
+labelFields: ["produitId", "emplacement", "typeStock", "quantite", "statut"],
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:247:          },
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:248:        ],
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:249:      },
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:250:    ],
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:251:  },
+  src\runtime\modules\generated\receptionsstockauto\receptionsstockauto.module.ts:252:};
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:5:    key: 
+"mouvementsstockauto",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:6:    label: 
+"Mouvements stock",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:7:    description: 
+"Entrées, sorties et corrections de stock AMARKHYS",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:8:    icon: 
+"arrow-left-right",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:9:    category: 
+"amarkhys",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:10:
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:11:    features: {
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:12:      
+dashboard: true,
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:13:      
+analytics: true,
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:14:      
+workflows: true,
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:28:        key: 
+"typeMouvement",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:29:        label: 
+"Type mouvement",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:30:        type: 
+"select",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:31:        
+required: true,
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:32:        
+defaultValue: "sortie",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:33:        
+options: [
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:34:          { 
+label: "Entrée", value: "entree" },
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:35:          { 
+label: "Sortie", value: "sortie" },
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:36:          { 
+label: "Correction", value: "correction" },
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:37:          { 
+label: "Annulation", value: "annulation" },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:38:        ],
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:39:        list: { 
+order: 1 },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:40:        grid: { 
+cols: 4 },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:41:      },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:42:      {
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:43:        key: 
+"stockId",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:44:        label: 
+"Stock",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:45:        type: 
+"relation",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:46:        
+relation: { module: "stocksauto" },
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:47:        
+required: true,
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:48:        
+searchable: true,
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:49:        list: { 
+order: 2 },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:50:        grid: { 
+cols: 4 },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:51:      },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:52:      {
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:53:        key: 
+"produitId",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:54:        label: 
+"Produit",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:55:        type: 
+"relation",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:56:        
+relation: { module: "produitsauto" },
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:57:        
+required: true,
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:58:        
+searchable: true,
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:59:        list: { 
+order: 3 },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:60:        grid: { 
+cols: 4 },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:61:      },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:62:      {
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:63:        key: 
+"quantite",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:64:        label: 
+"Quantité",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:65:        type: 
+"number",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:66:        
+required: true,
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:67:        list: { 
+order: 4 },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:68:        grid: { 
+cols: 4 },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:69:      },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:70:      {
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:71:        key: 
+"quantiteAvant",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:72:        label: 
+"Quantité avant",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:73:        type: 
+"number",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:74:        grid: { 
+cols: 4 },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:75:      },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:76:      {
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:77:        key: 
+"quantiteApres",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:78:        label: 
+"Quantité après",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:79:        type: 
+"number",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:80:        grid: { 
+cols: 4 },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:81:      },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:82:      {
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:83:        key: 
+"sourceModule",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:84:        label: 
+"Module source",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:85:        type: 
+"text",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:86:        grid: { 
+cols: 4 },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:87:      },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:88:      {
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:89:        key: 
+"sourceId",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:90:        label: 
+"Source",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:91:        type: 
+"text",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:92:        grid: { 
+cols: 4 },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:93:      },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:94:      {
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:95:        key: 
+"interventionId",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:96:        label: 
+"Intervention",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:97:        type: 
+"relation",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:98:        
+relation: { module: "interventionsauto" },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:99:        
+searchable: true,
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:100:        grid: 
+{ cols: 4 },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:101:      },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:102:      {
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:103:        key: 
+"ligneInterventionId",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:104:        label: 
+"Ligne intervention",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:105:        type: 
+"relation",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:106:        
+relation: { module: "lignesinterventionauto" },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:107:        
+searchable: true,
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:108:        grid: 
+{ cols: 4 },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:109:      },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:110:      {
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:111:        key: 
+"motif",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:112:        label: 
+"Motif",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:113:        type: 
+"text",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:114:        grid: 
+{ cols: 8 },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:115:      },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:116:      {
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:117:        key: 
+"statut",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:118:        label: 
+"Statut",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:119:        type: 
+"select",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:120:        
+defaultValue: "valide",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:121:        
+options: [
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:122:          { 
+label: "Brouillon", value: "brouillon" },
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:123:          { 
+label: "Validé", value: "valide" },
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:124:          { 
+label: "Annulé", value: "annule" },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:125:        ],
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:126:        list: 
+{ order: 5 },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:127:        grid: 
+{ cols: 4 },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:128:      },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:129:      {
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:130:        key: 
+"dateMouvement",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:131:        label: 
+"Date mouvement",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:132:        type: 
+"date",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:133:        list: 
+{ order: 6 },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:134:        grid: 
+{ cols: 4 },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:135:      },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:136:      {
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:137:        key: 
+"observations",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:138:        label: 
+"Observations",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:139:        type: 
+"textarea",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:140:        grid: 
+{ cols: 12 },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:141:      },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:142:    ],
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:143:  },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:144:
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:145:  form: {
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:146:    layout: 
+"tabs",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:147:
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:150:        key: 
+"mouvement",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:151:        label: 
+"Mouvement",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:152:        
+fields: [
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:153:          
+"typeMouvement",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:154:          
+"stockId",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:155:          
+"produitId",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:156:          
+"quantite",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:157:          
+"quantiteAvant",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:158:          
+"quantiteApres",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:159:          
+"dateMouvement",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:160:          
+"statut",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:161:        ],
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:162:        
+sections: [
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:163:          {
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:164:            
+key: "infos",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:165:            
+title: "Informations mouvement",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:166:            
+fields: [
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:167:              
+"typeMouvement",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:168:              
+"stockId",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:169:              
+"produitId",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:170:              
+"quantite",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:171:              
+"quantiteAvant",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:172:              
+"quantiteApres",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:173:              
+"dateMouvement",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:174:              
+"statut",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:175:            ],
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:176:          },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:177:        ],
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:178:      },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:179:      {
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:180:        key: 
+"source",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:181:        label: 
+"Source",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:182:        
+fields: [          "interventionId",          "motif",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:183:        ],
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:184:        
+sections: [
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:185:          {
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:186:            
+key: "source",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:187:            
+title: "Origine du mouvement",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:188:            
+fields: [              "interventionId",              "motif",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:189:            ],
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:190:          },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:191:        ],
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:192:      },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:193:      {
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:194:        key: 
+"notes",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:195:        label: 
+"Notes",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:196:        
+fields: [
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:197:          
+"observations",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:198:        ],
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:199:        
+sections: [
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:200:          {
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:201:            
+key: "observations",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:202:            
+title: "Observations",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:203:            
+fields: [
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:204:              
+"observations",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:205:            ],
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:206:          },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:207:        ],
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:208:      },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:209:    ],
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:214:    
+labelFields: ["typeMouvement", "produitId", "quantite", "stockId", "dateMouvement"],
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:215:  },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:216:
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:217:
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:218:  workflows: [
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:219:    {
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:220:      key: 
+"mouvement-stock",
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:221:      label: 
+"Cycle mouvement stock",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:222:      
+initialState: "valide",
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:223:      states: [
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:224:        { key: 
+"brouillon", label: "Brouillon", color: "default" },
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:225:        { key: 
+"valide", label: "Validé", color: "success" },
+> src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:226:        { key: 
+"annule", label: "Annulé", color: "danger" },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:227:      ],
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:228:      
+transitions: [
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:229:        { 
+from: "brouillon", to: "valide", action: "Valider" },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:230:        { 
+from: "valide", to: "annule", action: "Annuler" },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:231:      ],
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:232:    },
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:233:  ],
+  src\runtime\modules\generated\mouvementsstockauto\mouvementsstockauto.module.ts:234:};
+
+
