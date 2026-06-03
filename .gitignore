@@ -42,3 +42,11 @@ next-env.d.ts
 
 # External UI references, not part of the app build
 external-templates/
+
+# Local Firebase admin credentials
+secrets/
+*.service-account.json
+
+# Local Firebase admin credentials
+secrets/
+*.service-account.json
