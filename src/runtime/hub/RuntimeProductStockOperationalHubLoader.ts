@@ -5,6 +5,7 @@ import { mouvementsstockautoModule } from "@/runtime/modules/generated/mouvement
 import { commandesstockautoModule } from "@/runtime/modules/generated/commandesstockauto/commandesstockauto.module";
 import { lignescommandestockautoModule } from "@/runtime/modules/generated/lignescommandestockauto/lignescommandestockauto.module";
 import { receptionsstockautoModule } from "@/runtime/modules/generated/receptionsstockauto/receptionsstockauto.module";
+import { fournisseursautoModule } from "@/runtime/modules/generated/fournisseursauto/fournisseursauto.module";
 import type { ERPModule } from "@/runtime/modules/ERPModule";
 import type {
   ERPRecordHubConfig,
@@ -156,6 +157,47 @@ function uniqueHubRecords(records: ERPRecordHubRecord[]): ERPRecordHubRecord[] {
     seen.add(id);
     return true;
   });
+}
+
+
+function supplierBusinessLabel(supplier: ERPRecordHubRecord | null | undefined): string {
+  if (!supplier) {
+    return "";
+  }
+
+  return String(
+    supplier.nom ??
+      supplier.raisonSociale ??
+      supplier.displayLabel ??
+      supplier.label ??
+      supplier.codeFournisseur ??
+      ""
+  ).trim();
+}
+
+function enrichOrderWithSupplier(
+  order: ERPRecordHubRecord,
+  suppliers: ERPRecordHubRecord[]
+): ERPRecordHubRecord {
+  const supplierIds = hubRelationIds(order.fournisseurId);
+  const supplier =
+    suppliers.find((item) => supplierIds.includes(getHubRecordId(item))) ?? null;
+
+  if (!supplier) {
+    return order;
+  }
+
+  const label = supplierBusinessLabel(supplier);
+
+  return {
+    ...order,
+    fournisseurLabel: label,
+    fournisseurNom: String(supplier.nom ?? label ?? ""),
+    fournisseurCode: String(supplier.codeFournisseur ?? ""),
+    fournisseurTelephone: String(supplier.telephone ?? ""),
+    fournisseurEmail: String(supplier.email ?? ""),
+    fournisseurVille: String(supplier.ville ?? ""),
+  };
 }
 
 function enrichOrderWithProductLine(
@@ -484,11 +526,12 @@ export class RuntimeProductStockOperationalHubLoader {
       receptions: [],
     };
 
-    const [mouvements, commandes, lignesCommande, receptions] = await Promise.all([
+    const [mouvements, commandes, lignesCommande, receptions, fournisseurs] = await Promise.all([
       safeList(mouvementsstockautoModule),
       safeList(commandesstockautoModule),
       safeList(lignescommandestockautoModule),
       safeList(receptionsstockautoModule),
+      safeList(fournisseursautoModule),
     ]);
 
 
@@ -515,12 +558,12 @@ export class RuntimeProductStockOperationalHubLoader {
         const matchingLine =
           productOrderLines.find((line) => hubRelationMatches(line.commandeId, orderId)) ?? null;
 
-        return enrichOrderWithProductLine(order, matchingLine);
+        return enrichOrderWithSupplier(enrichOrderWithProductLine(order, matchingLine), fournisseurs);
       });
 
     const productOrders = uniqueHubRecords([
       ...productOrdersFromLines,
-      ...productOrdersDirect.map((record) => enrichRelatedRecord(record, "Commande")),
+      ...productOrdersDirect.map((record) => enrichOrderWithSupplier(enrichRelatedRecord(record, "Commande"), fournisseurs)),
     ]);
 
     const productReceptionsDirect = filterByAnyProductKey(receptions, productId);

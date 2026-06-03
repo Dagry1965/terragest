@@ -437,6 +437,61 @@ function orderQuantityOrAmount(record: ERPRecordHubRecord): string {
   return quantity;
 }
 
+
+function latestOrderLabel(records: ERPRecordHubRecord[]): string {
+  const first = records[0];
+
+  if (!first) {
+    return "Aucune commande";
+  }
+
+  return text(first, ["numeroCommande", "numero", "code", "displayLabel"], "Commande");
+}
+
+function latestReceptionLabel(records: ERPRecordHubRecord[]): string {
+  const first = records[0];
+
+  if (!first) {
+    return "Aucune réception";
+  }
+
+  return receptionSubtitle(first);
+}
+
+function mainSupplierLabel(records: ERPRecordHubRecord[]): string {
+  const first = records.find((record) => supplierLabel(record) !== "Fournisseur non renseigné");
+
+  if (!first) {
+    return "Fournisseur non renseigné";
+  }
+
+  return supplierLabel(first);
+}
+
+function totalOrderedQuantity(records: ERPRecordHubRecord[]): string {
+  const total = records.reduce((sum, record) => {
+    return sum + numberValue(record, ["quantiteCommandee", "productLineQuantity", "quantite"], 0);
+  }, 0);
+
+  if (total <= 0) {
+    return "Quantité non renseignée";
+  }
+
+  return formatNumber(total) + " unité" + (total > 1 ? "s" : "");
+}
+
+function totalReceivedQuantity(records: ERPRecordHubRecord[]): string {
+  const total = records.reduce((sum, record) => {
+    return sum + numberValue(record, ["quantiteRecue", "quantitéReçue", "quantite", "quantity"], 0);
+  }, 0);
+
+  if (total <= 0) {
+    return "Aucune réception";
+  }
+
+  return formatNumber(total) + " unité" + (total > 1 ? "s" : "");
+}
+
 function receptionSubtitle(record: ERPRecordHubRecord): string {
   const date = formatDate(
     text(
@@ -1171,6 +1226,33 @@ export function ERPProductStockOperationalSheet({
           </main>
 
           <aside className="space-y-5">
+            <section className="rounded-[1.9rem] bg-white p-5 shadow-sm ring-1 ring-slate-200">
+              <SectionTitle
+                title="Approvisionnement"
+                subtitle="Lecture fournisseur et réassort du produit."
+              />
+
+              <div className="grid gap-3">
+                {[
+                  ["Fournisseur principal", mainSupplierLabel(commandes)],
+                  ["Dernière commande", latestOrderLabel(commandes)],
+                  ["Dernière réception", latestReceptionLabel(receptions)],
+                  ["Quantité commandée", totalOrderedQuantity(commandes)],
+                  ["Quantité reçue", totalReceivedQuantity(receptions)],
+                ].map(([label, value]) => (
+                  <div
+                    key={label}
+                    className="flex items-center justify-between gap-4 rounded-2xl bg-slate-50 px-4 py-3 ring-1 ring-slate-100"
+                  >
+                    <p className="text-xs font-black text-slate-500">{label}</p>
+                    <p className="max-w-[160px] truncate text-right text-xs font-black text-slate-900">
+                      {value}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
             <section className="rounded-[1.9rem] bg-white p-5 shadow-sm ring-1 ring-slate-200">
               <SectionTitle title="Dossier sélectionné" />
 
