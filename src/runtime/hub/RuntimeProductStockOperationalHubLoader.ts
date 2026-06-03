@@ -409,6 +409,114 @@ function enrichRelatedRecord(
   };
 }
 
+
+function orderLineDeliveryNumber(value: unknown): number {
+  const amount = Number(value ?? 0);
+
+  return Number.isFinite(amount) ? amount : 0;
+}
+
+function orderLineDeliveryString(value: unknown, fallback = ""): string {
+  const raw = String(value ?? "").trim();
+
+  return raw || fallback;
+}
+
+function orderLineDeliveryStatus(ordered: number, delivered: number): string {
+  if (delivered <= 0) {
+    return "en_attente";
+  }
+
+  if (delivered < ordered) {
+    return "partiellement_livree";
+  }
+
+  return "totalement_livree";
+}
+
+function buildProductOrderLineDeliveryCascade(
+  productOrders: ERPRecordHubRecord[],
+  productOrderLines: ERPRecordHubRecord[],
+  productReceptions: ERPRecordHubRecord[]
+): ERPRecordHubRecord[] {
+  return productOrderLines
+    .map((line) => {
+      const lineId = getHubRecordId(line);
+      const orderIds = hubRelationIds(line.commandeId);
+
+      const order =
+        productOrders.find((candidate) => orderIds.includes(getHubRecordId(candidate))) ?? null;
+
+      const receptions = productReceptions
+        .filter((reception) => hubRelationMatches(reception.ligneCommandeId, lineId))
+        .sort((a, b) => {
+          const da = new Date(String(a.dateReception ?? a.dateLivraison ?? a.createdAt ?? "")).getTime();
+          const db = new Date(String(b.dateReception ?? b.dateLivraison ?? b.createdAt ?? "")).getTime();
+
+          return (Number.isFinite(db) ? db : 0) - (Number.isFinite(da) ? da : 0);
+        })
+        .map((reception) => {
+          const deliveredQuantity = orderLineDeliveryNumber(
+            reception.quantiteRecue ?? reception.quantitéReçue ?? reception.quantite ?? reception.quantity
+          );
+
+          return {
+            id: getHubRecordId(reception),
+            dateLivraison: reception.dateReception ?? reception.dateLivraison ?? reception.createdAt ?? "",
+            quantityDelivered: deliveredQuantity,
+            record: reception,
+          };
+        });
+
+      const quantityOrdered = orderLineDeliveryNumber(
+        line.quantiteCommandee ?? line.productLineQuantity ?? line.quantite ?? line.quantity
+      );
+
+      const quantityDelivered = receptions.reduce((sum, reception) => {
+        return sum + orderLineDeliveryNumber(reception.quantityDelivered);
+      }, 0);
+
+      const amount = orderLineDeliveryNumber(
+        line.montantTTC ??
+          line.montantHT ??
+          line.productLineAmountTTC ??
+          line.productLineAmountHT ??
+          line.amountTTC ??
+          line.amountHT
+      );
+
+      return {
+        id: lineId,
+        title: orderLineDeliveryString(
+          line.designation ?? line.displayLabel ?? line.label,
+          "Ligne de commande"
+        ),
+        dateCommande: order?.dateCommande ?? order?.createdAt ?? line.createdAt ?? "",
+        orderTitle: orderLineDeliveryString(
+          order?.numeroCommande ?? order?.numero ?? order?.code ?? order?.displayLabel,
+          "Commande fournisseur"
+        ),
+        supplierLabel: orderLineDeliveryString(
+          order?.fournisseurLabel ?? order?.fournisseurNom ?? order?.fournisseur ?? "",
+          "Fournisseur non renseigné"
+        ),
+        quantityOrdered,
+        quantityDelivered,
+        remainingQuantity: Math.max(0, quantityOrdered - quantityDelivered),
+        amount,
+        deliveryStatus: orderLineDeliveryStatus(quantityOrdered, quantityDelivered),
+        receptions,
+        record: line,
+      };
+    })
+    .sort((a, b) => {
+      const da = new Date(String(a.dateCommande ?? "")).getTime();
+      const db = new Date(String(b.dateCommande ?? "")).getTime();
+
+      return (Number.isFinite(db) ? db : 0) - (Number.isFinite(da) ? da : 0);
+    });
+}
+
 function enrichRootRecord(
   rootRecord: ERPRecordHubRecord,
   primaryRecords: ERPRecordHubRecord[],
@@ -603,6 +711,12 @@ export class RuntimeProductStockOperationalHubLoader {
     relatedRecordsBySection.commandes = productOrders;
 
     relatedRecordsBySection.receptions = productReceptions;
+    const productOrderLineDeliveryCascade = buildProductOrderLineDeliveryCascade(
+      productOrders,
+      productOrderLines,
+      productReceptions
+    );
+
     const enrichedRootRecord = enrichRootRecord(
       rootRecord,
       primaryRecords,
@@ -613,7 +727,10 @@ export class RuntimeProductStockOperationalHubLoader {
 
     return {
       config: input.config,
-      rootRecord: enrichedRootRecord,
+      rootRecord: {
+        ...enrichedRootRecord,
+        productOrderLineDeliveryCascade,
+      },
       primaryRecords,
       relatedRecordsBySection,
     };

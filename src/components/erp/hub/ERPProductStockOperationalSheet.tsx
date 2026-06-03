@@ -729,6 +729,202 @@ function FlowNode({
   );
 }
 
+
+type OrderLineDeliveryItem = Record<string, unknown>;
+
+function orderLineDeliveryItems(rootRecord: ERPRecordHubRecord | null): OrderLineDeliveryItem[] {
+  if (!rootRecord) {
+    return [];
+  }
+
+  const value = (rootRecord as Record<string, unknown>).productOrderLineDeliveryCascade;
+
+  return Array.isArray(value) ? (value as OrderLineDeliveryItem[]) : [];
+}
+
+function orderLineDeliveryText(record: OrderLineDeliveryItem, key: string, fallback = "-"): string {
+  const raw = String(record[key] ?? "").trim();
+
+  return raw || fallback;
+}
+
+function orderLineDeliveryNumberValue(record: OrderLineDeliveryItem, key: string): number {
+  const value = Number(record[key] ?? 0);
+
+  return Number.isFinite(value) ? value : 0;
+}
+
+function orderLineDeliveryArray(record: OrderLineDeliveryItem, key: string): OrderLineDeliveryItem[] {
+  const value = record[key];
+
+  return Array.isArray(value) ? (value as OrderLineDeliveryItem[]) : [];
+}
+
+function orderLineQuantityLabel(value: number): string {
+  if (!Number.isFinite(value) || value <= 0) {
+    return "0 unité";
+  }
+
+  return formatNumber(value) + " unité" + (value > 1 ? "s" : "");
+}
+
+function orderLineDeliveryStatusLabel(status: string): string {
+  if (status === "en_attente") {
+    return "En attente";
+  }
+
+  if (status === "partiellement_livree") {
+    return "Partiellement livrée";
+  }
+
+  if (status === "totalement_livree") {
+    return "Totalement livrée";
+  }
+
+  return humanStatusLabel(status);
+}
+
+function orderLineDeliveryStatusClass(status: string): string {
+  if (status === "en_attente") {
+    return "rounded-full bg-orange-50 px-3 py-1.5 text-[11px] font-black text-orange-700 ring-1 ring-orange-100";
+  }
+
+  if (status === "partiellement_livree") {
+    return "rounded-full bg-blue-50 px-3 py-1.5 text-[11px] font-black text-blue-700 ring-1 ring-blue-100";
+  }
+
+  if (status === "totalement_livree") {
+    return "rounded-full bg-emerald-50 px-3 py-1.5 text-[11px] font-black text-emerald-700 ring-1 ring-emerald-100";
+  }
+
+  return statusPillClass(status);
+}
+
+function OrderLinesDeliveryPanel({ items }: { items: OrderLineDeliveryItem[] }) {
+  return (
+    <section className="rounded-[2rem] bg-white p-6 shadow-sm ring-1 ring-slate-200 lg:p-7">
+      <SectionTitle
+        title="Lignes de commande du produit"
+        subtitle="Lignes où ce produit apparaît, avec leurs livraisons associées."
+      />
+
+      {items.length === 0 ? (
+        <EmptyPanel icon="📄" text="Aucune ligne de commande liée à ce produit." />
+      ) : (
+        <div className="space-y-3">
+          <div className="grid items-center gap-3 rounded-2xl bg-slate-900 px-4 py-3 text-[10px] font-black uppercase tracking-[0.14em] text-white xl:grid-cols-[44px_1fr_1fr_1fr_1fr]">
+            <span />
+            <span>Date ligne commande</span>
+            <span>Quantité commandée</span>
+            <span>Montant</span>
+            <span>Statut livraison</span>
+          </div>
+
+          {items.map((line) => {
+            const lineId = orderLineDeliveryText(line, "id", orderLineDeliveryText(line, "title", "ligne"));
+            const receptions = orderLineDeliveryArray(line, "receptions");
+            const status = orderLineDeliveryText(line, "deliveryStatus", "en_attente");
+
+            return (
+              <details
+                key={lineId}
+                className="group rounded-[1.35rem] border border-slate-200 bg-white p-3 shadow-sm open:ring-1 open:ring-emerald-100"
+              >
+                <summary className="cursor-pointer list-none">
+                  <div className="grid items-center gap-3 xl:grid-cols-[44px_1fr_1fr_1fr_1fr]">
+                    <div className="flex items-center justify-center">
+                      <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-emerald-50 text-base font-black text-emerald-700 ring-1 ring-emerald-200 group-open:hidden">
+                        +
+                      </span>
+                      <span className="hidden h-8 w-8 items-center justify-center rounded-full bg-slate-900 text-base font-black text-white group-open:inline-flex">
+                        −
+                      </span>
+                    </div>
+
+                    <div>
+                      <p className="truncate text-xs font-black text-slate-900">
+                        {formatDate(orderLineDeliveryText(line, "dateCommande", ""))}
+                      </p>
+                      <p className="mt-1 truncate text-[11px] font-bold text-slate-500">
+                        {orderLineDeliveryText(line, "orderTitle", "Commande fournisseur")}
+                      </p>
+                    </div>
+
+                    <p className="truncate text-xs font-black text-slate-900">
+                      {orderLineQuantityLabel(orderLineDeliveryNumberValue(line, "quantityOrdered"))}
+                    </p>
+
+                    <p className="truncate text-xs font-black text-slate-900">
+                      {money(orderLineDeliveryNumberValue(line, "amount"))}
+                    </p>
+
+                    <div className="flex items-center justify-start">
+                      <span className={orderLineDeliveryStatusClass(status)}>
+                        {orderLineDeliveryStatusLabel(status)}
+                      </span>
+                    </div>
+                  </div>
+                </summary>
+
+                <div className="mt-4 space-y-3 border-t border-slate-200 pt-4">
+                  <div className="rounded-2xl bg-slate-50 px-4 py-3 ring-1 ring-slate-100">
+                    <p className="text-[10px] font-black uppercase tracking-[0.14em] text-slate-400">
+                      Ligne de commande
+                    </p>
+                    <p className="mt-1 text-sm font-black text-slate-900">
+                      {orderLineDeliveryText(line, "title", "Ligne de commande")}
+                    </p>
+                    <p className="mt-1 text-xs font-bold text-slate-500">
+                      Fournisseur : {orderLineDeliveryText(line, "supplierLabel", "Fournisseur non renseigné")}
+                    </p>
+                  </div>
+
+                  <div className="rounded-2xl bg-white p-4 ring-1 ring-slate-100">
+                    <div className="mb-3 grid items-center gap-3 rounded-2xl bg-slate-50 px-4 py-3 text-[10px] font-black uppercase tracking-[0.14em] text-slate-500 xl:grid-cols-[1fr_1fr]">
+                      <span>Date livraison</span>
+                      <span>Quantité livrée</span>
+                    </div>
+
+                    {receptions.length === 0 ? (
+                      <p className="rounded-2xl bg-orange-50 px-4 py-3 text-xs font-bold text-orange-700 ring-1 ring-orange-100">
+                        Aucune livraison rattachée à cette ligne.
+                      </p>
+                    ) : (
+                      <div className="space-y-2">
+                        {receptions.map((reception) => {
+                          const receptionId = orderLineDeliveryText(
+                            reception,
+                            "id",
+                            orderLineDeliveryText(reception, "dateLivraison", "livraison")
+                          );
+
+                          return (
+                            <div
+                              key={receptionId}
+                              className="grid items-center gap-3 rounded-2xl bg-emerald-50 px-4 py-3 text-xs ring-1 ring-emerald-100 xl:grid-cols-[1fr_1fr]"
+                            >
+                              <p className="font-black text-emerald-900">
+                                {formatDate(orderLineDeliveryText(reception, "dateLivraison", ""))}
+                              </p>
+                              <p className="font-black text-emerald-700">
+                                {orderLineQuantityLabel(orderLineDeliveryNumberValue(reception, "quantityDelivered"))}
+                              </p>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </details>
+            );
+          })}
+        </div>
+      )}
+    </section>
+  );
+}
+
 function ProductFlowDiagram() {
   return (
     <section className="rounded-[2rem] bg-white p-6 shadow-sm ring-1 ring-slate-200 lg:p-7">
@@ -1115,6 +1311,8 @@ export function ERPProductStockOperationalSheet({
         <div className="grid gap-6 2xl:grid-cols-[minmax(0,1fr)_360px]">
           <main className="space-y-6">
             <ProductFlowDiagram />
+
+            <OrderLinesDeliveryPanel items={orderLineDeliveryItems(rootRecord)} />
 
             <section className="grid gap-5 xl:grid-cols-2 2xl:grid-cols-4">
               <DashboardPanel
