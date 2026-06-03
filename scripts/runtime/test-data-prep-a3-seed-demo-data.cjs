@@ -99,14 +99,14 @@ const SUPPLIERS = [
       telephone: "+2250700000002",
       email: "contact@energyauto.example",
       adresse: "Cocody, Abidjan",
-      observations: "Fournisseur batteries et accessoires Ã©lectriques.",
+      observations: "Fournisseur batteries et accessoires ÃƒÆ’Ã‚Â©lectriques.",
       statut: "actif",
     },
   },
 ];
 
 const PRODUCTS = [
-  product("demo-product-oil-5w30", "HUI-5W30-001", "Huile moteur 5W30 synthÃ¨se", {
+  product("demo-product-oil-5w30", "HUI-5W30-001", "Huile moteur 5W30 synthÃƒÆ’Ã‚Â¨se", {
     marque: "PETRONAS",
     categorie: "huile_moteur",
     typeArticle: "piece",
@@ -130,7 +130,7 @@ const PRODUCTS = [
     seuilMinimum: 8,
     stock: 30,
   }),
-  product("demo-product-gear-oil-75w80", "HUI-BV-75W80", "Huile boÃ®te 75W80", {
+  product("demo-product-gear-oil-75w80", "HUI-BV-75W80", "Huile boÃƒÆ’Ã‚Â®te 75W80", {
     marque: "Motul",
     categorie: "huile_moteur",
     typeArticle: "piece",
@@ -142,21 +142,21 @@ const PRODUCTS = [
     seuilMinimum: 4,
     stock: 12,
   }),
-  product("demo-product-oil-filter", "FIL-HUI-001", "Filtre Ã  huile", {
+  product("demo-product-oil-filter", "FIL-HUI-001", "Filtre ÃƒÆ’Ã‚Â  huile", {
     marque: "Bosch",
     categorie: "filtre",
     typeArticle: "piece",
-    unite: "unitÃ©",
+    unite: "unitÃƒÆ’Ã‚Â©",
     prixAchat: 3000,
     prixVente: 4500,
     seuilMinimum: 10,
     stock: 50,
   }),
-  product("demo-product-air-filter", "FIL-AIR-001", "Filtre Ã  air", {
+  product("demo-product-air-filter", "FIL-AIR-001", "Filtre ÃƒÆ’Ã‚Â  air", {
     marque: "Mann Filter",
     categorie: "filtre",
     typeArticle: "piece",
-    unite: "unitÃ©",
+    unite: "unitÃƒÆ’Ã‚Â©",
     prixAchat: 3800,
     prixVente: 5500,
     seuilMinimum: 6,
@@ -166,7 +166,7 @@ const PRODUCTS = [
     marque: "Mann Filter",
     categorie: "filtre",
     typeArticle: "piece",
-    unite: "unitÃ©",
+    unite: "unitÃƒÆ’Ã‚Â©",
     prixAchat: 4200,
     prixVente: 6000,
     seuilMinimum: 5,
@@ -176,7 +176,7 @@ const PRODUCTS = [
     marque: "AMARKHYS",
     categorie: "piece",
     typeArticle: "piece",
-    unite: "unitÃ©",
+    unite: "unitÃƒÆ’Ã‚Â©",
     prixAchat: 200,
     prixVente: 500,
     seuilMinimum: 25,
@@ -204,7 +204,7 @@ const PRODUCTS = [
     seuilMinimum: 4,
     stock: 16,
   }),
-  product("demo-product-rear-brake-pads", "FRN-PLA-AR", "Plaquettes frein arriÃ¨re", {
+  product("demo-product-rear-brake-pads", "FRN-PLA-AR", "Plaquettes frein arriÃƒÆ’Ã‚Â¨re", {
     marque: "Bosch",
     categorie: "piece",
     typeArticle: "piece",
@@ -228,7 +228,7 @@ const PRODUCTS = [
     marque: "Liqui Moly",
     categorie: "consommable",
     typeArticle: "piece",
-    unite: "aÃ©rosol",
+    unite: "aÃƒÆ’Ã‚Â©rosol",
     prixAchat: 1500,
     prixVente: 2500,
     seuilMinimum: 8,
@@ -258,11 +258,11 @@ const PRODUCTS = [
     seuilMinimum: 10,
     stock: 40,
   }),
-  product("demo-product-penetrating-oil", "SPR-DEG-001", "Spray dÃ©grippant", {
+  product("demo-product-penetrating-oil", "SPR-DEG-001", "Spray dÃƒÆ’Ã‚Â©grippant", {
     marque: "WD-40",
     categorie: "consommable",
     typeArticle: "piece",
-    unite: "aÃ©rosol",
+    unite: "aÃƒÆ’Ã‚Â©rosol",
     prixAchat: 2000,
     prixVente: 3000,
     seuilMinimum: 5,
@@ -282,7 +282,7 @@ const PRODUCTS = [
     marque: "Philips",
     categorie: "piece",
     typeArticle: "piece",
-    unite: "unitÃ©",
+    unite: "unitÃƒÆ’Ã‚Â©",
     prixAchat: 2300,
     prixVente: 3500,
     seuilMinimum: 6,
@@ -312,7 +312,7 @@ const PRODUCTS = [
     marque: "Varta",
     categorie: "piece",
     typeArticle: "piece",
-    unite: "unitÃ©",
+    unite: "unitÃƒÆ’Ã‚Â©",
     prixAchat: 38000,
     prixVente: 48000,
     seuilMinimum: 2,
@@ -322,7 +322,7 @@ const PRODUCTS = [
     marque: "Varta",
     categorie: "piece",
     typeArticle: "piece",
-    unite: "unitÃ©",
+    unite: "unitÃƒÆ’Ã‚Â©",
     prixAchat: 50000,
     prixVente: 62000,
     seuilMinimum: 2,
@@ -332,7 +332,7 @@ const PRODUCTS = [
     marque: "AMARKHYS",
     categorie: "piece",
     typeArticle: "piece",
-    unite: "unitÃ©",
+    unite: "unitÃƒÆ’Ã‚Â©",
     prixAchat: 300,
     prixVente: 800,
     seuilMinimum: 20,
@@ -342,18 +342,18 @@ const PRODUCTS = [
     marque: "AMARKHYS",
     categorie: "piece",
     typeArticle: "piece",
-    unite: "unitÃ©",
+    unite: "unitÃƒÆ’Ã‚Â©",
     prixAchat: 1500,
     prixVente: 2500,
     seuilMinimum: 6,
     stock: 25,
   }),
-  service("demo-service-diagnostic", "SRV-DIAG-001", "Diagnostic Ã©lectronique", {
+  service("demo-service-diagnostic", "SRV-DIAG-001", "Diagnostic ÃƒÆ’Ã‚Â©lectronique", {
     prixAchat: 0,
     prixVente: 15000,
     typeArticle: "service",
   }),
-  service("demo-service-labor", "SRV-MO-001", "Main dâ€™Å“uvre mÃ©canique", {
+  service("demo-service-labor", "SRV-MO-001", "Main dÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢Ãƒâ€¦Ã¢â‚¬Å“uvre mÃƒÆ’Ã‚Â©canique", {
     prixAchat: 0,
     prixVente: 12000,
     typeArticle: "main_oeuvre",
@@ -383,14 +383,14 @@ function product(id, reference, nom, options) {
       categorie: options.categorie,
       typeProduit: "stockable",
       stockable: true,
-      unite: options.unite || "unitÃ©",
+      unite: options.unite || "unitÃƒÆ’Ã‚Â©",
       contenance: options.contenance || null,
       uniteContenance: options.uniteContenance || null,
       prixAchat: Number(options.prixAchat || 0),
       prixVente: Number(options.prixVente || 0),
       tauxTVA: 18,
       seuilMinimum,
-      description: `Produit de dÃ©monstration AMARKHYS â€” ${nom}.`,
+      description: `Produit de dÃƒÆ’Ã‚Â©monstration AMARKHYS ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â ${nom}.`,
       statut: stock <= 0 ? "rupture" : stock <= seuilMinimum ? "rupture" : "actif",
       createdAt: NOW_ISO,
       updatedAt: NOW_ISO,
@@ -419,7 +419,7 @@ function service(id, reference, nom, options) {
       prixVente: Number(options.prixVente || 0),
       tauxTVA: 18,
       seuilMinimum: 0,
-      description: `Prestation de dÃ©monstration AMARKHYS â€” ${nom}.`,
+      description: `Prestation de dÃƒÆ’Ã‚Â©monstration AMARKHYS ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â ${nom}.`,
       statut: "actif",
       createdAt: NOW_ISO,
       updatedAt: NOW_ISO,
@@ -447,7 +447,7 @@ function buildStockForProduct(item) {
             ? "stock_faible"
             : "disponible",
       observations:
-        "Stock de dÃ©monstration gÃ©nÃ©rÃ© pour AMARKHYS. Emplacement logique commun.",
+        "Stock de dÃƒÆ’Ã‚Â©monstration gÃƒÆ’Ã‚Â©nÃƒÆ’Ã‚Â©rÃƒÆ’Ã‚Â© pour AMARKHYS. Emplacement logique commun.",
       createdAt: NOW_ISO,
       updatedAt: NOW_ISO,
       seedTag: "TEST-DATA-PREP-A3",
@@ -455,6 +455,147 @@ function buildStockForProduct(item) {
   };
 }
 
+function daysFromNow(days) {
+  const date = new Date();
+  date.setDate(date.getDate() + days);
+  return date.toISOString().slice(0, 10);
+}
+
+function isoDaysFromNow(days) {
+  const date = new Date();
+  date.setDate(date.getDate() + days);
+  return date.toISOString();
+}
+
+const CLIENTS = [
+  oldClient(1, "Kone", "Amadou", "particulier", "actif", -150),
+  oldClient(2, "Traore", "Mariam", "particulier", "actif", -145),
+  oldClient(3, "Coulibaly", "Yao", "particulier", "actif", -140),
+  oldClient(4, "Nguessan", "Awa", "particulier", "actif", -135),
+  oldClient(5, "Garage Express Pro", "", "entreprise", "actif", -132),
+  oldClient(6, "Diallo", "Ibrahim", "particulier", "actif", -128),
+  oldClient(7, "Soro", "Fatou", "particulier", "actif", -122),
+  oldClient(8, "Bamba", "Serge", "particulier", "actif", -118),
+  oldClient(9, "TransLog CI", "", "flotte", "actif", -112),
+  oldClient(10, "Amani", "Jean-Luc", "particulier", "actif", -96),
+
+  newClient(1, "Ouattara", "Nadine", "particulier", "prospect", -30),
+  newClient(2, "Yapi", "Kevin", "particulier", "actif", -26),
+  newClient(3, "Mensah", "Eric", "particulier", "actif", -22),
+  newClient(4, "Atelier BTP Services", "", "entreprise", "actif", -20),
+  newClient(5, "Zadi", "Claire", "particulier", "actif", -17),
+  newClient(6, "Toure", "Moussa", "particulier", "actif", -14),
+  newClient(7, "Kouame", "Sandrine", "particulier", "actif", -10),
+  newClient(8, "Diabate", "Karim", "particulier", "actif", -7),
+  newClient(9, "Ndiaye", "Aminata", "particulier", "actif", -4),
+  newClient(10, "AutoFleet PME", "", "flotte", "actif", -2),
+];
+
+const VEHICLES = [
+  vehicle("old", 1, "Toyota", "Corolla", "Essence", "AB-101-AM", 2016, 148000),
+  vehicle("old", 2, "Peugeot", "3008", "Diesel", "AB-202-MT", 2018, 112500),
+  vehicle("old", 3, "Renault", "Clio", "Essence", "AB-303-YC", 2015, 165200),
+  vehicle("old", 4, "Hyundai", "Tucson", "Diesel", "AB-404-NA", 2019, 98000),
+  vehicle("old", 5, "Mercedes", "Sprinter", "Diesel", "AB-505-GE", 2020, 132000),
+  vehicle("old", 6, "Kia", "Sportage", "Essence", "AB-606-ID", 2017, 126300),
+  vehicle("old", 7, "Nissan", "Qashqai", "Diesel", "AB-707-SF", 2016, 154000),
+  vehicle("old", 8, "Volkswagen", "Golf", "Essence", "AB-808-BS", 2014, 176000),
+  vehicle("old", 9, "Ford", "Ranger", "Diesel", "AB-909-TL", 2021, 89000),
+  vehicle("old", 10, "Citroen", "C4", "Diesel", "AB-010-AJ", 2018, 118000),
+
+  vehicle("new", 1, "Dacia", "Duster", "Essence", "AB-111-ON", 2020, 72000),
+  vehicle("new", 2, "BMW", "Serie 3", "Essence", "AB-222-YK", 2019, 84000),
+  vehicle("new", 3, "Audi", "A4", "Diesel", "AB-333-ME", 2018, 93000),
+  vehicle("new", 4, "Opel", "Astra", "Essence", "AB-444-BT", 2017, 106000),
+  vehicle("new", 5, "Suzuki", "Swift", "Essence", "AB-555-ZC", 2021, 48000),
+  vehicle("new", 6, "Toyota", "Yaris", "Hybride", "AB-666-TM", 2022, 39000),
+  vehicle("new", 7, "Peugeot", "208", "Essence", "AB-777-KS", 2020, 61000),
+  vehicle("new", 8, "Renault", "Captur", "Essence", "AB-888-DK", 2019, 77000),
+  vehicle("new", 9, "Hyundai", "i20", "Essence", "AB-999-NA", 2021, 45000),
+  vehicle("new", 10, "Toyota", "Hilux", "Diesel", "AB-110-AF", 2022, 58000),
+];
+
+function oldClient(index, nom, prenom, typeClient, statut, days) {
+  const padded = String(index).padStart(3, "0");
+  return {
+    id: `demo-client-old-${padded}`,
+    data: {
+      codeClient: `CLI-OLD-${padded}`,
+      nom,
+      prenom,
+      typeClient,
+      statut,
+      telephone: `+22507010${padded}`,
+      email: `client.old.${padded}@amarkhys.demo`,
+      adresse: `Adresse ancienne ${index}, Abidjan`,
+      ville: "Abidjan",
+      pays: "CÃ´te d'Ivoire",
+      dateInscription: daysFromNow(days),
+      observations: "Client ancien de dÃ©monstration avec historique atelier.",
+      createdAt: isoDaysFromNow(days),
+      updatedAt: NOW_ISO,
+      seedTag: "TEST-DATA-PREP-A3",
+      seedSegment: "old",
+    },
+  };
+}
+
+function newClient(index, nom, prenom, typeClient, statut, days) {
+  const padded = String(index).padStart(3, "0");
+  return {
+    id: `demo-client-new-${padded}`,
+    data: {
+      codeClient: `CLI-NEW-${padded}`,
+      nom,
+      prenom,
+      typeClient,
+      statut,
+      telephone: `+22507020${padded}`,
+      email: `client.new.${padded}@amarkhys.demo`,
+      adresse: `Adresse rÃ©cente ${index}, Abidjan`,
+      ville: "Abidjan",
+      pays: "CÃ´te d'Ivoire",
+      dateInscription: daysFromNow(days),
+      observations: "Client rÃ©cent de dÃ©monstration pour parcours en cours.",
+      createdAt: isoDaysFromNow(days),
+      updatedAt: NOW_ISO,
+      seedTag: "TEST-DATA-PREP-A3",
+      seedSegment: "new",
+    },
+  };
+}
+
+function vehicle(segment, index, marque, modele, energie, immatriculation, annee, kilometrage) {
+  const padded = String(index).padStart(3, "0");
+  const clientId = `demo-client-${segment}-${padded}`;
+
+  return {
+    id: `demo-vehicle-${segment}-${padded}`,
+    data: {
+      clientId,
+      codeVehicule: `VEH-${segment.toUpperCase()}-${padded}`,
+      immatriculation,
+      marque,
+      modele,
+      annee,
+      kilometrage,
+      energie,
+      carburant: energie,
+      statut: "actif",
+      vin: `VINDEMO${segment.toUpperCase()}${padded}AMARKHYS`,
+      dateMiseEnCirculation: `${annee}-06-15`,
+      dateFinGarantie: annee >= 2021 ? daysFromNow(180) : "",
+      prochaineVidange: daysFromNow(segment === "old" ? 20 : 45),
+      prochainControleTechnique: daysFromNow(segment === "old" ? 60 : 120),
+      assuranceExpiration: daysFromNow(segment === "old" ? 90 : 150),
+      observations: "VÃ©hicule de dÃ©monstration liÃ© Ã  un client AMARKHYS.",
+      createdAt: NOW_ISO,
+      updatedAt: NOW_ISO,
+      seedTag: "TEST-DATA-PREP-A3",
+      seedSegment: segment,
+    },
+  };
+}
 function loadEnvLocal() {
   const envPath = path.join(ROOT, ".env.local");
 
@@ -583,7 +724,7 @@ async function assertBusinessCollectionsAreEmpty(db) {
     );
   }
 
-  console.log("[GUARD] OK â€” target business collections are empty.");
+  console.log("[GUARD] OK ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â target business collections are empty.");
 }
 
 async function writeDoc(db, collectionName, id, data) {
@@ -612,7 +753,7 @@ async function assertCollectionsEmpty(db, collectionNames, label) {
     throw new Error(`${label} collections are not empty: ${details}`);
   }
 
-  console.log(`[GUARD] OK — ${label} collections are empty.`);
+  console.log(`[GUARD] OK Ã¢â‚¬â€ ${label} collections are empty.`);
 }
 
 async function assertFoundationExists(db) {
@@ -643,7 +784,7 @@ async function assertFoundationExists(db) {
     );
   }
 
-  console.log("[GUARD] OK — foundation seed exists.");
+  console.log("[GUARD] OK Ã¢â‚¬â€ foundation seed exists.");
 }
 
 async function validateClientsVehiclesPhase(db) {
@@ -655,8 +796,8 @@ async function validateClientsVehiclesPhase(db) {
 async function seedClientsVehicles(db) {
   console.log("");
   console.log("[PLAN] Clients/Vehicles seed");
-  console.log("- clientsauto: 20");
-  console.log("- vehicules: 20");
+  console.log(`- clientsauto: ${CLIENTS.length}`);
+  console.log(`- vehicules: ${VEHICLES.length}`);
   console.log("");
 
   if (!seedClientsVehiclesEnabled) {
@@ -665,8 +806,19 @@ async function seedClientsVehicles(db) {
     return;
   }
 
-  console.log("[WRITE SKIPPED]");
-  console.log("C1-C-A only validates phase guards. C1-C-B will add actual client/vehicle documents.");
+  console.log("[WRITE START]");
+
+  for (const client of CLIENTS) {
+    await writeDoc(db, "clientsauto", client.id, client.data);
+    console.log(`[WRITE] clientsauto/${client.id}`);
+  }
+
+  for (const vehicleItem of VEHICLES) {
+    await writeDoc(db, "vehicules", vehicleItem.id, vehicleItem.data);
+    console.log(`[WRITE] vehicules/${vehicleItem.id}`);
+  }
+
+  console.log("[WRITE DONE]");
 }
 async function seedFoundation(db) {
   const stockableProducts = PRODUCTS.filter((item) => item.stockable);
@@ -725,9 +877,9 @@ async function main() {
     await seedClientsVehicles(db);
 
     console.log("");
-    console.log("[C1-C-A DONE]");
-    console.log("Clients/vehicles phase guards are valid.");
-    console.log("No client or vehicle was written in this guard-only pass.");
+    console.log("[C1-C-B DONE]");
+    console.log("Clients/vehicles seed phase completed.");
+    console.log(seedClientsVehiclesEnabled ? "Clients and vehicles were written to Firestore." : "No client or vehicle was written to Firestore.");
     return;
   }
 
