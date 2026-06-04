@@ -1000,6 +1000,15 @@ export const runtimeBusinessRules:
               factureId:
                 factureIdForLines,
 
+              parentModuleKey:
+                "facturesauto",
+
+              parentRecordId:
+                factureIdForLines,
+
+              parentForeignKey:
+                "factureId",
+
               designation:
                 String(
                   ligne.designation ??
