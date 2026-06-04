@@ -93,6 +93,61 @@ export const facturesautoModule: ERPModule = {
         list: { visible: true, order: 3 },
         grid: { cols: 6 },
       },
+    {
+      key: "typeFacture",
+      label: "Type de facture",
+      type: "select",
+      required: false,
+      options: [
+        { value: "atelier", label: "Atelier" },
+        { value: "boutique", label: "Boutique" },
+        { value: "mixte", label: "Mixte" },
+        { value: "autre", label: "Autre" },
+      ],
+      defaultValue: "atelier",
+    },
+    {
+      key: "sourceScope",
+      label: "Périmètre source",
+      type: "select",
+      required: false,
+      options: [
+        { value: "single", label: "Source unique" },
+        { value: "multiple", label: "Sources multiples" },
+      ],
+      defaultValue: "single",
+    },
+    {
+      key: "sourceType",
+      label: "Type de source",
+      type: "select",
+      required: false,
+      options: [
+        { value: "atelier", label: "Atelier" },
+        { value: "boutique", label: "Boutique" },
+        { value: "commande", label: "Commande" },
+        { value: "autre", label: "Autre" },
+      ],
+      defaultValue: "atelier",
+    },
+    {
+      key: "sourceModule",
+      label: "Module source",
+      type: "text",
+      required: false,
+    },
+    {
+      key: "sourceRecordId",
+      label: "Enregistrement source",
+      type: "text",
+      required: false,
+    },
+    {
+      key: "sourceLabel",
+      label: "Libellé source",
+      type: "text",
+      required: false,
+    },
 {
         key: "interventionId",
         label: "Intervention",
@@ -241,7 +296,13 @@ export const facturesautoModule: ERPModule = {
               "statutFacture",
               "statutPaiement",
               "modePaiement",
-            ],
+            
+              "typeFacture",
+              "sourceScope",
+              "sourceType",
+              "sourceModule",
+              "sourceRecordId",
+              "sourceLabel"],
           },
         ],
       },
@@ -492,7 +553,8 @@ export const facturesautoModule: ERPModule = {
   composition: {
     // Q21E_C_BILLING_RELATIONSHIP_COMPOSITION
     // Facture knows its payments and payment schedules.
-    labelFields: ["numeroFacture", "clientId", "montantTTC", "resteAPayer", "statutPaiement"],
+    labelFields: ["numeroFacture", "clientId", "montantTTC", "resteAPayer", "statutPaiement",
+    "typeFacture"],
 
     contextBanner: {
       title: "Contexte facture",
@@ -546,7 +608,10 @@ export const facturesautoModule: ERPModule = {
       "canalDernierEnvoiFacture",
       "destinataireDernierEnvoiFacture",
       "nombreEnvoisFacture",
-    ],
+    
+    "sourceModule",
+    "sourceRecordId",
+    "sourceLabel"],
 
     children: [
       {
