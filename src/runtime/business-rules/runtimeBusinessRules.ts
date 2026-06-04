@@ -649,6 +649,20 @@ export const runtimeBusinessRules:
               "interventionsauto"
         );
 
+      const lignesInterventionModule =
+        coreERPModules.find(
+          module =>
+            module.metadata.key ===
+              "lignesinterventionauto"
+        );
+
+      const lignesFactureModule =
+        coreERPModules.find(
+          module =>
+            module.metadata.key ===
+              "lignesfactureauto"
+        );
+
       const interventionId =
         String(
           payload.id ??
@@ -798,15 +812,18 @@ export const runtimeBusinessRules:
           )
         );
 
-      await RuntimeDataBinding
+      const numeroFacture =
+        `FAC-${Date.now()}`;
+
+      const createdFacture =
+        await RuntimeDataBinding
         .create(
 
           facturesModule,
 
           {
 
-            numeroFacture:
-              `FAC-${Date.now()}`,
+            numeroFacture,
 
             dateFacture:
               resolveAutoInvoiceDate(),
@@ -836,11 +853,233 @@ export const runtimeBusinessRules:
               montantTTC,
 
             statutPaiement:
-              "en_attente"
+              "en_attente",
+
+            typeFacture:
+              "atelier",
+
+            sourceScope:
+              "single",
+
+            sourceType:
+              "atelier",
+
+            sourceModule:
+              "interventionsauto",
+
+            sourceRecordId:
+              interventionId,
+
+            sourceLabel:
+              String(
+                intervention.numeroIntervention ??
+                intervention.code ??
+                intervention.titre ??
+                interventionId
+              )
 
           }
 
         );
+
+      const createdFactureId =
+        String(
+          (createdFacture as any)?.id ??
+          (createdFacture as any)?._id ??
+          (createdFacture as any)?.recordId ??
+          (createdFacture as any)?.docId ??
+          ""
+        );
+
+      let factureIdForLines =
+        createdFactureId;
+
+      if (
+        !factureIdForLines
+      ) {
+        const refreshedFactures =
+          await RuntimeDataBinding.list(
+            facturesModule
+          );
+
+        const createdFromList =
+          refreshedFactures.find(
+            facture =>
+              String(facture.numeroFacture ?? "") ===
+                numeroFacture ||
+              (
+                String(facture.interventionId ?? "") ===
+                  interventionId &&
+                String(facture.statutFacture ?? "") !==
+                  "annulee"
+              )
+          );
+
+        factureIdForLines =
+          String(
+            createdFromList?.id ??
+            createdFromList?._id ??
+            ""
+          );
+      }
+
+      if (
+        factureIdForLines &&
+        lignesInterventionModule &&
+        lignesFactureModule &&
+        interventionId
+      ) {
+        const lignesIntervention =
+          await RuntimeDataBinding.list(
+            lignesInterventionModule
+          );
+
+        const lignesFacturables =
+          lignesIntervention.filter(
+            ligne => {
+              const lineInterventionId =
+                String(ligne.interventionId ?? "");
+
+              const removedAt =
+                String(ligne.removedAt ?? "").trim();
+
+              const statutLigne =
+                String(
+                  ligne.statutLigne ??
+                  ligne.statut ??
+                  ""
+                );
+
+              return (
+                lineInterventionId === interventionId &&
+                !removedAt &&
+                statutLigne !== "annulee" &&
+                statutLigne !== "retiree"
+              );
+            }
+          );
+
+        for (
+          const ligne of lignesFacturables
+        ) {
+          const lineMontantHT =
+            roundMoney(
+              asNumber(ligne.montantHT) ||
+              asNumber(ligne.totalHT) ||
+              asNumber(ligne.montant)
+            );
+
+          const lineTauxTVA =
+            asNumber(ligne.tauxTVA) ||
+            asNumber(ligne.tva) ||
+            tauxTVA;
+
+          const lineMontantTVA =
+            roundMoney(
+              asNumber(ligne.montantTVA) ||
+              (
+                lineMontantHT > 0
+                  ? lineMontantHT * lineTauxTVA / 100
+                  : 0
+              )
+            );
+
+          const lineMontantTTC =
+            roundMoney(
+              asNumber(ligne.montantTTC) ||
+              asNumber(ligne.montantTotal) ||
+              (
+                lineMontantHT +
+                lineMontantTVA
+              )
+            );
+
+          await RuntimeDataBinding.create(
+            lignesFactureModule,
+            {
+              factureId:
+                factureIdForLines,
+
+              designation:
+                String(
+                  ligne.designation ??
+                  ligne.produitNom ??
+                  ligne.libelle ??
+                  ligne.nom ??
+                  "Ligne intervention"
+                ),
+
+              description:
+                String(
+                  ligne.description ??
+                  ligne.observations ??
+                  ""
+                ),
+
+              quantite:
+                asNumber(ligne.quantite) || 1,
+
+              prixUnitaireHT:
+                asNumber(ligne.prixUnitaireHT) ||
+                asNumber(ligne.prixUnitaire) ||
+                lineMontantHT,
+
+              montantHT:
+                lineMontantHT,
+
+              tauxTVA:
+                lineTauxTVA,
+
+              montantTVA:
+                lineMontantTVA,
+
+              montantTTC:
+                lineMontantTTC,
+
+              statutLigne:
+                "validee",
+
+              sourceType:
+                "atelier",
+
+              sourceModule:
+                "lignesinterventionauto",
+
+              sourceRecordId:
+                interventionId,
+
+              sourceLineId:
+                String(
+                  ligne.id ??
+                  ligne._id ??
+                  ""
+                ),
+
+              clientId:
+                intervention.clientId ??
+                ligne.clientId,
+
+              vehiculeId:
+                intervention.vehiculeId ??
+                ligne.vehiculeId,
+
+              interventionId,
+
+              produitId:
+                ligne.produitId,
+
+              tenantId:
+                intervention.tenantId ??
+                payload.tenantId,
+
+              workspace:
+                intervention.workspace ??
+                payload.workspace ??
+                "amarkhys"
+            }
+          );
+        }
+      }
 
 RuntimeMetrics.increment(
   "amarkhys.interventions.completed",
