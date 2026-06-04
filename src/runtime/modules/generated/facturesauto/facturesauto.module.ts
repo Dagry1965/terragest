@@ -615,6 +615,21 @@ export const facturesautoModule: ERPModule = {
 
     children: [
       {
+        key: "lignes-facture",
+        moduleKey: "lignesfactureauto",
+        foreignKey: "factureId",
+        title: "Lignes facture",
+        description: "Lignes financières rattachées à cette facture.",
+        displayIn: [],
+        lazy: true,
+        position: "after",
+        allowCreate: false,
+        createLabel: "Ajouter une ligne facture",
+        openLabel: "Ouvrir ligne facture",
+
+        lockFields: ["factureId", "clientId", "vehiculeId", "interventionId"],
+      },
+      {
         key: "encaissements-facture",
         moduleKey: "encaissementsauto",
         foreignKey: "factureId",

@@ -1,5 +1,6 @@
 import { receptionsstockautoModule } from "@/runtime/modules/generated/receptionsstockauto";
 import { employesModule } from "../generated/employes";
+import { lignesfactureautoModule } from "../generated/lignesfactureauto/lignesfactureauto.module";
 import { lignescommandestockautoModule } from "@/runtime/modules/generated/lignescommandestockauto";
 import { commandesstockautoModule } from "@/runtime/modules/generated/commandesstockauto";
 import { fournisseursautoModule } from "@/runtime/modules/generated/fournisseursauto";
@@ -37,6 +38,7 @@ export const coreERPModules: ERPModule[] = [
   produitsautoModule,
   echeancespaiementautoModule,
   encaissementsautoModule,
+  lignesfactureautoModule,
   facturesautoModule,
   interventionsautoModule,
   rendezvousModule,

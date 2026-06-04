@@ -34,3 +34,4 @@ export {
   allERPModules,
 } from "./definitions/coreModules";
 export { registerCoreModules } from "./registry/registerCoreModules";
+export { lignesfactureautoModule } from "./generated/lignesfactureauto/lignesfactureauto.module";
