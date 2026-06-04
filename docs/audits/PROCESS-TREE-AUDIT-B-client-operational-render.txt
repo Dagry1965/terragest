@@ -1,0 +1,1302 @@
+﻿
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:4:import Link from "next/link";
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:5:import type {
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:6:  ERPRecordHubConfig,
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:7:  ERPRecordHubRecord,
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:8:} from "@/runtime/hub";
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:9:import { ClientOperationalSearchBox } from 
+"./ClientOperationalSearchBox";
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:10:import { ERPRelatedRecordsPanel } from 
+"@/components/erp/runtime/ERPRelatedRecordsPanel";
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:11:import { InvoicePaymentsHistory } from 
+"@/components/erp/billing/InvoicePaymentsHistory";
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:12:import { ERPOperationalTable } from 
+"@/components/erp/operational/ERPOperationalTable";
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:13:import { RuntimeHubActionContextAdapter } 
+from "@/runtime/hub/RuntimeHubActionContextAdapter";
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:14:import { rendezvousModule } from 
+"@/runtime/modules/generated/rendezvous/rendezvous.module";
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:15:import { vehiculesModule } from 
+"@/runtime/modules/generated/vehicules/vehicules.module";
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:16:import { interventionsautoModule } from 
+"@/runtime/modules/generated/interventionsauto/interventionsauto.module";
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:17:import type { ERPCompositionChild } from 
+"@/runtime/modules/ERPModule";
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:18:import { useAuth } from 
+"@/providers/AuthProvider";
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:19:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:20:const VEHICLE_SEDAN_VISUAL_PRESETS = [
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:21:  {
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:22:    name: "gris-argent",
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:23:    label: "Berline gris argent",
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:24:    kickerClass: "text-slate-700",
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:25:    sedanClass: "text-slate-400/45",
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:26:    selectedCardClass: "border-slate-300 
+bg-gradient-to-br from-white via-slate-50 to-slate-200/70 ring-2 ring-slate-100",
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:27:    idleCardClass: "border-slate-200 
+bg-gradient-to-br from-white via-slate-50/80 to-slate-100/70 hover:border-slate-300 
+hover:shadow-md",
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:28:  },
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:29:  {
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:30:    name: "blanc-nacre",
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:89:}
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:90:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:91:type ERPClientOperationalSheetProps = {
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:92:  config: ERPRecordHubConfig;
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:93:  rootRecord: ERPRecordHubRecord | null;
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:94:  vehicles: ERPRecordHubRecord[];
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:95:  relatedRecordsBySection: Record<string, 
+ERPRecordHubRecord[]>;
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:96:  selectedVehicleId?: string | null;
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:97:  selectedRendezvousId?: string | null;
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:98:  selectedInterventionId?: string | null;
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:99:  selectedFactureId?: string | null;
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:100:};
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:101:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:102:function text(
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:103:  record: ERPRecordHubRecord | null | 
+undefined,
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:104:  fields: string[],
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:105:  fallback = "-"
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:106:): string {
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:107:  if (!record) return fallback;
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:108:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:109:  for (const field of fields) {
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:110:    const value = record[field];
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:111:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:112:    if (typeof value === "string" && 
+value.trim().length > 0) {
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:113:      return value.trim();
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:114:    }
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:115:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:354:    ...child,
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:355:    mode: child.mode ?? "readonly",
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:356:    allowCreate: child.allowCreate ?? 
+false,
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:357:  };
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:358:}
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:359:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:360:const rendezvousChild = 
+buildOperationalChild({
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:361:  key: "client-sheet-rendezvous",
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:362:  title: "Rendez-vous du véhicule 
+sélectionné",
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:363:  description: "Les rendez-vous 
+rattachés au véhicule sélectionné dans la fiche client.",
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:364:  moduleKey: "rendezvous",
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:365:  foreignKey: "vehiculeId",
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:366:  badgeLabel: "rendez-vous",
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:367:  mode: "readonly",
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:368:  allowCreate: false,
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:369:  labelFields: ["dateRendezVous", 
+"heureRendezVous", "heure", "typeService", "statut"],
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:370:  subtitleFields: ["service", 
+"durationMinutes", "clientLabel"],
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:371:  relations: [],
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:372:});
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:373:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:374:const interventionsChild = 
+buildOperationalChild({
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:375:  key: "client-sheet-interventions",
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:376:  title: "Interventions du véhicule",
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:377:  description: "Les interventions 
+rattachées au véhicule sélectionné.",
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:378:  moduleKey: "interventionsauto",
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:379:  foreignKey: "vehiculeId",
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:380:  badgeLabel: "intervention(s)",
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:416:});
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:417:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:418:export function 
+ERPClientOperationalSheet({
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:419:  config: _config,
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:420:  rootRecord,
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:421:  vehicles,
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:422:  relatedRecordsBySection,
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:423:  selectedVehicleId = null,
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:424:  selectedRendezvousId: 
+initialSelectedRendezvousId = null,
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:425:  selectedInterventionId: 
+initialSelectedInterventionId = null,
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:426:  selectedFactureId: 
+initialSelectedFactureId = null,
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:427:}: ERPClientOperationalSheetProps) {
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:428:  
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:429:  const { user } = useAuth();
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:430:const [localSelectedVehicleId, 
+setLocalSelectedVehicleId] = useState<string | null>(
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:431:    selectedVehicleId ?? 
+recordId(vehicles[0]) ?? null
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:432:  );
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:433:
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:434:  const [selectedRendezvousId, 
+setSelectedRendezvousId] = useState<string | null>(
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:435:    initialSelectedRendezvousId
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:436:  );
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:437:  const [openedRendezvousDetailId, 
+setOpenedRendezvousDetailId] = useState<string | null>(null);
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:438:  const [openedRelanceActionKey, 
+setOpenedRelanceActionKey] = useState<string | null>(null);
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:439:  const [expandedInterventionId, 
+setExpandedInterventionId] = useState<string | null>(null);
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:440:  const [expandedFactureId, 
+setExpandedFactureId] = useState<string | null>(
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:441:    initialSelectedFactureId
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:442:  );
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:443:  const [expandedEncaissementId, 
+setExpandedEncaissementId] = useState<string | null>(null);
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:444:  const [selectedInterventionId, 
+setSelectedInterventionId] = useState<string | null>(
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:445:    initialSelectedInterventionId
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:446:  );
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:447:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:448:  const selectedVehicle = useMemo(() => {
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:449:    return (
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:450:      vehicles.find((vehicle) => 
+recordId(vehicle) === localSelectedVehicleId) ??
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:451:      vehicles[0] ??
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:452:      null
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:453:    );
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:454:  }, [vehicles, localSelectedVehicleId]);
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:455:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:456:  const clientName = text(
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:457:    rootRecord,
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:458:    ["displayLabel", "raisonSociale", 
+"nomComplet", "nom", "prenom"],
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:459:    "Client"
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:460:  );
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:461:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:567:    return [...records].sort((a, b) => 
+getRendezvousTime(b) - getRendezvousTime(a));
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:568:  }, 
+[relatedRecordsBySection.rendezvous]);
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:569:  const lignes = 
+relatedRecordsBySection.lignes ?? [];
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:570:  const factures = 
+relatedRecordsBySection.factures ?? [];
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:571:  const encaissements = 
+relatedRecordsBySection.encaissements ?? [];
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:572:  const recentActivity = 
+relatedRecordsBySection.recentActivity ?? [];
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:573:  const upcomingAppointments = 
+relatedRecordsBySection.upcomingAppointments ?? [];
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:574:
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:575:  const toggleExpandedIntervention = 
+(id: string) => {
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:576:    setExpandedInterventionId((current) 
+=> (current === id ? null : id));
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:577:  };
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:578:
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:579:  const toggleExpandedFacture = (id: 
+string) => {
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:580:    setExpandedFactureId((current) => 
+(current === id ? null : id));
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:581:  };
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:582:
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:583:  const toggleExpandedEncaissement = 
+(id: string) => {
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:584:    setExpandedEncaissementId((current) 
+=> (current === id ? null : id));
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:585:  };
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:586:
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:587:  const selectedRendezvous = useMemo(() 
+=> {
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:588:    return (
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:589:      rendezvous.find((item) => 
+recordId(item) === selectedRendezvousId) ??
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:590:      rendezvous[0] ??
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:591:      null
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:592:    );
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:593:  }, [rendezvous, selectedRendezvousId]);
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:594:
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:595:  const openedRendezvousDetail = 
+useMemo(() => {
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:596:    if (!openedRendezvousDetailId) {
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:597:      return null;
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:598:    }
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:599:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:600:    return (
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:601:      rendezvous.find((item) => 
+recordId(item) === openedRendezvousDetailId) ??
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:602:      null
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:603:    );
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:604:  }, [rendezvous, 
+openedRendezvousDetailId]);
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:605:
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:606:  const 
+interventionsForSelectedRendezvous = useMemo(() => {
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:607:    if (!selectedRendezvous) {
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:608:      return interventions;
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:609:    }
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:610:
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:611:    const rendezvousId = 
+recordId(selectedRendezvous);
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:612:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:613:    const filtered = 
+interventions.filter((intervention) => {
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:614:      return [
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:615:        "rendezVousId",
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:616:        "rendezvousId",
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:617:        "rdvId",
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:618:      ].some((field) => 
+String(intervention[field] ?? "") === rendezvousId);
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:619:    });
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:620:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:621:    return filtered.length > 0 ? 
+filtered : interventions;
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:622:  }, [interventions, 
+selectedRendezvous]);
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:623:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:624:  const selectedIntervention = 
+useMemo(() => {
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:625:    return (
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:626:      
+interventionsForSelectedRendezvous.find(
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:627:        (item) => recordId(item) === 
+selectedInterventionId
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:628:      ) ??
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:629:      
+interventionsForSelectedRendezvous[0] ??
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:630:      null
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:631:    );
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:632:  }, 
+[interventionsForSelectedRendezvous, selectedInterventionId]);
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:633:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:634:  const facturesForSelectedIntervention 
+= useMemo(() => {
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:635:    if (!selectedIntervention) {
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:636:      return [];
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:637:    }
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:638:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:639:    const interventionId = 
+recordId(selectedIntervention);
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:640:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:641:    const filtered = 
+factures.filter((facture) => {
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:642:      return 
+String(facture.interventionId ?? "") === interventionId;
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:643:    });
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:644:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:645:    return filtered.length > 0 ? 
+filtered : factures;
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:646:  }, [factures, selectedIntervention]);
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:647:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:648:  const selectedInvoice =
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:649:    
+facturesForSelectedIntervention.find((facture) => {
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:650:      const factureId = 
+recordId(facture);
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:651:      return (
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:652:        factureId === expandedFactureId 
+||
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:653:        factureId === 
+initialSelectedFactureId
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:654:      );
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:655:    }) ??
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:656:    facturesForSelectedIntervention[0] ??
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:657:    null;
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:658:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:659:  const interventionsHubModule = 
+useMemo(() => {
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:660:    const operational = 
+interventionsautoModule.operational as
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:661:      | {
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:662:          table?: {
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:663:            fields?: string[];
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:664:            [key: string]: unknown;
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:665:          };
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:666:          [key: string]: unknown;
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:667:        }
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:668:      | undefined;
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:669:
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:670:    const table = operational?.table;
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:671:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:672:    return {
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:673:      ...interventionsautoModule,
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:674:      operational: {
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:675:        ...operational,
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:676:        table: {
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:677:          ...table,
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:678:          fields: (table?.fields ?? 
+[]).filter(
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:679:            (field) => !["clientId", 
+"vehiculeId"].includes(field)
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:680:          ),
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:681:        },
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:682:      },
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:683:    };
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:684:  }, []);
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:685:
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:686:  const parcoursAtelierStatus = 
+useMemo(() => {
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:687:    const normalize = (value: string) =>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:688:      value
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:689:        .toLowerCase()
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:690:        .normalize("NFD")
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:691:        .replace(/[\u0300-\u036f]/g, "");
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:692:
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:693:    const rdvStatus = 
+normalize(text(selectedRendezvous, ["statut", "status"], ""));
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:694:    const interventionStatus = 
+normalize(text(selectedIntervention, ["statut", "status"], ""));
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:695:    const invoiceIds = new 
+Set(facturesForSelectedIntervention.map((facture) => recordId(facture)));
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:696:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:697:    const 
+paymentsForSelectedIntervention = encaissements.filter((encaissement) => {
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:698:      const factureId = String(
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:699:        encaissement.factureId ??
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:700:          encaissement.invoiceId ??
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:701:          encaissement.factureAutoId ??
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:702:          ""
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:703:      );
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:704:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:705:      return (
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:706:        invoiceIds.has(factureId) ||
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:707:        
+String(encaissement.interventionId ?? "") === recordId(selectedIntervention)
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:708:      );
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:709:    });
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:710:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:711:    const invoiceTotal = 
+facturesForSelectedIntervention.reduce((total, facture) => {
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:720:      return total + 
+numberValue(encaissement, ["montantEncaisse", "montant", "amount"]);
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:721:    }, 0);
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:722:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:723:    const remainingAmount =
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:724:      explicitRemaining > 0
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:725:        ? explicitRemaining
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:726:        : Math.max(invoiceTotal - 
+paidTotal, 0);
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:727:
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:728:    const hasRdv = 
+Boolean(selectedRendezvous);
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:729:    const hasIntervention = 
+Boolean(selectedIntervention);
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:730:    const hasInvoice = 
+facturesForSelectedIntervention.length > 0;
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:731:    const hasPayment = 
+paymentsForSelectedIntervention.length > 0;
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:732:
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:733:    let label = "Aucun parcours 
+sélectionné";
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:734:    let description = "Sélectionnez un 
+rendez-vous pour lire le parcours atelier.";
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:735:    let tone = "slate";
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:736:    let nextAction = "Choisir un 
+rendez-vous";
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:737:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:738:    if (hasRdv) {
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:739:      label = "RDV planifié";
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:740:      description = "Le rendez-vous est 
+identifié. L'intervention reste à suivre.";
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:741:      tone = "blue";
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:742:      nextAction = "Suivre 
+l'intervention";
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:743:    }
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:744:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:745:    if (rdvStatus.includes("annul")) {
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:746:      label = "Parcours annulé";
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:747:      description = "Le rendez-vous est 
+annulé. Aucune suite atelier active n'est attendue.";
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:748:      tone = "rose";
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:749:      nextAction = "Replanifier si 
+nécessaire";
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:750:    } else if (hasRdv && 
+hasIntervention) {
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:751:      label = "Intervention en cours";
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:752:      description = "Une intervention 
+est rattachée au rendez-vous sélectionné.";
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:753:      tone = "amber";
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:754:      nextAction = "Suivre les travaux";
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:755:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:756:      if (
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:757:        
+interventionStatus.includes("terminee") ||
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:758:        
+interventionStatus.includes("facturee") ||
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:759:        
+interventionStatus.includes("termin")
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:760:      ) {
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:761:        label = "Intervention terminée";
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:762:        description = "Les travaux sont 
+terminés. La facturation ou le paiement doit être vérifié.";
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:763:        tone = "emerald";
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:764:        nextAction = "Vérifier la 
+facture";
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:768:    if (hasInvoice) {
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:769:      label = "Facturé à encaisser";
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:770:      description = "Une facture est 
+rattachée à l'intervention. Le règlement reste à contrôler.";
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:771:      tone = "orange";
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:772:      nextAction = "Suivre le paiement";
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:773:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:774:      if (hasPayment && remainingAmount 
+> 0) {
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:775:        label = "Paiement partiel";
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:776:        description = 
+`${money(remainingAmount)} restent à encaisser sur ce parcours.`;
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:777:        tone = "orange";
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:778:        nextAction = "Relancer ou 
+encaisser le solde";
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:779:      }
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:780:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:781:      if (remainingAmount <= 0 && 
+invoiceTotal > 0) {
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:782:        label = "Parcours soldé";
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:783:        description = "Le parcours 
+atelier est facturé et soldé.";
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:784:        tone = "emerald";
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:785:        nextAction = "Dossier clôturé";
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:786:      }
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:787:    }
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:788:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:789:    const toneClass =
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:790:      tone === "emerald"
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:791:        ? "bg-emerald-50 
+text-emerald-800 ring-emerald-200"
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:792:        : tone === "orange"
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:793:          ? "bg-orange-50 
+text-orange-800 ring-orange-200"
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:794:          : tone === "amber"
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:795:            ? "bg-amber-50 
+text-amber-800 ring-amber-200"
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:796:            : tone === "rose"
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:797:              ? "bg-rose-50 
+text-rose-800 ring-rose-200"
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:798:              : tone === "blue"
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:799:                ? "bg-blue-50 
+text-blue-800 ring-blue-200"
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:800:                : "bg-slate-50 
+text-slate-700 ring-slate-200";
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:801:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:804:      description,
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:805:      nextAction,
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:806:      toneClass,
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:807:      remainingAmount,
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:808:      steps: [
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:809:        {
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:810:          label: "RDV",
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:811:          done: hasRdv,
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:812:          value: 
+text(selectedRendezvous, ["statut", "status"], hasRdv ? "suivi" : "à sélectionner"),
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:813:        },
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:814:        {
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:815:          label: "Intervention",
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:816:          done: hasIntervention,
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:817:          value: 
+text(selectedIntervention, ["statut", "status"], hasIntervention ? "suivi" : "non créée"),
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:818:        },
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:819:        {
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:820:          label: "Facture",
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:821:          done: hasInvoice,
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:822:          value: hasInvoice ? 
+`${facturesForSelectedIntervention.length} facture(s)` : "non émise",
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:823:        },
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:824:        {
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:825:          label: "Paiement",
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:826:          done: hasPayment || 
+(hasInvoice && remainingAmount <= 0 && invoiceTotal > 0),
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:827:          value:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:828:            hasInvoice && 
+remainingAmount <= 0 && invoiceTotal > 0
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:829:              ? "soldé"
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:830:              : hasPayment
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:831:                ? `${money(paidTotal)} 
+encaissé(s)`
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:832:                : "à encaisser",
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:833:        },
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:834:      ],
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:835:    };
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:836:  }, [
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:837:    selectedRendezvous,
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:838:    selectedIntervention,
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:839:    facturesForSelectedIntervention,
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:840:    encaissements,
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:841:  ]);
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:842:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:843:  const hubReturnTo = useMemo(() => {
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:844:    const selectedFacture = 
+facturesForSelectedIntervention[0] ?? null;
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:845:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:846:    return queryHref("/clientsauto/hub", 
+{
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:847:      clientId: recordId(rootRecord),
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:848:      selectedVehicleId: 
+recordId(selectedVehicle),
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:849:      selectedRendezvousId: 
+recordId(selectedRendezvous),
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:850:      selectedInterventionId: 
+recordId(selectedIntervention),
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:851:      selectedFactureId: 
+recordId(selectedFacture),
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:852:    });
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:853:  }, [
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:854:    rootRecord,
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:855:    selectedVehicle,
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:856:    selectedRendezvous,
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:857:    selectedIntervention,
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:858:    facturesForSelectedIntervention,
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:859:  ]);
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:860:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:861:  const selectedPaymentForReturn = 
+useMemo(() => {
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:862:    const selectedInvoiceId = 
+recordId(selectedInvoice);
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:863:    const selectedInterventionRecordId = 
+recordId(selectedIntervention);
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:864:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:865:    return (
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:866:      encaissements.find((encaissement) 
+=> {
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:867:        const factureId = String(
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:868:          encaissement.factureId ??
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:869:            encaissement.invoiceId ??
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:870:            encaissement.factureAutoId ??
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:871:            ""
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:872:        );
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:873:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:874:        return selectedInvoiceId ? 
+factureId === selectedInvoiceId : false;
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:881:      encaissements[0] ??
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:882:      null
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:883:    );
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:884:  }, [encaissements, selectedInvoice, 
+selectedIntervention]);
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:885:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:886:  const hubActionReturnParams = {
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:887:    clientId: recordId(rootRecord),
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:888:    selectedVehicleId: 
+recordId(selectedVehicle),
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:889:    selectedRendezvousId: 
+recordId(selectedRendezvous),
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:890:    selectedInterventionId: 
+recordId(selectedIntervention),
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:891:    selectedFactureId: 
+recordId(selectedInvoice),
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:892:  };
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:893:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:894:  const contextualVehicleDetailHref = 
+selectedVehicle
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:895:    ? withReturnTo(href("/vehicules", 
+selectedVehicle) + "/edit", hubReturnTo, hubActionReturnParams)
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:896:    : 
+withHubReturnContext(vehicleDetailHref, hubReturnTo, hubActionReturnParams);
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:897:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:898:  const contextualInterventionDetailHref 
+= selectedIntervention
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:899:    ? withReturnTo("/interventionsauto/" 
++ recordId(selectedIntervention), hubReturnTo, hubActionReturnParams)
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:900:    : 
+withHubReturnContext(interventionDetailHref, hubReturnTo, hubActionReturnParams);
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:901:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:902:  const contextualInvoiceDetailHref = 
+selectedInvoice
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:903:    ? withReturnTo("/facturesauto/" + 
+recordId(selectedInvoice), hubReturnTo, hubActionReturnParams)
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:904:    : 
+withHubReturnContext(invoiceDetailHref, hubReturnTo, hubActionReturnParams);
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:905:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:906:  const contextualPaymentDetailHref = 
+selectedPaymentForReturn
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:907:    ? withReturnTo("/encaissementsauto/" 
++ recordId(selectedPaymentForReturn), hubReturnTo, hubActionReturnParams)
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:911:    const selectedFacture = 
+facturesForSelectedIntervention[0] ?? null;
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:912:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:913:    return 
+RuntimeHubActionContextAdapter.resolve({
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:914:      clientId: recordId(rootRecord),
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:915:      clientLabel: text(rootRecord, 
+["displayLabel", "raisonSociale", "nomComplet", "nom", "prenom"], "Client"),
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:916:      clientPhone: text(rootRecord, 
+["telephone", "phone", "mobile", "whatsapp"], ""),
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:917:      clientEmail: text(rootRecord, 
+["email"], ""),
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:918:      vehiculeId: 
+recordId(selectedVehicle),
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:919:      rendezvousId: 
+recordId(selectedRendezvous),
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:920:      interventionId: 
+recordId(selectedIntervention),
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:921:      factureId: 
+recordId(selectedFacture),
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:922:      unpaidAmount,
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:923:      remainingAmount: 
+parcoursAtelierStatus.remainingAmount,
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:924:      returnTo: hubReturnTo,
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:925:    });
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:926:  }, [
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:927:    rootRecord,
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:928:    selectedVehicle,
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:929:    selectedRendezvous,
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:930:    selectedIntervention,
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:931:    facturesForSelectedIntervention,
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:932:    unpaidAmount,
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:933:    
+parcoursAtelierStatus.remainingAmount,
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:934:    hubReturnTo,
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:935:  ]);
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:936:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:937:  const openedRelanceAction = useMemo(() 
+=> {
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:938:    if (!openedRelanceActionKey) {
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:939:      return null;
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:940:    }
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:941:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:942:    return hubActions.find((action) => 
+action.key === openedRelanceActionKey) ?? null;
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:943:  }, [hubActions, 
+openedRelanceActionKey]);
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:944:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:945:  const relanceModalContext = useMemo(() 
+=> {
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:946:    const isFactureRelance =
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:947:      
+openedRelanceAction?.key.includes("relancer-facture") ?? false;
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:948:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:949:    const selectedFacture = 
+facturesForSelectedIntervention[0] ?? null;
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:950:    const amount = isFactureRelance
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:951:      ? 
+parcoursAtelierStatus.remainingAmount
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:952:      : unpaidAmount;
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:953:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:954:    const clientLabel = text(
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:955:      rootRecord,
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:956:      ["displayLabel", "raisonSociale", 
+"nomComplet", "nom", "prenom"],
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:957:      "Client"
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:958:    );
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:959:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:960:    const phone = text(rootRecord, 
+["telephone", "phone", "mobile", "whatsapp"], "");
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:961:    const email = text(rootRecord, 
+["email"], "");
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:962:    const factureLabel = 
+text(selectedFacture, ["numero", "numeroFacture", "code"], "-");
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:963:    const vehiculeLabel = 
+text(selectedVehicle, ["displayLabel", "immatriculation", "marque"], "-");
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:964:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:965:    const message = isFactureRelance
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:966:      ? [
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:967:          "Bonjour " + clientLabel + ",",
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:968:          "AMARKHYS Garage vous informe 
+qu'un solde de " + money(amount) + " reste à régler sur votre facture " + factureLabel + ".",
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:969:          "Merci de bien vouloir 
+procéder au règlement ou nous contacter pour toute précision.",
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:991:      whatsappHref: 
+buildRelanceWhatsAppHref(phone, message),
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:992:      smsHref: 
+buildRelanceSmsHref(phone, message),
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:993:      mailHref: 
+buildRelanceMailHref(email, subject, message),
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:994:      telHref: 
+normalizeRelancePhone(phone) ? "tel:" + normalizeRelancePhone(phone) : "",
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:995:    };
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:996:  }, [
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:997:    openedRelanceAction,
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:998:    facturesForSelectedIntervention,
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:999:    
+parcoursAtelierStatus.remainingAmount,
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1000:    unpaidAmount,
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1001:    rootRecord,
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1002:    selectedVehicle,
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1003:  ]);
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1004:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1005:  const headerContext = useMemo(() => {
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1006:    return {
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1007:      today: formatTodayLabel(),
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1008:      userLabel: getUserLabel(user),
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1009:    };
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1010:  }, [user]);
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1011:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1012:  const isCardMode = !["flotte", 
+"entreprise"].includes(clientType.toLowerCase());
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1013:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1014:  return (
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1015:    <main className="min-h-screen 
+bg-slate-100">
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1016:      <div className="mx-auto 
+max-w-[2040px] px-8 py-10 xl:px-12 2xl:px-16">
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1017:        <section className="space-y-8">
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1276:                          </div>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1277:                        </div>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1278:                      </article>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1279:                    );
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1280:                  })}
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1281:                  </div>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1282:                ) : (
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1283:                  <div 
+className="overflow-hidden rounded-[1.75rem] border border-slate-200">
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:1284:                    <table 
+className="min-w-full text-left text-sm">
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:1285:                      <thead 
+className="bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1286:                        <tr>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1287:                          <th 
+className="px-5 py-4">Véhicule</th>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1288:                          <th 
+className="px-5 py-4">Immatriculation</th>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1289:                          <th 
+className="px-5 py-4">Statut</th>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1290:                          <th 
+className="px-5 py-4">Action</th>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1291:                        </tr>
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:1292:                      </thead>
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:1293:                      <tbody 
+className="divide-y divide-slate-100 bg-white">
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1294:                        
+{vehicles.map((vehicle) => (
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1295:                          <tr 
+key={recordId(vehicle)}>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1296:                            <td 
+className="px-5 py-4 font-semibold text-slate-900">
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1297:                              
+{text(vehicle, ["displayLabel", "marque"])}
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1298:                            </td>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1299:                            <td 
+className="px-5 py-4 text-slate-600">
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1300:                              
+{text(vehicle, ["immatriculation"])}
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1301:                            </td>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1302:                            <td 
+className="px-5 py-4 text-slate-600">
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1303:                              
+{text(vehicle, ["statut"], "actif")}
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1304:                            </td>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1305:                            <td 
+className="px-5 py-4">
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1306:                              <button
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1307:                                
+type="button"
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1308:                                
+onClick={() => setLocalSelectedVehicleId(recordId(vehicle))}
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1309:                                
+className="rounded-full bg-slate-950 px-4 py-2 text-xs font-bold text-white"
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1310:                              >
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1311:                                
+Sélectionner
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1312:                              </button>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1313:                            </td>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1314:                          </tr>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1315:                        ))}
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:1316:                      </tbody>
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:1317:                    </table>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1318:                  </div>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1319:                )}
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1320:              </section>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1321:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1322:              <section
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:1323:                
+id="parcours-operationnel"
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1324:                
+className="rounded-[2.25rem] bg-white p-6 shadow-sm ring-1 ring-slate-200 xl:p-8"
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1325:              >
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:1326:                <SectionTitle 
+title="PARCOURS OPÉRATIONNEL : CLIENT → VÉHICULE → RENDEZ-VOUS → INTERVENTION → FACTURE" />
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1327:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1328:                <div
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:1329:                  
+data-amarkhys-parcours-atelier-status="SUMMARY"
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1330:                  className="mb-6 
+rounded-[1.75rem] bg-white p-5 shadow-sm ring-1 ring-slate-200"
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1331:                >
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1332:                  <div className="flex 
+flex-wrap items-start justify-between gap-4">
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1333:                    <div>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1334:                      <p 
+className="text-[10px] font-black uppercase tracking-[0.18em] text-slate-500">
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:1335:                        Statut 
+synthétique du parcours atelier
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1336:                      </p>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1337:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1338:                      <div 
+className="mt-3 flex flex-wrap items-center gap-3">
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1339:                        <span
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1340:                          className={[
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1341:                            
+"rounded-full px-4 py-2 text-sm font-black ring-1",
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:1342:                            
+parcoursAtelierStatus.toneClass,
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1343:                          ].join(" ")}
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1344:                        >
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:1345:                          
+{parcoursAtelierStatus.label}
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1346:                        </span>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1347:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1348:                        <span 
+className="text-sm font-semibold text-slate-600">
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:1349:                          
+{parcoursAtelierStatus.nextAction}
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1350:                        </span>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1351:                      </div>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1352:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1353:                      <p 
+className="mt-3 max-w-4xl text-sm leading-6 text-slate-600">
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:1354:                        
+{parcoursAtelierStatus.description}
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1355:                      </p>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1356:                    </div>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1357:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1358:                    <div 
+className="grid min-w-[360px] flex-1 gap-3 sm:grid-cols-4">
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:1359:                      
+{parcoursAtelierStatus.steps.map((step) => (
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1360:                        <div
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1361:                          
+key={step.label}
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1362:                          className={[
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1363:                            
+"rounded-2xl p-4 ring-1",
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1364:                            step.done
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1365:                              ? 
+"bg-emerald-50 text-emerald-800 ring-emerald-200"
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1366:                              : 
+"bg-slate-50 text-slate-500 ring-slate-200",
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1367:                          ].join(" ")}
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1368:                        >
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1369:                          <p 
+className="text-[10px] font-black uppercase tracking-wide">
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1370:                            {step.label}
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1371:                          </p>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1372:                          <p 
+className="mt-2 text-sm font-bold">
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1373:                            {step.value}
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1374:                          </p>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1375:                        </div>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1376:                      ))}
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1377:                    </div>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1379:                </div>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1380:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1381:                <section 
+className="overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white">
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1382:                      <div 
+className="border-b border-slate-100 bg-slate-50 px-5 py-4">
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1383:                        <p 
+className="text-xs font-bold uppercase tracking-wide text-slate-500">
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1384:                          1. Choisir un 
+rendez-vous
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1385:                        </p>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1386:                        <h3 
+className="mt-1 text-lg font-extrabold text-slate-950">
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:1387:                          Rendez-vous 
+du véhicule
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1388:                        </h3>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1389:                      </div>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1390:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1391:                      
+{rendezvous.length > 0 ? (
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1392:                        <div 
+className="overflow-x-auto">
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:1393:                          <table 
+className="min-w-full text-left text-sm">
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:1394:                            <thead 
+className="bg-slate-950 text-xs uppercase tracking-wide text-white">
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1395:                              <tr>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1396:                                <th 
+className="px-4 py-3">Date</th>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1397:                                <th 
+className="px-4 py-3">Heure</th>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1398:                                <th 
+className="px-4 py-3">Service</th>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1399:                                <th 
+className="px-4 py-3">Statut</th>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1400:                                <th 
+className="px-4 py-3">Action</th>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1401:                              </tr>
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:1402:                            </thead>
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:1403:                            <tbody 
+className="divide-y divide-slate-100 bg-white">
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1404:                              
+{rendezvous.map((appointment) => {
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1405:                                const 
+isSelected =
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:1406:                                  
+recordId(appointment) === recordId(selectedRendezvous);
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1407:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1408:                                return (
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1409:                                  <tr
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1410:                                    
+key={recordId(appointment)}
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1411:                                    
+onClick={() => {
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:1412:                                      
+setSelectedRendezvousId(recordId(appointment));
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1413:                                      
+setSelectedInterventionId(null);
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1414:                                    }}
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1415:                                    
+className={[
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1416:                                      
+"cursor-pointer transition",
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1417:                                      
+isSelected ? "bg-emerald-50" : "hover:bg-slate-50",
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1418:                                    
+].join(" ")}
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1419:                                  >
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1420:                                    <td 
+className="px-4 py-3 font-semibold text-slate-950">
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1421:                                      
+{text(appointment, ["dateRendezVous", "date", "activityDate"])}
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1422:                                    
+</td>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1423:                                    <td 
+className="px-4 py-3 text-slate-600">
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1424:                                      
+{text(appointment, ["heureRendezVous", "heure", "startAt"])}
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1425:                                    
+</td>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1426:                                    <td 
+className="px-4 py-3 text-slate-600">
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1427:                                      
+{text(appointment, ["typeService", "service", "displayLabel"])}
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1428:                                    
+</td>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1429:                                    <td 
+className="px-4 py-3 text-slate-600">
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1430:                                      
+{text(appointment, ["statut", "status"], "suivi")}
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1431:                                    
+</td>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1432:                                    <td 
+className="px-4 py-3">
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1433:                                        
+                                    <button
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1434:                                        
+type="button"
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1435:                                        
+onClick={(event) => {
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1436:                                        
+  event.stopPropagation();
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1437:                                        
+  const appointmentId = recordId(appointment);
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:1438:                                        
+  setSelectedRendezvousId(appointmentId);
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1439:                                        
+  setSelectedInterventionId(null);
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:1440:                                        
+  setOpenedRendezvousDetailId((current) =>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1441:                                        
+    current === appointmentId ? null : appointmentId
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1442:                                        
+  );
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1443:                                        
+}}
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1444:                                        
+className={[
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1445:                                        
+  "inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-xs font-black 
+uppercase tracking-[0.12em] shadow-sm ring-1 transition hover:-translate-y-0.5 hover:shadow-md",
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:1446:                                        
+  openedRendezvousDetailId === recordId(appointment)
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1447:                                        
+    ? "bg-emerald-700 text-white ring-emerald-600"
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1448:                                        
+    : "bg-white text-emerald-800 ring-emerald-200 hover:bg-emerald-50",
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1449:                                        
+].join(" ")}
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1450:                                      >
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1451:                                        
+<span aria-hidden="true">👁</span>
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:1452:                                        
+<span>Détails</span>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1453:                                      
+</button>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1454:                                    
+</td>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1455:                                  </tr>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1456:                                );
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1457:                              })}
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:1458:                            </tbody>
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:1459:                          </table>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1460:                        </div>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1461:                      ) : (
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1462:                        
+<EmptyCard>Aucun rendez-vous trouvé pour ce véhicule.</EmptyCard>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1463:                      )}
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1464:                    </section>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1465:
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:1466:                    
+{openedRendezvousDetail ? (
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1467:                      <div
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1468:                        
+data-amarkhys-rdv-detail-modal="RENDEZVOUS_DETAIL_MODAL"
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1469:                        
+className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/45 px-4 py-6 
+backdrop-blur-sm"
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1470:                        role="dialog"
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1471:                        
+aria-modal="true"
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1472:                      >
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1473:                        <div 
+className="w-full max-w-3xl overflow-hidden rounded-[2rem] bg-white shadow-2xl ring-1 
+ring-slate-200">
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1474:                          <div 
+className="border-b border-slate-100 bg-gradient-to-r from-emerald-50 to-white px-6 py-5">
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1475:                            <div 
+className="flex flex-wrap items-start justify-between gap-4">
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1476:                              <div>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1477:                                <p 
+className="text-xs font-black uppercase tracking-[0.18em] text-emerald-700">
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1478:                                  
+Rendez-vous atelier
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1479:                                </p>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1480:                                <h3 
+className="mt-2 text-2xl font-black text-slate-950">
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:1481:                                  
+Détails du rendez-vous
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1482:                                </h3>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1483:                                <p 
+className="mt-1 text-sm text-slate-500">
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1484:                                  
+Consultation rapide du rendez-vous sélectionné.
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1485:                                </p>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1486:                              </div>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1487:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1488:                              <button
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1489:                                
+type="button"
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:1490:                                
+onClick={() => setOpenedRendezvousDetailId(null)}
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1491:                                
+className="rounded-full bg-white px-4 py-2 text-sm font-bold text-slate-700 shadow-sm ring-1 
+ring-slate-200 hover:bg-slate-50"
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1492:                              >
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1493:                                Fermer
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1494:                              </button>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1495:                            </div>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1496:                          </div>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1497:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1498:                          <div 
+className="grid gap-4 p-6 sm:grid-cols-2 xl:grid-cols-5">
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1499:                            <div 
+className="rounded-2xl bg-slate-50 p-4 ring-1 ring-slate-100">
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1500:                              <p 
+className="text-xs font-bold uppercase text-slate-400">Date</p>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1501:                              <p 
+className="mt-2 font-semibold text-slate-950">
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:1502:                                
+{text(openedRendezvousDetail, ["dateRendezVous", "date", "activityDate"])}
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1503:                              </p>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1504:                            </div>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1505:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1506:                            <div 
+className="rounded-2xl bg-slate-50 p-4 ring-1 ring-slate-100">
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1507:                              <p 
+className="text-xs font-bold uppercase text-slate-400">Heure</p>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1508:                              <p 
+className="mt-2 font-semibold text-slate-950">
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:1509:                                
+{text(openedRendezvousDetail, ["heureRendezVous", "heure", "startAt"])}
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1510:                              </p>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1511:                            </div>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1512:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1513:                            <div 
+className="rounded-2xl bg-slate-50 p-4 ring-1 ring-slate-100">
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1514:                              <p 
+className="text-xs font-bold uppercase text-slate-400">Durée</p>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1515:                              <p 
+className="mt-2 font-semibold text-slate-950">
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:1516:                                
+{text(openedRendezvousDetail, ["durationMinutes", "dureeMinutes", "duration"], "-")} min
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1517:                              </p>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1518:                            </div>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1519:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1520:                            <div 
+className="rounded-2xl bg-slate-50 p-4 ring-1 ring-slate-100">
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1521:                              <p 
+className="text-xs font-bold uppercase text-slate-400">Type service</p>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1522:                              <p 
+className="mt-2 font-semibold text-slate-950">
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:1523:                                
+{text(openedRendezvousDetail, ["typeService", "service", "displayLabel"])}
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1524:                              </p>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1525:                            </div>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1526:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1527:                            <div 
+className="rounded-2xl bg-slate-50 p-4 ring-1 ring-slate-100">
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1528:                              <p 
+className="text-xs font-bold uppercase text-slate-400">Statut</p>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1529:                              <span 
+className="mt-2 inline-flex rounded-full bg-blue-100 px-3 py-1 text-xs font-bold text-blue-700">
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:1530:                                
+{text(openedRendezvousDetail, ["statut", "status"], "suivi")}
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1531:                              </span>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1532:                            </div>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1533:                          </div>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1534:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1535:                          <div 
+className="flex flex-wrap items-center justify-end gap-3 border-t border-slate-100 bg-slate-50 px-6 
+py-4">
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1536:                            <Link
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:1537:                              
+href={withReturnTo("/rendezvous/" + recordId(openedRendezvousDetail), hubReturnTo, {
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1538:                                
+clientId: recordId(rootRecord),
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1539:                                
+selectedVehicleId: recordId(selectedVehicle),
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:1540:                                
+selectedRendezvousId: recordId(openedRendezvousDetail),
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1541:                              })}
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1542:                              
+className="rounded-full bg-white px-5 py-2.5 text-sm font-bold text-slate-900 ring-1 ring-slate-200 
+hover:bg-slate-100"
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1543:                            >
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1544:                              Ouvrir la 
+fiche
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1545:                            </Link>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1546:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1547:                            <Link
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:1548:                              
+href={withReturnTo("/rendezvous/" + recordId(openedRendezvousDetail) + "/edit", hubReturnTo, {
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1549:                                
+clientId: recordId(rootRecord),
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1550:                                
+selectedVehicleId: recordId(selectedVehicle),
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:1551:                                
+selectedRendezvousId: recordId(openedRendezvousDetail),
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1552:                              })}
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1553:                              
+className="rounded-full bg-emerald-700 px-5 py-2.5 text-sm font-bold text-white 
+hover:bg-emerald-800"
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1554:                            >
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1555:                              Modifier 
+le RDV
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1556:                            </Link>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1557:                          </div>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1558:                        </div>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1559:                      </div>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1560:                    ) : null}
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1561:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1562:                    <section 
+className="rounded-[1.75rem] border border-slate-200 bg-white p-5">
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1563:                      <p 
+className="text-xs font-bold uppercase tracking-wide text-slate-500">
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1564:                        2. 
+Interventions liées au rendez-vous
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1565:                      </p>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1566:                      <p 
+className="mt-1 text-xs font-medium text-slate-500">
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1567:                        Les 
+interventions ci-dessous sont filtrées par le rendez-vous sélectionné.
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1568:                      </p>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1569:
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:1570:                      
+{selectedRendezvous ? (
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1571:                        <p 
+className="mt-1 text-sm text-slate-500">
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:1572:                          Filtre actif 
+: {text(selectedRendezvous, ["dateRendezVous", "date"])} · {text(selectedRendezvous, 
+["typeService", "service"])}
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1573:                        </p>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1574:                      ) : null}
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1575:
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:1576:                      
+{interventionsForSelectedRendezvous.length > 0 ? (
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1577:                        <div 
+className="mt-4 rounded-[1.5rem] border border-slate-200 bg-white p-3">
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:1578:                          
+<ERPOperationalTable
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1579:                            
+module={interventionsHubModule}
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:1580:                            
+data={interventionsForSelectedRendezvous as Record<string, unknown>[]}
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1581:                          />
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1582:                        </div>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1583:                      ) : (
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:1584:                        
+<EmptyCard>Aucune intervention n’est encore liée à ce rendez-vous. Sélectionnez un autre 
+rendez-vous ou créez une intervention depuis le parcours atelier.</EmptyCard>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1585:                      )}
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1586:                    </section>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1587:              </section>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1588:
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:1589:              <section 
+id="parcours-detaille" className="rounded-[2.25rem] bg-white p-6 shadow-sm ring-1 ring-slate-200 
+xl:p-8">
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:1590:                <SectionTitle 
+title="SYNTHÈSE DU PARCOURS" />
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1591:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1592:                <div className="grid 
+gap-4 xl:grid-cols-5">
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1593:                  {[
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1594:                    [
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1595:                      "1. Sélection du 
+véhicule",
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1596:                      selectedVehicle
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1597:                        ? 
+text(selectedVehicle, ["displayLabel", "immatriculation"])
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1598:                        : "Aucun 
+véhicule",
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1599:                    ],
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1600:                    ["2. Interventions 
+du véhicule", `${interventions.length} intervention(s)`],
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1601:                    ["3. Détail 
+intervention", `${lignes.length} ligne(s)`],
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1602:                    ["4. Facture liée", 
+`${factures.length} facture(s)`],
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1603:                    ["5. 
+Encaissements", `${encaissements.length} encaissement(s)`],
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1604:                  ].map(([title, 
+value]) => (
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1605:                    <article 
+key={title} className="rounded-[1.5rem] bg-slate-50 p-5">
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1606:                      <p 
+className="text-xs font-black uppercase tracking-wide text-slate-500">
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1607:                        {title}
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1608:                      </p>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1622:                    <p className="mt-1 
+text-emerald-800">
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1623:                      Véhicules en 
+cartes, max 4 par ligne, lecture visuelle rapide.
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1624:                    </p>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1625:                  </div>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1626:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1627:                  <div 
+className="rounded-[1.5rem] bg-slate-50 p-4">
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1628:                    <p 
+className="font-black text-slate-950">Flotte</p>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1629:                    <p className="mt-1 
+text-slate-600">
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:1630:                      Véhicules en 
+tableau compact, volume important, comparaison facilitée.
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1631:                    </p>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1632:                  </div>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1633:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1634:                  <div 
+className="rounded-[1.5rem] bg-slate-50 p-4">
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1635:                    <p 
+className="font-black text-slate-950">Entreprise</p>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1636:                    <p className="mt-1 
+text-slate-600">
+> src\components\erp\hub\ERPClientOperationalSheet.tsx:1637:                      Tableau 
+administratif avec affectation, contrat et statut.
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1638:                    </p>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1639:                  </div>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1640:                </div>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1641:              </section>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1642:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1643:              <section 
+className="rounded-[2.25rem] bg-white p-6 shadow-sm ring-1 ring-slate-200">
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1644:                <SectionTitle 
+title="NAVIGATION RAPIDE" />
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1645:                <div className="grid 
+gap-3">
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1646:                  <Link
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1647:                    
+href={contextualVehicleDetailHref}
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1648:                    
+className="rounded-[1.25rem] bg-slate-950 px-4 py-3 text-sm font-bold text-white"
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1649:                  >
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1650:                    🚗 Fiche véhicule 
+complète
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1651:                  </Link>
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1652:
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1653:                  <Link
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1654:                    
+href={contextualInterventionDetailHref}
+  src\components\erp\hub\ERPClientOperationalSheet.tsx:1655:                    
+className="rounded-[1.25rem] bg-slate-100 px-4 py-3 text-sm font-bold text-slate-900"
+
+
