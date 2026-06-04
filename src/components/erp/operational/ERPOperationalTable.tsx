@@ -15,6 +15,12 @@ import { operationalUiTokens } from "./operationalUiTokens";
 import {
   RuntimeOperationalDataResolver,
 } from "@/runtime/operational";
+import {
+  appendRuntimeReturnContext,
+  buildRuntimeCurrentReturnTo,
+  buildRuntimeReturnLabel,
+  readRuntimeReturnContext,
+} from "@/runtime/navigation/RuntimeReturnContextBuilder";
 
 type OperationalColumn =
   | {
@@ -34,25 +40,7 @@ type ERPOperationalTableProps = {
   data: Record<string, unknown>[];
 };
 
-function buildOperationalReturnTo(
-  pathname: string | null,
-  searchParams: { toString(): string } | null
-): string {
-  const path = pathname ?? "";
-  const query = searchParams?.toString() ?? "";
 
-  return query ? path + "?" + query : path;
-}
-
-function appendOperationalReturnTo(hrefValue: string, returnTo: string): string {
-  if (!hrefValue.startsWith("/") || !returnTo || hrefValue.includes("returnTo=")) {
-    return hrefValue;
-  }
-
-  const separator = hrefValue.includes("?") ? "&" : "?";
-
-  return hrefValue + separator + "returnTo=" + encodeURIComponent(returnTo);
-}
 
 function getRecordId(record: Record<string, unknown>): string {
   return String(record.id ?? record._id ?? record.uid ?? "").trim();
@@ -156,7 +144,7 @@ function buildRelationLabel(
     .map((field) => record[field])
     .filter((value) => value !== undefined && value !== null && String(value).trim() !== "")
     .map((value) => String(value).trim())
-    .join(" · ");
+    .join(" | ");
 }
 
 function getStatusBadgeClass(value: unknown): string {
@@ -198,10 +186,39 @@ export function ERPOperationalTable({
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const operationalReturnTo = buildOperationalReturnTo(pathname, searchParams);
+  const operationalReturnTo = buildRuntimeCurrentReturnTo({
+    currentPath: pathname,
+    currentQuery: searchParams,
+  });
+  const operationalReturnLabel = buildRuntimeReturnLabel(
+    null,
+    module.metadata.label,
+    module.metadata.key
+  );
+  const returnContext = readRuntimeReturnContext(searchParams);
+  const initialExpandedRecordId =
+    returnContext.expandedRecordId || returnContext.selectedRecordId;
+  const initialScrollTargetId =
+    returnContext.scrollTargetId || initialExpandedRecordId;
   const [expandedRows, setExpandedRows] = useState<Record<string, boolean>>({});
   const [relationLabels, setRelationLabels] = useState<Record<string, Record<string, string>>>({});
   const [childTotals, setChildTotals] = useState<Record<string, Record<string, number>>>({});
+
+  useEffect(() => {
+    if (!initialExpandedRecordId) {
+      return;
+    }
+    setExpandedRows((current) => ({
+      ...current,
+      [initialExpandedRecordId]: true,
+    }));
+
+    window.setTimeout(() => {
+      document
+        .getElementById("erp-operational-row-" + initialScrollTargetId)
+        ?.scrollIntoView({ block: "center", behavior: "smooth" });
+    }, 120);
+  }, [initialExpandedRecordId, initialScrollTargetId]);
 
   const tableConfig = module.operational?.table;
   const hasExpandableChildren = Boolean(module.composition?.children?.length);
@@ -313,10 +330,13 @@ export function ERPOperationalTable({
     }
 
     router.push(
-      appendOperationalReturnTo(
-        "/" + module.metadata.key + "/" + id + "/edit",
-        operationalReturnTo
-      )
+      appendRuntimeReturnContext({
+        destinationHref: "/" + module.metadata.key + "/" + id + "/edit",
+        returnTo: operationalReturnTo,
+        returnLabel: operationalReturnLabel,
+        sourceModule: module.metadata.key,
+        sourceRecordId: id,
+      })
     );
   }
 
@@ -384,10 +404,10 @@ export function ERPOperationalTable({
       <div className="flex flex-col gap-3 border-b border-slate-200 px-5 py-4 lg:flex-row lg:items-center lg:justify-between">
         <div>
           <h2 className="text-lg font-black text-[#10251C]">
-            {tableConfig?.title ?? "Liste opérationnelle"}
+            {tableConfig?.title ?? "Liste operationnelle"}
           </h2>
           <p className="mt-1 text-sm font-semibold text-slate-500">
-            {tableConfig?.description ?? "Données métier du module."}
+            {tableConfig?.description ?? "Donnees metier du module."}
           </p>
         </div>
 
@@ -434,6 +454,7 @@ export function ERPOperationalTable({
               return (
                 <Fragment key={recordId}>
                   <tr
+                    id={"erp-operational-row-" + recordId}
                     onClick={() => openRecord(record)}
                     className={operationalUiTokens.table.row}
                   >
@@ -446,9 +467,9 @@ export function ERPOperationalTable({
                             toggleExpanded(record);
                           }}
                           className="flex h-8 w-8 items-center justify-center rounded-xl border border-slate-200 bg-white text-sm font-black text-slate-600 transition hover:bg-slate-50"
-                          aria-label={expanded ? "Replier" : "Déplier"}
+                          aria-label={expanded ? "Replier" : "Deplier"}
                         >
-                          {expanded ? "−" : "+"}
+                          {expanded ? "-" : "+"}
                         </button>
                       </td>
                     ) : null}

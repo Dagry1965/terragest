@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import { ERPBadge } from "@/components/erp/ui";
 import type { ERPModule } from "@/runtime/modules";
@@ -8,6 +8,12 @@ import { ERPModuleBuilder } from "@/runtime/modules";
 import type { ERPModuleField } from "@/runtime/modules/schemas/ERPModuleSchema";
 import { useRuntimeTable } from "@/runtime/table/hooks/useRuntimeTable";
 import { ERPRuntimeFieldValue } from "./ERPRuntimeFieldValue";
+import {
+  appendRuntimeReturnContext,
+  buildRuntimeCurrentReturnTo,
+  buildRuntimeReturnLabel,
+} from "@/runtime/navigation/RuntimeReturnContextBuilder";
+
 
 interface ERPRuntimeTableProps {
   module: ERPModule;
@@ -37,6 +43,17 @@ export function ERPRuntimeTable({
   data,
 }: ERPRuntimeTableProps) {
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const runtimeReturnTo = buildRuntimeCurrentReturnTo({
+    currentPath: pathname,
+    currentQuery: searchParams,
+  });
+  const runtimeReturnLabel = buildRuntimeReturnLabel(
+    null,
+    module.metadata.label,
+    module.metadata.key
+  );
 
   const table =
     ERPModuleBuilder.buildTable(module);
@@ -118,7 +135,13 @@ export function ERPRuntimeTable({
     }
 
     router.push(
-      `/${module.metadata.key}/${id}/edit`
+      appendRuntimeReturnContext({
+        destinationHref: "/" + module.metadata.key + "/" + id + "/edit",
+        returnTo: runtimeReturnTo,
+        returnLabel: runtimeReturnLabel,
+        sourceModule: module.metadata.key,
+        sourceRecordId: id,
+      })
     );
   }
 
@@ -127,11 +150,11 @@ export function ERPRuntimeTable({
       <div className="flex flex-col gap-4 border-b border-[var(--erp-border)] px-6 py-5 md:flex-row md:items-center md:justify-between">
         <div>
           <h3 className="text-xl font-black text-[var(--erp-text)]">
-            Liste opérationnelle
+            Liste opÃƒÆ’Ã‚Â©rationnelle
           </h3>
 
           <p className="mt-1 text-xs sm:text-sm text-[var(--erp-text-muted)]">
-            Données métier du module {module.metadata.label}
+            DonnÃƒÆ’Ã‚Â©es mÃƒÆ’Ã‚Â©tier du module {module.metadata.label}
           </p>
         </div>
 
@@ -141,7 +164,7 @@ export function ERPRuntimeTable({
           </ERPBadge>
 
           <ERPBadge tone="info">
-            Données à jour
+            DonnÃƒÆ’Ã‚Â©es ÃƒÆ’Ã‚Â  jour
           </ERPBadge>
         </div>
       </div>
@@ -183,7 +206,7 @@ export function ERPRuntimeTable({
                   colSpan={columns.length}
                   className="px-6 py-10 text-center text-xs sm:text-sm text-[var(--erp-text-muted)]"
                 >
-                  Aucune donnée enregistrée pour ce module.
+                  Aucune donnÃƒÆ’Ã‚Â©e enregistrÃƒÆ’Ã‚Â©e pour ce module.
                 </td>
               </tr>
             ) : null}
@@ -214,7 +237,7 @@ export function ERPRuntimeTable({
 
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between border-t border-[var(--erp-border)] px-4 py-3 sm:px-6 sm:py-4 text-xs sm:text-sm text-[var(--erp-text-muted)]">
         <div>
-          {total} élément{total > 1 ? "s" : ""}
+          {total} ÃƒÆ’Ã‚Â©lÃƒÆ’Ã‚Â©ment{total > 1 ? "s" : ""}
         </div>
 
         <div className="flex gap-2">
@@ -228,7 +251,7 @@ export function ERPRuntimeTable({
             }
             className="rounded-xl border px-3 py-2"
           >
-            Précédent
+            PrÃƒÆ’Ã‚Â©cÃƒÆ’Ã‚Â©dent
           </button>
 
           <button

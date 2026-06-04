@@ -72,6 +72,11 @@ import { RuntimeOperationalChildrenResolver } from "@/runtime/operational";
 import { ERPRuntimeFieldValue } from "@/components/erp/runtime/ERPRuntimeFieldValue";
 
 import { operationalUiTokens } from "./operationalUiTokens";
+import {
+  appendRuntimeReturnContext,
+  buildRuntimeCurrentReturnTo,
+  buildRuntimeReturnLabel,
+} from "@/runtime/navigation/RuntimeReturnContextBuilder";
 type ExpandedGroup = {
   child: ERPCompositionChild;
   module: ERPModule;
@@ -88,25 +93,6 @@ function getRecordId(record: Record<string, unknown>): string {
   return String(record.id ?? record._id ?? record.uid ?? "").trim();
 }
 
-function buildExpandedReturnTo(
-  pathname: string | null,
-  searchParams: { toString(): string } | null
-): string {
-  const path = pathname ?? "";
-  const query = searchParams?.toString() ?? "";
-
-  return query ? path + "?" + query : path;
-}
-
-function appendExpandedReturnTo(hrefValue: string, returnTo: string): string {
-  if (!hrefValue.startsWith("/") || !returnTo || hrefValue.includes("returnTo=")) {
-    return hrefValue;
-  }
-
-  const separator = hrefValue.includes("?") ? "&" : "?";
-
-  return hrefValue + separator + "returnTo=" + encodeURIComponent(returnTo);
-}
 
 function buildRecordHref(moduleKey: string, record: Record<string, unknown>): string {
   const id = getRecordId(record);
@@ -227,8 +213,18 @@ export function ERPOperationalExpandedChildren({
   
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const expandedReturnTo = buildExpandedReturnTo(pathname, searchParams);
-const parentRecordId = getRecordId(parentRecord);
+  const parentRecordId = getRecordId(parentRecord);
+  const expandedReturnTo = buildRuntimeCurrentReturnTo({
+    currentPath: pathname,
+    currentQuery: searchParams,
+    expandedRecordId: parentRecordId,
+    scrollTargetId: parentRecordId,
+  });
+  const expandedReturnLabel = buildRuntimeReturnLabel(
+    null,
+    parentModule.metadata.label,
+    parentModule.metadata.key
+  );
   const children = useMemo(
     () => parentModule.composition?.children ?? [],
     [parentModule]
@@ -276,13 +272,12 @@ const parentRecordId = getRecordId(parentRecord);
     <div className="rounded-3xl border border-slate-200 bg-slate-50 p-4">
       {loading ? (
         <p className="text-sm font-semibold text-slate-500">
-          Chargement des éléments liés...
-        </p>
+          Chargement des elements lies...</p>
       ) : null}
 
       {!loading && groups.length === 0 ? (
         <p className="text-sm font-semibold text-slate-500">
-          Aucun élément lié à afficher.
+          Aucun element lie a afficher.
         </p>
       ) : null}
 
@@ -301,7 +296,7 @@ const parentRecordId = getRecordId(parentRecord);
                     {group.child.title ?? group.module.metadata.label}
                   </h3>
                   <p className="text-xs font-semibold text-slate-500">
-                    {group.records.length} enregistrement(s) lié(s)
+                    {group.records.length} enregistrement(s) lie(s)
                   </p>
                 </div>
               </div>
@@ -319,10 +314,15 @@ const parentRecordId = getRecordId(parentRecord);
                     >
                       <div className="mb-3 flex justify-end">
                         <Link
-                          href={appendExpandedReturnTo(
-                            buildRecordHref(group.module.metadata.key, record),
-                            expandedReturnTo
-                          )}
+                          href={appendRuntimeReturnContext({
+                            destinationHref: buildRecordHref(group.module.metadata.key, record),
+                            returnTo: expandedReturnTo,
+                            returnLabel: expandedReturnLabel,
+                            sourceModule: parentModule.metadata.key,
+                            sourceRecordId: parentRecordId,
+                            expandedRecordId: parentRecordId,
+                            scrollTargetId: parentRecordId,
+                          })}
                           className="rounded-2xl border border-emerald-200 bg-white px-3 py-2 text-xs font-black text-emerald-700 transition hover:bg-emerald-50"
                         >
                           {getOpenLabel(group.child)}
@@ -421,13 +421,18 @@ const parentRecordId = getRecordId(parentRecord);
 
                                           <td className="px-3 py-2 text-right">
                                             <Link
-                                              href={appendExpandedReturnTo(
-                                  buildRecordHref(
-                                    grandchildGroup.module.metadata.key,
-                                    line
-                                  ),
-                                  expandedReturnTo
-                                )}
+                                              href={appendRuntimeReturnContext({
+                                      destinationHref: buildRecordHref(
+                                        grandchildGroup.module.metadata.key,
+                                        line
+                                      ),
+                                      returnTo: expandedReturnTo,
+                                      returnLabel: expandedReturnLabel,
+                                      sourceModule: parentModule.metadata.key,
+                                      sourceRecordId: parentRecordId,
+                                      expandedRecordId: parentRecordId,
+                                      scrollTargetId: parentRecordId,
+                                    })}
                                               className="rounded-xl border border-emerald-200 bg-white px-2.5 py-1.5 text-[11px] font-black text-emerald-700 transition hover:bg-emerald-50"
                                             >
                                               {getOpenLabel(grandchildGroup.child)}
