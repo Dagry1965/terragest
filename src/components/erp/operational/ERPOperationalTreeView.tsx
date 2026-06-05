@@ -60,6 +60,66 @@ function getRoleLabel(role?: RuntimeOperationalTreeNodeRole): string {
   }
 }
 
+function getSummaryToneClassName(tone?: string): string {
+  switch (tone) {
+    case "success":
+      return "border-emerald-200 bg-emerald-50 text-emerald-800";
+    case "warning":
+      return "border-amber-200 bg-amber-50 text-amber-800";
+    case "danger":
+      return "border-rose-200 bg-rose-50 text-rose-800";
+    case "info":
+      return "border-cyan-200 bg-cyan-50 text-cyan-800";
+    default:
+      return "border-slate-200 bg-slate-50 text-slate-700";
+  }
+}
+
+function formatSummaryMetricValue(value: unknown, format?: string): string {
+  if (value === null || value === undefined || value === "") {
+    return "—";
+  }
+
+  if (format === "currency") {
+    const numberValue = Number(value);
+
+    if (!Number.isFinite(numberValue)) {
+      return String(value);
+    }
+
+    return new Intl.NumberFormat("fr-FR", {
+      maximumFractionDigits: 0,
+    }).format(numberValue);
+  }
+
+  if (format === "number") {
+    const numberValue = Number(value);
+
+    if (!Number.isFinite(numberValue)) {
+      return String(value);
+    }
+
+    return new Intl.NumberFormat("fr-FR", {
+      maximumFractionDigits: 2,
+    }).format(numberValue);
+  }
+
+  if (format === "percent") {
+    const numberValue = Number(value);
+
+    if (!Number.isFinite(numberValue)) {
+      return String(value);
+    }
+
+    return new Intl.NumberFormat("fr-FR", {
+      style: "percent",
+      maximumFractionDigits: 1,
+    }).format(numberValue);
+  }
+
+  return String(value);
+}
+
 function getRoleClassName(role?: RuntimeOperationalTreeNodeRole): string {
   switch (role) {
     case "root":
@@ -212,6 +272,45 @@ function ERPOperationalTreeNode({
                     <span className="truncate">{sourceSummary}</span>
                   </div>
                 ) : null}
+
+                {node.summary?.badges?.length || node.summary?.metrics?.length ? (
+                  <div className="mt-3 rounded-2xl border border-slate-100 bg-slate-50/70 p-2">
+                    {node.summary?.badges?.length ? (
+                      <div className="flex flex-wrap gap-1.5">
+                        {node.summary.badges.map((badge, index) => (
+                          <span
+                            key={badge.label + "-" + index}
+                            className={[
+                              "inline-flex rounded-full border px-2 py-0.5 text-[10px] font-black uppercase tracking-[0.14em]",
+                              getSummaryToneClassName(badge.tone),
+                            ].join(" ")}
+                          >
+                            {badge.label}
+                          </span>
+                        ))}
+                      </div>
+                    ) : null}
+
+                    {node.summary?.metrics?.length ? (
+                      <div className="mt-2 grid gap-1.5 sm:grid-cols-2 lg:grid-cols-5">
+                        {node.summary.metrics.map((metric, index) => (
+                          <div
+                            key={metric.label + "-" + index}
+                            className="rounded-xl border border-white bg-white px-2.5 py-1.5 shadow-sm"
+                          >
+                            <div className="text-[10px] font-black uppercase tracking-[0.14em] text-slate-400">
+                              {metric.label}
+                            </div>
+                            <div className="mt-0.5 truncate text-xs font-black text-slate-900">
+                              {formatSummaryMetricValue(metric.value, metric.format)}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ) : null}
+                  </div>
+                ) : null}
+
               </div>
 
               {openHref ? (

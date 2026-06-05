@@ -16,6 +16,35 @@ type ERPModuleLike = ERPModule & {
   };
 };
 
+export type RuntimeOperationalTreeSummaryTone =
+  | "default"
+  | "success"
+  | "warning"
+  | "danger"
+  | "info";
+
+export type RuntimeOperationalTreeMetricFormat =
+  | "text"
+  | "number"
+  | "currency"
+  | "percent";
+
+export interface RuntimeOperationalTreeSummaryBadge {
+  label: string;
+  tone?: RuntimeOperationalTreeSummaryTone;
+}
+
+export interface RuntimeOperationalTreeSummaryMetric {
+  label: string;
+  value: unknown;
+  format?: RuntimeOperationalTreeMetricFormat;
+}
+
+export interface RuntimeOperationalTreeSummary {
+  badges?: RuntimeOperationalTreeSummaryBadge[];
+  metrics?: RuntimeOperationalTreeSummaryMetric[];
+}
+
 export type RuntimeOperationalTreeNodeRole =
   | "root"
   | "child"
@@ -46,6 +75,7 @@ export type RuntimeOperationalTreeNode = {
   depth: number;
   nodeRole?: RuntimeOperationalTreeNodeRole;
   source?: RuntimeOperationalTreeSource;
+  summary?: RuntimeOperationalTreeSummary;
   children: RuntimeOperationalTreeNode[];
 };
 
