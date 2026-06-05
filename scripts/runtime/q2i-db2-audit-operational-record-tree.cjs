@@ -34,11 +34,7 @@ const recordTree = read(files.recordTree);
 const treeView = read(files.treeView);
 const componentIndex = read(files.componentIndex);
 
-add(
-  "ERPOperationalRecordTree exists",
-  exists(files.recordTree),
-  files.recordTree
-);
+add("ERPOperationalRecordTree exists", exists(files.recordTree), files.recordTree);
 
 add(
   "Receives parentModule",
@@ -54,8 +50,7 @@ add(
 
 add(
   "Uses RuntimeOperationalTreeResolver",
-  /RuntimeOperationalTreeResolver/.test(recordTree) &&
-    /resolveTree/.test(recordTree),
+  /RuntimeOperationalTreeResolver/.test(recordTree) && /resolveTree/.test(recordTree),
   "The component must reuse the runtime tree resolver."
 );
 
@@ -97,17 +92,9 @@ add(
   "Component must remain generic."
 );
 
-add(
-  "Tree view exported",
-  /ERPOperationalTreeView/.test(componentIndex),
-  files.componentIndex
-);
+add("Tree view exported", /ERPOperationalTreeView/.test(componentIndex), files.componentIndex);
 
-add(
-  "Record tree exported",
-  /ERPOperationalRecordTree/.test(componentIndex),
-  files.componentIndex
-);
+add("Record tree exported", /ERPOperationalRecordTree/.test(componentIndex), files.componentIndex);
 
 add(
   "Tree view still present",
