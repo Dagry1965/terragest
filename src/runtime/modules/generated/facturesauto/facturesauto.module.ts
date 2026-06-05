@@ -483,13 +483,15 @@ export const facturesautoModule: ERPModule = {
       enableSelection: true,
       enableDensityToggle: true,
       fields: [
-        "numeroFacture",
-        "dateFacture",
-        "clientId",
-        "vehiculeId",
-        "montantTTC",
-        "statut",
-      ],
+          "numeroFacture",
+          "clientId",
+          "vehiculeId",
+          "dateFacture",
+          "montantTTC",
+          "montantPaye",
+          "resteAPayer",
+          "statutPaiement",
+        ],
       relationLabelFields: {
         clientId: [
           "nom",

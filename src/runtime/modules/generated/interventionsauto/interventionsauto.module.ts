@@ -339,13 +339,14 @@ export const interventionsautoModule: ERPModule = {
       enableSelection: true,
       enableDensityToggle: true,
       fields: [
-        "clientId",
-        "vehiculeId",
-        "dateIntervention",
-        "typeIntervention",
-        "coutTotal",
-        "statut",
-      ],
+          "clientId",
+          "vehiculeId",
+          "dateIntervention",
+          "typeIntervention",
+          "kilometrage",
+          "coutTotal",
+          "statut",
+        ],
       relationLabelFields: {
         mecanicienId: ["prenom", "nom", "fonction", "telephone"],
         clientId: [
