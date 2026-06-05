@@ -139,93 +139,107 @@ function ERPOperationalTreeNode({
   const roleLabel = getRoleLabel(node.nodeRole);
   const sourceSummary = getSourceSummary(node);
   const openHref = buildOpenHref(node, currentReturnTo, currentReturnLabel);
-  const indentStyle = {
-    paddingLeft: Math.min(node.depth, 8) * 18,
-  };
+  const childCountLabel =
+    node.children.length > 0
+      ? node.children.length + " enfant" + (node.children.length > 1 ? "s" : "")
+      : null;
 
   return (
     <div className="relative">
-      <div
-        className="group flex items-start gap-3 rounded-2xl border border-slate-200 bg-white p-3 shadow-sm transition hover:border-slate-300 hover:shadow-md"
-        style={indentStyle}
-      >
-        <button
-          type="button"
-          disabled={!hasChildren}
-          onClick={() => setExpanded((value) => !value)}
-          className={[
-            "mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border text-xs font-black transition",
-            hasChildren
-              ? "border-slate-300 bg-white text-slate-700 hover:bg-slate-50"
-              : "border-slate-100 bg-slate-50 text-slate-300",
-          ].join(" ")}
-          aria-label={expanded ? "Réduire" : "Développer"}
-        >
-          {hasChildren ? (expanded ? "−" : "+") : "•"}
-        </button>
+      <div className="relative flex gap-3">
+        {node.depth > 0 ? (
+          <div className="relative flex w-6 shrink-0 justify-center">
+            <div className="absolute bottom-0 top-0 w-px bg-slate-200" />
+            <div className="absolute top-5 h-px w-6 translate-x-3 bg-slate-200" />
+          </div>
+        ) : null}
 
         <div className="min-w-0 flex-1">
-          <div className="flex flex-wrap items-center gap-2">
-            <span
-              className={[
-                "inline-flex rounded-full border px-2 py-0.5 text-[10px] font-black uppercase tracking-[0.18em]",
-                getRoleClassName(node.nodeRole),
-              ].join(" ")}
-            >
-              {roleLabel}
-            </span>
+          <div className="group relative rounded-2xl border border-slate-200 bg-white/95 px-3 py-2.5 shadow-sm transition hover:border-emerald-200 hover:bg-emerald-50/20 hover:shadow-md">
+            <div className="flex min-w-0 items-start gap-3">
+              <button
+                type="button"
+                disabled={!hasChildren}
+                onClick={() => setExpanded((value) => !value)}
+                className={[
+                  "mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border text-xs font-black transition",
+                  hasChildren
+                    ? "border-emerald-200 bg-white text-emerald-700 hover:bg-emerald-50"
+                    : "border-slate-200 bg-slate-50 text-slate-300",
+                ].join(" ")}
+                aria-label={expanded ? "Reduire" : "Developper"}
+              >
+                {hasChildren ? (expanded ? "−" : "+") : "•"}
+              </button>
 
-            <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.14em] text-slate-500">
-              {node.moduleLabel}
-            </span>
+              <div className="min-w-0 flex-1">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span
+                    className={[
+                      "inline-flex rounded-full border px-2 py-0.5 text-[10px] font-black uppercase tracking-[0.16em]",
+                      getRoleClassName(node.nodeRole),
+                    ].join(" ")}
+                  >
+                    {roleLabel}
+                  </span>
 
-            {node.children.length > 0 ? (
-              <span className="rounded-full bg-white px-2 py-0.5 text-[10px] font-bold text-slate-500 ring-1 ring-slate-200">
-                {node.children.length} enfant{node.children.length > 1 ? "s" : ""}
-              </span>
-            ) : null}
-          </div>
+                  <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.12em] text-slate-500">
+                    {node.moduleLabel}
+                  </span>
 
-          <div className="mt-1 truncate text-sm font-black text-slate-900">
-            {node.label}
-          </div>
+                  {childCountLabel ? (
+                    <span className="rounded-full bg-white px-2 py-0.5 text-[10px] font-bold text-slate-500 ring-1 ring-slate-200">
+                      {childCountLabel}
+                    </span>
+                  ) : null}
+                </div>
 
-          {node.subtitle ? (
-            <div className="mt-0.5 truncate text-xs font-medium text-slate-500">
-              {node.subtitle}
+                <div className="mt-1 truncate text-sm font-black text-slate-950">
+                  {node.label}
+                </div>
+
+                {node.subtitle ? (
+                  <div className="mt-0.5 truncate text-xs font-semibold text-slate-500">
+                    {node.subtitle}
+                  </div>
+                ) : null}
+
+                {sourceSummary ? (
+                  <div className="mt-2 inline-flex max-w-full rounded-xl border border-cyan-100 bg-cyan-50 px-2.5 py-1 text-[11px] font-semibold text-cyan-800">
+                    <span className="mr-1 font-black uppercase tracking-wide">
+                      Source
+                    </span>
+                    <span className="truncate">{sourceSummary}</span>
+                  </div>
+                ) : null}
+              </div>
+
+              {openHref ? (
+                <a
+                  href={openHref}
+                  className="mt-0.5 shrink-0 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-black text-slate-700 shadow-sm transition hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-800"
+                >
+                  {node.openLabel ?? "Ouvrir"}
+                </a>
+              ) : null}
             </div>
-          ) : null}
+          </div>
 
-          {sourceSummary ? (
-            <div className="mt-2 rounded-xl border border-cyan-100 bg-cyan-50 px-3 py-2 text-xs font-semibold text-cyan-800">
-              Source · {sourceSummary}
+          {hasChildren && expanded ? (
+            <div className="relative ml-3 mt-2 space-y-2 border-l border-slate-200 pl-4">
+              {node.children.map((child) => (
+                <ERPOperationalTreeNode
+                  key={getNodeKey(child)}
+                  node={child}
+                  defaultExpandedDepth={defaultExpandedDepth}
+                  currentReturnTo={currentReturnTo}
+                  currentReturnLabel={currentReturnLabel}
+                />
+              ))}
             </div>
           ) : null}
         </div>
-
-        {openHref ? (
-          <a
-            href={openHref}
-            className="shrink-0 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-black text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
-          >
-            {node.openLabel ?? "Ouvrir"}
-          </a>
-        ) : null}
       </div>
-
-      {hasChildren && expanded ? (
-        <div className="mt-2 space-y-2">
-          {node.children.map((child) => (
-            <ERPOperationalTreeNode
-              key={getNodeKey(child)}
-              node={child}
-              defaultExpandedDepth={defaultExpandedDepth}
-              currentReturnTo={currentReturnTo}
-              currentReturnLabel={currentReturnLabel}
-            />
-          ))}
-        </div>
-      ) : null}
     </div>
   );
 }
