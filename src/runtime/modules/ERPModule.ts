@@ -81,12 +81,33 @@ export type ERPOperationalTreePlacement =
   | "afterChildren"
   | "hidden";
 
+export interface ERPOperationalTreeSummaryBadgeConfig {
+  label?: string;
+  field?: string;
+  tone?: "default" | "success" | "warning" | "danger" | "info";
+  valueMap?: Record<string, string>;
+  toneMap?: Record<string, "default" | "success" | "warning" | "danger" | "info">;
+}
+
+export interface ERPOperationalTreeSummaryMetricConfig {
+  label: string;
+  field: string;
+  format?: "text" | "number" | "currency" | "percent";
+}
+
+export interface ERPOperationalTreeSummaryConfig {
+  rootOnly?: boolean;
+  badges?: ERPOperationalTreeSummaryBadgeConfig[];
+  metrics?: ERPOperationalTreeSummaryMetricConfig[];
+}
+
 export interface ERPOperationalTreeConfig {
   enabled?: boolean;
   title?: string;
   emptyLabel?: string;
   defaultExpandedDepth?: number;
   placement?: ERPOperationalTreePlacement;
+  summary?: ERPOperationalTreeSummaryConfig;
 }
 
 export interface ERPOperationalRightPanelConfig {

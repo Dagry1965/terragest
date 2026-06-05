@@ -520,6 +520,57 @@ export const facturesautoModule: ERPModule = {
         "removedAt",
       ],
     },
+    tree: {
+      summary: {
+        rootOnly: true,
+        badges: [
+          {
+            field: "typeFacture",
+            valueMap: {
+              atelier: "FACTURE ATELIER",
+              boutique: "FACTURE BOUTIQUE",
+              mixte: "FACTURE MIXTE",
+              autre: "FACTURE",
+            },
+            tone: "info",
+          },
+          {
+            field: "statutFacture",
+            valueMap: {
+              brouillon: "BROUILLON",
+              emise: "ÉMISE",
+              annulee: "ANNULÉE",
+            },
+            toneMap: {
+              brouillon: "warning",
+              emise: "success",
+              annulee: "danger",
+            },
+          },
+          {
+            field: "statutPaiement",
+            valueMap: {
+              en_attente: "PAIEMENT EN ATTENTE",
+              partiel: "PAIEMENT PARTIEL",
+              paye: "PAYÉE",
+            },
+            toneMap: {
+              en_attente: "warning",
+              partiel: "warning",
+              paye: "success",
+            },
+          },
+        ],
+        metrics: [
+          { label: "HT", field: "montantHT", format: "currency" },
+          { label: "TVA", field: "tva", format: "currency" },
+          { label: "TTC", field: "montantTTC", format: "currency" },
+          { label: "Payé", field: "montantPaye", format: "currency" },
+          { label: "Reste", field: "resteAPayer", format: "currency" },
+        ],
+      },
+    },
+
     rightPanel: {
       enabled: true,
       title: "Facturation aujourd'hui",

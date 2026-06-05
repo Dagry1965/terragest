@@ -199,6 +199,95 @@ function buildSubtitle(module: ERPModule, record: Record<string, unknown>): stri
   return fallback.length > 0 ? fallback.slice(0, 4).join(" · ") : undefined;
 }
 
+function getRuntimeOperationalSummaryRecordValue(
+  record: Record<string, unknown>,
+  field: string
+): unknown {
+  return record[field];
+}
+
+function normalizeRuntimeOperationalSummaryLabel(value: unknown): string {
+  if (value === null || value === undefined || value === "") {
+    return "";
+  }
+
+  return String(value).replace(/_/g, " ").trim();
+}
+
+function buildRuntimeOperationalTreeSummary(params: {
+  module: ERPModule;
+  record: Record<string, unknown>;
+  depth: number;
+}): RuntimeOperationalTreeSummary | undefined {
+  const summaryConfig = params.module.operational?.tree?.summary;
+
+  if (!summaryConfig) {
+    return undefined;
+  }
+
+  if (summaryConfig.rootOnly !== false && params.depth > 0) {
+    return undefined;
+  }
+
+  const badges =
+    summaryConfig.badges
+      ?.map((badgeConfig) => {
+        const rawValue = badgeConfig.field
+          ? getRuntimeOperationalSummaryRecordValue(params.record, badgeConfig.field)
+          : badgeConfig.label;
+
+        const rawKey =
+          rawValue === null || rawValue === undefined ? "" : String(rawValue);
+
+        const mappedLabel =
+          rawKey && badgeConfig.valueMap?.[rawKey]
+            ? badgeConfig.valueMap[rawKey]
+            : badgeConfig.label ?? normalizeRuntimeOperationalSummaryLabel(rawValue);
+
+        if (!mappedLabel) {
+          return null;
+        }
+
+        return {
+          label: mappedLabel,
+          tone:
+            rawKey && badgeConfig.toneMap?.[rawKey]
+              ? badgeConfig.toneMap[rawKey]
+              : badgeConfig.tone,
+        };
+      })
+      .filter(Boolean) ?? [];
+
+  const metrics =
+    summaryConfig.metrics
+      ?.map((metricConfig) => {
+        const value = getRuntimeOperationalSummaryRecordValue(
+          params.record,
+          metricConfig.field
+        );
+
+        if (value === undefined || value === null || value === "") {
+          return null;
+        }
+
+        return {
+          label: metricConfig.label,
+          value,
+          format: metricConfig.format,
+        };
+      })
+      .filter(Boolean) ?? [];
+
+  if (badges.length === 0 && metrics.length === 0) {
+    return undefined;
+  }
+
+  return {
+    badges: badges as RuntimeOperationalTreeSummaryBadge[],
+    metrics: metrics as RuntimeOperationalTreeSummaryMetric[],
+  };
+}
+
 function buildSource(record: Record<string, unknown>): RuntimeOperationalTreeSource | undefined {
   const source: RuntimeOperationalTreeSource = {
     sourceScope: stringifyValue(record.sourceScope) || undefined,
@@ -263,6 +352,11 @@ function buildNode(params: {
     depth: params.depth,
     nodeRole: inferNodeRole(moduleKey, params.depth, source),
     source,
+    summary: buildRuntimeOperationalTreeSummary({
+      module: params.module,
+      record: params.record,
+      depth: params.depth,
+    }),
     children: params.children ?? [],
   };
 }
