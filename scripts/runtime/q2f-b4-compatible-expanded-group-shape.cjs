@@ -1,4 +1,24 @@
-import type {
+﻿const fs = require("fs");
+const path = require("path");
+
+const ROOT = process.cwd();
+
+const rel = "src/runtime/operational/RuntimeOperationalChildrenResolver.ts";
+const file = path.join(ROOT, rel);
+
+if (!fs.existsSync(file)) {
+  throw new Error("File not found: " + rel);
+}
+
+const original = fs.readFileSync(file, "utf8");
+
+fs.writeFileSync(
+  file + ".bak-q2f-b4-compatible-expanded-group-shape",
+  original,
+  "utf8"
+);
+
+const content = `import type {
   ERPCompositionChild,
   ERPModule,
 } from "@/runtime/modules/ERPModule";
@@ -146,3 +166,12 @@ export class RuntimeOperationalChildrenResolver {
     ).filter(Boolean) as RuntimeOperationalExpandedGroup[];
   }
 }
+`;
+
+fs.writeFileSync(file, content, "utf8");
+
+console.log("[DONE] Q2-F-B4 RuntimeOperationalChildrenResolver compatible avec ERPOperationalExpandedChildren.");
+console.log("[WRITTEN]", rel);
+console.log("");
+console.log("Next:");
+console.log("pnpm build");

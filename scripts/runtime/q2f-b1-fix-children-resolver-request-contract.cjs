@@ -4,31 +4,21 @@ const path = require("path");
 const ROOT = process.cwd();
 
 const rel = "src/runtime/operational/RuntimeOperationalChildrenResolver.ts";
-const indexRel = "src/runtime/operational/index.ts";
+const file = path.join(ROOT, rel);
 
-function abs(file) {
-  return path.join(ROOT, file);
+if (!fs.existsSync(file)) {
+  throw new Error("File not found: " + rel);
 }
 
-function ensureDir(file) {
-  fs.mkdirSync(path.dirname(abs(file)), { recursive: true });
-}
+const original = fs.readFileSync(file, "utf8");
 
-function write(file, content) {
-  ensureDir(file);
-  fs.writeFileSync(abs(file), content, "utf8");
-  console.log("[WRITTEN]", file);
-}
+fs.writeFileSync(
+  file + ".bak-q2f-b1-fix-children-resolver-request-contract",
+  original,
+  "utf8"
+);
 
-function read(file) {
-  if (!fs.existsSync(abs(file))) {
-    throw new Error("File not found: " + file);
-  }
-
-  return fs.readFileSync(abs(file), "utf8");
-}
-
-const resolver = `import type {
+const content = `import type {
   ERPCompositionChild,
   ERPModule,
 } from "@/runtime/modules/ERPModule";
@@ -49,8 +39,24 @@ export type RuntimeOperationalExpandedGroup = {
 };
 
 export type RuntimeOperationalChildrenResolverRequest = {
-  parentModule: ERPModule;
-  parentRecord: Record<string, unknown>;
+  /**
+   * Forme cible préférée.
+   */
+  parentModule?: ERPModule;
+  parentRecord?: Record<string, unknown>;
+
+  /**
+   * Alias acceptés pour compatibilité progressive avec l'UI.
+   */
+  module?: ERPModule;
+  record?: Record<string, unknown>;
+
+  /**
+   * Profondeur maximale de résolution.
+   * 1 = enfants directs seulement.
+   * 2 = enfants + petits-enfants.
+   */
+  maxDepth?: number;
 };
 
 function getRecordId(record: Record<string, unknown>): string {
@@ -71,7 +77,9 @@ function isVisibleRuntimeRecord(record: Record<string, unknown>): boolean {
 
 async function resolveChildGroup(
   child: ERPCompositionChild,
-  parentRecordId: string
+  parentRecordId: string,
+  depth: number,
+  maxDepth: number
 ): Promise<RuntimeOperationalExpandedGroup | null> {
   const module = getModule(child.moduleKey);
 
@@ -87,21 +95,25 @@ async function resolveChildGroup(
 
   const grandchildrenByParentId: Record<string, RuntimeOperationalExpandedGroup[]> = {};
 
-  for (const record of records) {
-    const recordId = getRecordId(record);
+  if (depth < maxDepth) {
+    for (const record of records) {
+      const recordId = getRecordId(record);
 
-    if (!recordId) continue;
+      if (!recordId) continue;
 
-    const grandchildren = module.composition?.children ?? [];
+      const grandchildren = module.composition?.children ?? [];
 
-    const groups = (
-      await Promise.all(
-        grandchildren.map((grandchild) => resolveChildGroup(grandchild, recordId))
-      )
-    ).filter(Boolean) as RuntimeOperationalExpandedGroup[];
+      const groups = (
+        await Promise.all(
+          grandchildren.map((grandchild) =>
+            resolveChildGroup(grandchild, recordId, depth + 1, maxDepth)
+          )
+        )
+      ).filter(Boolean) as RuntimeOperationalExpandedGroup[];
 
-    if (groups.length > 0) {
-      grandchildrenByParentId[recordId] = groups;
+      if (groups.length > 0) {
+        grandchildrenByParentId[recordId] = groups;
+      }
     }
   }
 
@@ -117,13 +129,21 @@ export class RuntimeOperationalChildrenResolver {
   static async resolveExpandedChildren(
     request: RuntimeOperationalChildrenResolverRequest
   ): Promise<RuntimeOperationalExpandedGroup[]> {
-    const parentRecordId = getRecordId(request.parentRecord);
+    const parentModule = request.parentModule ?? request.module;
+    const parentRecord = request.parentRecord ?? request.record;
+    const maxDepth = Math.max(1, request.maxDepth ?? 2);
+
+    if (!parentModule || !parentRecord) {
+      return [];
+    }
+
+    const parentRecordId = getRecordId(parentRecord);
 
     if (!parentRecordId) {
       return [];
     }
 
-    const children = request.parentModule.composition?.children ?? [];
+    const children = parentModule.composition?.children ?? [];
 
     if (children.length === 0) {
       return [];
@@ -131,35 +151,19 @@ export class RuntimeOperationalChildrenResolver {
 
     return (
       await Promise.all(
-        children.map((child) => resolveChildGroup(child, parentRecordId))
+        children.map((child) =>
+          resolveChildGroup(child, parentRecordId, 1, maxDepth)
+        )
       )
     ).filter(Boolean) as RuntimeOperationalExpandedGroup[];
   }
 }
 `;
 
-write(rel, resolver);
+fs.writeFileSync(file, content, "utf8");
 
-let indexContent = read(indexRel);
-
-if (!indexContent.includes("RuntimeOperationalChildrenResolver")) {
-  indexContent += `
-
-export {
-  RuntimeOperationalChildrenResolver,
-} from "./RuntimeOperationalChildrenResolver";
-
-export type {
-  RuntimeOperationalChildrenResolverRequest,
-  RuntimeOperationalExpandedGroup,
-} from "./RuntimeOperationalChildrenResolver";
-`;
-}
-
-write(indexRel, indexContent);
-
-console.log("");
-console.log("[DONE] Q2-F-B RuntimeOperationalChildrenResolver foundation créée.");
+console.log("[DONE] Q2-F-B1 RuntimeOperationalChildrenResolver request contract corrigé.");
+console.log("[WRITTEN]", rel);
 console.log("");
 console.log("Next:");
 console.log("pnpm build");
