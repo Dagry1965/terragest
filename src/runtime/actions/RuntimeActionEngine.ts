@@ -18,6 +18,25 @@ import {
   RuntimeValidationEngine,
 } from "@/runtime/validation/RuntimeValidationEngine";
 
+export type RuntimeActionResultSeverity =
+  | "success"
+  | "warning"
+  | "danger"
+  | "info";
+
+export interface RuntimeActionResult {
+  success: boolean;
+  title?: string;
+  message?: string;
+  severity?: RuntimeActionResultSeverity;
+  action?: ERPModuleAction;
+  record?: Record<string, unknown>;
+  result?: unknown;
+  errors?: unknown;
+  effects?: string[];
+  nextActions?: string[];
+}
+
 export class RuntimeActionEngine {
 
   static resolveStateField(
@@ -79,8 +98,8 @@ export class RuntimeActionEngine {
 
     return actions.filter((action) => {
       // Q20H5C_RUNTIME_ONLY_ACTIONS
-      // Une action runtimeOnly est une action métier contrôlée
-      // qui ne correspond pas forcément à une transition de statut.
+      // Une action runtimeOnly est une action mÃ©tier contrÃ´lÃ©e
+      // qui ne correspond pas forcÃ©ment Ã  une transition de statut.
       if (
         allowedActionKeys &&
         !allowedActionKeys.includes(action.key) &&
@@ -139,8 +158,8 @@ export class RuntimeActionEngine {
     );
 
     // Q20H5C_B2_REMOVE_LINE_ACTION
-    // Action métier non-transitionnelle : retirer proprement une ligne
-    // sans réintroduire un statut utilisateur "annulée".
+    // Action mÃ©tier non-transitionnelle : retirer proprement une ligne
+    // sans rÃ©introduire un statut utilisateur "annulÃ©e".
     if (
       module?.metadata?.key === "lignesinterventionauto" &&
       action.key === "retirer-ligne" &&
@@ -168,7 +187,7 @@ export class RuntimeActionEngine {
       const result =
         await RuntimeLineRemovalService.removeInterventionLine({
           lineId,
-          reason: "Ligne retirée depuis l'action métier.",
+          reason: "Ligne retirÃ©e depuis l'action mÃ©tier.",
         });
 
       if (!result.removed) {
@@ -176,13 +195,13 @@ export class RuntimeActionEngine {
           success: false,
           message:
             result.reason === "line-linked-to-invoice"
-              ? "Cette ligne est déjà liée à une facture. Elle ne peut pas être retirée directement."
+              ? "Cette ligne est dÃ©jÃ  liÃ©e Ã  une facture. Elle ne peut pas Ãªtre retirÃ©e directement."
               : result.reason === "already-removed"
-                ? "Cette ligne a déjà été retirée."
+                ? "Cette ligne a dÃ©jÃ  Ã©tÃ© retirÃ©e."
                 : result.reason === "stock-not-found"
-                  ? "Stock introuvable pour réintégrer la quantité."
+                  ? "Stock introuvable pour rÃ©intÃ©grer la quantitÃ©."
                   : result.reason === "missing-stock-product-or-quantity"
-                    ? "Impossible de réintégrer le stock : produit, stock ou quantité manquant."
+                    ? "Impossible de rÃ©intÃ©grer le stock : produit, stock ou quantitÃ© manquant."
                     : "Retrait de la ligne impossible.",
           result,
           action,
@@ -192,7 +211,7 @@ export class RuntimeActionEngine {
 
       return {
         success: true,
-        message: "Ligne retirée avec succès.",
+        message: "Ligne retirÃ©e avec succÃ¨s.",
         result,
         action,
         record,

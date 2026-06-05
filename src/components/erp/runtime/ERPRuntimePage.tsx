@@ -2,10 +2,12 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { toast } from "react-hot-toast";
 
 import {
   ERPPage,
   ERPEmptyState,
+  ERPToast,
 } from "../ui";
 
 import { ERPEnterpriseForm } from "@/components/erp/forms/enterprise/ERPEnterpriseForm";
@@ -38,6 +40,54 @@ import {
 
 import { ERPOperationalModulePage } from "@/components/erp/operational";
 import { buildRuntimeFactureEncaissementCreateHref } from "@/runtime/navigation/RuntimeChildCreateHrefBuilder";
+
+function showRuntimeActionFeedback(actionResult: unknown) {
+  if (!actionResult || typeof actionResult !== "object") {
+    return;
+  }
+
+  const result = actionResult as {
+    success?: boolean;
+    title?: string;
+    message?: string;
+    severity?: "success" | "warning" | "danger" | "info";
+    effects?: string[];
+    nextActions?: string[];
+  };
+
+  const success = result.success !== false;
+  const tone =
+    result.severity ??
+    (success ? "success" : "danger");
+
+  const title =
+    result.title ??
+    (success ? "Action effectuée" : "Action impossible");
+
+  const details = [
+    result.message,
+    Array.isArray(result.effects) && result.effects.length > 0
+      ? result.effects.join(" · ")
+      : undefined,
+    Array.isArray(result.nextActions) && result.nextActions.length > 0
+      ? `Prochaine étape : ${result.nextActions.join(" · ")}`
+      : undefined,
+  ]
+    .filter(Boolean)
+    .join("\n");
+
+  if (!details && !title) {
+    return;
+  }
+
+  toast.custom(
+    <ERPToast
+      title={title}
+      message={details || undefined}
+      tone={tone}
+    />
+  );
+}
 
 function mapRuntimeActionsToActionBarActions(
   runtimeActions: ERPRuntimePageActionSource[] = [],
@@ -130,7 +180,7 @@ function getRuntimePageTypeLabel(type: string): string {
     case "list":
       return "liste";
     case "create":
-      return "création";
+      return "crÃ©ation";
     case "edit":
       return "modification";
     case "detail":
@@ -218,6 +268,8 @@ export function ERPRuntimePage({
         record: currentRecord,
       });
 
+    showRuntimeActionFeedback(actionResult);
+
     const recordId =
       String(
         currentRecord.id ??
@@ -253,7 +305,7 @@ export function ERPRuntimePage({
     module?.metadata?.description;
 
   const resolvedTitle =
-    title ?? `${moduleLabel} — ${getRuntimePageTypeLabel(type)}`;
+    title ?? `${moduleLabel} â€” ${getRuntimePageTypeLabel(type)}`;
 
 
   const createActionLabel =
@@ -360,7 +412,7 @@ export function ERPRuntimePage({
           description ??
           module.operational?.subtitle ??
           module.metadata.description ??
-          "Vue opérationnelle générée par le Runtime ERP."
+          "Vue opÃ©rationnelle gÃ©nÃ©rÃ©e par le Runtime ERP."
         }
       >
         <ERPOperationalModulePage
@@ -377,7 +429,7 @@ return (
       description={
         description ??
         moduleDescription ??
-        "Page générée automatiquement par le Runtime ERP."
+        "Page gÃ©nÃ©rÃ©e automatiquement par le Runtime ERP."
       }
     >
       <div className="space-y-6">
@@ -424,7 +476,7 @@ return (
 
         {loading && type === "list" ? (
           <div className="rounded-2xl border border-[var(--erp-border)] bg-[var(--erp-surface)] p-4 text-sm text-[var(--erp-text-muted)]">
-            Chargement des données...
+            Chargement des donnÃ©es...
           </div>
         ) : null}
 
@@ -452,7 +504,7 @@ return (
         {(type === "detail" || type === "edit") && runtimeActions.length > 0 ? (
           <div data-runtime-action-bar-placement="runtime-page">
             <ERPRuntimeActionBar
-              title="Actions métier"
+              title="Actions mÃ©tier"
               description="Actions runtime disponibles pour cet enregistrement."
               actions={mapRuntimeActionsToActionBarActions(
                 runtimeActions as ERPRuntimePageActionSource[],
@@ -523,7 +575,7 @@ return (
         {!module && (
           <ERPEmptyState
             title="Module introuvable"
-            description="Aucun module runtime n'a été trouvé."
+            description="Aucun module runtime n'a Ã©tÃ© trouvÃ©."
           />
         )}
       </div>
