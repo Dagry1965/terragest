@@ -72,6 +72,7 @@ import { RuntimeOperationalChildrenResolver } from "@/runtime/operational";
 import { ERPRuntimeFieldValue } from "@/components/erp/runtime/ERPRuntimeFieldValue";
 
 import { operationalUiTokens } from "./operationalUiTokens";
+import { ERPOperationalRecordTree } from "./ERPOperationalRecordTree";
 import {
   appendRuntimeReturnContext,
   buildRuntimeCurrentReturnTo,
@@ -269,7 +270,16 @@ export function ERPOperationalExpandedChildren({
   }
 
   return (
-    <div className="rounded-3xl border border-slate-200 bg-slate-50 p-4">
+    <div className="space-y-4">
+      <ERPOperationalRecordTree
+        parentModule={parentModule}
+        parentRecord={parentRecord}
+        title="Arbre operationnel"
+        emptyLabel="Aucun arbre operationnel disponible."
+        defaultExpandedDepth={2}
+      />
+
+      <div className="rounded-3xl border border-slate-200 bg-slate-50 p-4">
       {loading ? (
         <p className="text-sm font-semibold text-slate-500">
           Chargement des elements lies...</p>
@@ -455,6 +465,7 @@ export function ERPOperationalExpandedChildren({
             </section>
           );
         })}
+      </div>
       </div>
     </div>
   );
