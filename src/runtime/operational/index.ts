@@ -19,3 +19,15 @@ export type {
   RuntimeOperationalExpandedGroup,
 } from "./RuntimeOperationalChildrenResolver";
 export * from "./RuntimeOperationalChildrenResolver";
+
+
+export {
+  RuntimeOperationalTreeResolver,
+} from "./RuntimeOperationalTreeResolver";
+
+export type {
+  RuntimeOperationalTreeNode,
+  RuntimeOperationalTreeNodeRole,
+  RuntimeOperationalTreeResolverRequest,
+  RuntimeOperationalTreeSource,
+} from "./RuntimeOperationalTreeResolver";
