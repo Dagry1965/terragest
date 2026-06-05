@@ -76,6 +76,19 @@ export interface ERPOperationalRightPanelMetricConfig {
   currency?: string;
 }
 
+export type ERPOperationalTreePlacement =
+  | "beforeChildren"
+  | "afterChildren"
+  | "hidden";
+
+export interface ERPOperationalTreeConfig {
+  enabled?: boolean;
+  title?: string;
+  emptyLabel?: string;
+  defaultExpandedDepth?: number;
+  placement?: ERPOperationalTreePlacement;
+}
+
 export interface ERPOperationalRightPanelConfig {
     metrics?: ERPOperationalRightPanelMetricConfig[];
 enabled?: boolean;
@@ -112,6 +125,7 @@ enabled?: boolean;
   filters?: ERPOperationalFilterConfig[];
   table?: ERPOperationalTableConfig;
   rightPanel?: ERPOperationalRightPanelConfig;
+  tree?: ERPOperationalTreeConfig;
 }
 
 export interface ERPModuleAction {

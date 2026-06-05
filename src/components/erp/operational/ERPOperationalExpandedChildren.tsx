@@ -231,6 +231,15 @@ export function ERPOperationalExpandedChildren({
     [parentModule]
   );
 
+  const treeConfig = parentModule.operational?.tree;
+  const treePlacement = treeConfig?.placement ?? "beforeChildren";
+  const shouldRenderTree =
+    treeConfig?.enabled !== false && treePlacement !== "hidden";
+  const treeTitle = treeConfig?.title ?? "Arbre operationnel";
+  const treeEmptyLabel =
+    treeConfig?.emptyLabel ?? "Aucun arbre operationnel disponible.";
+  const treeDefaultExpandedDepth = treeConfig?.defaultExpandedDepth ?? 2;
+
   const [groups, setGroups] = useState<ExpandedGroup[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -271,13 +280,15 @@ export function ERPOperationalExpandedChildren({
 
   return (
     <div className="space-y-4">
-      <ERPOperationalRecordTree
-        parentModule={parentModule}
-        parentRecord={parentRecord}
-        title="Arbre operationnel"
-        emptyLabel="Aucun arbre operationnel disponible."
-        defaultExpandedDepth={2}
-      />
+      {shouldRenderTree && treePlacement === "beforeChildren" ? (
+        <ERPOperationalRecordTree
+          parentModule={parentModule}
+          parentRecord={parentRecord}
+          title={treeTitle}
+          emptyLabel={treeEmptyLabel}
+          defaultExpandedDepth={treeDefaultExpandedDepth}
+        />
+      ) : null}
 
       <div className="rounded-3xl border border-slate-200 bg-slate-50 p-4">
       {loading ? (
@@ -466,7 +477,18 @@ export function ERPOperationalExpandedChildren({
           );
         })}
       </div>
+
       </div>
+
+{shouldRenderTree && treePlacement === "afterChildren" ? (
+        <ERPOperationalRecordTree
+          parentModule={parentModule}
+          parentRecord={parentRecord}
+          title={treeTitle}
+          emptyLabel={treeEmptyLabel}
+          defaultExpandedDepth={treeDefaultExpandedDepth}
+        />
+      ) : null}
     </div>
   );
 }
