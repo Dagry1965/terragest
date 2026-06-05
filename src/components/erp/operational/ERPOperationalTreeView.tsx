@@ -8,6 +8,7 @@ import type {
 } from "@/runtime/operational";
 
 import { operationalUiTokens } from "./operationalUiTokens";
+import { appendRuntimeReturnContext } from "@/runtime/navigation/RuntimeReturnContextBuilder";
 
 type ERPOperationalTreeViewProps = {
   tree: RuntimeOperationalTreeNode | null;
@@ -111,10 +112,19 @@ function buildOpenHref(
     return null;
   }
 
-  void currentReturnTo;
-  void currentReturnLabel;
+  if (!currentReturnTo && !currentReturnLabel) {
+    return href;
+  }
 
-  return href;
+  return appendRuntimeReturnContext({
+    destinationHref: href,
+    returnTo: currentReturnTo,
+    returnLabel: currentReturnLabel,
+    sourceModule: node.moduleKey,
+    sourceRecordId: node.recordId,
+    expandedRecordId: node.recordId,
+    scrollTargetId: node.recordId,
+  });
 }
 
 function ERPOperationalTreeNode({
