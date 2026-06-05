@@ -43,7 +43,25 @@ export const rappelsautoModule: ERPModule = {
         list: { order: 2 },
         grid: { cols: 6 },
       },
-      {
+              {
+          key: "factureId",
+          label: "Facture",
+          type: "relation",
+          relation: { module: "facturesauto" },
+          searchable: true,
+          list: { visible: false },
+          grid: { cols: 6 },
+        },
+        {
+          key: "echeanceId",
+          label: "Échéance",
+          type: "relation",
+          relation: { module: "echeancespaiementauto" },
+          searchable: true,
+          list: { visible: false },
+          grid: { cols: 6 },
+        },
+{
         key: "typeRappel",
         label: "Type rappel",
         type: "select",
@@ -120,7 +138,9 @@ export const rappelsautoModule: ERPModule = {
           "dateRappel",
           "canal",
           "statut",
-        ],
+                    "factureId",
+            "echeanceId",
+],
 
         sections: [
           {

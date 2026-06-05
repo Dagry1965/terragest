@@ -213,7 +213,32 @@ export const echeancespaiementautoModule: ERPModule = {
     lockedFields: ["factureId", "clientId", "vehiculeId"],
     labelFields: ["factureId", "montantPrevu", "montantPaye", "dateEcheance", "statut"],
 
-    contextBanner: {
+        children: [
+      {
+        key: "rappels-echeance",
+        moduleKey: "rappelsauto",
+        foreignKey: "echeanceId",
+        title: "Relances de l'échéance",
+        description: "Relances rattachées à cette échéance de paiement.",
+        displayIn: [],
+        lazy: true,
+        position: "after",
+        allowCreate: false,
+        createLabel: "Ajouter une relance",
+        openLabel: "Ouvrir relance",
+        labelFields: ["typeRappel", "dateRappel", "canal", "statut"],
+        subtitleFields: ["clientId", "vehiculeId", "message"],
+        prefillFromParent: {
+          factureId: "factureId",
+          echeanceId: "id",
+          clientId: "clientId",
+          vehiculeId: "vehiculeId",
+        },
+        lockFields: ["factureId", "echeanceId", "clientId", "vehiculeId"],
+      },
+    ],
+
+contextBanner: {
       title: "Contexte échéance",
       items: [
         {
