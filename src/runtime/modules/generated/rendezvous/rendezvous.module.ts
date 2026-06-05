@@ -311,7 +311,13 @@ export const rendezvousModule: ERPModule = {
         field: "vehiculeId",
         type: "relation",
       },
-    ],
+            {
+          key: "clientId",
+          label: "Client",
+          field: "clientId",
+          type: "relation",
+        },
+],
     table: {
       enableSearch: true,
       enableSelection: true,
