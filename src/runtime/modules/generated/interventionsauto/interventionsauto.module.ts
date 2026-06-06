@@ -42,7 +42,7 @@ export const interventionsautoModule: ERPModule = {
       },
 {
         key: "vehiculeId",
-        label: "Véhicule",
+        label: "VÃ©hicule",
         type: "relation",
         relation: { module: "vehicules" },
         required: true,
@@ -61,13 +61,13 @@ export const interventionsautoModule: ERPModule = {
       },
       {
         key: "mecanicienId",
-        label: "Mécanicien responsable",
+        label: "MÃ©canicien responsable",
         type: "relation",
         relation: { module: "employes" },
         searchable: true,
         list: { visible: true, order: 5 },
         grid: { cols: 6 },
-        helperText: "Mécanicien responsable réel de l’intervention.",
+        helperText: "MÃ©canicien responsable rÃ©el de lâ€™intervention.",
       },
 {
         key: "dateIntervention",
@@ -84,9 +84,9 @@ export const interventionsautoModule: ERPModule = {
         options: [
           { label: "Vidange", value: "vidange" },
           { label: "Diagnostic", value: "diagnostic" },
-          { label: "Réparation", value: "reparation" },
+          { label: "RÃ©paration", value: "reparation" },
           { label: "Pneumatiques", value: "pneumatiques" },
-          { label: "Contrôle", value: "controle" },
+          { label: "ContrÃ´le", value: "controle" },
           { label: "Autre", value: "autre" },
         ],
         list: { visible: true, order: 4 },
@@ -94,7 +94,7 @@ export const interventionsautoModule: ERPModule = {
       },
 {
         key: "kilometrage",
-        label: "Kilométrage",
+        label: "KilomÃ©trage",
         type: "number",
         list: { visible: false },
         grid: { cols: 6 },
@@ -108,28 +108,28 @@ export const interventionsautoModule: ERPModule = {
       },
 {
         key: "travauxEffectues",
-        label: "Travaux effectués",
+        label: "Travaux effectuÃ©s",
         type: "textarea",
         list: { visible: false },
         grid: { cols: 12 },
       },
 {
         key: "coutPieces",
-        label: "Coût pièces",
+        label: "CoÃ»t piÃ¨ces",
         type: "number",
         list: { visible: false },
         grid: { cols: 4 },
       },
 {
         key: "coutMainOeuvre",
-        label: "Coût main d'oeuvre",
+        label: "CoÃ»t main d'oeuvre",
         type: "number",
         list: { visible: false },
         grid: { cols: 4 },
       },
 {
         key: "coutTotal",
-        label: "Coût total",
+        label: "CoÃ»t total",
         type: "number",
         list: { visible: true, order: 6 },
         grid: { cols: 4 },
@@ -140,7 +140,7 @@ export const interventionsautoModule: ERPModule = {
         type: "number",
         list: { visible: true, order: 7 },
         grid: { cols: 4 },
-        helperText: "Montant calculé depuis les lignes validées. Ancien équivalent legacy : coutTotal.",
+        helperText: "Montant calculÃ© depuis les lignes validÃ©es. Ancien Ã©quivalent legacy : coutTotal.",
       },
 {
         key: "statut",
@@ -150,16 +150,15 @@ export const interventionsautoModule: ERPModule = {
           operator: "notEquals",
           value: "__never_editable__",
         },
-        helperText: "Statut piloté par les actions. Utilisez les boutons d’action pour changer l’état de l’intervention.",
+        helperText: "Statut pilotÃ© par les actions. Utilisez les boutons dâ€™action pour changer lâ€™Ã©tat de lâ€™intervention.",
         type: "select",
         defaultValue: "ouverte",
         options: [
           { label: "Ouverte", value: "ouverte" },
           { label: "Diagnostic", value: "diagnostic" },
           { label: "En cours", value: "en_cours" },
-          { label: "Terminée", value: "terminee" },
-          { label: "Facturée", value: "facturee" },
-          { label: "Annulée", value: "annulee" },
+          { label: "TerminÃ©e", value: "terminee" },
+          { label: "AnnulÃ©e", value: "annulee" },
         ],
         list: { visible: true, order: 5 },
         grid: { cols: 6 },
@@ -223,7 +222,7 @@ export const interventionsautoModule: ERPModule = {
 
       {
         key: "couts",
-        label: "Coûts",
+        label: "CoÃ»ts",
 
         fields: [
           "coutPieces",
@@ -234,7 +233,7 @@ export const interventionsautoModule: ERPModule = {
         sections: [
           {
             key: "financier",
-            title: "Coûts intervention",
+            title: "CoÃ»ts intervention",
             fields: [
               "coutPieces",
               "coutMainOeuvre",
@@ -250,11 +249,11 @@ export const interventionsautoModule: ERPModule = {
   operational: {
     enabled: true,
     title: "Interventions",
-    subtitle: "Vue opérationnelle des interventions atelier.",
+    subtitle: "Vue opÃ©rationnelle des interventions atelier.",
     branding: {
       brandName: "AMARKHYS",
       runtimeLabel: "Runtime ERP",
-      eyebrow: "AMARKHYS · Runtime ERP",
+      eyebrow: "AMARKHYS Â· Runtime ERP",
     },
     kpis: [
       {
@@ -263,7 +262,7 @@ export const interventionsautoModule: ERPModule = {
         count: true,
         tone: "blue",
         icon: "activity",
-        description: "Nombre total d'interventions affichées.",
+        description: "Nombre total d'interventions affichÃ©es.",
       },
       {
         key: "ouvertes",
@@ -283,7 +282,7 @@ export const interventionsautoModule: ERPModule = {
       },
       {
         key: "terminees",
-        label: "Terminées",
+        label: "TerminÃ©es",
         field: "statut",
         equals: "terminee",
         tone: "green",
@@ -291,7 +290,7 @@ export const interventionsautoModule: ERPModule = {
       },
       {
         key: "annulees",
-        label: "Annulées",
+        label: "AnnulÃ©es",
         field: "statut",
         equals: "annulee",
         tone: "gray",
@@ -308,9 +307,8 @@ export const interventionsautoModule: ERPModule = {
           { label: "Ouverte", value: "ouverte" },
           { label: "Diagnostic", value: "diagnostic" },
           { label: "En cours", value: "en_cours" },
-          { label: "Terminée", value: "terminee" },
-          { label: "Facturée", value: "facturee" },
-          { label: "Annulée", value: "annulee" },
+          { label: "TerminÃ©e", value: "terminee" },
+          { label: "AnnulÃ©e", value: "annulee" },
         ],
       },
       {
@@ -321,9 +319,9 @@ export const interventionsautoModule: ERPModule = {
         options: [
           { label: "Vidange", value: "vidange" },
           { label: "Diagnostic", value: "diagnostic" },
-          { label: "Réparation", value: "reparation" },
+          { label: "RÃ©paration", value: "reparation" },
           { label: "Pneumatiques", value: "pneumatiques" },
-          { label: "Contrôle", value: "controle" },
+          { label: "ContrÃ´le", value: "controle" },
           { label: "Autre", value: "autre" },
         ],
       },
@@ -383,7 +381,7 @@ export const interventionsautoModule: ERPModule = {
       metrics: [
         {
           key: "total",
-          label: "Interventions affichées",
+          label: "Interventions affichÃ©es",
           type: "count",
           format: "number",
         },
@@ -397,7 +395,7 @@ export const interventionsautoModule: ERPModule = {
         },
         {
           key: "cout_total",
-          label: "Coût total",
+          label: "CoÃ»t total",
           type: "sum",
           field: "coutTotal",
           format: "currency",
@@ -562,7 +560,7 @@ export const interventionsautoModule: ERPModule = {
         key: "lignes",
         moduleKey: "lignesinterventionauto",
         foreignKey: "interventionId",
-        title: "Lignes de l’intervention",
+        title: "Lignes de lâ€™intervention",
         createLabel: "Ajouter une ligne",
         openLabel: "Ouvrir ligne",
         displayIn: ["detail", "edit"],
@@ -570,8 +568,8 @@ export const interventionsautoModule: ERPModule = {
         lazy: true,
 
         // Q20H5E_B1_CLEAN_LINE_PANEL_LABELS
-        // Affichage métier lisible des lignes liées :
-        // titre non dupliqué + statut/quantité/montant en informations secondaires.
+        // Affichage mÃ©tier lisible des lignes liÃ©es :
+        // titre non dupliquÃ© + statut/quantitÃ©/montant en informations secondaires.
         labelFields: [
           "designation",
         ],
@@ -656,16 +654,14 @@ export const interventionsautoModule: ERPModule = {
         { key: "ouverte", label: "Ouverte", color: "default" },
         { key: "diagnostic", label: "Diagnostic", color: "warning" },
         { key: "en_cours", label: "En cours", color: "warning" },
-        { key: "terminee", label: "Terminée", color: "success" },
-        { key: "facturee", label: "Facturée", color: "success" },
-        { key: "annulee", label: "Annulée", color: "danger" },
+        { key: "terminee", label: "TerminÃ©e", color: "success" },
+        { key: "annulee", label: "AnnulÃ©e", color: "danger" },
       ],
 
       transitions: [
         { from: "ouverte", to: "diagnostic", action: "Diagnostiquer" },
-        { from: "diagnostic", to: "en_cours", action: "Démarrer" },
+        { from: "diagnostic", to: "en_cours", action: "DÃ©marrer" },
         { from: "en_cours", to: "terminee", action: "Terminer" },
-        { from: "terminee", to: "facturee", action: "Facturer" },
         { from: "ouverte", to: "annulee", action: "Annuler" },
       ],
     },
