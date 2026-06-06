@@ -4,7 +4,7 @@ export const lignesinterventionautoModule: ERPModule = {
   metadata: {
     key: "lignesinterventionauto",
     label: "Lignes intervention",
-    description: "Pièces, services et main d’œuvre consommés sur une intervention AMARKHYS",
+    description: "PiÃƒÂ¨ces, services et main dÃ¢â‚¬â„¢Ã…â€œuvre consommÃƒÂ©s sur une intervention AMARKHYS",
     icon: "list-checks",
     category: "amarkhys",
 
@@ -36,7 +36,7 @@ export const lignesinterventionautoModule: ERPModule = {
       },
       {
         key: "produitId",
-        label: "Produit / pièce",
+        label: "Produit / piÃƒÂ¨ce",
         type: "relation",
         relation: {
     module: "produitsauto",
@@ -60,7 +60,7 @@ export const lignesinterventionautoModule: ERPModule = {
           recalculate: true,
         },
         searchable: true,
-  helperText: "Produit filtré selon le type d’article sélectionné.",
+  helperText: "Produit filtrÃƒÂ© selon le type dÃ¢â‚¬â„¢article sÃƒÂ©lectionnÃƒÂ©.",
         list: { order: 2 },
         grid: { cols: 6 },
       },
@@ -78,7 +78,7 @@ export const lignesinterventionautoModule: ERPModule = {
         dependsOn: "produitId",
         searchable: true,
         grid: { cols: 6 },
-        helperText: "Stock source filtré selon le produit sélectionné.",
+        helperText: "Stock source filtrÃƒÂ© selon le produit sÃƒÂ©lectionnÃƒÂ©.",
       },
       {
         key: "produitCode",
@@ -102,8 +102,8 @@ export const lignesinterventionautoModule: ERPModule = {
         type: "select",
         defaultValue: "piece",
         options: [
-          { label: "Pièce", value: "piece" },
-          { label: "Main d’œuvre", value: "main_oeuvre" },
+          { label: "PiÃƒÂ¨ce", value: "piece" },
+          { label: "Main dÃ¢â‚¬â„¢Ã…â€œuvre", value: "main_oeuvre" },
           { label: "Service", value: "service" },
           { label: "Remise", value: "remise" },
         ],
@@ -111,7 +111,7 @@ export const lignesinterventionautoModule: ERPModule = {
       },
       {
         key: "designation",
-        label: "Désignation",
+        label: "DÃƒÂ©signation",
         type: "text",
         required: false,
         searchable: true,
@@ -124,8 +124,8 @@ export const lignesinterventionautoModule: ERPModule = {
         type: "select",
         defaultValue: "piece",
         options: [
-          { label: "Pièce", value: "piece" },
-          { label: "Main d’œuvre", value: "main_oeuvre" },
+          { label: "PiÃƒÂ¨ce", value: "piece" },
+          { label: "Main dÃ¢â‚¬â„¢Ã…â€œuvre", value: "main_oeuvre" },
           { label: "Service", value: "service" },
           { label: "Remise", value: "remise" },
         ],
@@ -134,7 +134,7 @@ export const lignesinterventionautoModule: ERPModule = {
       },
       {
         key: "quantite",
-        label: "Quantité",
+        label: "QuantitÃƒÂ©",
         type: "number",
         defaultValue: 1,
         required: true,
@@ -199,11 +199,11 @@ export const lignesinterventionautoModule: ERPModule = {
         type: "select",
         defaultValue: "brouillon",
         // Q20H3_SIMPLIFIED_LINE_STATUSES
-        // Côté utilisateur, une ligne est seulement préparée ou confirmée.
-        // Facturation/retrait sont gérés par relations/actions runtime, pas par statut manuel.
+        // CÃƒÂ´tÃƒÂ© utilisateur, une ligne est seulement prÃƒÂ©parÃƒÂ©e ou confirmÃƒÂ©e.
+        // Facturation/retrait sont gÃƒÂ©rÃƒÂ©s par relations/actions runtime, pas par statut manuel.
         options: [
           { label: "Brouillon", value: "brouillon" },
-          { label: "Validée", value: "validee" },
+          { label: "ValidÃƒÂ©e", value: "validee" },
         ],
         list: { order: 8 },
         grid: { cols: 4 },
@@ -218,14 +218,14 @@ export const lignesinterventionautoModule: ERPModule = {
       },
       {
         key: "removedAt",
-        label: "Retirée le",
+        label: "RetirÃƒÂ©e le",
         type: "datetime",
         list: { visible: false },
         grid: { cols: 6 },
       },
       {
         key: "removedBy",
-        label: "Retirée par",
+        label: "RetirÃƒÂ©e par",
         type: "text",
         list: { visible: false },
         grid: { cols: 6 },
@@ -239,13 +239,13 @@ export const lignesinterventionautoModule: ERPModule = {
       },
       {
         key: "stockProcessedAt",
-        label: "Stock traité le",
+        label: "Stock traitÃƒÂ© le",
         type: "date",
         grid: { cols: 4 },
       },
       {
         key: "stockProcessedQuantity",
-        label: "Quantité traitée en stock",
+        label: "QuantitÃƒÂ© traitÃƒÂ©e en stock",
         type: "number",
         grid: { cols: 4 },
       },
@@ -309,7 +309,7 @@ export const lignesinterventionautoModule: ERPModule = {
           },
           {
             key: "montants",
-            title: "Quantité et montant",
+            title: "QuantitÃƒÂ© et montant",
             fields: [
               "quantite",
               "prixUnitaire",
@@ -385,7 +385,7 @@ export const lignesinterventionautoModule: ERPModule = {
     },
 
     // Q15F_B_REQUIRED_PARENT_CONTEXT
-    // Une ligne d'intervention doit toujours être créée dans le contexte d'une intervention parente.
+    // Une ligne d'intervention doit toujours ÃƒÂªtre crÃƒÂ©ÃƒÂ©e dans le contexte d'une intervention parente.
     requiresParentContext: true,
     allowedParents: [
       {
@@ -495,6 +495,12 @@ export const lignesinterventionautoModule: ERPModule = {
       type: "danger",
       runtimeOnly: true,
       permission: "lignesinterventionauto:update",
+      governance: {
+        disabledWhen: [
+          { field: "removedAt", notEmpty: true },
+        ],
+        disabledReason: "Cette ligne a dÃ©jÃ  Ã©tÃ© retirÃ©e.",
+      },
     },
   ],
 
@@ -506,10 +512,10 @@ export const lignesinterventionautoModule: ERPModule = {
 
       // Q20H3_SIMPLIFIED_LINE_WORKFLOW
       // Le workflow visible reste volontairement simple.
-      // Les états de facturation, retrait ou neutralisation sont techniques.
+      // Les ÃƒÂ©tats de facturation, retrait ou neutralisation sont techniques.
       states: [
         { key: "brouillon", label: "Brouillon", color: "default" },
-        { key: "validee", label: "Validée", color: "success" },
+        { key: "validee", label: "ValidÃƒÂ©e", color: "success" },
       ],
 
       transitions: [
