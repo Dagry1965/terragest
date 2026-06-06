@@ -10,8 +10,8 @@ export const interventionsautoActions: ERPModuleAction[] = [
     runtimeOnly: true,
   },
   {
-    key: "Démarrer",
-    label: "Démarrer l'intervention",
+    key: "DÃ©marrer",
+    label: "DÃ©marrer l'intervention",
     type: "primary",
     permission: "interventionsauto.workflow",
   },
@@ -28,10 +28,16 @@ export const interventionsautoActions: ERPModuleAction[] = [
     permission: "interventionsauto.workflow",
   },
   {
-    key: "Facturer",
-    label: "Générer la facture",
-    type: "secondary",
-    permission: "interventionsauto.workflow",
+    key: "creer-facture",
+    label: "Creer facture",
+    type: "primary",
+    runtimeOnly: true,
+    permission: "facturesauto:create",
+    governance: {
+      visibleWhen: [
+        { field: "statut", equals: "terminee" },
+      ],
+    },
   },
   {
     key: "Annuler",
