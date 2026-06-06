@@ -119,19 +119,19 @@ enabled?: boolean;
 
 export interface ERPOperationalBrandingConfig {
   /**
-   * Nom affiché dans l'eyebrow/header opérationnel.
+   * Nom affichÃ© dans l'eyebrow/header opÃ©rationnel.
    * Exemple : AMARKHYS, Terragest, ERP.
    */
   brandName?: string;
 
   /**
-   * Libellé de runtime ou contexte technique.
-   * Exemple : Runtime ERP, Cockpit opérationnel.
+   * LibellÃ© de runtime ou contexte technique.
+   * Exemple : Runtime ERP, Cockpit opÃ©rationnel.
    */
   runtimeLabel?: string;
 
   /**
-   * Libellé complet prioritaire.
+   * LibellÃ© complet prioritaire.
    * Si absent, le rendu utilise brandName + runtimeLabel.
    */
   eyebrow?: string;
@@ -149,6 +149,32 @@ enabled?: boolean;
   tree?: ERPOperationalTreeConfig;
 }
 
+export interface ERPActionVisibilityRule {
+  field: string;
+  equals?: string | number | boolean;
+  notEquals?: string | number | boolean;
+  in?: Array<string | number | boolean>;
+  notIn?: Array<string | number | boolean>;
+  empty?: boolean;
+  notEmpty?: boolean;
+}
+
+export interface ERPActionFeedbackConfig {
+  successTitle?: string;
+  successMessage?: string;
+  blockedTitle?: string;
+  blockedMessage?: string;
+}
+
+export interface ERPActionGovernanceConfig {
+  visibleWhen?: ERPActionVisibilityRule[];
+  hiddenWhen?: ERPActionVisibilityRule[];
+  disabledWhen?: ERPActionVisibilityRule[];
+  disabledReason?: string;
+  effects?: string[];
+  feedback?: ERPActionFeedbackConfig;
+}
+
 export interface ERPModuleAction {
   key: string;
   label: string;
@@ -158,17 +184,24 @@ export interface ERPModuleAction {
   href?: string;
 
   /**
-   * Action métier runtime qui n'est pas forcément une transition workflow.
-   * Exemple : retirer une ligne sans réintroduire un statut utilisateur "annulée".
+   * Action mÃ©tier runtime qui n'est pas forcÃ©ment une transition workflow.
+   * Exemple : retirer une ligne sans rÃ©introduire un statut utilisateur "annulÃ©e".
    */
   runtimeOnly?: boolean;
+
+  /**
+   * Generic metadata-driven action governance.
+   * Used by RuntimeActionEngine to decide visibility, disabled state,
+   * business feedback and declared effects without hardcoding module logic.
+   */
+  governance?: ERPActionGovernanceConfig;
 }
 
 export interface ERPModuleRelation {
   key: string;
   label: string;
   targetModule?: string;
-  targetmodule?: string; // doublon conservé comme demandé
+  targetmodule?: string; // doublon conservÃ© comme demandÃ©
   type: "one-to-one" | "one-to-many" | "many-to-one" | "many-to-many";
 }
 
@@ -244,7 +277,7 @@ export interface ERPModuleScheduling {
 
   /**
    * Q22F3A_SCHEDULING_CAPACITY_METADATA
-   * Nombre maximal de bookings acceptés sur un même créneau.
+   * Nombre maximal de bookings acceptÃ©s sur un mÃªme crÃ©neau.
    */
   capacity?: number;
 
@@ -392,12 +425,12 @@ export interface ERPModuleComposition {
 
   /**
    * Q15F-B_REQUIRED_PARENT_CONTEXT
-   * Quand true, le module ne peut être créé/modifié que depuis un parent valide.
+   * Quand true, le module ne peut Ãªtre crÃ©Ã©/modifiÃ© que depuis un parent valide.
    */
   requiresParentContext?: boolean;
 
   /**
-   * Parents autorisés pour ce module enfant.
+   * Parents autorisÃ©s pour ce module enfant.
    * Exemple : lignesinterventionauto -> interventionsauto via interventionId.
    */
   allowedParents?: ERPCompositionRequiredParent[];
