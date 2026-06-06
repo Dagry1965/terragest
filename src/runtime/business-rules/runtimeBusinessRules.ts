@@ -218,7 +218,7 @@ export const runtimeBusinessRules:
 
             message:
 
-              `Vidange prévue vers ${prochainKm} km`
+              `Vidange prÃ©vue vers ${prochainKm} km`
 
           }
 
@@ -251,11 +251,11 @@ export const runtimeBusinessRules:
             "interventionsauto",
 
           title:
-            "Rappel vidange créé",
+            "Rappel vidange crÃ©Ã©",
 
           message:
 
-            `Rappel automatique créé pour ${prochainKm} km`,
+            `Rappel automatique crÃ©Ã© pour ${prochainKm} km`,
 
           severity:
             "info"
@@ -352,11 +352,11 @@ export const runtimeBusinessRules:
               "interventionsauto",
 
             title:
-              "Intervention non créée",
+              "Intervention non crÃ©Ã©e",
 
             message:
               validation.reason ??
-              "Impossible de créer l'intervention depuis ce rendez-vous.",
+              "Impossible de crÃ©er l'intervention depuis ce rendez-vous.",
 
             severity:
               "warning",
@@ -427,10 +427,10 @@ export const runtimeBusinessRules:
             "interventionsauto",
 
           title:
-            "Intervention créée",
+            "Intervention crÃ©Ã©e",
 
           message:
-            "Intervention créée depuis RDV confirmé",
+            "Intervention crÃ©Ã©e depuis RDV confirmÃ©",
 
           severity:
             "info"
@@ -513,11 +513,11 @@ export const runtimeBusinessRules:
               "interventionsauto",
 
             title:
-              "Intervention non créée",
+              "Intervention non crÃ©Ã©e",
 
             message:
               validation.reason ??
-              "Impossible de créer l'intervention depuis ce rendez-vous.",
+              "Impossible de crÃ©er l'intervention depuis ce rendez-vous.",
 
             severity:
               "warning",
@@ -588,10 +588,10 @@ export const runtimeBusinessRules:
             "interventionsauto",
 
           title:
-            "Intervention créée",
+            "Intervention crÃ©Ã©e",
 
           message:
-            "Intervention créée depuis RDV confirmé",
+            "Intervention crÃ©Ã©e depuis RDV confirmÃ©",
 
           severity:
             "info"
@@ -615,9 +615,13 @@ export const runtimeBusinessRules:
   event:
     "interventionsauto.updated",
 
+  // Q2-L-B3-F5
+  // Neutralise la creation automatique de facture sur intervention terminee.
+  // La facturation doit etre portee par un processus comptable separe.
   condition:
     (payload) =>
 
+      false &&
       payload.statut ===
         "terminee",
 
@@ -1114,10 +1118,10 @@ RuntimeMetrics.increment(
             "facturesauto",
 
           title:
-            "Facture créée",
+            "Facture crÃ©Ã©e",
 
           message:
-            "Facture générée depuis intervention terminée",
+            "Facture gÃ©nÃ©rÃ©e depuis intervention terminÃ©e",
 
           severity:
             "info"
@@ -1210,11 +1214,11 @@ RuntimeMetrics.increment(
             "facturesauto",
 
           title:
-            "CA mis Ã  jour",
+            "CA mis ÃƒÂ  jour",
 
           message:
 
-            `Paiement reçu : ${payload.montantTTC}`,
+            `Paiement reÃ§u : ${payload.montantTTC}`,
 
           severity:
             "info",
@@ -1463,10 +1467,10 @@ RuntimeMetrics.increment(
             "facturesauto",
 
           title:
-            "Facture recalculée",
+            "Facture recalculÃ©e",
 
           message:
-            `Paiement reçu : ${montantPaye}. Reste à payer : ${resteAPayer}.`,
+            `Paiement reÃ§u : ${montantPaye}. Reste Ã  payer : ${resteAPayer}.`,
 
           severity:
             "info",
@@ -1712,10 +1716,10 @@ RuntimeMetrics.increment(
             "facturesauto",
 
           title:
-            "Facture recalculée",
+            "Facture recalculÃ©e",
 
           message:
-            `Encaissement mis à jour. Payé : ${montantPaye}. Reste : ${resteAPayer}.`,
+            `Encaissement mis Ã  jour. PayÃ© : ${montantPaye}. Reste : ${resteAPayer}.`,
 
           severity:
             "info",
@@ -1844,7 +1848,7 @@ RuntimeMetrics.increment(
             "planifie",
 
           message:
-            `Échéance de paiement en retard. Facture : ${payload.factureId}. Reste attendu : ${reste} FCFA.`,
+            `Ã‰chÃ©ance de paiement en retard. Facture : ${payload.factureId}. Reste attendu : ${reste} FCFA.`,
         }
       );
 
@@ -1872,10 +1876,10 @@ RuntimeMetrics.increment(
           "echeancespaiementauto",
 
         title:
-          "Échéance en retard",
+          "Ã‰chÃ©ance en retard",
 
         message:
-          `Une relance a été créée pour une échéance de ${reste} FCFA.`,
+          `Une relance a Ã©tÃ© crÃ©Ã©e pour une Ã©chÃ©ance de ${reste} FCFA.`,
 
         severity:
           "warning",
@@ -2004,7 +2008,7 @@ RuntimeMetrics.increment(
             "planifie",
 
           message:
-            `Échéance de paiement en retard. Facture : ${payload.factureId}. Reste attendu : ${reste} FCFA.`,
+            `Ã‰chÃ©ance de paiement en retard. Facture : ${payload.factureId}. Reste attendu : ${reste} FCFA.`,
         }
       );
 
@@ -2032,10 +2036,10 @@ RuntimeMetrics.increment(
           "echeancespaiementauto",
 
         title:
-          "Échéance en retard",
+          "Ã‰chÃ©ance en retard",
 
         message:
-          `Une relance a été créée pour une échéance de ${reste} FCFA.`,
+          `Une relance a Ã©tÃ© crÃ©Ã©e pour une Ã©chÃ©ance de ${reste} FCFA.`,
 
         severity:
           "warning",
@@ -2065,35 +2069,35 @@ function assertRendezvousCanCreateInterventionRecord(
   if (businessRuleAsString(rendezvous.statut).toLowerCase() === "annule") {
     return {
       ok: false,
-      reason: "Impossible de créer une intervention depuis un rendez-vous annulé.",
+      reason: "Impossible de crÃ©er une intervention depuis un rendez-vous annulÃ©.",
     };
   }
 
   if (businessRuleAsString(rendezvous.consumedByInterventionId)) {
     return {
       ok: false,
-      reason: "Impossible de créer une intervention : ce rendez-vous a déjà été consommé.",
+      reason: "Impossible de crÃ©er une intervention : ce rendez-vous a dÃ©jÃ  Ã©tÃ© consommÃ©.",
     };
   }
 
   if (!businessRuleAsString(rendezvous.clientId)) {
     return {
       ok: false,
-      reason: "Impossible de créer une intervention : clientId manquant.",
+      reason: "Impossible de crÃ©er une intervention : clientId manquant.",
     };
   }
 
   if (!businessRuleAsString(rendezvous.vehiculeId)) {
     return {
       ok: false,
-      reason: "Impossible de créer une intervention : vehiculeId manquant.",
+      reason: "Impossible de crÃ©er une intervention : vehiculeId manquant.",
     };
   }
 
   if (!businessRuleAsString(rendezvous.id)) {
     return {
       ok: false,
-      reason: "Impossible de créer une intervention : identifiant rendez-vous manquant.",
+      reason: "Impossible de crÃ©er une intervention : identifiant rendez-vous manquant.",
     };
   }
 
