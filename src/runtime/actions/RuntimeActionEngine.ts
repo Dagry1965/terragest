@@ -25,6 +25,11 @@ export type RuntimeActionResultSeverity =
   | "danger"
   | "info";
 
+export interface RuntimeGovernedAction extends ERPModuleAction {
+  disabled?: boolean;
+  description?: string;
+}
+
 export interface RuntimeActionResult {
   success: boolean;
   title?: string;
@@ -171,7 +176,7 @@ export class RuntimeActionEngine {
     userPermissions?: string[];
     workflow?: ERPModuleWorkflow;
     record?: Record<string, unknown>;
-  }): ERPModuleAction[] {
+  }): RuntimeGovernedAction[] {
 
     let allowedActionKeys: string[] | null = null;
 
@@ -201,8 +206,8 @@ export class RuntimeActionEngine {
     return actions
       .filter((action) => {
         // Q20H5C_RUNTIME_ONLY_ACTIONS
-        // Une action runtimeOnly est une action mÃ©tier contrÃ´lÃ©e
-        // qui ne correspond pas forcÃ©ment Ã  une transition de statut.
+        // Une action runtimeOnly est une action mÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©tier contrÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â´lÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©e
+        // qui ne correspond pas forcÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©ment ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â  une transition de statut.
         if (
           allowedActionKeys &&
           !allowedActionKeys.includes(action.key) &&
@@ -253,7 +258,7 @@ export class RuntimeActionEngine {
             disabled: true,
             description:
               action.governance.disabledReason ??
-              "Cette action n'est pas disponible dans l'Ã©tat actuel.",
+              "Cette action n'est pas disponible dans l'ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©tat actuel.",
           };
         }
 
@@ -298,9 +303,49 @@ export class RuntimeActionEngine {
       }
     );
 
+    const availableActions =
+      RuntimeActionEngine.getAvailableActions({
+        actions: module?.actions ?? [],
+        workflow,
+        record,
+      });
+
+    const availableAction =
+      availableActions.find(
+        (candidate) => candidate.key === action.key
+      );
+
+    if (
+      module?.actions?.length &&
+      !availableAction
+    ) {
+      return {
+        success: false,
+        severity: "warning",
+        title: "Action indisponible",
+        message:
+          "Cette action n'est pas disponible dans l'\u00e9tat actuel.",
+        action,
+        record,
+      };
+    }
+
+    if (availableAction?.disabled) {
+      return {
+        success: false,
+        severity: "warning",
+        title: "Action d\u00e9sactiv\u00e9e",
+        message:
+          availableAction.description ??
+          "Cette action est d\u00e9sactiv\u00e9e dans l'\u00e9tat actuel.",
+        action,
+        record,
+      };
+    }
+
     // Q20H5C_B2_REMOVE_LINE_ACTION
-    // Action mÃƒÆ’Ã‚Â©tier non-transitionnelle : retirer proprement une ligne
-    // sans rÃƒÆ’Ã‚Â©introduire un statut utilisateur "annulÃƒÆ’Ã‚Â©e".
+    // Action mÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©tier non-transitionnelle : retirer proprement une ligne
+    // sans rÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©introduire un statut utilisateur "annulÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©e".
     if (
       module?.metadata?.key === "lignesinterventionauto" &&
       action.key === "retirer-ligne" &&
@@ -328,7 +373,7 @@ export class RuntimeActionEngine {
       const result =
         await RuntimeLineRemovalService.removeInterventionLine({
           lineId,
-          reason: "Ligne retirÃƒÆ’Ã‚Â©e depuis l'action mÃƒÆ’Ã‚Â©tier.",
+          reason: "Ligne retirÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©e depuis l'action mÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©tier.",
         });
 
       if (!result.removed) {
@@ -336,13 +381,13 @@ export class RuntimeActionEngine {
           success: false,
           message:
             result.reason === "line-linked-to-invoice"
-              ? "Cette ligne est dÃƒÆ’Ã‚Â©jÃƒÆ’Ã‚Â  liÃƒÆ’Ã‚Â©e ÃƒÆ’Ã‚Â  une facture. Elle ne peut pas ÃƒÆ’Ã‚Âªtre retirÃƒÆ’Ã‚Â©e directement."
+              ? "Cette ligne est dÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©jÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â  liÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©e ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â  une facture. Elle ne peut pas ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Âªtre retirÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©e directement."
               : result.reason === "already-removed"
-                ? "Cette ligne a dÃƒÆ’Ã‚Â©jÃƒÆ’Ã‚Â  ÃƒÆ’Ã‚Â©tÃƒÆ’Ã‚Â© retirÃƒÆ’Ã‚Â©e."
+                ? "Cette ligne a dÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©jÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â  ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©tÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â© retirÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©e."
                 : result.reason === "stock-not-found"
-                  ? "Stock introuvable pour rÃƒÆ’Ã‚Â©intÃƒÆ’Ã‚Â©grer la quantitÃƒÆ’Ã‚Â©."
+                  ? "Stock introuvable pour rÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©intÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©grer la quantitÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©."
                   : result.reason === "missing-stock-product-or-quantity"
-                    ? "Impossible de rÃƒÆ’Ã‚Â©intÃƒÆ’Ã‚Â©grer le stock : produit, stock ou quantitÃƒÆ’Ã‚Â© manquant."
+                    ? "Impossible de rÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©intÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©grer le stock : produit, stock ou quantitÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â© manquant."
                     : "Retrait de la ligne impossible.",
           result,
           action,
@@ -352,7 +397,7 @@ export class RuntimeActionEngine {
 
       return {
         success: true,
-        message: "Ligne retirÃƒÆ’Ã‚Â©e avec succÃƒÆ’Ã‚Â¨s.",
+        message: "Ligne retirÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©e avec succÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¨s.",
         result,
         action,
         record,
