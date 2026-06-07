@@ -37,6 +37,14 @@ export const interventionsautoActions: ERPModuleAction[] = [
       visibleWhen: [
         { field: "statut", equals: "terminee" },
       ],
+      disabledWhenRelationExists: [
+        {
+          moduleKey: "facturesauto",
+          foreignKey: "interventionId",
+          activeOnly: true,
+        },
+      ],
+      disabledReason: "Une facture existe déjà pour cette intervention.",
     },
   },
   {

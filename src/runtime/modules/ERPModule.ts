@@ -166,10 +166,20 @@ export interface ERPActionFeedbackConfig {
   blockedMessage?: string;
 }
 
+export interface ERPActionRelationRule {
+  moduleKey: string;
+  foreignKey: string;
+  sourceField?: string;
+  activeOnly?: boolean;
+}
+
 export interface ERPActionGovernanceConfig {
   visibleWhen?: ERPActionVisibilityRule[];
   hiddenWhen?: ERPActionVisibilityRule[];
   disabledWhen?: ERPActionVisibilityRule[];
+  hiddenWhenRelationExists?: ERPActionRelationRule[];
+  visibleWhenRelationNotExists?: ERPActionRelationRule[];
+  disabledWhenRelationExists?: ERPActionRelationRule[];
   disabledReason?: string;
   effects?: string[];
   feedback?: ERPActionFeedbackConfig;
