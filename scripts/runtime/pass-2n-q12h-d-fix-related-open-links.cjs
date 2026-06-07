@@ -85,8 +85,8 @@ content = content.replace(
 );
 
 // 3. Nettoyage backup éventuel / mojibake
-content = content.replace(/Â·/g, "·");
-content = content.replace(/liÃ©/g, "lié");
+content = content.replace(/·/g, "·");
+content = content.replace(/lié/g, "lié");
 
 fs.writeFileSync(file, content, "utf8");
 

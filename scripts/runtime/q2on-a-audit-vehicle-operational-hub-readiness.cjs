@@ -336,7 +336,7 @@ if (existingVehicleHubRoute) {
 /**
  * Mojibake in relevant files.
  */
-const mojibakePatterns = ["Ã", "Â", "â€™", "â€", "\uFFFD"];
+const mojibakePatterns = ["Ã", "Â", "'", """, "\uFFFD"];
 
 const mojibakeTargets = {
   vehicleModule: modules.vehicle,

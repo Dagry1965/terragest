@@ -24,22 +24,22 @@ let changed = 0;
   const before = content;
 
   content = content
-    .replaceAll("Action effectuÃƒÂ©e", "Action effectuée")
-    .replaceAll("Action effectuÃƒÆ’Ã‚Â©e", "Action effectuée")
-    .replaceAll("Prochaine ÃƒÂ©tape", "Prochaine étape")
-    .replaceAll("Prochaine ÃƒÆ’Ã‚Â©tape", "Prochaine étape")
-    .replaceAll(" Ã‚Â· ", " · ")
-    .replaceAll(" Ãƒâ€šÃ‚Â· ", " · ")
-    .replaceAll("crÃƒÆ’Ã‚Â©ation", "création")
-    .replaceAll("title=\"Actions mÃ©tier\"", "title=\"Actions métier\"")
-    .replaceAll("title=\"Actions mÃƒÂ©tier\"", "title=\"Actions métier\"")
-    .replaceAll("title=\"Actions mÃƒÆ’Ã‚Â©tier\"", "title=\"Actions métier\"")
+    .replaceAll("Action effectuée", "Action effectuée")
+    .replaceAll("Action effectuée", "Action effectuée")
+    .replaceAll("Prochaine étape", "Prochaine étape")
+    .replaceAll("Prochaine étape", "Prochaine étape")
+    .replaceAll(" · ", " · ")
+    .replaceAll(" Ãƒ"š· ", " · ")
+    .replaceAll("création", "création")
+    .replaceAll("title=\"Actions métier\"", "title=\"Actions métier\"")
+    .replaceAll("title=\"Actions métier\"", "title=\"Actions métier\"")
+    .replaceAll("title=\"Actions métier\"", "title=\"Actions métier\"")
     .replaceAll(
-      "Vue opÃƒÆ’Ã‚Â©rationnelle gÃƒÆ’Ã‚Â©nÃƒÆ’Ã‚Â©rÃƒÆ’Ã‚Â©e par le Runtime ERP.",
+      "Vue opérationnelle générée par le Runtime ERP.",
       "Vue opérationnelle générée par le Runtime ERP."
     )
     .replaceAll(
-      "title ?? `${moduleLabel} ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â ${getRuntimePageTypeLabel(type)}`",
+      "title ?? `${moduleLabel} ââ"šÂ¬" ${getRuntimePageTypeLabel(type)}`",
       "title ?? `${moduleLabel} — ${getRuntimePageTypeLabel(type)}`"
     );
 
@@ -57,9 +57,9 @@ let changed = 0;
   const before = content;
 
   content = content
-    .replaceAll("Actions mÃ©tier", "Actions métier")
-    .replaceAll("Actions mÃƒÂ©tier", "Actions métier")
-    .replaceAll("Actions mÃƒÆ’Ã‚Â©tier", "Actions métier");
+    .replaceAll("Actions métier", "Actions métier")
+    .replaceAll("Actions métier", "Actions métier")
+    .replaceAll("Actions métier", "Actions métier");
 
   if (content !== before) {
     write(file, content);
@@ -77,23 +77,23 @@ let changed = 0;
   // Messages relation governance visibles
   content = content
     .replaceAll(
-      "Cette action n'est pas disponible car un enregistrement liÃ© existe dÃ©jÃ .",
+      "Cette action n'est pas disponible car un enregistrement lié existe déjà.",
       "Cette action n'est pas disponible car un enregistrement lié existe déjà."
     )
     .replaceAll(
-      "Cette action n'est pas disponible car un enregistrement liÃ© existe dÃ©jÃ .",
+      "Cette action n'est pas disponible car un enregistrement lié existe déjà.",
       "Cette action n'est pas disponible car un enregistrement lié existe déjà."
     )
     .replaceAll(
-      "Cette action est dÃ©sactivÃ©e car un enregistrement liÃ© existe dÃ©jÃ .",
+      "Cette action est désactivée car un enregistrement lié existe déjà.",
       "Cette action est désactivée car un enregistrement lié existe déjà."
     )
     .replaceAll(
-      "Cette action est dÃ©sactivÃ©e car un enregistrement liÃ© existe dÃ©jÃ .",
+      "Cette action est désactivée car un enregistrement lié existe déjà.",
       "Cette action est désactivée car un enregistrement lié existe déjà."
     )
-    .replaceAll("Action dÃ©sactivÃ©e", "Action désactivée")
-    .replaceAll("annulÃ©e", "annulée");
+    .replaceAll("Action désactivée", "Action désactivée")
+    .replaceAll("annulée", "annulée");
 
   // Nettoyer le commentaire runtimeOnly corrompu sans changer la logique.
   content = content.replace(

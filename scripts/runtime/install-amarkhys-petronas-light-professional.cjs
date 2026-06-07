@@ -155,12 +155,12 @@ if (fs.existsSync(file(registryPath))) {
   }
 
   registry = registry
-    .replaceAll("Vue GÃ©nÃ©rale", "Vue Générale")
-    .replaceAll("VÃ©hicules", "Véhicules")
-    .replaceAll("MatÃ©riels", "Matériels")
-    .replaceAll("RÃ©coltes", "Récoltes")
-    .replaceAll("DÃ©penses", "Dépenses")
-    .replaceAll("ObservabilitÃ©", "Observabilité");
+    .replaceAll("Vue Générale", "Vue Générale")
+    .replaceAll("Véhicules", "Véhicules")
+    .replaceAll("Matériels", "Matériels")
+    .replaceAll("Récoltes", "Récoltes")
+    .replaceAll("Dépenses", "Dépenses")
+    .replaceAll("Observabilité", "Observabilité");
 
   write(registryPath, registry);
 }

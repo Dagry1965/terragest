@@ -32,8 +32,8 @@ fs.writeFileSync(backupFile, content, "utf8");
 console.log("BACKUP:", backupFile);
 
 // Nettoyage séparateurs mojibake éventuels
-content = content.replace(/Â·/g, "·");
-content = content.replace(/join\(" Â· "\)/g, `join(" · ")`);
+content = content.replace(/·/g, "·");
+content = content.replace(/join\(" · "\)/g, `join(" · ")`);
 
 // Passer moduleKey à getLabel dans load()
 content = content.replace(

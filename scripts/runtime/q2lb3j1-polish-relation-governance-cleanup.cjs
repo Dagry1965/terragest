@@ -40,19 +40,19 @@ let changed = 0;
   // Normalize visible relation governance messages.
   content = content
     .replaceAll(
-      `"Cette action n'est pas disponible car un enregistrement liÃ© existe dÃ©jÃ ."`,
+      `"Cette action n'est pas disponible car un enregistrement lié existe déjà."`,
       `"Cette action n'est pas disponible car un enregistrement lié existe déjà."`
     )
     .replaceAll(
-      `"Cette action est dÃ©sactivÃ©e car un enregistrement liÃ© existe dÃ©jÃ ."`,
+      `"Cette action est désactivée car un enregistrement lié existe déjà."`,
       `"Cette action est désactivée car un enregistrement lié existe déjà."`
     )
     .replaceAll(
-      `title: "Action dÃ©sactivÃ©e",`,
+      `title: "Action désactivée",`,
       `title: "Action désactivée",`
     )
     .replaceAll(
-      `status === "annulÃ©e"`,
+      `status === "annulée"`,
       `status === "annulée"`
     );
 
@@ -70,8 +70,8 @@ let changed = 0;
   const before = content;
 
   content = content
-    .replaceAll(`title = "Actions mÃ©tier"`, `title = "Actions métier"`)
-    .replaceAll(`Actions mÃ©tier`, `Actions métier`);
+    .replaceAll(`title = "Actions métier"`, `title = "Actions métier"`)
+    .replaceAll(`Actions métier`, `Actions métier`);
 
   if (content !== before) {
     write(file, content);
@@ -87,14 +87,14 @@ let changed = 0;
   const before = content;
 
   content = content
-    .replaceAll(`title="Actions mÃƒÂ©tier"`, `title="Actions métier"`)
+    .replaceAll(`title="Actions métier"`, `title="Actions métier"`)
     .replaceAll(
       `description="Actions runtime disponibles pour cet enregistrement."`,
       `description="Actions runtime disponibles pour cet enregistrement."`
     )
-    .replaceAll(`Action effectuÃƒÆ’Ã‚Â©e`, `Action effectuée`)
-    .replaceAll(`Prochaine ÃƒÆ’Ã‚Â©tape`, `Prochaine étape`)
-    .replaceAll(` Ãƒâ€šÃ‚Â· `, ` · `);
+    .replaceAll(`Action effectuée`, `Action effectuée`)
+    .replaceAll(`Prochaine étape`, `Prochaine étape`)
+    .replaceAll(` Ãƒ"š· `, ` · `);
 
   if (content !== before) {
     write(file, content);

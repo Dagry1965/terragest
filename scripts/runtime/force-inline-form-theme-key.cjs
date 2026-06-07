@@ -93,15 +93,15 @@ content = content.replaceAll(
  * 5. Nettoyage mojibake léger.
  */
 content = content
-  .replaceAll("Validation mÃ©tier", "Validation métier")
-  .replaceAll("rÃ¨gles mÃ©tier", "règles métier")
-  .replaceAll("Action mÃ©tier", "Action métier")
-  .replaceAll("Suppression masquÃ©e", "Suppression masquée")
-  .replaceAll("lâ€™action mÃ©tier", "l’action métier")
-  .replaceAll("dâ€™archivage", "d’archivage")
-  .replaceAll("dâ€™annulation", "d’annulation")
-  .replaceAll("lâ€™historique", "l’historique")
-  .replaceAll("â€¢", "•");
+  .replaceAll("Validation métier", "Validation métier")
+  .replaceAll("règles métier", "règles métier")
+  .replaceAll("Action métier", "Action métier")
+  .replaceAll("Suppression masquée", "Suppression masquée")
+  .replaceAll("l'action métier", "l’action métier")
+  .replaceAll("d'archivage", "d’archivage")
+  .replaceAll("d'annulation", "d’annulation")
+  .replaceAll("l'historique", "l’historique")
+  .replaceAll(""¢", "•");
 
 fs.writeFileSync(target, content, "utf8");
 

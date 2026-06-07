@@ -23,9 +23,9 @@ const before = content;
 
 /**
  * Mojibake ciblé :
- * Ã‰mise   = \u00c3\u2030mise
- * AnnulÃ©e = Annul\u00c3\u00a9e
- * PayÃ©    = Pay\u00c3\u00a9
+ * Émise   = \u00c3\u2030mise
+ * Annulée = Annul\u00c3\u00a9e
+ * Payé    = Pay\u00c3\u00a9
  */
 content = content
   .replaceAll("\u00c3\u2030mise", "Émise")

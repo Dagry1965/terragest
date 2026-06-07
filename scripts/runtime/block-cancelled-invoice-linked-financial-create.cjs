@@ -140,22 +140,22 @@ if (!content.includes("cancelledInvoiceFinancialErrors")) {
  * 4) Corriger quelques textes visibles si présents.
  */
 content = content
-  .replaceAll("Les rÃ¨gles mÃ©tier ERP bloquent cet enregistrement.", "Les règles métier ERP bloquent cet enregistrement.")
-  .replaceAll("VÃ©hicule", "Véhicule")
-  .replaceAll("Montant encaissÃ©", "Montant encaissé")
-  .replaceAll("EspÃ¨ces", "Espèces")
-  .replaceAll("ChÃ¨que", "Chèque")
-  .replaceAll("RÃ©fÃ©rence", "Référence")
-  .replaceAll("Ã‰chÃ©ances", "Échéances")
-  .replaceAll("Ã©chÃ©ances", "échéances")
-  .replaceAll("Montant prÃ©vu", "Montant prévu")
-  .replaceAll("Montant payÃ©", "Montant payé")
-  .replaceAll("Date Ã©chÃ©ance", "Date échéance")
-  .replaceAll("Ã€ venir", "À venir")
-  .replaceAll("Partiellement payÃ©e", "Partiellement payée")
-  .replaceAll("PayÃ©e", "Payée")
-  .replaceAll("AnnulÃ©e", "Annulée")
-  .replaceAll("TÃ©lÃ©phone", "Téléphone");
+  .replaceAll("Les règles métier ERP bloquent cet enregistrement.", "Les règles métier ERP bloquent cet enregistrement.")
+  .replaceAll("Véhicule", "Véhicule")
+  .replaceAll("Montant encaissé", "Montant encaissé")
+  .replaceAll("Espèces", "Espèces")
+  .replaceAll("Chèque", "Chèque")
+  .replaceAll("Référence", "Référence")
+  .replaceAll("Échéances", "Échéances")
+  .replaceAll("échéances", "échéances")
+  .replaceAll("Montant prévu", "Montant prévu")
+  .replaceAll("Montant payé", "Montant payé")
+  .replaceAll("Date échéance", "Date échéance")
+  .replaceAll("À venir", "À venir")
+  .replaceAll("Partiellement payée", "Partiellement payée")
+  .replaceAll("Payée", "Payée")
+  .replaceAll("Annulée", "Annulée")
+  .replaceAll("Téléphone", "Téléphone");
 
 if (content === before) {
   console.log("NO CHANGE");

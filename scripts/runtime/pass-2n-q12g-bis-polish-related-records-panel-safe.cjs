@@ -24,8 +24,8 @@ fs.writeFileSync(backup, content, "utf8");
 console.log("BACKUP:", backup);
 
 // 1. Corrige les mojibake visibles dans ce panneau.
-content = content.replace(/Â·/g, "·");
-content = content.replace(/liÃ©/g, "lié");
+content = content.replace(/·/g, "·");
+content = content.replace(/lié/g, "lié");
 
 // 2. Panneau principal : plus premium, sans changer la structure.
 content = content.replace(

@@ -78,7 +78,7 @@ const oldStatusBlock = `                          {slot.available
                             ? slot.remainingCapacity !== undefined && slot.capacity && slot.capacity > 1
                               ? slot.remainingCapacity + " place(s) restante(s)"
                               : "Disponible"
-                            : slot.reason ?? "CrÃ©neau complet"}`;
+                            : slot.reason ?? "Créneau complet"}`;
 
 if (content.includes(oldStatusBlock)) {
   content = content.replace(oldStatusBlock, "                          {slotStatusLabel}");

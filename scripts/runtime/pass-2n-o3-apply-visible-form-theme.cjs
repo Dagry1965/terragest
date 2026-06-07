@@ -149,15 +149,15 @@ enterpriseForm = enterpriseForm
   .replaceAll("text-emerald-700", "text-[var(--erp-primary)]");
 
 enterpriseForm = enterpriseForm
-  .replaceAll("Validation mÃ©tier", "Validation métier")
-  .replaceAll("rÃ¨gles mÃ©tier", "règles métier")
-  .replaceAll("Action mÃ©tier", "Action métier")
-  .replaceAll("Suppression masquÃ©e", "Suppression masquée")
-  .replaceAll("lâ€™action mÃ©tier", "l’action métier")
-  .replaceAll("dâ€™archivage", "d’archivage")
-  .replaceAll("dâ€™annulation", "d’annulation")
-  .replaceAll("lâ€™historique", "l’historique")
-  .replaceAll("â€¢", "•");
+  .replaceAll("Validation métier", "Validation métier")
+  .replaceAll("règles métier", "règles métier")
+  .replaceAll("Action métier", "Action métier")
+  .replaceAll("Suppression masquée", "Suppression masquée")
+  .replaceAll("l'action métier", "l’action métier")
+  .replaceAll("d'archivage", "d’archivage")
+  .replaceAll("d'annulation", "d’annulation")
+  .replaceAll("l'historique", "l’historique")
+  .replaceAll(""¢", "•");
 
 write(enterpriseFormPath, enterpriseForm);
 
@@ -194,13 +194,13 @@ if (!formField.includes("shadow-[0_10px_30px_rgba(15,23,42,0.06)]")) {
 }
 
 formField = formField
-  .replaceAll("Relation mÃ©tier sÃ©lectionnÃ©e", "Relation métier sélectionnée")
-  .replaceAll("Aucune relation renseignÃ©e", "Aucune relation renseignée")
-  .replaceAll("Relation mÃ©tier verrouillÃ©e", "Relation métier verrouillée")
-  .replaceAll("SÃ©lectionner", "Sélectionner")
-  .replaceAll("dâ€™origine", "d’origine")
-  .replaceAll("Ãªtre", "être")
-  .replaceAll("â€¢", "•");
+  .replaceAll("Relation métier sélectionnée", "Relation métier sélectionnée")
+  .replaceAll("Aucune relation renseignée", "Aucune relation renseignée")
+  .replaceAll("Relation métier verrouillée", "Relation métier verrouillée")
+  .replaceAll("Sélectionner", "Sélectionner")
+  .replaceAll("d'origine", "d’origine")
+  .replaceAll("être", "être")
+  .replaceAll(""¢", "•");
 
 write(formFieldPath, formField);
 

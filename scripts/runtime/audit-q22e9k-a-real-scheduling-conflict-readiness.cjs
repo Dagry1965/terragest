@@ -144,7 +144,7 @@ function main() {
 
   assertRegex(
     content.guards,
-    /Créneau complet|CrÃ©neau complet|Conflit de planning|cr[eé]neau|creneau/i,
+    /Créneau complet|Créneau complet|Conflit de planning|cr[eé]neau|creneau/i,
     "Guard conserve un message métier conflit/capacité"
   );
 

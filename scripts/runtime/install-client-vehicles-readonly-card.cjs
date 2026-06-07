@@ -275,13 +275,13 @@ if (!form.includes("data-client-vehicles-readonly-card")) {
 }
 
 form = form
-  .replaceAll("CrÃ©ation", "Création")
-  .replaceAll("connectÃ©", "connecté")
-  .replaceAll("mÃ©tier", "métier")
-  .replaceAll("exÃ©cutent", "exécutent")
-  .replaceAll("Associe cet Ã©lÃ©ment", "Associe cet élément")
-  .replaceAll("Validation mÃ©tier", "Validation métier")
-  .replaceAll("â€¢", "•");
+  .replaceAll("Création", "Création")
+  .replaceAll("connecté", "connecté")
+  .replaceAll("métier", "métier")
+  .replaceAll("exécutent", "exécutent")
+  .replaceAll("Associe cet élément", "Associe cet élément")
+  .replaceAll("Validation métier", "Validation métier")
+  .replaceAll(""¢", "•");
 
 write(formFile, form);
 

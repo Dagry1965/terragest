@@ -225,7 +225,7 @@ if (fs.existsSync(facturesFile)) {
 
   content = content.replace(
     `        key: "numeroFacture",
-        label: "NumÃ©ro facture",
+        label: "Numéro facture",
         type: "text",
         required: true,
         searchable: true,`,
@@ -320,7 +320,7 @@ if (!form.includes("uniqueConstraintErrors")) {
 }
 
 form = form.replaceAll(
-  "Les rÃ¨gles mÃ©tier ERP bloquent cet enregistrement.",
+  "Les règles métier ERP bloquent cet enregistrement.",
   "Les règles métier ERP bloquent cet enregistrement."
 );
 

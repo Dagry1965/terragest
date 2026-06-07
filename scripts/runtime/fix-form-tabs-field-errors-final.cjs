@@ -52,7 +52,7 @@ content = content.replace(
 
 // 4. Corriger l'encodage résiduel
 content = content
-  .split("Aucun champ Ã  afficher pour cet onglet.")
+  .split("Aucun champ à afficher pour cet onglet.")
   .join("Aucun champ à afficher pour cet onglet.");
 
 // 5. Petite correction indentation return si nécessaire

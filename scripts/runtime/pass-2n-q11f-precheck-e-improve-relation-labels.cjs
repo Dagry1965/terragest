@@ -32,8 +32,8 @@ fs.writeFileSync(backupFile, content, "utf8");
 console.log("BACKUP:", backupFile);
 
 // 1. Corrige le séparateur mojibake éventuel.
-content = content.replace(/join\(" Â· "\)/g, `join(" · ")`);
-content = content.replace(/Â·/g, "·");
+content = content.replace(/join\(" · "\)/g, `join(" · ")`);
+content = content.replace(/·/g, "·");
 
 // 2. Ajoute les alias produits/stocks si absents.
 if (!content.includes("produitsauto: [")) {

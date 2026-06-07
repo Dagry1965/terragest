@@ -144,8 +144,8 @@ content = content.replace(
 );
 
 // Nettoyage mojibake éventuel
-content = content.replace(/Â·/g, "·");
-content = content.replace(/liÃ©/g, "lié");
+content = content.replace(/·/g, "·");
+content = content.replace(/lié/g, "lié");
 content = content.replace(/Main d'oeuvre/g, "Main d’œuvre");
 
 fs.writeFileSync(file, content, "utf8");

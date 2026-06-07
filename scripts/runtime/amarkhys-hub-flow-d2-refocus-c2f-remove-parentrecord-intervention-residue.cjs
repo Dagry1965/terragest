@@ -132,7 +132,7 @@ const checks = [
   ["fallback preserved", after.includes("Aucune intervention")],
   ["factures downstream preserved", after.includes("child={facturesChild}")],
   ["encaissements downstream preserved", after.includes("InvoicePaymentsHistory")],
-  ["rdv block preserved", after.includes("Choisir un rendez-vous") || after.includes("Choisir un rendez-vous".replace("é", "Ã©"))],
+  ["rdv block preserved", after.includes("Choisir un rendez-vous") || after.includes("Choisir un rendez-vous".replace("é", "é"))],
   ["intervention block preserved", after.includes("Interventions")],
 ];
 

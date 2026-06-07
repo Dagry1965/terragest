@@ -74,9 +74,9 @@ if (!content.includes(`pathname === "/fournisseursauto"`)) {
 
 // Small encoding cleanup in visible labels already present.
 content = content
-  .split(`label: "VÃ©hicules"`)
+  .split(`label: "Véhicules"`)
   .join(`label: "Vehicules"`)
-  .split(`accÃ¨s Ã `)
+  .split(`accès à`)
   .join(`acces a`);
 
 fs.writeFileSync(file, content, "utf8");

@@ -24,15 +24,15 @@ const invoiceActionsPath =
 let moduleContent = read(modulePath);
 
 moduleContent = moduleContent
-  .replaceAll("NumÃ©ro facture", "Numéro facture")
-  .replaceAll("Ã‰mise", "Émise")
-  .replaceAll("AnnulÃ©e", "Annulée")
-  .replaceAll("PayÃ©", "Payé")
-  .replaceAll("VÃ©hicule", "Véhicule")
-  .replaceAll("payÃ©", "payé")
-  .replaceAll("Reste Ã  payer", "Reste à payer")
-  .replaceAll("EspÃ¨ces", "Espèces")
-  .replaceAll("mÃ©tier", "métier");
+  .replaceAll("Numéro facture", "Numéro facture")
+  .replaceAll("Émise", "Émise")
+  .replaceAll("Annulée", "Annulée")
+  .replaceAll("Payé", "Payé")
+  .replaceAll("Véhicule", "Véhicule")
+  .replaceAll("payé", "payé")
+  .replaceAll("Reste à payer", "Reste à payer")
+  .replaceAll("Espèces", "Espèces")
+  .replaceAll("métier", "métier");
 
 if (!moduleContent.includes('key: "statutEnvoiFacture"')) {
   moduleContent = moduleContent.replace(
@@ -168,8 +168,8 @@ write(modulePath, moduleContent);
 let actionsContent = read(actionsPath);
 
 actionsContent = actionsContent
-  .replaceAll("payÃ©e", "payée")
-  .replaceAll("Marquer payÃ©e", "Marquer payée");
+  .replaceAll("payée", "payée")
+  .replaceAll("Marquer payée", "Marquer payée");
 
 if (!actionsContent.includes('key: "Marquer envoyee"')) {
   actionsContent = actionsContent.replace(
@@ -199,29 +199,29 @@ write(actionsPath, actionsContent);
 let invoiceActions = read(invoiceActionsPath);
 
 invoiceActions = invoiceActions
-  .replaceAll("PayÃ©", "Payé")
-  .replaceAll("PayÃ©e", "Payée")
-  .replaceAll("AnnulÃ©", "Annulé")
-  .replaceAll("AnnulÃ©e", "Annulée")
-  .replaceAll("Client non renseignÃ©", "Client non renseigné")
-  .replaceAll("VÃ©hicule non renseignÃ©", "Véhicule non renseigné")
-  .replaceAll("Intervention non renseignÃ©e", "Intervention non renseignée")
-  .replaceAll("â€¢", "•")
-  .replaceAll("annulÃ©e", "annulée")
-  .replaceAll("VÃ©hicule", "Véhicule")
-  .replaceAll("payÃ©", "payé")
-  .replaceAll("AnnulÃ©e", "Annulée")
-  .replaceAll("Reste Ã  payer", "Reste à payer")
-  .replaceAll("gÃ©nÃ©rÃ©e", "générée")
-  .replaceAll("FACTURE ANNULÃ‰E", "FACTURE ANNULÉE")
-  .replaceAll("conservÃ©", "conservé")
-  .replaceAll("opÃ©ration", "opération")
-  .replaceAll("nâ€™est", "n’est")
-  .replaceAll("vÃ©hicule", "véhicule")
-  .replaceAll("DÃ©tails", "Détails")
-  .replaceAll("DÃ©signation", "Désignation")
-  .replaceAll("tÃ©lÃ©charge", "télécharge")
-  .replaceAll("prÃ©pare", "prépare");
+  .replaceAll("Payé", "Payé")
+  .replaceAll("Payée", "Payée")
+  .replaceAll("Annulé", "Annulé")
+  .replaceAll("Annulée", "Annulée")
+  .replaceAll("Client non renseigné", "Client non renseigné")
+  .replaceAll("Véhicule non renseigné", "Véhicule non renseigné")
+  .replaceAll("Intervention non renseignée", "Intervention non renseignée")
+  .replaceAll(""¢", "•")
+  .replaceAll("annulée", "annulée")
+  .replaceAll("Véhicule", "Véhicule")
+  .replaceAll("payé", "payé")
+  .replaceAll("Annulée", "Annulée")
+  .replaceAll("Reste à payer", "Reste à payer")
+  .replaceAll("générée", "générée")
+  .replaceAll("FACTURE ANNULÉE", "FACTURE ANNULÉE")
+  .replaceAll("conservé", "conservé")
+  .replaceAll("opération", "opération")
+  .replaceAll("n'est", "n’est")
+  .replaceAll("véhicule", "véhicule")
+  .replaceAll("Détails", "Détails")
+  .replaceAll("Désignation", "Désignation")
+  .replaceAll("télécharge", "télécharge")
+  .replaceAll("prépare", "prépare");
 
 if (!invoiceActions.includes("function getInvoiceRecordId(")) {
   invoiceActions = invoiceActions.replace(

@@ -23,7 +23,7 @@ const root = process.cwd();
 /**
  * Produit runtime à protéger strictement.
  * Les scripts historiques de correction sont exclus pour éviter les faux positifs
- * du type .replaceAll("VÃ©hicule", "Véhicule").
+ * du type .replaceAll("Véhicule", "Véhicule").
  */
 const targets = [
   "src/runtime/modules/generated",
@@ -36,22 +36,22 @@ const targets = [
 ];
 
 const mojibakePatterns = [
-  "Ã©",
-  "Ã¨",
-  "Ãª",
-  "Ã«",
-  "Ã ",
-  "Ã¢",
-  "Ã´",
-  "Ã»",
-  "Ã§",
-  "Ã‰",
-  "Ã€",
-  "Ã‡",
-  "â€™",
-  "â€œ",
-  "â€",
-  "â€¢",
+  "é",
+  "è",
+  "ê",
+  "ë",
+  "à",
+  "â",
+  "ô",
+  "û",
+  "ç",
+  "É",
+  "À",
+  "Ç",
+  "'",
+  """,
+  """,
+  ""¢",
   "â†",
   "Â",
 ];

@@ -18,7 +18,7 @@ const patterns = [
   "Atelier aujourd'hui",
   "Facturation aujourd'hui",
   "Vue opérationnelle",
-  "Vue opÃ©rationnelle",
+  "Vue opérationnelle",
   "garage",
   "atelier",
 ];

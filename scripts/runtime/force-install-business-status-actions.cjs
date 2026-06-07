@@ -227,15 +227,15 @@ if (!content.includes("data-business-status-actions")) {
 }
 
 content = content
-  .replaceAll("DÃ©jÃ  payÃ©", "Déjà payé")
-  .replaceAll("Reste Ã  payer", "Reste à payer")
-  .replaceAll("exÃ©cutent", "exécutent")
-  .replaceAll("CrÃ©ation", "Création")
-  .replaceAll("connectÃ©", "connecté")
-  .replaceAll("mÃ©tier", "métier")
-  .replaceAll("Ã©lÃ©ment", "élément")
-  .replaceAll("Validation mÃ©tier", "Validation métier")
-  .replaceAll("â€¢", "•");
+  .replaceAll("Déjà payé", "Déjà payé")
+  .replaceAll("Reste à payer", "Reste à payer")
+  .replaceAll("exécutent", "exécutent")
+  .replaceAll("Création", "Création")
+  .replaceAll("connecté", "connecté")
+  .replaceAll("métier", "métier")
+  .replaceAll("élément", "élément")
+  .replaceAll("Validation métier", "Validation métier")
+  .replaceAll(""¢", "•");
 
 if (content === before) {
   console.log("NO CHANGE");

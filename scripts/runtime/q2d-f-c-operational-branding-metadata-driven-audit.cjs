@@ -110,7 +110,7 @@ checkNotContains(
 checkNotContains(
   "src/components/erp/operational/ERPOperationalModulePage.tsx",
   modulePage,
-  "AMARKHYS Â· Runtime ERP",
+  "AMARKHYS · Runtime ERP",
   "ERPOperationalModulePage ne hardcode plus AMARKHYS mojibake"
 );
 

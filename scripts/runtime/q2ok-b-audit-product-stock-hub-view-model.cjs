@@ -229,7 +229,7 @@ if (loaded.hubPrimary.exists) {
 /**
  * Mojibake only in hub files
  */
-const mojibakePatterns = ["Ã", "Â", "â€™", "â€", "\uFFFD"];
+const mojibakePatterns = ["Ã", "Â", "'", """, "\uFFFD"];
 for (const [key, file] of Object.entries(loaded)) {
   if (!file.exists) continue;
   const found = mojibakePatterns.filter((pattern) => file.content.includes(pattern));

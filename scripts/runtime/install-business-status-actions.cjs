@@ -280,15 +280,15 @@ ${actionBlock}`
  * 3) Nettoyage mojibake visible dans la zone inspectée.
  */
 content = content
-  .replaceAll("DÃ©jÃ  payÃ©", "Déjà payé")
-  .replaceAll("Reste Ã  payer", "Reste à payer")
-  .replaceAll("exÃ©cutent", "exécutent")
-  .replaceAll("mÃ©tier", "métier")
-  .replaceAll("CrÃ©ation", "Création")
-  .replaceAll("connectÃ©", "connecté")
-  .replaceAll("Ã©lÃ©ment", "élément")
-  .replaceAll("Validation mÃ©tier", "Validation métier")
-  .replaceAll("â€¢", "•");
+  .replaceAll("Déjà payé", "Déjà payé")
+  .replaceAll("Reste à payer", "Reste à payer")
+  .replaceAll("exécutent", "exécutent")
+  .replaceAll("métier", "métier")
+  .replaceAll("Création", "Création")
+  .replaceAll("connecté", "connecté")
+  .replaceAll("élément", "élément")
+  .replaceAll("Validation métier", "Validation métier")
+  .replaceAll(""¢", "•");
 
 if (content === before) {
   console.log("NO CHANGE");

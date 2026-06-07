@@ -25,8 +25,8 @@ const textPatterns = [
   "requestSubmit",
   "RuntimeActionEngine.execute",
   "CrÃ",
-  "Ã©",
-  "Ã¨",
+  "é",
+  "è",
   "Ã",
   "relation",
 ];

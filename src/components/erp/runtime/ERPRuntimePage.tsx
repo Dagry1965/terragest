@@ -378,7 +378,7 @@ async function handleRuntimeAction(action: NonNullable<ERPModule["actions"]>[num
     module?.metadata?.description;
 
   const resolvedTitle =
-    title ?? `${moduleLabel} ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â ${getRuntimePageTypeLabel(type)}`;
+    title ?? `${moduleLabel} - ${getRuntimePageTypeLabel(type)}`;
 
 
   const createActionLabel =
@@ -487,7 +487,7 @@ return (
       description={
         description ??
         moduleDescription ??
-        "Page gÃ©nÃ©rÃ©e automatiquement par le Runtime ERP."
+        "Page générée automatiquement par le Runtime ERP."
       }
     >
       <div className="space-y-6">
@@ -534,7 +534,7 @@ return (
 
         {loading && type === "list" ? (
           <div className="rounded-2xl border border-[var(--erp-border)] bg-[var(--erp-surface)] p-4 text-sm text-[var(--erp-text-muted)]">
-            Chargement des donnÃ©es...
+            Chargement des données...
           </div>
         ) : null}
 
@@ -633,7 +633,7 @@ return (
         {!module && (
           <ERPEmptyState
             title="Module introuvable"
-            description="Aucun module runtime n'a Ã©tÃ© trouvÃ©."
+            description="Aucun module runtime n'a été trouvé."
           />
         )}
       </div>

@@ -29,9 +29,9 @@ let content = fs.readFileSync(target, "utf8");
  * 1. Nettoyer mojibake visible dans ce moteur.
  */
 content = content
-  .replaceAll("Ã‰lÃ©ment", "Élément")
-  .replaceAll("VÃ©hicule", "Véhicule")
-  .replaceAll("Â·", "·");
+  .replaceAll("Élément", "Élément")
+  .replaceAll("Véhicule", "Véhicule")
+  .replaceAll("·", "·");
 
 /**
  * 2. Ajouter un helper de libellé statut si absent.

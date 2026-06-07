@@ -240,7 +240,7 @@ if (hasAny(loaded.hubTypes, ["displayModeSourceField", "displayModes"])) {
 /**
  * Mojibake.
  */
-const mojibakePatterns = ["Ã", "Â", "â€™", "â€", "\uFFFD"];
+const mojibakePatterns = ["Ã", "Â", "'", """, "\uFFFD"];
 for (const [key, content] of Object.entries(loaded)) {
   if (!content) continue;
   const found = mojibakePatterns.filter((pattern) => content.includes(pattern));

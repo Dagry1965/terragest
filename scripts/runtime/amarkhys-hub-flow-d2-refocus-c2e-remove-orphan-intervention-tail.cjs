@@ -93,7 +93,7 @@ const checks = [
   ["old line child detail removed from intervention section", !after.includes("child={lignesInterventionChild}")],
   ["old expand labels removed", forbiddenMarkers.every((marker) => !after.includes(marker))],
   ["fallback preserved", after.includes("Aucune intervention")],
-  ["rdv block preserved", after.includes("1. Choisir un rendez-vous") || after.includes("1. Choisir un rendez-vous".replace("é", "Ã©"))],
+  ["rdv block preserved", after.includes("1. Choisir un rendez-vous") || after.includes("1. Choisir un rendez-vous".replace("é", "é"))],
   ["intervention block preserved", after.includes("2. Interventions")],
   ["factures downstream preserved", after.includes("child={facturesChild}")],
   ["encaissements downstream preserved", after.includes("InvoicePaymentsHistory")],

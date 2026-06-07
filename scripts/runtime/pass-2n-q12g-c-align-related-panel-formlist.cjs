@@ -149,8 +149,8 @@ content = content.replace(
 );
 
 // Mojibake courant
-content = content.replace(/Â·/g, "·");
-content = content.replace(/liÃ©/g, "lié");
+content = content.replace(/·/g, "·");
+content = content.replace(/lié/g, "lié");
 
 fs.writeFileSync(file, content, "utf8");
 

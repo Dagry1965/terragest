@@ -82,7 +82,7 @@ function patchRelatedRecordsPanel() {
   params.set(child.foreignKey, parentRecordId);
 
   // Q15E_PARENT_CHILD_CONTEXT
-  // Transport gÃ©nÃ©rique du contexte parent vers la crÃ©ation enfant.
+  // Transport générique du contexte parent vers la création enfant.
   params.set("parentModuleKey", parentModuleKey);
   params.set("parentRecordId", parentRecordId);
   params.set("parentForeignKey", child.foreignKey);

@@ -56,16 +56,16 @@ rdv = rdv.replace(
 );
 
 rdv = rdv
-  .replaceAll("VÃ©hicule", "Véhicule")
-  .replaceAll("RÃ©paration", "Réparation")
-  .replaceAll("ContrÃ´le", "Contrôle")
-  .replaceAll("PlanifiÃ©", "Planifié")
-  .replaceAll("ConfirmÃ©", "Confirmé")
-  .replaceAll("TerminÃ©", "Terminé")
-  .replaceAll("FacturÃ©", "Facturé")
-  .replaceAll("AnnulÃ©", "Annulé")
-  .replaceAll("DÃ©tails", "Détails")
-  .replaceAll("DÃ©marrer", "Démarrer");
+  .replaceAll("Véhicule", "Véhicule")
+  .replaceAll("Réparation", "Réparation")
+  .replaceAll("Contrôle", "Contrôle")
+  .replaceAll("Planifié", "Planifié")
+  .replaceAll("Confirmé", "Confirmé")
+  .replaceAll("Terminé", "Terminé")
+  .replaceAll("Facturé", "Facturé")
+  .replaceAll("Annulé", "Annulé")
+  .replaceAll("Détails", "Détails")
+  .replaceAll("Démarrer", "Démarrer");
 
 write(rdvFile, rdv);
 

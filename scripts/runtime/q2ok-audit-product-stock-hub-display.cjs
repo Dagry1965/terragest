@@ -270,7 +270,7 @@ if (recordHub.exists) {
 /**
  * Mojibake audit
  */
-const mojibakePatterns = ["Ã", "Â", "â€™", "â€", " "];
+const mojibakePatterns = ["Ã", "Â", "'", """, " "];
 
 for (const [area, file] of [
   ["server-page", page],

@@ -141,7 +141,7 @@ if (
   add("generic-hub", "FAIL", "HIGH", "Generic ERPRecordHubPage selectedRecordId support incomplete");
 }
 
-const mojibakePatterns = ["Ã", "Â", "â€™", "â€", "\uFFFD"];
+const mojibakePatterns = ["Ã", "Â", "'", """, "\uFFFD"];
 
 for (const [key, content] of Object.entries(loaded)) {
   const found = mojibakePatterns.filter((pattern) => content.includes(pattern));

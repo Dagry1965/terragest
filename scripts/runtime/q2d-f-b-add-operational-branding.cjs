@@ -109,7 +109,7 @@ function backup(rel, suffix) {
     const fallbackMarkerMojibake = `  const subtitle =
     config?.subtitle ??
     module.metadata.description ??
-    "Vue opÃ©rationnelle gÃ©nÃ©rÃ©e par le Runtime ERP.";`;
+    "Vue opérationnelle générée par le Runtime ERP.";`;
 
     const replacement = `  const branding = config?.branding ?? {};
   const brandName = branding.brandName ?? "ERP";
@@ -131,9 +131,9 @@ function backup(rel, suffix) {
   }
 
   content = content.replace("AMARKHYS · Runtime ERP", "{eyebrow}");
-  content = content.replace("AMARKHYS Â· Runtime ERP", "{eyebrow}");
+  content = content.replace("AMARKHYS · Runtime ERP", "{eyebrow}");
 
-  if (content.includes("AMARKHYS · Runtime ERP") || content.includes("AMARKHYS Â· Runtime ERP")) {
+  if (content.includes("AMARKHYS · Runtime ERP") || content.includes("AMARKHYS · Runtime ERP")) {
     throw new Error("Hardcode AMARKHYS Runtime ERP encore présent dans ERPOperationalModulePage");
   }
 

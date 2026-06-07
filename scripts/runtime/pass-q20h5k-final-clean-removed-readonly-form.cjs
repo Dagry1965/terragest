@@ -117,7 +117,7 @@ content = content.replace(
 
 // 5) Replace error bullet.
 content = content.replace(
-  /Ã¢â‚¬¢ \{error\.field\} : \{error\.message\}/g,
+  /"¢ \{error\.field\} : \{error\.message\}/g,
   `- {error.field} : {error.message}`
 );
 
@@ -136,9 +136,9 @@ const fragmentReplacements = [
   [/Ãƒ /g, "a"],
   [/Ãƒ§/g, "c"],
   [/Ãƒ/g, ""],
-  [/Ã¢â‚¬â€/g, "-"],
-  [/Ã¢â‚¬¢/g, "-"],
-  [/Ã¢â‚¬/g, ""],
+  [/""/g, "-"],
+  [/"¢/g, "-"],
+  [/"/g, ""],
   [/Â/g, ""],
 ];
 

@@ -50,9 +50,9 @@ if (content.includes("Q20H3_SIMPLIFIED_LINE_STATUSES")) {
 content = content.replace(
 `        options: [
           { label: "Brouillon", value: "brouillon" },
-          { label: "ValidÃ©e", value: "validee" },
-          { label: "FacturÃ©e", value: "facturee" },
-          { label: "AnnulÃ©e", value: "annulee" },
+          { label: "Validée", value: "validee" },
+          { label: "Facturée", value: "facturee" },
+          { label: "Annulée", value: "annulee" },
         ],`,
 `        // Q20H3_SIMPLIFIED_LINE_STATUSES
         // Côté utilisateur, une ligne est seulement préparée ou confirmée.
@@ -85,14 +85,14 @@ content = content.replace(
 content = content.replace(
 `      states: [
         { key: "brouillon", label: "Brouillon", color: "default" },
-        { key: "validee", label: "ValidÃ©e", color: "success" },
-        { key: "facturee", label: "FacturÃ©e", color: "info" },
-        { key: "annulee", label: "AnnulÃ©e", color: "danger" },
+        { key: "validee", label: "Validée", color: "success" },
+        { key: "facturee", label: "Facturée", color: "info" },
+        { key: "annulee", label: "Annulée", color: "danger" },
       ],
 
       transitions: [
         { from: "brouillon", to: "validee", action: "Valider" },
-        { from: "validee", to: "facturee", action: "Marquer facturÃ©e" },
+        { from: "validee", to: "facturee", action: "Marquer facturée" },
         { from: "brouillon", to: "annulee", action: "Annuler" },
         { from: "validee", to: "annulee", action: "Annuler" },
       ],`,

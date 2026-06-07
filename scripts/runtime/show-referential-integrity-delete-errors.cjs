@@ -62,7 +62,7 @@ content = content.replace(
 );
 
 content = content.replaceAll(
-  "Supprimer cet Ã©lÃ©ment ?",
+  "Supprimer cet élément ?",
   "Supprimer cet élément ?"
 );
 

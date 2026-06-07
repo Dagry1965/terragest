@@ -164,11 +164,11 @@ for (const marker of loaderForbidden) {
 
 const mojibakeMarkers = [
   "Ãƒ",
-  "Ã¢",
+  "â",
   "ÃÆ",
   "Ã‚",
-  "â€",
-  "â€™",
+  """,
+  "'",
 ];
 
 let mojibakeDetected = false;

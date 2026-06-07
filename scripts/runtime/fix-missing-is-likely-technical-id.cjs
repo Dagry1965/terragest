@@ -44,13 +44,13 @@ ${marker}`
   );
 }
 
-content = content.replaceAll("Relation mÃ©tier sÃ©lectionnÃ©e", "Relation métier sélectionnée");
-content = content.replaceAll("Aucune relation renseignÃ©e", "Aucune relation renseignée");
-content = content.replaceAll("Relation mÃ©tier verrouillÃ©e", "Relation métier verrouillée");
-content = content.replaceAll("SÃ©lectionner", "Sélectionner");
-content = content.replaceAll("â€¢", "•");
-content = content.replaceAll("dâ€™origine", "d’origine");
-content = content.replaceAll("Ãªtre", "être");
+content = content.replaceAll("Relation métier sélectionnée", "Relation métier sélectionnée");
+content = content.replaceAll("Aucune relation renseignée", "Aucune relation renseignée");
+content = content.replaceAll("Relation métier verrouillée", "Relation métier verrouillée");
+content = content.replaceAll("Sélectionner", "Sélectionner");
+content = content.replaceAll(""¢", "•");
+content = content.replaceAll("d'origine", "d’origine");
+content = content.replaceAll("être", "être");
 
 fs.writeFileSync(target, content, "utf8");
 

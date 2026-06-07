@@ -224,13 +224,13 @@ formField = replaceAll(
 
 formField = replaceAll(
   formField,
-  `                Relation mÃ©tier verrouillÃ©e`,
+  `                Relation métier verrouillée`,
   `                {isLocked ? "Relation métier verrouillée" : "Relation métier en lecture seule"}`
 );
 
 formField = replaceAll(
   formField,
-  `                Cette relation vient du contexte dâ€™origine et ne peut pas Ãªtre modifiÃ©e ici.`,
+  `                Cette relation vient du contexte d'origine et ne peut pas être modifiée ici.`,
   `                Cette relation vient du contexte d'origine et ne peut pas être modifiée ici.`
 );
 

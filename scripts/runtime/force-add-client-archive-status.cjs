@@ -55,11 +55,11 @@ if (!content.includes('value:"archive"') && !content.includes('value: "archive"'
 }
 
 content = content
-  .replaceAll("PrÃ©nom", "Prénom")
-  .replaceAll("TÃ©lÃ©phone", "Téléphone")
-  .replaceAll("CÃ´te d'Ivoire", "Côte d'Ivoire")
-  .replaceAll("IdentitÃ©", "Identité")
-  .replaceAll("DÃ©sactiver", "Désactiver");
+  .replaceAll("Prénom", "Prénom")
+  .replaceAll("Téléphone", "Téléphone")
+  .replaceAll("Côte d'Ivoire", "Côte d'Ivoire")
+  .replaceAll("Identité", "Identité")
+  .replaceAll("Désactiver", "Désactiver");
 
 if (content === before) {
   console.log("NO CHANGE");

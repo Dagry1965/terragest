@@ -74,14 +74,14 @@ if (!content.includes('key: "amarkhys",\n  themeKey: "amarkhys-petronas"')) {
 
 // 3. Nettoyer accents registry.
 content = content
-  .replaceAll("Vue GÃ©nÃ©rale", "Vue Générale")
-  .replaceAll("MatÃ©riels", "Matériels")
-  .replaceAll("RÃ©coltes", "Récoltes")
-  .replaceAll("matÃ©riels", "matériels")
-  .replaceAll("financiÃ¨re", "financière")
-  .replaceAll("DÃ©penses", "Dépenses")
-  .replaceAll("ObservabilitÃ©", "Observabilité")
-  .replaceAll("VÃ©hicules", "Véhicules");
+  .replaceAll("Vue Générale", "Vue Générale")
+  .replaceAll("Matériels", "Matériels")
+  .replaceAll("Récoltes", "Récoltes")
+  .replaceAll("matériels", "matériels")
+  .replaceAll("financière", "financière")
+  .replaceAll("Dépenses", "Dépenses")
+  .replaceAll("Observabilité", "Observabilité")
+  .replaceAll("Véhicules", "Véhicules");
 
 fs.writeFileSync(target, content, "utf8");
 

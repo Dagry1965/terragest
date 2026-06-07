@@ -249,11 +249,11 @@ field = field
   .replaceAll("focus:shadow-[0_0_0_4px_rgba(127,255,232,0.08)]", "focus:shadow-[0_0_0_3px_var(--erp-focus-ring)]");
 
 field = field
-  .replaceAll("Relation mÃ©tier sÃ©lectionnÃ©e", "Relation métier sélectionnée")
-  .replaceAll("Aucune relation renseignÃ©e", "Aucune relation renseignée")
-  .replaceAll("Relation mÃ©tier verrouillÃ©e", "Relation métier verrouillée")
-  .replaceAll("SÃ©lectionner", "Sélectionner")
-  .replaceAll("â€¢", "•");
+  .replaceAll("Relation métier sélectionnée", "Relation métier sélectionnée")
+  .replaceAll("Aucune relation renseignée", "Aucune relation renseignée")
+  .replaceAll("Relation métier verrouillée", "Relation métier verrouillée")
+  .replaceAll("Sélectionner", "Sélectionner")
+  .replaceAll(""¢", "•");
 
 write(fieldPath, field);
 

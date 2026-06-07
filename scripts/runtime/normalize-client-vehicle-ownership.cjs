@@ -26,7 +26,7 @@ const before = content;
  * On garde vehicules.clientId comme seule source de vérité.
  */
 content = content.replace(
-  /,\s*\{\s*key:"vehicules",\s*label:"VÃ©hicules",[\s\S]*?type:"relation",[\s\S]*?grid:\{ cols:12 \}\s*\}/,
+  /,\s*\{\s*key:"vehicules",\s*label:"Véhicules",[\s\S]*?type:"relation",[\s\S]*?grid:\{ cols:12 \}\s*\}/,
   ""
 );
 
@@ -39,7 +39,7 @@ content = content.replace(
  * 2) Retirer l’onglet "vehicules" du formulaire.
  */
 content = content.replace(
-  /,\s*\{\s*key:"vehicules",\s*label:"VÃ©hicules",[\s\S]*?fields:\[\s*"vehicules"\s*\][\s\S]*?\}\s*\}\s*\]/,
+  /,\s*\{\s*key:"vehicules",\s*label:"Véhicules",[\s\S]*?fields:\[\s*"vehicules"\s*\][\s\S]*?\}\s*\}\s*\]/,
   "]"
 );
 
@@ -52,12 +52,12 @@ content = content.replace(
  * 3) Corriger les accents visibles.
  */
 content = content
-  .replaceAll("PrÃ©nom", "Prénom")
-  .replaceAll("TÃ©lÃ©phone", "Téléphone")
-  .replaceAll("CÃ´te d'Ivoire", "Côte d'Ivoire")
-  .replaceAll("IdentitÃ©", "Identité")
-  .replaceAll("VÃ©hicules", "Véhicules")
-  .replaceAll("DÃ©sactiver", "Désactiver");
+  .replaceAll("Prénom", "Prénom")
+  .replaceAll("Téléphone", "Téléphone")
+  .replaceAll("Côte d'Ivoire", "Côte d'Ivoire")
+  .replaceAll("Identité", "Identité")
+  .replaceAll("Véhicules", "Véhicules")
+  .replaceAll("Désactiver", "Désactiver");
 
 if (content === before) {
   console.log("NO CHANGE");

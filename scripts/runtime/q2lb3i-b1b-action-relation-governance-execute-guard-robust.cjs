@@ -129,7 +129,7 @@ import {
         record.removedAt ||
         status === "annulee" ||
         status === "annulée" ||
-        status === "annulÃ©e"
+        status === "annulée"
       );
     }
 

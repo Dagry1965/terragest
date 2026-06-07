@@ -41,7 +41,7 @@ const oldInterventionReturn = `                            return (
                                       {text(intervention, ["displayLabel", "dateIntervention", "titre", "numeroIntervention"])}
                                     </p>
                                     <p className="mt-1 text-sm text-slate-500">
-                                      {text(intervention, ["statut", "status"], "suivi")} Â· {text(intervention, ["montantTTC", "montantHT"], "0")}
+                                      {text(intervention, ["statut", "status"], "suivi")} · {text(intervention, ["montantTTC", "montantHT"], "0")}
                                     </p>
                                   </div>
 
@@ -74,7 +74,7 @@ const newInterventionReturn = `                            return (
                                         {text(intervention, ["displayLabel", "dateIntervention", "titre", "numeroIntervention"])}
                                       </p>
                                       <p className="mt-1 text-sm text-slate-500">
-                                        {text(intervention, ["statut", "status"], "suivi")} Â· {text(intervention, ["montantTTC", "montantHT"], "0")}
+                                        {text(intervention, ["statut", "status"], "suivi")} · {text(intervention, ["montantTTC", "montantHT"], "0")}
                                       </p>
                                     </div>
 

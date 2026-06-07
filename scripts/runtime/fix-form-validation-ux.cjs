@@ -229,17 +229,17 @@ function patchERPEnterpriseForm() {
   );
 
   content = content.replace(
-    `                  Validation mÃ©tier`,
+    `                  Validation métier`,
     `                  Validation métier`
   );
 
   content = content.replace(
-    `                      â€¢ {error.field} : {error.message}`,
+    `                      "¢ {error.field} : {error.message}`,
     `                      • {error.field} : {error.message}`
   );
 
   content = content.replace(
-    `Associe cet Ã©lÃ©ment aux autres objets mÃ©tier.`,
+    `Associe cet élément aux autres objets métier.`,
     `Associe cet élément aux autres objets métier.`
   );
 

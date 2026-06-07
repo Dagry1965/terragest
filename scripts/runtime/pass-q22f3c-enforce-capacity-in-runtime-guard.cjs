@@ -41,7 +41,7 @@ const conflictMarker = `  const conflict =
   if (!conflict.ok) {
     throw new Error(
       conflict.reason ??
-      "Conflit de planning dÃ©tectÃ©."
+      "Conflit de planning détecté."
     );
   }`;
 

@@ -72,11 +72,11 @@ const echeancesFile = path.join(
 
 patch(clientsFile, (content) => {
   let next = content
-    .replaceAll("PrÃ©nom", "Prénom")
-    .replaceAll("TÃ©lÃ©phone", "Téléphone")
-    .replaceAll("CÃ´te d'Ivoire", "Côte d'Ivoire")
-    .replaceAll("IdentitÃ©", "Identité")
-    .replaceAll("DÃ©sactiver", "Désactiver");
+    .replaceAll("Prénom", "Prénom")
+    .replaceAll("Téléphone", "Téléphone")
+    .replaceAll("Côte d'Ivoire", "Côte d'Ivoire")
+    .replaceAll("Identité", "Identité")
+    .replaceAll("Désactiver", "Désactiver");
 
   if (!next.includes('value:"archive"')) {
     next = next.replace(
@@ -100,45 +100,45 @@ patch(clientsFile, (content) => {
 
 patch(vehiculesFile, (content) =>
   content
-    .replaceAll("VÃ©hicules", "Véhicules")
-    .replaceAll("ModÃ¨le", "Modèle")
-    .replaceAll("AnnÃ©e", "Année")
-    .replaceAll("Ã‰lectrique", "Électrique")
-    .replaceAll("KilomÃ©trage", "Kilométrage")
-    .replaceAll("ContrÃ´le technique", "Contrôle technique")
-    .replaceAll("ImmobilisÃ©", "Immobilisé")
-    .replaceAll("ArchivÃ©", "Archivé")
-    .replaceAll("IdentitÃ©", "Identité")
-    .replaceAll("PropriÃ©taire", "Propriétaire")
-    .replaceAll("vÃ©hicule", "véhicule")
-    .replaceAll("RÃ©parer", "Réparer")
+    .replaceAll("Véhicules", "Véhicules")
+    .replaceAll("Modèle", "Modèle")
+    .replaceAll("Année", "Année")
+    .replaceAll("Électrique", "Électrique")
+    .replaceAll("Kilométrage", "Kilométrage")
+    .replaceAll("Contrôle technique", "Contrôle technique")
+    .replaceAll("Immobilisé", "Immobilisé")
+    .replaceAll("Archivé", "Archivé")
+    .replaceAll("Identité", "Identité")
+    .replaceAll("Propriétaire", "Propriétaire")
+    .replaceAll("véhicule", "véhicule")
+    .replaceAll("Réparer", "Réparer")
 );
 
 patch(facturesFile, (content) =>
   content
-    .replaceAll("NumÃ©ro facture", "Numéro facture")
-    .replaceAll("VÃ©hicule", "Véhicule")
-    .replaceAll("PayÃ©", "Payé")
-    .replaceAll("EspÃ¨ces", "Espèces")
+    .replaceAll("Numéro facture", "Numéro facture")
+    .replaceAll("Véhicule", "Véhicule")
+    .replaceAll("Payé", "Payé")
+    .replaceAll("Espèces", "Espèces")
 );
 
 patch(encaissementsFile, (content) =>
   content
-    .replaceAll("EspÃ¨ces", "Espèces")
-    .replaceAll("ChÃ¨que", "Chèque")
-    .replaceAll("RÃ©fÃ©rence transaction", "Référence transaction")
-    .replaceAll("ValidÃ©", "Validé")
-    .replaceAll("RejetÃ©", "Rejeté")
-    .replaceAll("AnnulÃ©", "Annulé")
+    .replaceAll("Espèces", "Espèces")
+    .replaceAll("Chèque", "Chèque")
+    .replaceAll("Référence transaction", "Référence transaction")
+    .replaceAll("Validé", "Validé")
+    .replaceAll("Rejeté", "Rejeté")
+    .replaceAll("Annulé", "Annulé")
 );
 
 patch(echeancesFile, (content) =>
   content
-    .replaceAll("Ã€ venir", "À venir")
-    .replaceAll("Partiellement payÃ©e", "Partiellement payée")
-    .replaceAll("PayÃ©e", "Payée")
-    .replaceAll("AnnulÃ©e", "Annulée")
-    .replaceAll("TÃ©lÃ©phone", "Téléphone")
+    .replaceAll("À venir", "À venir")
+    .replaceAll("Partiellement payée", "Partiellement payée")
+    .replaceAll("Payée", "Payée")
+    .replaceAll("Annulée", "Annulée")
+    .replaceAll("Téléphone", "Téléphone")
 );
 
 console.log("DONE normalize archive cancel statuses");

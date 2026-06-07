@@ -199,7 +199,7 @@ if (dangerousPrimary.length === 0) {
 /**
  * Mojibake in touched files.
  */
-const mojibakePatterns = ["Ã", "Â", "â€™", "â€", "\uFFFD"];
+const mojibakePatterns = ["Ã", "Â", "'", """, "\uFFFD"];
 for (const [key, content] of Object.entries({
   loader,
   kpiResolver,

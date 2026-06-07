@@ -110,14 +110,14 @@ content = content.replace(
  * 6) Nettoyage visible de quelques textes.
  */
 content = content
-  .replaceAll("CrÃ©e", "Crée")
-  .replaceAll("liÃ©", "lié")
-  .replaceAll("payÃ©", "payé")
-  .replaceAll("Ã payer", "à payer")
-  .replaceAll("Reste Ã payer", "Reste à payer")
-  .replaceAll("DÃ©jÃ", "Déjà")
-  .replaceAll("mÃ©tier", "métier")
-  .replaceAll("exÃ©cutent", "exécutent");
+  .replaceAll("Crée", "Crée")
+  .replaceAll("lié", "lié")
+  .replaceAll("payé", "payé")
+  .replaceAll("àpayer", "à payer")
+  .replaceAll("Reste àpayer", "Reste à payer")
+  .replaceAll("DéjÃ", "Déjà")
+  .replaceAll("métier", "métier")
+  .replaceAll("exécutent", "exécutent");
 
 if (content === before) {
   console.log("NO CHANGE");

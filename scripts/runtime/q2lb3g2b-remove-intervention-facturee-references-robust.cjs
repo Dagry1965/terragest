@@ -44,17 +44,17 @@ changed += updateFile(
   (content) => removeLinesContaining(content, [
     'interventionStatus.includes("facturee")',
     'interventionStatus.includes("facturée")',
-    'interventionStatus.includes("facturÃ©e")',
+    'interventionStatus.includes("facturée")',
   ])
 );
 
-// 2) Loader today : retirer les statuts facturee/facturée/facturÃ©e de la liste intervention active
+// 2) Loader today : retirer les statuts facturee/facturée/facturée de la liste intervention active
 changed += updateFile(
   "src/runtime/hub/RuntimeClientOperationalTodayLoader.ts",
   (content) => removeLinesContaining(content, [
     '"facturee"',
     '"facturée"',
-    '"facturÃ©e"',
+    '"facturée"',
   ])
 );
 
@@ -72,13 +72,13 @@ changed += updateFile(
   return (
     statut === "terminee" ||
     statut === "terminée" ||
-    statut === "terminÃ©e" ||
+    statut === "terminée" ||
     statut === "annulee" ||
     statut === "annulée" ||
-    statut === "annulÃ©e" ||
+    statut === "annulée" ||
     statut === "archivee" ||
     statut === "archivée" ||
-    statut === "archivÃ©e"
+    statut === "archivée"
   );
 }`
     );

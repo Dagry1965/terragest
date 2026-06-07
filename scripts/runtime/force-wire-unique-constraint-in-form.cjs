@@ -109,7 +109,7 @@ if (!content.includes("uniqueConstraintErrors")) {
 }
 
 content = content.replaceAll(
-  "Les rÃ¨gles mÃ©tier ERP bloquent cet enregistrement.",
+  "Les règles métier ERP bloquent cet enregistrement.",
   "Les règles métier ERP bloquent cet enregistrement."
 );
 

@@ -215,9 +215,9 @@ async function main() {
     .map(([key]) => key);
 
   if (missing.length > 0) {
-    console.error("[ERROR] Configuration Firebase incomplÃ¨te.");
+    console.error("[ERROR] Configuration Firebase incomplète.");
     console.error("Champs manquants:", missing.join(", "));
-    console.error("VÃ©rifie .env.local / .env.");
+    console.error("Vérifie .env.local / .env.");
     process.exit(1);
   }
 
@@ -254,7 +254,7 @@ async function main() {
 
     if (found.length > 0) {
       console.log("");
-      console.log(`[OK] Lignes trouvÃ©es dans ${collectionName}: ${found.length}`);
+      console.log(`[OK] Lignes trouvées dans ${collectionName}: ${found.length}`);
       lines = found.map((line) => ({
         ...line,
         __collectionName: collectionName,
@@ -265,7 +265,7 @@ async function main() {
 
   if (lines.length === 0) {
     console.log("");
-    console.log("[INFO] Aucune ligne trouvÃ©e par interventionId.");
+    console.log("[INFO] Aucune ligne trouvée par interventionId.");
   }
 
   const activeLines = lines.filter((line) => !line.removedAt);
@@ -283,15 +283,15 @@ async function main() {
 
   console.log("");
   console.log("=== SYNTHÃˆSE LIGNES ===");
-  console.log(`Total lignes trouvÃ©es: ${lines.length}`);
+  console.log(`Total lignes trouvées: ${lines.length}`);
   console.log(`Lignes actives: ${activeLines.length}`);
-  console.log(`Lignes retirÃ©es: ${removedLines.length}`);
-  console.log(`Lignes actives validÃ©es: ${validatedActiveLines.length}`);
+  console.log(`Lignes retirées: ${removedLines.length}`);
+  console.log(`Lignes actives validées: ${validatedActiveLines.length}`);
   console.log(`Lignes actives brouillon: ${draftActiveLines.length}`);
-  console.log(`Total attendu lignes validÃ©es actives: ${expectedValidatedTotal} FCFA`);
+  console.log(`Total attendu lignes validées actives: ${expectedValidatedTotal} FCFA`);
 
   console.log("");
-  console.log("=== DÃ‰TAIL LIGNES ===");
+  console.log("=== DÉTAIL LIGNES ===");
 
   for (const line of lines) {
     const statut = String(line.statut || line.etat || "");
@@ -314,7 +314,7 @@ async function main() {
     console.log(`removedAt: ${formatValue(line.removedAt)}`);
     console.log(`removedFromStatus: ${formatValue(line.removedFromStatus)}`);
     console.log(`removedReason: ${formatValue(line.removedReason)}`);
-    console.log(`COMPTÃ‰E_DANS_TOTAL_VALIDÃ‰: ${isCounted ? "OUI" : "NON"}`);
+    console.log(`COMPTÉE_DANS_TOTAL_VALIDÉ: ${isCounted ? "OUI" : "NON"}`);
   }
 
   const movementCollectionCandidates = [
@@ -325,7 +325,7 @@ async function main() {
   ];
 
   console.log("");
-  console.log("=== MOUVEMENTS STOCK LIÃ‰S AUX LIGNES ===");
+  console.log("=== MOUVEMENTS STOCK LIÉS AUX LIGNES ===");
 
   const movementIds = Array.from(
     new Set(
@@ -339,7 +339,7 @@ async function main() {
   );
 
   if (movementIds.length === 0) {
-    console.log("Aucun stockMovementId / stockReversalMovementId trouvÃ© sur les lignes.");
+    console.log("Aucun stockMovementId / stockReversalMovementId trouvé sur les lignes.");
   }
 
   for (const movementId of movementIds) {
@@ -387,18 +387,18 @@ console.log(`originalStockMovementId: ${formatValue(movement.originalStockMoveme
 
   if (removedLines.length > 0) {
     const removedWithoutReadonlyRisk = removedLines.length;
-    console.log(`OK: ${removedWithoutReadonlyRisk} ligne(s) retirÃ©e(s) conservÃ©e(s) pour audit.`);
+    console.log(`OK: ${removedWithoutReadonlyRisk} ligne(s) retirée(s) conservée(s) pour audit.`);
   }
 
   if (draftActiveLines.length > 0) {
     console.log(
-      `INFO: ${draftActiveLines.length} ligne(s) brouillon active(s), visible(s) mais non comptÃ©e(s).`
+      `INFO: ${draftActiveLines.length} ligne(s) brouillon active(s), visible(s) mais non comptée(s).`
     );
   }
 
   if (validatedActiveLines.length > 0) {
     console.log(
-      `OK: ${validatedActiveLines.length} ligne(s) validÃ©e(s) active(s), comptÃ©e(s) dans le total.`
+      `OK: ${validatedActiveLines.length} ligne(s) validée(s) active(s), comptée(s) dans le total.`
     );
   }
 
@@ -411,7 +411,7 @@ console.log(`originalStockMovementId: ${formatValue(movement.originalStockMoveme
   ];
 
   console.log("");
-  console.log("Totaux stockÃ©s sur intervention:");
+  console.log("Totaux stockés sur intervention:");
   for (const key of interventionTotalCandidates) {
     if (intervention[key] !== undefined) {
       console.log(`${key}: ${formatValue(intervention[key])}`);
@@ -419,7 +419,7 @@ console.log(`originalStockMovementId: ${formatValue(movement.originalStockMoveme
   }
 
   console.log("");
-  console.log("[DONE] Audit terminÃ©. Aucun document n'a Ã©tÃ© modifiÃ©.");
+  console.log("[DONE] Audit terminé. Aucun document n'a été modifié.");
 }
 
 main().catch((error) => {

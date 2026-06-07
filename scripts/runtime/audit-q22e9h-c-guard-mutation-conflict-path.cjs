@@ -195,7 +195,7 @@ function main() {
 
   assertRegex(
     guard,
-    /Conflit de planning|Créneau complet|CrÃ©neau complet|cr[eé]neau|creneau/i,
+    /Conflit de planning|Créneau complet|Créneau complet|cr[eé]neau|creneau/i,
     "Le guard conserve un message métier de conflit/créneau"
   );
 

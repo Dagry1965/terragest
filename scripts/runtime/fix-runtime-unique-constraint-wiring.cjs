@@ -99,8 +99,8 @@ if (!fs.existsSync(engineFile)) {
 let engine = read(engineFile);
 
 engine = engine
-  .replaceAll("existe dÃ©jÃ ", "existe déjà")
-  .replaceAll("doit Ãªtre", "doit être");
+  .replaceAll("existe déjà", "existe déjà")
+  .replaceAll("doit être", "doit être");
 
 write(engineFile, engine);
 
@@ -181,7 +181,7 @@ if (!form.includes("uniqueConstraintErrors")) {
 }
 
 form = form.replaceAll(
-  "Les rÃ¨gles mÃ©tier ERP bloquent cet enregistrement.",
+  "Les règles métier ERP bloquent cet enregistrement.",
   "Les règles métier ERP bloquent cet enregistrement."
 );
 

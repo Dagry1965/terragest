@@ -122,7 +122,7 @@ if (!loader.includes(`const numeroFacture = value("numeroFacture");`)) {
 if (!loader.includes("Factures AMARKHYS")) {
   loader = loader.replace(
     `    /**
-     * Contrats / factures / documents mÃ©tier
+     * Contrats / factures / documents métier
      */`,
     `    /**
      * Factures AMARKHYS
@@ -144,11 +144,11 @@ if (!loader.includes("Factures AMARKHYS")) {
 }
 
 loader = loader
-  .replaceAll("VÃ©hicules", "Véhicules")
-  .replaceAll("propriÃ©taires", "propriétaires")
-  .replaceAll("oÃ¹", "où")
-  .replaceAll("dÃ©jÃ", "déjà")
-  .replaceAll("mÃ©tier", "métier");
+  .replaceAll("Véhicules", "Véhicules")
+  .replaceAll("propriétaires", "propriétaires")
+  .replaceAll("où", "où")
+  .replaceAll("déjÃ", "déjà")
+  .replaceAll("métier", "métier");
 
 write(loaderFile, loader);
 

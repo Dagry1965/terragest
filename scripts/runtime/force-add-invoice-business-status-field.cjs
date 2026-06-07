@@ -55,14 +55,14 @@ if (!content.includes('key: "statutFacture"')) {
 }
 
 content = content
-  .replaceAll("NumÃ©ro facture", "Numéro facture")
-  .replaceAll("PayÃ©", "Payé")
-  .replaceAll("Montant payÃ©", "Montant payé")
-  .replaceAll("Reste Ã payer", "Reste à payer")
-  .replaceAll("Reste Ã  payer", "Reste à payer")
-  .replaceAll("EspÃ¨ces", "Espèces")
-  .replaceAll("VÃ©hicule", "Véhicule")
-  .replaceAll("Relations mÃ©tier", "Relations métier");
+  .replaceAll("Numéro facture", "Numéro facture")
+  .replaceAll("Payé", "Payé")
+  .replaceAll("Montant payé", "Montant payé")
+  .replaceAll("Reste àpayer", "Reste à payer")
+  .replaceAll("Reste à payer", "Reste à payer")
+  .replaceAll("Espèces", "Espèces")
+  .replaceAll("Véhicule", "Véhicule")
+  .replaceAll("Relations métier", "Relations métier");
 
 if (content === before) {
   console.log("NO CHANGE");

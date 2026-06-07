@@ -197,7 +197,7 @@ for (const target of genericTargets) {
 /**
  * Mojibake.
  */
-const mojibakePatterns = ["Ã", "Â", "â€™", "â€", "\uFFFD"];
+const mojibakePatterns = ["Ã", "Â", "'", """, "\uFFFD"];
 
 for (const [key, content] of Object.entries(loaded)) {
   if (!content) continue;

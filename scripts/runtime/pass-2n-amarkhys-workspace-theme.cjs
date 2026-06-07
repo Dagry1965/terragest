@@ -321,14 +321,14 @@ if (fs.existsSync(path.join(root, registryPath))) {
   let registry = readFile(registryPath);
 
   registry = registry
-    .replaceAll("Vue GÃ©nÃ©rale", "Vue Générale")
-    .replaceAll("MatÃ©riels", "Matériels")
-    .replaceAll("RÃ©coltes", "Récoltes")
-    .replaceAll("matÃ©riels", "matériels")
-    .replaceAll("financiÃ¨re", "financière")
-    .replaceAll("DÃ©penses", "Dépenses")
-    .replaceAll("ObservabilitÃ©", "Observabilité")
-    .replaceAll("VÃ©hicules", "Véhicules");
+    .replaceAll("Vue Générale", "Vue Générale")
+    .replaceAll("Matériels", "Matériels")
+    .replaceAll("Récoltes", "Récoltes")
+    .replaceAll("matériels", "matériels")
+    .replaceAll("financière", "financière")
+    .replaceAll("Dépenses", "Dépenses")
+    .replaceAll("Observabilité", "Observabilité")
+    .replaceAll("Véhicules", "Véhicules");
 
   if (!registry.includes('themeKey: "amarkhys-petronas"')) {
     registry = registry.replace(

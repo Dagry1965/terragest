@@ -47,10 +47,10 @@ backup(target, suffix);
 let content = read(target);
 
 content = content
-  .replaceAll("VÃ©hicules", "Véhicules")
-  .replaceAll("accÃ¨s Ã ", "accès à")
-  .replaceAll("accÃ¨s Ã ", "accès à")
-  .replaceAll("accÃ¨s", "accès");
+  .replaceAll("Véhicules", "Véhicules")
+  .replaceAll("accès à", "accès à")
+  .replaceAll("accès à", "accès à")
+  .replaceAll("accès", "accès");
 
 content = replaceRegexRequired(
   content,

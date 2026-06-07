@@ -26,9 +26,9 @@ if (!content.includes("fieldErrors?: Record<string, string>;")) {
 }
 
 content = content
-  .split("Aucun champ Ã  afficher pour cet onglet.")
+  .split("Aucun champ à afficher pour cet onglet.")
   .join("Aucun champ à afficher pour cet onglet.")
-  .split("Aucun champ Ã  afficher pour cet onglet.")
+  .split("Aucun champ à afficher pour cet onglet.")
   .join("Aucun champ à afficher pour cet onglet.");
 
 if (content === original) {

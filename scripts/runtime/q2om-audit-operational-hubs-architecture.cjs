@@ -311,7 +311,7 @@ if (hubRoutes.length >= 2) {
 /**
  * Mojibake in hub architecture files.
  */
-const mojibakePatterns = ["Ã", "Â", "â€™", "â€", "\uFFFD"];
+const mojibakePatterns = ["Ã", "Â", "'", """, "\uFFFD"];
 
 for (const [key, content] of Object.entries(loaded)) {
   if (!content) continue;

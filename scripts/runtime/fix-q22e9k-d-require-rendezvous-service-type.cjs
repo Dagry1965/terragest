@@ -118,7 +118,7 @@ function assertRendezvousServiceType(record: RuntimeRecord): void {
 if (!guardContent.includes("assertRendezvousServiceType(mergedRecord);")) {
   const anchor = `  if (!hasRealAppointmentDateAndTime(mergedRecord)) {
     throw new Error(
-      "Le rendez-vous doit avoir une date et une heure rÃ©elles avant sauvegarde."
+      "Le rendez-vous doit avoir une date et une heure réelles avant sauvegarde."
     );
   }`;
 

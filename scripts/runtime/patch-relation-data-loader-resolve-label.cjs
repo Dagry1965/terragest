@@ -109,7 +109,7 @@ if (!content.includes("Factures AMARKHYS")) {
 
   content = content.replace(
     `    /**
-     * Contrats / factures / documents mÃ©tier
+     * Contrats / factures / documents métier
      */`,
     `    /**
      * Factures AMARKHYS
@@ -131,11 +131,11 @@ if (!content.includes("Factures AMARKHYS")) {
 }
 
 content = content
-  .replaceAll("VÃ©hicules", "Véhicules")
-  .replaceAll("propriÃ©taires", "propriétaires")
-  .replaceAll("oÃ¹", "où")
-  .replaceAll("dÃ©jÃ", "déjà")
-  .replaceAll("mÃ©tier", "métier");
+  .replaceAll("Véhicules", "Véhicules")
+  .replaceAll("propriétaires", "propriétaires")
+  .replaceAll("où", "où")
+  .replaceAll("déjÃ", "déjà")
+  .replaceAll("métier", "métier");
 
 fs.writeFileSync(file, content, { encoding: "utf8" });
 

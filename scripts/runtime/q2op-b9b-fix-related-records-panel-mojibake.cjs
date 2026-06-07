@@ -19,33 +19,33 @@ if (!fs.existsSync(backupPath)) {
 let content = fs.readFileSync(fullPath, "utf8");
 
 const replacements = new Map([
-  ["confirmÃ©es", "confirmées"],
-  ["ValidÃ©e", "Validée"],
-  ["RetirÃ©e", "Retirée"],
-  ["ImmobilisÃ©", "Immobilisé"],
-  ["ArchivÃ©", "Archivé"],
-  ["FacturÃ©e", "Facturée"],
-  ["AnnulÃ©e", "Annulée"],
-  ["PiÃ¨ce", "Pièce"],
-  ["Main dâ€™Å“uvre", "Main d’œuvre"],
-  ["Main dâ€™œuvre", "Main d’œuvre"],
-  ["Enregistrement liÃ©", "Enregistrement lié"],
-  ["Transport gÃ©nÃ©rique", "Transport générique"],
-  ["crÃ©ation", "création"],
-  ["retirÃ©es", "retirées"],
-  ["affichÃ©es", "affichées"],
-  ["validÃ©es", "validées"],
-  ["Ancien â†’ rÃ©cent", "Ancien → récent"],
-  ["RÃ©cent â†’ ancien", "Récent → ancien"],
-  ["liÃ©", "lié"],
-  ["liÃ©s", "liés"],
+  ["confirmées", "confirmées"],
+  ["Validée", "Validée"],
+  ["Retirée", "Retirée"],
+  ["Immobilisé", "Immobilisé"],
+  ["Archivé", "Archivé"],
+  ["Facturée", "Facturée"],
+  ["Annulée", "Annulée"],
+  ["Pièce", "Pièce"],
+  ["Main d'Å“uvre", "Main d’œuvre"],
+  ["Main d'œuvre", "Main d’œuvre"],
+  ["Enregistrement lié", "Enregistrement lié"],
+  ["Transport générique", "Transport générique"],
+  ["création", "création"],
+  ["retirées", "retirées"],
+  ["affichées", "affichées"],
+  ["validées", "validées"],
+  ["Ancien â†’ récent", "Ancien → récent"],
+  ["Récent â†’ ancien", "Récent → ancien"],
+  ["lié", "lié"],
+  ["liés", "liés"],
 ]);
 
 for (const [bad, good] of replacements.entries()) {
   content = content.split(bad).join(good);
 }
 
-const mojibakePatterns = ["Ã", "Â", "â€™", "â€", "Å“"];
+const mojibakePatterns = ["Ã", "Â", "'", """, "Å“"];
 
 const stillFound = mojibakePatterns.filter((pattern) => content.includes(pattern));
 

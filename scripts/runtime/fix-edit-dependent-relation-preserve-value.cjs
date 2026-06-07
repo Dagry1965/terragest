@@ -134,21 +134,21 @@ field = field.replace(
 );
 
 field = field.replaceAll(
-  "Relation mÃ©tier sÃ©lectionnÃ©e",
+  "Relation métier sélectionnée",
   "Relation métier sélectionnée"
 );
 field = field.replaceAll(
-  "Aucune relation renseignÃ©e",
+  "Aucune relation renseignée",
   "Aucune relation renseignée"
 );
 field = field.replaceAll(
-  "Relation mÃ©tier verrouillÃ©e",
+  "Relation métier verrouillée",
   "Relation métier verrouillée"
 );
-field = field.replaceAll("SÃ©lectionner", "Sélectionner");
-field = field.replaceAll("â€¢", "•");
-field = field.replaceAll("dâ€™origine", "d’origine");
-field = field.replaceAll("Ãªtre", "être");
+field = field.replaceAll("Sélectionner", "Sélectionner");
+field = field.replaceAll(""¢", "•");
+field = field.replaceAll("d'origine", "d’origine");
+field = field.replaceAll("être", "être");
 
 write(fieldPath, field);
 

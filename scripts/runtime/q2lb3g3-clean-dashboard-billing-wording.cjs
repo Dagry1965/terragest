@@ -14,7 +14,7 @@ content = content.replace(
 );
 
 content = content.replace(
-  'description: "Interventions Ã  diagnostiquer, terminer ou facturer.",',
+  'description: "Interventions à diagnostiquer, terminer ou facturer.",',
   'description: "Interventions à diagnostiquer, suivre ou clôturer côté atelier.",'
 );
 

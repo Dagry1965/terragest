@@ -138,13 +138,13 @@ if (!field.includes(oldEffect)) {
 
 field = field.replace(oldEffect, newEffect);
 
-field = field.replaceAll("Relation mÃ©tier sÃ©lectionnÃ©e", "Relation métier sélectionnée");
-field = field.replaceAll("Aucune relation renseignÃ©e", "Aucune relation renseignée");
-field = field.replaceAll("Relation mÃ©tier verrouillÃ©e", "Relation métier verrouillée");
-field = field.replaceAll("dâ€™origine", "d’origine");
-field = field.replaceAll("Ãªtre", "être");
-field = field.replaceAll("SÃ©lectionner", "Sélectionner");
-field = field.replaceAll("â€¢", "•");
+field = field.replaceAll("Relation métier sélectionnée", "Relation métier sélectionnée");
+field = field.replaceAll("Aucune relation renseignée", "Aucune relation renseignée");
+field = field.replaceAll("Relation métier verrouillée", "Relation métier verrouillée");
+field = field.replaceAll("d'origine", "d’origine");
+field = field.replaceAll("être", "être");
+field = field.replaceAll("Sélectionner", "Sélectionner");
+field = field.replaceAll(""¢", "•");
 
 write(fieldPath, field);
 

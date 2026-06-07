@@ -52,7 +52,7 @@ for (const file of [rdvModuleFile, rdvActionsFile]) {
   );
 
   content = content.replace(
-    /\s*\{\s*label:\s*"FacturÃ©",\s*value:\s*"facture"\s*\},?/g,
+    /\s*\{\s*label:\s*"Facturé",\s*value:\s*"facture"\s*\},?/g,
     ""
   );
 
@@ -63,7 +63,7 @@ for (const file of [rdvModuleFile, rdvActionsFile]) {
   );
 
   content = content.replace(
-    /\s*\{\s*key:\s*"facture",\s*label:\s*"FacturÃ©",\s*color:\s*"default"\s*\},?/g,
+    /\s*\{\s*key:\s*"facture",\s*label:\s*"Facturé",\s*color:\s*"default"\s*\},?/g,
     ""
   );
 

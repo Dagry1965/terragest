@@ -114,16 +114,16 @@ backup(contextEnforcer, suffix);
   let content = read(sidebar);
 
   content = content
-    .replaceAll("VÃ©hicules", "Véhicules")
-    .replaceAll("accÃ¨s Ã", "accès à")
-    .replaceAll("accÃ¨s", "accès")
-    .replaceAll("Ã ", "à")
-    .replaceAll("Ã©", "é")
-    .replaceAll("Ã¨", "è")
-    .replaceAll("Ãª", "ê")
-    .replaceAll("Ã´", "ô")
-    .replaceAll("â€™", "’")
-    .replaceAll("â€¢", "•");
+    .replaceAll("Véhicules", "Véhicules")
+    .replaceAll("accès Ã", "accès à")
+    .replaceAll("accès", "accès")
+    .replaceAll("à", "à")
+    .replaceAll("é", "é")
+    .replaceAll("è", "è")
+    .replaceAll("ê", "ê")
+    .replaceAll("ô", "ô")
+    .replaceAll("'", "’")
+    .replaceAll(""¢", "•");
 
   write(sidebar, content);
 }
@@ -133,11 +133,11 @@ backup(contextEnforcer, suffix);
   let content = read(contextEnforcer);
 
   content = content
-    .replaceAll("AccÃ¨s refusÃ©", "Accès refusé")
-    .replaceAll("Ã©", "é")
-    .replaceAll("Ã¨", "è")
-    .replaceAll("Ã ", "à")
-    .replaceAll("â€™", "’");
+    .replaceAll("Accès refusé", "Accès refusé")
+    .replaceAll("é", "é")
+    .replaceAll("è", "è")
+    .replaceAll("à", "à")
+    .replaceAll("'", "’");
 
   write(contextEnforcer, content);
 }

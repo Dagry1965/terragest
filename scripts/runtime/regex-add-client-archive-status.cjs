@@ -40,11 +40,11 @@ content = content.replace(
 );
 
 content = content
-  .replaceAll("IdentitÃ©", "Identité")
-  .replaceAll("PrÃ©nom", "Prénom")
-  .replaceAll("TÃ©lÃ©phone", "Téléphone")
-  .replaceAll("DÃ©sactiver", "Désactiver")
-  .replaceAll("CÃ´te d'Ivoire", "Côte d'Ivoire");
+  .replaceAll("Identité", "Identité")
+  .replaceAll("Prénom", "Prénom")
+  .replaceAll("Téléphone", "Téléphone")
+  .replaceAll("Désactiver", "Désactiver")
+  .replaceAll("Côte d'Ivoire", "Côte d'Ivoire");
 
 if (content === before) {
   console.error("NO CHANGE - regex did not match.");

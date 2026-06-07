@@ -46,7 +46,7 @@ loader = loader.replace(
 
 loader = loader.replace(
   `    /**
-     * Contrats / factures / documents mÃ©tier
+     * Contrats / factures / documents métier
      */`,
   `    /**
      * Factures AMARKHYS
@@ -69,11 +69,11 @@ loader = loader.replace(
 );
 
 loader = loader
-  .replaceAll("VÃ©hicules", "Véhicules")
-  .replaceAll("propriÃ©taires", "propriétaires")
-  .replaceAll("oÃ¹", "où")
-  .replaceAll("dÃ©jÃ", "déjà")
-  .replaceAll("mÃ©tier", "métier");
+  .replaceAll("Véhicules", "Véhicules")
+  .replaceAll("propriétaires", "propriétaires")
+  .replaceAll("où", "où")
+  .replaceAll("déjÃ", "déjà")
+  .replaceAll("métier", "métier");
 
 write(loaderFile, loader);
 

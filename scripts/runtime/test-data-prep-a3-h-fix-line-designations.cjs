@@ -60,7 +60,7 @@ function looksCorrupted(value) {
   return (
     value.includes("Ã") ||
     value.includes("Â") ||
-    value.includes("â€") ||
+    value.includes(""") ||
     value.includes("�") ||
     value.length > 180
   );

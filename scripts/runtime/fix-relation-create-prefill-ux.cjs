@@ -17,11 +17,11 @@ const original = content;
 
 // 1. Corriger encodage résiduel si présent
 content = content
-  .split("SÃ©lectionner")
+  .split("Sélectionner")
   .join("Sélectionner")
-  .split("+ CrÃ©er")
+  .split("+ Créer")
   .join("+ Créer")
-  .split("Aucun champ Ã  afficher")
+  .split("Aucun champ à afficher")
   .join("Aucun champ à afficher");
 
 // 2. Ajouter helpers internes si absents
@@ -178,9 +178,9 @@ content = content.replace(
 
 // 4. Corriger le placeholder si encore cassé
 content = content
-  .split(`{field.placeholder ?? "SÃ©lectionner"}`)
+  .split(`{field.placeholder ?? "Sélectionner"}`)
   .join(`{field.placeholder ?? "Sélectionner"}`)
-  .split(`+ CrÃ©er {field.label}`)
+  .split(`+ Créer {field.label}`)
   .join(`+ Créer {field.label}`);
 
 if (content === original) {

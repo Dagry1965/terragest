@@ -405,7 +405,7 @@ function patchLignesInterventionModule() {
   if (!content.includes("autoFill: {")) {
     const oldBlock = `      {
         key: "produitId",
-        label: "Produit / piÃ¨ce",
+        label: "Produit / pièce",
         type: "relation",
         relation: { module: "produitsauto" },
         searchable: true,

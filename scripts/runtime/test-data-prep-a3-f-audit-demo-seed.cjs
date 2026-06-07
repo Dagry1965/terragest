@@ -222,7 +222,7 @@ async function main() {
   const failCount = checks.filter((check) => !check.ok).length;
 
   const reportLines = [
-    "# TEST-DATA-PREP-A3-C1-F â€” Global demo seed audit",
+    "# TEST-DATA-PREP-A3-C1-F "” Global demo seed audit",
     "",
     "## Summary",
     "",
@@ -246,7 +246,7 @@ async function main() {
   reportLines.push("## Checks", "");
 
   for (const check of checks) {
-    reportLines.push(`- ${check.ok ? "OK" : "FAIL"} â€” ${check.label} â€” ${check.details}`);
+    reportLines.push(`- ${check.ok ? "OK" : "FAIL"} "” ${check.label} "” ${check.details}`);
   }
 
   const reportPath = path.join(

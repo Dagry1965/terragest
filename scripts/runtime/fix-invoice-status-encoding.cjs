@@ -22,16 +22,16 @@ let content = fs.readFileSync(file, "utf8");
 const before = content;
 
 content = content
-  .replaceAll("Ã‰mise", "Émise")
-  .replaceAll("AnnulÃ©e", "Annulée")
-  .replaceAll("PayÃ©", "Payé")
-  .replaceAll("NumÃ©ro facture", "Numéro facture")
-  .replaceAll("Montant payÃ©", "Montant payé")
-  .replaceAll("Reste Ã payer", "Reste à payer")
-  .replaceAll("Reste Ã  payer", "Reste à payer")
-  .replaceAll("EspÃ¨ces", "Espèces")
-  .replaceAll("VÃ©hicule", "Véhicule")
-  .replaceAll("Relations mÃ©tier", "Relations métier");
+  .replaceAll("Émise", "Émise")
+  .replaceAll("Annulée", "Annulée")
+  .replaceAll("Payé", "Payé")
+  .replaceAll("Numéro facture", "Numéro facture")
+  .replaceAll("Montant payé", "Montant payé")
+  .replaceAll("Reste àpayer", "Reste à payer")
+  .replaceAll("Reste à payer", "Reste à payer")
+  .replaceAll("Espèces", "Espèces")
+  .replaceAll("Véhicule", "Véhicule")
+  .replaceAll("Relations métier", "Relations métier");
 
 if (content === before) {
   console.log("NO CHANGE");

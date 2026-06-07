@@ -16,7 +16,7 @@ let content = fs.readFileSync(target, "utf8");
 const original = content;
 
 // Correction encodage résiduel visible dans le bouton relation.
-content = content.split("+ CrÃ©er").join("+ Créer");
+content = content.split("+ Créer").join("+ Créer");
 
 // Remplacement du fallback final input.
 // Objectifs :
