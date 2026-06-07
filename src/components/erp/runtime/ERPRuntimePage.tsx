@@ -62,15 +62,15 @@ function showRuntimeActionFeedback(actionResult: unknown) {
 
   const title =
     result.title ??
-    (success ? "Action effectuÃƒÂ©e" : "Action impossible");
+    (success ? "Action effectuée" : "Action impossible");
 
   const details = [
     result.message,
     Array.isArray(result.effects) && result.effects.length > 0
-      ? result.effects.join(" Ã‚Â· ")
+      ? result.effects.join(" · ")
       : undefined,
     Array.isArray(result.nextActions) && result.nextActions.length > 0
-      ? `Prochaine ÃƒÂ©tape : ${result.nextActions.join(" Ã‚Â· ")}`
+      ? `Prochaine étape : ${result.nextActions.join(" · ")}`
       : undefined,
   ]
     .filter(Boolean)
@@ -180,7 +180,7 @@ function getRuntimePageTypeLabel(type: string): string {
     case "list":
       return "liste";
     case "create":
-      return "crÃƒÆ’Ã‚Â©ation";
+      return "création";
     case "edit":
       return "modification";
     case "detail":
@@ -470,7 +470,7 @@ async function handleRuntimeAction(action: NonNullable<ERPModule["actions"]>[num
           description ??
           module.operational?.subtitle ??
           module.metadata.description ??
-          "Vue opÃƒÆ’Ã‚Â©rationnelle gÃƒÆ’Ã‚Â©nÃƒÆ’Ã‚Â©rÃƒÆ’Ã‚Â©e par le Runtime ERP."
+          "Vue opérationnelle générée par le Runtime ERP."
         }
       >
         <ERPOperationalModulePage
@@ -562,7 +562,7 @@ return (
         {(type === "detail" || type === "edit") && runtimeActions.length > 0 ? (
           <div data-runtime-action-bar-placement="runtime-page">
             <ERPRuntimeActionBar
-              title="Actions mÃ©tier"
+              title="Actions métier"
               description="Actions runtime disponibles pour cet enregistrement."
               actions={mapRuntimeActionsToActionBarActions(
                 runtimeActions as ERPRuntimePageActionSource[],
