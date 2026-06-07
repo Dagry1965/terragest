@@ -38,6 +38,17 @@ async function getDoc(collection, id) {
   return snap.exists ? { id: snap.id, ...snap.data() } : null;
 }
 
+function isActivePayment(record) {
+  return (
+    record &&
+    !record.deletedAt &&
+    !record.removedAt &&
+    String(record.statut ?? "") !== "annule" &&
+    String(record.statut ?? "") !== "annulee" &&
+    String(record.statut ?? "") !== "annulée"
+  );
+}
+
 function pick(record) {
   if (!record) return null;
 
@@ -121,11 +132,15 @@ async function main() {
         item.tenantId === facture?.tenantId &&
         item.workspace === facture?.workspace
       ),
+    activeEncaissementsCount:
+      encaissements.filter(isActivePayment).length,
     encaissementsAllMatch:
-      encaissements.every((item) =>
-        item.tenantId === facture?.tenantId &&
-        item.workspace === facture?.workspace
-      ),
+      encaissements
+        .filter(isActivePayment)
+        .every((item) =>
+          item.tenantId === facture?.tenantId &&
+          item.workspace === facture?.workspace
+        ),
   });
 }
 
