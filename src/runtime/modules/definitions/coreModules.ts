@@ -57,7 +57,7 @@ export const coreERPModules: ERPModule[] = [
   createBusinessModule({
     key: "clients",
     label: "Clients",
-    description: "Gestion centralisée des clients.",
+    description: "Gestion centralisÃ©e des clients.",
     fields: clientFields,
   }),
   createBusinessModule({
@@ -74,7 +74,7 @@ export const coreERPModules: ERPModule[] = [
   }),
   createBusinessModule({
     key: "taches",
-    label: "Tâches",
+    label: "TÃ¢ches",
     fields: tacheFields,
   }),
 
@@ -120,8 +120,8 @@ export const coreERPModules: ERPModule[] = [
   },
   createBusinessModule({
     key: "vehicules",
-    label: "Véhicules",
-    description: "Gestion des véhicules.",
+    label: "VÃ©hicules",
+    description: "Gestion des vÃ©hicules.",
     fields: vehiculeFields,
   }),
   createBusinessModule({
@@ -131,7 +131,7 @@ export const coreERPModules: ERPModule[] = [
   }),
   createBusinessModule({
     key: "recoltes",
-    label: "Récoltes",
+    label: "RÃ©coltes",
     fields: recolteFields,
   }),
 
@@ -177,8 +177,8 @@ export const coreERPModules: ERPModule[] = [
   },
   createBusinessModule({
     key: "depenses",
-    label: "Dépenses",
-    description: "Gestion des dépenses.",
+    label: "DÃ©penses",
+    description: "Gestion des dÃ©penses.",
     fields: depenseFields,
   }),
   createBusinessModule({
@@ -233,6 +233,7 @@ for (const module of mergedERPModules) {
   echeancespaiementautoModule,
   encaissementsautoModule,
   facturesautoModule,
+  lignesfactureautoModule,
   lignesinterventionautoModule,
   produitsautoModule,
   stocksautoModule,

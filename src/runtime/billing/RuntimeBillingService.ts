@@ -1,6 +1,6 @@
 import type { ERPModule } from "@/runtime/modules/ERPModule";
 import { RuntimeDataBinding } from "@/runtime/data-binding";
-import { coreERPModules } from "@/runtime/modules/definitions/coreModules";
+import { allERPModules } from "@/runtime/modules/definitions/coreModules";
 import { RuntimeMetrics } from "@/runtime/metrics/RuntimeMetrics";
 import { RuntimeNotificationEngine } from "@/runtime/notifications/RuntimeNotificationEngine";
 
@@ -146,25 +146,25 @@ export class RuntimeBillingService {
 
     const facturesModule =
       RuntimeBillingService.resolveModule(
-        coreERPModules,
+        allERPModules,
         "facturesauto"
       );
 
     const interventionsModule =
       RuntimeBillingService.resolveModule(
-        coreERPModules,
+        allERPModules,
         "interventionsauto"
       );
 
     const lignesInterventionModule =
       RuntimeBillingService.resolveModule(
-        coreERPModules,
+        allERPModules,
         "lignesinterventionauto"
       );
 
     const lignesFactureModule =
       RuntimeBillingService.resolveModule(
-        coreERPModules,
+        allERPModules,
         "lignesfactureauto"
       );
 
@@ -174,10 +174,17 @@ export class RuntimeBillingService {
       !lignesInterventionModule ||
       !lignesFactureModule
     ) {
+      const missingModules = [
+        !facturesModule ? "facturesauto" : undefined,
+        !interventionsModule ? "interventionsauto" : undefined,
+        !lignesInterventionModule ? "lignesinterventionauto" : undefined,
+        !lignesFactureModule ? "lignesfactureauto" : undefined,
+      ].filter(Boolean);
+
       return {
         success: false,
         reason: "missing-module",
-        message: "Module de facturation incomplet.",
+        message: `Module de facturation incomplet : ${missingModules.join(", ")}.`,
       };
     }
 

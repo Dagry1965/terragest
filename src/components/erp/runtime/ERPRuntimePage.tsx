@@ -62,15 +62,15 @@ function showRuntimeActionFeedback(actionResult: unknown) {
 
   const title =
     result.title ??
-    (success ? "Action effectuée" : "Action impossible");
+    (success ? "Action effectuÃƒÂ©e" : "Action impossible");
 
   const details = [
     result.message,
     Array.isArray(result.effects) && result.effects.length > 0
-      ? result.effects.join(" · ")
+      ? result.effects.join(" Ã‚Â· ")
       : undefined,
     Array.isArray(result.nextActions) && result.nextActions.length > 0
-      ? `Prochaine étape : ${result.nextActions.join(" · ")}`
+      ? `Prochaine ÃƒÂ©tape : ${result.nextActions.join(" Ã‚Â· ")}`
       : undefined,
   ]
     .filter(Boolean)
@@ -180,7 +180,7 @@ function getRuntimePageTypeLabel(type: string): string {
     case "list":
       return "liste";
     case "create":
-      return "crÃ©ation";
+      return "crÃƒÆ’Ã‚Â©ation";
     case "edit":
       return "modification";
     case "detail":
@@ -257,16 +257,59 @@ export function ERPRuntimePage({
 
 
   async function handleRuntimeAction(action: NonNullable<ERPModule["actions"]>[number]) {
+    console.log(
+      "[Q2-L-B3-F6-F] handleRuntimeAction called",
+      {
+        module: module?.metadata?.key,
+        action: action.key,
+        recordId:
+          currentRecord?.id ??
+          currentRecord?._id ??
+          currentRecord?.uid,
+      }
+    );
+
     if (!module || !currentRecord) {
+      console.warn(
+        "[Q2-L-B3-F6-F] handleRuntimeAction skipped",
+        {
+          hasModule: Boolean(module),
+          hasCurrentRecord: Boolean(currentRecord),
+        }
+      );
       return;
     }
+    let actionResult: unknown;
 
-    const actionResult =
-      await RuntimeActionEngine.execute({
-        module,
+    try {
+      actionResult =
+        await RuntimeActionEngine.execute({
+          module,
+          action,
+          record: currentRecord,
+        });
+    } catch (error) {
+      console.error(
+        "ERP RUNTIME ACTION ERROR",
+        {
+          module: module?.metadata?.key,
+          action: action.key,
+          error,
+        }
+      );
+
+      actionResult = {
+        success: false,
+        severity: "danger",
+        title: "Action impossible",
+        message:
+          error instanceof Error
+            ? error.message
+            : "Une erreur est survenue pendant l'execution de l'action.",
         action,
         record: currentRecord,
-      });
+      };
+    }
 
     showRuntimeActionFeedback(actionResult);
 
@@ -305,7 +348,7 @@ export function ERPRuntimePage({
     module?.metadata?.description;
 
   const resolvedTitle =
-    title ?? `${moduleLabel} â€” ${getRuntimePageTypeLabel(type)}`;
+    title ?? `${moduleLabel} ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â ${getRuntimePageTypeLabel(type)}`;
 
 
   const createActionLabel =
@@ -412,7 +455,7 @@ export function ERPRuntimePage({
           description ??
           module.operational?.subtitle ??
           module.metadata.description ??
-          "Vue opÃ©rationnelle gÃ©nÃ©rÃ©e par le Runtime ERP."
+          "Vue opÃƒÆ’Ã‚Â©rationnelle gÃƒÆ’Ã‚Â©nÃƒÆ’Ã‚Â©rÃƒÆ’Ã‚Â©e par le Runtime ERP."
         }
       >
         <ERPOperationalModulePage
