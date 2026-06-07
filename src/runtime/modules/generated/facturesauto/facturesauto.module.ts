@@ -673,7 +673,7 @@ export const facturesautoModule: ERPModule = {
         foreignKey: "factureId",
         title: "Lignes facture",
         description: "Lignes financières rattachées à cette facture.",
-        displayIn: [],
+        displayIn: ["detail", "edit"],
         lazy: true,
         position: "after",
         allowCreate: false,

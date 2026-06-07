@@ -613,7 +613,7 @@ export const interventionsautoModule: ERPModule = {
         foreignKey: "interventionId",
         title: "Factures de l'intervention",
         openLabel: "Ouvrir facture",
-        displayIn: ["detail"],
+        displayIn: ["detail", "edit"],
         lazy: true,
         position: "after",
         allowCreate: false,
