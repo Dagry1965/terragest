@@ -414,6 +414,50 @@ export class RuntimeActionEngine {
         return action;
       });
   }
+
+  static async getAvailableActionsAsync({
+    actions = [],
+    userPermissions = ["*"],
+    workflow,
+    record,
+  }: {
+    actions?: ERPModuleAction[];
+    userPermissions?: string[];
+    workflow?: ERPModuleWorkflow;
+    record?: Record<string, unknown>;
+  }): Promise<RuntimeGovernedAction[]> {
+    const availableActions =
+      RuntimeActionEngine.getAvailableActions({
+        actions,
+        userPermissions,
+        workflow,
+        record,
+      });
+
+    const governedActions: RuntimeGovernedAction[] = [];
+
+    for (const action of availableActions) {
+      const relationGovernanceBlockReason =
+        await RuntimeActionEngine.getRelationGovernanceBlockReason({
+          action,
+          record,
+        });
+
+      if (relationGovernanceBlockReason) {
+        governedActions.push({
+          ...action,
+          disabled: true,
+          description: relationGovernanceBlockReason,
+        });
+        continue;
+      }
+
+      governedActions.push(action);
+    }
+
+    return governedActions;
+  }
+
   static async execute({
 
     module,

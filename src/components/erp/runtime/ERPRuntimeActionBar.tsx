@@ -87,7 +87,8 @@ function RuntimeActionButton({
   }
 
   return (
-    <button
+    <>
+      <button
       type="button"
       className={className}
       disabled={action.disabled || action.loading}
@@ -96,6 +97,18 @@ function RuntimeActionButton({
     >
       {content}
     </button>
+      {action.disabled && action.description ? (
+        <p
+                        className="mt-2 max-w-[18rem] text-xs font-semibold leading-5 text-amber-700"
+                        data-runtime-action-disabled-reason={action.key}
+                      >
+                        {/* Q2_L_B3_I_B2C_DISABLED_ACTION_REASON */}
+                        {action.description}
+                      </p>
+      ) : null}
+    </>
+
+
   );
 }
 

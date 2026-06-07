@@ -220,6 +220,9 @@ export function ERPRuntimePage({
   const [loading, setLoading] =
     useState(false);
 
+  const [runtimeActions, setRuntimeActions] =
+    useState<ERPRuntimePageActionSource[]>([]);
+
   useEffect(() => {
     setCurrentRecord(record);
   }, [record]);
@@ -256,7 +259,52 @@ export function ERPRuntimePage({
   }, [module, type]);
 
 
-  async function handleRuntimeAction(action: NonNullable<ERPModule["actions"]>[number]) {
+  
+
+  // Q2_L_B3_I_B2_ASYNC_RELATION_GOVERNED_ACTIONS
+  // Resolve action availability asynchronously so relation-based governance
+  // can disable actions before the user clicks.
+  useEffect(() => {
+    let mounted = true;
+
+    async function loadRuntimeActions() {
+      const removedRecord =
+        Boolean(currentRecord?.removedAt);
+
+      if (
+        (type !== "detail" && type !== "edit") ||
+        !module ||
+        !currentRecord ||
+        removedRecord
+      ) {
+        if (mounted) {
+          setRuntimeActions([]);
+        }
+
+        return;
+      }
+
+      const actions =
+        await RuntimeActionEngine.getAvailableActionsAsync({
+          actions: module.actions ?? [],
+          workflow: module.workflows?.[0],
+          record: currentRecord,
+        });
+
+      if (mounted) {
+        setRuntimeActions(
+          actions as ERPRuntimePageActionSource[]
+        );
+      }
+    }
+
+    void loadRuntimeActions();
+
+    return () => {
+      mounted = false;
+    };
+  }, [module, type, currentRecord]);
+async function handleRuntimeAction(action: NonNullable<ERPModule["actions"]>[number]) {
 
     if (!module || !currentRecord) {
       return;
@@ -344,21 +392,6 @@ export function ERPRuntimePage({
       : "#";
 
   const isRemovedRecord = Boolean(currentRecord?.removedAt);
-
-
-
-  const runtimeActions =
-
-
-    (type === "detail" || type === "edit") && !isRemovedRecord
-
-
-      ? RuntimeActionEngine.getAvailableActions({
-          actions: module?.actions ?? [],
-          workflow: module?.workflows?.[0],
-          record: currentRecord,
-          })
-        : [];
 
   const moduleHrefActions =
     // Q22E4B_LIST_NAVIGATION_ACTIONS
