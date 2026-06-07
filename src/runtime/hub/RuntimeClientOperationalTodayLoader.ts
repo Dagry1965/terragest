@@ -157,8 +157,6 @@ function isActiveIntervention(record: ERPRecordHubRecord): boolean {
     "annulée",
     "archivee",
     "archivée",
-    "facturee",
-    "facturée",
   ].includes(status);
 }
 

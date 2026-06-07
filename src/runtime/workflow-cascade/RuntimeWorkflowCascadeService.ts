@@ -55,10 +55,15 @@ function isInterventionAlreadyClosed(record: Record<string, unknown>): boolean {
   const statut = String(record.statut ?? "").trim().toLowerCase();
 
   return (
+    statut === "terminee" ||
+    statut === "terminée" ||
+    statut === "terminÃ©e" ||
     statut === "annulee" ||
     statut === "annulée" ||
-    statut === "facturee" ||
-    statut === "facturée"
+    statut === "annulÃ©e" ||
+    statut === "archivee" ||
+    statut === "archivée" ||
+    statut === "archivÃ©e"
   );
 }
 

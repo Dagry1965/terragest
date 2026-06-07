@@ -287,7 +287,7 @@ export const ERPBusinessAmarkhysDashboardConfig: ERPDashboardConfig = {
       type: "alert",
       moduleKey: "interventionsauto",
       title: "Interventions ouvertes",
-      description: "Interventions à diagnostiquer, terminer ou facturer.",
+      description: "Interventions à diagnostiquer, suivre ou clôturer côté atelier.",
       labelField: "typeIntervention",
       dateField: "dateIntervention",
       href: "/interventionsauto",

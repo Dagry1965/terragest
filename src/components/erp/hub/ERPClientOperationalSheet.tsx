@@ -755,7 +755,6 @@ const [localSelectedVehicleId, setLocalSelectedVehicleId] = useState<string | nu
 
       if (
         interventionStatus.includes("terminee") ||
-        interventionStatus.includes("facturee") ||
         interventionStatus.includes("termin")
       ) {
         label = "Intervention terminée";

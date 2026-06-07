@@ -257,26 +257,8 @@ export function ERPRuntimePage({
 
 
   async function handleRuntimeAction(action: NonNullable<ERPModule["actions"]>[number]) {
-    console.log(
-      "[Q2-L-B3-F6-F] handleRuntimeAction called",
-      {
-        module: module?.metadata?.key,
-        action: action.key,
-        recordId:
-          currentRecord?.id ??
-          currentRecord?._id ??
-          currentRecord?.uid,
-      }
-    );
 
     if (!module || !currentRecord) {
-      console.warn(
-        "[Q2-L-B3-F6-F] handleRuntimeAction skipped",
-        {
-          hasModule: Boolean(module),
-          hasCurrentRecord: Boolean(currentRecord),
-        }
-      );
       return;
     }
     let actionResult: unknown;

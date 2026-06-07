@@ -346,14 +346,6 @@ export class RuntimeActionEngine {
     // Q2-L-B3-F6-E_CREATE_INVOICE_ACTION
     // Action comptable runtimeOnly : creer une facture depuis une intervention terminee.
     // Ne modifie jamais le statut atelier de l'intervention.
-    console.log(
-      "[Q2-L-B3-F6-F] RuntimeActionEngine before create invoice branch",
-      {
-        module: module?.metadata?.key,
-        action: action.key,
-        hasRecord: Boolean(record),
-      }
-    );
 
     if (
       module?.metadata?.key === "interventionsauto" &&
@@ -387,17 +379,6 @@ export class RuntimeActionEngine {
           user,
         });
 
-      console.log(
-        "[Q2-L-B3-F6-F] RuntimeBillingService result",
-        {
-          interventionId,
-          success: result.success,
-          reason: result.reason,
-          message: result.message,
-          factureId: result.factureId,
-          effects: result.effects,
-        }
-      );
 
       return {
         success: result.success,
