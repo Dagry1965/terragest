@@ -1400,8 +1400,14 @@ RuntimeMetrics.increment(
           (encaissement: any) =>
             String(encaissement.factureId) ===
               String(payload.factureId) &&
+            String(encaissement.tenantId ?? "") ===
+              String(facture.tenantId ?? "") &&
+            String(encaissement.workspace ?? "") ===
+              String(facture.workspace ?? "") &&
             encaissement.statut ===
-              "valide"
+              "valide" &&
+            !encaissement.deletedAt &&
+            !encaissement.removedAt
         );
 
       const montantPaye =
@@ -1649,8 +1655,14 @@ RuntimeMetrics.increment(
           (encaissement: any) =>
             String(encaissement.factureId) ===
               String(payload.factureId) &&
+            String(encaissement.tenantId ?? "") ===
+              String(facture.tenantId ?? "") &&
+            String(encaissement.workspace ?? "") ===
+              String(facture.workspace ?? "") &&
             encaissement.statut ===
-              "valide"
+              "valide" &&
+            !encaissement.deletedAt &&
+            !encaissement.removedAt
         );
 
       const montantPaye =

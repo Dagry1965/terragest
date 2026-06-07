@@ -688,7 +688,7 @@ export const facturesautoModule: ERPModule = {
         foreignKey: "factureId",
         title: "Encaissements",
         description: "Paiements enregistrés pour cette facture.",
-        displayIn: [],
+        displayIn: ["detail", "edit"],
         lazy: true,
         position: "after",
         allowCreate: false,
